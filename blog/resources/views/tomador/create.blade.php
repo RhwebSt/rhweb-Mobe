@@ -10,12 +10,9 @@
                             <a class="btn btn btn-outline-dark" href="#" role="button">Sair</a>
                             
                         </div>
-                        
                         @csrf
                         @method('put')
                         <input type="hidden" name="trabalhador">
-                        
-
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label">Nome Completo</label>
                             <input type="text" class="form-control" name="nome__completo"  id="nome__completo">
@@ -314,7 +311,6 @@
     <script>
         $(document).ready(function(){
             $( "#nome__completo" ).keyup(function() {
-                $('#form').attr('action', "{{ route('tomador.store') }}");
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
                     url: "{{url('tomador')}}/"+dados,
