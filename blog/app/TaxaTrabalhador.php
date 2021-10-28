@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaxaTrabalhador extends Model
 {
     protected $fillable = [
-        'tsferias','tsdecimo13','tsrsr','das'
+        'tsferias','tsdecimo13','tsrsr','das','tomador'
     ];
     public function cadastro($dados)
     {

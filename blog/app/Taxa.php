@@ -12,7 +12,7 @@ class Taxa extends Model
     public function cadastro($dados)
     {
         return Taxa::create([
-            'tfaxadm'=>$dados['taxa_adm'],
+            'tftaxadm'=>$dados['taxa_adm'],
             'tfbenef'=>$dados['caixa_benef'],
             'tfferias'=>$dados['ferias'],
             'tf13'=>$dados['13_salario'],

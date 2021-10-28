@@ -80,7 +80,9 @@ class TomadorController extends Controller
      */
     public function show($id)
     {
-        //
+        $tomador = new Tomador;
+        $tomadors = $tomador->first($id);
+        return response()->json($tomadors);
     }
 
     /**
@@ -93,7 +95,7 @@ class TomadorController extends Controller
     {
         //
     }
-
+   
     /**
      * Update the specified resource in storage.
      *

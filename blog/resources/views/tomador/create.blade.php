@@ -1,7 +1,5 @@
 @extends('layouts.index')
 @section('conteine')
-
-        <main class="container">
         <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados da Empresa</div>
         <form class="row g-3 mt-1 mb-3" action="{{ route('tomador.store') }}" method="POST" >
 
@@ -18,7 +16,7 @@
 
                 <div class="col-md-6">
                     <label for="nome__completo" class="form-label">Nome Completo</label>
-                    <input type="text" class="form-control" name="nome__completo" value="" id="nome__completo">
+                    <input type="text" class="form-control" name="nome__completo"  id="nome__completo">
                 </div>
 
                 <div class="col-md-6">
@@ -309,5 +307,49 @@
                 </div>
 
 			</form>
-        </main>
-        @stop
+    <script>
+        $(document).ready(function(){
+            $( "#nome__completo" ).keyup(function() {
+                var dados = $( "#nome__completo" ).val();
+                $.ajax({
+                    url: "{{url('tomador')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#cnpj').val(data.tscnpj)
+                        $('#matricula').val(data.tsmatricula)
+                        $('#nome__fantasia').val(data.nome__fantasia)
+                        $('#simples').val(data.tssimples)
+                        $('#telefone').val(data.tstelefone)
+                        $('#cep').val(data.escep)
+                        $('#logradouro').val(data.eslogradouro)
+                        $('#numero').val(data.esnum)
+                        $('#tipo').val(data.estipo)
+                        $('#localidade').val(data.esmunicipio)
+                        $('#uf').val(data.esuf)
+                        $('#complemento').val(data.escomplemento)
+                        $('#taxa_adm').val(data.tftaxadm)
+                        $('#caixa_benef').val(data.tfbenef)
+                        $('#ferias').val(data.tfferias)
+                        $('#13_salario').val(data.tf13)
+                        $('#taxa__fed').val(data.tftaxafed)
+                        $('#ferias_trab').val(data.tsferias)
+                        $('#13__saltrab').val(data.tsdecimo13)
+                        $('#rsr').val(data.tsrsr)
+                        $('#das').val(data.das)
+                        $('#cod__fpas').val(data.psfpas)
+                        $('#cod__grps').val(data.cod__grps)
+                        $('#cod__recol').val(data.cod__recol)
+                        $('#cnae').val(data.cnae)
+                        $('#fap__aliquota').val(data.psfapaliquota)
+                        $('#rat__ajustado').val(data.psratajustados)
+                        $('#fpas__terceiros').val(data.psfpasterceiros)
+                        $('#aliq__terceiros').val(data.psaliquotateceiros)
+                        $('#esocial').val(data.pssocial)
+                        console.log(data)
+                    }
+                });
+            });
+        });
+    </script>
+@stop

@@ -22,13 +22,37 @@ class Tomador extends Model
             'tstipo'=>$dados['tipo']
         ]);
     }
-    public function lista()
+    // public function lista()
+    // {
+    //    return DB::table('tomadors')
+    //         ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador')
+    //         // ->join('orders', 'users.id', '=', 'orders.user_id')
+    //         ->select('tomadors.*', 'enderecos.*')
+    //         ->paginate(20);
+    // }
+    public function first($id)
     {
        return DB::table('tomadors')
             ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador')
-            // ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('tomadors.*', 'enderecos.*')
-            ->paginate(20);
+            ->join('taxas', 'tomadors.id', '=', 'taxas.tomador')
+            ->join('retencao_faturas', 'tomadors.id', '=', 'retencao_faturas.tomador')
+            ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+            ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
+            ->join('taxa_trabalhadors', 'tomadors.id', '=', 'taxa_trabalhadors.tomador')
+            ->join('indice_faturas', 'tomadors.id', '=', 'indice_faturas.tomador')
+            ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
+            ->select(
+                'tomadors.*', 
+                'enderecos.*',
+                'taxas.*',
+                'retencao_faturas.*',
+                'cartao_pontos.*',
+                'parametrosefips.*',
+                'taxa_trabalhadors.*',
+                'indice_faturas.*'
+            )
+            ->where('tsnome', $id)
+            ->first();
     }
     public function editar($dados)
     {
