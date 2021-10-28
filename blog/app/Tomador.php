@@ -49,7 +49,8 @@ class Tomador extends Model
                 'cartao_pontos.*',
                 'parametrosefips.*',
                 'taxa_trabalhadors.*',
-                'indice_faturas.*'
+                'indice_faturas.*',
+                'bancarios.*'
             )
             ->where('tsnome', $id)
             ->first();

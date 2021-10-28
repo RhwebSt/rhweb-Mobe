@@ -17,7 +17,7 @@ class IndiceFatura extends Model
             'isepi'=>$dados['epi'],
             'isseguroportrabalhador'=>$dados['seguro__trabalhador'],
             'isindecesobrefolha'=>$dados['indice__folha'],
-            'isvalealimentacao'=>$dados['valor__transporte'],
+            'isvaletransporte'=>$dados['valor__transporte'],
             'isvalealimentacao'=>$dados['valor__alimentacao'],
             'tomador'=>$dados['tomador']
         ]);

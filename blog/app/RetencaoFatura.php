@@ -15,7 +15,7 @@ class RetencaoFatura extends Model
        return RetencaoFatura::create([
             'rsinssempresa'=>$dados['inss__empresa'],
             'rsfgts'=>$dados['fgts__empresa'],
-            'rsfgts'=>$dados['valor_fatura'],
+            'rsvalorfatura'=>$dados['valor_fatura'],
             'tomador'=>$dados['tomador']
         ]);
     }
