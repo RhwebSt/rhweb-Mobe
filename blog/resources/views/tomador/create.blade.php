@@ -2,7 +2,7 @@
 @section('conteine')
     <main class="container ">
             <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados da Empresa</div>
-                <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="POST" >
+                <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn mt-5 " role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
