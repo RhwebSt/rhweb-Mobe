@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     protected $fillable = [
-        'eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','trabalhador','tomador'
+        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','trabalhador','tomador'
     ];
     public function cadastro($dados)
     {
         return Endereco::create([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],
-            // 'estipo'=>$dados['tf13'],
+            'escep'=>$dados['cep'],
             'esmunicipio'=>$dados['localidade'],
             'esuf'=>$dados['uf'],
             'escomplemento'=>$dados['complemento__endereco'],
@@ -23,34 +23,36 @@ class Endereco extends Model
             'trabalhador'=>$dados['trabalhador']
         ]);
     }
+    // public function editar($dados,$id)
+    // {
+    //   return Endereco::where('id', $id)
+    //   ->update([
+    //     'eslogradouro'=>$dados['logradouro'],
+    //     'esbairro'=>$dados['bairro'],
+    //     // 'estipo'=>$dados['tf13'],
+    //     'esmunicipio'=>$dados['localidade'],
+    //     'esesuf'=>$dados['uf'],
+    //     'escomplemento'=>$dados['complemento__endereco'],
+    //     'esnum'=>$dados['numero'],
+    // ]);
+    // }
     public function editar($dados,$id)
     {
-      return Endereco::where('id', $id)
-      ->update([
-        'eslogradouro'=>$dados['logradouro'],
-        'esbairro'=>$dados['bairro'],
-        // 'estipo'=>$dados['tf13'],
-        'esmunicipio'=>$dados['localidade'],
-        'esesuf'=>$dados['uf'],
-        'escomplemento'=>$dados['complemento__endereco'],
-        'esnum'=>$dados['numero'],
-    ]);
-    }
-    public function editartomador($dados,$id)
-    {
         return Endereco::where('tomador', $id)
+        ->orWhere('trabalhador', $id)
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],
-            // 'estipo'=>$dados['tf13'],
+            'escep'=>$dados['cep'],
             'esmunicipio'=>$dados['localidade'],
             'esuf'=>$dados['uf'],
             'escomplemento'=>$dados['complemento__endereco'],
             'esnum'=>$dados['numero'],
         ]);
     }
+    
     public function deletar($id)
     {
-        return Endereco::where('tomador', $id)->delete();
+        return Endereco::where('tomador', $id)->orWhere('trabalhador', $id)->delete();
     }
 }

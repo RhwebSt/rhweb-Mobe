@@ -19,4 +19,18 @@ class Nascimento extends Model
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
+    public function editar($dados,$id)
+    {
+        return Nascimento::where('trabalhador', $id)
+        ->update([
+            'nsnascimento'=>$dados['data_nascimento'],
+            'nscivil'=>$dados['estado__civil'],
+            'nsnaturalidade'=>$dados['pais__nascimento'],
+            'nsnacionalidade'=>$dados['pais__nacionalidade']
+        ]);
+    }
+    public function deletar($id)
+    {
+        return Nascimento::where('trabalhador', $id)->delete();
+    }
 }

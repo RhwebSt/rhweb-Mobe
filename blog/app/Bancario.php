@@ -27,21 +27,7 @@ class Bancario extends Model
     public function editar($dados,$id)
     {
         return Bancario::where('tomador', $id)
-        ->update([
-            'bstitular'=>$dados['nome__conta'],
-            'bsbanco'=>$dados['banco'],
-            'bsagencia'=>$dados['agencia'],
-            'bsoperacao'=>$dados['operacao'],
-            'bsconta'=>$dados['conta'],
-            'bspix'=>$dados['pix'],
-            'bsdefaltor'=>$dados['deflator'],
-            'tomador'=>$dados['tomador'],
-            'trabalhador'=>$dados['trabalhador']
-        ]);
-    }
-    public function editarbacario($dados,$id)
-    {
-        return Bancario::where('tomador', $id)
+        ->orWhere('trabalhador', $id)
         ->update([
             'bstitular'=>$dados['nome__conta'],
             'bsbanco'=>$dados['banco'],
@@ -54,6 +40,6 @@ class Bancario extends Model
     }
     public function deletar($id)
     {
-      return Bancario::where('tomador', $id)->delete();
+      return Bancario::where('tomador', $id)->orWhere('trabalhador', $id)->delete();
     }
 }

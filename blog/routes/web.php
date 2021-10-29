@@ -18,3 +18,4 @@ Route::resource('tomador','tomador\\TomadorController')->names('tomador');
 Route::resource('trabalhador','trabalhador\\TrabalhadorController')->names('trabalhador');
 Route::resource('home','home\\HomeController')->names('home');
 Route::resource('usuario','usuario\\UsuarioController')->names('usuario');
+Route::resource('depedente','depedente\\DepedenteController')->names('depedente');

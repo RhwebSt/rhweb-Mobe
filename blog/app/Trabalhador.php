@@ -31,19 +31,18 @@ class Trabalhador extends Model
             ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
             ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
             ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
-            ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
             ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
             ->join('enderecos', 'trabalhadors.id', '=', 'enderecos.trabalhador')
             // ->join('dependentes', 'trabalhadors.id', '=', 'dependentes.trabalhador')
             ->select(
-                'trabalahdors.*', 
+                'trabalhadors.*', 
                 'documentos.*', 
                 'bancarios.*',
-                'categoria.*',
+                'categorias.*',
                 'nascimentos.*',
                 'enderecos.*'
                 )
-            ->where('id', $id)
+            ->where('tsnome', $id)
             ->first();
     }
     public function lista()
@@ -64,5 +63,24 @@ class Trabalhador extends Model
                 'enderecos.*'
                 )
                 ->paginate(20);
+    }
+    public function editar($dados,$id)
+    {
+        return Trabalhador::where('id', $id)
+        ->update([
+            'tsnome'=>$dados['nome__completo'],
+            'tscpf'=>$dados['cpf'],
+            'tsmatricula'=>$dados['matricula'],
+            'tsmae'=>$dados['nome__mae'],
+            // 'tspai'=>$dados['simples'],
+            'tstelefone'=>$dados['telefone'],
+            'tssexo'=>$dados['sexo'],
+            'tsescolaridade'=>$dados['grau__instrucao'],
+            'tsirrf'=>$dados['irrf'],
+        ]);
+    }
+    public function deletar($id)
+    {
+        return Trabalhador::where('id', $id)->delete();
     }
 }

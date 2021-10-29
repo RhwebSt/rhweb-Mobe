@@ -58,7 +58,7 @@ class TrabalhadorController extends Controller
             $nascimentos = $nascimento->cadastro($dados);
             $categorias = $categoria->cadastro($dados);
             $documentos = $documento->cadastro($dados);
-            return redirect()->route('trabalhador.create')->withInput()->withErrors([true]); 
+            return redirect()->route('trabalhador.index')->withInput()->withErrors([true]); 
         }
     }
 
@@ -70,7 +70,9 @@ class TrabalhadorController extends Controller
      */
     public function show($id)
     {
-        //
+        $trabalhador = new Trabalhador;
+        $trabalhadors = $trabalhador->first($id);
+        return response()->json($trabalhadors);
     }
 
     /**
@@ -96,7 +98,27 @@ class TrabalhadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dados = $request->all();
+        $trabalhador = new Trabalhador;
+        $endereco = new Endereco;
+        $bancario = new Bancario;
+        $nascimento = new Nascimento;
+        $categoria = new Categoria;
+        $documento = new Documento;
+        $trabalhadors = $trabalhador->editar($dados,$id);
+        $enderecos = $endereco->editar($dados,$id); 
+        $bancarios = $bancario->editar($dados,$id);
+        $nascimentos = $nascimento->editar($dados,$id);
+        $categorias = $categoria->editar($dados,$id);
+        $documentos = $documento->editar($dados,$id);
+        if ($trabalhadors && $enderecos &&  $bancarios && 
+        $nascimentos && $categorias && $documentos) {
+            $condicao = 'edittrue';
+        }else{
+            $condicao = 'editfalse';
+        }
+            return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]); 
+        
     }
 
     /**
@@ -107,6 +129,25 @@ class TrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trabalhador = new Trabalhador;
+        $endereco = new Endereco;
+        $bancario = new Bancario;
+        $nascimento = new Nascimento;
+        $categoria = new Categoria;
+        $documento = new Documento;
+        $enderecos = $endereco->deletar($id); 
+        $bancarios = $bancario->deletar($id);
+        $nascimentos = $nascimento->deletar($id);
+        $categorias = $categoria->deletar($id);
+        $documentos = $documento->deletar($id);
+        if ($enderecos &&  $bancarios && 
+        $nascimentos && $categorias && $documentos) {
+            $trabalhadors = $trabalhador->deletar($id);
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+            return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]); 
+        
     }
 }

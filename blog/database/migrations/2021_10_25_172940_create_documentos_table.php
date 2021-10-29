@@ -16,10 +16,10 @@ class CreateDocumentosTable extends Migration
         Schema::create('documentos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('dstipo')->nullable();
-            $table->char('dsemisssao', 10)->nullable();
-            $table->char('uf', 2)->nullable();
-            $table->char('ctps', 20)->nullable();
-            $table->char('pis', 20)->nullable();
+            $table->char('dsserie', 10)->nullable();
+            $table->char('dsuf', 2)->nullable();
+            $table->char('dsctps', 20)->nullable();
+            $table->char('dspis', 20)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();
             $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->timestamps();

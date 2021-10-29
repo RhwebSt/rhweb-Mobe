@@ -127,8 +127,8 @@ class TomadorController extends Controller
         $indicefatura = new IndiceFatura; 
         $condicao = '';
         $tomadors = $tomador->editar($dados,$id);
-        $enderecos = $endereco->editartomador($dados,$id); 
-        $bancarios = $bancario->editarbacario($dados,$id);
+        $enderecos = $endereco->editar($dados,$id); 
+        $bancarios = $bancario->editar($dados,$id);
         $retencaofaturas = $retencaofatura->editar($dados,$id);
         $cartaoponto = $cartaoponto->editar($dados,$id);
         $parametrosefips = $parametrosefip->editar($dados,$id);
