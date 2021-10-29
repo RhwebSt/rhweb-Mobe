@@ -19,4 +19,17 @@ class CartaoPonto extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
+    public function editar($dados,$id)
+    {
+        return CartaoPonto::where('tomador', $id)
+        ->update([
+            'csdiasuteis'=>$dados['dias_uteis'],
+            'cssabados'=>$dados['sabados'],
+            'csdomingos'=>$dados['domingos'],
+        ]);
+    }
+    public function deletar($id)
+    {
+      return CartaoPonto::where('tomador', $id)->delete();
+    }
 }

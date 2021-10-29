@@ -22,5 +22,21 @@ class IndiceFatura extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
-   
+   public function editar($dados,$id)
+   {
+        return IndiceFatura::where('tomador', $id)
+        ->update([
+            'isalimentacao'=>$dados['alimentacao'],
+            'istransporte'=>$dados['transporte'],
+            'isepi'=>$dados['epi'],
+            'isseguroportrabalhador'=>$dados['seguro__trabalhador'],
+            'isindecesobrefolha'=>$dados['indice__folha'],
+            'isvaletransporte'=>$dados['valor__transporte'],
+            'isvalealimentacao'=>$dados['valor__alimentacao'],
+        ]);
+   }
+   public function deletar($id)
+    {
+      return IndiceFatura::where('tomador', $id)->delete();
+    }
 }

@@ -19,4 +19,17 @@ class RetencaoFatura extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
+    public function editar($dados,$id)
+    {
+        return RetencaoFatura::where('tomador', $id)
+        ->update([
+            'rsinssempresa'=>$dados['inss__empresa'],
+            'rsfgts'=>$dados['fgts__empresa'],
+            'rsvalorfatura'=>$dados['valor_fatura'],
+      ]);
+    }
+    public function deletar($id)
+    {
+      return RetencaoFatura::where('tomador', $id)->delete();
+    }
 }

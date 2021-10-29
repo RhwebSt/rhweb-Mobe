@@ -12,7 +12,7 @@ class Taxa extends Model
     public function cadastro($dados)
     {
         return Taxa::create([
-            'tftaxadm'=>$dados['taxa_adm'],
+            'tftaxaadm'=>$dados['taxa_adm'],
             'tfbenef'=>$dados['caixa_benef'],
             'tfferias'=>$dados['ferias'],
             'tf13'=>$dados['13_salario'],
@@ -20,15 +20,19 @@ class Taxa extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
-    public function editar($dados)
+    public function editar($dados,$id)
     {
-      return Taxa::where('id', $dados['id'])
+      return Taxa::where('id', $id)
       ->update([
-        'tfaxadm'=>$dados['taxa_adm'],
+        'tftaxaadm'=>$dados['taxa_adm'],
         'tfbenef'=>$dados['caixa_benef'],
         'tfferias'=>$dados['ferias'],
         'tf13'=>$dados['13_salario'],
-        'tftaxafed'=>$dados['taxa__fed'],
+        'tftaxafed'=>$dados['taxa__fed']
     ]);
+    }
+    public function deletar($id)
+    {
+      return Taxa::where('tomador', $id)->delete();
     }
 }

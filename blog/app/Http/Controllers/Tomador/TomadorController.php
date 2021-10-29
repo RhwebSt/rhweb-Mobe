@@ -22,10 +22,10 @@ class TomadorController extends Controller
      */
     public function index()
     {
-        $tomador = new Tomador;
-        $tomadors = $tomador->lista();
+        // $tomador = new Tomador;
+        // $tomadors = $tomador->lista();
         
-        return view('tomador.index',compact('tomadors'));
+        return view('tomador.index');
     }
 
     /**
@@ -68,7 +68,16 @@ class TomadorController extends Controller
             $parametrosefips = $parametrosefip->cadastro($dados);
             $taxatrabalhador = $taxatrabalhador->cadastro($dados);
             $indicefaturas = $indicefatura->cadastro($dados);
-            return view('tomador.create');
+            if ($enderecos && $taxas
+            && $bancarios && $retencaofaturas && 
+            $cartaoponto && $parametrosefips && 
+            $taxatrabalhador && $indicefaturas) {
+                $condicao = 'cadastratrue';
+            }else{
+                $condicao = 'cadastrafalse';
+            }
+            return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
+            
         }
     }
 
@@ -105,7 +114,36 @@ class TomadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        $dados = $request->all();
+        // dd($dados);
+        $tomador = new Tomador;
+        $endereco = new Endereco;
+        $taxa = new Taxa;
+        $bancario = new Bancario;
+        $retencaofatura = new RetencaoFatura;
+        $cartaoponto = new CartaoPonto;
+        $parametrosefip = new Parametrosefip;
+        $taxatrabalhador = new TaxaTrabalhador;
+        $indicefatura = new IndiceFatura; 
+        $condicao = '';
+        $tomadors = $tomador->editar($dados,$id);
+        $enderecos = $endereco->editartomador($dados,$id); 
+        $bancarios = $bancario->editarbacario($dados,$id);
+        $retencaofaturas = $retencaofatura->editar($dados,$id);
+        $cartaoponto = $cartaoponto->editar($dados,$id);
+        $parametrosefips = $parametrosefip->editar($dados,$id);
+        $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
+        $indicefaturas = $indicefatura->editar($dados,$id);
+        $taxas = $taxa->editar($dados,$id);
+        if ($tomadors && $enderecos && $taxas
+        && $bancarios && $retencaofaturas && 
+        $cartaoponto && $parametrosefips && 
+        $taxatrabalhador && $indicefaturas) {
+            $condicao = 'edittrue';
+        }else{
+            $condicao = 'editfalse';
+        }
+        return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -116,6 +154,32 @@ class TomadorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tomador = new Tomador;
+        $endereco = new Endereco;
+        $taxa = new Taxa;
+        $bancario = new Bancario;
+        $retencaofatura = new RetencaoFatura;
+        $cartaoponto = new CartaoPonto;
+        $parametrosefip = new Parametrosefip;
+        $taxatrabalhador = new TaxaTrabalhador;
+        $indicefatura = new IndiceFatura; 
+        $enderecos = $endereco->deletar($id); 
+        $bancarios = $bancario->deletar($id);
+        $retencaofaturas = $retencaofatura->deletar($id);
+        $cartaoponto = $cartaoponto->deletar($id);
+        $parametrosefips = $parametrosefip->deletar($id);
+        $taxatrabalhador = $taxatrabalhador->deletar($id);
+        $indicefaturas = $indicefatura->deletar($id);
+        $taxas = $taxa->deletar($id);
+        if ($enderecos && $taxas
+        && $bancarios && $retencaofaturas && 
+        $cartaoponto && $parametrosefips && 
+        $taxatrabalhador && $indicefaturas) {
+            $tomadors = $tomador->deletar($id);
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+        return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
     }
 }

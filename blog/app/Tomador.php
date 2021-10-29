@@ -55,14 +55,23 @@ class Tomador extends Model
             ->where('tsnome', $id)
             ->first();
     }
-    public function editar($dados)
+    public function editar($dados,$id)
     {
-      Tomador::where('id', $dados['id'])
-      ->update(['tsnome'=>$dados['tsnome'],
-      'tsfantasia'=>$dados['tsfantasia'],
-      'tscnpj'=>$dados['tscnpj'],
-      'tsmatricula'=>$dados['tsmatricula'],
-      'tssimples'=>$dados['tssimples'],
-      'tstipo'=>$dados['tstipo']]);
+      return Tomador::where('id', $id)
+      ->update(
+        [
+            'tsnome'=>$dados['nome__completo'],
+            'tsfantasia'=>$dados['nome__fantasia'],
+            'tscnpj'=>$dados['cnpj'],
+            'tsmatricula'=>$dados['matricula'],
+            'tssimples'=>$dados['simples'],
+            'tstelefone'=>$dados['telefone'],
+            'tstipo'=>$dados['tipo']
+        ]
+     );
+    }
+    public function deletar($id)
+    {
+      return Tomador::where('id', $id)->delete();
     }
 }

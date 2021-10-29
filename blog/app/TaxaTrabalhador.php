@@ -20,14 +20,18 @@ class TaxaTrabalhador extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
-    public function editar($dados)
+    public function editar($dados,$id)
     {
-        TaxaTrabalhador::where('id', $dados['id'])
+       return TaxaTrabalhador::where('tomador', $id)
       ->update([
         'tsferias'=>$dados['ferias_trab'],
         'tsdecimo13'=>$dados['13__saltrab'],
         'tsrsr'=>$dados['rsr'],
         'das'=>$dados['das'],
     ]);
+    }
+    public function deletar($id)
+    {
+      return TaxaTrabalhador::where('tomador', $id)->delete();
     }
 }

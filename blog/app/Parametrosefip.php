@@ -20,24 +20,28 @@ class Parametrosefip extends Model
             'psfapaliquota'=>$dados['fap__aliquota'],
             'psratajustados'=>$dados['rat__ajustado'],
             'psfpasterceiros'=>$dados['fpas__terceiros'],
-            'psaliquotateceiros'=>$dados['aliq__terceiros'],
+            'psaliquotaterceiros'=>$dados['aliq__terceiros'],
             'pssocial'=>$dados['esocial'],
             'tomador'=>$dados['tomador']
         ]);
     }
-    public function editar($dados)
+    public function editar($dados,$id)
     {
-       return Parametrosefip::where('id', $dados['id'])
+       return Parametrosefip::where('tomador', $id)
       ->update([
         'psfpas'=>$dados['cod__fpas'],
         'psgrps'=>$dados['cod__grps'],
         'psresol'=>$dados['cod__recol'],
-        'psnae'=>$dados['cnae'],
+        'pscnae'=>$dados['cnae'],
         'psfapaliquota'=>$dados['fap__aliquota'],
-        'pasratajustados'=>$dados['rat__ajustado'],
-        'psfpasterceiros'=>$dados['psfpasterceiros'],
-        'psaliquotateceiros'=>$dados['aliq__terceiros'],
+        'psratajustados'=>$dados['rat__ajustado'],
+        'psfpasterceiros'=>$dados['fpas__terceiros'],
+        'psaliquotaterceiros'=>$dados['aliq__terceiros'],
         'pssocial'=>$dados['esocial'],
     ]);
+    }
+    public function deletar($id)
+    {
+      return Parametrosefip::where('tomador', $id)->delete();
     }
 }
