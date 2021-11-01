@@ -1,26 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Depedente;
+namespace App\Http\Controllers\TabelaPreco;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Dependente;
-class DepedenteController extends Controller
+use Illuminate\Http\Request;
+use App\TabelaPreco;
+class TabelaPrecoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($depedente)
+    public function index($tabelapreco)
     {
-        
-        $id = $depedente;
-        $depedente = new Dependente;
-        $depedentes = $depedente->lista($id);
+        $id = $tabelapreco;
         $user = Auth::user();
-        return view('trabalhador.depedente.index',compact('depedentes','id','user'));
+        return view('tomador.tabelapreco.index',compact('id','user'));
     }
 
     /**
@@ -28,10 +25,9 @@ class DepedenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $user = Auth::user();
-        return view('trabalhador.depedente.create',compact('id','user'));
+        //
     }
 
     /**
@@ -43,15 +39,15 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $id = $dados['trabalhador'];
-        $depedente = new Dependente;
-        $depedentes = $depedente->cadastro($dados);
-       if($depedentes) {
+        $tabelapreco = new TabelaPreco;
+        $id = $dados['tomador'];
+        $tabelaprecos = $tabelapreco->cadastro($dados);
+        if($tabelaprecos) {
             $condicao = 'cadastratrue';
         }else{
             $condicao = 'cadastrafalse';
         }
-        return redirect()->route('depedente.mostrar.create',$id)->withInput()->withErrors([$condicao]);
+        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -62,7 +58,9 @@ class DepedenteController extends Controller
      */
     public function show($id)
     {
-        
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->first($id);
+        return response()->json($tabelaprecos);
     }
 
     /**
@@ -73,10 +71,7 @@ class DepedenteController extends Controller
      */
     public function edit($id)
     {
-        $depedente = new Dependente;
-        $depedentes = $depedente->first($id);
-        $user = Auth::user();
-        return view('trabalhador.depedente.edit',compact('depedentes','id','user'));
+        //
     }
 
     /**
@@ -89,14 +84,14 @@ class DepedenteController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $depedente = new Dependente;
-        $depedentes = $depedente->editar($dados,$id);
-        if($depedentes) {
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->editar($dados,$id);
+        if($tabelaprecos) {
             $condicao = 'edittrue';
         }else{
             $condicao = 'editfalse';
         }
-        return redirect()->route('depedente.edit',$id)->withInput()->withErrors([$condicao]);
+        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -107,16 +102,16 @@ class DepedenteController extends Controller
      */
     public function destroy($id)
     {
-        $depedente = new Dependente;
-        $depedentes = $depedente->first($id);
-        $trabalhador = $depedentes->trabalhador;
-        $excluir = $depedente->deletar($id);
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->first($id);
+        $excluir = $tabelapreco->deletar($id);
+        $id = $tabelaprecos->tomador;
         if ($excluir) {
             $condicao = 'deletatrue';
         }else{
             $condicao = 'deletafalse';
         }
         
-        return redirect()->route('depedente.mostrar.index',$trabalhador);
+        return redirect()->route('tabelapreco.mostrar.index',$id);
     }
 }

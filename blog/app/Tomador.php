@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Tomador extends Model
 {
     protected $fillable = [
-        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples'
+        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone'
     ];
     public function cadastro($dados)
     {

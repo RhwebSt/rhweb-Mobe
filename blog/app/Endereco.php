@@ -20,7 +20,8 @@ class Endereco extends Model
             'escomplemento'=>$dados['complemento__endereco'],
             'esnum'=>$dados['numero'],
             'tomador'=>$dados['tomador'],
-            'trabalhador'=>$dados['trabalhador']
+            'trabalhador'=>$dados['trabalhador'],
+            'empresa'=>$dados['empresa']
         ]);
     }
     // public function editar($dados,$id)

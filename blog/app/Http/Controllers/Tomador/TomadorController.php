@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tomador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Tomador;
 use App\Taxa;
 use App\Endereco;
@@ -24,8 +25,8 @@ class TomadorController extends Controller
     {
         // $tomador = new Tomador;
         // $tomadors = $tomador->lista();
-        
-        return view('tomador.index');
+        $user = Auth::user();
+        return view('tomador.index',compact('user'));
     }
 
     /**
@@ -35,7 +36,8 @@ class TomadorController extends Controller
      */
     public function create()
     {
-        return view('tomador.create');
+        $user = Auth::user();
+        return view('tomador.create',compact('user'));
     }
 
     /**
@@ -154,6 +156,7 @@ class TomadorController extends Controller
      */
     public function destroy($id)
     {
+        
         $tomador = new Tomador;
         $endereco = new Endereco;
         $taxa = new Taxa;

@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('conteine')
-    <main class="container ">
-        <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Identificação do Trabalhador</div>
+    <div class="container " style="background-image: linear-gradient(150deg, rgb(252, 253, 253),rgb(234, 241, 250));">
+        
         @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
@@ -27,25 +27,26 @@
             @endif
             @endforeach
         @endif     
-        <form action="" id="formdelete" method="post">
-            @csrf
-           @method('delete')
-            <button type="submit" id="deletar" disabled class="btn btn-outline-dark">Deleta</button>
-        </form>
+        
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}"  method="POST" >
-        <div class="container mt-5 ">
-            <div class="btn  " role="group" aria-label="Basic example">
+        
+        <div class="btn mt-5 " role="group" aria-label="Basic example">
             <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
-            <button type="submit" id="atualizar" disabled class="btn btn-outline-dark">Atualizar</button>
-                <!-- <a class="btn btn btn-outline-dark" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
-                <a class="btn btn btn-outline-dark" disabled id="depedente" role="button">Dependentes</a>
-                <a class="btn btn btn-outline-dark" href="#" role="button">Sair</a>
-            </div>
+            <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
+            <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Excluir
+                      </button>
+                      
+                <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
+                <a class="btn btn btn-primary disabled"  id="depedente" role="button">Dependentes</a>
+                <a class="btn btn btn-primary" href="#" role="button">Sair</a>
         </div>
+        <div class="container text-center   fs-4 fw-bold">Identificação do Trabalhador</div>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden"  name="deflator" >
         <input type="hidden"  name="tomador" >
+        <input type="hidden" name="empresa">
             <div class="col-md-6">
               <label for="nome__completo" class="form-label">Nome Completo</label>
               <input type="text" class="form-control" name="nome__completo" id="nome__completo" >
@@ -135,7 +136,7 @@
               <input type="text" class="form-control" name="nome__mae" id="nome__mae" >
             </div>
 
-            <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Local de Residência</div>
+            <div class="container text-center  fs-4 fw-bold">Local de Residência</div>
 
             <div class="col-md-2">
               <label for="cep" class="form-label">Cep</label>
@@ -187,7 +188,7 @@
               <input type="text" class="form-control" name="telefone" id="telefone" value="">
             </div>
 
-            <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Contrato de Trabalho</div>
+            <div class="container text-center  fs-4 fw-bold">Contrato de Trabalho</div>
 
             <div class="col-md-3">
               <label for="data__admissao" class="form-label">Data de Admissão</label>
@@ -240,7 +241,7 @@
             </div>
             
             
-            <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador</div>
+            <div class="container text-center  fs-4 fw-bold">Dados Bancários do Trabalhador</div>
             
             <div class="col-md-6">
               <label for="nome__conta" class="form-label">Nome do Titular</label>
@@ -272,7 +273,32 @@
               <input type="text" class="form-control" name="pix" id="pix" value="">
             </div>
  
-        </main>
+        </div>
+</form>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                          <form action="" id="formdelete" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <div class="modal-header " style="background-color:#000000;">
+                                        <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        
+                                        <p class="text-black">Obs: Caso excluar os dados do trabalhador seus depedentes seram excluidor?</p>
+                                        <p class="text-black">Deseja realmente excluir?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-danger">Deletar</button>
+
+                                        </div>
+                                    </form>
+                          </div>
+                        </div>
+                      </div>
         <script>
         $(document).ready(function(){
            
@@ -283,22 +309,25 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      console.log(data)
-                        if (data.id) {
-                            $('#form').attr('action', "{{ url('trabalhador')}}/"+data.id);
-                            $('#formdelete').attr('action',"{{ url('trabalhador')}}/"+data.id)
-                            $('#depedente').attr('href',"{{ url('depedente')}}/"+data.id+"/edit")
+                        if (data.trabalhador) {
+                            $('#form').attr('action', "{{ url('trabalhador')}}/"+data.trabalhador);
+                            $('#formdelete').attr('action',"{{ url('trabalhador')}}/"+data.trabalhador)
+                            $('#depedente').removeClass('disabled')
+                            $('#depedente').attr('href',"{{ url('depedente')}}/"+data.trabalhador+'/mostrar')
                             $('#incluir').attr('disabled','disabled')
                             $('#atualizar').removeAttr( "disabled" )
                             $('#deletar').removeAttr( "disabled" )
+                            $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
                         }else{
+                          $('#depedente').addClass('disabled')
                             $('#form').attr('action', "{{ route('trabalhador.store') }}");
                             $('#incluir').removeAttr( "disabled" )
                             $('#depedente').removeAttr( "disabled" )
                             $('#atualizar').attr('disabled','disabled')
                             $('#deletar').attr('disabled','disabled')
                             $('#method').val(' ')
+                            $('#excluir').attr( "disabled" )
                         }
                         $('#cpf').val(data.tscpf)
                         $('#matricula').val(data.tsmatricula)
@@ -324,7 +353,7 @@
                         $('#ctps').val(data.dsctps)
                         $('#serie__ctps').val(data.dsserie)
                         $('#uf__ctps').val(data.dsuf)
-                        $('#situacao_contrato').val(data.cssituacao)
+                        $('#situacao__contrato').val(data.cssituacao)
                         $('#data__afastamento').val(data.csafastamento)
                         $('#nome__conta').val(data.bstitular)
                         $('#banco').val(data.bsbanco)

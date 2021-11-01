@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 class UsuarioController extends Controller
 {
@@ -14,7 +15,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view('login.usuario');
+        $user = Auth::user();
+        return view('usuarios.index',compact('user'));
     }
 
     /**

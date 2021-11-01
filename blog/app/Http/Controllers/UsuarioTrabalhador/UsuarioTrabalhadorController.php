@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\UsuarioTrabalhador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-class UserController extends Controller
+use App\Empresa;
+use App\Endereco;
+use App\ValoresRublica;
+class UsuarioTrabalhadorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-       
-        return view('login.index');
+        $user = Auth::user();
+        
+        return view('usuarios.trabalhador.index',compact('user'));
     }
 
     /**
@@ -38,13 +41,24 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $user = new User;
-        $users = $user->login($dados);
-        if (count($users) > 0) {
-            return view('login.home',compact('users')); 
-        }else {
-            return view('login.index')->with('msg', 'Usuario não cadastrado.'); 
+        $empresa = new Empresa;
+        $endereco = new Endereco;
+        $valoresrublica = new ValoresRublica;
+        $empresas = $empresa->cadastro($dados);
+        // dd($empresas['id']);
+        if ($empresas) {
+            // $dados['tomador'] = $empresas['id'];
+            $dados['empresa'] = $empresas['id'];
+            $enderecos = $endereco->cadastro($dados);
+            $valoresrublicas = $valoresrublica->cadastro($dados);
+            if ($enderecos && $valoresrublicas) {
+                $condicao = 'cadastratrue';
+            }else{
+                $condicao = 'cadastrafalse';
+            }
+            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
         }
+        // dd($dados);
     }
 
     /**
@@ -55,7 +69,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $empresa = new Empresa;
+        $empresas = $empresa->first($id);
+        return response()->json($empresas);
     }
 
     /**

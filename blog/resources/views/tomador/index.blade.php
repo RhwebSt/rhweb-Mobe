@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('conteine')
-    <main class="container ">
-            <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados da Empresa</div>
+    <div class="container ">
+            
             @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
@@ -27,24 +27,25 @@
             @endif
             @endforeach
         @endif     
-        <form action="" id="formdelete" method="post">
-            @csrf
-           @method('delete')
-            <button type="submit" id="deletar" disabled class="btn btn-primary">Deleta</button>
-        </form>
+        
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="Post" >
-                        <div class="btn mt-5 " role="button" aria-label="Basic example">
+                        <div class="btn " role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
-                            
+                           
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
-                            
-                            <a class="btn btn btn-outline-dark" href="#" role="button">Sair</a>
+                            <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Excluir
+                      </button>
+                      <a class="btn btn-primary disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
+                            <a class="btn btn btn-primary" href="#" role="button">Sair</a>
                             
                         </div>
+                        <div class="container text-center  fs-4 fw-bold">Dados da Empresa</div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
                         <input type="hidden" name="trabalhador">
+                        <input type="hidden" name="empresa">
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label">Nome Completo</label>
                             <input type="text" class="form-control" name="nome__completo"  id="nome__completo">
@@ -76,7 +77,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Endereço</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Endereço</h1>
 
                         <div class="col-md-2">
                             <label for="cep" class="form-label">CEP</label>
@@ -119,7 +120,7 @@
                             <input type="text" class="form-control" name="complemento__endereco" value="" id="complemento">
                         </div>
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Tomador</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Tomador</h1>
 
 
                         <div class="col-md-2">
@@ -148,7 +149,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Trabalhador</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1>
 
 
                         <div class="col-md-3">
@@ -172,7 +173,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Parametros SEFIP</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Parametros SEFIP</h1>
 
 
                         <div class="col-md-3">
@@ -220,7 +221,7 @@
                             <input type="text" class="form-control" name="esocial" value="" id="esocial">
                         </div>
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Indice Sobre Fatura</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Indice Sobre Fatura</h1>
 
 
                         <div class="col-md-3">
@@ -259,7 +260,7 @@
                             <input type="text" class="form-control" name="valor__alimentacao" value="" id="valor__alimentacao">
                         </div>
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Informação para o Cartão Ponto</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
 
                         <div class="col-md-4">
                             <label for="dias_uteis" class="form-label">Dias Úteis</label>
@@ -277,7 +278,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Retenções na Fatura</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Retenções na Fatura</h1>
 
 
                         <div class="col-md-4">
@@ -291,7 +292,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Base da Fatura</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Base da Fatura</h1>
 
                         <div class="col-md-4">
                             <label for="valor_fatura" class="form-label">(P) Valor da Produção - (F) Valor da Folha</label>
@@ -299,7 +300,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados Bancários</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Dados Bancários</h1>
 
 
                         <div class="col-md-6">
@@ -339,7 +340,31 @@
 
                 </form>
             </div>
-    </main>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                          <form action="" id="formdelete" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <div class="modal-header " style="background-color:#000000;">
+                                        <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        
+                                        
+                                        <p class="text-black">Deseja realmente excluir?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-danger">Deletar</button>
+
+                                        </div>
+                                    </form>
+                          </div>
+                        </div>
+                      </div>
+    </div>
     <script>
         $(document).ready(function(){
            
@@ -356,6 +381,8 @@
                             $('#incluir').attr('disabled','disabled')
                             $('#atualizar').removeAttr( "disabled" )
                             $('#deletar').removeAttr( "disabled" )
+                            $('#excluir').removeAttr( "disabled" )
+                            $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.id+"/mostrar")
                             $('#method').val('PUT')
                         }else{
                             $('#form').attr('action', "{{ route('tomador.store') }}");
@@ -363,6 +390,8 @@
                             $('#atualizar').attr('disabled','disabled')
                             $('#deletar').attr('disabled','disabled')
                             $('#method').val(' ')
+                            $('#excluir').attr( "disabled" )
+                            $('#tabelapreco').addClass('disabled').removeAttr('href')
                         }
                         $('#cnpj').val(data.tscnpj)
                         $('#matricula').val(data.tsmatricula)
@@ -373,10 +402,11 @@
                         $('#logradouro').val(data.eslogradouro)
                         $('#numero').val(data.esnum)
                         $('#tipo').val(data.estipo)
+                        $('#bairro').val(data.esbairro)
                         $('#localidade').val(data.esmunicipio)
                         $('#uf').val(data.esuf)
                         $('#complemento').val(data.escomplemento)
-                        $('#taxa_adm').val(data.tftaxadm)
+                        $('#taxa_adm').val(data.tftaxaadm)
                         $('#caixa_benef').val(data.tfbenef)
                         $('#ferias').val(data.tfferias)
                         $('#13_salario').val(data.tf13)
@@ -386,9 +416,9 @@
                         $('#rsr').val(data.tsrsr)
                         $('#das').val(data.das)
                         $('#cod__fpas').val(data.psfpas)
-                        $('#cod__grps').val(data.cod__grps)
-                        $('#cod__recol').val(data.cod__recol)
-                        $('#cnae').val(data.cnae)
+                        $('#cod__grps').val(data.psgrps)
+                        $('#cod__recol').val(data.psrecol)
+                        $('#cnae').val(data.pscnae)
                         $('#fap__aliquota').val(data.psfapaliquota)
                         $('#rat__ajustado').val(data.psratajustados)
                         $('#fpas__terceiros').val(data.psfpasterceiros)
@@ -413,10 +443,11 @@
                         $('#operacao').val(data.bsoperacao)
                         $('#conta').val(data.bsconta)
                         $('#pix').val(data.bspix)
-                        $('#bsdefaltor').val(data.deflator)
+                        $('#deflator').val(data.bsdefaltor)
                     }
                 });
             });
         });
     </script>
+    
 @stop

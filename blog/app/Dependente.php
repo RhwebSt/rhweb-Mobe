@@ -21,13 +21,17 @@ class Dependente extends Model
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
+    public function lista($id)
+    {
+        return Dependente::where('trabalhador', $id)->get();
+    }
     public function first($id)
     {
-        return Dependente::where('trabalhador', $id)->first();
+        return Dependente::where('id', $id)->first();
     }
     public function editar($dados,$id)
     {
-        return Dependente::where('trabalhador', $id)
+        return Dependente::where('id', $id)
         ->update([
             'dsnome'=>$dados['nome__dependente'],
             'dstipo'=>$dados['tipo__dependente'],
@@ -39,6 +43,6 @@ class Dependente extends Model
     }
     public function deletar($id)
     {
-        return Dependente::where('trabalhador', $id)->delete();
+        return Dependente::where('id', $id)->orWhere('trabalhador', $id)->delete();
     }
 }

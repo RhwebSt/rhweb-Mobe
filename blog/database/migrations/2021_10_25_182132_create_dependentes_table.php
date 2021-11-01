@@ -15,7 +15,7 @@ class CreateDependentesTable extends Migration
     {
         Schema::create('dependentes', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('dsnome', 20)->nullable();
+            $table->char('dsnome', 30)->nullable();
             $table->char('dstipo', 10)->nullable();
             $table->char('dsdata', 10)->nullable();
             $table->char('dscpf', 11)->nullable();

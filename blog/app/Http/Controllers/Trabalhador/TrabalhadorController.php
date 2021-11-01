@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Trabalhador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Trabalhador;
 use App\Endereco;
 use App\Bancario;
 use App\Nascimento;
 use App\Categoria;
 use App\Documento;
+use App\Dependente;
 class TrabalhadorController extends Controller
 {
     /**
@@ -21,7 +23,8 @@ class TrabalhadorController extends Controller
     {
         $trabalhador = new Trabalhador;
         $trabalhadors = $trabalhador->lista();
-        return view('trabalhador.index',compact('trabalhadors'));
+        $user = Auth::user();
+        return view('trabalhador.index',compact('trabalhadors','user'));
     }
 
     /**
@@ -31,7 +34,8 @@ class TrabalhadorController extends Controller
      */
     public function create()
     {
-        return view('trabalhador.create');
+        $user = Auth::user();
+        return view('trabalhador.create',compact('user'));
     }
 
     /**
@@ -58,7 +62,13 @@ class TrabalhadorController extends Controller
             $nascimentos = $nascimento->cadastro($dados);
             $categorias = $categoria->cadastro($dados);
             $documentos = $documento->cadastro($dados);
-            return redirect()->route('trabalhador.index')->withInput()->withErrors([true]); 
+            if ($enderecos &&  $bancarios && 
+                $nascimentos && $categorias && $documentos) {
+                    $condicao = 'cadastratrue';
+                }else{
+                    $condicao = 'cadastrafalse';
+                }
+                return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]);  
         }
     }
 
@@ -135,12 +145,14 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         $documento = new Documento;
+        $dependente = new Dependente;
+        $dependentes = $dependente->deletar($id); 
         $enderecos = $endereco->deletar($id); 
         $bancarios = $bancario->deletar($id);
         $nascimentos = $nascimento->deletar($id);
         $categorias = $categoria->deletar($id);
         $documentos = $documento->deletar($id);
-        if ($enderecos &&  $bancarios && 
+        if ($enderecos &&  $bancarios && $dependentes &&
         $nascimentos && $categorias && $documentos) {
             $trabalhadors = $trabalhador->deletar($id);
             $condicao = 'deletatrue';
