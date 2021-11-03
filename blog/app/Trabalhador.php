@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Trabalhador extends Model
 {
     protected $fillable = [
-        'tsnome','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsirrf','user'
+        'tsnome','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','tsirrf','user','tomador'
     ];
     public function cadastro($dados)
     {
@@ -79,6 +79,7 @@ class Trabalhador extends Model
             'tsirrf'=>$dados['irrf'],
         ]);
     }
+   
     public function deletar($id)
     {
         return Trabalhador::where('id', $id)->delete();

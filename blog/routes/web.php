@@ -24,6 +24,8 @@ Route::resource('comisionado','comisionario\\ComisionarioController')->names('co
 Route::resource('usuariotrabalhador','usuariotrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
 Route::resource('depedente','depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
 Route::resource('depedente.mostrar','depedente\\DepedenteController')->only(['index', 'create']);
+Route::resource('irrf','irrf\\IrrfController')->names('irrf');
+Route::resource('inss','inss\\InssController')->names('inss');
 Route::middleware(['admin'])->group(function () {
     Route::resource('home','home\\HomeController')->names('home');
 });

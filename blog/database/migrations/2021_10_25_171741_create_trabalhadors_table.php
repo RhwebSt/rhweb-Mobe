@@ -27,6 +27,8 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tsescolaridade',20)->nullable();
             $table->string('tsindice',20)->nullable();
             $table->string('tsirrf',10)->nullable();
+            $table->integer('tomador')->unsigned()->nullable();
+            $table->foreign('tomador')->references('id')->on('tomadors');
             $table->integer('user')->unsigned()->nullable();
             $table->foreign('user')->references('id')->on('users');
             $table->timestamps();

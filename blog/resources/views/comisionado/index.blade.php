@@ -1,32 +1,60 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="container">
-              <h5 class="card-title text-center fs-3 ">Comissionado</h5>
+              
 
-                <!-- <p class="text-success">Comissionado cadastrado com sucesso.</p>
+              @if($errors->all())
+            @foreach($errors->all() as  $error)
+              @if($error === 'edittrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Atualização realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'editfalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél atualizar os dados!</strong>
+                </div>
+            @elseif($error === 'deletatrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Registro deletador com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastratrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Cadastrador realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastrafalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                </div>
+            @endif
+            @endforeach
+        @endif     
 
-                <p class="text-danger">Não foi possivel cadastrar o Comissionado.</p>
-
-                <p class="text-danger">Comissionado não cadastrado.</p> -->
-
-
-              <form class="row g-3 mt-1 mb-3" method="POST" action="">
-
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
+                @csrf
+                <input type="hidden" id="method" name="_method" value="">
+                <input type="hidden" name="tomador" id="idtomador">
+                <input type="hidden" name="trabalhador" id="idtrabalhador">
                 <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                      <a class="btn ms-2" href="#" role="button" style="background-color: #2A90CB; color: #f0f0f0">Incluir</a>
-                      <button type="button" class="btn ms-2  col-md-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
-                          Excluir
+                     
+                      <button type="submit" id="incluir" disabled class="btn btn-primary" >
+                      Incluir
                         </button>
+                        <button type="submit" id="atualizar" disabled class="btn btn-primary" >
+                        Editar
+                        </button>
+                      <!-- <button type="button" id="excluir" disabled class="btn ms-2  col-md-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
+                          Excluir
+                        </button> -->
                         
-                      <a class="btn btn-primary btn-md btn-radius ms-2 col-md-1" href="#" role="button">Editar</a>
-                      <a class="btn btn-outline-light ms-2 col-md-1" href="#" style="background-color: #2A90CB; color: #f0f0f0" role="button">Sair</a>
+                     
+                      <a class="btn btn-primary" href="{{route('home.index')}}"  role="button">Sair</a>
                   </div>
               </div>
-
+              <h5 class="card-title text-center fs-3 ">Comissionado</h5>
                 <div class="col-md-6">
                   <label for="tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control" name="tomador" value="" id="tomador">
+                  <input type="text" class="form-control" name="nome_tomador" value="" id="tomador">
                 </div>
 
                 <div class="col-md-6">
@@ -41,7 +69,7 @@
 
                 <div class="col-md-3">
                   <label for="indice" class="form-label">Indíce %</label>
-                  <input type="password" class="form-control" name="indice" value="" id="indice">
+                  <input type="text" class="form-control" name="indice" value="" id="indice">
                 </div>
               </form> 
               
@@ -68,72 +96,7 @@
             <script>
         $(document).ready(function(){
            
-            $( "#nome__trabalhador" ).keyup(function() {
-                var dados = $( "#nome__trabalhador" ).val();
-                $.ajax({
-                    url: "{{url('trabalhador')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        console.log(data)
-                        // if (data.trabalhador) {
-                        //     $('#form').attr('action', "{{ url('trabalhador')}}/"+data.trabalhador);
-                        //     $('#formdelete').attr('action',"{{ url('trabalhador')}}/"+data.trabalhador)
-                        //     $('#depedente').removeClass('disabled')
-                        //     $('#depedente').attr('href',"{{ url('depedente')}}/"+data.trabalhador+'/mostrar')
-                        //     $('#incluir').attr('disabled','disabled')
-                        //     $('#atualizar').removeAttr( "disabled" )
-                        //     $('#deletar').removeAttr( "disabled" )
-                        //     $('#excluir').removeAttr( "disabled" )
-                        //     $('#method').val('PUT')
-                        // }else{
-                        //   $('#depedente').addClass('disabled')
-                        //     $('#form').attr('action', "{{ route('trabalhador.store') }}");
-                        //     $('#incluir').removeAttr( "disabled" )
-                        //     $('#depedente').removeAttr( "disabled" )
-                        //     $('#atualizar').attr('disabled','disabled')
-                        //     $('#deletar').attr('disabled','disabled')
-                        //     $('#method').val(' ')
-                        //     $('#excluir').attr( "disabled" )
-                        // }
-                        // $('#cpf').val(data.tscpf)
-                        // $('#matricula').val(data.tsmatricula)
-                        // $('#pis').val(data.dspis)
-                        // $('#data_nascimento').val(data.nsnascimento)
-                        // $('#telefone').val(data.tstelefone)
-                        // $('#pais__nascimento').val(data.nsnaturalidade)
-                        // $('#pais__nacionalidade').val(data.nsnacionalidade)
-                        // $('#nome__mae').val(data.tsmae)
-                        // $('#cep').val(data.escep)
-                        // $('#logradouro').val(data.esmunicipio)
-                        // $('#uf').val(data.esuf)
-                        // $('#numero').val(data.esnum)
-                        // $('#complemento').val(data.escomplemento)
-                        // $('#bairro').val(data.esbairro)
-                        // $('#localidade').val(data.eslogradouro)
-                        // $('#uf').val(data.esuf)
-                        // $('#data__admissao').val(data.csadmissao)
-                        // $('#categoria').val(data.cscategoria)
-                        // $('#cbo').val(data.cbo)
-                        // $('#irrf').val(data.csirrf)
-                        // $('#sf').val(data.psfpas)
-                        // $('#ctps').val(data.dsctps)
-                        // $('#serie__ctps').val(data.dsserie)
-                        // $('#uf__ctps').val(data.dsuf)
-                        // $('#situacao__contrato').val(data.cssituacao)
-                        // $('#data__afastamento').val(data.csafastamento)
-                        // $('#nome__conta').val(data.bstitular)
-                        // $('#banco').val(data.bsbanco)
-                        // $('#agencia').val(data.bsagencia)
-                        // $('#operacao').val(data.bsoperacao)
-                        // $('#conta').val(data.bsconta)
-                        // $('#pix').val(data.bspix)
-                        // $('#bsdefaltor').val(data.deflator)
-                        // $('#endereco').val(data.eiid)
-                        // $('#bancario').val(data.biid)
-                    }
-                });
-            });
+           
             $( "#tomador" ).keyup(function() {
                 var dados = $( "#tomador" ).val();
                 $.ajax({
@@ -141,82 +104,46 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                        console.log(data)
-                        // if (data.id) {
-                        //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                        //     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
-                        //     $('#incluir').attr('disabled','disabled')
-                        //     $('#atualizar').removeAttr( "disabled" )
-                        //     $('#deletar').removeAttr( "disabled" )
-                        //     $('#excluir').removeAttr( "disabled" )
-                        //     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
-                        //     $('#method').val('PUT')
-                           
-                        // }else{
-                        //     $('#form').attr('action', "{{ route('tomador.store') }}");
-                        //     $('#incluir').removeAttr( "disabled" )
-                        //     $('#atualizar').attr('disabled','disabled')
-                        //     $('#deletar').attr('disabled','disabled')
-                        //     $('#method').val(' ')
-                        //     $('#excluir').attr( "disabled" )
-                        //     $('#tabelapreco').addClass('disabled').removeAttr('href')
-                        // }
-                        // $('#cnpj').val(data.tscnpj)
-                        // $('#matricula').val(data.tsmatricula)
-                        // $('#nome__fantasia').val(data.tsfantasia)
-                        // $('#simples').val(data.tssimples)
-                        // $('#telefone').val(data.tstelefone)
-                        // $('#cep').val(data.escep)
-                        // $('#logradouro').val(data.eslogradouro)
-                        // $('#numero').val(data.esnum)
-                        // $('#tipo').val(data.estipo)
-                        // $('#bairro').val(data.esbairro)
-                        // $('#localidade').val(data.esmunicipio)
-                        // $('#uf').val(data.esuf)
-                        // $('#complemento').val(data.escomplemento)
-                        // $('#taxa_adm').val(data.tftaxaadm)
-                        // $('#caixa_benef').val(data.tfbenef)
-                        // $('#ferias').val(data.tfferias)
-                        // $('#13_salario').val(data.tf13)
-                        // $('#taxa__fed').val(data.tftaxafed)
-                        // $('#ferias_trab').val(data.tsferias)
-                        // $('#13__saltrab').val(data.tsdecimo13)
-                        // $('#rsr').val(data.tsrsr)
-                        // $('#das').val(data.das)
-                        // $('#cod__fpas').val(data.psfpas)
-                        // $('#cod__grps').val(data.psgrps)
-                        // $('#cod__recol').val(data.psrecol)
-                        // $('#cnae').val(data.pscnae)
-                        // $('#fap__aliquota').val(data.psfapaliquota)
-                        // $('#rat__ajustado').val(data.psratajustados)
-                        // $('#fpas__terceiros').val(data.psfpasterceiros)
-                        // $('#aliq__terceiros').val(data.psaliquotateceiros)
-                        // $('#esocial').val(data.pssocial)
-                        // $('#alimentacao').val(data.isalimentacao)
-                        // $('#transporte').val(data.istransporte)
-                        // $('#epi').val(data.isepi)
-                        // $('#seguro__trabalhador').val(data.isseguroportrabalhador)
-                        // $('#indice__folha').val(data.isindecesobrefolha)
-                        // $('#valor__transporte').val(data.isvaletransporte)
-                        // $('#valor__alimentacao').val(data.isvalealimentacao)
-                        // $('#dias_uteis').val(data.csdiasuteis)
-                        // $('#sabados').val(data.cssabados)
-                        // $('#domingos').val(data.csdomingos)
-                        // $('#inss__empresa').val(data.rsinssempresa)
-                        // $('#fgts__empresa').val(data.rsfgts)
-                        // $('#valor_fatura').val(data.rsvalorfatura)
-                        // $('#nome__conta').val(data.bstitular)
-                        // $('#banco').val(data.bsbanco)
-                        // $('#agencia').val(data.bsagencia)
-                        // $('#operacao').val(data.bsoperacao)
-                        // $('#conta').val(data.bsconta)
-                        // $('#pix').val(data.bspix)
-                        // $('#deflator').val(data.bsdefaltor)
-                        // $('#endereco').val(data.eiid)
-                        // $('#bancario').val(data.biid)
+                        $('#idtomador').val(data.tomador)
                     }
                 });
             });
+            $( "#nome__trabalhador" ).keyup(function() {
+                var dados = $( "#nome__trabalhador" ).val();
+                $.ajax({
+                    url: "{{url('trabalhador')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        if (data.trabalhador) {
+                            
+                            $('#incluir').removeAttr( "disabled" )
+                            $('#atualizar').removeAttr( "disabled" )
+                            $('#excluir').removeAttr( "disabled" )
+                            $('#method').val('PUT')
+                            comissionador(data.trabalhador)
+                        }else{
+                            $('#incluir').attr('disabled','disabled')
+                            $('#atualizar').attr('disabled','disabled')
+                            $('#excluir').attr( "disabled" )
+                        }
+                        $('#idtrabalhador').val(data.trabalhador)
+                        
+                    }
+                });
+            });
+            function comissionador(id) {
+                $.ajax({
+                    url: "{{url('comisionado')}}/"+id,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#matricula__trab').val(data.csmatricula)
+                        $('#indice').val(data.csindece);
+                        $('#form').attr('action', "{{ url('comisionado')}}/"+data.id);
+                    }
+                })
+            }
         });
     </script>     
 @stop

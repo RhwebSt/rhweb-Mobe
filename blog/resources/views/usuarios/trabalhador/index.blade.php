@@ -57,7 +57,7 @@
 
                 <div class="col-md-2">
                     <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
-                    <input type="text" class="form-control pesquisa" name="cnpj_mf" id="cnpj_mf">
+                    <input type="text" class="form-control " name="cnpj_mf" id="cnpj_mf">
                 </div>
 
                 <div class="col-md-3">

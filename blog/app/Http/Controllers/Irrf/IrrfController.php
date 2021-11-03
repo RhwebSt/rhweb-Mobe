@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Comisionario;
+namespace App\Http\Controllers\Irrf;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Comissionado;
-class ComisionarioController extends Controller
+class IrrfController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class ComisionarioController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('comisionado.index',compact('user'));
+        return view('irrf.index',compact('user'));
     }
 
     /**
@@ -37,15 +36,7 @@ class ComisionarioController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $trabalhador = new Comissionado;
-        $trabalhadors = $trabalhador->cadastro($dados);
-        if ($trabalhadors) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
-        }
-        return redirect()->route('comisionado.index')->withInput()->withErrors([$condicao]);  
+        //
     }
 
     /**
@@ -56,9 +47,7 @@ class ComisionarioController extends Controller
      */
     public function show($id)
     {
-        $comissionado = new Comissionado;
-        $comissionados = $comissionado->first($id);
-        return response()->json($comissionados);
+        //
     }
 
     /**
@@ -81,16 +70,7 @@ class ComisionarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dados = $request->all();
-
-        $comissionado = new Comissionado;
-        $comissionados = $comissionado->editar($dados,$id);
-        if ($comissionados) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
-        }
-        return redirect()->route('comisionado.index')->withInput()->withErrors([$condicao]); 
+        //
     }
 
     /**
