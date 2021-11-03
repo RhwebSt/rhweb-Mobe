@@ -116,8 +116,8 @@ class TrabalhadorController extends Controller
         $categoria = new Categoria;
         $documento = new Documento;
         $trabalhadors = $trabalhador->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$id); 
-        $bancarios = $bancario->editar($dados,$id);
+        $enderecos = $endereco->editar($dados,$dados['endereco']); 
+        $bancarios = $bancario->editar($dados,$dados['bancario']);
         $nascimentos = $nascimento->editar($dados,$id);
         $categorias = $categoria->editar($dados,$id);
         $documentos = $documento->editar($dados,$id);
@@ -146,13 +146,22 @@ class TrabalhadorController extends Controller
         $categoria = new Categoria;
         $documento = new Documento;
         $dependente = new Dependente;
+        $campoendereco = 'trabalhador';
+        $campobacario = 'trabalhador';
         $dependentes = $dependente->deletar($id); 
-        $enderecos = $endereco->deletar($id); 
-        $bancarios = $bancario->deletar($id);
+        $enderecos = $endereco->first($id,$campoendereco); 
+        // dd($enderecos);
+        $exenderecos = $endereco->deletar($enderecos->eiid); 
+
+        $bancarios = $bancario->first($id,$campobacario);
+        
+        $exbancarios = $bancario->deletar($bancarios->biid);
+
         $nascimentos = $nascimento->deletar($id);
         $categorias = $categoria->deletar($id);
         $documentos = $documento->deletar($id);
-        if ($enderecos &&  $bancarios && $dependentes &&
+        // dd($exbancarios,$exenderecos,$nascimentos,$categorias,$documentos);
+        if ($exenderecos &&  $exbancarios  &&
         $nascimentos && $categorias && $documentos) {
             $trabalhadors = $trabalhador->deletar($id);
             $condicao = 'deletatrue';

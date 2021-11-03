@@ -26,4 +26,26 @@ class ValoresRublica extends Model
             'empresa'=>$dados['empresa'],
         ]);
     }
+    public function editar($dados,$id)
+    {
+        return ValoresRublica::where('id', $id)
+        ->orWhere('empresa', $id)
+        ->update([
+            'vsvttrabalhador'=>$dados['vt__trabalhador'],
+            'vsvatrabalhador'=>$dados['va__trabalhador'],
+            'vsnrofatura'=>$dados['nro__fatura'],
+            'vsreciboavulso'=>$dados['nro__reciboavulso'],
+            'vsmatricula'=>$dados['matric__trabalhador'],
+            'vsnrorequisicao'=>$dados['nro__requisicao'],
+            'vsnroboletins'=>$dados['nro__boletins'],
+            'vscbo'=>$dados['cbo'],
+            'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
+            'vsnroequesocial'=>$dados['seq__esocial'],
+            'vsnroflha'=>$dados['nro__folha']
+        ]);
+    }
+    public function deletar($id)
+    {
+        return ValoresRublica::where('empresa', $id)->delete();
+    }
 }

@@ -272,7 +272,9 @@
               <label for="pix" class="form-label">PIX</label>
               <input type="text" class="form-control" name="pix" id="pix" value="">
             </div>
- 
+            <input type="hidden" name="endereco" id="endereco">
+
+<input type="hidden" name="bancario" id="bancario">
         </div>
 </form>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -362,6 +364,8 @@
                         $('#conta').val(data.bsconta)
                         $('#pix').val(data.bspix)
                         $('#bsdefaltor').val(data.deflator)
+                        $('#endereco').val(data.eiid)
+                        $('#bancario').val(data.biid)
                     }
                 });
             });

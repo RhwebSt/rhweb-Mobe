@@ -14,7 +14,7 @@ class CreateBancariosTable extends Migration
     public function up()
     {
         Schema::create('bancarios', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('biid');
             $table->char('bstitular', 20)->nullable();
             $table->char('bsbanco', 15)->nullable();
             $table->char('bsagencia', 15)->nullable();

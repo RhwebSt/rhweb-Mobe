@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Usuario;
+namespace App\Http\Controllers\Comisionario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-class UsuarioController extends Controller
+
+class ComisionarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('usuarios.index',compact('user'));
+        return view('comisionado.index',compact('user'));
     }
 
     /**
@@ -37,15 +37,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $user = new User;
-        $users = $user->cadastro($dados);
-        if ($users) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
-        }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
+        //
     }
 
     /**
@@ -56,9 +48,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $user = new User;
-        $users = $user->first($id);
-        return response()->json($users);
+        //
     }
 
     /**
@@ -81,15 +71,7 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dados = $request->all();
-        $user = new User;
-        $users = $user->editar($dados,$id);
-        if ($users) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
-        }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
+        //
     }
 
     /**
@@ -100,13 +82,6 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $user = new User;
-        $users = $user->deletar($id); 
-        if ($users) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
-        }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
+        //
     }
 }

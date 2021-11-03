@@ -20,7 +20,7 @@ Route::resource('tabelapreco','tabelapreco\\TabelaPrecoController')->only(['stor
 Route::resource('trabalhador','trabalhador\\TrabalhadorController')->names('trabalhador');
 
 Route::resource('usuario','usuario\\UsuarioController')->names('usuario');
-
+Route::resource('comisionado','comisionario\\ComisionarioController')->names('comisionado');
 Route::resource('usuariotrabalhador','usuariotrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
 Route::resource('depedente','depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
 Route::resource('depedente.mostrar','depedente\\DepedenteController')->only(['index', 'create']);

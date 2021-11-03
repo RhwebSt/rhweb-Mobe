@@ -20,7 +20,7 @@
 
     </head>
     <body >
-    <main  style="background-image: linear-gradient(150deg, rgb(252, 253, 253),rgb(234, 241, 250));">
+    <main  style="background-color: #e7e7e7;">
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
               <a class="navbar-brand" href="">Usuário</a>
@@ -43,6 +43,7 @@
                       <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.index')}}">Cadastro de Usuário</a></li>
                       <li><a class="dropdown-item " href="{{route('usuariotrabalhador.index')}}">Cadastro de Tomador</a></li>
+                      <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionador</a></li>
                     </ul>
                   </li>
                 </ul>

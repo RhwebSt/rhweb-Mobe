@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     protected $fillable = [
-        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','trabalhador','tomador'
+        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador'
     ];
     public function cadastro($dados)
     {
@@ -37,10 +37,33 @@ class Endereco extends Model
     //     'esnum'=>$dados['numero'],
     // ]);
     // }
+    public function first($id,$campo)
+    {
+        return Endereco::where($campo,$id)
+        // ->orWhere($campo,$id)
+        // ->orWhere(function($query) use ($id){
+        //     $query->where('trabalhador', $id)
+        //           ->whereNull('empresa')
+        //           ->whereNull('tomador');
+        // })
+        // ->orWhere(function($query) use ($id){
+        //     $query->where('empresa', $id)
+        //           ->whereNull('trabalhador')
+        //           ->whereNull('tomador');
+        // })
+        // ->orWhere(function($query) use ($id){
+        //     $query->where('tomador', $id)
+        //           ->whereNull('empresa')
+        //           ->whereNull('trabalhador');
+        // })
+        ->first();
+    }
     public function editar($dados,$id)
     {
-        return Endereco::where('tomador', $id)
-        ->orWhere('trabalhador', $id)
+        return Endereco::where('eiid', $id)
+        // ->orWhere('trabalhador', $id)
+        // ->orWhere('empresa', $id)
+        // ->orWhere('tomador', $id)
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],
@@ -54,6 +77,6 @@ class Endereco extends Model
     
     public function deletar($id)
     {
-        return Endereco::where('tomador', $id)->orWhere('trabalhador', $id)->delete();
+        return Endereco::where('eiid', $id)->delete();
     }
 }

@@ -25,6 +25,7 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tstelefone',13)->nullable();
             $table->string('tssexo',10)->nullable();
             $table->string('tsescolaridade',20)->nullable();
+            $table->string('tsindice',20)->nullable();
             $table->string('tsirrf',10)->nullable();
             $table->integer('user')->unsigned()->nullable();
             $table->foreign('user')->references('id')->on('users');

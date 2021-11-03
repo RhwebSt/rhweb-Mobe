@@ -39,4 +39,24 @@ class Empresa extends Model
             ->where('esnome', $id)
             ->first();
     }
+    public function editar($dados,$id)
+    {
+        return Empresa::where('id', $id)
+        ->update([
+            'esnome'=>$dados['nome'],
+            'escnpj'=>$dados['cnpj_mf'],
+            'esdataregitro'=>$dados['dataregistro'],
+            'esresponsavel'=>$dados['responsave'],
+            'esemail'=>$dados['email'],
+            'escnae'=>$dados['cnae__codigo'],
+            'escondicaosindicato'=>$dados['contribuicao__sindicato'],
+            'esretemferias'=>$dados['retem__ferias'],
+            'essindicalizado'=>$dados['sincalizado'],
+            'escodigomunicipio'=>$dados['cod__municipio'],
+        ]);
+    }
+    public function deletar($id)
+    {
+        return Empresa::where('id', $id)->delete();
+    }
 }

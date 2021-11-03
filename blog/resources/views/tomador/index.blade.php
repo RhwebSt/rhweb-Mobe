@@ -337,7 +337,9 @@
                             <label for="deflator" class="form-label">% DEFLATOR</label>
                             <input type="text" class="form-control" name="deflator" value="" id="deflator">
                         </div>
+                    <input type="hidden" name="endereco" id="endereco">
 
+                    <input type="hidden" name="bancario" id="bancario">
                 </form>
             </div>
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -376,14 +378,15 @@
                     contentType: 'application/json',
                     success: function(data) {
                         if (data.id) {
-                            $('#form').attr('action', "{{ url('tomador')}}/"+data.id);
-                            $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.id)
+                            $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
+                            $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
                             $('#incluir').attr('disabled','disabled')
                             $('#atualizar').removeAttr( "disabled" )
                             $('#deletar').removeAttr( "disabled" )
                             $('#excluir').removeAttr( "disabled" )
-                            $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.id+"/mostrar")
+                            $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
                             $('#method').val('PUT')
+                           
                         }else{
                             $('#form').attr('action', "{{ route('tomador.store') }}");
                             $('#incluir').removeAttr( "disabled" )
@@ -444,6 +447,8 @@
                         $('#conta').val(data.bsconta)
                         $('#pix').val(data.bspix)
                         $('#deflator').val(data.bsdefaltor)
+                        $('#endereco').val(data.eiid)
+                        $('#bancario').val(data.biid)
                     }
                 });
             });

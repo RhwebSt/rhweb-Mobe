@@ -45,7 +45,6 @@ class UsuarioTrabalhadorController extends Controller
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;
         $empresas = $empresa->cadastro($dados);
-        // dd($empresas['id']);
         if ($empresas) {
             // $dados['tomador'] = $empresas['id'];
             $dados['empresa'] = $empresas['id'];
@@ -58,7 +57,6 @@ class UsuarioTrabalhadorController extends Controller
             }
             return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
         }
-        // dd($dados);
     }
 
     /**
@@ -94,7 +92,19 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dados = $request->all();
+        $empresa = new Empresa;
+        $endereco = new Endereco;
+        $valoresrublica = new ValoresRublica;
+        $empresas = $empresa->editar($dados,$id);
+        $enderecos = $endereco->editar($dados,$dados['endereco']); 
+        $valoresrublicas = $valoresrublica->editar($dados,$id);
+        if ($empresas && $enderecos && $valoresrublicas) {
+            $condicao = 'edittrue';
+        }else{
+            $condicao = 'editfalse';
+        }
+        return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -105,6 +115,20 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $empresa = new Empresa;
+        $endereco = new Endereco;
+        $valoresrublica = new ValoresRublica;
+        $campo = 'empresa';
+        $enderecos = $endereco->first($id,$campo); 
+        $exenderecos = $endereco->deletar($enderecos->eiid); 
+        $valoresrublicas = $valoresrublica->deletar($enderecos->empresa); 
+        if ($exenderecos &&  $valoresrublicas) {
+            $empresas = $empresa->deletar($enderecos->empresa);
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]); 
     }
 }

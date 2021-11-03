@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','usuario','cargo','remember_token'
+        'name', 'email', 'password','usuario','cargo','empresa','remember_token'
     ];
 
     /**
@@ -49,12 +50,42 @@ class User extends Authenticatable
     public function cadastro($dados)
     {
         return User::create([
-            'name'=>$dados['nome'],
+            'name'=>$dados['usuario'],
             'email'=>$dados['email'],
-            'usuario'=>$dados['usuario'],
+            // 'usuario'=>$dados['usuario'],
             'password'=> Hash::make($dados['senha']),
             'cargo'=>$dados['cargo'],
-            'remember_token'=>$dados['_token'],
+            'empresa'=>$dados['empresa'],
+            // 'remember_token'=>$dados['_token'],
         ]);
+    }
+    public function first($id)
+    {
+        return DB::table('empresas')
+            ->join('users', 'empresas.id', '=', 'users.empresa')
+            ->select(
+                'empresas.*', 
+                'users.name', 
+                'users.cargo',
+                'users.id', 
+                'users.empresa'
+                )
+            ->where('name', $id)
+            ->first();
+    }
+    public function editar($dados,$id)
+    {
+        return User::where('id', $id)
+        ->update([
+            'name'=>$dados['usuario'],
+            'email'=>$dados['email'],
+            // 'usuario'=>$dados['usuario'],
+            'password'=> Hash::make($dados['senha']),
+            'cargo'=>$dados['cargo'],
+        ]);
+    }
+    public function deletar($id)
+    {
+        return User::where('id', $id)->delete();
     }
 }

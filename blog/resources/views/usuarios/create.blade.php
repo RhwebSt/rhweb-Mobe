@@ -3,66 +3,34 @@
         <div class="container" style="background-image: linear-gradient(150deg, rgb(252, 253, 253),rgb(234, 241, 250));">
             
             
-        @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
-                </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
-            <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('usuariotrabalhador.store') }}" method="POST" action="" >
+
+            <form class="row g-3 mt-1 mb-3" method="POST" action="" >
 
             <div class="row">
                 <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn  text-white btn-primary "  >
-                        Incluir
-                      </button>
-                      <button type="submit" id="atualizar" disabled class="btn  text-white btn-primary "  >
-                        Editar
-                      </button>
-                    <button type="button" id="excluir" disabled class="btn  text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Incluir</a>
+                    <button type="button" class="btn ms-2 col-md-1 text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                         Excluir
                       </button>
-                   
-                    <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
+                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Editar</a>
+                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Sair</a>
                 </div>
             </div>
                 <h1 class="container text-center fs-4 fw-bold">Cadastro de Empresas</h1>
-                @csrf
-                <input type="hidden" name="trabalhador" >
-                <input type="hidden" name="tomador">
-        <input type="hidden" id="method" name="_method" value="">
+                
                 <div class="col-md-7">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control pesquisa" name="nome" id="nome">
+                    <input type="text" class="form-control" name="nome" id="nome">
                 </div>
 
                 <div class="col-md-2">
-                    <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
-                    <input type="text" class="form-control pesquisa" name="cnpj_mf" id="cnpj_mf">
+                    <label for="cnpj_mf" class="form-label">CNPJ/MF Nº</label>
+                    <input type="text" class="form-control" name="cnpj_mf" id="cnpj_mf">
                 </div>
 
                 <div class="col-md-3">
                     <label for="nome" class="form-label">Data de Registro</label>
-                    <input type="date" class="form-control" name="dataregistro" id="dataregistro">
+                    <input type="date" class="form-control" name="nome" id="nome">
                 </div>
 
 
@@ -83,7 +51,7 @@
 
                 <div class="col-md-3">
                     <label for="tipo" class="form-label">Tipo</label>
-                    <input type="text" class="form-control" name="complemento__endereco" id="complemento__endereco">
+                    <input type="text" class="form-control" name="tipo" id="tipo">
                 </div>
 
                 <div class="col-md-5">
@@ -209,9 +177,6 @@
                         <option>2-Restrita</option>
                     </select>
                 </div>
-                <input type="hidden" name="endereco" id="endereco">
-
-<input type="hidden" name="bancario" id="bancario">
         </form>
 
         
@@ -227,78 +192,13 @@
                     </div>
                     <div class="modal-footer" style="background-image: linear-gradient(50deg, rgb(69, 71, 243),rgb(91, 9, 199))">
                     <button type="button" class="btn btn-success btn-outline-light" data-bs-dismiss="modal">Fechar</button>
-                    <form action="" method="post" id="formdelete">
-                    @csrf
-                        @method('delete')
-                        
-                        
-                        <button type="submit" class="btn btn-danger" >Deletar</button>
+                    <form action="">
+                        <a class="btn btn-danger btn-outline-light ms-2" href="#" role="button">Deletar</a>
                     </form>
                     </div>
                 </div>
                 </div>
             </div>
     </div>
-    <script>
-        $(document).ready(function(){
-           
-            $( ".pesquisa" ).keyup(function() {
-                var dados = $(this).val();
-                $.ajax({
-                    url: "{{url('usuariotrabalhador')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        if (data.empresa) {
-                            $('#form').attr('action', "{{ url('usuariotrabalhador')}}/"+data.empresa);
-                            $('#formdelete').attr('action',"{{ url('usuariotrabalhador')}}/"+data.empresa)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#deletar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                            
-                        }else{
-                        
-                            $('#form').attr('action', "{{ route('usuariotrabalhador.store') }}");
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#depedente').removeAttr( "disabled" )
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#deletar').attr('disabled','disabled')
-                            $('#method').val(' ')
-                            $('#excluir').attr( "disabled" )
-                        }
-                        $('#cnpj_mf').val(data.escnpj)
-                        $('#dataregistro').val(data.esdataregitro)
-                        $('#cep').val(data.escep)
-                        $('#logradouro').val(data.eslogradouro)
-                        $('#numero').val(data.esnum)
-                        $('#complemento__endereco').val(data.escomplemento)
-                        $('#bairro').val(data.esbairro)
-                        $('#localidade').val(data.esmunicipio)
-                        $('#uf').val(data.esuf)
-                        $('#responsave').val(data.esresponsavel)
-                        $('#email').val(data.esemail)
-                        $('#cnae__codigo').val(data.escnae)
-                        $('#cod__municipio').val(data.escodigomunicipio)
-                        $('#contribuicao__sindicato').val(data.escondicaosindicato)
 
-                        $('#vt__trabalhador').val(data.vsvttrabalhador)
-                        $('#va__trabalhador').val(data.vsvatrabalhador)
-                        $('#nro__fatura').val(data.vsnrofatura)
-                        $('#nro__reciboavulso').val(data.vsreciboavulso)
-                        $('#matric__trabalhador').val(data.vsmatricula)
-                        $('#vsnrorequisicao').val(data.vsnrorequisicao)
-                        $('#nro__boletins').val(data.vsnroboletins)
-                        $('#nro__folha').val(data.vsnroflha)
-                        $('#nro__cartaoponto').val(data.vsnrocartaoponto)
-                        $('#seq__esocial').val(data.vsnroequesocial)
-                        $('#cbo').val(data.vscbo)
-                        $('#endereco').val(data.eiid)
-                        $('#bancario').val(data.biid)
-                    }
-                });
-            });
-        });
-    </script>
     @stop

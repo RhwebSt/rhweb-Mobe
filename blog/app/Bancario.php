@@ -26,8 +26,8 @@ class Bancario extends Model
     }
     public function editar($dados,$id)
     {
-        return Bancario::where('tomador', $id)
-        ->orWhere('trabalhador', $id)
+        return Bancario::where('biid', $id)
+        // ->orWhere('trabalhador', $id)
         ->update([
             'bstitular'=>$dados['nome__conta'],
             'bsbanco'=>$dados['banco'],
@@ -38,8 +38,24 @@ class Bancario extends Model
             'bsdefaltor'=>$dados['deflator']
         ]);
     }
+    public function first($id,$campo)
+    {
+        return Bancario::where($campo,$id)
+        // ->orWhere('biid',$id)
+        // ->orWhere(function($query) use ($id){
+        //     $query->where('trabalhador', $id)
+        //           ->whereNull('empresa')
+        //           ->whereNull('tomador');
+        // })
+        // ->orWhere(function($query) use ($id){
+        //     $query->where('tomador', $id)
+        //           ->whereNull('empresa')
+        //           ->whereNull('trabalhador');
+        // })
+        ->first();
+    }
     public function deletar($id)
     {
-      return Bancario::where('tomador', $id)->orWhere('trabalhador', $id)->delete();
+      return Bancario::where('biid', $id)->delete();
     }
 }

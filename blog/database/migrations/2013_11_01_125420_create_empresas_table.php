@@ -25,8 +25,7 @@ class CreateEmpresasTable extends Migration
             $table->char('essindicalizado', 5)->nullable();
             $table->char('esretemferias', 10)->nullable();
             $table->char('escondicaosindicato', 10)->nullable();
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+           
             $table->timestamps();
         });
     }

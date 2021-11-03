@@ -14,6 +14,7 @@ use App\CartaoPonto;
 use App\Parametrosefip;
 use App\TaxaTrabalhador;
 use App\IndiceFatura;
+use App\TabelaPreco;
 class TomadorController extends Controller
 {
     /**
@@ -129,8 +130,8 @@ class TomadorController extends Controller
         $indicefatura = new IndiceFatura; 
         $condicao = '';
         $tomadors = $tomador->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$id); 
-        $bancarios = $bancario->editar($dados,$id);
+        $enderecos = $endereco->editar($dados,$dados['endereco']); 
+        $bancarios = $bancario->editar($dados,$dados['bancario']);
         $retencaofaturas = $retencaofatura->editar($dados,$id);
         $cartaoponto = $cartaoponto->editar($dados,$id);
         $parametrosefips = $parametrosefip->editar($dados,$id);
@@ -166,16 +167,29 @@ class TomadorController extends Controller
         $parametrosefip = new Parametrosefip;
         $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
-        $enderecos = $endereco->deletar($id); 
-        $bancarios = $bancario->deletar($id);
+        $tabelapreco = new TabelaPreco;
+       $campoendereco = 'tomador';
+       $campobacario = 'tomador';
+       $bancarios = $bancario->first($id,$campobacario);
+    //    dd($bancarios);
+       $exbancarios = $bancario->deletar($bancarios->biid);
+
+        $tabelaprecos = $tabelapreco->deletar($id);
+
+        $enderecos = $endereco->first($id,$campoendereco); 
+        // dd($enderecos);
+        $exenderecos = $endereco->deletar($enderecos->eiid); 
+
+       
+
         $retencaofaturas = $retencaofatura->deletar($id);
         $cartaoponto = $cartaoponto->deletar($id);
         $parametrosefips = $parametrosefip->deletar($id);
         $taxatrabalhador = $taxatrabalhador->deletar($id);
         $indicefaturas = $indicefatura->deletar($id);
         $taxas = $taxa->deletar($id);
-        if ($enderecos && $taxas
-        && $bancarios && $retencaofaturas && 
+        if ($exenderecos && $taxas
+        && $exbancarios && $retencaofaturas && 
         $cartaoponto && $parametrosefips && 
         $taxatrabalhador && $indicefaturas) {
             $tomadors = $tomador->deletar($id);

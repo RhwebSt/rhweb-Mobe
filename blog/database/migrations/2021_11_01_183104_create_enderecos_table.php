@@ -14,7 +14,7 @@ class CreateEnderecosTable extends Migration
     public function up()
     {
         Schema::create('enderecos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('eiid');
             $table->char('escep', 16)->nullable();
             $table->char('eslogradouro', 30)->nullable();
             $table->char('esbairro', 20)->nullable();
