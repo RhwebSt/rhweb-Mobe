@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="../../../../../reset.css">
 		<link rel="stylesheet" href="../../../../../Mobe-style.css">
+    <link rel="stylesheet" href="{{url('/css/style.css')}}">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
@@ -18,6 +19,12 @@
          <!-- <link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}"> -->
          <link rel="stylesheet" href="../../../../../CSS/Rodapé/Rodapé.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
+        <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist
+/additional-methods.min.js"></script>
+        
 
     </head>
     <body >
@@ -210,5 +217,8 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <script src="{{url('/js/masck.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
+    <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
   </body>
 </html>

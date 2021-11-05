@@ -23,4 +23,14 @@ class Irrf extends Model
     {
         return Irrf::where('irsano',$id)->get();
     }
+    public function edita($dados,$id)
+    {
+        return Irrf::where('id', $id)
+        ->update([
+            'irsano'=>$dados['ano'],
+            'irsvalorinicial'=>$dados['valor__inicial'],
+            'irsvalorfinal'=>$dados['valor__final'],
+            'irsindece'=>$dados['indice'],
+        ]);
+    }
 }

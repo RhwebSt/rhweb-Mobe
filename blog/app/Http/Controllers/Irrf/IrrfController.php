@@ -144,7 +144,7 @@ class IrrfController extends Controller
             'indice'=>'',
             'fator'=>'',
         ];
-        $inss = new Inss;
+        $inss = new Irrf;
         foreach ($dados as $key => $value) {
            
             if ($key === 'ano') {
@@ -156,29 +156,31 @@ class IrrfController extends Controller
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 7) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 8) {
-                $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id01']);
             }
-            elseif($contador == 9)
+            elseif($contador == 8)
             $novodados['valor__inicial'] = $value;
-            elseif ($contador == 10) {
+            elseif ($contador == 9) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 11) {
+            }elseif ($contador == 10) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 12) {
-                $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id02']);
             }
-            elseif($contador == 13)
+            elseif($contador == 11)
             $novodados['valor__inicial'] = $value;
-            elseif ($contador == 14) {
+            elseif ($contador == 12) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 15) {
+            }elseif ($contador == 13) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 16) {
-                $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id03']);
+            }
+            elseif($contador == 14)
+            $novodados['valor__inicial'] = $value;
+            elseif ($contador == 15) {
+                $novodados['valor__final'] = $value;
+            }elseif ($contador == 16) {
+                $novodados['indice'] = $value;
+                $inss->edita($novodados,$dados['id04']);
             }
             elseif($contador == 17)
             $novodados['valor__inicial'] = $value;
@@ -186,28 +188,13 @@ class IrrfController extends Controller
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 19) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
-                $novodados['fator'] = $value;
-                $inss->edita($novodados,$dados['id04']);
-               
-            }
-            elseif($contador == 21)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 22) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 23) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 24) {
-                $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id05']);
-               
             }
             $contador++;
             
         }
         $condicao = 'edittrue';
-        
-        return redirect()->route('inss.index')->withInput()->withErrors([$condicao]);
+        return redirect()->route('irrf.index')->withInput()->withErrors([$condicao]);
     }
 
     /**

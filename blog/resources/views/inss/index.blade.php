@@ -28,7 +28,7 @@
         @endif     
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('inss.store')}}" >
         <input type="hidden" name="user" value="{{$user->id}}">
-                <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">Faixa de Cálculos</h1>
+                
                     @csrf
                     <input type="hidden" id="method" name="_method" value="">
                 <div class="row">
@@ -46,7 +46,7 @@
                         <a class="btn ms-2 col-md-1 text-white" href="{{route('home.index')}}" style="background-color: #194bf0;" role="button">Sair</a>
                     </div>
                 </div>
-
+                <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">INSS</h1>
                 <div class="container block">
                     <div class="col-md-1">
                         <label for="ano" class="form-label">Ano</label>

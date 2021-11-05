@@ -45,6 +45,7 @@
     <a class="btn ms-2 col-md-1 text-white" href="{{route('home.index')}}" style="background-color: #194bf0;" role="button">Sair</a>
     </div>
 </div>
+<h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">IRRF</h1>
 <input type="hidden" name="user" value="{{$user->id}}">
 @csrf
 <input type="hidden" id="method" name="_method" value="">

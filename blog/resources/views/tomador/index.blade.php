@@ -30,7 +30,7 @@
         
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn " role="button" aria-label="Basic example">
-                            <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
+                            <button type="submit" id="incluir" class="btn btn-primary" value="Validar!">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
                            
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
@@ -82,7 +82,7 @@
 
                         <div class="col-md-2">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control" name="cep" value="" id="cep">
+                            <input type="text" class="form-control" name="cep"   id="cep">
                         </div>
                         
                         <div class="col-md-6">
@@ -116,7 +116,7 @@
                             <input type="text" class="form-control" name="uf" value="" id="uf">
                         </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-5 d-none">
                             <label for="complemento" class="form-label">Complemento</label>
                             <input type="text" class="form-control" name="complemento__endereco" value="" id="complemento">
                         </div>
@@ -126,7 +126,7 @@
 
                         <div class="col-md-2">
                             <label for="taxa_adm" class="form-label">Taxa Adm %</label>
-                            <input type="text" class="form-control" name="taxa_adm" value="" id="taxa_adm">
+                            <input type="text" class="form-control " name="taxa_adm" value="" id="taxa_adm">
                         </div>
 
                         <div class="col-md-2">
@@ -148,7 +148,10 @@
                             <label for="taxa__fed" class="form-label">Taxa Fed. %</label>
                             <input type="text" class="form-control" name="taxa__fed" value="" id="taxa__fed">
                         </div>
-
+                        <div class="col-md-2">
+                            <label for="deflator" class="form-label">% DEFLATOR</label>
+                            <input type="text" class="form-control" name="deflator" value="" id="deflator">
+                        </div>
 
                         <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1>
 
@@ -334,10 +337,7 @@
                             <input type="text" class="form-control" name="pix" value="" id="pix">
                         </div>
 
-                        <div class="col-md-2">
-                            <label for="deflator" class="form-label">% DEFLATOR</label>
-                            <input type="text" class="form-control" name="deflator" value="" id="deflator">
-                        </div>
+                       
                     <input type="hidden" name="endereco" id="endereco">
 
                     <input type="hidden" name="bancario" id="bancario">
@@ -394,7 +394,7 @@
                             $('#atualizar').attr('disabled','disabled')
                             $('#deletar').attr('disabled','disabled')
                             $('#method').val(' ')
-                            $('#excluir').attr( "disabled" )
+                            $('#excluir').attr( "disabled",'disabled' )
                             $('#tabelapreco').addClass('disabled').removeAttr('href')
                         }
                         $('#cnpj').val(data.tscnpj)
