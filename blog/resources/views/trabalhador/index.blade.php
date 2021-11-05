@@ -47,6 +47,7 @@
         <input type="hidden"  name="deflator" >
         <input type="hidden"  name="tomador" >
         <input type="hidden" name="empresa">
+        <input type="hidden" name="user" value="{{$user->id}}">
             <div class="col-md-6">
               <label for="nome__completo" class="form-label">Nome Completo</label>
               <input type="text" class="form-control" name="nome__completo" id="nome__completo" >

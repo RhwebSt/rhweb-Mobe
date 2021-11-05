@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+
 class Tomador extends Model
 {
     protected $fillable = [
-        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone'
+        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','user'
     ];
     public function cadastro($dados)
     {
@@ -19,7 +20,9 @@ class Tomador extends Model
             'tsmatricula'=>$dados['matricula'],
             'tssimples'=>$dados['simples'],
             'tstelefone'=>$dados['telefone'],
-            'tstipo'=>$dados['tipo']
+            'tstipo'=>$dados['tipo'],
+            'user'=>$dados['user']
+
         ]);
     }
     // public function lista()
@@ -52,7 +55,17 @@ class Tomador extends Model
                 'indice_faturas.*',
                 'bancarios.*'
             )
-            ->where('tsnome', $id)
+            ->where(function($query) use ($id){
+                $cargo =['admin'];
+                $user = auth()->user();
+                if (in_array($user->cargo,$cargo)) {
+                    $query->where('tsnome', $id);
+                }else{
+                    $query->where('tsnome', $id)
+                    ->where('tomadors.user', $user->id);
+                }
+               
+            })
             ->first();
     }
     public function editar($dados,$id)

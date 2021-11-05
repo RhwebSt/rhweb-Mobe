@@ -146,7 +146,8 @@
                             $('#deletar').removeAttr( "disabled" )
                             $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
-                            
+                            $('#nome__completo').val(data.esnome)
+                            $('#cargo').val(data.cargo)
                         }else{
                         
                             $('#form').attr('action', "{{ route('usuario.store') }}");
@@ -157,8 +158,7 @@
                             $('#method').val(' ')
                             $('#excluir').attr( "disabled" )
                         }
-                        $('#nome__completo').val(data.esnome)
-                        $('#cargo').val(data.cargo)
+                       
                     }
                 });
             });

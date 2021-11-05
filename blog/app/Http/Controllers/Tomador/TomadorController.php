@@ -92,6 +92,7 @@ class TomadorController extends Controller
      */
     public function show($id)
     {
+        
         $tomador = new Tomador;
         $tomadors = $tomador->first($id);
         return response()->json($tomadors);

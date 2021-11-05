@@ -29,22 +29,31 @@
             @endforeach
         @endif     
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('usuariotrabalhador.store') }}" method="POST" action="" >
-
-            <div class="row">
-                <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn  text-white btn-primary "  >
-                        Incluir
-                      </button>
-                      <button type="submit" id="atualizar" disabled class="btn  text-white btn-primary "  >
-                        Editar
-                      </button>
-                    <button type="button" id="excluir" disabled class="btn  text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                        Excluir
-                      </button>
-                   
-                    <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
+            <?php
+                $permissao = [
+                    'admin'
+                ]
+            ?>
+            @if(in_array($user->cargo,$permissao))
+                <div class="row">
+                    <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
+                        <button type="submit" id="incluir" class="btn  text-white btn-primary "  >
+                            Incluir
+                        </button>
+                        <button type="submit" id="atualizar" disabled class="btn  text-white btn-primary "  >
+                            Editar
+                        </button>
+                        <button type="button" id="excluir" disabled class="btn  text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                            Excluir
+                        </button>
+                    
+                        <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
+                    </div>
                 </div>
-            </div>
+                
+                @else
+                <input type="hidden" id="empresa" value="{{$user->empresa}}">
+            @endif
                 <h1 class="container text-center fs-4 fw-bold">Cadastro de Empresas</h1>
                 @csrf
                 <input type="hidden" name="trabalhador" >
@@ -241,7 +250,18 @@
     </div>
     <script>
         $(document).ready(function(){
-           
+            var empresa = $('#empresa').val()
+            $.ajax({
+                url: "{{url('usuariotrabalhador')}}/"+empresa,
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                    if (data.empresa) {
+                        $('#nome').val(data.esnome)
+                        campos(data);
+                    }
+                }
+            })
             $( ".pesquisa" ).keyup(function() {
                 var dados = $(this).val();
                 $.ajax({
@@ -268,37 +288,40 @@
                             $('#method').val(' ')
                             $('#excluir').attr( "disabled" )
                         }
-                        $('#cnpj_mf').val(data.escnpj)
-                        $('#dataregistro').val(data.esdataregitro)
-                        $('#cep').val(data.escep)
-                        $('#logradouro').val(data.eslogradouro)
-                        $('#numero').val(data.esnum)
-                        $('#complemento__endereco').val(data.escomplemento)
-                        $('#bairro').val(data.esbairro)
-                        $('#localidade').val(data.esmunicipio)
-                        $('#uf').val(data.esuf)
-                        $('#responsave').val(data.esresponsavel)
-                        $('#email').val(data.esemail)
-                        $('#cnae__codigo').val(data.escnae)
-                        $('#cod__municipio').val(data.escodigomunicipio)
-                        $('#contribuicao__sindicato').val(data.escondicaosindicato)
-
-                        $('#vt__trabalhador').val(data.vsvttrabalhador)
-                        $('#va__trabalhador').val(data.vsvatrabalhador)
-                        $('#nro__fatura').val(data.vsnrofatura)
-                        $('#nro__reciboavulso').val(data.vsreciboavulso)
-                        $('#matric__trabalhador').val(data.vsmatricula)
-                        $('#vsnrorequisicao').val(data.vsnrorequisicao)
-                        $('#nro__boletins').val(data.vsnroboletins)
-                        $('#nro__folha').val(data.vsnroflha)
-                        $('#nro__cartaoponto').val(data.vsnrocartaoponto)
-                        $('#seq__esocial').val(data.vsnroequesocial)
-                        $('#cbo').val(data.vscbo)
-                        $('#endereco').val(data.eiid)
-                        $('#bancario').val(data.biid)
+                        campos(data);
                     }
                 });
             });
+            function campos(data) {
+                $('#cnpj_mf').val(data.escnpj)
+                $('#dataregistro').val(data.esdataregitro)
+                $('#cep').val(data.escep)
+                $('#logradouro').val(data.eslogradouro)
+                $('#numero').val(data.esnum)
+                $('#complemento__endereco').val(data.escomplemento)
+                $('#bairro').val(data.esbairro)
+                $('#localidade').val(data.esmunicipio)
+                $('#uf').val(data.esuf)
+                $('#responsave').val(data.esresponsavel)
+                $('#email').val(data.esemail)
+                $('#cnae__codigo').val(data.escnae)
+                $('#cod__municipio').val(data.escodigomunicipio)
+                $('#contribuicao__sindicato').val(data.escondicaosindicato)
+
+                $('#vt__trabalhador').val(data.vsvttrabalhador)
+                $('#va__trabalhador').val(data.vsvatrabalhador)
+                $('#nro__fatura').val(data.vsnrofatura)
+                $('#nro__reciboavulso').val(data.vsreciboavulso)
+                $('#matric__trabalhador').val(data.vsmatricula)
+                $('#vsnrorequisicao').val(data.vsnrorequisicao)
+                $('#nro__boletins').val(data.vsnroboletins)
+                $('#nro__folha').val(data.vsnroflha)
+                $('#nro__cartaoponto').val(data.vsnrocartaoponto)
+                $('#seq__esocial').val(data.vsnroequesocial)
+                $('#cbo').val(data.vscbo)
+                $('#endereco').val(data.eiid)
+                $('#bancario').val(data.biid)
+            }
         });
     </script>
     @stop

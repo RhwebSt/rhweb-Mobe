@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="shortcut icon" href="../../../../../icon/index/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <!-- <title>Cadastro Trabalhador</title> -->
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -15,15 +15,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
             rel="stylesheet">
          <link rel="stylesheet" href="./cadastroTrabalhador.css">
+         <!-- <link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}"> -->
          <link rel="stylesheet" href="../../../../../CSS/Rodapé/Rodapé.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     </head>
     <body >
-    <main  style="background-color: #e7e7e7;">
+    <main >
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="">Usuário</a>
+              <!-- <a class="navbar-brand" href=""></a> -->
+              <img class="navbar-brand" src="{{url('/imagem/rhwebTop.png')}}" alt="" srcset="" style="width: 90px">
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
@@ -36,13 +38,21 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-image: linear-gradient(100deg, #ffffff, #fdfdfd, #f5f5fa);">
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{ route('tomador.index') }}">Tomador</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
+                      <?php
+                        $permissao = [
+                          'admin'
+                        ]
+                      ?>
+                      @if(in_array($user->cargo,$permissao))
                       <li><a class="dropdown-item border-bottom border-secundary" href="#">Rúbricas</a></li>
-                      <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li>
+                      <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('inss.index')}}">INSS</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
-                      <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li>
+                      <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
+                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuariotrabalhador.index')}}">Cadastro de Acesso</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.index')}}">Cadastro de Usuário</a></li>
-                      <li><a class="dropdown-item " href="{{route('usuariotrabalhador.index')}}">Cadastro de Tomador</a></li>
+                      
+                      @endif
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionador</a></li>
                     </ul>
                   </li>

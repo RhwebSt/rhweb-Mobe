@@ -18,7 +18,8 @@ class UsuarioTrabalhadorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+        $empresa = new Empresa;
+        $empresas = $empresa->first($user->empresa);
         return view('usuarios.trabalhador.index',compact('user'));
     }
 

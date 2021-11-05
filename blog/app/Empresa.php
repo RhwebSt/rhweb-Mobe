@@ -37,7 +37,7 @@ class Empresa extends Model
                 'valores_rublicas.*',
             )
             ->where('esnome', $id)
-            ->orWhere('empresa.id', $id)
+            ->orWhere('empresas.id', $id)
             ->first();
     }
     public function editar($dados,$id)

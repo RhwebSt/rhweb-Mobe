@@ -22,7 +22,7 @@ class Trabalhador extends Model
             'tssexo'=>$dados['sexo'],
             'tsescolaridade'=>$dados['grau__instrucao'],
             'tsirrf'=>$dados['irrf'],
-            // 'user'=>$dados['user']
+            'user'=>$dados['user']
         ]);
     }
     public function first($id)
@@ -42,7 +42,17 @@ class Trabalhador extends Model
                 'nascimentos.*',
                 'enderecos.*'
                 )
-            ->where('tsnome', $id)
+            ->where(function($query) use ($id){
+                $cargo =['admin'];
+                $user = auth()->user();
+                if (in_array($user->cargo,$cargo)) {
+                    $query->where('tsnome', $id);
+                }else{
+                    $query->where('tsnome', $id)
+                    ->where('trabalhadors.user', $user->id);
+                }
+               
+            })
             ->first();
     }
     public function lista()

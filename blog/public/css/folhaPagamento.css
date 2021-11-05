@@ -1,0 +1,66 @@
+:root{
+    --body-bg:rgb(100, 149, 255);
+    --body-color: black;
+}
+
+.dark-mode:root{
+    --body-bg:#000000;
+    --body-color: rgb(255, 255, 255);
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-repeat: no-repeat;
+    background-color: var(--body-bg);
+}
+
+.dropdown-menu{
+    background-image: linear-gradient(120deg, #1250d6, #0751f3, rgb(71, 42, 236));
+    margin-top: 10px;
+}
+
+.dropdown-item{
+    color: white;
+    transition: ease-in-out 300ms;
+}
+
+.dropdown-item:hover{
+    background-color: rgb(6, 58, 155);
+    color: white;
+    transition: ease-in-out 300ms;
+}
+
+@media (min-width: 576px){
+    main {
+        margin-top: 700px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px){
+    main {
+        margin-top: 800px;
+        width: 20%;
+    }
+}
+
+@media (min-width: 992px){
+    main {
+        margin-top: 300px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px){
+    main {
+        margin-top: 100px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1400px){
+    main {
+        margin-top: 100px;
+        width: 100%;
+    }
+}

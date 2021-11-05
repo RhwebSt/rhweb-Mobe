@@ -44,6 +44,7 @@
                         <div class="container text-center  fs-4 fw-bold">Dados da Empresa</div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
+                        <input type="hidden" name="user" value="{{$user->id}}">
                         <input type="hidden" name="trabalhador">
                         <input type="hidden" name="empresa">
                         <div class="col-md-6">
