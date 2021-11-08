@@ -12,24 +12,25 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('/','user\\UserController')->names('user');
-Route::resource('login','login\\LoginController')->names('login');
+Route::resource('/','User\\UserController')->names('user');
+Route::resource('login','Login\\LoginController')->names('login');
 
 
 
 
-Route::resource('depedente','depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
-Route::resource('depedente.mostrar','depedente\\DepedenteController')->only(['index', 'create']);
+Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
+Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
 
 Route::middleware(['admin'])->group(function () {
-    Route::resource('home','home\\HomeController')->names('home');
-    Route::resource('usuariotrabalhador','usuariotrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
-    Route::resource('irrf','irrf\\IrrfController')->names('irrf');
-    Route::resource('inss','inss\\InssController')->names('inss');
-    Route::resource('tomador','tomador\\TomadorController')->names('tomador');
-    Route::resource('tabelapreco.mostrar','tabelapreco\\TabelaPrecoController')->only(['index', 'create']);
-    Route::resource('tabelapreco','tabelapreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
-    Route::resource('trabalhador','trabalhador\\TrabalhadorController')->names('trabalhador');
-    Route::resource('usuario','usuario\\UsuarioController')->names('usuario');
-    Route::resource('comisionado','comisionario\\ComisionarioController')->names('comisionado');
+    Route::resource('home','Home\\HomeController')->names('home');
+    Route::resource('usuariotrabalhador','Usuariotrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
+    Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
+    Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+    Route::resource('inss','Inss\\InssController')->names('inss');
+    Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
+    Route::resource('tabelapreco.mostrar','Tabelapreco\\TabelaPrecoController')->only(['index', 'create']);
+    Route::resource('tabelapreco','Tabelapreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
+    Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
+    Route::resource('usuario','Usuario\\UsuarioController')->names('usuario');
+    Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
 });

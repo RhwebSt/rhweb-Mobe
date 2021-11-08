@@ -50,7 +50,6 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
         $tomador = new Tomador;
         $taxa = new Taxa;
         $endereco = new Endereco;

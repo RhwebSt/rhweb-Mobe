@@ -15,10 +15,10 @@ class CreateTaxaTrabalhadorsTable extends Migration
     {
         Schema::create('taxa_trabalhadors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tsferias')->nullable();
-            $table->integer('tsdecimo13')->nullable();
-            $table->integer('tsrsr')->nullable();
-            $table->integer('das')->nullable();
+            $table->float('tsferias',8,2)->nullable();
+            $table->float('tsdecimo13',8,2)->nullable();
+            $table->float('tsrsr',8,2)->nullable();
+            $table->float('das',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();

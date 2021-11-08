@@ -313,7 +313,7 @@
                 $('#nro__fatura').val(data.vsnrofatura)
                 $('#nro__reciboavulso').val(data.vsreciboavulso)
                 $('#matric__trabalhador').val(data.vsmatricula)
-                $('#vsnrorequisicao').val(data.vsnrorequisicao)
+                $('#nro__requisicao').val(data.vsnrorequisicao)
                 $('#nro__boletins').val(data.vsnroboletins)
                 $('#nro__folha').val(data.vsnroflha)
                 $('#nro__cartaoponto').val(data.vsnrocartaoponto)

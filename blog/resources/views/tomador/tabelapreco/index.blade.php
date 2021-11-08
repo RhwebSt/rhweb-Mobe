@@ -114,7 +114,7 @@
                             $('#method').val('PUT')
                             $('#ano').val(data.tsano)
                             $('#rubricas').val(data.tsrubrica)
-                            $('#valor').val(data.tsvalor)
+                            $('#valor').val(data.tsvalor.toString().replace(".", ","))
                         }else{
                             $('#form').attr('action', "{{ route('tabelapreco.store') }}");
                             $('#incluir').removeAttr( "disabled" )

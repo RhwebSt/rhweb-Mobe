@@ -22,7 +22,7 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tsmae',30)->nullable();
             // $table->string('pai',30)->nullable();
             $table->string('tsuf',2)->nullable();
-            $table->string('tstelefone',13)->nullable();
+            $table->string('tstelefone',18)->nullable();
             $table->string('tssexo',10)->nullable();
             $table->string('tsescolaridade',20)->nullable();
             $table->string('tsindice',20)->nullable();

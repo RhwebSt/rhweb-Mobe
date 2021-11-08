@@ -13,10 +13,10 @@ class TaxaTrabalhador extends Model
     {
         
        return TaxaTrabalhador::create([
-            'tsferias'=>$dados['ferias_trab'],
-            'tsdecimo13'=>$dados['13__saltrab'],
-            'tsrsr'=>$dados['rsr'],
-            'das'=>$dados['das'],
+            'tsferias'=>str_replace(",",".",$dados['ferias_trab']),
+            'tsdecimo13'=>str_replace(",",".",$dados['13__saltrab']),
+            'tsrsr'=>str_replace(",",".",$dados['rsr']),
+            'das'=>str_replace(",",".",$dados['das']),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -24,10 +24,10 @@ class TaxaTrabalhador extends Model
     {
        return TaxaTrabalhador::where('tomador', $id)
       ->update([
-        'tsferias'=>$dados['ferias_trab'],
-        'tsdecimo13'=>$dados['13__saltrab'],
-        'tsrsr'=>$dados['rsr'],
-        'das'=>$dados['das'],
+        'tsferias'=>str_replace(",",".",$dados['ferias_trab']),
+        'tsdecimo13'=>str_replace(",",".",$dados['13__saltrab']),
+        'tsrsr'=>str_replace(",",".",$dados['rsr']),
+        'das'=>str_replace(",",".",$dados['das']),
     ]);
     }
     public function deletar($id)

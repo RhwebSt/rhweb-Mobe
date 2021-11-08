@@ -18,7 +18,7 @@ class CreateTabelaPrecosTable extends Migration
             $table->char('tsano', 10)->nullable();
             $table->char('tsrubrica', 30)->nullable();
             $table->char('tsdescricao', 60)->nullable();
-            $table->char('tsvalor', 10)->nullable();
+            $table->float('tsvalor',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->integer('empresa')->unsigned()->nullable();

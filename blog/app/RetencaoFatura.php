@@ -13,9 +13,9 @@ class RetencaoFatura extends Model
     {
         
        return RetencaoFatura::create([
-            'rsinssempresa'=>$dados['inss__empresa'],
-            'rsfgts'=>$dados['fgts__empresa'],
-            'rsvalorfatura'=>$dados['valor_fatura'],
+            'rsinssempresa'=>str_replace(",",".",$dados['inss__empresa']),
+            'rsfgts'=>str_replace(",",".",$dados['fgts__empresa']),
+            'rsvalorfatura'=>str_replace(",",".",$dados['valor_fatura']),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -23,9 +23,9 @@ class RetencaoFatura extends Model
     {
         return RetencaoFatura::where('tomador', $id)
         ->update([
-            'rsinssempresa'=>$dados['inss__empresa'],
-            'rsfgts'=>$dados['fgts__empresa'],
-            'rsvalorfatura'=>$dados['valor_fatura'],
+            'rsinssempresa'=>str_replace(",",".",$dados['inss__empresa']),
+            'rsfgts'=>str_replace(",",".",$dados['fgts__empresa']),
+            'rsvalorfatura'=>str_replace(",",".",$dados['valor_fatura']),
       ]);
     }
     public function deletar($id)

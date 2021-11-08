@@ -12,11 +12,11 @@ class Taxa extends Model
     public function cadastro($dados)
     {
         return Taxa::create([
-            'tftaxaadm'=>$dados['taxa_adm'],
-            'tfbenef'=>$dados['caixa_benef'],
-            'tfferias'=>$dados['ferias'],
-            'tf13'=>$dados['13_salario'],
-            'tftaxafed'=>$dados['taxa__fed'],
+            'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
+            'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
+            'tfferias'=>str_replace(",",".",$dados['ferias']),
+            'tf13'=>str_replace(",",".",$dados['13_salario']),
+            'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -24,11 +24,11 @@ class Taxa extends Model
     {
       return Taxa::where('id', $id)
       ->update([
-        'tftaxaadm'=>$dados['taxa_adm'],
-        'tfbenef'=>$dados['caixa_benef'],
-        'tfferias'=>$dados['ferias'],
-        'tf13'=>$dados['13_salario'],
-        'tftaxafed'=>$dados['taxa__fed']
+        'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
+            'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
+            'tfferias'=>str_replace(",",".",$dados['ferias']),
+            'tf13'=>str_replace(",",".",$dados['13_salario']),
+            'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
     ]);
     }
     public function deletar($id)

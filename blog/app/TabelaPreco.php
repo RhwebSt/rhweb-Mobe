@@ -16,7 +16,7 @@ class TabelaPreco extends Model
             'tsano'=>$dados['ano'],
             'tsrubrica'=>$dados['rubricas'],
             'tsdescricao'=>$dados['descricao'],
-            'tsvalor'=>$dados['valor'],
+            'tsvalor'=>str_replace(",",".",$dados['valor']),
             'empresa'=>$dados['empresa'],
             'tomador'=>$dados['tomador']
         ]);

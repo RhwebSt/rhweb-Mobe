@@ -15,11 +15,11 @@ class CreateTaxasTable extends Migration
     {
         Schema::create('taxas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tftaxaadm')->nullable();
-            $table->integer('tfbenef')->nullable();
-            $table->integer('tfferias')->nullable();
-            $table->integer('tf13')->nullable();
-            $table->integer('tftaxafed')->nullable();
+            $table->float('tftaxaadm',8,2)->nullable();
+            $table->float('tfbenef',8,2)->nullable();
+            $table->float('tfferias',8,2)->nullable();
+            $table->float('tf13',8,2)->nullable();
+            $table->float('tftaxafed',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();

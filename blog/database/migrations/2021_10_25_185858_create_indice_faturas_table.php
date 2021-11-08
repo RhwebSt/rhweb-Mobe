@@ -15,13 +15,13 @@ class CreateIndiceFaturasTable extends Migration
     {
         Schema::create('indice_faturas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('isalimentacao')->nullable();
-            $table->integer('istransporte')->nullable();
-            $table->char('isepi', 20)->nullable();
-            $table->integer('isseguroportrabalhador')->nullable();
+            $table->float('isalimentacao',8,2)->nullable();
+            $table->float('istransporte',8,2)->nullable();
+            $table->float('isepi',8,2)->nullable();
+            $table->float('isseguroportrabalhador',8,2)->nullable();
             $table->char('isindecesobrefolha', 15)->nullable();
-            $table->char('isvaletransporte', 15)->nullable();
-            $table->char('isvalealimentacao', 10)->nullable();
+            $table->float('isvaletransporte',8,2)->nullable();
+            $table->float('isvalealimentacao',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();

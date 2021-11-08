@@ -51,7 +51,7 @@
                         ]
                       ?>
                       @if(in_array($user->cargo,$permissao))
-                      <li><a class="dropdown-item border-bottom border-secundary" href="#">Rúbricas</a></li>
+                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
                       <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('inss.index')}}">INSS</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
