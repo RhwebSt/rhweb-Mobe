@@ -20,6 +20,7 @@ $("#form").validate({
         },
         simples:{
             required:true,
+            range: [1, 9]
         },
         cep:{
             required:true,
@@ -122,7 +123,8 @@ $("#form").validate({
         },
         valor:{
             required:true
-        }
+        },
+      
     },
     messages:{
         nome__completo: {
@@ -141,6 +143,7 @@ $("#form").validate({
         },
         simples:{
             required: 'O campo SIMPLES não pode esta vazio!',
+            range: 'O campo SIMPLES não pode ter um valor maior que 9!',
         },
         telefone:{
             required: 'O campo TELEFONE não pode esta vazio!',

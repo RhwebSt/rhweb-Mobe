@@ -21,7 +21,6 @@ class CreateBancariosTable extends Migration
             $table->char('bsoperacao', 10)->nullable();
             $table->char('bsconta', 10)->nullable();
             $table->char('bspix', 50)->nullable();
-            $table->char('bsdefaltor', 15)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();
             $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->integer('tomador')->unsigned()->nullable();

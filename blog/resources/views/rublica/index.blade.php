@@ -4,9 +4,9 @@
     <form class="row g-3 mt-1 mb-3 mt-5" method="POST" action="" >
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                        <a class="btn ms-2 text-white table-hover botao" href="#" role="button">Incluir</a>
-                        <a class="btn  btn-md ms-2 col-md-1 text-white botao table-hover" href="#" role="button" >Editar</a>
-                        <a class="btn ms-2 col-md-1 text-white botao table-hover" href="#" role="button">Sair</a>
+                    <button type="submit" id="incluir" class="btn btn-primary" value="Validar!">Incluir</button>
+                            <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
+                        <a class="btn ms-2 col-md-1 text-white btn-primary botao table-hover" href="#" role="button">Sair</a>
                     </div>
                 </div>
 

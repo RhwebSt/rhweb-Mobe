@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bancario extends Model
 {
     protected $fillable = [
-        'bstitular','bsbanco','bsagencia','bsoperacao','bsconta','bspix','bsdefaltor','tomador','trabalhador'
+        'bstitular','bsbanco','bsagencia','bsoperacao','bsconta','bspix','tomador','trabalhador'
     ];
     public function cadastro($dados)
     {
@@ -19,7 +19,6 @@ class Bancario extends Model
             'bsoperacao'=>$dados['operacao'],
             'bsconta'=>$dados['conta'],
             'bspix'=>$dados['pix'],
-            'bsdefaltor'=>$dados['deflator'],
             'tomador'=>$dados['tomador'],
             'trabalhador'=>$dados['trabalhador']
         ]);
@@ -35,7 +34,6 @@ class Bancario extends Model
             'bsoperacao'=>$dados['operacao'],
             'bsconta'=>$dados['conta'],
             'bspix'=>$dados['pix'],
-            'bsdefaltor'=>$dados['deflator']
         ]);
     }
     public function first($id,$campo)

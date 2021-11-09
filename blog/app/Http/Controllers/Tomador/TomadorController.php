@@ -13,6 +13,7 @@ use App\RetencaoFatura;
 use App\CartaoPonto;
 use App\Parametrosefip;
 use App\TaxaTrabalhador;
+use App\IncideFolhar;
 use App\IndiceFatura;
 use App\TabelaPreco;
 class TomadorController extends Controller
@@ -57,23 +58,25 @@ class TomadorController extends Controller
         $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
-        $taxatrabalhador = new TaxaTrabalhador;
+        $incidefolhar = new IncideFolhar;
+        // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
         $tomadors = $tomador->cadastro($dados);
         if ($tomadors) {
             $dados['tomador'] = $tomadors['id'];
+            $incidefolhars = $incidefolhar->cadastro($dados);
             $enderecos = $endereco->cadastro($dados); 
             $taxas = $taxa->cadastro($dados);
             $bancarios = $bancario->cadastro($dados);
             $retencaofaturas = $retencaofatura->cadastro($dados);
             $cartaoponto = $cartaoponto->cadastro($dados);
             $parametrosefips = $parametrosefip->cadastro($dados);
-            $taxatrabalhador = $taxatrabalhador->cadastro($dados);
+            // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
             $indicefaturas = $indicefatura->cadastro($dados);
             if ($enderecos && $taxas
             && $bancarios && $retencaofaturas && 
-            $cartaoponto && $parametrosefips && 
-            $taxatrabalhador && $indicefaturas) {
+            $cartaoponto && $parametrosefips && $incidefolhars &&
+             $indicefaturas) {
                 $condicao = 'cadastratrue';
             }else{
                 $condicao = 'cadastrafalse';

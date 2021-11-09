@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Parametrosefip extends Model
 {
     protected $fillable = [
-        'psfpas','psgrps','psresol','pscnae','psfapaliquota','psratajustados','psfpasterceiros','psaliquotaterceiros','pssocial','tomador'
+        'psfpas','psgrps','psresol','pscnae','psfapaliquota','psratajustados','psfpasterceiros','psaliquotaterceiros','tomador'
     ];
     public function cadastro($dados)
     {
@@ -21,7 +21,6 @@ class Parametrosefip extends Model
             'psratajustados'=>str_replace(",",".",$dados['rat__ajustado']),
             'psfpasterceiros'=>$dados['fpas__terceiros'],
             'psaliquotaterceiros'=>$dados['aliq__terceiros'],
-            'pssocial'=>$dados['esocial'],
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -37,7 +36,7 @@ class Parametrosefip extends Model
         'psratajustados'=>$dados['rat__ajustado'],
         'psfpasterceiros'=>$dados['fpas__terceiros'],
         'psaliquotaterceiros'=>$dados['aliq__terceiros'],
-        'pssocial'=>$dados['esocial'],
+       
     ]);
     }
     public function deletar($id)

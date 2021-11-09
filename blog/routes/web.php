@@ -23,7 +23,8 @@ Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['in
 
 Route::middleware(['admin'])->group(function () {
     Route::resource('home','Home\\HomeController')->names('home');
-    Route::resource('usuariotrabalhador','Usuariotrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
+    Route::resource('rolnomealfabetica','Trabalhador\\RelatorioController')->only(['index']);
+    Route::resource('usuariotrabalhador','UsuarioTrabalhador\\UsuarioTrabalhadorController')->names('usuariotrabalhador');
     Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
     Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
     Route::resource('inss','Inss\\InssController')->names('inss');

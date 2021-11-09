@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaxasTable extends Migration
+class CreateIncideFolharsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateTaxasTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxas', function (Blueprint $table) {
+        Schema::create('incide_folhars', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('tftaxaadm',8,2)->nullable();
-            // $table->float('tfbenef',8,2)->nullable();
-            // $table->float('tfferias',8,2)->nullable();
-            // $table->float('tf13',8,2)->nullable();
-            $table->float('tfdefaltor',8,2)->nullable();
-            $table->float('tftaxafed',8,2)->nullable();
-            $table->float('tfdas',8,2)->nullable();
+            $table->float('insalimentacao',8,2)->nullable();
+            $table->float('instransporte',8,2)->nullable();
+            $table->integer('instipotrans')->nullable();
+            $table->integer('instipoali')->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();
@@ -35,6 +32,6 @@ class CreateTaxasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taxas');
+        Schema::dropIfExists('incide_folhars');
     }
 }

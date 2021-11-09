@@ -77,7 +77,14 @@
                             <input type="text" class="form-control" name="telefone" value="" id="telefone">
                         </div>
 
-
+                        <div class="col-md-2">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select id="tipo" name="tipo" class="form-select" value="">
+                            <option selected value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            </select>
+                        </div>
                         <h1 class="container text-center  fs-4 fw-bold">Endereço</h1>
 
                         <div class="col-md-2">
@@ -121,7 +128,7 @@
                             <input type="text" class="form-control" name="complemento__endereco" value="" id="complemento">
                         </div>
 
-                        <h1 class="container text-center  fs-4 fw-bold">Tomador</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Tomador Taxas</h1>
 
 
                         <div class="col-md-2">
@@ -129,17 +136,17 @@
                             <input type="text" class="form-control " name="taxa_adm" value="" id="taxa_adm">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 d-none">
                             <label for="caixa_benef" class="form-label">Caixa benef. %</label>
                             <input type="text" class="form-control" name="caixa_benef" value="" id="caixa_benef">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 d-none">
                             <label for="ferias" class="form-label">Férias 1,00 %</label>
                             <input type="text" class="form-control" name="ferias" value="" id="ferias">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                             <label for="13_salario" class="form-label">13º Salário 0,66 %</label>
                             <input type="text" class="form-control" name="13_salario" value="" id="13_salario">
                         </div>
@@ -152,29 +159,32 @@
                             <label for="deflator" class="form-label">% DEFLATOR</label>
                             <input type="text" class="form-control" name="deflator" value="" id="deflator">
                         </div>
-
-                        <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1>
-
-
-                        <div class="col-md-3">
-                            <label for="ferias_trab" class="form-label">Férias %</label>
-                            <input type="text" class="form-control" name="ferias_trab" value="" id="ferias_trab">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="13__saltrab" class="form-label">13º Sálario %</label>
-                            <input type="text" class="form-control" name="13__saltrab" value="" id="13__saltrab">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="rsr" class="form-label">RSR %</label>
-                            <input type="text" class="form-control" name="rsr" value="" id="rsr">
-                        </div>
-
                         <div class="col-md-3">
                             <label for="das" class="form-label">DAS %</label>
                             <input type="text" class="form-control" name="das" value="" id="das">
                         </div>
+                        <!-- <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1> -->
+
+
+                        <div class="col-md-3 d-none">
+                            <label for="ferias_trab" class="form-label">Férias %</label>
+                            <input type="text" class="form-control" name="ferias_trab" value="" id="ferias_trab">
+                        </div>
+
+                        <div class="col-md-3 d-none">
+                            <label for="13__saltrab" class="form-label">13º Sálario %</label>
+                            <input type="text" class="form-control" name="13__saltrab" value="" id="13__saltrab">
+                        </div>
+
+                        <div class="col-md-3 d-none">
+                            <label for="rsr" class="form-label">RSR %</label>
+                            <input type="text" class="form-control" name="rsr" value="" id="rsr">
+                        </div>
+
+                        <!-- <div class="col-md-3">
+                            <label for="das" class="form-label">DAS %</label>
+                            <input type="text" class="form-control" name="das" value="" id="das">
+                        </div> -->
 
 
                         <h1 class="container text-center  fs-4 fw-bold">Parametros SEFIP</h1>
@@ -220,16 +230,16 @@
                             <input type="text" class="form-control" name="aliq__terceiros" value="" id="aliq__terceiros">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                             <label for="esocial" class="form-label">E-SOCIAL Nº</label>
                             <input type="text" class="form-control" name="esocial" value="" id="esocial">
                         </div>
 
-                        <h1 class="container text-center  fs-4 fw-bold">Indice Sobre Fatura</h1>
+                        <h1 class="container text-center  fs-4 fw-bold">Incide Sobre Fatura</h1>
 
 
                         <div class="col-md-3">
-                            <label for="alimentacao" class="form-label">Alimentação</label>
+                            <label for="alimentacao" class="form-label">VA Alimentação</label>
                             <input type="text" class="form-control" name="alimentacao" value="" id="alimentacao">
                         </div>
 
@@ -263,7 +273,31 @@
                             <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
                             <input type="text" class="form-control" name="valor__alimentacao" value="" id="valor__alimentacao">
                         </div>
+                        <h1 class="container text-center  fs-4 fw-bold">Incide sobre a folha</h1>
 
+
+                        <div class="col-md-3">
+                            <label for="folhartransporte" class="form-label">VT Transporte</label>
+                            <input type="text" class="form-control" name="folhartransporte" value="" id="folhartransporte">
+                        </div>
+                        <div class="col-md-3">
+                        <label for="folhartipotrans" class="form-label">Tipo</label>
+                        <select class="form-select" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                        </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="folharalim" class="form-label">VA Alimentação</label>
+                            <input type="text" class="form-control" name="folharalim" value="" id="folharalim">
+                        </div>
+                        <div class="col-md-3">
+                        <label for="folhartipoalim" class="form-label">Tipo</label>
+                        <select class="form-select" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                        </select>
+                        </div>
                         <h1 class="container text-center  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
 
                         <div class="col-md-4">
@@ -285,28 +319,36 @@
                         <h1 class="container text-center  fs-4 fw-bold">Retenções na Fatura</h1>
 
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="inss__empresa" class="form-label">INSS Empresa %</label>
                             <input type="text" class="form-control" name="inss__empresa" value="" id="inss__empresa">
                         </div>
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                        <label for="retencaoinss" class="form-label">Retenção INSS</label>
+                        <select class="form-select" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
+                            <option value="sim" selected>SIM</option>
+                            <option value="não">NÃO</option>
+                        </select>
+                        </div>
+                        <div class="col-md-3">
                             <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
                             <input type="text" class="form-control" name="fgts__empresa" value="" id="fgts__empresa">
                         </div>
-
-
-                        <h1 class="container text-center  fs-4 fw-bold">Base da Fatura</h1>
-
-                        <div class="col-md-4">
-                            <label for="valor_fatura" class="form-label">(P) Valor da Produção - (F) Valor da Folha</label>
-                            <input type="text" class="form-control" name="valor_fatura" value="" id="valor_fatura">
+                        <div class="col-md-3">
+                        <label for="retencaofgts" class="form-label">Retenção FGTS</label>
+                        <select class="form-select" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
+                            <option value="sim" selected>SIM</option>
+                            <option value="não">NÃO</option>
+                        </select>
                         </div>
-
-
+                        <div class="col-md-3">
+                        <label for="valorfatura" class="form-label">Base da Fatura</label>
+                        <select class="form-select" id="valorfatura" name="valor_fatura" aria-label="Default select example">
+                            <option value="Produção" selected>Produção</option>
+                            <option value="Fatura">Fatura</option>
+                        </select>
+                        </div>
                         <h1 class="container text-center  fs-4 fw-bold">Dados Bancários</h1>
-
-
                         <div class="col-md-6">
                             <label for="nome__conta" class="form-label">Nome do Titular</label>
                             <input type="text" class="form-control" name="nome__conta" value="" id="nome__conta">

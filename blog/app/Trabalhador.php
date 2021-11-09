@@ -94,4 +94,29 @@ class Trabalhador extends Model
     {
         return Trabalhador::where('id', $id)->delete();
     }
+    public function roltrabalhado()
+    {
+        return DB::table('trabalhadors')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->select(
+            'trabalhadors.*', 
+            'documentos.*', 
+            'categorias.*',
+            'nascimentos.*',
+            )
+            ->where(function($query){
+                $cargo =['admin'];
+                $user = auth()->user();
+                if (in_array($user->cargo,$cargo)) {
+                    $query->where('trabalhadors.id', '>', 0);
+                }else{
+                    $query->where('trabalhadors.user', $user->id);
+                }
+            })
+        ->orderBy('tsnome', 'asc')
+        ->get();
+           
+    }
 }

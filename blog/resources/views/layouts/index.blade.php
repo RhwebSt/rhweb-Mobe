@@ -24,6 +24,7 @@
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist
 /additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
         
 
     </head>
@@ -131,7 +132,7 @@
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Frequencia na Produção</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Ordem Nome</a></li>
+                                <li><a class="dropdown-item border-bottom border-secundary" id="ordemnome" href="#">Rol Trabalhadores Gráficos- Ordem Nome</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Ordem Cadastro</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol RG</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol Contas Bancos</a></li>
@@ -210,7 +211,52 @@
             </div>
           </div>
 </nav>
+<div class="container" id="template_invoice">
+  <div class="row">
+    <div class="col-xs-6">
+      <address>
+        <strong>ROL DOS TRABALHADOR ALFABETICA: </strong>
+    	R121<br>
+    	MOBE PRESTADORA DE SERVIÇOS LTDA<br>
+      </address>
+    </div>
+   
+  </div>
+ 
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <!-- <h3 class="panel-title"><strong>Order summary</strong></h3> -->
+        </div>
+        <div class="">
+          <div class="table-responsive">
+            <table class="table  table-borderless" id="table" style="font-size: 10px;">
+              <thead>
+                <tr>
+                  <td class="text-center"><strong>MAT</strong></td>
+                  <td class="text-center"><strong>NOME</strong></td>
+                  <td class="text-center"><strong>DTA.ADM</strong></td>
+                  <td class="text-right"><strong>DTA.NAS</strong></td>
+                  <td class="text-right"><strong>PIS</strong></td>
+                  <td class="text-right"><strong>CPF</strong></td>
+                  <td class="text-right"><strong>SITUAC</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     @yield('conteine')
+
     <footer style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
         <p class="text-center p-4  col-md-12" style="margin-top: 100px;">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
@@ -218,7 +264,51 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="{{url('/js/masck.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
+    <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script> -->
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
+    <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
+    <script>
+       
+        $(document).ready(function(){
+          $.ajax({
+                url: "{{url('rolnomealfabetica')}}",
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                  if (data.length > 0) {
+                    data.forEach(element => {
+                      $('#table tbody').prepend( `<tr>
+                                                  <td>${branco(element.tsmatricula)}</td>
+                                                  <td class="text-center">${branco(element.tsnome)}</td>
+                                                  <td class="text-center">${converte(element.csadmissao)}</td>
+                                                  <td class="text-right">${converte(element.nsnascimento)}</td>
+                                                  <td class="text-right">${branco(element.dspis)}</td>
+                                                  <td class="text-right">${branco(element.tscpf)}</td>
+                                                  <td class="text-right">${branco(element.cssituacao)}</td>
+                                              </tr>` );
+                    });
+                    
+                  }
+                    console.log(data)
+                }
+            });
+            function converte(valor) {
+              if (valor) {
+                var novadata = valor.split('-')
+                return `${novadata[2]}/${novadata[1]}/${novadata[0]}`
+              }else{
+                return ' '
+              }
+            }
+            function branco(valor) {
+              if (valor) {
+                return valor
+              }else{
+                return ' '
+              }
+            }
+        })
+       
+    </script>
   </body>
 </html>

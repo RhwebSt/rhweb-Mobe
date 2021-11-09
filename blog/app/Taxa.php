@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Taxa extends Model
 {
     protected $fillable = [
-        'tftaxaadm','tfbenef','tfferias','tf13','tftaxafed','tomador'
+        'tftaxaadm','tfdefaltor','tfdas','tftaxafed','tomador'
     ];
     public function cadastro($dados)
     {
         return Taxa::create([
             'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
-            'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfferias'=>str_replace(",",".",$dados['ferias']),
-            'tf13'=>str_replace(",",".",$dados['13_salario']),
+            // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
+            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
+            'tfdas'=>str_replace(",",".",$dados['das']),
             'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
             'tomador'=>$dados['tomador']
         ]);
@@ -25,9 +25,9 @@ class Taxa extends Model
       return Taxa::where('id', $id)
       ->update([
         'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
-            'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfferias'=>str_replace(",",".",$dados['ferias']),
-            'tf13'=>str_replace(",",".",$dados['13_salario']),
+            // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
+            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
+            'tfdas'=>str_replace(",",".",$dados['das']),
             'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
     ]);
     }
