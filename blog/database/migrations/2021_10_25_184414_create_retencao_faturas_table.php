@@ -16,9 +16,9 @@ class CreateRetencaoFaturasTable extends Migration
         Schema::create('retencao_faturas', function (Blueprint $table) {
             $table->increments('id');
             $table->float('rsinssempresa',8,2)->nullable();
-            $table->integer('rstipoinssempresa')->nullable();
+            $table->char('rstipoinssempresa',5)->nullable();
             $table->float('rsfgts',8,2)->nullable();
-            $table->integer('rstipofgts')->nullable();
+            $table->char('rstipofgts',5)->nullable();
             $table->char('rsvalorfatura',15)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
