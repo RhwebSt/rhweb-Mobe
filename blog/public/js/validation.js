@@ -40,6 +40,9 @@ $("#form").validate({
         uf:{
             required:true
         },
+        tipo:{
+            required:true
+        },
         taxa_adm:{
             required:true
         },
@@ -124,7 +127,66 @@ $("#form").validate({
         valor:{
             required:true
         },
-      
+        nome_tomador:{
+            required:true
+        },
+        nome__trabalhador:{
+            required:true
+        },
+        matricula__trab:{
+            required:true
+        },
+        indice:{
+            required:true
+        },
+        alimentacao:{
+            required:true
+        },
+        transporte:{
+            required:true
+        },
+        epi:{
+            required:true
+        },
+        seguro__trabalhador:{
+            required:true
+        },
+        indice__folha:{
+            required:true
+        },
+        valor__transporte:{
+            required:true
+        },
+        valor__alimentacao:{
+            required:true
+        },
+        folhartransporte:{
+            required:true
+        },
+        folhartipotrans:{
+            required:true
+        },
+        folharalim:{
+            required:true
+        },
+        folhartipoalim:{
+            required:true
+        },
+        nome__conta:{
+            required:true
+        },
+        banco:{
+            required:true
+        },
+        agencia:{
+            required:true
+        },
+        operacao:{
+            required:true
+        },
+        conta:{
+            required:true
+        }
     },
     messages:{
         nome__completo: {
@@ -156,6 +218,9 @@ $("#form").validate({
         },
         numero:{
             required:'O campo NUMERO não pode esta vazio!',
+        },
+        tipo:{
+            required:'O campo não pode esta vazio!',
         },
         bairro:{
             required:'O campo BAIRRO não pode esta vazio!',
@@ -248,6 +313,66 @@ $("#form").validate({
             required:'O campo não pode esta vazio!',
         },
         rubricas:{
+            required:'O campo não pode esta vazio!',
+        },
+        nome_tomador:{
+            required:'O campo não pode esta vazio!',
+        },
+        nome__trabalhador:{
+            required:'O campo não pode esta vazio!',
+        },
+        matricula__trab:{
+            required:'O campo não pode esta vazio!',
+        },
+        indice:{
+            required:'O campo não pode esta vazio!',
+        },
+        alimentacao:{
+            required:'O campo não pode esta vazio!',
+        },
+        transporte:{
+            required:'O campo não pode esta vazio!',
+        },
+        epi:{
+            required:'O campo não pode esta vazio!',
+        },
+        seguro__trabalhador:{
+            required:'O campo não pode esta vazio!',
+        },
+        indice__folha:{
+            required:'O campo não pode esta vazio!',
+        },
+        valor__transporte:{
+            required:'O campo não pode esta vazio!',
+        },
+        valor__alimentacao:{
+            required:'O campo não pode esta vazio!',
+        },
+        folhartransporte:{
+            required:'O campo não pode esta vazio!',
+        },
+        folhartipotrans:{
+            required:'O campo não pode esta vazio!',
+        },
+        folharalim:{
+            required:'O campo não pode esta vazio!',
+        },
+        folhartipoalim:{
+            required:'O campo não pode esta vazio!',
+        },
+        nome__conta:{
+            required:'O campo não pode esta vazio!',
+        },
+        banco:{
+            required:'O campo não pode esta vazio!',
+        },
+        agencia:{
+            required:'O campo não pode esta vazio!',
+        },
+        operacao:{
+            required:'O campo não pode esta vazio!',
+        },
+        conta:{
             required:'O campo não pode esta vazio!',
         }
     }

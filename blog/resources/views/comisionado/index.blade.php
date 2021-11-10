@@ -53,8 +53,8 @@
               </div>
               <h5 class="card-title text-center fs-3 ">Comissionado</h5>
                 <div class="col-md-6">
-                  <label for="tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control" name="nome_tomador" value="" id="tomador">
+                  <label for="nome_tomador" class="form-label">Tomador</label>
+                  <input type="text" class="form-control"  name="nome_tomador" value="" id="nome_tomador">
                 </div>
 
                 <div class="col-md-6">
@@ -66,7 +66,7 @@
                   <label for="matricula__trab" class="form-label">Matricula Trabalhador</label>
                   <input type="text" class="form-control" name="matricula__trab" value="" id="matricula__trab">
                 </div>
-
+                <input type="hidden" id="comissionado">
                 <div class="col-md-3">
                   <label for="indice" class="form-label">Indíce %</label>
                   <input type="text" class="form-control" name="indice" value="" id="indice">
@@ -97,14 +97,19 @@
         $(document).ready(function(){
            
            
-            $( "#tomador" ).keyup(function() {
-                var dados = $( "#tomador" ).val();
+            $( "#nome_tomador" ).keyup(function() {
+                var dados = $( "#nome_tomador" ).val();
                 $.ajax({
                     url: "{{url('tomador')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                        $('#idtomador').val(data.tomador)
+                      if (data.tomador && $('#idtrabalhador').val() && $('#comissionado').val() || !data.tomador) {
+                        $('#incluir').attr('disabled','disabled')
+                      }else{
+                        $('#incluir').removeAttr( "disabled" )
+                      }
+                      $('#idtomador').val(data.tomador)
                     }
                 });
             });
@@ -115,20 +120,15 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                        if (data.trabalhador) {
-                            
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                            comissionador(data.trabalhador)
+                        if (data.trabalhador && $('#idtomador').val() && $('#comissionado').val() || !data.trabalhador) {
+                          $('#incluir').attr('disabled','disabled')
                         }else{
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#excluir').attr( "disabled" )
+                          $('#incluir').removeAttr( "disabled" )
                         }
+                        $('#matricula__trab').val(data.tsmatricula)
                         $('#idtrabalhador').val(data.trabalhador)
-                        
+                        comissionador(data.trabalhador)
+                       
                     }
                 });
             });
@@ -138,9 +138,22 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
+                      if (data.id) {
+                       
+                        $('#comissionado').val(data.id);
+                        $('#atualizar').removeAttr( "disabled" )
+                        $('#excluir').removeAttr( "disabled" )
+                        $('#incluir').attr('disabled','disabled')
+                        $('#method').val('PUT')
                         $('#matricula__trab').val(data.csmatricula)
                         $('#indice').val(data.csindece);
+                        $('#tomador').val(data.tsnome)
                         $('#form').attr('action', "{{ url('comisionado')}}/"+data.id);
+                      }else{
+                          // $('#incluir').attr('disabled','disabled')
+                          $('#atualizar').attr('disabled','disabled')
+                          $('#excluir').attr( "disabled" )
+                      }
                     }
                 })
             }

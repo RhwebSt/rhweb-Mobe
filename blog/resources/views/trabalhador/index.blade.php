@@ -39,7 +39,7 @@
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                 <a class="btn btn btn-primary disabled"  id="depedente" role="button">Dependentes</a>
-                <a class="btn btn btn-primary" href="#" role="button">Sair</a>
+                <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
         <div class="container text-center   fs-4 fw-bold">Identificação do Trabalhador</div>
         @csrf

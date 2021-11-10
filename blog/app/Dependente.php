@@ -43,6 +43,6 @@ class Dependente extends Model
     }
     public function deletar($id)
     {
-        return Dependente::where('id', $id)->orWhere('trabalhador', $id)->delete();
+        return Dependente::where('id', $id)->delete();
     }
 }

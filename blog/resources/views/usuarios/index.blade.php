@@ -48,7 +48,7 @@
                    
                     
 
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button type="button" disabled class="btn btn-primary" id="permicao" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Permissões
                       </button>
   
@@ -87,7 +87,14 @@
 
                 <div class="col-md-4">
                   <label for="nome__completo" class="form-label">Nome do tomador</label>
-                  <input type="text" class="form-control pesquisa" name="nome__completo" value="" id="nome__completo">
+                  <input class="form-control" list="datalistOptions" name="nome__completo" id="nome__completo" >
+                  <datalist id="datalistOptions">
+                    <!-- <option value="San Francisco">
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Chicago"> -->
+                  </datalist>
                 </div>
 
                 <div class="col-md-3">
@@ -133,34 +140,40 @@
         $(document).ready(function(){
           $( "#usuario" ).keyup(function() {
                 var dados = $(this).val();
-                $.ajax({
-                    url: "{{url('usuario')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        if (data.id) {
-                            $('#form').attr('action', "{{ url('usuario')}}/"+data.id);
-                            $('#formdelete').attr('action',"{{ url('usuario')}}/"+data.id)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#deletar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                            $('#nome__completo').val(data.esnome)
-                            $('#cargo').val(data.cargo)
-                        }else{
-                        
-                            $('#form').attr('action', "{{ route('usuario.store') }}");
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#depedente').removeAttr( "disabled" )
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#deletar').attr('disabled','disabled')
-                            $('#method').val(' ')
-                            $('#excluir').attr( "disabled" )
-                        }
-                       
-                    }
-                });
+                if (dados) {
+                  $.ajax({
+                      url: "{{url('usuario')}}/"+dados,
+                      type: 'get',
+                      success: function(data) {
+                          if (data.id) {
+                              $('#form').attr('action', "{{ url('usuario')}}/"+data.id);
+                              $('#formdelete').attr('action',"{{ url('usuario')}}/"+data.id)
+                              $('#incluir').attr('disabled','disabled')
+                              $('#atualizar').removeAttr( "disabled" )
+                              $('#deletar').removeAttr( "disabled" )
+                              $('#excluir').removeAttr( "disabled" )
+                              $('#permicao').removeAttr( "disabled" )
+                              $('#method').val('PUT')
+                              $('#nome__completo').val(data.esnome)
+                              $('#cargo').val(data.cargo)
+                              $('#senha').val('')
+                          }else{
+                          
+                              $('#form').attr('action', "{{ route('usuario.store') }}");
+                              $('#incluir').removeAttr( "disabled" )
+                              $('#depedente').removeAttr( "disabled" )
+                              $('#atualizar').attr('disabled','disabled')
+                              $('#deletar').attr('disabled','disabled')
+                              $('#permicao').attr('disabled','disabled')
+                              $('#method').val(' ')
+                              $('#excluir').attr( 'disabled','disabled' )
+                              $('#nome__completo').val('')
+                              $('#cargo').val('')
+                              $('#senha').val('')
+                          }
+                      }
+                  });
+                }
             });
             $( ".pesquisa" ).keyup(function() {
                 var dados = $(this).val();

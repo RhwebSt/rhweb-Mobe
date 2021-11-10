@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Comissionado extends Model
 {
     protected $fillable = [
@@ -21,7 +21,21 @@ class Comissionado extends Model
     }
     public function first($id)
     {
-        return Comissionado::where('trabalhador', $id)->first();
+        return DB::table('comissionados')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
+        
+        ->select(
+            'tomadors.*', 
+           'comissionados.*'
+        )
+        ->where(function($query) use ($id){
+            $cargo =['admin'];
+            $user = auth()->user();
+            if (in_array($user->cargo,$cargo)) {
+                $query->where('trabalhador', $id);
+            }
+        })
+        ->first();
     }
     public function editar($dados,$id)
     {

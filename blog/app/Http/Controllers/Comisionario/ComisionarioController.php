@@ -38,6 +38,7 @@ class ComisionarioController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $trabalhador = new Comissionado;
         $trabalhadors = $trabalhador->cadastro($dados);
         if ($trabalhadors) {
@@ -82,7 +83,7 @@ class ComisionarioController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-
+        // dd($dados);
         $comissionado = new Comissionado;
         $comissionados = $comissionado->editar($dados,$id);
         if ($comissionados) {

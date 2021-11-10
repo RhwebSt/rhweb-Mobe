@@ -38,11 +38,13 @@
                             {{$depedente->dstipo}}
                         </td>
                         <td class="bg-light text-black">
-                            <?php
-                                $data = explode('-',$depedente->dsdata);
-                                $data = $data[2]."/".$data[1]."/".$data[0];
-                            ?>
-                            {{$data}}
+                            @if($depedente->dsdata)
+                                <?php
+                                    $data = explode('-',$depedente->dsdata);
+                                    $data = $data[2]."/".$data[1]."/".$data[0];
+                                ?>
+                                {{$data}}
+                            @endif
                         </td>
                         <td class="bg-light text-black">
                             {{$depedente->dsirrf}}

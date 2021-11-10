@@ -19,6 +19,7 @@ class DepedenteController extends Controller
         $id = $depedente;
         $depedente = new Dependente;
         $depedentes = $depedente->lista($id);
+        // dd($depedentes);
         $user = Auth::user();
         return view('trabalhador.depedente.index',compact('depedentes','id','user'));
     }

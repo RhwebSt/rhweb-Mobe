@@ -38,7 +38,7 @@
                         Excluir
                       </button>
                       <a class="btn btn-primary disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
-                            <a class="btn btn btn-primary" href="#" role="button">Sair</a>
+                            <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
                             
                         </div>
                         <div class="container text-center  fs-4 fw-bold">Dados da Empresa</div>
@@ -103,7 +103,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <label for="tipo" class="form-label">Tipo</label>
+                            <label for="tipo" class="form-label">Tipo da construção</label>
                             <input type="text" class="form-control" name="tipo" value="" id="tipo">
                         </div>
 
@@ -415,85 +415,90 @@
            
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
-                $.ajax({
-                    url: "{{url('tomador')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        if (data.id) {
-                            $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                            $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#deletar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
-                            $('#method').val('PUT')
-                           
-                        }else{
-                            $('#form').attr('action', "{{ route('tomador.store') }}");
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#deletar').attr('disabled','disabled')
-                            $('#method').val(' ')
-                            $('#excluir').attr( "disabled",'disabled' )
-                            $('#tabelapreco').addClass('disabled').removeAttr('href')
+                if (dados) {
+                    $.ajax({
+                        url: "{{url('tomador')}}/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            console.log(data);
+                            if (data.id) {
+                                $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
+                                $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
+                                $('#incluir').attr('disabled','disabled')
+                                $('#atualizar').removeAttr( "disabled" )
+                                $('#deletar').removeAttr( "disabled" )
+                                $('#excluir').removeAttr( "disabled" )
+                                $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
+                                $('#method').val('PUT')
+                            
+                            }else{
+                                $('#form').attr('action', "{{ route('tomador.store') }}");
+                                $('#incluir').removeAttr( "disabled" )
+                                $('#atualizar').attr('disabled','disabled')
+                                $('#deletar').attr('disabled','disabled')
+                                $('#method').val(' ')
+                                $('#excluir').attr( "disabled",'disabled' )
+                                $('#tabelapreco').addClass('disabled').removeAttr('href')
+                            }
+                            $('#cnpj').val(data.tscnpj)
+                            $('#matricula').val(data.tsmatricula)
+                            $('#nome__fantasia').val(data.tsfantasia)
+                            $('#simples').val(data.tssimples)
+                            $('#telefone').val(data.tstelefone)
+                            $('#cep').val(data.escep)
+                            $('#logradouro').val(data.eslogradouro)
+                            $('#numero').val(data.esnum)
+                            $('#tipo').val(data.estipo)
+                            $('#bairro').val(data.esbairro)
+                            $('#localidade').val(data.esmunicipio)
+                            $('#uf').val(data.esuf)
+                            $('#complemento').val(data.escomplemento)
+                            $('#taxa_adm').val(data.tftaxaadm.toFixed(2).toString().replace(".", ","))
+                            // $('#caixa_benef').val(data.tfbenef.toFixed(2).toString().replace(".", ","))
+                            // $('#ferias').val(data.tfferias.toFixed(2).toString().replace(".", ","))
+                            // $('#13_salario').val(data.tf13.toFixed(2).toString().replace(".", ","))
+                            $('#taxa__fed').val(data.tftaxafed.toFixed(2).toString().replace(".", ","))
+                            // $('#ferias_trab').val(data.tsferias.toFixed(2).toString().replace(".", ","))
+                            // $('#13__saltrab').val(data.tsdecimo13.toFixed(2).toString().replace(".", ","))
+                            // $('#rsr').val(data.tsrsr.toFixed(2).toString().replace(".", ","))
+                            $('#das').val(data.tfdas.toFixed(2).toString().replace(".", ","))
+                            $('#cod__fpas').val(data.psfpas)
+                            $('#cod__grps').val(data.psgrps)
+                            $('#cod__recol').val(data.psresol)
+                            $('#cnae').val(data.pscnae)
+                            $('#fap__aliquota').val(data.psfapaliquota.toFixed(2).toString().replace(".", ","))
+                            $('#rat__ajustado').val(data.psratajustados.toFixed(2).toString().replace(".", ","))
+                            $('#fpas__terceiros').val(data.psfpasterceiros)
+                            $('#aliq__terceiros').val(data.psaliquotaterceiros)
+                            $('#esocial').val(data.pssocial)
+                            $('#alimentacao').val(data.isalimentacao.toFixed(2).toString().replace(".", ","))
+                            $('#transporte').val(data.istransporte.toFixed(2).toString().replace(".", ","))
+                            $('#epi').val(data.isepi.toFixed(2).toString().replace(".", ","))
+                            $('#seguro__trabalhador').val(data.isseguroportrabalhador)
+                            $('#indice__folha').val(data.isindecesobrefolha)
+                            $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
+                            $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
+                            $('#dias_uteis').val(data.csdiasuteis)
+                            $('#sabados').val(data.cssabados)
+                            $('#domingos').val(data.csdomingos)
+                            $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
+                            $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
+                            // $('#valor_fatura').val(data.rsvalorfatura.toFixed(2).toString().replace(".", ","))
+                            $('#nome__conta').val(data.bstitular)
+                            $('#banco').val(data.bsbanco)
+                            $('#agencia').val(data.bsagencia)
+                            $('#operacao').val(data.bsoperacao)
+                            $('#conta').val(data.bsconta)
+                            $('#pix').val(data.bspix)
+                            $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))
+                            $('#folharalim').val(data.insalimentacao.toFixed(2).toString().replace(".", ","))
+                            $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
+                            $('#endereco').val(data.eiid)
+                            $('#bancario').val(data.biid)
                         }
-                        $('#cnpj').val(data.tscnpj)
-                        $('#matricula').val(data.tsmatricula)
-                        $('#nome__fantasia').val(data.tsfantasia)
-                        $('#simples').val(data.tssimples)
-                        $('#telefone').val(data.tstelefone)
-                        $('#cep').val(data.escep)
-                        $('#logradouro').val(data.eslogradouro)
-                        $('#numero').val(data.esnum)
-                        $('#tipo').val(data.estipo)
-                        $('#bairro').val(data.esbairro)
-                        $('#localidade').val(data.esmunicipio)
-                        $('#uf').val(data.esuf)
-                        $('#complemento').val(data.escomplemento)
-                        $('#taxa_adm').val(data.tftaxaadm.toString().replace(".", ","))
-                        $('#caixa_benef').val(data.tfbenef.toString().replace(".", ","))
-                        $('#ferias').val(data.tfferias.toString().replace(".", ","))
-                        $('#13_salario').val(data.tf13.toString().replace(".", ","))
-                        $('#taxa__fed').val(data.tftaxafed.toString().replace(".", ","))
-                        $('#ferias_trab').val(data.tsferias.toString().replace(".", ","))
-                        $('#13__saltrab').val(data.tsdecimo13.toString().replace(".", ","))
-                        $('#rsr').val(data.tsrsr.toString().replace(".", ","))
-                        $('#das').val(data.das.toString().replace(".", ","))
-                        $('#cod__fpas').val(data.psfpas)
-                        $('#cod__grps').val(data.psgrps)
-                        $('#cod__recol').val(data.psresol)
-                        $('#cnae').val(data.pscnae)
-                        $('#fap__aliquota').val(data.psfapaliquota.toString().replace(".", ","))
-                        $('#rat__ajustado').val(data.psratajustados.toString().replace(".", ","))
-                        $('#fpas__terceiros').val(data.psfpasterceiros)
-                        $('#aliq__terceiros').val(data.psaliquotaterceiros)
-                        $('#esocial').val(data.pssocial)
-                        $('#alimentacao').val(data.isalimentacao.toString().replace(".", ","))
-                        $('#transporte').val(data.istransporte.toString().replace(".", ","))
-                        $('#epi').val(data.isepi.toString().replace(".", ","))
-                        $('#seguro__trabalhador').val(data.isseguroportrabalhador)
-                        $('#indice__folha').val(data.isindecesobrefolha)
-                        $('#valor__transporte').val(data.isvaletransporte.toString().replace(".", ","))
-                        $('#valor__alimentacao').val(data.isvalealimentacao.toString().replace(".", ","))
-                        $('#dias_uteis').val(data.csdiasuteis)
-                        $('#sabados').val(data.cssabados)
-                        $('#domingos').val(data.csdomingos)
-                        $('#inss__empresa').val(data.rsinssempresa.toString().replace(".", ","))
-                        $('#fgts__empresa').val(data.rsfgts.toString().replace(".", ","))
-                        $('#valor_fatura').val(data.rsvalorfatura.toString().replace(".", ","))
-                        $('#nome__conta').val(data.bstitular)
-                        $('#banco').val(data.bsbanco)
-                        $('#agencia').val(data.bsagencia)
-                        $('#operacao').val(data.bsoperacao)
-                        $('#conta').val(data.bsconta)
-                        $('#pix').val(data.bspix)
-                        $('#deflator').val(data.bsdefaltor)
-                        $('#endereco').val(data.eiid)
-                        $('#bancario').val(data.biid)
-                    }
-                });
+                    });
+                }
             });
         });
     </script>

@@ -41,7 +41,7 @@ class Tomador extends Model
             ->join('retencao_faturas', 'tomadors.id', '=', 'retencao_faturas.tomador')
             ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
             ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
-            ->join('taxa_trabalhadors', 'tomadors.id', '=', 'taxa_trabalhadors.tomador')
+            ->join('incide_folhars', 'tomadors.id', '=', 'incide_folhars.tomador')
             ->join('indice_faturas', 'tomadors.id', '=', 'indice_faturas.tomador')
             ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
             ->select(
@@ -51,7 +51,7 @@ class Tomador extends Model
                 'retencao_faturas.*',
                 'cartao_pontos.*',
                 'parametrosefips.*',
-                'taxa_trabalhadors.*',
+                'incide_folhars.*',
                 'indice_faturas.*',
                 'bancarios.*'
             )

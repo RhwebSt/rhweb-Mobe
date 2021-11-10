@@ -1,7 +1,9 @@
 $("#telefone").mask("(00) 00000-0000");
 $("#cnpj").mask("00.000.000/0000-00");
 $('#cep').mask("00000-000")
-$('#caixa_benef,#ferias,#13_salario,#taxa__fed').mask('000,00', {reverse: true});
+$('#caixa_benef').mask('000,00', {reverse: true});
+$('#ferias').mask('000,00', {reverse: true});
+$('#13_salario').mask('000,00', {reverse: true});
 $('#taxa__fed').mask('9,9999', {reverse: true});
 $('#taxa_adm').mask('00,00', {reverse: true});
 $('#inss__empresa').mask('000,00', {reverse: true});
@@ -16,7 +18,10 @@ $('#cpf').mask('000.000.000-00', {reverse: true});
 $('#pis').mask('000.00000.00-0', {reverse: true})
 $('#rubricas').mask('00000000000')
 $('#das').mask('00,00', {reverse: true});
-$('#ferias_trab,#13__saltrab,#rsr,#fgts__empresa').mask('000,00', {reverse: true});
+$('#ferias_trab').mask('000,00', {reverse: true});
+$('#rsr').mask('000,00', {reverse: true});
+$('#13__saltrab').mask('000,00', {reverse: true});
+$('#fgts__empresa').mask('000,00', {reverse: true});
 $('#fap__aliquota').mask('0,0000', {reverse: true});
 $('#alimentacao').mask('000,00', {reverse: true});
 $('#transporte').mask('000,00', {reverse: true});
@@ -35,5 +40,11 @@ $('#operacao').mask('000')
 $('#conta').mask('00000000-0')
 $('#simples').mask('0')
 $('#valor_fatura').mask('000.000.000.000.000,00', {reverse: true});
-
+$('#matricula__trab').mask('0000')
+$('#indice').mask('0000')
+$('#folhartransporte').mask('000,00', {reverse: true});
+$('#folharalim').mask('000,00', {reverse: true});
+$('#dias_uteis').mask('00,00', {reverse: true});
+$('#sabados').mask('00,00', {reverse: true});
+$('#domingos').mask('00,00', {reverse: true});
 
