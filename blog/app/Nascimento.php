@@ -13,6 +13,7 @@ class Nascimento extends Model
     {
        return Nascimento::create([
             'nsnascimento'=>$dados['data_nascimento'],
+            'nsraca'=>$dados['raca'],
             'nscivil'=>$dados['estado__civil'],
             'nsnaturalidade'=>$dados['pais__nascimento'],
             'nsnacionalidade'=>$dados['pais__nacionalidade'],
@@ -25,6 +26,7 @@ class Nascimento extends Model
         ->update([
             'nsnascimento'=>$dados['data_nascimento'],
             'nscivil'=>$dados['estado__civil'],
+            'nsraca'=>$dados['raca'],
             'nsnaturalidade'=>$dados['pais__nascimento'],
             'nsnacionalidade'=>$dados['pais__nacionalidade']
         ]);

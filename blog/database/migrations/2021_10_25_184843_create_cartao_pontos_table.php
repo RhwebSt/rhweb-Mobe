@@ -15,9 +15,9 @@ class CreateCartaoPontosTable extends Migration
     {
         Schema::create('cartao_pontos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('csdiasuteis')->nullable();
-            $table->integer('cssabados')->nullable();
-            $table->integer('csdomingos')->nullable();
+            $table->float('csdiasuteis',8,2)->nullable();
+            $table->float('cssabados',8,2)->nullable();
+            $table->float('csdomingos',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();

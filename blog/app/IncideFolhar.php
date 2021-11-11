@@ -24,7 +24,7 @@ class IncideFolhar extends Model
         return IncideFolhar::where('tomador', $id)
         ->update([
             'insalimentacao'=>str_replace(",",".",$dados['folharalim']),
-            'instranporte'=>str_replace(",",".",$dados['folhartransporte']),
+            'instransporte'=>str_replace(",",".",$dados['folhartransporte']),
             'instipotrans'=>str_replace(",",".",$dados['folhartipotrans']),
             'instipoali'=>str_replace(",",".",$dados['folhartipoalim']),
         ]);

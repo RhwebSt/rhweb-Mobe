@@ -16,9 +16,9 @@ class IndiceFatura extends Model
             'istransporte'=>str_replace(",",".",$dados['transporte']),
             'isepi'=>str_replace(",",".",$dados['epi']),
             'isseguroportrabalhador'=>str_replace(",",".",$dados['seguro__trabalhador']),
-            'isindecesobrefolha'=>$dados['indice__folha'],
-            'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
-            'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),
+            // 'isindecesobrefolha'=>$dados['indice__folha'],
+            // 'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
+            // 'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -30,9 +30,9 @@ class IndiceFatura extends Model
             'istransporte'=>str_replace(",",".",$dados['transporte']),
             'isepi'=>str_replace(",",".",$dados['epi']),
             'isseguroportrabalhador'=>str_replace(",",".",$dados['seguro__trabalhador']),
-            'isindecesobrefolha'=>$dados['indice__folha'],
-            'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
-            'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),
+            // 'isindecesobrefolha'=>$dados['indice__folha'],
+            // 'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
+            // 'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),
         ]);
    }
    public function deletar($id)

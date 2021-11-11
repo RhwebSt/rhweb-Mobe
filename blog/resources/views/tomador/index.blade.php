@@ -79,12 +79,13 @@
 
                         <div class="col-md-2">
                             <label for="tipo" class="form-label">Tipo</label>
-                            <select id="tipo" name="tipo" class="form-select" value="">
-                            <option selected value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <select id="tipo" name="tipo" class="form-select">
+                            <option selected >1</option>
+                            <option >2</option>
+                            <option >3</option>
                             </select>
                         </div>
+                       
                         <h1 class="container text-center  fs-4 fw-bold">Endereço</h1>
 
                         <div class="col-md-2">
@@ -102,9 +103,12 @@
                             <input type="text" class="form-control" name="numero" value="" id="numero">
                         </div>
 
-                        <div class="col-md-3">
-                            <label for="tipo" class="form-label">Tipo da construção</label>
-                            <input type="text" class="form-control" name="tipo" value="" id="tipo">
+                        <div class="col-md-3"> 
+                                <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
+                                <select name="tipoconstrucao" id="tipoconstrucao" class="form-select">
+                                <option selected >Casa</option>
+                                <option >Apartamento</option>
+                            </select>
                         </div>
 
                         <div class="col-md-5">
@@ -283,8 +287,8 @@
                         <div class="col-md-3">
                         <label for="folhartipotrans" class="form-label">Tipo</label>
                         <select class="form-select" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
-                            <option value="1" selected>1</option>
-                            <option value="2">2</option>
+                            <option selected>1</option>
+                            <option >2</option>
                         </select>
                         </div>
                         <div class="col-md-3">
@@ -294,8 +298,8 @@
                         <div class="col-md-3">
                         <label for="folhartipoalim" class="form-label">Tipo</label>
                         <select class="form-select" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
-                            <option value="1" selected>1</option>
-                            <option value="2">2</option>
+                            <option  selected>1</option>
+                            <option>2</option>
                         </select>
                         </div>
                         <h1 class="container text-center  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
@@ -326,8 +330,8 @@
                         <div class="col-md-3">
                         <label for="retencaoinss" class="form-label">Retenção INSS</label>
                         <select class="form-select" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
-                            <option value="sim" selected>SIM</option>
-                            <option value="não">NÃO</option>
+                            <option  selected>SIM</option>
+                            <option>NÃO</option>
                         </select>
                         </div>
                         <div class="col-md-3">
@@ -337,15 +341,15 @@
                         <div class="col-md-3">
                         <label for="retencaofgts" class="form-label">Retenção FGTS</label>
                         <select class="form-select" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
-                            <option value="sim" selected>SIM</option>
-                            <option value="não">NÃO</option>
+                            <option selected>SIM</option>
+                            <option >NÃO</option>
                         </select>
                         </div>
                         <div class="col-md-3">
                         <label for="valorfatura" class="form-label">Base da Fatura</label>
                         <select class="form-select" id="valorfatura" name="valor_fatura" aria-label="Default select example">
-                            <option value="Produção" selected>Produção</option>
-                            <option value="Fatura">Fatura</option>
+                            <option selected>Produção</option>
+                            <option>Fatura</option>
                         </select>
                         </div>
                         <h1 class="container text-center  fs-4 fw-bold">Dados Bancários</h1>
@@ -469,15 +473,15 @@
                             $('#fap__aliquota').val(data.psfapaliquota.toFixed(2).toString().replace(".", ","))
                             $('#rat__ajustado').val(data.psratajustados.toFixed(2).toString().replace(".", ","))
                             $('#fpas__terceiros').val(data.psfpasterceiros)
-                            $('#aliq__terceiros').val(data.psaliquotaterceiros)
+                            $('#aliq__terceiros').val(data.psaliquotaterceiros.toString().replace(".", ","))
                             $('#esocial').val(data.pssocial)
                             $('#alimentacao').val(data.isalimentacao.toFixed(2).toString().replace(".", ","))
                             $('#transporte').val(data.istransporte.toFixed(2).toString().replace(".", ","))
                             $('#epi').val(data.isepi.toFixed(2).toString().replace(".", ","))
-                            $('#seguro__trabalhador').val(data.isseguroportrabalhador)
-                            $('#indice__folha').val(data.isindecesobrefolha)
-                            $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
-                            $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
+                            $('#seguro__trabalhador').val(data.isseguroportrabalhador.toString().replace(".", ","))
+                            // $('#indice__folha').val(data.isindecesobrefolha)
+                            // $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
+                            // $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
                             $('#dias_uteis').val(data.csdiasuteis)
                             $('#sabados').val(data.cssabados)
                             $('#domingos').val(data.csdomingos)
@@ -495,6 +499,55 @@
                             $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
                             $('#endereco').val(data.eiid)
                             $('#bancario').val(data.biid)
+                            for (let index = 0; index <  $('#tipo option').length; index++) {  
+                                if (data.tstipo == $('#tipo option').eq(index).text()) {
+                                    
+                                    $('#tipo option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#tipo option').eq(index).removeAttr('selected')
+                                }
+                            }
+                            
+                            for (let index = 0; index <  $('#folhartipotrans option').length; index++) {  
+                                if (data.instipotrans == $('#folhartipotrans option').eq(index).text()) {
+                                    
+                                    $('#folhartipotrans option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#folhartipotrans option').eq(index).removeAttr('selected')
+                                }
+                            }
+                            for (let index = 0; index <  $('#folhartipoalim option').length; index++) {  
+                                if (data.instipoali == $('#folhartipoalim option').eq(index).text()) {
+                                    
+                                    $('#folhartipoalim option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#folhartipoalim option').eq(index).removeAttr('selected')
+                                }
+                            }
+                            for (let index = 0; index <  $('#retencaofgts option').length; index++) {  
+                                if (data.rstipofgts == $('#retencaofgts option').eq(index).text()) {
+                                    
+                                    $('#retencaofgts option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#retencaofgts option').eq(index).removeAttr('selected')
+                                }
+                            }
+                            for (let index = 0; index <  $('#retencaoinss option').length; index++) {  
+                                if (data.rstipoinssempresa == $('#retencaoinss option').eq(index).text()) {
+                                    
+                                    $('#retencaoinss option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#retencaoinss option').eq(index).removeAttr('selected')
+                                }
+                            }
+                            for (let index = 0; index <  $('#valorfatura option').length; index++) {  
+                                if (data.rsvalorfatura == $('#valorfatura option').eq(index).text()) {
+                                    
+                                    $('#valorfatura option').eq(index).attr('selected','selected')
+                                }else  {
+                                    $('#valorfatura option').eq(index).removeAttr('selected')
+                                }
+                            }
                         }
                     });
                 }

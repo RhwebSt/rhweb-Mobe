@@ -273,7 +273,7 @@
     <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
-    <script>
+    <!-- <script>
        
         $(document).ready(function(){
           $.ajax({
@@ -315,6 +315,6 @@
             }
         })
        
-    </script>
+    </script> -->
   </body>
 </html>

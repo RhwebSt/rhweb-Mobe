@@ -88,9 +88,9 @@ $("#form").validate({
         fpas__terceiros:{
             required:true
         },
-        aliq__terceiros:{
-            required:true
-        },
+        // aliq__terceiros:{
+        //     required:true
+        // },
         esocial:{
             required:true
         },
@@ -276,9 +276,9 @@ $("#form").validate({
         fpas__terceiros:{
             required:'O campo FPAS Terceiros não pode esta vazio!'
         },
-        aliq__terceiros:{
-            required:'O campo Aliq. Terceiros não pode esta vazio!'
-        },
+        // aliq__terceiros:{
+        //     required:'O campo Aliq. Terceiros não pode esta vazio!'
+        // },
         esocial:{
             required:'O campo E-SOCIAL Nº não pode esta vazio!'
         },

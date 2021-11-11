@@ -74,7 +74,7 @@
                 <select id="sexo" name="sexo" class="form-select" >
                   <option selected>Masculino</option>
                   <option>Feminino</option>
-                  <option>Outro</option>
+                  <option >Outro</option>
                 </select>
             </div>
             
@@ -91,7 +91,7 @@
 
             <div class="col-md-2">
                 <label for="raca" class="form-label">Raça</label>
-                <select id="raca" name="raca" class="form-select" value="">
+                <select id="raca" name="raca" class="form-select">
                   <option selected>Preto</option>
                   <option>Pardo</option>
                   <option>Branco</option>
@@ -157,7 +157,7 @@
                 
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 d-none">
               <label for="tipo" class="form-label">Tipo</label>
               <input type="text" class="form-control" name="tipo__endereco" id="tipo" value="">
           </div>
@@ -180,7 +180,7 @@
             </div>
 
             <div class="col-md-4">
-              <label for="complemento" class="form-label">Complemento</label>
+              <label for="complemento" class="form-label">tipo</label>
               <input type="text" class="form-control" name="complemento__endereco" id="complemento" value="">
             </div>
 
@@ -304,7 +304,9 @@
                       </div>
         <script>
         $(document).ready(function(){
-           
+          for (let index = 0; index <  $('#sexo option').length; index++) {  
+                          console.log($('#sexo option').eq(index).text())
+                        }
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
@@ -352,7 +354,7 @@
                         $('#categoria').val(data.cscategoria)
                         $('#cbo').val(data.cbo)
                         $('#irrf').val(data.csirrf)
-                        $('#sf').val(data.psfpas)
+                        $('#sf').val(data.cssf)
                         $('#ctps').val(data.dsctps)
                         $('#serie__ctps').val(data.dsserie)
                         $('#uf__ctps').val(data.dsuf)
@@ -367,6 +369,35 @@
                         $('#bsdefaltor').val(data.deflator)
                         $('#endereco').val(data.eiid)
                         $('#bancario').val(data.biid)
+                        for (let index = 0; index <  $('#sexo option').length; index++) {  
+                          if (data.tssexo == $('#sexo option').eq(index).text()) {
+                            console.log('ok')
+                            $('#sexo option').eq(index).attr('selected','selected')
+                          }else  {
+                            $('#sexo option').eq(index).removeAttr('selected')
+                          }
+                        }
+                        for (let index = 0; index <  $('#estado__civil option').length; index++) {  
+                          if (data.nscivil === $('#estado__civil option').eq(index).text()) {
+                            $('#estado__civil option').eq(index).attr('selected','selected')
+                          }else{
+                            $('#estado__civil option').eq(index).removeAttr('selected')
+                          }
+                        }
+                        for (let index = 0; index <  $('#raca option').length; index++) {  
+                          if (data.nsraca === $('#raca option').eq(index).text()) {
+                            $('#raca option').eq(index).attr('selected','selected')
+                          }else{
+                            $('#raca option').eq(index).removeAttr('selected')
+                          }
+                        }
+                        for (let index = 0; index <  $('#grau__instrucao option').length; index++) {  
+                          if (data.tsescolaridade === $('#grau__instrucao option').eq(index).text()) {
+                            $('#grau__instrucao option').eq(index).attr('selected','selected')
+                          }else{
+                            $('#grau__instrucao option').eq(index).removeAttr('selected')
+                          }
+                        }
                     }
                 });
             });

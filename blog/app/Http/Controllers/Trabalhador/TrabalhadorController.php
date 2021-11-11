@@ -47,6 +47,7 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        
         $trabalhador = new Trabalhador;
         $endereco = new Endereco;
         $bancario = new Bancario;

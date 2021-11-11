@@ -51,6 +51,7 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $tomador = new Tomador;
         $taxa = new Taxa;
         $endereco = new Endereco;
@@ -129,7 +130,8 @@ class TomadorController extends Controller
         $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
-        $taxatrabalhador = new TaxaTrabalhador;
+        $incidefolhar = new IncideFolhar;
+        // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
         $condicao = '';
         $tomadors = $tomador->editar($dados,$id);
@@ -138,13 +140,16 @@ class TomadorController extends Controller
         $retencaofaturas = $retencaofatura->editar($dados,$id);
         $cartaoponto = $cartaoponto->editar($dados,$id);
         $parametrosefips = $parametrosefip->editar($dados,$id);
-        $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
+        // $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
         $indicefaturas = $indicefatura->editar($dados,$id);
+        $incidefolhars = $incidefolhar->editar($dados,$id);
         $taxas = $taxa->editar($dados,$id);
+        // dd($tomadors , $enderecos , $taxas
+        // , $bancarios , $retencaofaturas , 
+        // $cartaoponto , $parametrosefips , $indicefaturas);
         if ($tomadors && $enderecos && $taxas
-        && $bancarios && $retencaofaturas && 
-        $cartaoponto && $parametrosefips && 
-        $taxatrabalhador && $indicefaturas) {
+        && $bancarios && $retencaofaturas && $incidefolhars &&
+        $cartaoponto && $parametrosefips && $indicefaturas) {
             $condicao = 'edittrue';
         }else{
             $condicao = 'editfalse';
