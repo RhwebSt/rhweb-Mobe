@@ -28,6 +28,11 @@
         
 
     </head>
+    <style>
+        form input[type="text"] {
+    text-transform: uppercase !important;
+}
+    </style>
     <body >
     <main >
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
@@ -108,7 +113,7 @@
                               <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Recibo Avulsos
                               </a>
-                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink""
+                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos</a></li>
                               <li><a class="dropdown-item " href="#">Rol dos recibos</a></li>
                             </ul>
@@ -132,7 +137,7 @@
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Frequencia na Produção</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" id="ordemnome" href="#">Rol Trabalhadores Gráficos- Ordem Nome</a></li>
+                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('rolnome') }}">Rol Trabalhadores Gráficos- Ordem Nome</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Ordem Cadastro</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol RG</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol Contas Bancos</a></li>

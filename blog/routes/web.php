@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','User\\UserController')->names('user');
 Route::resource('login','Login\\LoginController')->names('login');
-
-
-
-
+Route::get('rolnome','PdfController@rolnome');
 Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
 Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
 

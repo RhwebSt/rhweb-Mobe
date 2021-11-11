@@ -32,10 +32,10 @@ class Parametrosefip extends Model
         'psgrps'=>$dados['cod__grps'],
         'psresol'=>$dados['cod__recol'],
         'pscnae'=>$dados['cnae'],
-        'psfapaliquota'=>$dados['fap__aliquota'],
-        'psratajustados'=>$dados['rat__ajustado'],
+        'psfapaliquota'=>str_replace(",",".",$dados['fap__aliquota']),
+        'psratajustados'=>str_replace(",",".",$dados['rat__ajustado']),
         'psfpasterceiros'=>$dados['fpas__terceiros'],
-        'psaliquotaterceiros'=>$dados['aliq__terceiros'],
+        'psaliquotaterceiros'=>str_replace(",",".",$dados['aliq__terceiros']),
        
     ]);
     }

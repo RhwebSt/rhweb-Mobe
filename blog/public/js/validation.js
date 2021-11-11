@@ -105,15 +105,15 @@ $("#form").validate({
         },
         dias_uteis:{
             required:true,
-            range: [1, 31]
+           
         },
         sabados:{
             required:true,
-            range: [1, 31]
+            
         },
         domingos:{
             required:true,
-            range: [1, 31]
+            
         },
         ano:{
             required:true,

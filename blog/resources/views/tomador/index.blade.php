@@ -49,7 +49,7 @@
                         <input type="hidden" name="empresa">
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" name="nome__completo"  id="nome__completo">
+                            <input type="text" class="form-control text-lowercase" name="nome__completo"  id="nome__completo">
                         </div>
 
                         <div class="col-md-6">
@@ -259,17 +259,17 @@
                         </div>
 
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 d-none">
                             <label for="indice__folha" class="form-label">Indíce sobre Folha ( 1 Paga - 2 Desconta )</label>
                             <input type="text" class="form-control" name="indice__folha" value="" id="indice__folha">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 d-none">
                             <label for="valor__transporte" class="form-label">Valor Vale Transporte</label>
                             <input type="text" class="form-control" name="valor__transporte" value="" id="valor__transporte">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                             <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
                             <input type="text" class="form-control" name="valor__alimentacao" value="" id="valor__alimentacao">
                         </div>
@@ -349,7 +349,7 @@
                         </select>
                         </div>
                         <h1 class="container text-center  fs-4 fw-bold">Dados Bancários</h1>
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-none">
                             <label for="nome__conta" class="form-label">Nome do Titular</label>
                             <input type="text" class="form-control" name="nome__conta" value="" id="nome__conta">
                         </div>
@@ -412,7 +412,7 @@
     </div>
     <script>
         $(document).ready(function(){
-           
+            $('#nome__fantasia').val().toLowerCase();
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
@@ -421,7 +421,6 @@
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            console.log(data);
                             if (data.id) {
                                 $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
                                 $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)

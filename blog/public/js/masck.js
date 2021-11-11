@@ -22,7 +22,7 @@ $('#ferias_trab').mask('000,00', {reverse: true});
 $('#rsr').mask('000,00', {reverse: true});
 $('#13__saltrab').mask('000,00', {reverse: true});
 $('#fgts__empresa').mask('000,00', {reverse: true});
-$('#fap__aliquota').mask('0,0000', {reverse: true});
+$('#fap__aliquota').mask('0,00', {reverse: true});
 $('#alimentacao').mask('000,00', {reverse: true});
 $('#transporte').mask('000,00', {reverse: true});
 $('#epi').mask('000,00', {reverse: true});
@@ -32,7 +32,7 @@ $('#valor__transporte').mask('000,00', {reverse: true});
 $('#seguro__trabalhador').mask('000,00', {reverse: true});
 $('#rat__ajustado').mask('0,00', {reverse: true});
 $('#fpas__terceiros').mask('0000', {reverse: true});
-$('#aliq__terceiros').mask('0,00', {reverse: true});
+$('#aliq__terceiros').mask('0,0', {reverse: true});
 $('#deflator').mask('000,0000', {reverse: true});
 $('#matricula').mask('0000').val(Math.floor(Math.floor(Math.random() * 9999)))
 $('#agencia').mask('0000')
