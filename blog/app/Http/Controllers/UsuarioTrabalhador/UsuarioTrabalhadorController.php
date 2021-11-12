@@ -42,6 +42,7 @@ class UsuarioTrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+    
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;
@@ -94,6 +95,7 @@ class UsuarioTrabalhadorController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        // dd($dados);
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;

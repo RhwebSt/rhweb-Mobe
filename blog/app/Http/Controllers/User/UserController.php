@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-       
+        if (auth()->check()){
+            return redirect()->route('home.index');
+        }
         return view('login.index');
     }
 

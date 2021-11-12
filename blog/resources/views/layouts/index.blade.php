@@ -30,8 +30,9 @@
     </head>
     <style>
         form input[type="text"] {
-    text-transform: uppercase !important;
-}
+            text-transform: uppercase !important;
+            color:black !important
+        }
     </style>
     <body >
     <main >
@@ -56,16 +57,16 @@
                           'admin'
                         ]
                       ?>
-                      @if(in_array($user->cargo,$permissao))
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
-                      <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('inss.index')}}">INSS</a></li>
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
-                      <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuariotrabalhador.index')}}">Cadastro de Acesso</a></li>
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.index')}}">Cadastro de Usuário</a></li>
-                      
-                      @endif
+                      @can('admin')
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
+                          <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('inss.index')}}">INSS</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
+                          <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
+                          
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.index')}}">Cadastro de Usuário</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuariotrabalhador.index')}}">Cadastro de Acesso</a></li>
+                      @endcan
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionador</a></li>
                     </ul>
                   </li>
@@ -126,7 +127,7 @@
                               <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Relatórios
                               </a>
-                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink""
+                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Folha Produção por Ano</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Folha Produção por Mês</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Relação dos Sálarios- Contribuição INSS</a></li>
@@ -217,49 +218,7 @@
           </div>
 </nav>
 
-<div class="container d-none" id="template_invoice">
-  <div class="row">
-    <div class="col-xs-6">
-      <address>
-        <strong>ROL DOS TRABALHADOR ALFABETICA: </strong>
-    	R121<br>
-    	MOBE PRESTADORA DE SERVIÇOS LTDA<br>
-      </address>
-    </div>
-   
-  </div>
- 
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <!-- <h3 class="panel-title"><strong>Order summary</strong></h3> -->
-        </div>
-        <div class="">
-          <div class="table-responsive">
-            <table class="table  table-borderless" id="table" style="font-size: 10px;">
-              <thead>
-                <tr>
-                  <td class="text-center"><strong>MAT</strong></td>
-                  <td class="text-center"><strong>NOME</strong></td>
-                  <td class="text-center"><strong>DTA.ADM</strong></td>
-                  <td class="text-right"><strong>DTA.NAS</strong></td>
-                  <td class="text-right"><strong>PIS</strong></td>
-                  <td class="text-right"><strong>CPF</strong></td>
-                  <td class="text-right"><strong>SITUAC</strong></td>
-                </tr>
-              </thead>
-              <tbody>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
     @yield('conteine')
 
@@ -273,48 +232,6 @@
     <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
-    <!-- <script>
-       
-        $(document).ready(function(){
-          $.ajax({
-                url: "{{url('rolnomealfabetica')}}",
-                type: 'get',
-                contentType: 'application/json',
-                success: function(data) {
-                  if (data.length > 0) {
-                    data.forEach(element => {
-                      $('#table tbody').prepend( `<tr>
-                                                  <td>${branco(element.tsmatricula)}</td>
-                                                  <td class="text-center">${branco(element.tsnome)}</td>
-                                                  <td class="text-center">${converte(element.csadmissao)}</td>
-                                                  <td class="text-right">${converte(element.nsnascimento)}</td>
-                                                  <td class="text-right">${branco(element.dspis)}</td>
-                                                  <td class="text-right">${branco(element.tscpf)}</td>
-                                                  <td class="text-right">${branco(element.cssituacao)}</td>
-                                              </tr>` );
-                    });
-                    
-                  }
-                    console.log(data)
-                }
-            });
-            function converte(valor) {
-              if (valor) {
-                var novadata = valor.split('-')
-                return `${novadata[2]}/${novadata[1]}/${novadata[0]}`
-              }else{
-                return ' '
-              }
-            }
-            function branco(valor) {
-              if (valor) {
-                return valor
-              }else{
-                return ' '
-              }
-            }
-        })
-       
-    </script> -->
+   
   </body>
 </html>

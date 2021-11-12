@@ -47,4 +47,14 @@ $('#folharalim').mask('000,00', {reverse: true});
 $('#dias_uteis').mask('00,00', {reverse: true});
 $('#sabados').mask('00,00', {reverse: true});
 $('#domingos').mask('00,00', {reverse: true});
-
+$('#cbo').mask('00000000000000',{reverse:true});
+$('#vt__trabalhador').mask('000.000.000,00',{reverse:true});
+$('#va__trabalhador').mask('000.000.000,00',{reverse:true});
+$('#nro__fatura').mask('000000000',{reverse:true});
+$('#nro__reciboavulso').mask('000000000',{reverse:true});
+$('#nro__requisicao').mask('000000000',{reverse:true});
+$('#nro__boletins').mask('000000000',{reverse:true});
+$('#nro__folha').mask('000000000',{reverse:true});
+$('#nro__cartaoponto').mask('000000000',{reverse:true});
+$('#seq__esocial').mask('000000000',{reverse:true});
+$('#cbo').mask('000000000',{reverse:true});

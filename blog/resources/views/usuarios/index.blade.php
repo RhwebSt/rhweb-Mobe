@@ -81,21 +81,11 @@
                         </div>
                       </div>
 
-                      <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
+                      <a class="btn   text-white btn-primary " href="{{route('home.index')}}" role="button" >Sair</a>
                   </div>
               </div>
 
-                <div class="col-md-4">
-                  <label for="nome__completo" class="form-label">Nome do tomador</label>
-                  <input class="form-control" list="datalistOptions" name="nome__completo" id="nome__completo" >
-                  <datalist id="datalistOptions">
-                    <!-- <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago"> -->
-                  </datalist>
-                </div>
+              
 
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
@@ -110,6 +100,17 @@
                 <div class="col-md-3">
                   <label for="senha" class="form-label">Senha</label>
                   <input type="password" class="form-control" name="senha" value="" id="senha">
+                </div>
+                <div class="col-md-4">
+                  <label for="nome__completo" class="form-label">Nome do tomador</label>
+                  <input class="form-control" list="datalistOptions" name="nome__completo" id="nome__completo" >
+                  <datalist id="datalistOptions">
+                    <!-- <option value="San Francisco">
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Chicago"> -->
+                  </datalist>
                 </div>
               </form>  
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -175,7 +176,7 @@
                   });
                 }
             });
-            $( ".pesquisa" ).keyup(function() {
+            $( "#nome__completo" ).keyup(function() {
                 var dados = $(this).val();
                 $.ajax({
                     url: "{{url('usuariotrabalhador')}}/"+dados,

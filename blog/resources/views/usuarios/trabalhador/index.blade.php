@@ -29,12 +29,8 @@
             @endforeach
         @endif     
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('usuariotrabalhador.store') }}" method="POST" action="" >
-            <?php
-                $permissao = [
-                    'admin'
-                ]
-            ?>
-            @if(in_array($user->cargo,$permissao))
+           
+            @can('admin')
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn  text-white btn-primary "  >
@@ -53,7 +49,7 @@
                 
                 @else
                 <input type="hidden" id="empresa" value="{{$user->empresa}}">
-            @endif
+                @endcan
                 <h1 class="container text-center fs-4 fw-bold">Cadastro de Empresas</h1>
                 @csrf
                 <input type="hidden" name="trabalhador" >
@@ -90,11 +86,14 @@
                     <input type="text" class="form-control" name="numero" id="numero">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="tipo" class="form-label">Tipo</label>
-                    <input type="text" class="form-control" name="complemento__endereco" id="complemento__endereco">
-                </div>
-
+                
+                <div class="col-md-3"> 
+                                <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
+                                <select name="complemento__endereco" id="complemento__endereco" class="form-select">
+                                <option selected >Casa</option>
+                                <option >Apartamento</option>
+                            </select>
+                        </div>
                 <div class="col-md-5">
                     <label for="bairro" class="form-label">Bairro</label>
                     <input type="text" class="form-control" name="bairro" id="bairro">
@@ -139,7 +138,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 d-none">
                     <label for="retem__ferias" class="form-label">Retem Férias</label>
                     <select id="retem__ferias" name="retem__ferias" class="form-select">
                         <option>1-Sim</option>
@@ -176,7 +175,7 @@
                     <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 d-none">
                     <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
                     <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
                 </div>
@@ -211,9 +210,9 @@
                     <input type="text" class="form-control" name="cbo" id="cbo">
                 </div>
 
-                <div class="col-md-2 mb-5">
+                <div class="col-md-2 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
-                    <select id="retem__ferias" name="ambiente__esocial" class="form-select">
+                    <select id="ambiente__esocial" name="ambiente__esocial" class="form-select">
                         <option>1-Produção </option>
                         <option>2-Restrita</option>
                     </select>
@@ -321,6 +320,30 @@
                 $('#cbo').val(data.vscbo)
                 $('#endereco').val(data.eiid)
                 $('#bancario').val(data.biid)
+                for (let index = 0; index <  $('#sincalizado option').length; index++) {  
+                    if (data.essindicalizado == $('#sincalizado option').eq(index).text()) {
+                        
+                        $('#sincalizado option').eq(index).attr('selected','selected')
+                    }else  {
+                        $('#sincalizado option').eq(index).removeAttr('selected')
+                    }
+                }
+                for (let index = 0; index <  $('#retem__ferias option').length; index++) {  
+                    if (data.esretemferias == $('#retem__ferias option').eq(index).text()) {
+                        
+                        $('#retem__ferias option').eq(index).attr('selected','selected')
+                    }else  {
+                        $('#retem__ferias option').eq(index).removeAttr('selected')
+                    }
+                }
+                // for (let index = 0; index <  $('#ambiente__esocial option').length; index++) {  
+                //     if (data.esretemferias == $('#ambiente__esocial option').eq(index).text()) {
+                        
+                //         $('#ambiente__esocial option').eq(index).attr('selected','selected')
+                //     }else  {
+                //         $('#ambiente__esocial option').eq(index).removeAttr('selected')
+                //     }
+                // }
             }
         });
     </script>
