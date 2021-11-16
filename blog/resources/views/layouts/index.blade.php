@@ -52,11 +52,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-image: linear-gradient(100deg, #ffffff, #fdfdfd, #f5f5fa);">
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{ route('tomador.index') }}">Tomador</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
-                      <?php
-                        $permissao = [
-                          'admin'
-                        ]
-                      ?>
+                    
                       @can('admin')
                           <li><a class="dropdown-item border-bottom border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
@@ -64,8 +60,8 @@
                           <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.index')}}">Cadastro de Usuário</a></li>
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuariotrabalhador.index')}}">Cadastro de Acesso</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('user.create')}}">Cadastro de Usuário</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Acesso</a></li>
                       @endcan
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionador</a></li>
                     </ul>
@@ -93,7 +89,7 @@
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletim com Cartão</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Cartão</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletim com Tabela</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Calcular Folha</a></li>
@@ -205,8 +201,8 @@
                       @endif
                      
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="background-image: linear-gradient(90deg, #ffffff, #ebecf7, #e8e8fa)";>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuariotrabalhador.index')}}">Meus da dados</a></li>
-                        <li><a class="dropdown-item" href="{{route('login.create')}}">Sair</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Meus da dados</a></li>
+                        <li><a class="dropdown-item" href="{{route('logout.create')}}">Sair</a></li>
                       </ul>
                     </div>
                   </div>

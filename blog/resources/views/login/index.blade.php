@@ -39,7 +39,7 @@
 
     <span class="login__input--border"></span>
 
-    <button class="login__submit">Entrar</button>
+    <button  class="login__submit">Entrar</button>
 
 </form>   
     </div>

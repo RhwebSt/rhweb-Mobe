@@ -17,7 +17,7 @@ class LoginController extends Controller
         if (auth()->check()){
             return redirect()->route('home.index');
         }
-        return view('login.index');
+        return view('login.index'); 
     }
 
     /**
@@ -28,7 +28,7 @@ class LoginController extends Controller
     public function create()
     {
         Auth::logout();
-        return redirect()->route('user.index');
+        return redirect()->route('/.index');
     }
 
     /**
@@ -45,7 +45,7 @@ class LoginController extends Controller
         }
         return redirect()->route('login.index')->withInput()->withErrors(['Não foi possivel efetuar o login, tente novamento.']);
     }
-
+ 
     /**
      * Display the specified resource.
      *

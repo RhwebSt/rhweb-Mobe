@@ -8,6 +8,7 @@ $('#taxa__fed').mask('9,9999', {reverse: true});
 $('#taxa_adm').mask('00,00', {reverse: true});
 $('#inss__empresa').mask('000,00', {reverse: true});
 $('#valor').mask('000.000.000.000.000,00', {reverse: true});
+$('#contribuicao__sindicato').mask('000.000.000.000.000,00', {reverse: true});
 $('#ano').mask('0000')
 $('#cod__fpas').mask('000')
 $('#cod__grps').mask('0000')
@@ -48,6 +49,10 @@ $('#dias_uteis').mask('00,00', {reverse: true});
 $('#sabados').mask('00,00', {reverse: true});
 $('#domingos').mask('00,00', {reverse: true});
 $('#cbo').mask('00000000000000',{reverse:true});
+$('#irrf').mask('00000000000000',{reverse:true});
+$('#sf').mask('00000000000000',{reverse:true});
+$('#ctps').mask('00000000000000',{reverse:true});
+$('#serie__ctps').mask('00000000000000',{reverse:true});
 $('#vt__trabalhador').mask('000.000.000,00',{reverse:true});
 $('#va__trabalhador').mask('000.000.000,00',{reverse:true});
 $('#nro__fatura').mask('000000000',{reverse:true});

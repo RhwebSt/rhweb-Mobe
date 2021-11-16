@@ -23,14 +23,14 @@
                 </div>
              @elseif($error === 'cadastrafalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                    <strong>Não foi porssivél realizar o cadastro !</strong> 
                 </div>
             @endif
             @endforeach
         @endif     
 
 
-              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('usuario.store')}}">
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('user.store')}}">
               @csrf
                 <input type="hidden" id="method" name="_method" value="">
                 <input type="hidden" name="empresa" id="idempresa">
@@ -143,12 +143,12 @@
                 var dados = $(this).val();
                 if (dados) {
                   $.ajax({
-                      url: "{{url('usuario')}}/"+dados,
+                      url: "{{url('user')}}/"+dados,
                       type: 'get',
                       success: function(data) {
                           if (data.id) {
-                              $('#form').attr('action', "{{ url('usuario')}}/"+data.id);
-                              $('#formdelete').attr('action',"{{ url('usuario')}}/"+data.id)
+                              $('#form').attr('action', "{{ url('user')}}/"+data.id);
+                              $('#formdelete').attr('action',"{{ url('user')}}/"+data.id)
                               $('#incluir').attr('disabled','disabled')
                               $('#atualizar').removeAttr( "disabled" )
                               $('#deletar').removeAttr( "disabled" )
@@ -160,7 +160,7 @@
                               $('#senha').val('')
                           }else{
                           
-                              $('#form').attr('action', "{{ route('usuario.store') }}");
+                              $('#form').attr('action', "{{ route('user.store') }}");
                               $('#incluir').removeAttr( "disabled" )
                               $('#depedente').removeAttr( "disabled" )
                               $('#atualizar').attr('disabled','disabled')
@@ -179,7 +179,7 @@
             $( "#nome__completo" ).keyup(function() {
                 var dados = $(this).val();
                 $.ajax({
-                    url: "{{url('usuariotrabalhador')}}/"+dados,
+                    url: "{{url('listaempresa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {

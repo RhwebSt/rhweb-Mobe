@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\TabCartaoPonto;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Empresa;
-class UserController extends Controller
+use App\Lancamentotabela;
+class TabCartaoPontoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-       
+        $user = Auth::user();
+        return view('tabCartaoPonto.index',compact('user'));
     }
 
     /**
@@ -26,9 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $users = $user->first('jose');
-        return view('usuarios.index',compact('user'));
+        //
     }
 
     /**
@@ -40,14 +38,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $user = new User;
-        $users = $user->cadastro($dados);
-        if ($users) {
-            $condicao = 'cadastratrue';
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentotabelas = $lancamentotabela->cadastro($dados);
+        $id = $lancamentotabelas['id'];
+        $user = Auth::user();
+        if ($lancamentotabelas) {
+            return view('tabelaCadastro.index',compact('user','id'));
         }else{
             $condicao = 'cadastrafalse';
-        }
-        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
+           
+        } 
+        return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -58,16 +59,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = new User;
-        $empresa = new Empresa;
-        $empresas = $empresa->usuario($id);
-        if ($empresas) {
-            return response()->json($empresas);
-        }else{
-            $users = $user->first($id);
-            return response()->json($users);
-        }
-        
+        //
     }
 
     /**
@@ -90,15 +82,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dados = $request->all();
-        $user = new User;
-        $users = $user->editar($dados,$id);
-        if ($users) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
-        }
-        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
+        //
     }
 
     /**

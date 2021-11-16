@@ -471,9 +471,85 @@ $("#form").validate({
             required:true,
            
             maxlength:6
+        },
+        categoria__contrato:{
+            required:true,
+            maxlength:20
+        },
+        irrf:{
+            required:true
+        },
+        sf:{
+            required:true
+        },
+        ctps:{
+            required:true
+        },
+        serie__ctps:{
+            required:true
+        },
+        uf__ctps:{
+            required:true,
+            maxlength:2
+        },
+        situacao__contrato:{
+            required:true
+        },
+        // data__afastamento:{
+        //     required:true
+        // },
+        data_nascimento:{
+            required:true
+        },
+        pais__nascimento:{
+            required:true
+        },
+        pais__nacionalidade:{
+            required:true
+        },
+        nome__mae:{
+            required:true
         }
     },
     messages:{
+        nome__mae:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        pais__nacionalidade:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        pais__nascimento:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        data_nascimento:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        // data__afastamento:{
+        //     required:"O campo nome não pode esta vazio!",
+        // },
+        situacao__contrato:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        uf__ctps:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mas de 2 caracteris'
+        },
+        serie__ctps:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        ctps:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        sf:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        irrf:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        categoria__contrato:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mas de 20 caracteris'
+        },
         pis:{
             required:"O campo nome não pode esta vazio!",
         },

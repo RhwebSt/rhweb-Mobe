@@ -43,9 +43,8 @@ class Trabalhador extends Model
                 'enderecos.*'
                 )
             ->where(function($query) use ($id){
-                $cargo =['admin'];
                 $user = auth()->user();
-                if (in_array($user->cargo,$cargo)) {
+                if ($user->hasPermissionTo('admin')) {
                     $query->where('tsnome', $id);
                 }else{
                     $query->where('tsnome', $id)

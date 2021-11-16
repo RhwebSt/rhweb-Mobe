@@ -40,6 +40,20 @@ class Empresa extends Model
             ->orWhere('empresas.id', $id)
             ->first();
     }
+    public function usuario($id)
+    {
+        return DB::table('empresas')
+            ->join('users', 'empresas.id', '=', 'users.empresa')
+            ->select(
+                'empresas.*', 
+                'users.name', 
+                'users.cargo',
+                'users.id', 
+                'users.empresa'
+                )
+            ->where('name', $id)
+            ->first();
+    }
     public function editar($dados,$id)
     {
         return Empresa::where('id', $id)

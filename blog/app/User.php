@@ -7,9 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -57,21 +58,11 @@ class User extends Authenticatable
             'cargo'=>$dados['cargo'],
             'empresa'=>$dados['empresa'],
             // 'remember_token'=>$dados['_token'],
-        ]);
+        ])->givePermissionTo('user');
     }
     public function first($id)
     {
-        return DB::table('empresas')
-            ->join('users', 'empresas.id', '=', 'users.empresa')
-            ->select(
-                'empresas.*', 
-                'users.name', 
-                'users.cargo',
-                'users.id', 
-                'users.empresa'
-                )
-            ->where('name', $id)
-            ->first();
+        return User::where('name', $id)->first();
     }
     public function editar($dados,$id)
     {
@@ -82,6 +73,7 @@ class User extends Authenticatable
             // 'usuario'=>$dados['usuario'],
             'password'=> Hash::make($dados['senha']),
             'cargo'=>$dados['cargo'],
+            'empresa'=>$dados['empresa'],
         ]);
     }
     public function deletar($id)

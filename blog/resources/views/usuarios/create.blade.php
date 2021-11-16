@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
-        <div class="container" style="background-image: linear-gradient(150deg, rgb(252, 253, 253),rgb(234, 241, 250));">
+        <div class="container" >
             
             
 

@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
-    <div class="container " style="background-image: linear-gradient(150deg, rgb(252, 253, 253),rgb(234, 241, 250));">
+    <div class="container " >
     
         @if($errors->all())
             @foreach($errors->all() as  $error)
@@ -161,6 +161,13 @@
               <label for="tipo" class="form-label">Tipo</label>
               <input type="text" class="form-control" name="tipo__endereco" id="tipo" value="">
           </div>
+          <div class="col-md-3"> 
+                  <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
+                  <select name="complemento__endereco" id="complemento__endereco" class="form-select">
+                  <option selected >Casa</option>
+                  <option >Apartamento</option>
+              </select>
+          </div>
 
 
             <div class="col-md-5">
@@ -178,12 +185,6 @@
               <label for="uf" class="form-label">UF</label>
               <input type="text" class="form-control" name="uf" id="uf" value="">
             </div>
-
-            <div class="col-md-4">
-              <label for="complemento" class="form-label">tipo</label>
-              <input type="text" class="form-control" name="complemento__endereco" id="complemento" value="">
-            </div>
-
             <div class="col-md-2">
               <label for="telefone" class="form-label">Telefone</label>
               <input type="text" class="form-control" name="telefone" id="telefone" value="">
@@ -371,10 +372,16 @@
                         $('#bancario').val(data.biid)
                         for (let index = 0; index <  $('#sexo option').length; index++) {  
                           if (data.tssexo == $('#sexo option').eq(index).text()) {
-                            console.log('ok')
                             $('#sexo option').eq(index).attr('selected','selected')
                           }else  {
                             $('#sexo option').eq(index).removeAttr('selected')
+                          }
+                        }
+                        for (let index = 0; index <  $('#complemento__endereco option').length; index++) {  
+                          if (data.escomplemento == $('#complemento__endereco option').eq(index).text()) {
+                            $('#complemento__endereco option').eq(index).attr('selected','selected')
+                          }else  {
+                            $('#complemento__endereco option').eq(index).removeAttr('selected')
                           }
                         }
                         for (let index = 0; index <  $('#estado__civil option').length; index++) {  

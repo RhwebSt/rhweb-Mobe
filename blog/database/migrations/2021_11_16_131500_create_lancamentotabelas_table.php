@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartaoPontosTable extends Migration
+class CreateLancamentotabelasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCartaoPontosTable extends Migration
      */
     public function up()
     {
-        Schema::create('cartao_pontos', function (Blueprint $table) {
+        Schema::create('lancamentotabelas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('csdiasuteis')->nullable();
-            $table->integer('cssabados')->nullable();
-            $table->integer('csdomingos')->nullable();
+            $table->char('liboletim', 50)->nullable();
+            $table->char('lsdata', 10)->nullable();
+            $table->char('lsnumero', 11)->nullable();
+           
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();
@@ -31,6 +32,6 @@ class CreateCartaoPontosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cartao_pontos');
+        Schema::dropIfExists('lancamentotabelas');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UsuarioTrabalhador;
+namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Empresa;
 use App\Endereco;
 use App\ValoresRublica;
-class UsuarioTrabalhadorController extends Controller
+class EmpresaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,7 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $empresa = new Empresa;
-        $empresas = $empresa->first($user->empresa);
-        return view('usuarios.trabalhador.index',compact('user'));
+    
     }
 
     /**
@@ -30,7 +27,10 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $empresa = new Empresa;
+        $empresas = $empresa->first($user->empresa);
+        return view('usuarios.empresa.index',compact('user'));
     }
 
     /**
@@ -56,7 +56,7 @@ class UsuarioTrabalhadorController extends Controller
             }else{
                 $condicao = 'cadastrafalse';
             }
-            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
+            return redirect()->route('empresa.index')->withInput()->withErrors([$condicao]);
         }
     }
 
@@ -105,7 +105,7 @@ class UsuarioTrabalhadorController extends Controller
         }else{
             $condicao = 'editfalse';
         }
-        return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
+        return redirect()->route('empresa.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -116,7 +116,6 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;
@@ -130,6 +129,6 @@ class UsuarioTrabalhadorController extends Controller
         }else{
             $condicao = 'deletafalse';
         }
-            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]); 
+            return redirect()->route('empresa.index')->withInput()->withErrors([$condicao]); 
     }
 }

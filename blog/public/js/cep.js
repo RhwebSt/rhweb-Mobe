@@ -4,7 +4,6 @@ function limpa_formulário_cep() {
     document.getElementById('bairro').value=("");
     document.getElementById('localidade').value=("");
     document.getElementById('uf').value=("");
-    document.getElementById('ibge').value=("");
 }
 
 function meu_callback(conteudo) {

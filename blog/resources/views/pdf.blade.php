@@ -193,9 +193,9 @@
                             $datanascimento = explode('-',$trabalhador->nsnascimento);
                             $datanascimento = $datanascimento[2]."/".$datanascimento[1]."/".$datanascimento[0];
                         ?>
-                    
-                    @endif
                     {{$datanascimento}}
+                    @endif
+                    
                 </td>
                 <td class="pis">{{$trabalhador->dspis}}</td>
                 <td class="situacao">{{$trabalhador->cssituacao}}</td>
