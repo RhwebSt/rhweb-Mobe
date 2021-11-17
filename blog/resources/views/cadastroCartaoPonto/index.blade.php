@@ -1,47 +1,14 @@
 @extends('layouts.index')
 @section('conteine')
+<div class="card-body">
+              <h5 class="card-title text-center fs-3 ">Lançamento com Tabela</h5>
 
-<div class="container">
-        @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
-                </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
+                <p class="text-success">Boletim criado com sucesso.</p>
 
-        <h1 class="container text-center mt-3 fs-4 mb-5">Lançamento com Tabela de Preço</h1>
 
-        <div class="responsive mt-5">
-            <div class="table-bordered border-white" >
-                <form class="d-flex p-1 ">
-                    <input class="form-control me-1" style="width:30rem; border: 1px solid black;" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn" type="submit" style="background-color:#2541B2; Color: #fefeff;">Pesquisar</button>
-                </form>
-            </div>
-        </div>
-
-        <form class="row g-3 mt-1 mb-5" method="POST" action="{{route('tabcadastro.store')}}">
-        @csrf
-        <div class="row">
+              <form class="row g-3 mt-1 mb-3" method="POST" action="{{route('cadastrocartaoponto.store')}}">
+              @csrf
+                <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
        
                         <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
@@ -49,104 +16,76 @@
                         <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
-                    <a class="btn btn btn-primary" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
+                      <a class="btn btn btn-primary" href="{{route('tabcadastro.index')}}" role="button" >Lançar</a>
+               
+                    <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
                   </div>
               </div>
-            <input type="hidden" name="lancamento" value="{{$id}}">
-            <div class="col-md-10 input">
-                <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input type="text" class="form-control " value="" id="nome__completo">
-            </div>
-            <input type="hidden" name="trabalhador" id="trabalhador">
-            <div class="col-md-2 input">
-                <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control " name="matricula" value="" id="matricula">
-            </div>
 
-            <div class="col-md-2 input">
-                <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control " name="codigo" value="" id="codigo">
-            </div>
-
-            <div class="col-md-8 input">
-                <label for="rubrica" class="form-label">Rúbrica</label>
-                <input type="text" class="form-control " list="datalistOptions" name="rubrica" value="" id="rubrica">
-                <datalist id="datalistOptions">
-                    <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago">
-                  </datalist>
-            </div>
-
-            <div class="col-md-2 input">
-                <label for="quantidade" class="form-label">Quantidade/Tonelada</label>
-                <input type="text" class="form-control " name="quantidade" value="" id="quantidade">
-            </div>
-            
-
-        </form>
-
-        <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-color: #353535;">
-            <thead>
-                <th class="col text-white">Cod</th>
-                <th colspan="2" class="col text-white">Rúbrica</th>
-                <th class="col text-white">Quantidade/Tonelada</th>
-            </thead>
-            <tbody>
-                <td class="bg-light text-black">001</td>
-                <td class="bg-light text-black">Diária Normal</td>
-                <td class="bg-light text-black"></td>
-                <td class="bg-light text-black">20</td>
-            </tbody>
-        </table>
-
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
-                  <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-md-6 input">
+                  <label for="tomador" class="form-label">Tomador</label>
+                  <input type="text" class="form-control " name="nome__completo" value="" id="nome__completo">
                 </div>
-                <div class="modal-body" style="background-color: #fffdfd;">
-                  <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
+                  <input type="hidden" name="tomador" id="tomador">
+                  <input type="hidden" id="domingo" name="domingo">
+                  <input type="hidden" name="sabado" id="sabado">
+                  <input type="hidden" name="diasuteis" id="diasuteis">
+                <div class="col-md-1">
+                    <label for="matricula" class="form-label">Matrícula</label>
+                    <input type="text" class="form-control " name="matricula" value="" id="matricula">
+                  </div>
+
+                <div class="col-md-2">
+                    <label for="num__boletim" class="form-label">Nº do Boletim</label>
+                    <input type="text" class="form-control" name="num__boletim" id="num__boletim">
                 </div>
-                <div class="modal-footer" style="background-color: #fffdfd;">
-                  <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-                  <form action="">
-                  <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
-                </form> 
+
+                <div class="col-md-2">
+                  <label for="data" class="form-label">Data</label>
+                  <input type="date" class="form-control" name="data" value="" id="data">
+                </div>
+
+                <div class="col-md-2">
+                  <label for="num__trabalhador" class="form-label">Nº de Trabalhador</label>
+                  <input type="text" class="form-control" name="num__trabalhador" value="" id="num__trabalhador">
+                </div>
+              </form> 
+              
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
+                      <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #fffdfd;">
+                      <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fffdfd;">
+                      <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
+                      <form action="">
+                      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
+                    </form> 
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <script>
-            $( "#rubrica" ).keyup(function() {
-            var dados = $(this).val();
-            $.ajax({
-                url: "{{url('rublica')}}/"+dados,
-                type: 'get',
-                contentType: 'application/json',
-                success: function(data) {
-                    data.forEach(element => {
-                        $('#datalistOptions').html(`<option value="${element.rsrublica}">`)
-                    });
-                }
-            });
-        });
-                $( "#nome__completo" ).keyup(function() {
+            <script>
+               $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
                     $.ajax({
-                        url: "{{url('trabalhador')}}/"+dados,
+                        url: "{{url('tomador')}}/"+dados,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            console.log(data)
                           if (data.id) {
-                            $('#trabalhador').val(data.trabalhador)
+                            $('#tomador').val(data.tomador)
                             $('#matricula').val(data.tsmatricula)
+                            $('#domingo').val(data.csdomingos)
+                            $('#sabado').val(data.cssabados)
+                            $('#diasuteis').val(data.csdiasuteis)
                           }
                             // if (data.id) {
                             //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
@@ -275,5 +214,5 @@
                     });
                 }
             });
-          </script>
+            </script>         
 @stop

@@ -105,11 +105,12 @@
                   <label for="nome__completo" class="form-label">Nome do tomador</label>
                   <input class="form-control" list="datalistOptions" name="nome__completo" id="nome__completo" >
                   <datalist id="datalistOptions">
-                    <!-- <option value="San Francisco">
+                    <option value="San Francisco">
                     <option value="New York">
                     <option value="Seattle">
                     <option value="Los Angeles">
-                    <option value="Chicago"> -->
+                    <option value="Chicago">
+                      
                   </datalist>
                 </div>
               </form>  

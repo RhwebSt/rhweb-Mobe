@@ -45,9 +45,9 @@ $('#matricula__trab').mask('0000')
 $('#indice').mask('0000')
 $('#folhartransporte').mask('000,00', {reverse: true});
 $('#folharalim').mask('000,00', {reverse: true});
-$('#dias_uteis').mask('00,00', {reverse: true});
-$('#sabados').mask('00,00', {reverse: true});
-$('#domingos').mask('00,00', {reverse: true});
+// $('#dias_uteis').mask('00,00', {reverse: true});
+// $('#sabados').mask('00,00', {reverse: true});
+// $('#domingos').mask('00,00', {reverse: true});
 $('#cbo').mask('00000000000000',{reverse:true});
 $('#irrf').mask('00000000000000',{reverse:true});
 $('#sf').mask('00000000000000',{reverse:true});

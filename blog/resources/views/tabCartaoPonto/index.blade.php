@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="card-body">
-              <h5 class="card-title text-center fs-3 ">Boletim com  Cartão Ponto</h5>
+              <h5 class="card-title text-center fs-3 ">Lançamento com Tabela</h5>
 
                 <p class="text-success">Boletim criado com sucesso.</p>
 

@@ -13,9 +13,9 @@ class CartaoPonto extends Model
     {
         
        return CartaoPonto::create([
-            'csdiasuteis'=>str_replace(",",".",$dados['dias_uteis']),
-            'cssabados'=>str_replace(",",".",$dados['sabados']),
-            'csdomingos'=>str_replace(",",".",$dados['domingos']),
+            'csdiasuteis'=>$dados['dias_uteis'],
+            'cssabados'=>$dados['sabados'],
+            'csdomingos'=>$dados['domingos'],
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -23,9 +23,9 @@ class CartaoPonto extends Model
     {
         return CartaoPonto::where('tomador', $id)
         ->update([
-            'csdiasuteis'=>str_replace(",",".",$dados['dias_uteis']),
-            'cssabados'=>str_replace(",",".",$dados['sabados']),
-            'csdomingos'=>str_replace(",",".",$dados['domingos']),
+            'csdiasuteis'=>$dados['dias_uteis'],
+            'cssabados'=>$dados['sabados'],
+            'csdomingos'=>$dados['domingos'],
         ]);
     }
     public function deletar($id)

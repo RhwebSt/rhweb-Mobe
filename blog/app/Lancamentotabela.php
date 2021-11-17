@@ -18,4 +18,8 @@ class Lancamentotabela extends Model
             'tomador'=>$dados['tomador'],
         ]);
     }
+    public function listacomun($id)
+    {
+        return Lancamentotabela::where('liboletim',$id)->first();
+    }
 }

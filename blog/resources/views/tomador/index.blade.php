@@ -306,17 +306,17 @@
 
                         <div class="col-md-4">
                             <label for="dias_uteis" class="form-label">Dias Úteis</label>
-                            <input type="text" class="form-control" name="dias_uteis" value="" id="dias_uteis">
+                            <input type="time" class="form-control" name="dias_uteis" value="" id="dias_uteis">
                         </div>
 
                         <div class="col-md-4">
                             <label for="sabados" class="form-label">Sábados</label>
-                            <input type="text" class="form-control" name="sabados" value="" id="sabados">
+                            <input type="time" class="form-control" name="sabados" value="" id="sabados">
                         </div>
 
                         <div class="col-md-4">
                             <label for="domingos" class="form-label">Domingos</label>
-                            <input type="text" class="form-control" name="domingos" value="" id="domingos">
+                            <input type="time" class="form-control" name="domingos" value="" id="domingos">
                         </div>
 
 

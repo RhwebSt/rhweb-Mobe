@@ -15,13 +15,14 @@ class CreateBolcartaopontosTable extends Migration
     {
         Schema::create('bolcartaopontos', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('bsentrada', 10)->nullable();
-            $table->char('bssaida', 10)->nullable();
-            $table->char('bsstatus', 10)->nullable();
-            $table->float('bftotal',8,2)->nullable();
-            $table->float('bfhoraex',8,2)->nullable();
-            $table->float('bfhoraexcem',8,2)->nullable();
-            $table->float('bfadinortuno',8,2)->nullable();
+            $table->char('bsentradamanhao', 10)->nullable();
+            $table->char('bssaidamanhao', 10)->nullable();
+            $table->char('bsentradatarde', 10)->nullable();
+            $table->char('bssaidatarde', 10)->nullable();
+            $table->char('bstotal',10)->nullable();
+            $table->char('bshoraex',10)->nullable();
+            $table->char('bshoraexcem',10)->nullable();
+            $table->char('bsadinortuno',10)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();
             $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->integer('lancamento')->unsigned()->nullable();

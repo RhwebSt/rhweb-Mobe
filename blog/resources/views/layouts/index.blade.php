@@ -89,8 +89,8 @@
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Cartão</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletim com Tabela</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim com Cartão</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Calcular Folha</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Planilha de Fechamento- Boletins</a></li>

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Rublica;
+namespace App\Http\Controllers\BoletimCartaoPonto;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Rublica;
-class RublicaController extends Controller
+use App\Bolcartaoponto;
+class BoletimCartaoPontoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class RublicaController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('rublica.index',compact('user'));
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user'));
     }
 
     /**
@@ -38,14 +38,17 @@ class RublicaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $rublica = new Rublica;
-        $rublicas = $rublica->cadastro($dados);
-        if($rublicas){
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
-        }
-    return redirect()->route('rublica.index')->withInput()->withErrors([$condicao]);
+        $bolcartaoponto = new Bolcartaoponto;
+        $bolcartaopontos = $bolcartaoponto->cadastro($dados);
+        $lista = $bolcartaoponto->listacadastro($dados['lancamento']);
+        $user = Auth::user();
+        $id = $dados['lancamento'];
+        // if ($lancamentorublicas) {
+        //     $condicao = 'cadastratrue';
+        // }else{
+        //     $condicao = 'cadastrafalse';
+        // } 
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'));
     }
 
     /**
@@ -56,15 +59,7 @@ class RublicaController extends Controller
      */
     public function show($id)
     {
-        $rublica = new Rublica;
-        $rublicas = $rublica->first($id);
-        return response()->json($rublicas);
-    }
-    public function lista($id)
-    {
-        $rublica = new Rublica;
-        $rublicas = $rublica->first($id);
-        return response()->json($rublicas);
+        //
     }
 
     /**
@@ -87,15 +82,7 @@ class RublicaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dados = $request->all();
-        $rublica = new Rublica;
-        $rublicas = $rublica->editar($dados,$id);
-        if ($rublicas) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
-        }
-        return redirect()->route('rublica.index')->withInput()->withErrors([$condicao]);
+        //
     }
 
     /**

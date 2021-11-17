@@ -1,46 +1,12 @@
 @extends('layouts.index')
 @section('conteine')
-
 <div class="container">
-        @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
-                </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
-
-        <h1 class="container text-center mt-3 fs-4 mb-5">Lançamento com Tabela de Preço</h1>
-
-        <div class="responsive mt-5">
-            <div class="table-bordered border-white" >
-                <form class="d-flex p-1 ">
-                    <input class="form-control me-1" style="width:30rem; border: 1px solid black;" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn" type="submit" style="background-color:#2541B2; Color: #fefeff;">Pesquisar</button>
-                </form>
-            </div>
-        </div>
-
-        <form class="row g-3 mt-1 mb-5" method="POST" action="{{route('tabcadastro.store')}}">
+        <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
+        <form class="row g-3 mt-1 mb-5" method="POST" action="{{route('boletimcartaoponto.store')}}">
         @csrf
+        <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
+        <input type="hidden" name="sadado" id="sabado" value="{{$sabado}}">
+        <input type="hidden" name="diasuteis" id="diasuteis" value="{{$diasuteis}}">
         <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
        
@@ -49,40 +15,61 @@
                         <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
-                    <a class="btn btn btn-primary" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
+                    <a class="btn btn btn-primary" href="{{route('cadastrocartaoponto.index')}}" role="button">Sair</a>
                   </div>
               </div>
-            <input type="hidden" name="lancamento" value="{{$id}}">
-            <div class="col-md-10 input">
+            <input type="hidden" name="lancamento" value="{{$id}}"> 
+            <input type="hidden" name="trabalhador" id="trabalhador">          
+            <div class="col-md-10 input mt-5">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input type="text" class="form-control " value="" id="nome__completo">
+                <input type="text" class="form-control " name="nome__completo" value="" id="nome__completo">
             </div>
-            <input type="hidden" name="trabalhador" id="trabalhador">
-            <div class="col-md-2 input">
+            <div class="col-md-2 input mt-5">
                 <label for="matricula" class="form-label">Matrícula</label>
                 <input type="text" class="form-control " name="matricula" value="" id="matricula">
             </div>
-
+            <!-- <div class="col-md-2 input">
+                <label for="data" class="form-label">Data</label>
+                <input type="date" class="form-control " name="data" value="" id="data">
+            </div> -->
             <div class="col-md-2 input">
-                <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control " name="codigo" value="" id="codigo">
-            </div>
-
-            <div class="col-md-8 input">
-                <label for="rubrica" class="form-label">Rúbrica</label>
-                <input type="text" class="form-control " list="datalistOptions" name="rubrica" value="" id="rubrica">
-                <datalist id="datalistOptions">
-                    <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago">
-                  </datalist>
+                <label for="entrada1" class="form-label">Entrada</label>
+                <input type="time" class="form-control " name="entrada1" value="" id="entrada1">
             </div>
 
             <div class="col-md-2 input">
-                <label for="quantidade" class="form-label">Quantidade/Tonelada</label>
-                <input type="text" class="form-control " name="quantidade" value="" id="quantidade">
+                <label for="saida1" class="form-label">Saída</label>
+                <input type="time" class="form-control " name="saida" value="" id="saida">
+            </div>
+
+            <div class="col-md-2 input">
+                <label for="entrada2" class="form-label">Entrada</label>
+                <input type="time" class="form-control " name="entrada2" value="" id="entrada2">
+            </div>
+
+            <div class="col-md-2 input">
+                <label for="saida2" class="form-label">Saída</label>
+                <input type="time" class="form-control " name="saida2" value="" id="saida2">
+            </div>
+
+            <div class="col-md-1 input">
+                <label for="total" class="form-label">Total</label>
+                <input type="text" class="form-control " name="total" value="" id="total">
+            </div>
+
+            <div class="col-md-1 input">
+                <label for="hora__extra" class="form-label">HRS 50%</label>
+                <input type="text" class="form-control " name="hora__extra" value="" id="hora__extra">
+            </div>
+
+            <div class="col-md-1 input">
+                <label for="horas__cem" class="form-label">HRS 100%</label>
+                <input type="text" class="form-control " name="horas__cem" value="" id="horas__cem">
+            </div>
+
+            <div class="col-md-1 input">
+                <label for="adc__noturno" class="form-label">ADC.NOT</label>
+                <input type="text" class="form-control " name="adc__noturno" value="" id="adc__noturno">
             </div>
             
 
@@ -90,15 +77,35 @@
 
         <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-color: #353535;">
             <thead>
-                <th class="col text-white">Cod</th>
-                <th colspan="2" class="col text-white">Rúbrica</th>
-                <th class="col text-white">Quantidade/Tonelada</th>
+                <th class="col text-white">Matricula</th>
+                <th colspan="2" class="col text-white">Nome</th>
+                <th class="col text-white">Entrada</th>
+                <th class="col text-white">Saída</th>
+                <th class="col text-white">Entrada</th>
+                <th class="col text-white">Saída</th>
+                <th class="col text-white">Total</th>
+                <th class="col text-white">HRS 50%</th>
+                <th class="col text-white">HRS 100%</th>
+                <th class="col text-white">AD.NOT</th>
             </thead>
             <tbody>
-                <td class="bg-light text-black">001</td>
-                <td class="bg-light text-black">Diária Normal</td>
-                <td class="bg-light text-black"></td>
-                <td class="bg-light text-black">20</td>
+                @foreach($lista as $listas)
+                <tr>
+                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
+                <td class="bg-light text-black">{{$listas->tsnome}}</td>
+                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
+                <td class="bg-light text-black">{{$listas->bsentradamanhao}}</td>
+                <td class="bg-light text-black">{{$listas->bssaidamanhao}}</td>
+                <td class="bg-light text-black">{{$listas->bsentradatarde}}</td>
+                <td class="bg-light text-black">{{$listas->bssaidatarde}}</td>
+                <td class="bg-light text-black">{{$listas->bstotal}}</td>
+                <td class="bg-light text-black">{{$listas->bshoraex}}</td>
+                <td class="bg-light text-black">{{$listas->bshoraexcem}}</td>
+                <td class="bg-light text-black">{{$listas->bsadinortuno}}</td>
+               
+                </tr>
+               
+                @endforeach
             </tbody>
         </table>
 
@@ -121,20 +128,48 @@
               </div>
             </div>
           </div>
-          <script>
-            $( "#rubrica" ).keyup(function() {
-            var dados = $(this).val();
-            $.ajax({
-                url: "{{url('rublica')}}/"+dados,
-                type: 'get',
-                contentType: 'application/json',
-                success: function(data) {
-                    data.forEach(element => {
-                        $('#datalistOptions').html(`<option value="${element.rsrublica}">`)
-                    });
-                }
-            });
-        });
+</div>
+<script>
+    $('#total').focus(function(){
+        let horario1 = $('#entrada1').val();
+        let horario2 =$('#saida').val();
+        let horario3 = $('#entrada2').val();
+        let horario4 = $('#saida2').val();
+        console.log($('#diasuteis').val())
+        if (horario1 && horario2 && horario3 && horario4) {
+           
+            let partes1 = horario1.split(':');
+            let segundos1 = partes1[0] * 3600 + partes1[1] * 60;
+            let partes2 = horario2.split(':');
+            let segundos2 = partes2[0] * 3600 + partes2[1] * 60;
+            let partes3 = horario3.split(':');
+            let segundos3 = partes3[0] * 3600 + partes3[1] * 60;
+            let partes4 = horario4.split(':');
+            let segundos4 = partes4[0] * 3600 + partes4[1] * 60;
+            let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+            let total = totalHoras;
+            let horas = Math.floor(total / 3600);
+            let minutos = Math.floor((total - (horas * 3600)) / 60);
+            let segundos = Math.floor(total % 60);
+            $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+            diasuteis(total)
+            // if ($(this).val()) {
+            //     diasuteis(total)
+            // }
+        }
+    })
+    function diasuteis(resutado) {
+        let diasuteis = $('#diasuteis').val()
+        diasuteis = diasuteis.split(':');
+        diasuteis =  parseInt(diasuteis[0]) * 3600 +  parseInt(diasuteis[1]) * 60;
+        let totalhrs50= parseInt(resutado) -  parseInt(diasuteis);
+        let total = totalhrs50;
+        let horas = Math.floor(total / 3600);
+        let minutos = Math.floor((total - (horas * 3600)) / 60);
+        let segundos = Math.floor(total % 60);
+        $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+    }
+    
                 $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
@@ -143,7 +178,6 @@
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            console.log(data)
                           if (data.id) {
                             $('#trabalhador').val(data.trabalhador)
                             $('#matricula').val(data.tsmatricula)

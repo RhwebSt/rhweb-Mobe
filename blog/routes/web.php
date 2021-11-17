@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
+    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
+    Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->names('tabcadastro');
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
