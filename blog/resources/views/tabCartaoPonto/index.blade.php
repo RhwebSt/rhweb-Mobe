@@ -1,13 +1,39 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="card-body">
+@if($errors->all())
+            @foreach($errors->all() as  $error)
+              @if($error === 'edittrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Atualização realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'editfalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél atualizar os dados!</strong>
+                </div>
+            @elseif($error === 'deletatrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Registro deletador com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastratrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Cadastrador realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastrafalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                </div>
+            @endif
+            @endforeach
+        @endif        
               <h5 class="card-title text-center fs-3 ">Lançamento com Tabela</h5>
 
-                <p class="text-success">Boletim criado com sucesso.</p>
+               
 
 
-              <form class="row g-3 mt-1 mb-3" method="POST" action="{{route('tabcartaoponto.store')}}">
+              <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">
               @csrf
+              <input type="hidden" id="method" name="_method" value="">
                 <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
        
@@ -16,7 +42,7 @@
                         <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
-                      <a class="btn btn btn-primary" href="{{route('tabcadastro.index')}}" role="button" >Lançar</a>
+                      
                
                     <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
                   </div>
@@ -60,8 +86,11 @@
                     </div>
                     <div class="modal-footer" style="background-color: #fffdfd;">
                       <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-                      <form action="">
-                      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
+                      <form action="" id="formdelete" method="post">
+                    @csrf
+                    @method('delete')
+                      
+                      <button type="submit" class="btn btn-danger">Deletar</button>
                     </form> 
                     </div>
                   </div>
@@ -69,6 +98,37 @@
               </div>
             </div>
             <script>
+               $( "#num__boletim" ).keyup(function() {
+                var dados = $(this).val();
+                if (dados) {
+                    $.ajax({
+                        url: "{{url('tabcartaoponto')}}/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                          if (data.id) {
+                                $('#form').attr('action', "{{ url('tabcartaoponto')}}/"+data.id);
+                                $('#formdelete').attr('action',"{{ url('tabcartaoponto')}}/"+data.id)
+                                $('#incluir').attr('disabled','disabled')
+                                $('#atualizar').removeAttr( "disabled" )
+                                $('#deletar').removeAttr( "disabled" )
+                                $('#excluir').removeAttr( "disabled" )
+                                $('#method').val('PUT')
+                            
+                            }else{
+                                $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+                                $('#incluir').removeAttr( "disabled" )
+                                $('#atualizar').attr('disabled','disabled')
+                                $('#deletar').attr('disabled','disabled')
+                                $('#method').val(' ')
+                                $('#excluir').attr( "disabled",'disabled' )
+                            }
+                            $('#data').val(data.lsdata)
+                            $('#num__trabalhador').val(data.lsnumero)
+                        }
+                    });
+                }
+            });
                $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Lancamentotabela;
+use App\Lancamentorublica;
 class TabCartaoPontoController extends Controller
 {
     /**
@@ -38,16 +39,22 @@ class TabCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $lancamentotabela = new Lancamentotabela;
-        $lancamentotabelas = $lancamentotabela->cadastro($dados);
-        $id = $lancamentotabelas['id'];
         $user = Auth::user();
-        if ($lancamentotabelas) {
-            return view('tabelaCadastro.index',compact('user','id'));
-        }else{
-            $condicao = 'cadastrafalse';
-           
-        } 
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentorublica = new Lancamentorublica;
+        $listalancamentotabela = $lancamentotabela->listacomun($dados['num__boletim']);
+        if (!$listalancamentotabela) {
+            $lancamentotabelas = $lancamentotabela->cadastro($dados);
+            $lista = $lancamentorublica->listacadastro($lancamentotabelas['id']);
+            $id = $lancamentotabelas['id'];
+            return view('tabelaCadastro.index',compact('user','id','lista'));
+        }else if ($listalancamentotabela) {
+            $lista = $lancamentorublica->listacadastro($listalancamentotabela->id);
+            
+            $id =$listalancamentotabela->id;
+            return view('tabelaCadastro.index',compact('user','id','lista'));
+        }
+        $condicao = 'cadastrafalse';
         return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 
@@ -59,7 +66,9 @@ class TabCartaoPontoController extends Controller
      */
     public function show($id)
     {
-        //
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentotabelas = $lancamentotabela->listacomun($id);
+        return response()->json($lancamentotabelas);
     }
 
     /**
@@ -82,7 +91,19 @@ class TabCartaoPontoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dados = $request->all();
+        $user = Auth::user();
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentorublica = new Lancamentorublica;
+        $lancamentotabelas = $lancamentotabela->editar($dados,$id);
+        if ($lancamentotabelas) {
+            $lista = $lancamentorublica->listacadastro($id);
+            return view('tabelaCadastro.index',compact('user','id','lista'));
+        }else{
+            $condicao = 'editfalse';
+            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
+        }
+        
     }
 
     /**
@@ -93,6 +114,15 @@ class TabCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lancamentorublica = new Lancamentorublica;
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentorublicas = $lancamentorublica->deletar($id);
+        if ($lancamentorublicas) {
+            $lancamentotabela->deletar($id);
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+        return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 }

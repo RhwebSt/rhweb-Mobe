@@ -2,10 +2,11 @@
 @section('conteine')
 <div class="container">
         <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
-        <form class="row g-3 mt-1 mb-5" method="POST" action="{{route('boletimcartaoponto.store')}}">
+        <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
         @csrf
+        <input type="hidden" id="method" name="_method" value="">
         <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
-        <input type="hidden" name="sadado" id="sabado" value="{{$sabado}}">
+        <input type="hidden" name="sabado" id="sabado" value="{{$sabado}}">
         <input type="hidden" name="diasuteis" id="diasuteis" value="{{$diasuteis}}">
         <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
@@ -89,6 +90,7 @@
                 <th class="col text-white">AD.NOT</th>
             </thead>
             <tbody>
+            @if(count($lista) > 0)
                 @foreach($lista as $listas)
                 <tr>
                 <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
@@ -106,7 +108,24 @@
                 </tr>
                
                 @endforeach
+                @else
+                    <tr>
+                        <td colspan="11" class="bg-light text-black">
+                        <div class="alert alert-danger" role="alert">
+                            Não a registro cadastrador!
+                        </div>
+                        </td>
+                    </tr>
+                @endif
             </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td colspan="11">
+                    {{ $lista->links() }}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -130,12 +149,22 @@
           </div>
 </div>
 <script>
+    // var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+    // var Xmas95 = new Date('November 18, 2021 08:24:30');
+    // var weekday = Xmas95.getDay();
+    // semana.forEach((element,index) => {
+    //     if (weekday == index) {
+    //         console.log(element)
+    //     }
+    // });
+
+
+// console.log(weekday); // 1
     $('#total').focus(function(){
         let horario1 = $('#entrada1').val();
         let horario2 =$('#saida').val();
         let horario3 = $('#entrada2').val();
         let horario4 = $('#saida2').val();
-        console.log($('#diasuteis').val())
         if (horario1 && horario2 && horario3 && horario4) {
            
             let partes1 = horario1.split(':');
@@ -153,35 +182,56 @@
             let segundos = Math.floor(total % 60);
             $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
             diasuteis(total)
-            // if ($(this).val()) {
-            //     diasuteis(total)
-            // }
+           
         }
     })
     function diasuteis(resutado) {
         let diasuteis = $('#diasuteis').val()
         diasuteis = diasuteis.split(':');
         diasuteis =  parseInt(diasuteis[0]) * 3600 +  parseInt(diasuteis[1]) * 60;
-        let totalhrs50= parseInt(resutado) -  parseInt(diasuteis);
-        let total = totalhrs50;
-        let horas = Math.floor(total / 3600);
-        let minutos = Math.floor((total - (horas * 3600)) / 60);
-        let segundos = Math.floor(total % 60);
-        $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+        let total = '';
+        if (diasuteis <  resutado) {
+            total = (parseInt(diasuteis) - parseInt(resutado)) * (-1);
+            let horas = Math.floor(total / 3600);
+            let minutos = Math.floor((total - (horas * 3600)) / 60);
+            let segundos = Math.floor(total % 60);
+            $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+        }else{
+            $('#hora__extra').val("0:00")
+        }
+        
     }
     
-                $( "#nome__completo" ).keyup(function() {
+            $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
                     $.ajax({
-                        url: "{{url('trabalhador')}}/"+dados,
+                        url: "{{url('boletimcartaoponto')}}/"+dados,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
                           if (data.id) {
+                            $('#form').attr('action', "{{ url('boletimcartaoponto')}}/"+data.id);
+                            // $('#formdelete').attr('action',"{{ url('boletimcartaoponto')}}/"+data.tomador)
+                            $('#incluir').attr('disabled','disabled')
+                            $('#atualizar').removeAttr( "disabled" )
+                            // $('#deletar').removeAttr( "disabled" )
+                            // $('#excluir').removeAttr( "disabled" )
+                            $('#method').val('PUT')
                             $('#trabalhador').val(data.trabalhador)
                             $('#matricula').val(data.tsmatricula)
+                            $('#entrada1').val(data.bsentradamanhao)
+                            $('#saida').val(data.bssaidamanhao)
+                            $('#entrada2').val(data.bsentradatarde)
+                            $('#saida2').val(data.bssaidatarde)
+                            $('#total').val(data.bstotal)
+                            $('#hora__extra').val(data.bshoraex)
+                            $('#horas__cem').val(data.bshoraexcem)
+                            $('#adc__noturno').val(data.bsadinortuno)
+                          }else{
+                              trabalhador(dados)
                           }
+
                             // if (data.id) {
                             //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
                             //     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
@@ -309,5 +359,18 @@
                     });
                 }
             });
+            function trabalhador(dados) {
+                $.ajax({
+                    url: "{{url('trabalhador')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        if (data.id) {
+                        $('#trabalhador').val(data.trabalhador)
+                        $('#matricula').val(data.tsmatricula)
+                        }
+                    }
+                });
+            }
           </script>
 @stop

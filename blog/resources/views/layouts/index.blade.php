@@ -89,19 +89,31 @@
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim com Cartão</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletim Extra</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Calcular Folha</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Planilha de Fechamento- Boletins</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol dos Boletins</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos da Folha</a></li>
-                              <li><a class="dropdown-item" href="#">Imprimir Cartão Ponto</a></li>
+                             
                             </ul>
                           </li>
                         </ul>
-                          
+                        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                          <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Faturas
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos</a></li>
+                              <li><a class="dropdown-item " href="#">Rol dos recibos</a></li>
+                            </ul>
+                          </li>
+                        </ul>
 
 
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
@@ -124,69 +136,26 @@
                                 Relatórios
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Folha Produção por Ano</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Folha Produção por Mês</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Relação dos Sálarios- Contribuição INSS</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Produção do Trabalhador Semestral- Tomador-INSS</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Produção do Trabalhador Anual- Tomador-INSS</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Folha de Produção Anual</a></li>
+                               
+                                
+                                
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol dos Boletin</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Frequencia na Produção</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('rolnome') }}">Rol Trabalhadores Gráficos- Ordem Nome</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Ordem Cadastro</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol RG</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol Contas Bancos</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol Trabalhadores Gráficos- Rol Telefones</a></li>
-                                <li><a class="dropdown-item " href="#">Rol Trabalhadores Gráficos- Rol Exames</a></li>
+                                
+                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('rolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
+
+                                
                               </ul>
                             </li>
                           </ul>
 
-                          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Tabela Anual
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Gerar</a></li>
-                                  <li><a class="dropdown-item " href="#">Exibir</a></li>
-                                </ul>
-                              </li>
-                            </ul>
+                          
+                            
 
-                          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Administração
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Administrador</a></li>
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Históricos</a></li>
-                                  <li><a class="dropdown-item " href="#">SEFIP Geral</a></li>
-                                </ul>
-                              </li>
-                            </ul>
+                          
 
-
-                          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-                              <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Auxiliar
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Alterar data de Tomador</a></li>
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Simulador de Cálculos</a></li>
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Controlador de uniformes</a></li>
-                                  <li><a class="dropdown-item border-bottom border-secundary" href="#">Recalculos da Folha</a></li>
-                                  <li><a class="dropdown-item " href="#">Recalculos do Boletim</a></li>
-                                </ul>
-                              </li>
-                            </ul>
+                         
 
                   <div class="d-flex align-items-end"> 
                     <div class="flex-shrink-0 dropdown flex-row-reverse">

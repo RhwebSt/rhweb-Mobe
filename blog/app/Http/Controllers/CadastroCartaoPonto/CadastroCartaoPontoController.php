@@ -39,6 +39,7 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $user = Auth::user();
@@ -75,7 +76,7 @@ class CadastroCartaoPontoController extends Controller
      */
     public function show($id)
     {
-        //
+      
     }
 
     /**
@@ -98,7 +99,23 @@ class CadastroCartaoPontoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dados = $request->all();
+        $user = Auth::user();
+        $lancamentotabela = new Lancamentotabela;
+        $bolcartaoponto = new Bolcartaoponto;
+        $lancamentotabelas = $lancamentotabela->editar($dados,$id);
+        if ($lancamentotabelas) {
+            $lista = $bolcartaoponto->listacadastro($id);
+            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
+            ->with([
+                'domingo'=>$dados['domingo'],
+                'sabado'=>$dados['sabado'],
+                'diasuteis'=>$dados['diasuteis']
+            ]);
+        }else{
+            $condicao = 'editfalse';
+            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
+        }
     }
 
     /**
@@ -109,6 +126,15 @@ class CadastroCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bolcartaoponto = new Bolcartaoponto;
+        $lancamentotabela = new Lancamentotabela;
+        $bolcartaopontos = $bolcartaoponto->deletar($id);
+        if ($bolcartaopontos) {
+            $lancamentotabela->deletar($id);
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+        return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 }

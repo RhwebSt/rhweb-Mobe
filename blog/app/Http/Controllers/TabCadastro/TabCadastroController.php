@@ -40,6 +40,7 @@ class TabCadastroController extends Controller
         $dados = $request->all();
         $lancamentorublica = new Lancamentorublica;
         $lancamentorublicas = $lancamentorublica->cadastro($dados);
+        $lista = $lancamentorublica->listacadastro($dados['lancamento']);
         $user = Auth::user();
         $id = $dados['lancamento'];
         // if ($lancamentorublicas) {
@@ -47,7 +48,7 @@ class TabCadastroController extends Controller
         // }else{
         //     $condicao = 'cadastrafalse';
         // } 
-        return view('tabelaCadastro.index',compact('user','id'));
+        return view('tabelaCadastro.index',compact('user','id','lista'));
     }
 
     /**

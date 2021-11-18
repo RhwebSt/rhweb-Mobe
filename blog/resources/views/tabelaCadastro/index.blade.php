@@ -30,14 +30,7 @@
 
         <h1 class="container text-center mt-3 fs-4 mb-5">Lançamento com Tabela de Preço</h1>
 
-        <div class="responsive mt-5">
-            <div class="table-bordered border-white" >
-                <form class="d-flex p-1 ">
-                    <input class="form-control me-1" style="width:30rem; border: 1px solid black;" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn" type="submit" style="background-color:#2541B2; Color: #fefeff;">Pesquisar</button>
-                </form>
-            </div>
-        </div>
+       
 
         <form class="row g-3 mt-1 mb-5" method="POST" action="{{route('tabcadastro.store')}}">
         @csrf
@@ -95,10 +88,24 @@
                 <th class="col text-white">Quantidade/Tonelada</th>
             </thead>
             <tbody>
-                <td class="bg-light text-black">001</td>
-                <td class="bg-light text-black">Diária Normal</td>
-                <td class="bg-light text-black"></td>
-                <td class="bg-light text-black">20</td>
+                @if(count($lista) > 0)
+                @foreach($lista as $listas)
+                    <tr>
+                        <td class="bg-light text-black">{{$listas->licodigo}}</td>
+                        <td class="bg-light text-black">{{$listas->lshistorico}}</td>
+                        <td class="bg-light text-black"></td>
+                        <td class="bg-light text-black">{{$listas->lsquantidade}}</td>
+                    </tr>
+                @endforeach
+                @else
+                    <tr>
+                        <td colspan="4" class="bg-light text-black">
+                        <div class="alert alert-danger" role="alert">
+                            Não a registro cadastrador!
+                        </div>
+                        </td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 

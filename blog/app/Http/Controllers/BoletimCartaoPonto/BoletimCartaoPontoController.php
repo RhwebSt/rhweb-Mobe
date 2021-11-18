@@ -38,6 +38,7 @@ class BoletimCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $bolcartaoponto = new Bolcartaoponto;
         $bolcartaopontos = $bolcartaoponto->cadastro($dados);
         $lista = $bolcartaoponto->listacadastro($dados['lancamento']);
@@ -48,7 +49,12 @@ class BoletimCartaoPontoController extends Controller
         // }else{
         //     $condicao = 'cadastrafalse';
         // } 
-        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'));
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))  
+        ->with([
+            'domingo'=>$dados['domingo'],
+            'sabado'=>$dados['sabado'],
+            'diasuteis'=>$dados['diasuteis']
+        ]);
     }
 
     /**
@@ -59,7 +65,9 @@ class BoletimCartaoPontoController extends Controller
      */
     public function show($id)
     {
-        //
+        $bolcartaoponto = new Bolcartaoponto;
+        $bolcartaopontos = $bolcartaoponto->listafirst($id);
+        return response()->json($bolcartaopontos);
     }
 
     /**
@@ -82,7 +90,23 @@ class BoletimCartaoPontoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dados = $request->all();
+        $user = Auth::user();
+        $bolcartaoponto = new Bolcartaoponto;
+        $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
+        if ($bolcartaopontos) {
+            $lista = $bolcartaoponto->listacadastro($dados['lancamento']);
+            $id = $dados['lancamento'];
+            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
+            ->with([
+                'domingo'=>$dados['domingo'],
+                'sabado'=>$dados['sabado'],
+                'diasuteis'=>$dados['diasuteis']
+            ]);
+        }else{
+            $condicao = 'editfalse';
+            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
+        }
     }
 
     /**

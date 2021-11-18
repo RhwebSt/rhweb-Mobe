@@ -1,13 +1,35 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="card-body">
+      @if($errors->all())
+            @foreach($errors->all() as  $error)
+              @if($error === 'edittrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Atualização realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'editfalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél atualizar os dados!</strong>
+                </div>
+            @elseif($error === 'deletatrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Registro deletador com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastratrue')
+                <div class="alert alert-success mt-2 alert-block">
+                    <strong>Cadastrador realizada com sucesso!</strong>
+                </div>
+             @elseif($error === 'cadastrafalse')
+                <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                </div>
+            @endif
+            @endforeach
+        @endif     
               <h5 class="card-title text-center fs-3 ">Lançamento com Tabela</h5>
-
-                <p class="text-success">Boletim criado com sucesso.</p>
-
-
-              <form class="row g-3 mt-1 mb-3" method="POST" action="{{route('cadastrocartaoponto.store')}}">
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
               @csrf
+              <input type="hidden" id="method" name="_method" value="">
                 <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
        
@@ -16,7 +38,7 @@
                         <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
-                      <a class="btn btn btn-primary" href="{{route('tabcadastro.index')}}" role="button" >Lançar</a>
+                      
                
                     <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
                   </div>
@@ -63,8 +85,11 @@
                     </div>
                     <div class="modal-footer" style="background-color: #fffdfd;">
                       <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-                      <form action="">
-                      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
+                    <form action="" id="formdelete" method="post">
+                    @csrf
+                    @method('delete')
+                      
+                      <button type="submit" class="btn btn-danger">Deletar</button>
                     </form> 
                     </div>
                   </div>
@@ -72,6 +97,37 @@
               </div>
             </div>
             <script>
+               $( "#num__boletim" ).keyup(function() {
+                var dados = $(this).val();
+                if (dados) {
+                    $.ajax({
+                        url: "{{url('tabcartaoponto')}}/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                          if (data.id) {
+                                $('#form').attr('action', "{{ url('cadastrocartaoponto')}}/"+data.id);
+                                $('#formdelete').attr('action',"{{ url('cadastrocartaoponto')}}/"+data.id)
+                                $('#incluir').attr('disabled','disabled')
+                                $('#atualizar').removeAttr( "disabled" )
+                                $('#deletar').removeAttr( "disabled" )
+                                $('#excluir').removeAttr( "disabled" )
+                                $('#method').val('PUT')
+                            
+                            }else{
+                                $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
+                                $('#incluir').removeAttr( "disabled" )
+                                $('#atualizar').attr('disabled','disabled')
+                                $('#deletar').attr('disabled','disabled')
+                                $('#method').val(' ')
+                                $('#excluir').attr( "disabled",'disabled' )
+                            }
+                            $('#data').val(data.lsdata)
+                            $('#num__trabalhador').val(data.lsnumero)
+                        }
+                    });
+                }
+            });
                $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
@@ -87,129 +143,7 @@
                             $('#sabado').val(data.cssabados)
                             $('#diasuteis').val(data.csdiasuteis)
                           }
-                            // if (data.id) {
-                            //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                            //     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
-                            //     $('#incluir').attr('disabled','disabled')
-                            //     $('#atualizar').removeAttr( "disabled" )
-                            //     $('#deletar').removeAttr( "disabled" )
-                            //     $('#excluir').removeAttr( "disabled" )
-                            //     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
-                            //     $('#method').val('PUT')
-                            
-                            // }else{
-                            //     $('#form').attr('action', "{{ route('tomador.store') }}");
-                            //     $('#incluir').removeAttr( "disabled" )
-                            //     $('#atualizar').attr('disabled','disabled')
-                            //     $('#deletar').attr('disabled','disabled')
-                            //     $('#method').val(' ')
-                            //     $('#excluir').attr( "disabled",'disabled' )
-                            //     $('#tabelapreco').addClass('disabled').removeAttr('href')
-                            // }
-                            // $('#cnpj').val(data.tscnpj)
-                            // $('#matricula').val(data.tsmatricula)
-                            // $('#nome__fantasia').val(data.tsfantasia)
-                            // $('#simples').val(data.tssimples)
-                            // $('#telefone').val(data.tstelefone)
-                            // $('#cep').val(data.escep)
-                            // $('#logradouro').val(data.eslogradouro)
-                            // $('#numero').val(data.esnum)
-                            // $('#tipo').val(data.estipo)
-                            // $('#bairro').val(data.esbairro)
-                            // $('#localidade').val(data.esmunicipio)
-                            // $('#uf').val(data.esuf)
-                            // $('#complemento').val(data.escomplemento)
-                            // $('#taxa_adm').val(data.tftaxaadm.toFixed(2).toString().replace(".", ","))
-                            // // $('#caixa_benef').val(data.tfbenef.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias').val(data.tfferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13_salario').val(data.tf13.toFixed(2).toString().replace(".", ","))
-                            // $('#taxa__fed').val(data.tftaxafed.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias_trab').val(data.tsferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13__saltrab').val(data.tsdecimo13.toFixed(2).toString().replace(".", ","))
-                            // // $('#rsr').val(data.tsrsr.toFixed(2).toString().replace(".", ","))
-                            // $('#das').val(data.tfdas.toFixed(2).toString().replace(".", ","))
-                            // $('#cod__fpas').val(data.psfpas)
-                            // $('#cod__grps').val(data.psgrps)
-                            // $('#cod__recol').val(data.psresol)
-                            // $('#cnae').val(data.pscnae)
-                            // $('#fap__aliquota').val(data.psfapaliquota.toFixed(2).toString().replace(".", ","))
-                            // $('#rat__ajustado').val(data.psratajustados.toFixed(2).toString().replace(".", ","))
-                            // $('#fpas__terceiros').val(data.psfpasterceiros)
-                            // $('#aliq__terceiros').val(data.psaliquotaterceiros.toString().replace(".", ","))
-                            // $('#esocial').val(data.pssocial)
-                            // $('#alimentacao').val(data.isalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#transporte').val(data.istransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#epi').val(data.isepi.toFixed(2).toString().replace(".", ","))
-                            // $('#seguro__trabalhador').val(data.isseguroportrabalhador.toString().replace(".", ","))
-                            // // $('#indice__folha').val(data.isindecesobrefolha)
-                            // // $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#dias_uteis').val(data.csdiasuteis)
-                            // $('#sabados').val(data.cssabados)
-                            // $('#domingos').val(data.csdomingos)
-                            // $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
-                            // $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor_fatura').val(data.rsvalorfatura.toFixed(2).toString().replace(".", ","))
-                            // $('#nome__conta').val(data.bstitular)
-                            // $('#banco').val(data.bsbanco)
-                            // $('#agencia').val(data.bsagencia)
-                            // $('#operacao').val(data.bsoperacao)
-                            // $('#conta').val(data.bsconta)
-                            // $('#pix').val(data.bspix)
-                            // $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#folharalim').val(data.insalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
-                            // $('#endereco').val(data.eiid)
-                            // $('#bancario').val(data.biid)
-                            // for (let index = 0; index <  $('#tipo option').length; index++) {  
-                            //     if (data.tstipo == $('#tipo option').eq(index).text()) {
-                                    
-                            //         $('#tipo option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#tipo option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            
-                            // for (let index = 0; index <  $('#folhartipotrans option').length; index++) {  
-                            //     if (data.instipotrans == $('#folhartipotrans option').eq(index).text()) {
-                                    
-                            //         $('#folhartipotrans option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipotrans option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#folhartipoalim option').length; index++) {  
-                            //     if (data.instipoali == $('#folhartipoalim option').eq(index).text()) {
-                                    
-                            //         $('#folhartipoalim option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipoalim option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaofgts option').length; index++) {  
-                            //     if (data.rstipofgts == $('#retencaofgts option').eq(index).text()) {
-                                    
-                            //         $('#retencaofgts option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaofgts option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaoinss option').length; index++) {  
-                            //     if (data.rstipoinssempresa == $('#retencaoinss option').eq(index).text()) {
-                                    
-                            //         $('#retencaoinss option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaoinss option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#valorfatura option').length; index++) {  
-                            //     if (data.rsvalorfatura == $('#valorfatura option').eq(index).text()) {
-                                    
-                            //         $('#valorfatura option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#valorfatura option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
+                          
                         }
                     });
                 }
