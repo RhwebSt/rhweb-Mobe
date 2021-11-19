@@ -9,8 +9,8 @@
                 </div>
                 <div class="col text-end">
                     <div class="btn " role="button" aria-label="Basic example">
-                            <a class="btn btn btn-primary" href="{{ route('depedente.mostrar.create',$id) }}" role="button">Incluir</a>
-                            <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Sair</a>
+                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button">Incluir</a>
+                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button">Sair</a>
                     </div>
                 </div> 
             </div>
@@ -73,7 +73,7 @@
                                         <p class="text-black">Deseja realmente excluir?</p>
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>
                                         <button type="submit" class="btn btn-danger">Deletar</button>
 
                                         </div>

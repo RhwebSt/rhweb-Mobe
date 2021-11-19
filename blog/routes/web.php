@@ -23,8 +23,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('home','Home\\HomeController')->names('home');
     Route::get('rolnome','PdfController@rolnome');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
-    Route::resource('tabelapreco.mostrar','Tabelapreco\\TabelaPrecoController')->only(['index', 'create']);
-    Route::resource('tabelapreco','Tabelapreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
+    Route::resource('tabelapreco.mostrar','TabelaPreco\\TabelaPrecoController')->only(['index', 'create']);
+    Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);

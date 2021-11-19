@@ -8,16 +8,16 @@
         <!-- <title>Cadastro Trabalhador</title> -->
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <link rel="stylesheet" href="../../../../../reset.css">
-		<link rel="stylesheet" href="../../../../../Mobe-style.css">
-    <link rel="stylesheet" href="{{url('/css/style.css')}}">
+        <link rel="stylesheet" href="{{url('/css/reset.css')}}">
+		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
+        <link rel="stylesheet" href="{{url('/css/style.css')}}">
+        <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
             rel="stylesheet">
-         <link rel="stylesheet" href="./cadastroTrabalhador.css">
-         <!-- <link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}"> -->
-         <link rel="stylesheet" href="../../../../../CSS/Rodapé/Rodapé.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
@@ -35,22 +35,22 @@
         }
     </style>
     <body >
-    <main >
+    <main>
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
               <!-- <a class="navbar-brand" href=""></a> -->
-              <img class="navbar-brand" src="{{url('/imagem/rhwebTop.png')}}" alt="" srcset="" style="width: 90px">
+              <img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px">
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
             <div class="collapse navbar-collapse " id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                    <a class="nav-link dropdown-toggle text-white " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                       Cadastro
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-image: linear-gradient(100deg, #ffffff, #fdfdfd, #f5f5fa);">
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{ route('tomador.index') }}">Tomador</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item border-secundary border-bottom " href="{{ route('tomador.index') }}">Tomador</a></li>
                       <li><a class="dropdown-item border-bottom border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
                     
                       @can('admin')
@@ -157,19 +157,19 @@
 
                          
 
-                  <div class="d-flex align-items-end"> 
+                  <div class="dbg-primary-flex align-items-end bguser "> 
                     <div class="flex-shrink-0 dropdown flex-row-reverse">
                       @if($user->name)
-                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white ms-3"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user fa-md"></i> {{$user->name}}
                       </a>
                       @else
-                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white ms-3"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user fa-md"></i> MOBE
                       </a>
                       @endif
                      
-                      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="background-image: linear-gradient(90deg, #ffffff, #ebecf7, #e8e8fa)";>
+                      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Meus da dados</a></li>
                         <li><a class="dropdown-item" href="{{route('logout.create')}}">Sair</a></li>
                       </ul>
@@ -181,19 +181,25 @@
               </ul>
             </div>
           </div>
+          <div class="">
+                <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust"></i></button>
+        </div>
 </nav>
 
 
 
-    @yield('conteine')
 
-    <footer style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
-        <p class="text-center p-4  col-md-12" style="margin-top: 100px;">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
+   @yield('conteine')
+
+    <footer class="" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
+        <p class="text-center p-4  col-md-12">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
     </main>
+    <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="{{url('/js/masck.js')}}"></script>
+    
     <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>

@@ -43,7 +43,7 @@ class LoginController extends Controller
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
             return redirect()->route('home.index');
         }
-        return redirect()->route('login.index')->withInput()->withErrors(['Não foi possivel efetuar o login, tente novamento.']);
+        return redirect()->route('/.index')->withInput()->withErrors(['Não foi possivel efetuar o login, tente novamento.']);
     }
  
     /**

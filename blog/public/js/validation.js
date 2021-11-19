@@ -509,9 +509,33 @@ $("#form").validate({
         },
         nome__mae:{
             required:true
-        }
+        },
+        entrada1:{
+            required:true
+        },
+        saida:{
+            required:true
+        },
+        entrada2:{
+            required:true
+        },
+        saida2:{
+            required:true
+        },
     },
     messages:{
+        saida2:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        entrada2:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        saida:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        entrada1:{
+            required:"O campo nome não pode esta vazio!",
+        },
         nome__mae:{
             required:"O campo nome não pode esta vazio!",
         },

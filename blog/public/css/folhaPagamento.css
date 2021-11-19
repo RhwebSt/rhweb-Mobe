@@ -1,11 +1,19 @@
 :root{
     --body-bg:rgb(100, 149, 255);
     --body-color: black;
+    --botao-dark-mode-color: rgb(252, 250, 250);
+    --botao-dark-mode-icon-color:black;
+    --hover-dark-mode-bg: rgb(14, 13, 13);
+    --hover-dark-mode-color: white;
 }
 
-.dark-mode:root{
-    --body-bg:#000000;
+.darkmode{
+    --body-bg:#242424;
     --body-color: rgb(255, 255, 255);
+    --botao-dark-mode-color: rgb(14, 13, 13);
+    --botao-dark-mode-icon-color: white;
+    --hover-dark-mode-bg: rgb(252, 250, 250);
+    --hover-dark-mode-color: black;
 }
 
 body {
@@ -30,17 +38,45 @@ body {
     transition: ease-in-out 300ms;
 }
 
+.botao__dark{
+    width:40px;
+    height:40px;
+    border-radius: 100%;
+    background-color: var(--botao-dark-mode-color);
+    color: var(--botao-dark-mode-icon-color);
+}
+
+.botao__dark:hover{
+    background-color: var(--hover-dark-mode-bg);
+    color: var(--hover-dark-mode-color);
+    transition: ease-out 1s;
+    transition: ease-in 800ms;
+}
+
 @media (min-width: 576px){
     main {
         margin-top: 700px;
         width: 100%;
     }
+
+    .botao{
+        width: 15px;
+        height:15px;
+        margin-top: 5px;
+    }
 }
 
 @media (min-width: 768px){
+    
     main {
         margin-top: 800px;
         width: 20%;
+    }
+
+    .botao{
+        width:15px;
+        height:5px;
+        margin-top: 5px;
     }
 }
 
@@ -49,12 +85,23 @@ body {
         margin-top: 300px;
         width: 100%;
     }
+
+    .botao{
+        width:10px;
+        height:10px;
+        margin-top: 5px;
+    }
 }
 
 @media (min-width: 1200px){
     main {
         margin-top: 100px;
         width: 100%;
+    }
+
+    .botao{
+        width:40px;
+        height:40px;
     }
 }
 
@@ -63,4 +110,10 @@ body {
         margin-top: 100px;
         width: 100%;
     }
+
+    .botao{
+        width:40px;
+        height:40px;
+    }
 }
+

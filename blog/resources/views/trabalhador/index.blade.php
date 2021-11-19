@@ -31,17 +31,32 @@
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}"  method="POST" >
         
         <div class="btn mt-5 " role="group" aria-label="Basic example">
-            <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
-            <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
-            <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="submit" id="incluir" class="btn botao text-white">Incluir</button>
+            <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
+            <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Excluir
                       </button>
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
-                <a class="btn btn btn-primary disabled"  id="depedente" role="button">Dependentes</a>
-                <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
+                <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
+                <a class="btn botao disabled"  id="depedente" role="button">Imprimir</a>
+                <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
-        <div class="container text-center   fs-4 fw-bold">Identificação do Trabalhador</div>
+        
+        <div class="col-md-6 table-bordered border-dark d-flex mt-5 mb-4">
+            <label for="pesquisa" class="form-label"></label>
+            <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
+                <datalist id="datalistOptions">
+                    <option value="San Francisco">
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Chicago">
+                </datalist>
+            <button class="btn botao" type="submit">Pesquisar</button>
+        </div>
+        
+        <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador</div>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden"  name="deflator" >
@@ -51,6 +66,11 @@
             <div class="col-md-6">
               <label for="nome__completo" class="form-label">Nome Completo</label>
               <input type="text" class="form-control" name="nome__completo" id="nome__completo" >
+            </div>
+            
+            <div class="col-md-6">
+              <label for="nome__social" class="form-label">Nome Social</label>
+              <input type="text" class="form-control" name="nome__social" id="nome__social" >
             </div>
 
             <div class="col-md-2">
@@ -92,7 +112,7 @@
             <div class="col-md-2">
                 <label for="raca" class="form-label">Raça</label>
                 <select id="raca" name="raca" class="form-select">
-                  <option selected>Preto</option>
+                  <option selected>Negro</option>
                   <option>Pardo</option>
                   <option>Branco</option>
                   <option>Indígena</option>
@@ -137,7 +157,7 @@
               <input type="text" class="form-control" name="nome__mae" id="nome__mae" >
             </div>
 
-            <div class="container text-center  fs-4 fw-bold">Local de Residência</div>
+            <div class="container text-center  fs-4 fw-bold mt-4 mb-3">Local de Residência</div>
 
             <div class="col-md-2">
               <label for="cep" class="form-label">Cep</label>
@@ -170,13 +190,13 @@
           </div>
 
 
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <label for="bairro" class="form-label">Bairro</label>
                 <input type="text" class="form-control" name="bairro" id="bairro" value="">
             </div>
 
             
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <label for="localidade" class="form-label">Municipio</label>
                 <input type="text" class="form-control" name="localidade" id="localidade" value="">
             </div>
@@ -190,7 +210,7 @@
               <input type="text" class="form-control" name="telefone" id="telefone" value="">
             </div>
 
-            <div class="container text-center  fs-4 fw-bold">Contrato de Trabalho</div>
+            <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Contrato de Trabalho</div>
 
             <div class="col-md-3">
               <label for="data__admissao" class="form-label">Data de Admissão</label>
@@ -202,7 +222,7 @@
               <input type="text" class="form-control" name="categoria__contrato" id="categoria" value="">
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-2">
               <label for="cbo" class="form-label">CBO</label>
               <input type="text" class="form-control" name="cbo" id="cbo" value="">
             </div>
@@ -243,34 +263,30 @@
             </div>
             
             
-            <div class="container text-center  fs-4 fw-bold">Dados Bancários do Trabalhador</div>
-            
-            <div class="col-md-6">
-              <label for="nome__conta" class="form-label">Nome do Titular</label>
-              <input type="text" class="form-control" name="nome__conta" id="nome__conta" value="">
-            </div>
+            <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador</div>
 
-            <div class="col-md-2">
+
+            <div class="col-md-3 mb-5">
               <label for="banco" class="form-label">Banco</label>
               <input type="text" class="form-control" name="banco" id="banco" value="">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 mb-5">
               <label for="agencia" class="form-label">Agência</label>
               <input type="text" class="form-control" name="agencia" id="agencia" value="">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 mb-5">
               <label for="operacao" class="form-label">Operação</label>
               <input type="text" class="form-control" name="operacao" id="operacao" value="">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 mb-5">
               <label for="conta" class="form-label">Conta</label>
               <input type="text" class="form-control" name="conta" id="conta" value="">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3 mb-5">
               <label for="pix" class="form-label">PIX</label>
               <input type="text" class="form-control" name="pix" id="pix" value="">
             </div>

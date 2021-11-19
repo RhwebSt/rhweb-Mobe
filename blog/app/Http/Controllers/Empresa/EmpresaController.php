@@ -56,7 +56,7 @@ class EmpresaController extends Controller
             }else{
                 $condicao = 'cadastrafalse';
             }
-            return redirect()->route('empresa.index')->withInput()->withErrors([$condicao]);
+            return redirect()->route('listaempresa.create')->withInput()->withErrors([$condicao]);
         }
     }
 
@@ -105,7 +105,7 @@ class EmpresaController extends Controller
         }else{
             $condicao = 'editfalse';
         }
-        return redirect()->route('empresa.index')->withInput()->withErrors([$condicao]);
+        return redirect()->route('listaempresa.create')->withInput()->withErrors([$condicao]);
     }
 
     /**

@@ -34,8 +34,21 @@
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn btn-primary" value="Validar!">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
-                        <a class="btn ms-2 col-md-1 text-white btn-primary botao table-hover" href="#" role="button">Sair</a>
+                        <a class="btn col-md-1 text-white botao table-hover" href="#" role="button">Sair</a>
                     </div>
+                </div>
+                
+                <div class="col-md-6 table-bordered border-white d-flex mt-5 mb-4">
+                    <label for="pesquisa" class="form-label"></label>
+                    <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
+                        <datalist id="datalistOptions">
+                            <option value="San Francisco">
+                            <option value="New York">
+                            <option value="Seattle">
+                            <option value="Los Angeles">
+                            <option value="Chicago">
+                        </datalist>
+                    <button class="btn" type="submit" style="background-color:#2541B2; Color: #fefeff;">Pesquisar</button>
                 </div>
 
                 <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>

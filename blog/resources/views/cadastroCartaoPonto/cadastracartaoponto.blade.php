@@ -8,6 +8,7 @@
         <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
         <input type="hidden" name="sabado" id="sabado" value="{{$sabado}}">
         <input type="hidden" name="diasuteis" id="diasuteis" value="{{$diasuteis}}">
+        <input type="hidden" name="data" value="{{$data}}">
         <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
        
@@ -149,59 +150,6 @@
           </div>
 </div>
 <script>
-    // var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
-    // var Xmas95 = new Date('November 18, 2021 08:24:30');
-    // var weekday = Xmas95.getDay();
-    // semana.forEach((element,index) => {
-    //     if (weekday == index) {
-    //         console.log(element)
-    //     }
-    // });
-
-
-// console.log(weekday); // 1
-    $('#total').focus(function(){
-        let horario1 = $('#entrada1').val();
-        let horario2 =$('#saida').val();
-        let horario3 = $('#entrada2').val();
-        let horario4 = $('#saida2').val();
-        if (horario1 && horario2 && horario3 && horario4) {
-           
-            let partes1 = horario1.split(':');
-            let segundos1 = partes1[0] * 3600 + partes1[1] * 60;
-            let partes2 = horario2.split(':');
-            let segundos2 = partes2[0] * 3600 + partes2[1] * 60;
-            let partes3 = horario3.split(':');
-            let segundos3 = partes3[0] * 3600 + partes3[1] * 60;
-            let partes4 = horario4.split(':');
-            let segundos4 = partes4[0] * 3600 + partes4[1] * 60;
-            let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-            let total = totalHoras;
-            let horas = Math.floor(total / 3600);
-            let minutos = Math.floor((total - (horas * 3600)) / 60);
-            let segundos = Math.floor(total % 60);
-            $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
-            diasuteis(total)
-           
-        }
-    })
-    function diasuteis(resutado) {
-        let diasuteis = $('#diasuteis').val()
-        diasuteis = diasuteis.split(':');
-        diasuteis =  parseInt(diasuteis[0]) * 3600 +  parseInt(diasuteis[1]) * 60;
-        let total = '';
-        if (diasuteis <  resutado) {
-            total = (parseInt(diasuteis) - parseInt(resutado)) * (-1);
-            let horas = Math.floor(total / 3600);
-            let minutos = Math.floor((total - (horas * 3600)) / 60);
-            let segundos = Math.floor(total % 60);
-            $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
-        }else{
-            $('#hora__extra').val("0:00")
-        }
-        
-    }
-    
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
@@ -231,130 +179,6 @@
                           }else{
                               trabalhador(dados)
                           }
-
-                            // if (data.id) {
-                            //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                            //     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
-                            //     $('#incluir').attr('disabled','disabled')
-                            //     $('#atualizar').removeAttr( "disabled" )
-                            //     $('#deletar').removeAttr( "disabled" )
-                            //     $('#excluir').removeAttr( "disabled" )
-                            //     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
-                            //     $('#method').val('PUT')
-                            
-                            // }else{
-                            //     $('#form').attr('action', "{{ route('tomador.store') }}");
-                            //     $('#incluir').removeAttr( "disabled" )
-                            //     $('#atualizar').attr('disabled','disabled')
-                            //     $('#deletar').attr('disabled','disabled')
-                            //     $('#method').val(' ')
-                            //     $('#excluir').attr( "disabled",'disabled' )
-                            //     $('#tabelapreco').addClass('disabled').removeAttr('href')
-                            // }
-                            // $('#cnpj').val(data.tscnpj)
-                            // $('#matricula').val(data.tsmatricula)
-                            // $('#nome__fantasia').val(data.tsfantasia)
-                            // $('#simples').val(data.tssimples)
-                            // $('#telefone').val(data.tstelefone)
-                            // $('#cep').val(data.escep)
-                            // $('#logradouro').val(data.eslogradouro)
-                            // $('#numero').val(data.esnum)
-                            // $('#tipo').val(data.estipo)
-                            // $('#bairro').val(data.esbairro)
-                            // $('#localidade').val(data.esmunicipio)
-                            // $('#uf').val(data.esuf)
-                            // $('#complemento').val(data.escomplemento)
-                            // $('#taxa_adm').val(data.tftaxaadm.toFixed(2).toString().replace(".", ","))
-                            // // $('#caixa_benef').val(data.tfbenef.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias').val(data.tfferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13_salario').val(data.tf13.toFixed(2).toString().replace(".", ","))
-                            // $('#taxa__fed').val(data.tftaxafed.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias_trab').val(data.tsferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13__saltrab').val(data.tsdecimo13.toFixed(2).toString().replace(".", ","))
-                            // // $('#rsr').val(data.tsrsr.toFixed(2).toString().replace(".", ","))
-                            // $('#das').val(data.tfdas.toFixed(2).toString().replace(".", ","))
-                            // $('#cod__fpas').val(data.psfpas)
-                            // $('#cod__grps').val(data.psgrps)
-                            // $('#cod__recol').val(data.psresol)
-                            // $('#cnae').val(data.pscnae)
-                            // $('#fap__aliquota').val(data.psfapaliquota.toFixed(2).toString().replace(".", ","))
-                            // $('#rat__ajustado').val(data.psratajustados.toFixed(2).toString().replace(".", ","))
-                            // $('#fpas__terceiros').val(data.psfpasterceiros)
-                            // $('#aliq__terceiros').val(data.psaliquotaterceiros.toString().replace(".", ","))
-                            // $('#esocial').val(data.pssocial)
-                            // $('#alimentacao').val(data.isalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#transporte').val(data.istransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#epi').val(data.isepi.toFixed(2).toString().replace(".", ","))
-                            // $('#seguro__trabalhador').val(data.isseguroportrabalhador.toString().replace(".", ","))
-                            // // $('#indice__folha').val(data.isindecesobrefolha)
-                            // // $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#dias_uteis').val(data.csdiasuteis)
-                            // $('#sabados').val(data.cssabados)
-                            // $('#domingos').val(data.csdomingos)
-                            // $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
-                            // $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor_fatura').val(data.rsvalorfatura.toFixed(2).toString().replace(".", ","))
-                            // $('#nome__conta').val(data.bstitular)
-                            // $('#banco').val(data.bsbanco)
-                            // $('#agencia').val(data.bsagencia)
-                            // $('#operacao').val(data.bsoperacao)
-                            // $('#conta').val(data.bsconta)
-                            // $('#pix').val(data.bspix)
-                            // $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#folharalim').val(data.insalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
-                            // $('#endereco').val(data.eiid)
-                            // $('#bancario').val(data.biid)
-                            // for (let index = 0; index <  $('#tipo option').length; index++) {  
-                            //     if (data.tstipo == $('#tipo option').eq(index).text()) {
-                                    
-                            //         $('#tipo option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#tipo option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            
-                            // for (let index = 0; index <  $('#folhartipotrans option').length; index++) {  
-                            //     if (data.instipotrans == $('#folhartipotrans option').eq(index).text()) {
-                                    
-                            //         $('#folhartipotrans option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipotrans option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#folhartipoalim option').length; index++) {  
-                            //     if (data.instipoali == $('#folhartipoalim option').eq(index).text()) {
-                                    
-                            //         $('#folhartipoalim option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipoalim option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaofgts option').length; index++) {  
-                            //     if (data.rstipofgts == $('#retencaofgts option').eq(index).text()) {
-                                    
-                            //         $('#retencaofgts option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaofgts option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaoinss option').length; index++) {  
-                            //     if (data.rstipoinssempresa == $('#retencaoinss option').eq(index).text()) {
-                                    
-                            //         $('#retencaoinss option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaoinss option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#valorfatura option').length; index++) {  
-                            //     if (data.rsvalorfatura == $('#valorfatura option').eq(index).text()) {
-                                    
-                            //         $('#valorfatura option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#valorfatura option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
                         }
                     });
                 }
@@ -372,5 +196,195 @@
                     }
                 });
             }
+    
+            var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+            var data = new Date('{{$data}} 08:24:30');
+            var dias = data.getDay();
+   
+            $('#total').focus(function(){
+                let horario1 = $('#entrada1').val();
+                let horario2 =$('#saida').val();
+                let horario3 = $('#entrada2').val();
+                let horario4 = $('#saida2').val();
+                let partes1 = horario1.split(':');
+                let segundos1 = partes1[0] * 3600 + partes1[1] * 60;
+                let partes2 = horario2.split(':');
+                let segundos2 = partes2[0] * 3600 + partes2[1] * 60;
+                let partes3 = horario3.split(':');
+                let segundos3 = partes3[0] * 3600 + partes3[1] * 60;
+                let partes4 = horario4.split(':');
+                let segundos4 = partes4[0] * 3600 + partes4[1] * 60;
+                // adnotuno(segundos1,segundos2,segundos3,segundos4,total)
+                if (horario1 && horario2 && horario3 && horario4) {
+                    let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                    let total = totalHoras;
+                    let horas = Math.floor(total / 3600);
+                    let minutos = Math.floor((total - (horas * 3600)) / 60);
+                    let segundos = Math.floor(total % 60);
+                    $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+                    feriados(total)
+                    
+                    semana.forEach((element,index) => {
+                        if (dias == index) {
+                            if (element === 'Sábado') {
+                                sabado(total)
+                            }else{
+                                diasuteis(total)
+                            }
+                        }
+                    })
+                }
+            })
+            function diasuteis(resutado) {
+                let diasuteis = $('#diasuteis').val()
+                diasuteis = diasuteis.split(':');
+                diasuteis =  parseInt(diasuteis[0]) * 3600 +  parseInt(diasuteis[1]) * 60;
+                let total = '';
+                if (diasuteis <  resutado) {
+                    total = (parseInt(diasuteis) - parseInt(resutado)) * (-1);
+                    let horas = Math.floor(total / 3600);
+                    let minutos = Math.floor((total - (horas * 3600)) / 60);
+                    let segundos = Math.floor(total % 60);
+                    $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+                }else{
+                    $('#hora__extra').val("0:00")
+                }
+                
+            }
+        
+           function sabado(resutado) {
+                let sabado = $('#sabado').val()
+                sabado = sabado.split(':');
+                sabado =  parseInt(sabado[0]) * 3600 +  parseInt(sabado[1]) * 60;
+                let total = '';
+                if (sabado <  resutado) {
+                    total = (parseInt(sabado) - parseInt(resutado)) * (-1);
+                    let horas = Math.floor(total / 3600);
+                    let minutos = Math.floor((total - (horas * 3600)) / 60);
+                    let segundos = Math.floor(total % 60);
+                    $('#hora__extra').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+                }else{
+                    $('#hora__extra').val("0:00")
+                }
+           }
+           function feriados(total) {
+            $.ajax({
+                url: "https://brasilapi.com.br/api/feriados/v1/2021",
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                    data.forEach(element => {
+                        if (element.date === '{{$data}}') {
+                            domingo(total)
+                        }else{
+                            $('#horas__cem').val("0:00")
+                        }
+                    });
+                    semana.forEach((element,index) => {
+                        if (dias == index) {
+                            if (element === 'Domingo') {
+                                domingo(total)
+                            }else{
+                                $('#horas__cem').val("0:00")
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        function domingo(resutado) {
+            let domingo = $('#domingo').val()
+            domingo = domingo.split(':');
+            domingo =  parseInt(domingo[0]) * 3600 +  parseInt(domingo[1]) * 60;
+            let total = '';
+            if (domingo <  resutado) {
+                total = (parseInt(domingo) - parseInt(resutado)) * (-1);
+                let horas = Math.floor(total / 3600);
+                let minutos = Math.floor((total - (horas * 3600)) / 60);
+                let segundos = Math.floor(total % 60);
+                $('#horas__cem').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`)
+                $('#hora__extra').val("0:00")
+            }else{
+                $('#horas__cem').val("0:00")
+            }
+        }
+        function adnotuno(segundos1,segundos2,segundos3,segundos4,total) {
+            let noturnos1 = '5:00'
+            let noturnos2 = '23:00'
+            let noturnos3 = '00:00'
+            if (segundos1 > noturno1(noturnos1)  || segundos1 <  noturno2(noturnos2)) {
+                segundos1 -= 86400
+                let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
+                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+            }else if (segundos2 > noturno1(noturnos1) || segundos2 <  noturno2(noturnos2)) {
+                segundos2 -= 86400
+                let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
+                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+            }else if (segundos3 > noturno1(noturnos1) || segundos3 <  noturno2(noturnos2)) {
+                segundos3 -= 86400
+                let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+            }else if (segundos4 > noturno1(noturnos1) || segundos4 <  noturno2(noturnos2)) {
+                segundos4 -= 86400
+                let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+            }
+
+            
+        }
+        function noturno1(resultado) {
+            let noturno1 = resultado.split(':');
+            let segundos = noturno1[0] * 3600 + noturno1[1] * 60;
+            return segundos;
+        }
+        function noturno2(resultado) {
+            let noturno2 = resultado.split(':');
+            let segundos = noturno2[0] * 3600 + noturno2[1] * 60;
+            return segundos;
+        }
+        function noturno3(resultado) {
+            let noturno3 = resultado.split(':');
+            let segundos = ''
+            if (noturno3[0] == '00') {
+                segundos = noturno3[1] * 60;
+            }else{
+                segundos = noturno3[0] * 3600 + noturno3[1] * 60;
+            }
+            return segundos;
+        }
+        function totalgeral(segundos1,segundos2,segundos3,segundos4,total) {
+            let horas = Math.floor(total / 3600);
+            let minutos = Math.floor((total - (horas * 3600)) / 60);
+            let segundos = Math.floor(total % 60);
+            $('#total').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+            adnotunototal(segundos1,segundos2,segundos3,segundos4,total)
+        }
+        function adnotunototal(segundos1,segundos2,segundos3,segundos4,total) {
+            let totalHoras = []
+            let soma = 0
+             if (segundos1 > 82800 || segundos1 < 18000) {
+                 console.log('1')
+                 totalHoras.push(segundos1);
+            }
+             if(segundos2 > 82800 || segundos2 < 18000){
+                console.log('2')
+                totalHoras.push(segundos2);
+            }
+             if(segundos3 > 82800 || segundos3 < 18000){
+                console.log('3')
+                totalHoras.push(segundos3);
+            }
+            if(segundos4 > 82800 || segundos4 < 18000){
+                console.log('4')
+                totalHoras.push(segundos4);
+            }
+            totalHoras.forEach(element => {
+                soma += element
+            });
+            let horas = Math.floor(soma / 3600);
+            let minutos = Math.floor((soma - (horas * 3600)) / 60);
+            let segundos = Math.floor(soma % 60);
+            $('#adc__noturno').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+        }
           </script>
 @stop

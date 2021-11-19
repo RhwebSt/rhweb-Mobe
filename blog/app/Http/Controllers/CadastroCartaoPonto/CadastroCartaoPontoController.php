@@ -52,7 +52,8 @@ class CadastroCartaoPontoController extends Controller
             ->with([
                 'domingo'=>$dados['domingo'],
                 'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis']
+                'diasuteis'=>$dados['diasuteis'],
+                'data'=>$dados['data']
             ]);
         }else if($listalancamentotabela){
             $lista = $bolcartaoponto->listacadastro($listalancamentotabela->id);
@@ -61,7 +62,8 @@ class CadastroCartaoPontoController extends Controller
             ->with([
                 'domingo'=>$dados['domingo'],
                 'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis']
+                'diasuteis'=>$dados['diasuteis'],
+                'data'=>$dados['data']
             ]);
         }
         $condicao = 'cadastrafalse';
@@ -110,7 +112,8 @@ class CadastroCartaoPontoController extends Controller
             ->with([
                 'domingo'=>$dados['domingo'],
                 'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis']
+                'diasuteis'=>$dados['diasuteis'],
+                'data'=>$dados['data']
             ]);
         }else{
             $condicao = 'editfalse';

@@ -32,17 +32,17 @@
 
 <div class="row">
     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-    <button type="submit" id="incluir" style="background-color: #194bf0;" class="btn ms-2 btn-primary col-md-1 text-white" >
+    <button type="submit" id="incluir" class="btn ms-2 botao col-md-1 text-white" >
         Incluir
     </button>
-    <button type="button" id="deletar" disabled class="btn ms-2  col-md-1 d-none text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #194bf0;">
+    <button type="button" id="deletar" disabled class="btn ms-2 botao col-md-1 d-none text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
         Excluir
     </button>
-    <button type="submit" id="atualizar" disabled style="background-color: #194bf0;" class="btn ms-2  btn-primary col-md-1 text-white" >
+    <button type="submit" id="atualizar" disabled class="btn ms-2 botao col-md-1 text-white" >
     Editar
     </button>
     
-    <a class="btn ms-2 col-md-1 text-white" href="{{route('home.index')}}" style="background-color: #194bf0;" role="button">Sair</a>
+    <a class="btn ms-2 botao col-md-1 text-white" href="{{route('home.index')}}" role="button">Sair</a>
     </div>
 </div>
 <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">IRRF</h1>

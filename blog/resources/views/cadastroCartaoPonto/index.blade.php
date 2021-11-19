@@ -143,7 +143,6 @@
                             $('#sabado').val(data.cssabados)
                             $('#diasuteis').val(data.csdiasuteis)
                           }
-                          
                         }
                     });
                 }

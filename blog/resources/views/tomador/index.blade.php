@@ -30,18 +30,35 @@
         
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn " role="button" aria-label="Basic example">
-                            <button type="submit" id="incluir" class="btn btn-primary" value="Validar!">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
+                            <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
+                            <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
                            
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
-                            <button type="button" class="btn btn-primary  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Excluir
                       </button>
-                      <a class="btn btn-primary disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
-                            <a class="btn btn btn-primary" href="{{route('home.index')}}" role="button">Sair</a>
+                      <a class="btn botao disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
+                            <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                             
                         </div>
-                        <div class="container text-center  fs-4 fw-bold">Dados da Empresa</div>
+
+                            
+                            
+                        <div class="col-md-6 table-bordered border-white d-flex mt-5 mb-4">
+                          <label for="pesquisa" class="form-label"></label>
+                          <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
+                          <datalist id="datalistOptions">
+                            <option value="San Francisco">
+                            <option value="New York">
+                            <option value="Seattle">
+                            <option value="Los Angeles">
+                            <option value="Chicago">
+                          </datalist>
+                          <button class="btn botao" type="submit" >Pesquisar</button>
+                        </div>
+
+              
+                        <div class="container text-center mb-3  fs-4 fw-bold">Dados da Empresa</div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
                         <input type="hidden" name="user" value="{{$user->id}}">
@@ -61,22 +78,7 @@
                             <label for="cnpj" class="form-label">CNPJ</label>
                             <input type="text" class="form-control" name="cnpj" value="" id="cnpj">
                         </div>
-
-                        <div class="col-md-2">
-                            <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control" name="matricula" value="" id="matricula">
-                        </div>
-
-                        <div class="col-md-2">
-                            <label for="simples" class="form-label">Simples</label>
-                            <input type="text" class="form-control" name="simples" value="" id="simples">
-                        </div>
-
-                        <div class="col-md-2">
-                            <label for="telefone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" name="telefone" value="" id="telefone">
-                        </div>
-
+                        
                         <div class="col-md-2">
                             <label for="tipo" class="form-label">Tipo</label>
                             <select id="tipo" name="tipo" class="form-select">
@@ -85,8 +87,25 @@
                             <option >3</option>
                             </select>
                         </div>
+
+                        <div class="col-md-2">
+                            <label for="matricula" class="form-label">Matrícula</label>
+                            <input type="text" class="form-control" name="matricula" value="" id="matricula">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="simples" class="form-label">Simples</label>
+                            <input type="text" class="form-control" name="simples" value="" id="simples">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" value="" id="telefone">
+                        </div>
+
+                        
                        
-                        <h1 class="container text-center  fs-4 fw-bold">Endereço</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Endereço</h1>
 
                         <div class="col-md-2">
                             <label for="cep" class="form-label">CEP</label>
@@ -132,20 +151,20 @@
                             <input type="text" class="form-control" name="complemento__endereco" value="" id="complemento">
                         </div>
 
-                        <h1 class="container text-center  fs-4 fw-bold">Tomador Taxas</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Tomador Taxas</h1>
 
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="taxa_adm" class="form-label">Taxa Adm %</label>
                             <input type="text" class="form-control " name="taxa_adm" value="" id="taxa_adm">
                         </div>
 
-                        <div class="col-md-2 d-none">
+                        <div class="col-md-3 d-none">
                             <label for="caixa_benef" class="form-label">Caixa benef. %</label>
                             <input type="text" class="form-control" name="caixa_benef" value="" id="caixa_benef">
                         </div>
 
-                        <div class="col-md-2 d-none">
+                        <div class="col-md-3 d-none">
                             <label for="ferias" class="form-label">Férias 1,00 %</label>
                             <input type="text" class="form-control" name="ferias" value="" id="ferias">
                         </div>
@@ -159,7 +178,7 @@
                             <label for="taxa__fed" class="form-label">Taxa Fed. %</label>
                             <input type="text" class="form-control" name="taxa__fed" value="" id="taxa__fed">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="deflator" class="form-label">% DEFLATOR</label>
                             <input type="text" class="form-control" name="deflator" value="" id="deflator">
                         </div>
@@ -191,7 +210,7 @@
                         </div> -->
 
 
-                        <h1 class="container text-center  fs-4 fw-bold">Parametros SEFIP</h1>
+                        <h1 class="container text-center mt-4 mb-3   fs-4 fw-bold">Parametros SEFIP</h1>
 
 
                         <div class="col-md-3">
@@ -219,17 +238,17 @@
                             <input type="text" class="form-control" name="fap__aliquota" value="" id="fap__aliquota">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="rat__ajustado" class="form-label">RAT Ajustado %</label>
                             <input type="text" class="form-control" name="rat__ajustado" value="" id="rat__ajustado">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="fpas__terceiros" class="form-label">FPAS Terceiros</label>
                             <input type="text" class="form-control" name="fpas__terceiros" value="" id="fpas__terceiros">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="aliq__terceiros" class="form-label">Aliq. Terceiros</label>
                             <input type="text" class="form-control" name="aliq__terceiros" value="" id="aliq__terceiros">
                         </div>
@@ -239,26 +258,26 @@
                             <input type="text" class="form-control" name="esocial" value="" id="esocial">
                         </div>
 
-                        <h1 class="container text-center  fs-4 fw-bold">Incide Sobre Fatura</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide Sobre Fatura</h1>
 
 
-                        <div class="col-md-3">
-                            <label for="alimentacao" class="form-label">VA Alimentação</label>
+                        <div class="col-md-2">
+                            <label for="alimentacao" class="form-label"> Alimentação</label>
                             <input type="text" class="form-control" name="alimentacao" value="" id="alimentacao">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="transporte" class="form-label">Transporte</label>
                             <input type="text" class="form-control" name="transporte" value="" id="transporte">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label for="epi" class="form-label">EPI % (Sobre(PROD+RSR)Folha)</label>
                             <input type="text" class="form-control" name="epi" value="" id="epi">
                         </div>
 
                         <div class="col-md-3">
-                            <label for="seguro__trabalhador" class="form-label">Seguro (Valor por Trabalhador)</label>
+                            <label for="seguro__trabalhador" class="form-label">Seguro (Val.Trab)</label>
                             <input type="text" class="form-control" name="seguro__trabalhador" value="" id="seguro__trabalhador">
                         </div>
 
@@ -277,7 +296,7 @@
                             <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
                             <input type="text" class="form-control" name="valor__alimentacao" value="" id="valor__alimentacao">
                         </div>
-                        <h1 class="container text-center  fs-4 fw-bold">Incide sobre a folha</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide sobre a folha</h1>
 
 
                         <div class="col-md-3">
@@ -302,7 +321,7 @@
                             <option>2</option>
                         </select>
                         </div>
-                        <h1 class="container text-center  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
 
                         <div class="col-md-4">
                             <label for="dias_uteis" class="form-label">Dias Úteis</label>
@@ -320,25 +339,25 @@
                         </div>
 
 
-                        <h1 class="container text-center  fs-4 fw-bold">Retenções na Fatura</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Retenções na Fatura</h1>
 
 
                         <div class="col-md-3">
                             <label for="inss__empresa" class="form-label">INSS Empresa %</label>
                             <input type="text" class="form-control" name="inss__empresa" value="" id="inss__empresa">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                         <label for="retencaoinss" class="form-label">Retenção INSS</label>
                         <select class="form-select" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
                             <option  selected>SIM</option>
                             <option>NÃO</option>
                         </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
                             <input type="text" class="form-control" name="fgts__empresa" value="" id="fgts__empresa">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                         <label for="retencaofgts" class="form-label">Retenção FGTS</label>
                         <select class="form-select" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
                             <option selected>SIM</option>
@@ -352,33 +371,33 @@
                             <option>Fatura</option>
                         </select>
                         </div>
-                        <h1 class="container text-center  fs-4 fw-bold">Dados Bancários</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Dados Bancários</h1>
                         <div class="col-md-6 d-none">
                             <label for="nome__conta" class="form-label">Nome do Titular</label>
                             <input type="text" class="form-control" name="nome__conta" value="" id="nome__conta">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3 mb-5">
                             <label for="banco" class="form-label">Banco</label>
                             <input type="text" class="form-control" name="banco" value="" id="banco">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 mb-5">
                             <label for="agencia" class="form-label">Agência</label>
                             <input type="text" class="form-control" name="agencia" value="" id="agencia">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 mb-5">
                             <label for="operacao" class="form-label">Operação</label>
                             <input type="text" class="form-control" name="operacao" value="" id="operacao">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 mb-5">
                             <label for="conta" class="form-label">Conta</label>
                             <input type="text" class="form-control" name="conta" value="" id="conta">
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3 mb-5">
                             <label for="pix" class="form-label">PIX</label>
                             <input type="text" class="form-control" name="pix" value="" id="pix">
                         </div>
