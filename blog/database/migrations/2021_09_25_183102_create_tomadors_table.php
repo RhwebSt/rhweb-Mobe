@@ -15,15 +15,15 @@ class CreateTomadorsTable extends Migration
     {
         Schema::create('tomadors', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('tsnome', 20)->nullable();
-            $table->char('tsfantasia', 20)->nullable();
+            $table->char('tsnome', 100)->nullable();
+            $table->char('tsfantasia', 100)->nullable();
             $table->char('tscnpj', 19)->nullable();
             $table->char('tstelefone', 16)->nullable();
             $table->char('tsmatricula', 10)->nullable();
             $table->char('tssimples', 10)->nullable();
             $table->char('tstipo', 10)->nullable();
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+            $table->integer('empresa')->unsigned()->nullable();
+            $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

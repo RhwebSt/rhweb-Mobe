@@ -1,8 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="container">
-
-
                 @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
@@ -30,6 +28,11 @@
         @endif     
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
                 <input type="hidden" value="{{$id}}" name="tomador">
+                @if($user->empresa)
+                    <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                @else
+                    <input type="hidden" name="empresa" value="">
+                @endif
                 @csrf
                 <input type="hidden" id="method" name="_method" value="">
                 <div class="row">
@@ -57,14 +60,14 @@
 
                 <div class="col-md-2">
                     <label for="rubricas" class="form-label">Rúbricas</label>
-                    <input type="text" class="form-control" name="rubricas" value="" id="rubricas">
+                    <input type="text" class="form-control pesquisa" name="rubricas" value="" id="rubricas">
                 </div>
 
                 <div class="col-md-7">
                   <label for="descricao" class="form-label">Descrição</label>
-                  <input type="text" class="form-control" name="descricao"  id="descricao">
+                  <input type="text" class="form-control " name="descricao"  id="descricao">
                 </div>
-                <input type="hidden" name="empresa" value="">
+              
                 <div class="col-md-1">
                   <label for="valor" class="form-label">Valor</label>
                   <input type="text" class="form-control" name="valor" value="" id="valor">
@@ -96,14 +99,13 @@
             <script>
         $(document).ready(function(){
            
-            $( "#descricao" ).keyup(function() {
+            $( ".pesquisa" ).keyup(function() {
                 var dados = $(this).val();
                 $.ajax({
                     url: "{{url('tabelapreco')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      console.log(data)
                         if (data.id) {
                             $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
                             $('#formdelete').attr('action',"{{ url('tabelapreco')}}/"+data.id)
@@ -112,9 +114,6 @@
                             $('#deletar').removeAttr( "disabled" )
                             $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
-                            $('#ano').val(data.tsano)
-                            $('#rubricas').val(data.tsrubrica)
-                            $('#valor').val(data.tsvalor.toString().replace(".", ","))
                         }else{
                             $('#form').attr('action', "{{ route('tabelapreco.store') }}");
                             $('#incluir').removeAttr( "disabled" )
@@ -123,7 +122,9 @@
                             $('#method').val(' ')
                             $('#excluir').attr( "disabled","disabled" )
                         }
-                      
+                      $('#ano').val(data.tsano)
+                      $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
+                      $('#descricao').val(data.tsdescricao)
                     }
                 });
             });

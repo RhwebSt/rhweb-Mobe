@@ -28,7 +28,7 @@
             @endforeach
         @endif     
         
-        <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}"  method="POST" >
+        <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST" >
         
         <div class="btn mt-5 " role="group" aria-label="Basic example">
             <button type="submit" id="incluir" class="btn botao text-white">Incluir</button>
@@ -39,19 +39,19 @@
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                 <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
-                <a class="btn botao disabled"  id="depedente" role="button">Imprimir</a>
+                <a class="btn botao disabled"  id="imprimir" role="button">Imprimir</a>
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
         
         <div class="col-md-6 table-bordered border-dark d-flex mt-5 mb-4">
             <label for="pesquisa" class="form-label"></label>
-            <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
+            <input class="pesquisa form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
                 <datalist id="datalistOptions">
-                    <option value="San Francisco">
+                    <!-- <option value="San Francisco">
                     <option value="New York">
                     <option value="Seattle">
                     <option value="Los Angeles">
-                    <option value="Chicago">
+                    <option value="Chicago"> -->
                 </datalist>
             <button class="btn botao" type="submit">Pesquisar</button>
         </div>
@@ -61,8 +61,10 @@
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden"  name="deflator" >
         <input type="hidden"  name="tomador" >
-        <input type="hidden" name="empresa">
-        <input type="hidden" name="user" value="{{$user->id}}">
+        <!-- <input type="hidden" name="empresa">  -->
+        <input type="hidden" name="empresa" value="{{$user->empresa}}">
+        <input type="file" name="file" onchange="encodeImageFileAsURL(this)">
+        <input type="hidden" name="foto" id="foto">
             <div class="col-md-6">
               <label for="nome__completo" class="form-label">Nome Completo</label>
               <input type="text" class="form-control" name="nome__completo" id="nome__completo" >
@@ -320,12 +322,18 @@
                         </div>
                       </div>
         <script>
+         function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function() {
+              $('#foto').val(reader.result)
+            }
+            reader.readAsDataURL(file);
+          }
         $(document).ready(function(){
-          for (let index = 0; index <  $('#sexo option').length; index++) {  
-                          console.log($('#sexo option').eq(index).text())
-                        }
-            $( "#nome__completo" ).keyup(function() {
-                var dados = $( "#nome__completo" ).val();
+          
+            $( ".pesquisa" ).keyup(function() {
+                var dados = $(this).val();
                 $.ajax({
                     url: "{{url('trabalhador')}}/"+dados,
                     type: 'get',
@@ -341,7 +349,9 @@
                             $('#deletar').removeAttr( "disabled" )
                             $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
+                            $('#imprimir').removeClass('disabled').attr('href',"{{url('ficharegitrotrab')}}/"+data.trabalhador)
                         }else{
+                          $('#imprimir').addClass('disabled')
                           $('#depedente').addClass('disabled')
                             $('#form').attr('action', "{{ route('trabalhador.store') }}");
                             $('#incluir').removeAttr( "disabled" )
@@ -351,6 +361,7 @@
                             $('#method').val(' ')
                             $('#excluir').attr( "disabled" )
                         }
+                        $('#nome__completo').val(data.tsnome)
                         $('#cpf').val(data.tscpf)
                         $('#matricula').val(data.tsmatricula)
                         $('#pis').val(data.dspis)

@@ -16,10 +16,12 @@ class CreateTrabalhadorsTable extends Migration
         Schema::create('trabalhadors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tsnome',30)->nullable();
+            $table->longText('tsfoto');
+            $table->string('tsnomesocial',30)->nullable();
             $table->string('tscpf',15)->nullable();
             $table->integer('tsmatricula')->nullable();
             $table->integer('tsserie')->nullable();
-            $table->string('tsmae',30)->nullable();
+            $table->string('tsmae',50)->nullable();
             // $table->string('pai',30)->nullable();
             $table->string('tsuf',2)->nullable();
             $table->string('tstelefone',18)->nullable();
@@ -27,10 +29,8 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tsescolaridade',30)->nullable();
             $table->string('tsindice',20)->nullable();
             $table->string('tsirrf',10)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+            $table->integer('empresa')->unsigned()->nullable();
+            $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

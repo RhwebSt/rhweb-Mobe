@@ -112,6 +112,6 @@ class TabelaPrecoController extends Controller
             $condicao = 'deletafalse';
         }
         
-        return redirect()->route('tabelapreco.mostrar.index',$id);
+        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
     }
 }

@@ -118,6 +118,6 @@ class DepedenteController extends Controller
             $condicao = 'deletafalse';
         }
         
-        return redirect()->route('depedente.mostrar.index',$trabalhador);
+        return redirect()->route('depedente.mostrar.index',$trabalhador)->withInput()->withErrors([$condicao]);
     }
 }

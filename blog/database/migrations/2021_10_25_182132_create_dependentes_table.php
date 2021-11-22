@@ -17,6 +17,7 @@ class CreateDependentesTable extends Migration
             $table->increments('id');
             $table->char('dsnome', 30)->nullable();
             $table->char('dstipo', 10)->nullable();
+            $table->char('dssexo', 10)->nullable();
             $table->char('dsdata', 10)->nullable();
             $table->char('dscpf', 11)->nullable();
             $table->char('dsirrf', 20)->nullable();

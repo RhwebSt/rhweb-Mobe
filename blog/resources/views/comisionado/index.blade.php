@@ -52,10 +52,7 @@
                   </div>
               </div>
               <h5 class="card-title text-center fs-3 ">Comissionado</h5>
-                <div class="col-md-6">
-                  <label for="nome_tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control"  name="nome_tomador" value="" id="nome_tomador">
-                </div>
+                
 
                 <div class="col-md-6">
                     <label for="nome__trabalhador" class="form-label">Nome do Trabalhador</label>
@@ -70,6 +67,10 @@
                 <div class="col-md-3">
                   <label for="indice" class="form-label">Indíce %</label>
                   <input type="text" class="form-control" name="indice" value="" id="indice">
+                </div>
+                <div class="col-md-6">
+                  <label for="nome_tomador" class="form-label">Tomador</label>
+                  <input type="text" class="form-control"  name="nome_tomador" value="" id="nome_tomador">
                 </div>
               </form> 
               
@@ -147,7 +148,7 @@
                         $('#method').val('PUT')
                         $('#matricula__trab').val(data.csmatricula)
                         $('#indice').val(data.csindece);
-                        $('#tomador').val(data.tsnome)
+                        $('#nome_tomador').val(data.tsnome)
                         $('#form').attr('action', "{{ url('comisionado')}}/"+data.id);
                       }else{
                           // $('#incluir').attr('disabled','disabled')

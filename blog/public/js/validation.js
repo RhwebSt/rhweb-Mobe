@@ -204,11 +204,11 @@ $("#form").validate({
     rules:{
         nome__completo:{
             required: true,
-            maxlength: 20,
+            maxlength: 40,
         },
         nome__fantasia:{
             required: true,
-            maxlength: 20,
+            maxlength: 40,
         },
         cpf:{
            required:true,
@@ -386,7 +386,7 @@ $("#form").validate({
             required:true
         },
         banco:{
-            required:true
+            required:true,
         },
         agencia:{
             required:true
@@ -399,7 +399,7 @@ $("#form").validate({
         },
         nome:{
             required:true,
-            maxlength: 20,
+            maxlength: 40,
         },
         cnpj_mf:{
             required:true
@@ -509,33 +509,9 @@ $("#form").validate({
         },
         nome__mae:{
             required:true
-        },
-        entrada1:{
-            required:true
-        },
-        saida:{
-            required:true
-        },
-        entrada2:{
-            required:true
-        },
-        saida2:{
-            required:true
-        },
+        }
     },
     messages:{
-        saida2:{
-            required:"O campo nome não pode esta vazio!",
-        },
-        entrada2:{
-            required:"O campo nome não pode esta vazio!",
-        },
-        saida:{
-            required:"O campo nome não pode esta vazio!",
-        },
-        entrada1:{
-            required:"O campo nome não pode esta vazio!",
-        },
         nome__mae:{
             required:"O campo nome não pode esta vazio!",
         },
@@ -652,11 +628,11 @@ $("#form").validate({
         },
         nome:{
             required: "O campo nome não pode esta vazio!",
-            maxlength: "  O campo nome não pode tem mais de 20 caracteres!",
+            maxlength: "  O campo nome não pode tem mais de 40 caracteres!",
         },
         nome__completo: {
             required: "O campo nome não pode esta vazio!",
-            maxlength: "  O campo nome não pode tem mais de 20 caracteres!",
+            maxlength: "  O campo nome não pode tem mais de 40 caracteres!",
         },
         nome__fantasia: {
             required: "O campo nome fantasia não pode esta vazio!",

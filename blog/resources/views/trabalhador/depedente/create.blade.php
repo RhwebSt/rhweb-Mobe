@@ -38,8 +38,8 @@
                   </div>
                   <div class="col">
                     <div class="btn text-end form-control" role="button" aria-label="Basic example">
-                      <a class="btn btn-outline-light ms-2 col-md-1" href="{{ route('depedente.mostrar.index',$id) }}" style="background-color: #2A90CB; color: #f0f0f0" role="button">Sair</a>
-                      <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
+                      <a class="btn botao ms-2 col-md-1" href="{{ route('depedente.mostrar.index',$id) }}" role="button">Sair</a>
+                      <button type="submit" id="incluir" class="btn botao">Incluir</button>
                     </div>
                   </div>
               </div>

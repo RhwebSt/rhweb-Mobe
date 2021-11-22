@@ -28,7 +28,7 @@
             @endforeach
         @endif     
         
-            <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('tomador.store') }}"  method="Post" >
+            <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn " role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
@@ -40,30 +40,35 @@
                       <a class="btn botao disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
                             <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                             
-                        </div>
-
+                        </div> 
+                        <div class="col-md-6">
+                            <div class="col-md-12 p-0 table-bordered border-white d-flex mt-5 mb-4">
+                                <label for="pesquisa" class="form-label"></label>
+                                <input class="pesquisar form-control  me-1" list="datalistOptions"  name="pesquisa" id="pesquisa" >
+                                
+                                <datalist id="datalistOptions">
+                                    <option value="San Francisco">
+                                    <option value="New York">
+                                    <option value="Seattle">
+                                    <option value="Los Angeles">
+                                    <option value="Chicago">
+                                </datalist>
+                                
+                                <a class="btn botao" href="#" >Pesquisar</a>
                             
-                            
-                        <div class="col-md-6 table-bordered border-white d-flex mt-5 mb-4">
-                          <label for="pesquisa" class="form-label"></label>
-                          <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
-                          <datalist id="datalistOptions">
-                            <option value="San Francisco">
-                            <option value="New York">
-                            <option value="Seattle">
-                            <option value="Los Angeles">
-                            <option value="Chicago">
-                          </datalist>
-                          <button class="btn botao" type="submit" >Pesquisar</button>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <input type="hidden" class="form-control is-invalid" id="validationServer05" aria-describedby="mensagem-pesquisa"" required>
+                                <div id="mensagem-pesquisa" class="invalid-feedback">
+                                </div>
+                            </div>
                         </div>
-
-              
                         <div class="container text-center mb-3  fs-4 fw-bold">Dados da Empresa</div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
-                        <input type="hidden" name="user" value="{{$user->id}}">
+                        <input type="hidden" name="empresa" value="{{$user->empresa}}">
                         <input type="hidden" name="trabalhador">
-                        <input type="hidden" name="empresa">
+                       
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label">Nome Completo</label>
                             <input type="text" class="form-control text-lowercase" name="nome__completo"  id="nome__completo">
@@ -379,7 +384,10 @@
 
                         <div class="col-md-3 mb-5">
                             <label for="banco" class="form-label">Banco</label>
-                            <input type="text" class="form-control" name="banco" value="" id="banco">
+                            <input type="text" class="form-control "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="" id="banco">
+                            <div id="menssagem-banco" class="valid-feedback">
+                               
+                            </div>
                         </div>
 
                         <div class="col-md-2 mb-5">
@@ -435,11 +443,11 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('#nome__fantasia').val().toLowerCase();
-            $( "#nome__completo" ).keyup(function() {
-                var dados = $( "#nome__completo" ).val();
-                if (dados) {
-                    $.ajax({
+           
+            $('#pesquisa').change(function(){
+                let dados = $(this).val();
+                dados =  dados.replace(/\D/g, '');
+                $.ajax({
                         url: "{{url('tomador')}}/"+dados,
                         type: 'get',
                         contentType: 'application/json',
@@ -462,7 +470,9 @@
                                 $('#method').val(' ')
                                 $('#excluir').attr( "disabled",'disabled' )
                                 $('#tabelapreco').addClass('disabled').removeAttr('href')
+                                pesquisa(dados)
                             }
+                            $('#nome__completo').val(data.tsnome)
                             $('#cnpj').val(data.tscnpj)
                             $('#matricula').val(data.tsmatricula)
                             $('#nome__fantasia').val(data.tsfantasia)
@@ -471,7 +481,7 @@
                             $('#cep').val(data.escep)
                             $('#logradouro').val(data.eslogradouro)
                             $('#numero').val(data.esnum)
-                            $('#tipo').val(data.estipo)
+                            // $('#tipo').val(data.estipo)
                             $('#bairro').val(data.esbairro)
                             $('#localidade').val(data.esmunicipio)
                             $('#uf').val(data.esuf)
@@ -568,9 +578,34 @@
                                 }
                             }
                         }
-                    });
-                }
-            });
+                });
+            })
+            function pesquisa(dados) {
+               
+                $.ajax({
+                        url: "https://brasilapi.com.br/api/cnpj/v1/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            $("#pesquisa").removeClass('is-invalid')
+                            $('#nome__completo').val(data.razao_social)
+                            $('#nome__fantasia').val(data.nome_fantasia)
+                            $('#cnpj').val(data.cnpj)
+                            $('#telefone').val(data.ddd_telefone_1)
+                            $('#cnae').val(data.cnae_fiscal)
+                            $('#mensagem-pesquisa').text(' ').addClass('valid-feedback').removeClass('invalid-feedback')
+                        },
+                        error: function(data){
+                            // $("#pesquisa").addClass('is-invalid')
+                            // $('#nome__completo').val(' ')
+                            // $('#nome__fantasia').val('')
+                            // $('#cnpj').val('')
+                            // $('#telefone').val(' ')
+                            // $('#cnae').val(' ')
+                            // $('#mensagem-pesquisa').text( data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
+                        }
+                })
+            }
         });
     </script>
     

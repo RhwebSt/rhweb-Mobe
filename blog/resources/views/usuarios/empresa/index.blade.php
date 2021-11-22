@@ -46,7 +46,24 @@
                         <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
                     </div>
                 </div>
-                
+                <div class="col-md-6">
+                            <div class="col-md-12 p-0 table-bordered border-white d-flex mt-5 mb-4">
+                                <label for="pesquisa" class="form-label"></label>
+                                <input class="pesquisar form-control  me-1" list="datalistOptions"  name="pesquisa" id="pesquisa" >
+                                
+                                <datalist id="datalistOptions">
+                                    
+                                </datalist>
+                                
+                                <a class="btn botao" href="#" >Pesquisar</a>
+                            
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <input type="hidden" class="form-control is-invalid" id="validationServer05" aria-describedby="mensagem-pesquisa"" required>
+                                <div id="mensagem-pesquisa" class="invalid-feedback">
+                                </div>
+                            </div>
+                        </div>
                 @else
                 <input type="hidden" id="empresa" value="{{$user->empresa}}">
                 @endcan
@@ -57,7 +74,7 @@
         <input type="hidden" id="method" name="_method" value="">
                 <div class="col-md-7">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control pesquisa" name="nome" id="nome">
+                    <input type="text" class="form-control" name="nome" id="nome">
                 </div>
 
                 <div class="col-md-2">
@@ -261,10 +278,18 @@
                     }
                 }
             })
-            $( ".pesquisa" ).keyup(function() {
+            $( "#pesquisa" ).keyup(function() {
+                var novodados = ''
                 var dados = $(this).val();
+                var cpf =  $(this).val()
+                cpf = cpf.replace(/\D/g, '');
+                if (cpf) {
+                    novodados = cpf
+                }else{
+                    novodados=dados
+                }
                 $.ajax({
-                    url: "{{url('listaempresa')}}/"+dados,
+                    url: "{{url('listaempresa')}}/"+novodados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -276,9 +301,8 @@
                             $('#deletar').removeAttr( "disabled" )
                             $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
-                            
+                            campos(data);
                         }else{
-                        
                             $('#form').attr('action', "{{ route('empresa.store') }}");
                             $('#incluir').removeAttr( "disabled" )
                             $('#depedente').removeAttr( "disabled" )
@@ -286,12 +310,39 @@
                             $('#deletar').attr('disabled','disabled')
                             $('#method').val(' ')
                             $('#excluir').attr( "disabled" )
+                            pesquisa(novodados)
                         }
-                        campos(data);
+                        
                     }
                 });
             });
+            function pesquisa(dados) {
+               $.ajax({
+                       url: "https://brasilapi.com.br/api/cnpj/v1/"+dados,
+                       type: 'get',
+                       contentType: 'application/json',
+                       success: function(data) {
+                        //    $("#pesquisa").removeClass('is-invalid')
+                           $('#nome').val(data.razao_social)
+                           $('#cnpj_mf').val(data.cnpj)
+                           $('#dataregistro').val(data.data_situacao_cadastral)
+                           $('#cnae__codigo').val(data.cnae_fiscal)
+                           $('#cod__municipio').val(data.codigo_municipio)
+                        //    $('#mensagem-pesquisa').text(' ').addClass('valid-feedback').removeClass('invalid-feedback')
+                       },
+                       error: function(data){
+                           // $("#pesquisa").addClass('is-invalid')
+                           // $('#nome__completo').val(' ')
+                           // $('#nome__fantasia').val('')
+                           // $('#cnpj').val('')
+                           // $('#telefone').val(' ')
+                           // $('#cnae').val(' ')
+                           // $('#mensagem-pesquisa').text( data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
+                       }
+               })
+           }
             function campos(data) {
+                $('#nome').val(data.esnome)
                 $('#cnpj_mf').val(data.escnpj)
                 $('#dataregistro').val(data.esdataregitro)
                 $('#cep').val(data.escep)

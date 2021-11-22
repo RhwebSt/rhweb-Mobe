@@ -14,14 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
+
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
+    Route::get('ficharegitrotrab/{id}','Trabalhador\\fichaRegistroTrabController@ficha');
+    Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->names('tabcadastro');
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
     Route::resource('home','Home\\HomeController')->names('home');
-    Route::get('rolnome','PdfController@rolnome');
+   
+    Route::get('comprovantepagamento','ComprovantePag\\ComprovantePagController@index');
+    Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
+    Route::get('fatura','Fatura\\FaturaController@index');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
     Route::resource('tabelapreco.mostrar','TabelaPreco\\TabelaPrecoController')->only(['index', 'create']);
     Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);

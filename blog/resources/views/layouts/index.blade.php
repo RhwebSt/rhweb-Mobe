@@ -109,7 +109,7 @@
                                 Faturas
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{ url('fatura') }}">Recibos</a></li>
                               <li><a class="dropdown-item " href="#">Rol dos recibos</a></li>
                             </ul>
                           </li>
@@ -123,8 +123,8 @@
                                 Recibo Avulsos
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos</a></li>
-                              <li><a class="dropdown-item " href="#">Rol dos recibos</a></li>
+                              <li><a class="dropdown-item border-bottom border-secundary" href="{{ url('comprovantepagamento') }}">Recibos</a></li>
+                              <li><a class="dropdown-item " href="{{ url('comprovantepagamentodiaria') }}">Rol dos recibos</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -143,7 +143,7 @@
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
                                 
-                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('rolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
+                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
 
                                 
                               </ul>
@@ -200,9 +200,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="{{url('/js/masck.js')}}"></script>
     
-    <script type="text/javascript" src="{{url('/js/validation.js')}}" ></script>
+    
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/validation.js')}}"></script>
    
   </body>
 </html>

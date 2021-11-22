@@ -29,9 +29,8 @@ class Comissionado extends Model
            'comissionados.*'
         )
         ->where(function($query) use ($id){
-            $cargo =['admin'];
             $user = auth()->user();
-            if (in_array($user->cargo,$cargo)) {
+            if ($user->hasPermissionTo('admin')) {
                 $query->where('trabalhador', $id);
             }
         })

@@ -47,7 +47,17 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        
+        // if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
+        //     $novafoto = $request->foto;
+        //     $extension = $novafoto->getClientOriginalExtension();
+        //     $name = md5($novafoto->getClientOriginalName().strtotime('now')).'.'.$extension;
+        //     $novafoto->move(storage_path('app/imagem'), $name);
+        // }
+        // $file_path = public_path('imagem/'.$name);
+        // return response()->download(public_path().'/imagem/'.$name);
+        // $file = base_path().
+        // "/storage/app/imagem/3dbc802c397ae2f987773df44e7cc3a6.zip";
+        // return response()->download($file, "3dbc802c397ae2f987773df44e7cc3a6.zip");
         $trabalhador = new Trabalhador;
         $endereco = new Endereco;
         $bancario = new Bancario;
@@ -56,7 +66,6 @@ class TrabalhadorController extends Controller
         $documento = new Documento;
         $trabalhadors = $trabalhador->cadastro($dados);
         if ($trabalhadors) {
-            // dd($dados);
             $dados['trabalhador'] = $trabalhadors['id'];
             $enderecos = $endereco->cadastro($dados); 
             $bancarios = $bancario->cadastro($dados);

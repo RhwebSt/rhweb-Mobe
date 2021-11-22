@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\DB;
 class Trabalhador extends Model
 {
     protected $fillable = [
-        'tsnome','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','tsirrf','user','tomador'
+        'tsnome','tsfoto','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','tsirrf','empresa'
     ];
     public function cadastro($dados)
     {
         
        return Trabalhador::create([
             'tsnome'=>$dados['nome__completo'],
+            'tsfoto'=>$dados['foto'],
             'tscpf'=>$dados['cpf'],
             'tsmatricula'=>$dados['matricula'],
             'tsmae'=>$dados['nome__mae'],
@@ -22,7 +23,7 @@ class Trabalhador extends Model
             'tssexo'=>$dados['sexo'],
             'tsescolaridade'=>$dados['grau__instrucao'],
             'tsirrf'=>$dados['irrf'],
-            'user'=>$dados['user']
+            'empresa'=>$dados['empresa']
         ]);
     }
     public function first($id)
@@ -45,10 +46,27 @@ class Trabalhador extends Model
             ->where(function($query) use ($id){
                 $user = auth()->user();
                 if ($user->hasPermissionTo('admin')) {
-                    $query->where('tsnome', $id);
+                    $query->where('tsnome', 'like', '%'.$id.'%') 
+                    ->orWhere('tscpf', 'like', '%'.$id.'%')
+                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                    ->orWhere('trabalhadors.id',$id);
                 }else{
-                    $query->where('tsnome', $id)
-                    ->where('trabalhadors.user', $user->id);
+                    $query->where([
+                        ['trabalhadors.tsnome',$id],
+                        ['trabalhadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tscpf',$id],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tsmatricula',$id],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.id',$id],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ]);
                 }
                
             })
@@ -106,12 +124,11 @@ class Trabalhador extends Model
             'nascimentos.*',
             )
             ->where(function($query){
-                $cargo =['admin'];
                 $user = auth()->user();
-                if (in_array($user->cargo,$cargo)) {
+                if ($user->hasPermissionTo('admin')) {
                     $query->where('trabalhadors.id', '>', 0);
                 }else{
-                    $query->where('trabalhadors.user', $user->id);
+                    $query->where('trabalhadors.empresa', $user->empresa);
                 }
             })
         ->orderBy('tsnome', 'asc')

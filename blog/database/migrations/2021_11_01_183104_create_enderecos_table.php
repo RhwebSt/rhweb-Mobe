@@ -17,7 +17,7 @@ class CreateEnderecosTable extends Migration
             $table->increments('eiid');
             $table->char('escep', 16)->nullable();
             $table->char('eslogradouro', 50)->nullable();
-            $table->char('esbairro', 20)->nullable();
+            $table->char('esbairro', 40)->nullable();
             $table->char('esestado', 20)->nullable();
             $table->char('estipo', 10)->nullable();
             $table->char('esmunicipio', 30)->nullable();

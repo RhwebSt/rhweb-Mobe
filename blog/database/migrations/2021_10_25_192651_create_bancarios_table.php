@@ -15,8 +15,8 @@ class CreateBancariosTable extends Migration
     {
         Schema::create('bancarios', function (Blueprint $table) {
             $table->increments('biid');
-            $table->char('bstitular', 20)->nullable();
-            $table->char('bsbanco', 15)->nullable();
+            // $table->char('bstitular', 20)->nullable();
+            $table->char('bsbanco', 100)->nullable();
             $table->char('bsagencia', 15)->nullable();
             $table->char('bsoperacao', 10)->nullable();
             $table->char('bsconta', 10)->nullable();

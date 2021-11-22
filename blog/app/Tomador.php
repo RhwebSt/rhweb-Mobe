@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class Tomador extends Model
 {
     protected $fillable = [
-        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','user'
+        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','empresa'
     ];
     public function cadastro($dados)
     {
@@ -21,7 +21,7 @@ class Tomador extends Model
             'tssimples'=>$dados['simples'],
             'tstelefone'=>$dados['telefone'],
             'tstipo'=>$dados['tipo'],
-            'user'=>$dados['user']
+            'empresa'=>$dados['empresa']
 
         ]);
     }
@@ -56,13 +56,24 @@ class Tomador extends Model
                 'bancarios.*'
             )
             ->where(function($query) use ($id){
-                $cargo =['admin'];
                 $user = auth()->user();
-                if (in_array($user->cargo,$cargo)) {
-                    $query->where('tsnome', $id);
+                if ($user->hasPermissionTo('admin')) {
+                    $query->where('tsnome','like','%'.$id.'%')
+                    ->orWhere('tscnpj', 'like', '%'.$id.'%')
+                    ->orWhere('tsmatricula', 'like', '%'.$id.'%');
                 }else{
-                    $query->where('tsnome', $id)
-                    ->where('tomadors.user', $user->id);
+                     $query->where([
+                            ['tsnome',$id],
+                            ['tomadors.empresa', $user->empresa]
+                        ])
+                        ->orWhere([
+                            ['tscnpj',$id],
+                            ['tomadors.empresa', $user->empresa],
+                        ])
+                        ->orWhere([
+                            ['tsmatricula',$id],
+                            ['tomadors.empresa', $user->empresa],
+                        ]);
                 }
                
             })

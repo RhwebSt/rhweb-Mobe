@@ -207,34 +207,76 @@
                 let horario3 = $('#entrada2').val();
                 let horario4 = $('#saida2').val();
                 let partes1 = horario1.split(':');
-                let segundos1 = partes1[0] * 3600 + partes1[1] * 60;
                 let partes2 = horario2.split(':');
-                let segundos2 = partes2[0] * 3600 + partes2[1] * 60;
                 let partes3 = horario3.split(':');
-                let segundos3 = partes3[0] * 3600 + partes3[1] * 60;
                 let partes4 = horario4.split(':');
-                let segundos4 = partes4[0] * 3600 + partes4[1] * 60;
-                // adnotuno(segundos1,segundos2,segundos3,segundos4,total)
-                if (horario1 && horario2 && horario3 && horario4) {
-                    let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                    let total = totalHoras;
-                    let horas = Math.floor(total / 3600);
-                    let minutos = Math.floor((total - (horas * 3600)) / 60);
-                    let segundos = Math.floor(total % 60);
-                    $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
-                    feriados(total)
-                    
-                    semana.forEach((element,index) => {
-                        if (dias == index) {
-                            if (element === 'Sábado') {
-                                sabado(total)
-                            }else{
-                                diasuteis(total)
-                            }
-                        }
-                    })
+                if ( parseInt(partes1[0]) >= 22 || parseInt(partes1[0]) <= 5) {
+                    adnoturno(partes1,partes2,partes3,partes4)
+                }else  if ( parseInt(partes2[0]) >= 22 || parseInt(partes2[0]) <= 5) {
+                    adnoturno(partes1,partes2,partes3,partes4)
+                }else  if ( parseInt(partes3[0]) >= 22 || parseInt(partes3[0]) <= 5) {
+                    adnoturno(partes1,partes2,partes3,partes4)
+                }else  if ( parseInt(partes4[0]) >= 22 || parseInt(partes4[0]) <= 5) {
+                    adnoturno(partes1,partes2,partes3,partes4)
                 }
+                // adnotuno(segundos1,segundos2,segundos3,segundos4,total)
+                // if (horario1 && horario2 && horario3 && horario4) {
+                //     let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                //     let total = totalHoras;
+                //     let horas = Math.floor(total / 3600);
+                //     let minutos = Math.floor((total - (horas * 3600)) / 60);
+                //     let segundos = Math.floor(total % 60);
+                //     $(this).val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+                //     feriados(total)
+                    
+                //     semana.forEach((element,index) => {
+                //         if (dias == index) {
+                //             if (element === 'Sábado') {
+                //                 sabado(total)
+                //             }else{
+                //                 diasuteis(total)
+                //             }
+                //         }
+                //     })
+                // }
             })
+            function adnoturno(partes1,partes2,partes3,partes4) {
+                let campo = []
+                let totalHoras = '';
+                let segundos1 = partes1[0] * 3600 + partes1[1] * 60;
+                let segundos2 = partes2[0] * 3600 + partes2[1] * 60;
+                let segundos3 = partes3[0] * 3600 + partes3[1] * 60;
+                let segundos4 = partes4[0] * 3600 + partes4[1] * 60;
+               
+                campo.push(segundos1)
+                campo.push(segundos2)
+                campo.push(segundos3)
+                campo.push(segundos4)
+                campo.forEach((element,index) => {
+                    if (element === 79200 && element === 82800) {
+                        
+                        let segundo24 = 86400
+                        // if (index === 0) {
+                        //     totalHoras = ((segundo24 - segundos2) - (segundo24 - segundos1)) + (segundos3 - segundos4);
+                        //     console.log(totalHoras)
+                        // }
+                        // if (index === 1) {
+                        //     totalHoras = ((segundo24 - segundos2) - (segundo24 - segundos1)) + (segundos3 - segundos4);
+                        //     console.log(totalHoras)
+                        // }
+                        // if (index === 2) {
+                        //     totalHoras = (segundos1 - segundos2) + (( segundo24 - segundos3) - (segundo24 - segundos4));
+                        //     console.log(totalHoras)
+                        // }
+                        // if (index === 3) {
+                        //     totalHoras = (segundos2 - segundos1) + (segundos3 - segundo24);
+                        //     console.log(totalHoras)
+                        // }
+                    }
+                });
+                
+                
+            }
             function diasuteis(resutado) {
                 let diasuteis = $('#diasuteis').val()
                 diasuteis = diasuteis.split(':');
@@ -308,83 +350,83 @@
                 $('#horas__cem').val("0:00")
             }
         }
-        function adnotuno(segundos1,segundos2,segundos3,segundos4,total) {
-            let noturnos1 = '5:00'
-            let noturnos2 = '23:00'
-            let noturnos3 = '00:00'
-            if (segundos1 > noturno1(noturnos1)  || segundos1 <  noturno2(noturnos2)) {
-                segundos1 -= 86400
-                let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
-                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
-            }else if (segundos2 > noturno1(noturnos1) || segundos2 <  noturno2(noturnos2)) {
-                segundos2 -= 86400
-                let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
-                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
-            }else if (segundos3 > noturno1(noturnos1) || segundos3 <  noturno2(noturnos2)) {
-                segundos3 -= 86400
-                let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
-            }else if (segundos4 > noturno1(noturnos1) || segundos4 <  noturno2(noturnos2)) {
-                segundos4 -= 86400
-                let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
-            }
+        // function adnotuno(segundos1,segundos2,segundos3,segundos4,total) {
+        //     let noturnos1 = '5:00'
+        //     let noturnos2 = '23:00'
+        //     let noturnos3 = '00:00'
+        //     if (segundos1 > noturno1(noturnos1)  || segundos1 <  noturno2(noturnos2)) {
+        //         segundos1 -= 86400
+        //         let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
+        //         totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+        //     }else if (segundos2 > noturno1(noturnos1) || segundos2 <  noturno2(noturnos2)) {
+        //         segundos2 -= 86400
+        //         let totalHoras = (((segundos1 - segundos2) + (segundos3 - segundos4)) * (-1));
+        //         totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+        //     }else if (segundos3 > noturno1(noturnos1) || segundos3 <  noturno2(noturnos2)) {
+        //         segundos3 -= 86400
+        //         let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+        //         totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+        //     }else if (segundos4 > noturno1(noturnos1) || segundos4 <  noturno2(noturnos2)) {
+        //         segundos4 -= 86400
+        //         let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+        //         totalgeral(segundos1,segundos2,segundos3,segundos4,totalHoras)
+        //     }
 
             
-        }
-        function noturno1(resultado) {
-            let noturno1 = resultado.split(':');
-            let segundos = noturno1[0] * 3600 + noturno1[1] * 60;
-            return segundos;
-        }
-        function noturno2(resultado) {
-            let noturno2 = resultado.split(':');
-            let segundos = noturno2[0] * 3600 + noturno2[1] * 60;
-            return segundos;
-        }
-        function noturno3(resultado) {
-            let noturno3 = resultado.split(':');
-            let segundos = ''
-            if (noturno3[0] == '00') {
-                segundos = noturno3[1] * 60;
-            }else{
-                segundos = noturno3[0] * 3600 + noturno3[1] * 60;
-            }
-            return segundos;
-        }
-        function totalgeral(segundos1,segundos2,segundos3,segundos4,total) {
-            let horas = Math.floor(total / 3600);
-            let minutos = Math.floor((total - (horas * 3600)) / 60);
-            let segundos = Math.floor(total % 60);
-            $('#total').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
-            adnotunototal(segundos1,segundos2,segundos3,segundos4,total)
-        }
-        function adnotunototal(segundos1,segundos2,segundos3,segundos4,total) {
-            let totalHoras = []
-            let soma = 0
-             if (segundos1 > 82800 || segundos1 < 18000) {
-                 console.log('1')
-                 totalHoras.push(segundos1);
-            }
-             if(segundos2 > 82800 || segundos2 < 18000){
-                console.log('2')
-                totalHoras.push(segundos2);
-            }
-             if(segundos3 > 82800 || segundos3 < 18000){
-                console.log('3')
-                totalHoras.push(segundos3);
-            }
-            if(segundos4 > 82800 || segundos4 < 18000){
-                console.log('4')
-                totalHoras.push(segundos4);
-            }
-            totalHoras.forEach(element => {
-                soma += element
-            });
-            let horas = Math.floor(soma / 3600);
-            let minutos = Math.floor((soma - (horas * 3600)) / 60);
-            let segundos = Math.floor(soma % 60);
-            $('#adc__noturno').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
-        }
+        // }
+        // function noturno1(resultado) {
+        //     let noturno1 = resultado.split(':');
+        //     let segundos = noturno1[0] * 3600 + noturno1[1] * 60;
+        //     return segundos;
+        // }
+        // function noturno2(resultado) {
+        //     let noturno2 = resultado.split(':');
+        //     let segundos = noturno2[0] * 3600 + noturno2[1] * 60;
+        //     return segundos;
+        // }
+        // function noturno3(resultado) {
+        //     let noturno3 = resultado.split(':');
+        //     let segundos = ''
+        //     if (noturno3[0] == '00') {
+        //         segundos = noturno3[1] * 60;
+        //     }else{
+        //         segundos = noturno3[0] * 3600 + noturno3[1] * 60;
+        //     }
+        //     return segundos;
+        // }
+        // function totalgeral(segundos1,segundos2,segundos3,segundos4,total) {
+        //     let horas = Math.floor(total / 3600);
+        //     let minutos = Math.floor((total - (horas * 3600)) / 60);
+        //     let segundos = Math.floor(total % 60);
+        //     $('#total').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+        //     adnotunototal(segundos1,segundos2,segundos3,segundos4,total)
+        // }
+        // function adnotunototal(segundos1,segundos2,segundos3,segundos4,total) {
+        //     let totalHoras = []
+        //     let soma = 0
+        //      if (segundos1 > 82800 || segundos1 < 18000) {
+        //          console.log('1')
+        //          totalHoras.push(segundos1);
+        //     }
+        //      if(segundos2 > 82800 || segundos2 < 18000){
+        //         console.log('2')
+        //         totalHoras.push(segundos2);
+        //     }
+        //      if(segundos3 > 82800 || segundos3 < 18000){
+        //         console.log('3')
+        //         totalHoras.push(segundos3);
+        //     }
+        //     if(segundos4 > 82800 || segundos4 < 18000){
+        //         console.log('4')
+        //         totalHoras.push(segundos4);
+        //     }
+        //     totalHoras.forEach(element => {
+        //         soma += element
+        //     });
+        //     let horas = Math.floor(soma / 3600);
+        //     let minutos = Math.floor((soma - (horas * 3600)) / 60);
+        //     let segundos = Math.floor(soma % 60);
+        //     $('#adc__noturno').val(`${horas}:${minutos < 10 ? '0':''}${minutos}`) 
+        // }
           </script>
 @stop

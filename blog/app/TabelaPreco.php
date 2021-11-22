@@ -23,7 +23,24 @@ class TabelaPreco extends Model
     }
     public function first($id)
     {
-        return TabelaPreco::where('id', $id)->orWhere('tsdescricao', $id)->first();
+        return TabelaPreco::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tsrubrica','like', '%'.$id.'%')
+                ->orWhere('tsdescricao', 'like', '%'.$id.'%');
+            }else{
+                 $query->where([
+                        ['tsrubrica',$id],
+                        ['empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['tsdescricao',$id],
+                        ['empresa', $user->empresa],
+                    ]);
+            }
+           
+        })
+        ->first();
     }
     public function editar($dados,$id)
     {
@@ -32,11 +49,11 @@ class TabelaPreco extends Model
             'tsano'=>$dados['ano'],
             'tsrubrica'=>$dados['rubricas'],
             'tsdescricao'=>$dados['descricao'],
-            'tsvalor'=>$dados['valor'],
+            'tsvalor'=>str_replace(",",".",$dados['valor']),
         ]);
     }
     public function deletar($id)
     {
-        return TabelaPreco::where('id', $id)->orWhere('tomador', $id)->delete();
+        return TabelaPreco::where('id', $id)->delete();
     }
 }

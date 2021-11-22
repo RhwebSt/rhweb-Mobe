@@ -28,7 +28,7 @@ class Bancario extends Model
         return Bancario::where('biid', $id)
         // ->orWhere('trabalhador', $id)
         ->update([
-            'bstitular'=>$dados['nome__conta'],
+            // 'bstitular'=>$dados['nome__conta'],
             'bsbanco'=>$dados['banco'],
             'bsagencia'=>$dados['agencia'],
             'bsoperacao'=>$dados['operacao'],
