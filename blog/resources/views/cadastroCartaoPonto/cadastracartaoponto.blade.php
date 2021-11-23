@@ -261,7 +261,7 @@
                     total = (primeiro + segundo)
                     let acresimo = (total/3150)
                     acresimo = horasnotunas(acresimo.toString())
-                     $('#adc__noturno').val(conversaohoras(total))
+                     $('#adc__noturno').val(acresimo)
                      total += horasnormais
                      $('#total').val(conversaohoras(total))
                      diasuteis($('#total').val())
@@ -270,9 +270,8 @@
                     segundo = segundos4 - segundos3;
                     total = primeiro + segundo
                     let acresimo = (total/3150)
-                   
                     acresimo = horasnotunas(acresimo.toString())
-                    $('#adc__noturno').val(conversaohoras(total))
+                    $('#adc__noturno').val(acresimo)
                     total += horasnormais
                     $('#total').val(conversaohoras(total))
                     diasuteis($('#total').val())
@@ -345,8 +344,8 @@
                 let novoacresimo1 = `0.${novoacresimo[1]}`
                 novoacresimo1 = novoacresimo1 * 0.6
                 novoacresimo1 = novoacresimo1.toFixed(2)
-                console.log((novoacresimo1 * 1) + parseInt(novoacresimo[0]))
-                return novoacresimo
+                novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
+                return novoacresimo1
             }
             function diasuteis(resutado) {
                 let diasuteis = $('#diasuteis').val()
