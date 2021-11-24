@@ -14,6 +14,7 @@ class LoginController extends Controller
      */
     public function index()
     {
+
         if (auth()->check()){
             return redirect()->route('home.index');
         }
@@ -39,11 +40,20 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'user' => 'required',
+            'password'=>'required|min:6'
+        ],[
+            'user.required'=>'Campo usuario não pode esta vazio!',
+            'password.required'=>'Informe sua senha!',
+            'password.min'=>'A senha não pode ter menos de 6 caracteris!',
+            
+        ]);
         $dados = $request->all();
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
             return redirect()->route('home.index');
         }
-        return redirect()->route('/.index')->withInput()->withErrors(['Não foi possivel efetuar o login, tente novamento.']);
+        return redirect()->route('/.index')->withInput()->withErrors(['mensagem'=>'Não foi possivel efetuar o login, tente novamento.']);
     }
  
     /**

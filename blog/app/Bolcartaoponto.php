@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Bolcartaoponto extends Model
 {
     protected $fillable = [
-        'bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador','lancamento'
+        'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador','lancamento'
     ];
     public function cadastro($dados)
     {
@@ -16,7 +16,12 @@ class Bolcartaoponto extends Model
             'bssaidamanhao'=>$dados['saida'],
             'bsentradatarde'=>$dados['entrada2'],
             'bssaidatarde'=>$dados['saida2'],
+            'bsentradanoite'=>$dados['entrada3'],
+            'bssaidanoite'=>$dados['saida3'],
+            'bsentradamadrugada'=>$dados['entrada4'],
+            'bssaidamadrugada'=>$dados['saida4'],
             'bstotal'=>str_replace(",",".",$dados['total']),
+            'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),
             'bshoraexcem'=>str_replace(",",".",$dados['horas__cem']),
             'bsadinortuno'=>str_replace(",",".",$dados['adc__noturno']),
@@ -63,11 +68,16 @@ class Bolcartaoponto extends Model
     {
         return Bolcartaoponto::where('id', $id)
         ->update([
-            'bsentradamanhao'=>$dados['entrada1'],
+           'bsentradamanhao'=>$dados['entrada1'],
             'bssaidamanhao'=>$dados['saida'],
             'bsentradatarde'=>$dados['entrada2'],
             'bssaidatarde'=>$dados['saida2'],
+            'bsentradanoite'=>$dados['entrada3'],
+            'bssaidanoite'=>$dados['saida3'],
+            'bsentradamadrugada'=>$dados['entrada4'],
+            'bssaidamadrugada'=>$dados['saida4'],
             'bstotal'=>str_replace(",",".",$dados['total']),
+            'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),
             'bshoraexcem'=>str_replace(",",".",$dados['horas__cem']),
             'bsadinortuno'=>str_replace(",",".",$dados['adc__noturno']),

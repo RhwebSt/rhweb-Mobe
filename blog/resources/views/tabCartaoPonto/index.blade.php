@@ -48,29 +48,45 @@
                   </div>
               </div>
 
+              
                 <div class="col-md-6 input">
                   <label for="tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control " name="nome__completo" value="" id="nome__completo">
+                  <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="" id="nome__completo">
+                  @error('nome__completo')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
                   <input type="hidden" name="tomador" id="tomador">
                 <div class="col-md-1">
-                    <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="text" class="form-control " name="matricula" value="" id="matricula">
+                    <label for="matricula" class="form-label ">Matrícula</label>
+                    <input type="text" class="form-control @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
+                    @error('matricula')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                   </div>
 
                 <div class="col-md-2">
                     <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                    <input type="text" class="form-control" name="num__boletim" id="num__boletim">
+                    <input type="text" class="form-control @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
+                    @error('liboletim')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-md-2">
                   <label for="data" class="form-label">Data</label>
-                  <input type="date" class="form-control" name="data" value="" id="data">
+                  <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="" id="data">
+                    @error('data')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-md-2">
                   <label for="num__trabalhador" class="form-label">Nº de Trabalhador</label>
-                  <input type="text" class="form-control" name="num__trabalhador" value="" id="num__trabalhador">
+                  <input type="text" class="form-control @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
+                  @error('num__trabalhador')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
               </form> 
               
@@ -114,7 +130,7 @@
                                 $('#deletar').removeAttr( "disabled" )
                                 $('#excluir').removeAttr( "disabled" )
                                 $('#method').val('PUT')
-                            
+                                tomador(data.tomador)
                             }else{
                                 $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
                                 $('#incluir').removeAttr( "disabled" )
@@ -123,150 +139,37 @@
                                 $('#method').val(' ')
                                 $('#excluir').attr( "disabled",'disabled' )
                             }
-                            $('#data').val(data.lsdata)
-                            $('#num__trabalhador').val(data.lsnumero)
+                            $('#num__boletim').removeClass('is-invalid').next().text(' ')
+                            $('#matricula').removeClass('is-invalid').next().text(' ')
+                            $('#nome__completo').removeClass('is-invalid').next().text(' ')
+                            $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
+                            $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
                         }
                     });
                 }
             });
-               $( "#nome__completo" ).keyup(function() {
+            $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
-                    $.ajax({
-                        url: "{{url('tomador')}}/"+dados,
-                        type: 'get',
-                        contentType: 'application/json',
-                        success: function(data) {
-                          if (data.id) {
-                            $('#tomador').val(data.tomador)
-                            $('#matricula').val(data.tsmatricula)
-                          }
-                            // if (data.id) {
-                            //     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                            //     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
-                            //     $('#incluir').attr('disabled','disabled')
-                            //     $('#atualizar').removeAttr( "disabled" )
-                            //     $('#deletar').removeAttr( "disabled" )
-                            //     $('#excluir').removeAttr( "disabled" )
-                            //     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
-                            //     $('#method').val('PUT')
-                            
-                            // }else{
-                            //     $('#form').attr('action', "{{ route('tomador.store') }}");
-                            //     $('#incluir').removeAttr( "disabled" )
-                            //     $('#atualizar').attr('disabled','disabled')
-                            //     $('#deletar').attr('disabled','disabled')
-                            //     $('#method').val(' ')
-                            //     $('#excluir').attr( "disabled",'disabled' )
-                            //     $('#tabelapreco').addClass('disabled').removeAttr('href')
-                            // }
-                            // $('#cnpj').val(data.tscnpj)
-                            // $('#matricula').val(data.tsmatricula)
-                            // $('#nome__fantasia').val(data.tsfantasia)
-                            // $('#simples').val(data.tssimples)
-                            // $('#telefone').val(data.tstelefone)
-                            // $('#cep').val(data.escep)
-                            // $('#logradouro').val(data.eslogradouro)
-                            // $('#numero').val(data.esnum)
-                            // $('#tipo').val(data.estipo)
-                            // $('#bairro').val(data.esbairro)
-                            // $('#localidade').val(data.esmunicipio)
-                            // $('#uf').val(data.esuf)
-                            // $('#complemento').val(data.escomplemento)
-                            // $('#taxa_adm').val(data.tftaxaadm.toFixed(2).toString().replace(".", ","))
-                            // // $('#caixa_benef').val(data.tfbenef.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias').val(data.tfferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13_salario').val(data.tf13.toFixed(2).toString().replace(".", ","))
-                            // $('#taxa__fed').val(data.tftaxafed.toFixed(2).toString().replace(".", ","))
-                            // // $('#ferias_trab').val(data.tsferias.toFixed(2).toString().replace(".", ","))
-                            // // $('#13__saltrab').val(data.tsdecimo13.toFixed(2).toString().replace(".", ","))
-                            // // $('#rsr').val(data.tsrsr.toFixed(2).toString().replace(".", ","))
-                            // $('#das').val(data.tfdas.toFixed(2).toString().replace(".", ","))
-                            // $('#cod__fpas').val(data.psfpas)
-                            // $('#cod__grps').val(data.psgrps)
-                            // $('#cod__recol').val(data.psresol)
-                            // $('#cnae').val(data.pscnae)
-                            // $('#fap__aliquota').val(data.psfapaliquota.toFixed(2).toString().replace(".", ","))
-                            // $('#rat__ajustado').val(data.psratajustados.toFixed(2).toString().replace(".", ","))
-                            // $('#fpas__terceiros').val(data.psfpasterceiros)
-                            // $('#aliq__terceiros').val(data.psaliquotaterceiros.toString().replace(".", ","))
-                            // $('#esocial').val(data.pssocial)
-                            // $('#alimentacao').val(data.isalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#transporte').val(data.istransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#epi').val(data.isepi.toFixed(2).toString().replace(".", ","))
-                            // $('#seguro__trabalhador').val(data.isseguroportrabalhador.toString().replace(".", ","))
-                            // // $('#indice__folha').val(data.isindecesobrefolha)
-                            // // $('#valor__transporte').val(data.isvaletransporte.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor__alimentacao').val(data.isvalealimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#dias_uteis').val(data.csdiasuteis)
-                            // $('#sabados').val(data.cssabados)
-                            // $('#domingos').val(data.csdomingos)
-                            // $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
-                            // $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
-                            // // $('#valor_fatura').val(data.rsvalorfatura.toFixed(2).toString().replace(".", ","))
-                            // $('#nome__conta').val(data.bstitular)
-                            // $('#banco').val(data.bsbanco)
-                            // $('#agencia').val(data.bsagencia)
-                            // $('#operacao').val(data.bsoperacao)
-                            // $('#conta').val(data.bsconta)
-                            // $('#pix').val(data.bspix)
-                            // $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))
-                            // $('#folharalim').val(data.insalimentacao.toFixed(2).toString().replace(".", ","))
-                            // $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
-                            // $('#endereco').val(data.eiid)
-                            // $('#bancario').val(data.biid)
-                            // for (let index = 0; index <  $('#tipo option').length; index++) {  
-                            //     if (data.tstipo == $('#tipo option').eq(index).text()) {
-                                    
-                            //         $('#tipo option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#tipo option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            
-                            // for (let index = 0; index <  $('#folhartipotrans option').length; index++) {  
-                            //     if (data.instipotrans == $('#folhartipotrans option').eq(index).text()) {
-                                    
-                            //         $('#folhartipotrans option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipotrans option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#folhartipoalim option').length; index++) {  
-                            //     if (data.instipoali == $('#folhartipoalim option').eq(index).text()) {
-                                    
-                            //         $('#folhartipoalim option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#folhartipoalim option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaofgts option').length; index++) {  
-                            //     if (data.rstipofgts == $('#retencaofgts option').eq(index).text()) {
-                                    
-                            //         $('#retencaofgts option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaofgts option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#retencaoinss option').length; index++) {  
-                            //     if (data.rstipoinssempresa == $('#retencaoinss option').eq(index).text()) {
-                                    
-                            //         $('#retencaoinss option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#retencaoinss option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                            // for (let index = 0; index <  $('#valorfatura option').length; index++) {  
-                            //     if (data.rsvalorfatura == $('#valorfatura option').eq(index).text()) {
-                                    
-                            //         $('#valorfatura option').eq(index).attr('selected','selected')
-                            //     }else  {
-                            //         $('#valorfatura option').eq(index).removeAttr('selected')
-                            //     }
-                            // }
-                        }
-                    });
+                    tomador(dados)
                 }
             });
+            function tomador(dados) {
+              $.ajax({
+                  url: "{{url('tomador')}}/"+dados,
+                  type: 'get',
+                  contentType: 'application/json',
+                  success: function(data) {
+                    if (data.id) {
+                      $('#tomador').val(data.tomador)
+                      $('#nome__completo').val(data.tsnome)
+                      $('#matricula').val(data.tsmatricula)
+                      $('#domingo').val(data.csdomingos)
+                      $('#sabado').val(data.cssabados)
+                      $('#diasuteis').val(data.csdiasuteis)
+                    }
+                  }
+              });
+            }
             </script>         
 @stop

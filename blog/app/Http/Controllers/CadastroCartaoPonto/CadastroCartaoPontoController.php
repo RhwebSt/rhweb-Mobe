@@ -39,7 +39,26 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
+        $request->validate([
+            'nome__completo' => 'required',
+            'liboletim'=>'required|numeric|unique:lancamentotabelas',
+            'matricula'=>'required|max:6',
+            'num__trabalhador'=>'numeric',
+            'num__trabalhador'=>'required',
+            'data'=>'required'
+        ],[
+            'nome__completo.required'=>'Campo não pode esta vazio!',
+            'matricula.required'=>'Campo não pode esta vazio!',
+            'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+            'num__trabalhador.required'=>'Campo não pode esta vazio!',
+            'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+            'liboletim.required'=>'Campo não pode esta vazio!',
+            'liboletim.numeric'=>'O campo naõ pode conter letras',
+            'liboletim.exists'=>'O boletim ja ta cadastrado',
+            'data.required'=>'O campo não pode esta vazio!'
+            
+        ]);
+        
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $user = Auth::user();
@@ -102,6 +121,23 @@ class CadastroCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'nome__completo' => 'required',
+            'matricula'=>'required|max:6',
+            'num__trabalhador'=>'numeric',
+            'num__trabalhador'=>'required',
+            'data'=>'required'
+        ],[
+            'nome__completo.required'=>'Campo não pode esta vazio!',
+            'matricula.required'=>'Campo não pode esta vazio!',
+            'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+            'num__trabalhador.required'=>'Campo não pode esta vazio!',
+            'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+            'liboletim.required'=>'Campo não pode esta vazio!',
+            'liboletim.numeric'=>'O campo naõ pode conter letras',
+            'data.required'=>'O campo não pode esta vazio!'
+            
+        ]);
         $user = Auth::user();
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;

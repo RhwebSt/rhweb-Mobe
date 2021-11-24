@@ -22,21 +22,23 @@
 <img class="imagem__logo" src="{{url('/imagem/RHWEBlogin.png')}}" alt="" >
 
 <h1 class="login__title">Login</h1>
-@if($errors->all())
-                    @foreach($errors->all() as $error)
-                    <div class="alert alert-danger mt-2 alert-block">
-                        <strong>{{$error}}</strong>
-                    </div>
-                    @endforeach
-                @endif
+@error('mensagem')
+    <div class="alert alert-danger">
+        {{$message}}
+    </div>
+@enderror
 <form class="login__form"  action="{{ route('login.store') }}" method="POST">
     @csrf
-    <input class="login__input usuario" type="text" name="user" value="" placeholder="Usuário">
-
+    <input class="login__input usuario @error('user') is-invalid @enderror" type="text" name="user" value="" placeholder="Usuário">
+    @error('user')
+        <span class="alert alert-danger mt-1">{{ $message }}</span>
+    @enderror
     <span class="login__input--border"></span>
 
-    <input class="login__input senha" type="password" name="password" value="" placeholder="Senha" >
-
+    <input class="login__input senha  @error('password') is-invalid @enderror" type="password" name="password" value="" placeholder="Senha" >
+    @error('password')
+        <span class="alert alert-danger mt-1">{{ $message }}</span>
+    @enderror
     <span class="login__input--border"></span>
 
     <button  class="login__submit">Entrar</button>

@@ -19,6 +19,11 @@ class CreateBolcartaopontosTable extends Migration
             $table->char('bssaidamanhao', 10)->nullable();
             $table->char('bsentradatarde', 10)->nullable();
             $table->char('bssaidatarde', 10)->nullable();
+            $table->char('bsentradanoite', 10)->nullable();
+            $table->char('bssaidanoite', 10)->nullable();
+            $table->char('bsentradamadrugada', 10)->nullable();
+            $table->char('bssaidamadrugada', 10)->nullable();
+            $table->char('horas_normais',10)->nullable();
             $table->char('bstotal',10)->nullable();
             $table->char('bshoraex',10)->nullable();
             $table->char('bshoraexcem',10)->nullable();

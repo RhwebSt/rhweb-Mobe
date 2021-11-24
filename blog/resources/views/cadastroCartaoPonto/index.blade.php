@@ -46,30 +46,45 @@
 
                 <div class="col-md-6 input">
                   <label for="tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control " name="nome__completo" value="" id="nome__completo">
+                  <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="" id="nome__completo">
+                  @error('nome__completo')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
                   <input type="hidden" name="tomador" id="tomador">
                   <input type="hidden" id="domingo" name="domingo">
                   <input type="hidden" name="sabado" id="sabado">
                   <input type="hidden" name="diasuteis" id="diasuteis">
                 <div class="col-md-1">
-                    <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="text" class="form-control " name="matricula" value="" id="matricula">
+                    <label for="matricula" class="form-label ">Matrícula</label>
+                    <input type="text" class="form-control @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
+                    @error('matricula')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                   </div>
 
                 <div class="col-md-2">
                     <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                    <input type="text" class="form-control" name="num__boletim" id="num__boletim">
+                    <input type="text" class="form-control @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
+                    @error('liboletim')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-md-2">
                   <label for="data" class="form-label">Data</label>
-                  <input type="date" class="form-control" name="data" value="" id="data">
+                  <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="" id="data">
+                    @error('data')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-md-2">
                   <label for="num__trabalhador" class="form-label">Nº de Trabalhador</label>
-                  <input type="text" class="form-control" name="num__trabalhador" value="" id="num__trabalhador">
+                  <input type="text" class="form-control @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
+                  @error('num__trabalhador')
+                      <span class="">{{ $message }}</span>
+                    @enderror
                 </div>
               </form> 
               
@@ -113,7 +128,7 @@
                                 $('#deletar').removeAttr( "disabled" )
                                 $('#excluir').removeAttr( "disabled" )
                                 $('#method').val('PUT')
-                            
+                                tomador(data.tomador)
                             }else{
                                 $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
                                 $('#incluir').removeAttr( "disabled" )
@@ -122,8 +137,11 @@
                                 $('#method').val(' ')
                                 $('#excluir').attr( "disabled",'disabled' )
                             }
-                            $('#data').val(data.lsdata)
-                            $('#num__trabalhador').val(data.lsnumero)
+                            $('#num__boletim').removeClass('is-invalid').next().text(' ')
+                            $('#matricula').removeClass('is-invalid').next().text(' ')
+                            $('#nome__completo').removeClass('is-invalid').next().text(' ')
+                            $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
+                            $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
                         }
                     });
                 }
@@ -131,21 +149,25 @@
                $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 if (dados) {
-                    $.ajax({
-                        url: "{{url('tomador')}}/"+dados,
-                        type: 'get',
-                        contentType: 'application/json',
-                        success: function(data) {
-                          if (data.id) {
-                            $('#tomador').val(data.tomador)
-                            $('#matricula').val(data.tsmatricula)
-                            $('#domingo').val(data.csdomingos)
-                            $('#sabado').val(data.cssabados)
-                            $('#diasuteis').val(data.csdiasuteis)
-                          }
-                        }
-                    });
+                    tomador(dados)
                 }
             });
+            function tomador(dados) {
+              $.ajax({
+                  url: "{{url('tomador')}}/"+dados,
+                  type: 'get',
+                  contentType: 'application/json',
+                  success: function(data) {
+                    if (data.id) {
+                      $('#tomador').val(data.tomador)
+                      $('#nome__completo').val(data.tsnome)
+                      $('#matricula').val(data.tsmatricula)
+                      $('#domingo').val(data.csdomingos)
+                      $('#sabado').val(data.cssabados)
+                      $('#diasuteis').val(data.csdiasuteis)
+                    }
+                  }
+              });
+            }
             </script>         
 @stop

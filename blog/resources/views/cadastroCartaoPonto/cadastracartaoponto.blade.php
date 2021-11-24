@@ -2,6 +2,17 @@
 @section('conteine')
 <div class="container">
         <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
+       
+        @error('true')
+            <div class="alert alert-success"  role="alert">
+                {{$message}}
+            </div>
+        @enderror
+        @error('false')
+            <div class="alert alert-danger"  role="alert">
+                {{$message}}
+            </div>
+        @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
         @csrf
         <input type="hidden" id="method" name="_method" value="">
@@ -24,11 +35,17 @@
             <input type="hidden" name="trabalhador" id="trabalhador">          
             <div class="col-md-10 input mt-5">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input type="text" class="form-control " name="nome__completo" value="" id="nome__completo">
+                <input type="text" class="form-control  @error('nome__completo') is-invalid @enderror" name="nome__completo" value="" id="nome__completo">
+                @error('nome__completo')
+                    <span class="">{{ $message }}</span>
+                @enderror
             </div>
             <div class="col-md-2 input mt-5">
                 <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control " name="matricula" value="" id="matricula">
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="matricula" value="" id="matricula">
+                @error('matricula')
+                    <span class="">{{ $message }}</span>
+                @enderror
             </div>
             <!-- <div class="col-md-2 input">
                 <label for="data" class="form-label">Data</label>
@@ -73,7 +90,7 @@
 
             <div class="col-md-3 input">
                 <label for="saida5" class="form-label">Saída (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno " name="saida5" value="" id="saida4">
+                <input type="time" class="form-control adc__noturno " name="saida4" value="" id="saida4">
             </div>
 
             <div class="col-md-2 input">
@@ -121,7 +138,7 @@
                 <tr>
                 <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
                 <td class="bg-light text-black">{{$listas->tsnome}}</td>
-                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
+                <td class="bg-light text-black"></td>
                 <td class="bg-light text-black">{{$listas->bsentradamanhao}}</td>
                 <td class="bg-light text-black">{{$listas->bssaidamanhao}}</td>
                 <td class="bg-light text-black">{{$listas->bsentradatarde}}</td>
@@ -197,10 +214,16 @@
                             $('#saida').val(data.bssaidamanhao)
                             $('#entrada2').val(data.bsentradatarde)
                             $('#saida2').val(data.bssaidatarde)
+
+                            $('#entrada3').val(data.bsentradanoite)
+                            $('#saida3').val(data.bssaidanoite)
+                            $('#entrada4').val(data.bsentradamadrugada)
+                            $('#saida4').val(data.bssaidamadrugada)
                             $('#total').val(data.bstotal)
                             $('#hora__extra').val(data.bshoraex)
                             $('#horas__cem').val(data.bshoraexcem)
                             $('#adc__noturno').val(data.bsadinortuno)
+                            $('#horas_normais').val(data.horas_normais)
                           }else{
                               trabalhador(dados)
                           }
@@ -215,8 +238,8 @@
                     contentType: 'application/json',
                     success: function(data) {
                         if (data.id) {
-                        $('#trabalhador').val(data.trabalhador)
-                        $('#matricula').val(data.tsmatricula)
+                            $('#trabalhador').val(data.trabalhador)
+                            $('#matricula').val(data.tsmatricula)
                         }
                     }
                 });
@@ -255,27 +278,43 @@
                     segundos4 = segundos(horario4);
                 }
                
-                if (segundos1 >= 79200 && segundos2 < 79200) {
+                if (segundos1 >= 79200 && segundos2 < 10800) {
                     primeiro = (86400 - segundos1) + segundos2;
                     segundo = segundos4 - segundos3;
                     total = (primeiro + segundo)
                     let acresimo = (total/3150)
-                    acresimo = horasnotunas(acresimo.toString())
+                    total += horasnormais
+                    acresimo = horasnotunas(acresimo.toString(),total)
                      $('#adc__noturno').val(acresimo)
-                     total += horasnormais
-                     $('#total').val(conversaohoras(total))
+                    console.log('1')
                      diasuteis($('#total').val())
-                }else if (segundos1 >= 79200 && segundos2 >= 79200) {
+                     feriados($('#total').val())
+                }else if (segundos1 >= 79200 && segundos2 >= 79200 && segundos4 <= 18000) {
+                    primeiro = segundos2 - segundos1;
+                    segundo = segundos4 - segundos3;
+                    total = primeiro + segundo
+                    console.log(total)
+                    let acresimo = (total/3150)
+                    total += horasnormais
+                    acresimo = horasnotunas(acresimo.toString(),total)
+                     $('#adc__noturno').val(acresimo)
+                     console.log('2')
+                    diasuteis($('#total').val())
+                    feriados($('#total').val())
+                }else if (segundos3 > 0 && segundos4 <= 18000) {
                     primeiro = segundos2 - segundos1;
                     segundo = segundos4 - segundos3;
                     total = primeiro + segundo
                     let acresimo = (total/3150)
-                    acresimo = horasnotunas(acresimo.toString())
-                    $('#adc__noturno').val(acresimo)
                     total += horasnormais
-                    $('#total').val(conversaohoras(total))
-                    diasuteis($('#total').val())
-                }else{
+                    acresimo = horasnotunas(acresimo.toString(),total)
+                     $('#adc__noturno').val(acresimo)
+                     console.log('3')
+                     diasuteis($('#total').val())
+                     feriados($('#total').val())
+               
+                }
+                else{
                      $('#adc__noturno').val('0:00')
                 }
             })
@@ -290,6 +329,7 @@
                 let segundos3 = 0
                 let segundos4 = 0
                 let horaextra = 0
+                let totalHoras = 0
                 if ($('#adc__noturno').val()) {
                     adnotuno = $('#adc__noturno').val()
                     adnotuno = segundos(adnotuno);
@@ -306,25 +346,37 @@
                 if (horario4) {
                     segundos4 = segundos(horario4);
                 }
-                if (segundos2 <= 43200 &&  segundos1 >= 18000 ||  segundos4 <= 79200 && segundos3 > 43200) {
-                    let totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                    if (totalHoras > 0) {
-                        $('#horas_normais').val(conversaohoras(totalHoras)) 
-                        totalHoras += adnotuno 
-                        $('#total').val(conversaohoras(totalHoras))
-                      
-                        feriados($('#total').val())
-                        semana.forEach((element,index) => {
-                            if (dias == index) {
-                                if (element === 'Sábado') {
-                                    sabado($('#total').val())
-                                }else{
-                                    diasuteis($('#total').val())
-                                }
+                if (segundos1 >= 18000 && segundos2 <= 54000) {
+                    totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                    $('#horas_normais').val(conversaohoras(totalHoras))
+                    totalHoras += adnotuno 
+                    $('#total').val(conversaohoras(totalHoras))
+                    feriados($('#total').val())
+                    semana.forEach((element,index) => {
+                        if (dias == index) {
+                            if (element === 'Sábado') {
+                                sabado($('#total').val())
+                            }else{
+                                diasuteis($('#total').val())
                             }
-                        })
-                       
-                    }
+                        }
+                    })
+                   
+                }else if(segundos4 <= 79200 && segundos3 > 43200){
+                    totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+                    feriados($('#total').val())
+                    $('#horas_normais').val(conversaohoras(totalHoras))
+                    totalHoras += adnotuno 
+                    $('#total').val(conversaohoras(totalHoras))
+                    semana.forEach((element,index) => {
+                        if (dias == index) {
+                            if (element === 'Sábado') {
+                                sabado($('#total').val())
+                            }else{
+                                diasuteis($('#total').val())
+                            }
+                        }
+                    })
                 }
                 
             })
@@ -339,13 +391,18 @@
                 let segundos = partes1[0] * 3600 + partes1[1] * 60;
                 return segundos;
             }
-            function horasnotunas(acresimo) {
+            function horasnotunas(acresimo,total) {
                 let novoacresimo = acresimo.split('.')
                 let novoacresimo1 = `0.${novoacresimo[1]}`
                 novoacresimo1 = novoacresimo1 * 0.6
                 novoacresimo1 = novoacresimo1.toFixed(2)
                 novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
-                return novoacresimo1
+                novoacresimo1 =  novoacresimo1.toString()
+                let novoacresimo2 = novoacresimo1.split('.')
+                let novototal = conversaohoras(total)
+                novototal = novototal.split(':')
+                $('#total').val(`${novototal[0]}:${novoacresimo2[1]}`)
+                return `${novoacresimo2[0]}:${novoacresimo2[1]}`
             }
             function diasuteis(resutado) {
                 let diasuteis = $('#diasuteis').val()
@@ -354,8 +411,8 @@
                     total = (parseInt(segundos(diasuteis)) - parseInt(segundos(resutado))) * (-1);
                     $('#hora__extra').val(conversaohoras(total))
                 }else{
-                    // $('#hora__extra').val("0:00")
-                    console.log('1')
+                    $('#hora__extra').val("0:00")
+                    
                 }
                 
             }
@@ -404,8 +461,7 @@
                 $('#horas__cem').val(conversaohoras(total))
                 $('#hora__extra').val("0:00")
             }else{
-                // $('#horas__cem').val("0:00")
-                console.log('3')
+                $('#horas__cem').val("0:00")
             }
         }
           </script>

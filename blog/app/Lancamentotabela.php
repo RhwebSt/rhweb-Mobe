@@ -12,7 +12,7 @@ class Lancamentotabela extends Model
     public function cadastro($dados)
     {
        return Lancamentotabela::create([
-            'liboletim'=>$dados['num__boletim'],
+            'liboletim'=>$dados['liboletim'],
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
             'tomador'=>$dados['tomador'],
@@ -26,7 +26,7 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where('id', $id)
         ->update([
-            'liboletim'=>$dados['num__boletim'],
+            'liboletim'=>$dados['liboletim'],
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
         ]);
