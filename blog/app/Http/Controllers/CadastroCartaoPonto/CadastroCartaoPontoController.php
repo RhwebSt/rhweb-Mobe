@@ -62,7 +62,7 @@ class CadastroCartaoPontoController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $user = Auth::user();
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['num__boletim']);
+        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             $lista = $bolcartaoponto->listacadastro($lancamentotabelas['id']);

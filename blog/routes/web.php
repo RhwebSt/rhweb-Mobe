@@ -17,6 +17,7 @@ Route::resource('login','Login\\LoginController')->only(['store'])->names('login
 
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('ficharegitrotrab/{id}','Trabalhador\\fichaRegistroTrabController@ficha');
+    Route::get('fichaepitrab/{id}','fichaEpi\\fichaEpiTrabController@ficha');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');

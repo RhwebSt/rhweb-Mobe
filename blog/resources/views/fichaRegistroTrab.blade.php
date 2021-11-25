@@ -141,7 +141,7 @@
         
         <table>
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Mobe Prestadora de Serviços LTDA</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
             </tr>
         </table>
 
@@ -155,7 +155,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : 343509150001.49</strong></td>
+                <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
             </tr>
 
             <tr>
@@ -163,7 +163,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Rua:</strong> Nereu Ramos, 646 - 88133-330</td>
+                <td class="small__font width__padrao"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
                 
             </tr>
 
@@ -172,7 +172,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Bairro:</strong> Jardim Eldorado - SC</td>
+                <td class="small__font width__padrao"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
                 
             </tr>
 
@@ -317,6 +317,11 @@
                         <td class="small__font border-right border-top data"><strong>Data de Nascimento: </strong>{{$depedente->dsdata}}</td>
                     </tr>
                 @endforeach
+                @else
+                <tr>
+                        <td  class="small__font border-top border-left nome" style="text-align: center;"><strong>Não a depedentes.</strong></td>
+                        
+                    </tr>
             @endif
         </table>
 

@@ -39,6 +39,17 @@ class Bolcartaoponto extends Model
             'bolcartaopontos.*', 
             )
         ->where('lancamentotabelas.id', $id)
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.id',$id);
+            }else{
+                $query->where([
+                    ['lancamentotabelas.id',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })
         ->paginate(15);
     }
     public function listafirst($id)
@@ -52,15 +63,15 @@ class Bolcartaoponto extends Model
             'bolcartaopontos.*', 
             )
         ->where(function($query) use ($id){
-            $cargo =['admin'];
             $user = auth()->user();
-            if (in_array($user->cargo,$cargo)) {
-                $query->where('trabalhadors.tsnome', $id);
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%');
             }else{
-                $query->where('trabalhadors.tsnome', $id)
-                ->where('tomadors.user', $user->id);
+                $query->where([
+                    ['trabalhadors.tsnome',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
             }
-               
         })
         ->first();
     }

@@ -41,7 +41,15 @@ class Trabalhador extends Model
                 'bancarios.*',
                 'categorias.*',
                 'nascimentos.*',
-                'enderecos.*'
+                'enderecos.eslogradouro',
+                'enderecos.esbairro',
+                'enderecos.esestado',
+                'enderecos.esmunicipio',
+                'enderecos.esuf',
+                'enderecos.escomplemento',
+                'enderecos.esnum',
+                'enderecos.escep',
+                'enderecos.eiid'
                 )
             ->where(function($query) use ($id){
                 $user = auth()->user();

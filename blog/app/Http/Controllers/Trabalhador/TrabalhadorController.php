@@ -131,6 +131,8 @@ class TrabalhadorController extends Controller
         $nascimentos = $nascimento->editar($dados,$id);
         $categorias = $categoria->editar($dados,$id);
         $documentos = $documento->editar($dados,$id);
+        // dd($trabalhadors, $enderecos,  $bancarios , 
+        // $nascimentos ,$categorias, $documentos);
         if ($trabalhadors && $enderecos &&  $bancarios && 
         $nascimentos && $categorias && $documentos) {
             $condicao = 'edittrue';

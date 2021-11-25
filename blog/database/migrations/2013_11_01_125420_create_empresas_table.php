@@ -15,11 +15,11 @@ class CreateEmpresasTable extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('esnome', 30)->nullable();
+            $table->char('esnome', 100)->nullable();
             $table->char('escnpj', 30)->nullable();
             $table->char('esdataregitro', 30)->nullable();
             $table->char('esresponsavel', 30)->nullable();
-            $table->char('esemail', 30)->nullable();
+            $table->char('esemail', 100)->nullable();
             $table->char('escnae', 30)->nullable();
             $table->char('escodigomunicipio', 30)->nullable();
             $table->char('essindicalizado', 30)->nullable();

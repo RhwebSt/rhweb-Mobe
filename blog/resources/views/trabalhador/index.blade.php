@@ -39,6 +39,7 @@
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                 <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
+                <a class="btn botao disabled"  id="fichaepi" role="button">Epi</a>
                 <a class="btn botao disabled"  id="imprimir" role="button">Imprimir</a>
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
@@ -350,8 +351,10 @@
                             $('#excluir').removeAttr( "disabled" )
                             $('#method').val('PUT')
                             $('#imprimir').removeClass('disabled').attr('href',"{{url('ficharegitrotrab')}}/"+data.trabalhador)
+                            $('#fichaepi').removeClass('disabled').attr('href',"{{url('fichaepitrab')}}/"+data.trabalhador)
                         }else{
                           $('#imprimir').addClass('disabled')
+                          $('#fichaepi').addClass('disabled')
                           $('#depedente').addClass('disabled')
                             $('#form').attr('action', "{{ route('trabalhador.store') }}");
                             $('#incluir').removeAttr( "disabled" )
@@ -359,7 +362,7 @@
                             $('#atualizar').attr('disabled','disabled')
                             $('#deletar').attr('disabled','disabled')
                             $('#method').val(' ')
-                            $('#excluir').attr( "disabled" )
+                            $('#excluir').attr('disabled','disabled')
                         }
                         $('#nome__completo').val(data.tsnome)
                         $('#cpf').val(data.tscpf)

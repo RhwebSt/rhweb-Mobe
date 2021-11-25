@@ -61,7 +61,7 @@ class TabCartaoPontoController extends Controller
         $user = Auth::user(); 
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['num__boletim']);
+        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             $lista = $lancamentorublica->listacadastro($lancamentotabelas['id']);

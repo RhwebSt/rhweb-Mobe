@@ -15,8 +15,8 @@ class CreateTrabalhadorsTable extends Migration
     {
         Schema::create('trabalhadors', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tsnome',30)->nullable();
-            $table->longText('tsfoto');
+            $table->string('tsnome',40)->nullable();
+            $table->longText('tsfoto')->nullable();
             $table->string('tsnomesocial',30)->nullable();
             $table->string('tscpf',15)->nullable();
             $table->integer('tsmatricula')->nullable();
