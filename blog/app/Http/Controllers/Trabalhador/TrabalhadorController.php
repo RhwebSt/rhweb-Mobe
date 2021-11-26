@@ -47,6 +47,63 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // $request->validate([
+        //     'nome__completo' => 'required|min:3',
+        //     'nome__social'=>'min:3',
+        //     'cpf'=>'required|max:15|cpf',
+        //     'matricula'=>'required|min:4',
+        //     'pis'=>'required|max:15|pis',
+        //     'sexo'=>'required|min:4',
+        //     'estado__civil'=>'required|min:4',
+        //     'raca'=>'required|min:4',
+        //     'grau__instrucao'=>'required|min:11',
+        //     'data_nascimento'=>'required|min:8',
+        //     'pais__nascimento'=>'required|min:3',
+        //     'pais__nacionalidade'=>'required|min:3',
+        //     'nome__mae'=>'required|min:4',
+        //     'cep'=>'required|max:8|min:8|cep',
+        //     'logradouro'=>'required|min:3',
+        //     'numero'=>'required',
+        //     'bairro'=>'required|min:3'
+        // ],[
+        //     'bairro.required'=>'Campo',
+        //     'numero.required'=>'Campo não pode esta vazio!',
+        //     'logradouro.min'=>'Campo não pode conter menos de 3 caracteres!',
+        //     'logradouro.required'=>'Campo não pode esta vazio!',
+        //     'cep.required'=>'Campo não pode esta vazio!',
+        //     'cep.max'=>'Campo não pode conter mais de 8 caracteres!',
+        //     'cep.min'=>'Campo não pode ter menos de 8 caracteres!',
+        //     'cep.cep'=>'Este não é um CEP valido!',
+        //     'nome__mae.min'=>'Campo não pode ter menos de 4 caracteres!',
+        //     'nome__mae.required'=>'Campo não pode esta vazio!',
+        //     'pais__nacionalidade.min'=>'Campo não pode ter menos de 3 caracteres!',
+        //     'pais__nacionalidade.required'=>"Campo não pode esta vazio!",
+        //     'pais__nascimento.required'=>'Campo não pode esta vazio!',
+        //     'pais__nascimento.min'=>'Campo não pode ter menos de 3 caracteres!',
+        //     'data_nascimento.required'=>'Campo não pode esta vazio!',
+        //     'data_nascimento.min'=>'Campo não pode ter menos de 8 caracteres!',
+        //     'grau__instrucao.required'=>'Campo não pode esta vazio!',
+        //     'grau__instrucao.min'=>'Campo não pode ter menos de 11 caracteres!',
+        //     'raca.required'=>'Campo não pode esta vazio!',
+        //     'raca.min'=>'Campo não pode ter menos de 4 caracteres!',
+        //     'data_nascimento.required'=>'Campo não pode esta vazio!',
+        //     'grau__instrucao.required'=>'Campo não pode esta vazio!',
+        //     'estado__civil.required'=>'Campo não pode esta vazio!',
+        //     'estado__civil.min'=>'Campo não pode ter menos de 4 caracteres!',
+        //     'sexo.required'=>'Campo não pode esta vazio!',
+        //     'sexo.min'=>'Campo não pode ter menos de 4 caracteres!',
+        //     'pis.required'=>'Campo não pode esta vazio!',
+        //     'pis.max'=>'Campo não pode conter mais de 15 caracteres',
+        //     'pis.pis'=>'Este não é um PIS valido!',
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'nome__completo.min'=>'Campo não pode ter menos de 3 caracteris!',
+        //     'nome__social'=>'Campo não pode ter menos de 3 caracteres!',
+        //     'cpf.required'=>'Campo não pode esta vazio!',
+        //     'cpf.max'=>'O campo não pode esta vazio!',
+        //     'cpf.cpf'=>'Este não é um CPF valido!',
+        //     'matricula.required'=>'Campo não pode esta vazio!',
+        //     'matricula.min'=>'Campo não pode ter menos de 3 caracteres!'
+        // ]);
         // if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
         //     $novafoto = $request->foto;
         //     $extension = $novafoto->getClientOriginalExtension();

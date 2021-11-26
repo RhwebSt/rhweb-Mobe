@@ -1,5 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
+
     <div class="container " >
     
         @if($errors->all())
@@ -28,7 +29,7 @@
             @endforeach
         @endif     
         
-        <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST" >
+        <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST">
         
         <div class="btn mt-5 " role="group" aria-label="Basic example">
             <button type="submit" id="incluir" class="btn botao text-white">Incluir</button>
@@ -44,19 +45,18 @@
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
         
-        <div class="col-md-6 table-bordered border-dark d-flex mt-5 mb-4">
-            <label for="pesquisa" class="form-label"></label>
-            <input class="pesquisa form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
-                <datalist id="datalistOptions">
-                    <!-- <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago"> -->
-                </datalist>
-            <button class="btn botao" type="submit">Pesquisar</button>
-        </div>
         
+        <div class="col-md-6 mt-5 mb-4">
+                            <label for="exampleDataList" class="form-label">Buscar</label>
+                            <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
+                            <datalist id="datalistOptions">
+                                <!-- <option value="San Francisco">
+                                <option value="New York">
+                                <option value="Seattle">
+                                <option value="Los Angeles">
+                                <option value="Chicago"> -->
+                            </datalist>
+                        </div>
         <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador</div>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
@@ -64,7 +64,20 @@
         <input type="hidden"  name="tomador" >
         <!-- <input type="hidden" name="empresa">  -->
         <input type="hidden" name="empresa" value="{{$user->empresa}}">
-        <input type="file" name="file" onchange="encodeImageFileAsURL(this)">
+        
+        <div>
+            <div class="col-md-5">
+                <img class="trabfoto" id="trabfoto" src="" alt="foto do trabalhador">
+            </div>
+        </div>
+        
+        <div>
+            <div class="mb-3 col-md-5">
+              <label for="formFileSm " class="form-label">Foto do Trabalhador</label>
+              <input class="form-control form-control-sm"   onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
+            </div>
+        </div>
+
         <input type="hidden" name="foto" id="foto">
             <div class="col-md-6">
               <label for="nome__completo" class="form-label">Nome Completo</label>
@@ -310,7 +323,7 @@
                                         </div>
                                         <div class="modal-body">
                                         
-                                        <p class="text-black">Obs: Caso excluar os dados do trabalhador seus depedentes seram excluidor?</p>
+                                        <p class="text-black">Obs: Caso exclua os dados do trabalhador seus depedentes seram excluidor?</p>
                                         <p class="text-black">Deseja realmente excluir?</p>
                                         </div>
                                         <div class="modal-footer">
@@ -328,6 +341,7 @@
             var reader = new FileReader();
             reader.onloadend = function() {
               $('#foto').val(reader.result)
+              $('#trabfoto').attr('src',reader.result)
             }
             reader.readAsDataURL(file);
           }
@@ -340,6 +354,7 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
+                      $('#datalistOptions').prepend(`<option value="${data.tsnome}">`)
                         if (data.trabalhador) {
                             $('#form').attr('action', "{{ url('trabalhador')}}/"+data.trabalhador);
                             $('#formdelete').attr('action',"{{ url('trabalhador')}}/"+data.trabalhador)
@@ -365,6 +380,8 @@
                             $('#excluir').attr('disabled','disabled')
                         }
                         $('#nome__completo').val(data.tsnome)
+                        $('#foto').val(data.tsfoto)
+                        $('#trabfoto').attr('src',data.tsfoto)
                         $('#cpf').val(data.tscpf)
                         $('#matricula').val(data.tsmatricula)
                         $('#pis').val(data.dspis)
@@ -374,12 +391,12 @@
                         $('#pais__nacionalidade').val(data.nsnacionalidade)
                         $('#nome__mae').val(data.tsmae)
                         $('#cep').val(data.escep)
-                        $('#logradouro').val(data.esmunicipio)
+                        $('#logradouro').val(data.eslogradouro)
                         $('#uf').val(data.esuf)
                         $('#numero').val(data.esnum)
                         $('#complemento').val(data.escomplemento)
                         $('#bairro').val(data.esbairro)
-                        $('#localidade').val(data.eslogradouro)
+                        $('#localidade').val(data.esmunicipio)
                         $('#uf').val(data.esuf)
                         $('#data__admissao').val(data.csadmissao)
                         $('#categoria').val(data.cscategoria)

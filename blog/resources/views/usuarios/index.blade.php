@@ -89,28 +89,35 @@
 
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" name="usuario" value="" id="usuario">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="" id="usuario">
+                  @error('name')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
                 <input type="hidden" name="email">
                 <div class="col-md-2">
                   <label for="cargo" class="form-label">Cargo</label>
-                  <input type="text" class="form-control" name="cargo" value="" id="cargo">
+                  <input type="text" class="form-control " name="cargo" value="" id="cargo">
                 </div>
 
                 <div class="col-md-3">
                   <label for="senha" class="form-label">Senha</label>
-                  <input type="password" class="form-control" name="senha" value="" id="senha">
+                  <input type="password" class="form-control @error('senha') is-invalid @enderror" name="senha" value="" id="senha">
+                  @error('senha')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
                 <div class="col-md-4">
                   <label for="nome__completo" class="form-label">Nome do tomador</label>
-                  <input class="form-control" list="datalistOptions" name="nome__completo" id="nome__completo" >
-                  <datalist id="datalistOptions">
-                    <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago">
-                      
+                  <input class="form-control @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" name="nome__completo" id="nome__completo" >
+                  @error('nome__completo')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                  @error('empresa')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                  <span class="invalid-feedback" id="mensagemtomador"></span>
+                  <datalist id="datalistOptions">    
                   </datalist>
                 </div>
               </form>  
@@ -159,6 +166,7 @@
                               $('#nome__completo').val(data.esnome)
                               $('#cargo').val(data.cargo)
                               $('#senha').val('')
+                              $('#idempresa').val(data.empresa)
                           }else{
                           
                               $('#form').attr('action', "{{ route('user.store') }}");
@@ -179,12 +187,24 @@
             });
             $( "#nome__completo" ).keyup(function() {
                 var dados = $(this).val();
+                dados =  dados.replace(/\D/g, '');
+                if (!dados) {
+                  dados = $(this).val();
+                }
                 $.ajax({
                     url: "{{url('listaempresa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      $('#idempresa').val(data.empresa)
+                      if (data.empresa) {
+                        $('#idempresa').val(data.empresa)
+                        $('#datalistOptions').prepend(`<option value="${data.esnome}/>`)
+                        // $('#mensagemtomador').text(' ')
+                        // $( "#nome__completo" ).addClass('is-valid')
+                      }else{
+                        // $('#mensagemtomador').text('Não foi porssível encontra o tomador!')
+                        // $( "#nome__completo" ).addClass('is-invalid')
+                      }
                     }
                 });
             });

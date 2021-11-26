@@ -16,6 +16,8 @@ class CreateEmpresasTable extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->increments('id');
             $table->char('esnome', 100)->nullable();
+            $table->char('estelefone', 20)->nullable();
+            $table->longText('esfoto')->nullable();
             $table->char('escnpj', 30)->nullable();
             $table->char('esdataregitro', 30)->nullable();
             $table->char('esresponsavel', 30)->nullable();

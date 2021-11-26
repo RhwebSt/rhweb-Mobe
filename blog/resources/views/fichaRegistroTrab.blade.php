@@ -8,6 +8,10 @@
     </head>
 
     <style>
+        .capitalize{
+            text-transform: capitalize;
+        }
+        
         body{
             font-family:sans-serif;
         }
@@ -76,12 +80,16 @@
         .logo{
             margin-top:10px;
             margin-right: 50px;
-            width: 90px;
+            width: 100px;
             height: 120px;
         }
 
         .documentos{
             width:230.7px;
+        }
+        
+        .documento__info{
+            width: 172px;
         }
 
         .rua{
@@ -89,11 +97,11 @@
         }
 
         .uf{
-            width:40px;
+            width:50px;
         }
 
         .cep{
-            width:133px;
+            width:123px;
         }
 
         .cidade{
@@ -134,6 +142,10 @@
         .data__ass{
         width:150px;
         }
+        
+        .semdepe{
+            width:700px;
+        }
 
     </style>
 
@@ -147,7 +159,7 @@
 
         <table>
             <tr>
-                <td rowspan="6"><img class="logo" src="https://lh3.googleusercontent.com/proxy/7XVxRZ-bvU9WJtieivDc5c4XXjoX-XcEZXdZ1X5kJpoN8vEGcSO-_p-_ikG1YW9JLmboS3Zomxnci0MLDfXrqIQevO9o9w" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
+                <td rowspan="6"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
             </tr>
 
             <tr>
@@ -163,7 +175,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
                 
             </tr>
 
@@ -172,7 +184,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
                 
             </tr>
 
@@ -181,7 +193,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Tel:</strong> (48) 3086-0103</td>
+                <td class="small__font width__padrao capitalize"><strong>Tel:</strong> (48) 3086-0103</td>
             </tr>
 
         </table>
@@ -189,13 +201,13 @@
 
         <table>
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Ficha de Registro do Trabalhador Matrícula: {{$trabalhadors->tsmatricula}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Ficha de Registro do Trabalhador</td>
             </tr>
         </table>
 
         <table>
             <tr>
-                <td rowspan="6"><img class="logo" src="{{$trabalhadors->tsfoto}}"></td>
+                <td rowspan="7"><img class="logo" src="{{$trabalhadors->tsfoto}}"></td>
             </tr>
 
             <tr>
@@ -203,7 +215,15 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="width__padrao"><strong>{{$trabalhadors->tsnome}}</strong></td>
+                <td class="width__padrao uppercase"><strong>{{$trabalhadors->tsnome}}</strong></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="width__padrao small__font capitalize"><strong>Matrícula:</strong> {{$trabalhadors->tsmatricula}}</td>
             </tr>
 
             <tr>
@@ -211,7 +231,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Categoria:</strong> {{$trabalhadors->cscategoria}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Categoria:</strong> {{$trabalhadors->cscategoria}}</td>
                 
             </tr>
 
@@ -220,7 +240,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>CBO: {{$trabalhadors->cbo}}</strong> - Desenvolvedor de Software</td>
+                <td class="small__font width__padrao capitalize"><strong>CBO: {{$trabalhadors->cbo}}</strong> - Desenvolvedor de Software</td>
                 
             </tr>
 
@@ -229,7 +249,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Data de Admissão:</strong> {{$trabalhadors->csadmissao}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Data de Admissão:</strong> {{$trabalhadors->csadmissao}}</td>
             </tr>
 
         </table>
@@ -242,28 +262,20 @@
 
         <table>
             <tr>
-                <td class="small__font documentos border-left border-top"><strong>PIS:</strong>  {{$trabalhadors->dspis}}</td>
-                <td class="small__font documentos border-top"><strong>CPF:</strong> {{$trabalhadors->tscpf}}</td>
-                <td class="small__font documentos border-right border-top"><strong>Data Nascimento:</strong> {{$trabalhadors->nsnascimento}}</td>
+                <td class="small__font documentos border-left border-top capitalize"><strong>PIS:</strong>  {{$trabalhadors->dspis}}</td>
+                <td class="small__font documentos border-top capitalize"><strong>CPF:</strong> {{$trabalhadors->tscpf}}</td>
+                <td class="small__font documentos border-right border-top capitalize"><strong>Data Nascimento:</strong> {{$trabalhadors->nsnascimento}}</td>
             </tr>
-
+            
+        <table>
             <tr>
-                <td class="small__font documentos border-left"><strong>CTPS:</strong> {{$trabalhadors->dsctps}}</td>
-                <td class="small__font documentos"><strong>Série:</strong> {{$trabalhadors->dsserie}} - {{$trabalhadors->dsuf}}</td>
-                <td class="small__font documentos border-right"><strong>Data Emissão:</strong> 99/99/9999</td>
+                <td class="small__font documento__info border-left border-bottom capitalize"><strong>CTPS:</strong> {{$trabalhadors->dsctps}}</td>
+                <td class="small__font documento__info uppercase border-bottom"><strong>Série:</strong> {{$trabalhadors->dsserie}} - {{$trabalhadors->dsuf}}</td>
+                <td class="small__font documento__info  capitalize border-bottom"><strong>Estado Cívil:</strong> {{$trabalhadors->nscivil}}</td>
+                <td class="small__font documento__info border-right capitalize border-bottom"><strong>Sexo:</strong> {{$trabalhadors->tssexo}}</td>
             </tr>
+        </table>
 
-            <tr>
-                <td class="small__font documentos border-left"><strong>RG:</strong> 9999999999</td>
-                <td class="small__font documentos"><strong>SSP:</strong> SC</td>
-                <td class="small__font documentos border-right"><strong>Data Emissão:</strong> 99/99/9999</td>
-            </tr>
-
-            <tr>
-                <td class="small__font documentos border-left border-bottom"><strong>Estado Cívil:</strong> {{$trabalhadors->nscivil}}</td>
-                <td class="small__font documentos border-bottom"><strong>Sexo:</strong> {{$trabalhadors->tssexo}}</td>
-                <td class="small__font documentos  border-bottom border-right"></td>
-            </tr>
         </table>
 
         <table>
@@ -274,16 +286,16 @@
 
         <table>
             <tr>
-                <td class="small__font border-left rua border-top"><strong>Endereço:</strong>  {{$trabalhadors->eslogradouro}}, {{$trabalhadors->esnum}}</td>
-                <td class="small__font uf border-top"><strong>UF:</strong> {{$trabalhadors->esuf}}</td>
-                <td class="small__font border-right cep text-center border-top"><strong>CEP:</strong> {{$trabalhadors->escep}}</td>
+                <td class="small__font border-left rua border-top capitalize"><strong>Endereço:</strong>  {{$trabalhadors->eslogradouro}}, {{$trabalhadors->esnum}}</td>
+                <td class="small__font uf border-top text-center capitalize"><strong>UF:</strong> {{$trabalhadors->esuf}}</td>
+                <td class="small__font border-right cep text-center border-top capitalize"><strong>CEP:</strong> {{$trabalhadors->escep}}</td>
             </tr>
         </table>
         <table>    
             <tr>
-                <td class="small__font cidade border-left border-bottom"><strong>Cidade:</strong> {{$trabalhadors->esmunicipio}}</td>
-                <td class="small__font cidade border-bottom"><strong>Natural:</strong> {{$trabalhadors->nsnaturalidade}}</td>
-                <td class="small__font border-right cep text-center telefone border-bottom"><strong>Telefone:</strong>{{$trabalhadors->tstelefone}}</td>
+                <td class="small__font cidade border-left border-bottom capitalize"><strong>Cidade:</strong> {{$trabalhadors->esmunicipio}}</td>
+                <td class="small__font cidade border-bottom capitalize"><strong>Natural:</strong> {{$trabalhadors->nsnaturalidade}}</td>
+                <td class="small__font border-right cep telefone border-bottom capitalize"><strong>Telefone:</strong>{{$trabalhadors->tstelefone}}</td>
             </tr>
         </table>
         
@@ -295,11 +307,7 @@
 
         <table>
             <tr>
-                <td class="small__font afiliacao border-left border-right border-top"><strong>Nome da Mãe:</strong>{{$trabalhadors->tsmae}}</td>
-                
-            </tr>
-            <tr>
-                <td class="small__font afiliacao border-left border-right border-bottom"><strong>Nome do Pai:</strong></td>
+                <td class="small__font afiliacao border-left border-right border-top capitalize"><strong>Nome da Mãe:</strong>{{$trabalhadors->tsmae}}</td>
             </tr>
         </table>
 
@@ -313,13 +321,13 @@
             @if(count($depedentes) > 0)
                 @foreach($depedentes as $depedente)
                     <tr>
-                        <td class="small__font border-top border-left nome"><strong>Nome: </strong>{{$depedente->dsnome}}</td>
-                        <td class="small__font border-right border-top data"><strong>Data de Nascimento: </strong>{{$depedente->dsdata}}</td>
+                        <td class="small__font border-top border-left nome capitalize"><strong>Nome: </strong>{{$depedente->dsnome}}</td>
+                        <td class="small__font border-right border-top data capitalize"><strong>Data de Nascimento: </strong>{{$depedente->dsdata}}</td>
                     </tr>
                 @endforeach
                 @else
                 <tr>
-                        <td  class="small__font border-top border-left nome" style="text-align: center;"><strong>Não a depedentes.</strong></td>
+                        <td  class="small__font semdepe border-top border-left nome text-center border-right border-bottom"><strong>Não á depedentes.</strong></td>
                         
                     </tr>
             @endif
@@ -333,9 +341,9 @@
 
         <table>
             <tr>
-                <td class="small__font bancario text-center"><strong>Banco:</strong> {{$trabalhadors->bsbanco}}</td>
-                <td class="small__font bancario text-center"><strong>Agência:</strong> {{$trabalhadors->bsagencia}}</td>
-                <td class="small__font bancario text-center"><strong>Conta:</strong> {{$trabalhadors->bsconta}}</td>
+                <td class="small__font bancario text-center capitalize"><strong>Banco:</strong> {{$trabalhadors->bsbanco}}</td>
+                <td class="small__font bancario text-center capitalize"><strong>Agência:</strong> {{$trabalhadors->bsagencia}}</td>
+                <td class="small__font bancario text-center capitalize"><strong>Conta:</strong> {{$trabalhadors->bsconta}}</td>
             </tr>
         </table>
 
@@ -352,7 +360,7 @@
     
             <tr>
                 <td class="fontDeclaracao"></td>
-                <td class="fontDeclaracao text-center">Assinatura Trabalhador</td>
+                <td class="fontDeclaracao text-center capitalize">Assinatura Trabalhador</td>
             </tr>
         </table>
     </body>

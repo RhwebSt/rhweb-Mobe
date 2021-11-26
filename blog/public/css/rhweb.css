@@ -9,6 +9,7 @@
     --botao-dark-mode-icon-color:black;
     --hover-dark-mode-bg: rgb(14, 13, 13);
     --hover-dark-mode-color: white;
+    --img-trab-color:1.7px solid #5345B0;
 }
 
 .darkmode{
@@ -22,6 +23,7 @@
     --botao-dark-mode-icon-color: white;
     --hover-dark-mode-bg: rgb(252, 250, 250);
     --hover-dark-mode-color: black;
+    --img-trab-color:2px solid #241E4E;;
     
 }
 
@@ -29,9 +31,9 @@ body {
     font-family: 'Raleway', sans-serif;
     background-color: var(--body-bg);
     color: var(--body-color);
-  
-   
+
 }
+
 
 input:hover{
     border-color: #4f29f89a;
@@ -58,9 +60,7 @@ input:hover{
 }
 
 
-.linhatab{
-   background-color: red;
-}
+
 
 
 .botao__dark{
@@ -98,6 +98,22 @@ input:hover{
     border-color: #3370FF;
 
 }
+
+.searhicon{
+    
+    
+    border-radius: 3px;
+    padding-right:10px;
+    padding-left: 10px;
+}
+
+.trabfoto{
+    width: 100px; 
+    height: 120px;
+    border: var(--img-trab-color) ;
+}
+
+
 
 
 

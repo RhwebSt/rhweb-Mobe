@@ -11,19 +11,19 @@
                 </div>
              @elseif($error === 'editfalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
+                    <strong>Não foi possível atualizar os dados!</strong>
                 </div>
             @elseif($error === 'deletatrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
+                    <strong>Registro deletado com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastratrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
+                    <strong>Cadastrado realizada com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastrafalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                    <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
             @endif
             @endforeach
@@ -46,18 +46,28 @@
                         <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
                     </div>
                 </div>
-                <div class="col-md-6">
-                            <div class="col-md-12 p-0 table-bordered border-white d-flex mt-5 mb-4">
-                                <label for="pesquisa" class="form-label"></label>
-                                <input class="pesquisar form-control  me-1" list="datalistOptions"  name="pesquisa" id="pesquisa" >
-                                
+                
+                <div>
+                            <div class="col-md-5 mt-5 mb-4">
+                                <label for="exampleDataList" class="form-label">Buscar</label>
+                                <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
                                 <datalist id="datalistOptions">
-                                    
+                                    <!-- <option value="San Francisco">
+                                    <option value="New York">
+                                    <option value="Seattle">
+                                    <option value="Los Angeles">
+                                    <option value="Chicago"> -->
                                 </datalist>
-                                
-                                <a class="btn botao" href="#" >Pesquisar</a>
-                            
                             </div>
+                            
+                            <div>
+                                <div class="mb-3 col-md-4">
+                                  <label for="formFileSm" class="form-label">Logo da Empresa</label>
+                                  <input class="form-control " type="file" name="file" onchange="encodeImageFileAsURL(this)">
+                                  <input type="hidden" name="foto" id="foto">
+                                </div>
+                            </div>
+                            
                             <div class="col-md-12 p-0">
                                 <input type="hidden" class="form-control is-invalid" id="validationServer05" aria-describedby="mensagem-pesquisa"" required>
                                 <div id="mensagem-pesquisa" class="invalid-feedback">
@@ -71,7 +81,7 @@
                 @csrf
                 <input type="hidden" name="trabalhador" >
                 <input type="hidden" name="tomador">
-        <input type="hidden" id="method" name="_method" value="">
+                <input type="hidden" id="method" name="_method" value="">
                 <div class="col-md-7">
                     <label for="nome" class="form-label">Nome</label>
                     <input type="text" class="form-control" name="nome" id="nome">
@@ -167,6 +177,11 @@
                     <label for="contribuicao__sindicato" class="form-label">Contribuição ao Sindicato</label>
                     <input type="text" class="form-control" name="contribuicao__sindicato" id="contribuicao__sindicato">
                 </div>
+                
+                <div class="col-md-3">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" name="telefone" id="telefone">
+                </div>
 
                 <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
 
@@ -234,9 +249,11 @@
                         <option>2-Restrita</option>
                     </select>
                 </div>
-                <input type="hidden" name="endereco" id="endereco">
+                
+                    <input type="hidden" name="endereco" id="endereco">
 
-<input type="hidden" name="bancario" id="bancario">
+                    <input type="hidden" name="bancario" id="bancario">
+            </div>
         </form>
 
         
@@ -263,8 +280,17 @@
                 </div>
                 </div>
             </div>
-    </div>
-    <script>
+            
+            
+     <script>
+         function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function() {
+              $('#foto').val(reader.result)
+            }
+            reader.readAsDataURL(file);
+          }
         $(document).ready(function(){
             var empresa = $('#empresa').val()
             $.ajax({
@@ -343,6 +369,8 @@
            }
             function campos(data) {
                 $('#nome').val(data.esnome)
+                $('#foto').val(data.esfoto)
+                $('#telefone').val(data.estelefone)
                 $('#cnpj_mf').val(data.escnpj)
                 $('#dataregistro').val(data.esdataregitro)
                 $('#cep').val(data.escep)

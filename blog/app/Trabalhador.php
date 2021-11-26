@@ -55,9 +55,10 @@ class Trabalhador extends Model
                 $user = auth()->user();
                 if ($user->hasPermissionTo('admin')) {
                     $query->where('tsnome', 'like', '%'.$id.'%') 
-                    ->orWhere('tscpf', 'like', '%'.$id.'%')
-                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                    ->orWhere('tscpf',$id)
+                    ->orWhere('tsmatricula',$id)
                     ->orWhere('trabalhadors.id',$id);
+                    
                 }else{
                     $query->where([
                         ['trabalhadors.tsnome',$id],
@@ -78,7 +79,7 @@ class Trabalhador extends Model
                 }
                
             })
-            ->first();
+            ->get();
     }
     public function lista()
     {
@@ -104,6 +105,7 @@ class Trabalhador extends Model
         return Trabalhador::where('id', $id)
         ->update([
             'tsnome'=>$dados['nome__completo'],
+            'tsfoto'=>$dados['foto'],
             'tscpf'=>$dados['cpf'],
             'tsmatricula'=>$dados['matricula'],
             'tsmae'=>$dados['nome__mae'],

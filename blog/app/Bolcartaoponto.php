@@ -38,7 +38,7 @@ class Bolcartaoponto extends Model
             'trabalhadors.*', 
             'bolcartaopontos.*', 
             )
-        ->where('lancamentotabelas.id', $id)
+        // ->where('lancamentotabelas.id', $id)
         ->where(function($query) use ($id){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {

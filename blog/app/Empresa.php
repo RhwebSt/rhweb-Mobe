@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\DB;
 class Empresa extends Model
 {
     protected $fillable = [
-        'esnome','escnpj','esdataregitro','esresponsavel','esemail','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
+        'esnome','escnpj','esfoto','estelefone','esdataregitro','esresponsavel','esemail','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
     ];
     public function cadastro($dados)
     {
        return Empresa::create([
             'esnome'=>$dados['nome'],
+            'esfoto'=>$dados['foto'],
+            'estelefone'=>$dados['telefone'],
             'escnpj'=>$dados['cnpj_mf'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],
@@ -28,6 +30,7 @@ class Empresa extends Model
     }
     public function first($id)
     {
+        
        return DB::table('empresas')
             ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
             ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
@@ -36,8 +39,35 @@ class Empresa extends Model
                 'enderecos.*',
                 'valores_rublicas.*',
             )
-            ->where('esnome', $id)
-            ->orWhere('empresas.id', $id)
+            ->where(function($query) use ($id){
+                $user = auth()->user();
+                if ($user->hasPermissionTo('admin')) {
+                    $query->where('empresas.esnome',$id)
+                    ->orWhere('empresas.escnpj',$id)
+                    ->orWhere('empresas.escnae',$id)
+                    ->orWhere('empresas.escodigomunicipio',$id)
+                    ->orWhere('empresas.id',$id);
+                }else{
+                    $query->where([
+                        ['empresas.esnome',$id],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escnpj',$id],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escnae',$id],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escodigomunicipio',$id],
+                        ['empresas.id', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['empresas.id',$id],
+                        ['empresas.id', $user->empresa]
+                    ]);
+                }
+            })
+           
             ->first();
     }
     public function usuario($id)
@@ -59,6 +89,8 @@ class Empresa extends Model
         return Empresa::where('id', $id)
         ->update([
             'esnome'=>$dados['nome'],
+            'esfoto'=>$dados['foto'],
+            'estelefone'=>$dados['telefone'],
             'escnpj'=>$dados['cnpj_mf'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],

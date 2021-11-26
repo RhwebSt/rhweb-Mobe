@@ -27,7 +27,7 @@ class UserController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $users = $user->first('jose');
+        // $users = $user->first('jose');
         return view('usuarios.index',compact('user'));
     }
 
@@ -40,6 +40,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $request->validate([
+            'name' => 'required|unique:users',
+            'senha'=>'required|min:6',
+            'nome__completo'=>'required',
+            'empresa'=>'required|min:1',
+        ],[
+            'nome__completo.required'=>'Campo não pode esta vazio!',
+            'name.required'=>'Campo não pode esta vazio!',
+            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
+            'senha.required'=>'Campo não pode esta vazio!',
+            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
+            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
+            
+        ]);
         $user = new User;
         $users = $user->cadastro($dados);
         if ($users) {
@@ -91,6 +105,19 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'usuario' => 'required',
+            'senha'=>'required|min:6',
+            'nome__completo'=>'required',
+            'empresa'=>'required|min:1',
+        ],[
+            'nome__completo.required'=>'Campo não pode esta vazio!',
+            'usuario.required'=>'Campo não pode esta vazio!',
+            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
+            'senha.required'=>'Campo não pode esta vazio!',
+            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
+            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
+        ]);
         $user = new User;
         $users = $user->editar($dados,$id);
         if ($users) {

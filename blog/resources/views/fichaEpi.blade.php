@@ -12,6 +12,14 @@
         body{
             font-family:sans-serif;
         }
+        
+        .uppercase{
+            text-transform: uppercase;
+        }
+        
+        .capitalize{
+            text-transform: capitalize;
+        }
 
         .border-left{
             border-left: 1px solid;
@@ -151,7 +159,7 @@
 
         <table>
             <tr>
-                <td rowspan="6"><img class="logo" src="https://lh3.googleusercontent.com/proxy/7XVxRZ-bvU9WJtieivDc5c4XXjoX-XcEZXdZ1X5kJpoN8vEGcSO-_p-_ikG1YW9JLmboS3Zomxnci0MLDfXrqIQevO9o9w" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
+                <td rowspan="6"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
             </tr>
 
             <tr>
@@ -167,7 +175,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
                 
             </tr>
 
@@ -176,7 +184,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
+                <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
                 
             </tr>
 
@@ -199,7 +207,7 @@
             <h1 class="text-center font text-bold titulo" >Termo de Compromisso</h1>
         <table>
             <tr>
-                <td><p>Eu.......................................................................................................................................................... declaro sob minha inteira responsablidade a guarda e conservação dos equipamentos de proteção individual constante nesta ficha-controle e uniforme. Assumo também a responsabilidade de devolvê-los integralmente ou parcialmente, quando solicitado, ou por ocasião de eventual desligamento do quadro de associados. Também estou ciente que, na eventualidade de danificar ou extraviar o equipamento por ato doloso, estarei sujeito a desconto do valor em minha folha de pagamento. Também me comprometo a utilizá-lo de forma correta e de acordo com as intruções de treinamento referentes ao uso correto, guarda, conservação e higienização dos EPI, recebida na presente data, fornecida pela <strong> {{$empresas->esnome}}</strong>, também estou ciente que a não utilização dos mesmos em minha atividade profissionais, é ato faltoso e passível de punições legais e disciplinares</p></td>
+                <td><p>Eu.......................................................................................................................................................... declaro sob minha inteira responsablidade a guarda e conservação dos equipamentos de proteção individual constante nesta ficha-controle e uniforme. Assumo também a responsabilidade de devolvê-los integralmente ou parcialmente, quando solicitado, ou por ocasião de eventual desligamento do quadro de associados. Também estou ciente que, na eventualidade de danificar ou extraviar o equipamento por ato doloso, estarei sujeito a desconto do valor em minha folha de pagamento. Também me comprometo a utilizá-lo de forma correta e de acordo com as intruções de treinamento referentes ao uso correto, guarda, conservação e higienização dos EPI, recebida na presente data, fornecida pela <strong class="uppercase"> {{$empresas->esnome}}</strong>, também estou ciente que a não utilização dos mesmos em minha atividade profissionais, é ato faltoso e passível de punições legais e disciplinares</p></td>
             </tr>
            
         </table>
@@ -212,12 +220,12 @@
 
             <table>
                 <tr>
-                    <td class="border-left border-top border-bottom small__font nome__trab text-bold"> Nome do Trabalhador</td>
+                    <td class="border-left border-top border-bottom small__font nome__trab text-bold capitalize"> Nome do Trabalhador</td>
                     <td class="border-right border-left border-bottom border-top small__font matric text-center text-bold">Matrícula</td>
                 </tr>
 
                 <tr>
-                    <td class="border-left border-bottom small__font nome__trab">{{$trabalhadors->tsnome}}</td>
+                    <td class="border-left border-bottom small__font nome__trab capitalize">{{$trabalhadors->tsnome}}</td>
                     <td class="border-right border-left border-bottom small__font matric text-center"> {{$trabalhadors->tsmatricula}}</td>
                 </tr>
             </table>
@@ -239,7 +247,7 @@
             <table>
                 <tr>
                     <td class="small__font text-bold border-top border-bottom border-left text-center quant">Quant.</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center descr">Descrição</td>
+                    <td class="small__font text-bold border-top border-bottom border-left text-center descr capitalize">Descrição</td>
                     <td class="small__font text-bold border-top border-bottom border-left text-center tm">TM</td>
                     <td class="small__font text-bold border-top border-bottom border-left text-center ca">CA</td>
                     <td class="small__font text-bold border-top border-bottom border-left text-center data">Dta.Rec</td>
@@ -248,9 +256,9 @@
                 </tr>
 
                 <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant">1</td>
+                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
                     <td class="small__font text-bold border-bottom border-left descr">Camiseta</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm">EGG</td>
+                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
                     <td class="small__font text-bold border-bottom border-left text-center ca"></td>
                     <td class="small__font text-bold border-bottom border-left text-center data"></td>
                     <td class="small__font text-bold border-bottom border-left text-center data"></td>

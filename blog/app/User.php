@@ -51,7 +51,7 @@ class User extends Authenticatable
     public function cadastro($dados)
     {
         return User::create([
-            'name'=>$dados['usuario'],
+            'name'=>$dados['name'],
             'email'=>$dados['email'],
             // 'usuario'=>$dados['usuario'],
             'password'=> Hash::make($dados['senha']),
@@ -68,7 +68,7 @@ class User extends Authenticatable
     {
         return User::where('id', $id)
         ->update([
-            'name'=>$dados['usuario'],
+            'name'=>$dados['name'],
             'email'=>$dados['email'],
             // 'usuario'=>$dados['usuario'],
             'password'=> Hash::make($dados['senha']),
