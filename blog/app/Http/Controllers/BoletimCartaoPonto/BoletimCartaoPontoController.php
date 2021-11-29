@@ -45,10 +45,31 @@ class BoletimCartaoPontoController extends Controller
         $id = $dados['lancamento'];
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
+            'trabalhador'=>'required',
             'matricula'=>'required|min:4',
+            'entrada1'=>'max:5',
+            'saida'=>'max:5',
+            'entrada2'=>'max:5',
+            'saida2'=>'max:5',
+            'entrada3'=>'max:5',
+            'saida3'=>'max:5',
+            'entrada4'=>'max:5',
+            'saida4'=>'max:5',
+            'total'=>'max:5|required'
 
         ],[
+            'total.required'=>'O campo não pode esta vazio!',
+            'total.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
             'nome__completo.required'=>'O campo não pode esta vazio!',
+            'trabalhador.required'=>'O campo não pode esta vazio!',
             'matricula.required'=>'O campo não pode esta vazio!',
             'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
@@ -111,10 +132,31 @@ class BoletimCartaoPontoController extends Controller
      
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
+            'trabalhador'=>'required',
             'matricula'=>'required|min:4',
+            'entrada1'=>'max:5',
+            'saida'=>'max:5',
+            'entrada2'=>'max:5',
+            'saida2'=>'max:5',
+            'entrada3'=>'max:5',
+            'saida3'=>'max:5',
+            'entrada4'=>'max:5',
+            'saida4'=>'max:5',
+            'total'=>'max:5|required'
 
         ],[
+            'total.required'=>'O campo não pode esta vazio!',
+            'total.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
+            'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
             'nome__completo.required'=>'O campo não pode esta vazio!',
+            'trabalhador.required'=>'O campo não pode esta vazio!',
             'matricula.required'=>'O campo não pode esta vazio!',
             'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);

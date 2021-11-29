@@ -495,11 +495,13 @@ $("#form").validate({
         situacao__contrato:{
             required:true
         },
-        // data__afastamento:{
-        //     required:true
-        // },
+        data__afastamento:{
+            // required:true,
+            maxlength:10
+        },
         data_nascimento:{
-            required:true
+            required:true,
+            maxlength:10
         },
         pais__nascimento:{
             required:true
@@ -508,10 +510,68 @@ $("#form").validate({
             required:true
         },
         nome__mae:{
+            required:true
+        },
+        data__admissao:{
+            required:true,
+            maxlength:10
+        },
+        pix:{
+            maxlength:50
+        },
+        liboletim:{
+            required:true,
+            maxlength:4
+        },
+        data:{
+            required:true,
+            maxlength:10
+        },
+        num__trabalhador:{
+            required:true,
+            range: [1, 10]
+        },
+        licodigo:{
+            required:true,
+            maxlength:4
+        },
+        rubrica:{
+            required:true,
+        },
+        quantidade:{
             required:true
         }
     },
     messages:{
+        quantidade:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        rubrica:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        licodigo:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 4 caracteres'
+        },
+        num__trabalhador:{
+            required:"O campo nome não pode esta vazio!",
+            range:'O campo tem que conter uma quantidade entre 1 a 10!'
+        },
+        liboletim:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 4 caracteres'
+        },
+        data:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 10 caracteres'
+        },
+        pix:{
+            maxlength:'O campo não pode ter mas de 50 caracteres'
+        },
+        data__admissao:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 10 caracteres'
+        },
         nome__mae:{
             required:"O campo nome não pode esta vazio!",
         },
@@ -523,10 +583,12 @@ $("#form").validate({
         },
         data_nascimento:{
             required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mas de 10 caracteres'
         },
-        // data__afastamento:{
-        //     required:"O campo nome não pode esta vazio!",
-        // },
+        data__afastamento:{
+            
+            maxlength:'O campo não pode ter mas de 10 caracteres'
+        },
         situacao__contrato:{
             required:"O campo nome não pode esta vazio!",
         },

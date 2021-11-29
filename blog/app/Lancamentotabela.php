@@ -22,6 +22,10 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where('liboletim',$id)->first();
     }
+    public function listaget($id)
+    {
+        return Lancamentotabela::where('tomador',$id)->get();
+    }
     public function editar($dados,$id)
     {
         return Lancamentotabela::where('id', $id)
@@ -33,6 +37,6 @@ class Lancamentotabela extends Model
     }
     public function deletar($id)
     {
-      return Lancamentotabela::where('id', $id)->delete();
+      return Lancamentotabela::where('id', $id)->orWhere('tomador',$id)->delete();
     }
 }

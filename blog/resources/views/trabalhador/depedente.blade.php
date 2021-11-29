@@ -12,19 +12,19 @@
                         </div>
                     @elseif($error === 'editfalse')
                         <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi porssivél atualizar os dados!</strong>
+                            <strong>Não foi possível atualizar os dados!</strong>
                         </div>
                     @elseif($error === 'deletatrue')
                         <div class="alert alert-success mt-2 alert-block">
-                            <strong>Registro deletador com sucesso!</strong>
+                            <strong>Registro deletado com sucesso!</strong>
                         </div>
                     @elseif($error === 'cadastratrue')
                         <div class="alert alert-success mt-2 alert-block">
-                            <strong>Cadastrador realizada com sucesso!</strong>
+                            <strong>Cadastrado realizada com sucesso!</strong>
                         </div>
                     @elseif($error === 'cadastrafalse')
                         <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi porssivél realizar o cadastro !</strong>
+                            <strong>Não foi possível realizar o cadastro !</strong>
                         </div>
                     @endif
                     @endforeach
@@ -32,20 +32,20 @@
                 <form action="" id="formdelete" method="post">
                     @csrf
                     @method('delete')
-                    <button type="submit" id="deletar" disabled class="btn btn-outline-dark">Deleta</button>
+                    <button type="submit" id="deletar" disabled class="btn botao">Deleta</button>
                 </form>   
               <form class="row g-3 mt-1 mb-3"  action="{{ route('depedente.store') }}" method="POST" id="form">
 
                 <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
     
-                  <button type="submit" id="incluir" class="btn btn-primary">Incluir</button>
-            <button type="submit" id="atualizar" disabled class="btn btn-outline-dark">Atualizar</button>
+                  <button type="submit" id="incluir" class="btn botao">Incluir</button>
+            <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
                       <!-- <button type="button" class="btn btn-outline-dark ms-2  col-md-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                         </button> -->
                   
-                      <a class="btn btn-outline-light ms-2 col-md-1" href="#" style="background-color: #2A90CB; color: #f0f0f0" role="button">Sair</a>
+                      <a class="btn botao" href="#" style="background-color: #2A90CB; color: #f0f0f0" role="button">Sair</a>
                   </div>
               </div>
               @csrf

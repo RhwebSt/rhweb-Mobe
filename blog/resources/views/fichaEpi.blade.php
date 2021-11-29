@@ -13,6 +13,14 @@
             font-family:sans-serif;
         }
         
+        table{
+            border-collapse: collapse;
+        }
+        
+        td{
+            padding-left: 5px;
+        }
+        
         .uppercase{
             text-transform: uppercase;
         }
@@ -88,7 +96,7 @@
         }
 
         .nome__trab{
-            width:600px;
+            width:598px;
         }
 
         .matric{
@@ -96,7 +104,7 @@
         }
 
         .doc__padrao{
-            width:229.5px
+            width:228.5px;
         }
 
         .cbo{
@@ -108,11 +116,11 @@
         }
 
         .descr{
-            width:215px;
+            width:225px;
         }
 
         .assina{
-            width:200px;
+            width:181px;
         }
 
         .data{
@@ -232,15 +240,15 @@
 
             <table>
                 <tr>
-                    <td class="border-left border-bottom border-top border-right small__font text-bold doc__padrao">CPF: {{$trabalhadors->tscpf}}</td>
-                    <td class="border-left border-bottom border-top border-right small__font text-bold doc__padrao">PIS:  {{$trabalhadors->dspis}}</td>
-                    <td class="border-left border-bottom border-top border-right small__font text-bold doc__padrao">CTPS:{{$trabalhadors->dsctps}}</td>
+                    <td class="border-left border-top border-right small__font text-bold doc__padrao">CPF: {{$trabalhadors->tscpf}}</td>
+                    <td class="border-left border-top border-right small__font text-bold doc__padrao">PIS:  {{$trabalhadors->dspis}}</td>
+                    <td class="border-left border-top border-right small__font text-bold doc__padrao">CTPS:{{$trabalhadors->dsctps}}</td>
                 </tr>
             </table>
 
             <table>
                 <tr>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold cbo">CBO: {{$trabalhadors->cbo}}</td>
+                    <td class="border-left border-top border-right small__font text-bold cbo">CBO: {{$trabalhadors->cbo}}</td>
                 </tr>
             </table>
 

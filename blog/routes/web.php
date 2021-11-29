@@ -37,6 +37,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
     Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);
+    Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');

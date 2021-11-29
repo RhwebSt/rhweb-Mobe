@@ -42,9 +42,9 @@
                     <label for="comfirmesenha" class="form-label">Confirme sua Senha</label>
                     <input type="password" class="form-control form-control-sm" name="comfirmesenha" id="comfirmesenha" >
                 </div>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
-                <a href="#" class="btn  btn-block mt-3" style="background-color:#1750ee; Color: #fefeff;">Consultar</a>
-                <a href="#" class="btn  btn-block mt-3" style="background-color:#1750ee; Color: #fefeff;">Sair</a>
+                <button type="submit" class="btn botao">Cadastrar</button>
+                <a href="#" class="btn botao btn-block mt-3">Consultar</a>
+                <a href="#" class="btn botao btn-block mt-3">Sair</a>
               </form>
               
             </div>

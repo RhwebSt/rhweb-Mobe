@@ -11,19 +11,19 @@
                 </div>
              @elseif($error === 'editfalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
+                    <strong>Não foi possível atualizar os dados!</strong>
                 </div>
             @elseif($error === 'deletatrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
+                    <strong>Registro deletado com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastratrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
+                    <strong>Cadastrado realizada com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastrafalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                    <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
             @endif
             @endforeach
@@ -37,26 +37,34 @@
                 <div class="row">
                   <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
                      
-                      <button type="submit" id="incluir" disabled class="btn btn-primary" >
+                      <button type="submit" id="incluir" disabled class="btn botao" >
                       Incluir
                         </button>
-                        <button type="submit" id="atualizar" disabled class="btn btn-primary" >
+                        <button type="submit" id="atualizar" disabled class="btn botao" >
                         Editar
                         </button>
-                      <!-- <button type="button" id="excluir" disabled class="btn ms-2  col-md-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
+                      <!-- <button type="button" id="excluir" disabled class="btn ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
                           Excluir
                         </button> -->
                         
                      
-                      <a class="btn btn-primary" href="{{route('home.index')}}"  role="button">Sair</a>
+                      <a class="btn botao" href="{{route('home.index')}}"  role="button">Sair</a>
                   </div>
               </div>
               <h5 class="card-title text-center fs-3 ">Comissionado</h5>
                 
 
+
                 <div class="col-md-6">
-                    <label for="nome__trabalhador" class="form-label">Nome do Trabalhador</label>
-                    <input type="text" class="form-control" name="nome__trabalhador" id="nome__trabalhador">
+                    <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
+                    <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
+                    <datalist id="datalistOptions">
+                        <!-- <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago"> -->
+                    </datalist>
                 </div>
 
                 <div class="col-md-3">
@@ -68,10 +76,19 @@
                   <label for="indice" class="form-label">Indíce %</label>
                   <input type="text" class="form-control" name="indice" value="" id="indice">
                 </div>
+                
                 <div class="col-md-6">
-                  <label for="nome_tomador" class="form-label">Tomador</label>
-                  <input type="text" class="form-control"  name="nome_tomador" value="" id="nome_tomador">
+                    <label for="exampleDataList" class="form-label">Tomador</label>
+                    <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
+                    <datalist id="datalistOptions">
+                        <!-- <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago"> -->
+                    </datalist>
                 </div>
+                
               </form> 
               
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

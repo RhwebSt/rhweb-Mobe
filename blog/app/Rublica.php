@@ -31,10 +31,10 @@ class Rublica extends Model
     }
     public function first($id)
     {
-        return Rublica::where('rsrublica',$id)->first();
+        return Rublica::where('id',$id)->get();
     }
     public function listarublica($id)
     {
-        return Rublica::where('rsrublica','like','%'.$id.'%')->get();
+        return Rublica::where('rsrublica','like','%'.$id.'%')->orWhere('rsdescricao','like','%'.$id.'%')->get();
     }
 }

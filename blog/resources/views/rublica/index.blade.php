@@ -9,19 +9,19 @@
                 </div>
              @elseif($error === 'editfalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
+                    <strong>Não foi possível atualizar os dados!</strong>
                 </div>
             @elseif($error === 'deletatrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
+                    <strong>Registro deletado com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastratrue')
                 <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
+                    <strong>Cadastrado realizada com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastrafalse')
                 <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                    <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
             @endif
             @endforeach
@@ -32,23 +32,22 @@
         @csrf
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn btn-primary" value="Validar!">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn btn-primary">Atualizar</button>
-                        <a class="btn col-md-1 text-white botao table-hover" href="#" role="button">Sair</a>
+                    <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
+                            <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
+                        <a class="btn botao" href="#" role="button">Sair</a>
                     </div>
                 </div>
                 
-                <div class="col-md-6 table-bordered border-white d-flex mt-5 mb-4">
-                    <label for="pesquisa" class="form-label"></label>
-                    <input class="pesquisar form-control  me-1" list="datalistOptions" name="pesquisa" id="pesquisa" >
-                        <datalist id="datalistOptions">
-                            <option value="San Francisco">
-                            <option value="New York">
-                            <option value="Seattle">
-                            <option value="Los Angeles">
-                            <option value="Chicago">
-                        </datalist>
-                    <button class="btn" type="submit" style="background-color:#2541B2; Color: #fefeff;">Pesquisar</button>
+                <div class="col-md-5 mt-5 mb-4">
+                    <label for="exampleDataList" class="form-label">Buscar</label>
+                    <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
+                    <datalist id="datalistOptions">
+                        <!-- <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago"> -->
+                    </datalist>
                 </div>
 
                 <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>

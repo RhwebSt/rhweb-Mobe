@@ -8,12 +8,12 @@
 
             <div class="row">
                 <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Incluir</a>
-                    <button type="button" class="btn ms-2 col-md-1 text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                    <a class="btn botao col-md-1 " href="#" role="button" >Incluir</a>
+                    <button type="button" class="btn botao col-md-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                         Excluir
                       </button>
-                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Editar</a>
-                    <a class="btn ms-2 col-md-1 text-white btn-primary " href="#" role="button" >Sair</a>
+                    <a class="btn botao col-md-1 " href="#" role="button" >Editar</a>
+                    <a class="btn botao col-md-1 " href="#" role="button" >Sair</a>
                 </div>
             </div>
                 <h1 class="container text-center fs-4 fw-bold">Cadastro de Empresas</h1>

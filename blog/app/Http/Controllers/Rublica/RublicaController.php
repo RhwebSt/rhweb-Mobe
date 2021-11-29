@@ -57,10 +57,10 @@ class RublicaController extends Controller
     public function show($id)
     {
         $rublica = new Rublica;
-        $rublicas = $rublica->first($id);
+        $rublicas = $rublica->listarublica($id);
         return response()->json($rublicas);
     }
-    public function lista($id)
+    public function unic($id)
     {
         $rublica = new Rublica;
         $rublicas = $rublica->first($id);

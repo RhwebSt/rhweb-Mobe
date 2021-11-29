@@ -41,6 +41,7 @@ class CadastroCartaoPontoController extends Controller
         $dados = $request->all();
         $request->validate([
             'nome__completo' => 'required',
+            'tomador'=>'required',
             'liboletim'=>'required|numeric|unique:lancamentotabelas',
             'matricula'=>'required|max:6',
             'num__trabalhador'=>'numeric',
@@ -48,6 +49,7 @@ class CadastroCartaoPontoController extends Controller
             'data'=>'required'
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',
+            'tomador.required'=>'Campo não pode esta vazio!',
             'matricula.required'=>'Campo não pode esta vazio!',
             'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
             'num__trabalhador.required'=>'Campo não pode esta vazio!',

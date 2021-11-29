@@ -46,7 +46,7 @@ $('#indice').mask('0000')
 $('#folhartransporte').mask('000,00', {reverse: true});
 $('#folharalim').mask('000,00', {reverse: true});
 
-$('#cbo').mask('00000000000000',{reverse:true});
+
 $('#irrf').mask('00000000000000',{reverse:true});
 $('#sf').mask('00000000000000',{reverse:true});
 $('#ctps').mask('00000000000000',{reverse:true});
@@ -60,4 +60,3 @@ $('#nro__boletins').mask('000000000',{reverse:true});
 $('#nro__folha').mask('000000000',{reverse:true});
 $('#nro__cartaoponto').mask('000000000',{reverse:true});
 $('#seq__esocial').mask('000000000',{reverse:true});
-$('#cbo').mask('000000000',{reverse:true});

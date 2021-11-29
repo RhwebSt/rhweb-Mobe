@@ -8,6 +8,7 @@
         <!-- <title>Cadastro Trabalhador</title> -->
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
         <link rel="stylesheet" href="{{url('/css/style.css')}}">
@@ -17,21 +18,21 @@
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
             rel="stylesheet">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-          
+         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        
+         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist
 /additional-methods.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
         
 
     </head>
     <style>
         form input[type="text"] {
             text-transform: uppercase !important;
-            color:black !important
+            color:black !important,
+            font-weight: bold !important;
         }
     </style>
     <body >
@@ -60,10 +61,10 @@
                           <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('user.create')}}">Cadastro de Usuário</a></li>
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Acesso</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('user.create')}}">Cadastro de Acesso</a></li>
+                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
                       @endcan
-                      <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionador</a></li>
+                      <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -191,7 +192,7 @@
 
    @yield('conteine')
 
-    <footer class="" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
+    <footer class="mt-5" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
         <p class="text-center p-4  col-md-12">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
     </main>

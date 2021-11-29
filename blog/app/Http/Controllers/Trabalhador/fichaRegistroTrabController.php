@@ -16,7 +16,6 @@ class fichaRegistroTrabController extends Controller
         $empresa = new Empresa;
         $depedente = new Dependente;
         $trabalhadors = $trabalhador->first($id);
-        
         if ($trabalhadors) {
             $empresas = $empresa->first($trabalhadors->empresa);
             $depedentes = $depedente->lista($trabalhadors->id);

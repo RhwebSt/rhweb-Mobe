@@ -16,6 +16,9 @@ use App\TaxaTrabalhador;
 use App\IncideFolhar;
 use App\IndiceFatura;
 use App\TabelaPreco;
+use App\Bolcartaoponto;
+use App\Lancamentorublica;
+use App\Lancamentotabela;
 class TomadorController extends Controller
 {
     /**
@@ -51,7 +54,25 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
+        $request->validate([
+            'nome__completo' => 'required|max:100',
+            // 'matricula'=>'required|max:6',
+            // 'num__trabalhador'=>'numeric',
+            // 'num__trabalhador'=>'required',
+            // 'data'=>'required'
+        ],
+        // [
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'matricula.required'=>'Campo não pode esta vazio!',
+        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
+        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+        //     'liboletim.required'=>'Campo não pode esta vazio!',
+        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
+        //     'data.required'=>'O campo não pode esta vazio!'
+            
+        // ]
+        );
         $tomador = new Tomador;
         $taxa = new Taxa;
         $endereco = new Endereco;
@@ -173,33 +194,38 @@ class TomadorController extends Controller
         $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
-        $taxatrabalhador = new TaxaTrabalhador;
+        $incidefolhar = new IncideFolhar;
+        // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
         $tabelapreco = new TabelaPreco;
-       $campoendereco = 'tomador';
-       $campobacario = 'tomador';
-       $bancarios = $bancario->first($id,$campobacario);
-    //    dd($bancarios);
-       $exbancarios = $bancario->deletar($bancarios->biid);
 
+        $bolcartaoponto = new Bolcartaoponto;
+        $lancamentorublica = new Lancamentorublica;
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentotabelas = $lancamentotabela->listaget($id);
+        foreach ($lancamentotabelas as $key => $value) {
+            $bolcartaopontos = $bolcartaoponto->deletar($value->id);
+            $lancamentorublicas = $lancamentorublica->deletar($value->id);
+        }
+        $campoendereco = 'tomador';
+        $campobacario = 'tomador';
+        $lancamentotabelas = $lancamentotabela->deletar($id);
+        $bancarios = $bancario->first($id,$campobacario);
+        $exbancarios = $bancario->deletar($bancarios->biid);
         $tabelaprecos = $tabelapreco->deletar($id);
-
         $enderecos = $endereco->first($id,$campoendereco); 
-        // dd($enderecos);
         $exenderecos = $endereco->deletar($enderecos->eiid); 
-
-       
-
         $retencaofaturas = $retencaofatura->deletar($id);
         $cartaoponto = $cartaoponto->deletar($id);
         $parametrosefips = $parametrosefip->deletar($id);
-        $taxatrabalhador = $taxatrabalhador->deletar($id);
+        // $taxatrabalhador = $taxatrabalhador->deletar($id);
         $indicefaturas = $indicefatura->deletar($id);
         $taxas = $taxa->deletar($id);
+        $incidefolhars = $incidefolhar->deletar($id);
         if ($exenderecos && $taxas
         && $exbancarios && $retencaofaturas && 
-        $cartaoponto && $parametrosefips && 
-        $taxatrabalhador && $indicefaturas) {
+        $cartaoponto && $parametrosefips && $incidefolhars &&
+         $indicefaturas) {
             $tomadors = $tomador->deletar($id);
             $condicao = 'deletatrue';
         }else{

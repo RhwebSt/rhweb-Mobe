@@ -113,6 +113,12 @@ input:hover{
     border: var(--img-trab-color) ;
 }
 
+.logfoto{
+    width:100px; 
+    height: 100px;
+    border: var(--img-trab-color) ;
+}
+
 
 
 

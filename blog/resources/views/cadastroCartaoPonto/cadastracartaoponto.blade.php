@@ -2,8 +2,7 @@
 @section('conteine')
 <div class="container">
         <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
-       
-        @error('true')
+          @error('true')
             <div class="alert alert-success"  role="alert">
                 {{$message}}
             </div>
@@ -25,6 +24,7 @@
        
                         <button type="submit" id="incluir" class="btn botao">Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
+                        <button type="submit" id="atualizar" disabled class="btn botao">Relatório</button>
                         <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
@@ -32,68 +32,115 @@
                   </div>
               </div>
             <input type="hidden" name="lancamento" value="{{$id}}"> 
-            <input type="hidden" name="trabalhador" id="trabalhador">          
-            <div class="col-md-10 input mt-5">
-                <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input type="text" class="form-control  @error('nome__completo') is-invalid @enderror" name="nome__completo" value="" id="nome__completo">
-                @error('nome__completo')
-                    <span class="">{{ $message }}</span>
+            <input type="hidden" name="trabalhador" id="trabalhador">
+            
+           
+            
+            
+            <div class="col-md-10 mt-5 input">
+                <label for="nome__completo" class="form-label">Nome Trabalhador</label>
+                <input class="pesquisa form-control text-dark fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" id="nome__completo">
+                <datalist id="datalistOptions">
+                   
+                </datalist>
+                 @error('nome__completo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                @error('trabalhador')
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            
+            
             <div class="col-md-2 input mt-5">
                 <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="matricula" value="" id="matricula">
+                <input type="text" class="form-control text-dark fw-bold @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula">
                 @error('matricula')
-                    <span class="">{{ $message }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <!-- <div class="col-md-2 input">
                 <label for="data" class="form-label">Data</label>
                 <input type="date" class="form-control " name="data" value="" id="data">
             </div> -->
+            
+            <h1 class="text-center fs-5 fw-bold">Diurno</h1>
+            
             <div class="col-md-3 input">
                 <label for="entrada1" class="form-label">Entrada</label>
-                <input type="time" class="form-control diaurno " name="entrada1" value="" id="entrada1">
+                <input type="time" class="form-control diaurno  @error('entrada1') is-invalid @enderror" name="entrada1" value="" id="entrada1">
+                <small class="mt-1">De (05:00 ás 12:00)</small>
+                @error('entrada1')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-3 input">
                 <label for="saida1" class="form-label">Saída</label>
-                <input type="time" class="form-control diaurno " name="saida" value="" id="saida">
+                <input type="time" class="form-control diaurno @error('saida') is-invalid @enderror" name="saida" value="" id="saida">
+                <small class="mt-1">De (05:00 ás 15:00)</small>
+                @error('saida')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-3 input">
                 <label for="entrada2" class="form-label">Entrada</label>
-                <input type="time" class="form-control diaurno " name="entrada2" value="" id="entrada2">
+                <input type="time" class="form-control diaurno @error('entrada2') is-invalid @enderror" name="entrada2" value="" id="entrada2">
+                <small class="mt-1">De (12:00 ás 22:00)</small>
+                @error('entrada2')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-3 input">
                 <label for="saida2" class="form-label">Saída</label>
-                <input type="time" class="form-control diaurno " name="saida2" value="" id="saida2">
+                <input type="time" class="form-control diaurno @error('saida2') is-invalid @enderror" name="saida2" value="" id="saida2">
+                <small class="mt-1">De (12:00 ás 22:00)</small>
+                @error('saida2')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             
-            <h1 class="text-center">Noturno</h1>
+            <h1 class="text-center fs-5 fw-bold">Noturno</h1>
             
             <div class="col-md-3 input">
                 <label for="entrada3" class="form-label">Entrada (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno " name="entrada3" value="" id="entrada3">
+                <input type="time" class="form-control adc__noturno @error('entrada3') is-invalid @enderror" name="entrada3" value="" id="entrada3">
+                <small class="mt-1">De (22:00 ás 03:00)</small>
+                @error('entrada3')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-3 input">
                 <label for="saida3" class="form-label">Saída (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno " name="saida3" value="" id="saida3">
+                <input type="time" class="form-control adc__noturno  @error('saida3') is-invalid @enderror" name="saida3" value="" id="saida3">
+                <small class="fs-6">De (03:00 ás 05:00)</small>
+                @error('saida3')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             
             <div class="col-md-3 input">
                 <label for="entrada4" class="form-label">Entrada (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno " name="entrada4" value="" id="entrada4">
+                <input type="time" class="form-control adc__noturno @error('entrada4') is-invalid @enderror" name="entrada4" value="" id="entrada4">
+                <small class="fs-6">De (00:00 ás 05:00)</small>
+                @error('entrada4')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-3 input">
                 <label for="saida5" class="form-label">Saída (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno " name="saida4" value="" id="saida4">
+                <input type="time" class="form-control adc__noturno @error('saida4') is-invalid @enderror" name="saida4" value="" id="saida4">
+                <small class="fs-6">De (00:00 ás 05:00)</small>
+                @error('saida4')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
-            <div class="col-md-2 input">
+            <div class="col-md-3 input">
                 <label for="horas_normais" class="form-label">Horas Normais </label>
                 <input type="text" class="form-control" name="horas_normais" value="" id="horas_normais">
             </div>
@@ -112,14 +159,29 @@
                 <label for="adc__noturno" class="form-label">ADC.NOT</label>
                 <input type="text" class="form-control " name="adc__noturno" value="" id="adc__noturno">
             </div>
-            <div class="col-md-2 input">
+            <div class="col-md-3 input">
                 <label for="total" class="form-label">Total</label>
-                <input type="text" class="form-control " name="total" value="" id="total">
+                <input type="text" class="form-control @error('total') is-invalid @enderror" name="total" value="" id="total">
+                @error('total')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
         </form>
-
-        <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+        
+        
+        <ul class="nav nav-pills " id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation" style="background-color: #9098A2; border-radius:3px;">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;">Diurno</button>
+          </li>
+          <li class="nav-item ms-1" role="presentation" style="background-color: #9098A2; border-radius:3px;">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;">Noturno</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+              
+              <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
             <thead>
                 <th class="col text-white">Matricula</th>
                 <th colspan="2" class="col text-white">Nome</th>
@@ -127,14 +189,16 @@
                 <th class="col text-white">Saída</th>
                 <th class="col text-white">Entrada</th>
                 <th class="col text-white">Saída</th>
-                <th class="col text-white">Total</th>
                 <th class="col text-white">HRS 50%</th>
                 <th class="col text-white">HRS 100%</th>
-                <th class="col text-white">AD.NOT</th>
+                <th class="col text-white">Horas Normais</th>
+                <th class="col text-white">Total Geral</th>
             </thead>
             <tbody>
             @if(count($lista) > 0)
                 @foreach($lista as $listas)
+                @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
+                $listas->bsentradatarde && $listas->bssaidatarde)
                 <tr>
                 <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
                 <td class="bg-light text-black">{{$listas->tsnome}}</td>
@@ -143,13 +207,13 @@
                 <td class="bg-light text-black">{{$listas->bssaidamanhao}}</td>
                 <td class="bg-light text-black">{{$listas->bsentradatarde}}</td>
                 <td class="bg-light text-black">{{$listas->bssaidatarde}}</td>
-                <td class="bg-light text-black">{{$listas->bstotal}}</td>
                 <td class="bg-light text-black">{{$listas->bshoraex}}</td>
                 <td class="bg-light text-black">{{$listas->bshoraexcem}}</td>
-                <td class="bg-light text-black">{{$listas->bsadinortuno}}</td>
+                <td class="bg-light text-black">{{$listas->horas_normais}}</td>
+                <td class="bg-light text-black">{{$listas->bstotal}}</td>
                
                 </tr>
-               
+               @endif
                 @endforeach
                 @else
                     <tr>
@@ -170,6 +234,89 @@
                 </tr>
             </tfoot>
         </table>
+              
+              
+              
+              
+          </div>
+          
+  
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              
+              
+              
+              <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+            <thead>
+                <th class="col text-white">Matricula</th>
+                <th colspan="2" class="col text-white">Nome</th>
+                <th class="col text-white">Entrada</th>
+                <th class="col text-white">Saída</th>
+                <th class="col text-white">Entrada</th>
+                <th class="col text-white">Saída</th>
+                <th class="col text-white">HRS 50%</th>
+                <th class="col text-white">HRS 100%</th>
+                <th class="col text-white">AD.NOT</th>
+                <th class="col text-white">Total Geral</th>
+            </thead>
+            <tbody>
+            @if(count($lista) > 0)
+                @foreach($lista as $listas)
+                @if($listas->bsentradanoite && $listas->bsentradanoite ||
+                $listas->bsentradamadrugada && $listas->bssaidamadrugada)
+                <tr>
+                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
+                <td class="bg-light text-black">{{$listas->tsnome}}</td>
+                <td class="bg-light text-black"></td>
+                <td class="bg-light text-black">{{$listas->bsentradanoite}}</td>
+                <td class="bg-light text-black">{{$listas->bssaidanoite}}</td>
+                <td class="bg-light text-black">{{$listas->bsentradamadrugada}}</td>
+                <td class="bg-light text-black">{{$listas->bssaidamadrugada}}</td>
+                <td class="bg-light text-black">{{$listas->bshoraex}}</td>
+                <td class="bg-light text-black">{{$listas->bshoraexcem}}</td>
+                <td class="bg-light text-black">{{$listas->bsadinortuno}}</td>
+                <td class="bg-light text-black">{{$listas->bstotal}}</td>
+               
+                </tr>
+               @endif
+                @endforeach
+                @else
+                    <tr>
+                        <td colspan="11" class="bg-light text-black">
+                        <div class="alert alert-danger" role="alert">
+                            Não a registro cadastrado!
+                        </div>
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td colspan="11">
+                    {{ $lista->links() }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+              
+              
+          </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+       
+          
+        
+        
+
+        
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -192,58 +339,71 @@
           </div>
 </div>
 <script>
+    
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
-                if (dados) {
-                    $.ajax({
-                        url: "{{url('boletimcartaoponto')}}/"+dados,
-                        type: 'get',
-                        contentType: 'application/json',
-                        success: function(data) {
-                          if (data.id) {
-                            $('#form').attr('action', "{{ url('boletimcartaoponto')}}/"+data.id);
-                            // $('#formdelete').attr('action',"{{ url('boletimcartaoponto')}}/"+data.tomador)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            // $('#deletar').removeAttr( "disabled" )
-                            // $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                            $('#trabalhador').val(data.trabalhador)
-                            $('#matricula').val(data.tsmatricula)
-                            $('#entrada1').val(data.bsentradamanhao)
-                            $('#saida').val(data.bssaidamanhao)
-                            $('#entrada2').val(data.bsentradatarde)
-                            $('#saida2').val(data.bssaidatarde)
-
-                            $('#entrada3').val(data.bsentradanoite)
-                            $('#saida3').val(data.bssaidanoite)
-                            $('#entrada4').val(data.bsentradamadrugada)
-                            $('#saida4').val(data.bssaidamadrugada)
-                            $('#total').val(data.bstotal)
-                            $('#hora__extra').val(data.bshoraex)
-                            $('#horas__cem').val(data.bshoraexcem)
-                            $('#adc__noturno').val(data.bsadinortuno)
-                            $('#horas_normais').val(data.horas_normais)
-                          }else{
-                              trabalhador(dados)
-                          }
-                        }
-                    });
-                }
-            });
-            function trabalhador(dados) {
                 $.ajax({
                     url: "{{url('trabalhador')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
+                      let nome = ''
+                      if (data.length > 1) {
+                        data.forEach(element => {
+                          nome += `<option value="${element.tsnome}">`
+                          nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tscpf}">`
+                        });
+                        $('#datalistOptions').html(nome)
+                        
+                      }else if(data.length === 1){
+                        // data.forEach(element => {
+                        //   nome += `<option value="${element.tsnome}">`
+                        //   nome += `<option value="${element.tsmatricula}">`
+                        //   nome += `<option value="${element.tscpf}">`
+                        // });
+                        $('#datalistOptions').html(nome)
+                        $('#trabalhador').val(data[0].trabalhador)
+                        $('#matricula').val(data[0].tsmatricula)
+                        boletim(dados)
+                      }              
+                    }
+                });
+            });
+            function boletim(dados) {
+                $.ajax({
+                    url: "{{url('boletimcartaoponto')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
                         if (data.id) {
-                            $('#trabalhador').val(data.trabalhador)
-                            $('#matricula').val(data.tsmatricula)
+                        $('#form').attr('action', "{{ url('boletimcartaoponto')}}/"+data.id);
+                        // $('#formdelete').attr('action',"{{ url('boletimcartaoponto')}}/"+data.tomador)
+                        $('#incluir').attr('disabled','disabled')
+                        $('#atualizar').removeAttr( "disabled" )
+                        // $('#deletar').removeAttr( "disabled" )
+                        // $('#excluir').removeAttr( "disabled" )
+                        $('#method').val('PUT')
+                        $('#trabalhador').val(data.trabalhador)
+                        $('#matricula').val(data.tsmatricula)
+                        $('#entrada1').val(data.bsentradamanhao)
+                        $('#saida').val(data.bssaidamanhao)
+                        $('#entrada2').val(data.bsentradatarde)
+                        $('#saida2').val(data.bssaidatarde)
+                        $('#entrada3').val(data.bsentradanoite)
+                        $('#saida3').val(data.bssaidanoite)
+                        $('#entrada4').val(data.bsentradamadrugada)
+                        $('#saida4').val(data.bssaidamadrugada)
+                        $('#horas_normais').val(data.horas_normais)
+                        $('#total').val(data.bstotal)
+                        $('#hora__extra').val(data.bshoraex)
+                        $('#horas__cem').val(data.bshoraexcem)
+                        $('#adc__noturno').val(data.bsadinortuno)
                         }
                     }
                 });
             }
+           
     
             var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
             var data = new Date('{{$data}} 08:24:30');

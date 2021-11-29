@@ -19,7 +19,7 @@ class CreateCategoriasTable extends Migration
             $table->char('cssituacao',10)->nullable();
             $table->char('csadmissao', 10)->nullable();
             $table->char('csafastamento', 10)->nullable();
-            $table->char('cbo', 18)->nullable();
+            $table->char('cbo', 255)->nullable();
             $table->char('cssf', 18)->nullable();
             $table->char('csirrf', 18)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();

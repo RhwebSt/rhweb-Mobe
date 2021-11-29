@@ -31,6 +31,6 @@ class IncideFolhar extends Model
    }
    public function deletar($id)
    {
-     return IndiceFatura::where('tomador', $id)->delete();
+     return IncideFolhar::where('tomador', $id)->delete();
    }
 }

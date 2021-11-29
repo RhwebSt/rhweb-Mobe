@@ -61,6 +61,12 @@
                             </div>
                             
                             <div>
+                                <div class="col-md-5 mb-3">
+                                    <img class="trabfoto" id="trabfoto" src="" alt="logo do usuario">
+                                </div>
+                            </div>
+                            
+                            <div>
                                 <div class="mb-3 col-md-4">
                                   <label for="formFileSm" class="form-label">Logo da Empresa</label>
                                   <input class="form-control " type="file" name="file" onchange="encodeImageFileAsURL(this)">
@@ -288,6 +294,7 @@
             var reader = new FileReader();
             reader.onloadend = function() {
               $('#foto').val(reader.result)
+              $('#trabfoto').attr('src',reader.result)
             }
             reader.readAsDataURL(file);
           }
@@ -370,6 +377,7 @@
             function campos(data) {
                 $('#nome').val(data.esnome)
                 $('#foto').val(data.esfoto)
+                $('#trabfoto').attr('src',data.esfoto)
                 $('#telefone').val(data.estelefone)
                 $('#cnpj_mf').val(data.escnpj)
                 $('#dataregistro').val(data.esdataregitro)

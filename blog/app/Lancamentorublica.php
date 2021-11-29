@@ -36,29 +36,27 @@ class Lancamentorublica extends Model
         return DB::table('trabalhadors')
         ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
         ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        // ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
         ->select(
             'trabalhadors.*', 
             'lancamentorublicas.*', 
             )
-            ->where(function($query) use ($id){
-                $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%') 
-                    ->orWhere('lancamentorublicas.licodigo', 'like', '%'.$id.'%');
-                   
-                }else{
-                    $query->where([
-                        ['trabalhadors.tsnome',$id],
-                        ['trabalhadors.empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['lancamentorublicas.licodigo',$id],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ]);
-                }
-               
-            })
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                // $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%');
+                $query->where('lancamentorublicas.licodigo',$id)
+                ->orWhere('lancamentorublicas.id',$id);
+            }else{
+                $query->where([
+                    ['lancamentorublicas.licodigo',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])->orWhere([
+                    ['lancamentorublicas.id',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })
         ->first();
     }
     public function editar($dados,$id)
@@ -74,6 +72,6 @@ class Lancamentorublica extends Model
     }
     public function deletar($id)
     {
-      return Lancamentorublica::where('lancamento', $id)->delete();
+      return Lancamentorublica::where('id', $id)->orWhere('lancamento', $id)->delete();
     }
 }

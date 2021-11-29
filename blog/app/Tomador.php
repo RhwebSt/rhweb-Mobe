@@ -77,7 +77,7 @@ class Tomador extends Model
                 }
                
             })
-            ->first();
+            ->get();
     }
     public function editar($dados,$id)
     {

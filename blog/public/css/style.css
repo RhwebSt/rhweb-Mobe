@@ -2,5 +2,5 @@
     color:brown
 }
 form input[type="text"] {
-    text-transform: uppercase !important;
+    text-transform: capitalize;
 }
