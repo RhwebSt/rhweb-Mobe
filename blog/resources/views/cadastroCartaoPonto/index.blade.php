@@ -137,7 +137,7 @@
                                 $('#deletar').removeAttr( "disabled" )
                                 $('#excluir').removeAttr( "disabled" )
                                 $('#method').val('PUT')
-                                tomador(data.tomador)
+                                buscatomador(data.tomador)
                             }else{
                                 $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
                                 $('#incluir').removeAttr( "disabled" )
@@ -184,6 +184,20 @@
                   }
               });
             });
+            function buscatomador(dados) {
+              $.ajax({
+                  url: "{{url('tomador')}}/"+dados,
+                  type: 'get',
+                  contentType: 'application/json',
+                  success: function(data) {
+                    if (data.length === 1) {
+                      tomador(data[0])
+                      $('#nome__completo').val(data[0].tsnome)
+                    }
+                  }
+              })
+            }
+            
             function tomador(data) {
               $('#tomador').val(data.tomador)
               // $('#nome__completo').val(data.tsnome)

@@ -17,8 +17,10 @@ Route::resource('login','Login\\LoginController')->only(['store'])->names('login
 
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('ficharegitrotrab/{id}','Trabalhador\\fichaRegistroTrabController@ficha');
+    Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@ficha');
     Route::get('fichaepitrab/{id}','fichaEpi\\fichaEpiTrabController@ficha');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
+    Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget');
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');

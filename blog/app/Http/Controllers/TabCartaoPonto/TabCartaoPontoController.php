@@ -61,6 +61,8 @@ class TabCartaoPontoController extends Controller
             
         ]);
         $user = Auth::user(); 
+        $quantidade = $dados['num__trabalhador'];
+        $boletim = $dados['liboletim'];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
@@ -68,12 +70,12 @@ class TabCartaoPontoController extends Controller
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             $lista = $lancamentorublica->listacadastro($lancamentotabelas['id']);
             $id = $lancamentotabelas['id'];
-            return view('tabelaCadastro.index',compact('user','id','lista'));
+            return view('tabelaCadastro.index',compact('user','boletim','quantidade','id','lista'));
         }else if ($listalancamentotabela) {
             $lista = $lancamentorublica->listacadastro($listalancamentotabela->id);
             
             $id =$listalancamentotabela->id;
-            return view('tabelaCadastro.index',compact('user','id','lista'));
+            return view('tabelaCadastro.index',compact('user','boletim','quantiade','id','lista'));
         }
         $condicao = 'cadastrafalse';
         return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
@@ -131,12 +133,14 @@ class TabCartaoPontoController extends Controller
             
         ]);
         $user = Auth::user();
+        $quantidade = $dados['num__trabalhador'];
+        $boletim = $dados['liboletim'];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
             $lista = $lancamentorublica->listacadastro($id);
-            return view('tabelaCadastro.index',compact('user','id','lista'));
+            return view('tabelaCadastro.index',compact('boletim','user','id','lista','quantidade'));
         }else{
             $condicao = 'editfalse';
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);

@@ -31,7 +31,7 @@
     <style>
         form input[type="text"] {
             text-transform: uppercase !important;
-            color:black !important,
+            color:black !important;
             font-weight: bold !important;
         }
     </style>
@@ -205,7 +205,7 @@
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>
-    <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
+    <script type="text/javascript" src="{{url('/js/validation.js')}}"></script>
    
   </body>
 </html>

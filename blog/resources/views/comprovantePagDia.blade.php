@@ -8,8 +8,25 @@
 </head>
 
 <style>
+    *{
+        margin: 5px;
+        padding: 0px;
+    }
+    
+    td{
+        padding-left:5px;
+    }
+
+    table{
+        border-collapse: collapse;
+    }
+
     body{
         font-family:sans-serif;
+    }
+    
+    .uppercase{
+        text-transform: uppercase;
     }
 
     .border-left{
@@ -55,8 +72,7 @@
     }
 
     .title-recibo{
-        width:500px;
-        text-transform: uppercase;
+        width:300px;
     }
 
     .title-nome{
@@ -65,7 +81,7 @@
     }
 
     .matric{
-        width:100px;
+        width:159px;
     }
 
     .cpf{
@@ -93,63 +109,63 @@
     }
 
     .descricao{
-        width:362px;
+        width:351.5px;
     }
 
     .referencia{
-        width: 90px;
+        width: 120px;
     }
 
     .vencimentos{
-        width: 90px;
+        width: 120px;
     }
 
     .descontos{
-        width: 90px;
+        width: 100px;
     }
 
     .tipoTrab{
-        width: 512px;
+        width: 533px;
     }
 
     .total__vencimentos{
-        width: 90px;
+        width: 119px;
     }
 
     .total__descontos{
-        width: 90px;
+        width: 100px;
     }
 
     .servicosbase{
-        width: 87px;
+        width: 94px;
     }
 
     .servrsr{
-        width: 87px;
+        width: 94px;
     }
 
     .bainss{
-        width: 85px;
+        width: 94px;
     }
 
     .bafgts{
-        width: 87px;
+        width: 94px;
     }
 
     .fgtsmes{
-        width: 87px;
+        width: 94px;
     }
 
     .bairrf{
-        width: 87px;
+        width: 94px;
     }
 
     .fairrf{
-        width: 87px;
+        width: 94px;
     }
 
     .num__filho{
-        width: 60px;
+        width: 67px;
     }
 
     .fontDeclaracao{
@@ -157,7 +173,7 @@
     }
 
     .declaracao{
-        width: 702px;
+        width: 763.5px;
     }
 
     .data{
@@ -169,7 +185,7 @@
     }
 
     .linhaass{
-        width:548px;
+        width:608.5px;
     }
 
     .titlename{
@@ -181,136 +197,158 @@
     }
 
     .valor{
-        width: 120px;
+        width: 134.7px;
     }
 
     .dia{
         width: 46.5px;
     }
+    
+    .name__title{
+        width: 763.5px;
+    }
+    
+     .comp{
+        width: 250px;
+    }
+    
+    .cnpj{
+        width: 203px;
+    }
+    
+    .font__trab{
+        font-size:14px;
+    }
 </style>
 
 <body>
+    
+    
     <table>
         <tr>
-            <td class="border-top border-left tomador small__font text-bold">Mobe Prestadora de Serviços LTDA</td>
-            <td class="border-top border-right small__font text-bold cnpj text-center">CNPJ: 999999999-99</td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">Mobe Prestadora de Serviços LTDA</td>
+        </tr>
+    </table>
+    
+    <table>
+        <tr>
+            <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
+            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência: Outubro - 2021</td>
+            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ: 999999999-99</td>
         </tr>
 
+    </table>
+    
+    <table>
         <tr>
-            <td class=" border-left title-recibo text-bold border-bottom titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
-            <td class=" border-right small__font text-bold text-center border-bottom">Comp: Outubro - 2021</td>
-        </tr>
-
-        <tr>
-            <td class=" border-left title-nome text-bold border-bottom destaque titlename">Eliel Felipe dos Santos Rocha</td>
-            <td class=" border-right small__font text-bold text-center border-bottom destaque"></td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Eliel Felipe dos Santos Rocha</td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td class="small__font matric border-left text-center border-bottom"><strong>Matric:</strong> 9999</td>
-            <td class="small__font cpf border-left text-center border-bottom"><strong>CPF:</strong> 999.999.999-99</td>
-            <td class="small__font pis border-left text-center border-bottom"><strong>PIS:</strong> 999999999-99</td>
-            <td class="small__font cbo border-left border-right text-center border-bottom"><strong>CBO:</strong> 9999999</td>
+            <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong> 9999</td>
+            <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong> 999.999.999-99</td>
+            <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong> 999999999-99</td>
+            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong> 9999999</td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td class="small__font border-left cod text-center text-bold border-bottom">Cod.</td>
-            <td class="small__font border-left text-center descricao text-bold border-bottom">Descrição</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">Referência %</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">Vencimentos</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">Descontos</td>
+            <td class="small__font border-left cod text-center text-bold border-bottom border-top destaque">Cod.</td>
+            <td class="small__font border-left text-center descricao text-bold border-bottom border-top destaque">Descrição</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom border-top destaque">Referência %</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Vencimentos</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">Horas Normais</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Horas Normais</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">HE 50%</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">HE 50%</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">Adc.Noturno S/H Normal</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Adc.Noturno S/H Normal</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">Gratificação</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Gratificação</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">RSR 18,18%</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">RSR 18,18%</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">INSS</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">INSS</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">Seguro</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Seguro</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">Ferias + 1/3</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">13º Salário</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center">9999</td>
-            <td class="small__font border-left descricao">INSS Sobre 13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold">999.999.999,99</td>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
     </table>
 
     <table>
         <tr>
             <td class="small__font border-left border-top tipoTrab">Trabalhador Intermitente Conforme a Lei 13.467/2017</td>
-            <td class="small__font border-left text-bold border-top total__vencimentos text-center destaque border-bottom border-right">Total.Venc</td>
-            <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total.Desc</td>
+            <td class="small__font border-left text-bold border-top total__vencimentos text-center destaque border-bottom border-right">Total Vencimento</td>
+            <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
         </tr>
 
         <tr>
@@ -328,46 +366,44 @@
 
     <table>
         <tr>
-            <td class="small__font border-left border-top servicosbase text-center">Serviços</td>
-            <td class="small__font border-left border-top servrsr text-center">Serviços+RSR</td>
-            <td class="small__font border-left border-top bainss text-center">Base INSS</td>
-            <td class="small__font border-left border-top bafgts text-center">Base FGTS</td>
-            <td class="small__font border-left border-top fgtsmes text-center">FGTS Mês</td>
-            <td class="small__font border-left border-top bairrf text-center">Base IRRF</td>
-            <td class="small__font border-left border-top fairrf text-center">Faixa IRRF</td>
-            <td class="small__font border-left border-right border-top num__filho text-center">Num.Filho</td>
+            <td class="small__font border-left border-top servicosbase text-center  destaque">Serviços</td>
+            <td class="small__font border-left border-top servrsr text-center destaque">Serviços+RSR</td>
+            <td class="small__font border-left border-top bainss text-center destaque">Base INSS</td>
+            <td class="small__font border-left border-top bafgts text-center destaque">Base FGTS</td>
+            <td class="small__font border-left border-top fgtsmes text-center destaque">FGTS Mês</td>
+            <td class="small__font border-left border-top bairrf text-center destaque">Base IRRF</td>
+            <td class="small__font border-left border-top fairrf text-center destaque">Faixa IRRF</td>
+            <td class="small__font border-left border-right border-top num__filho text-center destaque">Num.Filho</td>
         </tr>
 
         <tr>
-            <td class="little__font border-left border-top border-bottom servicosbase text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom fairrf text-center destaque">999.999.999,99</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center destaque">99</td>
-        </tr>
-    </table>
-
-
-
-    <table>
-        <tr>
-            <td class="text-center titlename text-bold border-top border-bottom border-right border-left prodDia">Relação da Produção por Dia</td>
+            <td class="little__font border-left border-top border-bottom servicosbase text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center">999.999.999,99</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">99</td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td class="text-center border-left border-top border-bottom dia small__font">Dia</td>
-            <td  class="text-center border-left border-top border-bottom small__font valor">Valor</td>
-            <td  class="text-center border-left border-top border-bottom small__font dia">Dia</td>
-            <td  class="text-center border-left border-top border-bottom small__font valor">Valor</td>
-            <td  class="text-center border-left border-top border-bottom small__font dia">Dia</td>
-            <td  class="text-center border-left border-top border-bottom small__font valor">Valor</td>
-            <td  class="text-center border-left border-top border-bottom small__font dia">Dia</td>
-            <td  class="text-center border-left border-top border-bottom small__font border-right valor">Valor</td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Relação da Produção por Dia</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="text-center border-left border-top border-bottom dia small__font destaque">Dia</td>
+            <td  class="text-center border-left border-top border-bottom small__font valor destaque">Valor</td>
+            <td  class="text-center border-left border-top border-bottom small__font dia destaque">Dia</td>
+            <td  class="text-center border-left border-top border-bottom small__font valor destaque">Valor</td>
+            <td  class="text-center border-left border-top border-bottom small__font dia destaque">Dia</td>
+            <td  class="text-center border-left border-top border-bottom small__font valor destaque">Valor</td>
+            <td  class="text-center border-left border-top border-bottom small__font dia destaque">Dia</td>
+            <td  class="text-center border-left border-top border-bottom small__font border-right valor destaque">Valor</td>
         </tr>
 
         <tr>
@@ -455,8 +491,8 @@
             <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
             <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left border-top  small__font border-bottom destaque dia text-bold">Total</td>
-            <td  class="text-center border-left small__font border-top border-bottom border-right destaque valor">999.999.999,99</td>
+            <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
+            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">999.999.999,99</td>
         </tr>
     </table>
 

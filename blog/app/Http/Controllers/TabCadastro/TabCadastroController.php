@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Lancamentorublica;
+use App\Lancamentotabela;
 class TabCadastroController extends Controller
 {
     /**
@@ -42,22 +43,27 @@ class TabCadastroController extends Controller
         $lancamentorublica = new Lancamentorublica;
         $lista = $lancamentorublica->listacadastro($dados['lancamento']);
         $user = Auth::user();
+        $quantidade = $dados['numtrabalhador'];
         $id = $dados['lancamento'];
+        $lancamentorublicas = $lancamentorublica->verifica($dados);
+        if ($lancamentorublicas) {
+            $condicao = 'jacadastrador';
+            return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors($condicao);
+        }
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
             'matricula'=>'required|max:4',
-            'licodigo'=>'required|max:4|unique:lancamentorublicas',
+            'codigo'=>'required|max:4',
             'rubrica'=>'required|max:60',
             'quantidade'=>'required'
         ],
             [
-                'licodigo.unique'=>'O campo codigo já está sendo utilizado.',
-                'licodigo.required'=>'O campo codigo é obrigatório.',
-                'licodigo.max'=>'O campo codigo não pode ser superior a 4 caracteres.'
+                'codigo.required'=>'O campo codigo é obrigatório.',
+                'codigo.max'=>'O campo codigo não pode ser superior a 4 caracteres.'
             ]
         );
         if ($validator->fails()) {
-            return view('tabelaCadastro.index',compact('user','id','lista'))->withErrors($validator);
+            return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors($validator);
         }
         $condicao = '';
         $lancamentorublicas = $lancamentorublica->cadastro($dados);
@@ -66,7 +72,7 @@ class TabCadastroController extends Controller
         }else{
             $condicao = 'cadastrafalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista'))->withErrors([$condicao]);
+        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
     }
 
     /**
@@ -118,12 +124,13 @@ class TabCadastroController extends Controller
         $condicao = '';
         $lancamentorublicas = $lancamentorublica->editar($dados,$id);
         $id = $dados['lancamento'];
+        $quantidade = $dados['numtrabalhador'];
         if ($lancamentorublicas) {
             $condicao = 'edittrue';
         }else{
             $condicao = 'editfalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista'))->withErrors([$condicao]);
+        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
     }
 
     /**
@@ -134,20 +141,23 @@ class TabCadastroController extends Controller
      */
     public function destroy($id)
     {
+        $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $lancamentorublicas = $lancamentorublica->listafirst($id);
         $delete = $id;
         if ($lancamentorublicas) {
             $id = $lancamentorublicas->lancamento;
         }
-        $lista = $lancamentorublica->listacadastro($id);
+        $lancamentotabelas = $lancamentotabela->listacomun($lancamentorublicas->lancamento);
+        $quantidade = $lancamentotabelas->lsnumero;
         $user = Auth::user();
         $lancamentorublicas = $lancamentorublica->deletar($delete);
+        $lista = $lancamentorublica->listacadastro($id);
         if ($lancamentorublicas) {
             $condicao = 'deletatrue';
         }else{
             $condicao = 'deletafalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista'))->withErrors([$condicao]);
+        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
     }
 }

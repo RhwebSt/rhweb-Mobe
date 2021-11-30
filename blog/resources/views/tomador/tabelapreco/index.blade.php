@@ -26,6 +26,7 @@
             @endif
             @endforeach
         @endif     
+        
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
                 <input type="hidden" value="{{$id}}" name="tomador">
                 @if($user->empresa)
@@ -55,22 +56,38 @@
               <h5 class="card-title text-center fs-3 ">Tabela de Preços</h5>
                 <div class="col-md-2">
                   <label for="ano" class="form-label">Ano</label>
-                  <input type="text" class="form-control" name="ano" value="" id="ano">
+                  <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="" id="ano">
+                  @error('ano')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <div class="col-md-2">
                     <label for="rubricas" class="form-label">Rúbricas</label>
-                    <input type="text" class="form-control pesquisa" name="rubricas" value="" id="rubricas">
+                    <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="" id="rubricas">
+                    @error('rubricas')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <div class="col-md-7">
                   <label for="descricao" class="form-label">Descrição</label>
-                  <input type="text" class="form-control " name="descricao"  id="descricao">
+                  <input type="text" class="form-control fw-bold @error('descricao') is-invalid @enderror" list="descricoes" name="descricao"  id="descricao">
+                  <datalist id="descricoes">
+                   
+                   </datalist>
+                   @error('rubricas')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                   <span class="text-danger" id="rublicamensagem"></span>
                 </div>
               
                 <div class="col-md-1">
                   <label for="valor" class="form-label">Valor</label>
-                  <input type="text" class="form-control" name="valor" value="" id="valor">
+                  <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="" id="valor">
+                  @error('valor')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
               </form> 
               
@@ -97,38 +114,63 @@
               </div>
             </div> 
             <script>
-        $(document).ready(function(){
+        //$(document).ready(function(){
+        //   $( "#descricao" ).keyup(function() {
+        //         var dados = $(this).val();
+        //         $.ajax({
+        //             url: "{{url('rublica')}}/"+dados,
+        //             type: 'get',
+        //             contentType: 'application/json',
+        //             success: function(data) {
+        //                 $('#descricao').removeClass('is-invalid')
+        //                 $('#rublicamensagem').text(' ')
+        //                 let nome = ''
+        //                 if (data.length > 1) {
+        //                     data.forEach(element => {
+        //                       nome += `<option value="${element.rsdescricao}">`
+        //                     });
+        //                     $('#descricoes').html(nome)
+        //                 }else if (data.length === 1) {
+        //                   $('#rubricas').val(data[0].rsrublica)
+        //                 }else{
+        //                     $('#rubricas').val(' ')
+        //                     $('#descricao').addClass('is-invalid')
+        //                     $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+        //                 }
+        //             }
+        //         });
+        //     });
            
-            $( ".pesquisa" ).keyup(function() {
-                var dados = $(this).val();
-                $.ajax({
-                    url: "{{url('tabelapreco')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        if (data.id) {
-                            $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
-                            $('#formdelete').attr('action',"{{ url('tabelapreco')}}/"+data.id)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#deletar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                        }else{
-                            $('#form').attr('action', "{{ route('tabelapreco.store') }}");
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#deletar').attr('disabled','disabled')
-                            $('#method').val(' ')
-                            $('#excluir').attr( "disabled","disabled" )
-                        }
-                      $('#ano').val(data.tsano)
-                      $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
-                      $('#descricao').val(data.tsdescricao)
-                    }
-                });
-            });
-        });
+        //     // $( ".pesquisa" ).keyup(function() {
+        //     //     var dados = $(this).val();
+        //     //     $.ajax({
+        //     //         url: "{{url('tabelapreco')}}/"+dados,
+        //     //         type: 'get',
+        //     //         contentType: 'application/json',
+        //     //         success: function(data) {
+        //     //             if (data.id) {
+        //     //                 $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
+        //     //                 $('#formdelete').attr('action',"{{ url('tabelapreco')}}/"+data.id)
+        //     //                 $('#incluir').attr('disabled','disabled')
+        //     //                 $('#atualizar').removeAttr( "disabled" )
+        //     //                 $('#deletar').removeAttr( "disabled" )
+        //     //                 $('#excluir').removeAttr( "disabled" )
+        //     //                 $('#method').val('PUT')
+        //     //             }else{
+        //     //                 $('#form').attr('action', "{{ route('tabelapreco.store') }}");
+        //     //                 $('#incluir').removeAttr( "disabled" )
+        //     //                 $('#atualizar').attr('disabled','disabled')
+        //     //                 $('#deletar').attr('disabled','disabled')
+        //     //                 $('#method').val(' ')
+        //     //                 $('#excluir').attr( "disabled","disabled" )
+        //     //             }
+        //     //           $('#ano').val(data.tsano)
+        //     //           $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
+        //     //           $('#descricao').val(data.tsdescricao)
+        //     //         }
+        //     //     });
+        //     // });
+        // });
     </script>   
-            @stop    
+  @stop    
            

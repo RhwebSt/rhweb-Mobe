@@ -39,6 +39,24 @@ class TabelaPrecoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $request->validate([
+            'ano' => 'required|max:4',
+            'rubricas'=>'required|max:30',
+            'descricao'=>'required|max:60',
+            'valor'=>'required'
+        ]
+        // [
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'matricula.required'=>'Campo não pode esta vazio!',
+        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
+        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+        //     'liboletim.required'=>'Campo não pode esta vazio!',
+        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
+        //     'data.required'=>'O campo não pode esta vazio!'
+            
+        // ]
+        );
         $tabelapreco = new TabelaPreco;
         $id = $dados['tomador'];
         $tabelaprecos = $tabelapreco->cadastro($dados);
@@ -62,7 +80,12 @@ class TabelaPrecoController extends Controller
         $tabelaprecos = $tabelapreco->first($id);
         return response()->json($tabelaprecos);
     }
-
+    public function listaget($id)
+    {
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->get($id);
+        return response()->json($tabelaprecos);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -84,6 +107,12 @@ class TabelaPrecoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'ano' => 'required|max:4',
+            'rubricas'=>'required|max:30',
+            'descricao'=>'required|max:60',
+            'valor'=>'required'
+        ]);
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->editar($dados,$id);
         if($tabelaprecos) {

@@ -40,23 +40,23 @@
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                 <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
-                <a class="btn botao disabled"  id="fichaepi" role="button">Epi</a>
-                <a class="btn botao disabled"  id="imprimir" role="button">Imprimir</a>
+                <a class="btn botao disabled"  id="fichaepi" role="button">EPI</a>
+                <a class="btn botao disabled"  id="imprimir" role="button">Imprimir Ficha</a>
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
         </div>
         
         
         <div class="col-md-6 mt-5 mb-4">
-                            <label for="exampleDataList" class="form-label">Buscar</label>
-                            <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
-                            <datalist id="datalistOptions">
-                                <!-- <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago"> -->
-                            </datalist>
-                        </div>
+            <label for="exampleDataList" class="form-label">Buscar</label>
+            <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
+            <datalist id="datalistOptions">
+                <!-- <option value="San Francisco">
+                <option value="New York">
+                <option value="Seattle">
+                <option value="Los Angeles">
+                <option value="Chicago"> -->
+            </datalist>
+        </div>
         <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador</div>
         @csrf
         <input type="hidden" id="method" name="_method" value="">

@@ -23,12 +23,16 @@
                 <div class="alert alert-danger mt-2 alert-block">
                     <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
+              @elseif($error === 'jacadastrador')
+               <div class="alert alert-danger mt-2 alert-block">
+                    <strong>Esta registro já tar cadastrador!</strong>
+                </div>
             @endif
             @endforeach
         @endif        
               <h5 class="card-title text-center fs-3 ">Lançamento com Tabela</h5>
 
-               
+              
 
                 <div class="container">
               <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">

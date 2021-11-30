@@ -540,9 +540,39 @@ $("#form").validate({
         },
         quantidade:{
             required:true
+        },
+        ano:{
+            required:true,
+            maxlength:4
+        },
+        rubricas:{
+            required:true,
+            maxlength:30
+        },
+        descricao:{
+            required:true,
+            maxlength:60
+        },
+        valor:{
+            required:true
         }
     },
     messages:{
+        valor:{
+            required:"O campo nome não pode esta vazio!",
+        },
+        descricao:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 60 caracteres'
+        },
+        rubricas:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 30 caracteres'
+        },
+        ano:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 4 caracteres'
+        },
         quantidade:{
             required:"O campo nome não pode esta vazio!",
         },

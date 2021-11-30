@@ -14,7 +14,7 @@ class Lancamentorublica extends Model
        return Lancamentorublica::create([
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
-            'licodigo'=>$dados['licodigo'],
+            'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
         ]);
@@ -59,13 +59,20 @@ class Lancamentorublica extends Model
         })
         ->first();
     }
+    public function verifica($dados)
+    {
+        return Lancamentorublica::where([
+            ['licodigo', '=', $dados['codigo']],
+            ['licodigo', '=', $dados['trabalhador']],
+        ])->count();
+    }
     public function editar($dados,$id)
     {
         return Lancamentorublica::where('id', $id)
         ->update([
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
-            'licodigo'=>$dados['licodigo'],
+            'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
         ]);

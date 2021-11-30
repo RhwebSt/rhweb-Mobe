@@ -60,7 +60,8 @@ class Tomador extends Model
                 if ($user->hasPermissionTo('admin')) {
                     $query->where('tsnome','like','%'.$id.'%')
                     ->orWhere('tscnpj', 'like', '%'.$id.'%')
-                    ->orWhere('tsmatricula', 'like', '%'.$id.'%');
+                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                    ->orWhere('tomadors.id',$id);
                 }else{
                      $query->where([
                             ['tsnome',$id],
@@ -68,6 +69,10 @@ class Tomador extends Model
                         ])
                         ->orWhere([
                             ['tscnpj',$id],
+                            ['tomadors.empresa', $user->empresa],
+                        ])
+                        ->orWhere([
+                            ['tomadors.id',$id],
                             ['tomadors.empresa', $user->empresa],
                         ])
                         ->orWhere([

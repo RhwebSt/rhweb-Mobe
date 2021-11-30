@@ -27,18 +27,21 @@
             @endif
             @endforeach
         @endif     
-
+        @if(count($lista) >= $quantidade)
+            <div class="alert alert-danger mt-2 alert-block">
+                        <strong>Você ja tem {{$quantidade}} cadastrador!</strong>
+            </div>
+        @endif
         <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço</h1>
-
-       
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.store')}}">
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">
               <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
     
-                    <button type="submit" id="incluir" class="btn botao">Incluir</button>
+                    <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
                     <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
+                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" role="button">Relatório</a>
                     <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       Excluir
                   </button>
@@ -47,7 +50,8 @@
           </div>
               
             <input type="hidden" name="lancamento" value="{{$id}}">
-
+            <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
+        
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
@@ -72,8 +76,8 @@
 
             <div class="col-md-2 input">
                 <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control fw-bold @error('licodigo') is-invalid @enderror" name="licodigo" value="" id="codigo">
-                @error('licodigo')
+                <input type="text" class="form-control fw-bold @error('codigo') is-invalid @enderror" name="codigo" value="" id="codigo">
+                @error('codigo')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
@@ -102,9 +106,13 @@
 
         <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
             <thead>
+                <th colspan="2" class="col text-white">Nome do Trabalhador</th>
                 <th class="col text-white">Cod</th>
-                <th colspan="2" class="col text-white">Rúbrica</th>
+                <th  class="col text-white">Rúbrica</th>
                 <th class="col text-white">Quantidade/Tonelada</th>
+                <th class="col text-white">Valor Unitário</th>
+                <th class="col text-white">Total R$</th>
+                <th class="col text-white">Ação</th>
             </thead>
             <tbody>
                 @if(count($lista) > 0)
@@ -112,13 +120,23 @@
                     <tr>
                         <td class="bg-light text-black">{{$listas->licodigo}}</td>
                         <td class="bg-light text-black">{{$listas->lshistorico}}</td>
-                        <td class="bg-light text-black"></td>
                         <td class="bg-light text-black">{{$listas->lsquantidade}}</td>
+                        <td class="bg-light text-black">{{$listas->lshistorico}}</td>
+                        <td class="bg-light text-black">{{$listas->lsquantidade}}</td>
+                        <td class="bg-light text-black"></td>
+                        <td class="bg-light text-black"></td>
+                        <td class="bg-light text-black">
+                        <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn "><i class="fal fa-trash"></i></button>
+                        </form> 
+                        </td>
                     </tr>
                 @endforeach
                 @else
                     <tr>
-                        <td colspan="4" class="bg-light text-black">
+                        <td colspan="8" class="bg-light text-black">
                         <div class="alert alert-danger" role="alert">
                             Não á registro cadastrado!
                         </div>
@@ -158,7 +176,7 @@
             $( "#rubrica" ).keyup(function() {
                 var dados = $(this).val();
                 $.ajax({
-                    url: "{{url('rublica')}}/"+dados,
+                    url: "{{url('listatabelapreco')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -167,10 +185,12 @@
                         let nome = ''
                         if (data.length >= 1) {
                             data.forEach(element => {
-                            nome += `<option value="${element.rsdescricao}">`
+                            nome += `<option value="${element.tsdescricao}">`
                             });
                             $('#rublicas').html(nome)
+                            $('#codigo').val(data[0].tsrubrica)
                         }else{
+                            
                             $('#rubrica').addClass('is-invalid')
                             $('#rublicamensagem').text('Esta rublica não esta cadastra.')
                         }

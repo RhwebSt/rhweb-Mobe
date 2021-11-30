@@ -42,6 +42,27 @@ class TabelaPreco extends Model
         })
         ->first();
     }
+    public function get($id)
+    {
+        return TabelaPreco::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tsrubrica','like', '%'.$id.'%')
+                ->orWhere('tsdescricao', 'like', '%'.$id.'%');
+            }else{
+                 $query->where([
+                        ['tsrubrica',$id],
+                        ['empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['tsdescricao',$id],
+                        ['empresa', $user->empresa],
+                    ]);
+            }
+           
+        })
+        ->get();
+    }
     public function editar($dados,$id)
     {
         return TabelaPreco::where('id', $id)
