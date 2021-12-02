@@ -41,7 +41,43 @@ class Lancamentotabela extends Model
             'lancamentorublicas.lshistorico',
             'lancamentorublicas.lsquantidade',
             'lancamentorublicas.lfvalor',
+            'lancamentorublicas.lftomador',
             'lancamentorublicas.trabalhador',
+            'lancamentotabelas.liboletim',
+            'lancamentotabelas.lsdata',
+            'empresas.esnome',
+            'tomadors.tsnome' 
+            )
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.liboletim',$id);
+            }else{
+                $query->where([
+                    ['lancamentotabelas.liboletim',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->get();
+    }
+    public function relatoriocartaoponto($id)
+    {
+        return DB::table('trabalhadors')
+        ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->select(
+            'trabalhadors.tsnome as trabalhadornome',
+            // 'trabalhadors.id as trabalhadorid',
+            // 'trabalhadors.tsmatricula', 
+            // 'bolcartaopontos.licodigo',
+            // 'bolcartaopontos.lshistorico',
+            // 'bolcartaopontos.lsquantidade',
+            // 'bolcartaopontos.lfvalor',
+            // 'bolcartaopontos.trabalhador',
+            'bolcartaopontos.*',
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
             'empresas.esnome',

@@ -30,7 +30,7 @@
         @endif     
         
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
-                    <input type="hidden" value="{{$id}}" name="tomador">
+                    <input type="hidden" value="{{$tomador}}" name="tomador">
                     @if($user->empresa)
                         <input type="hidden" name="empresa" value="{{$user->empresa}}">
                     @else
@@ -70,18 +70,22 @@
                         @error('rubricas')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
+                      <datalist id="rubricas">
+                       
+                       </datalist>
+                       <span class="text-danger" id="rubricamensagem"></span>
                     </div>
     
                     <div class="col-md-7">
                       <label for="descricao" class="form-label">Descrição</label>
-                      <input type="text" class="form-control fw-bold @error('descricao') is-invalid @enderror" list="descricoes" name="descricao"  id="descricao">
+                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao"  id="descricao">
                       <datalist id="descricoes">
                        
                        </datalist>
                        @error('rubricas')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
-                       <span class="text-danger" id="rublicamensagem"></span>
+                       <span class="text-danger" id="descricoesmensagem"></span>
                     </div>
                   
                     <div class="col-md-3">
@@ -101,7 +105,10 @@
                     </div>
                     
                     
-                    <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                 
+              </form> 
+              
+              <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
                             <th class="col text-center border-end border-start border-top" style="width:60px;">Ano</th>
                             <th class="col text-center border-end border-top" style="width:80px">Código</th>
@@ -112,20 +119,36 @@
                         </thead>
                         
                         <tbody style="background-color: #081049; color: white;">
+                        @if(count($tabelaprecos) > 0)
+                          @foreach($tabelaprecos as $tabelapreco)
                             <tr>
-                            <td class="col text-center border-end border-start" style="width:60px;">2021</td>
-                            <td class="col text-center border-end" style="width:80px">00005</td>
-                            <td class="col text-center border-end" style="width:900px">Diaria Normal</td>
-                            <td class="col text-center border-end" style="width:110px;">R$ 20,00</td>
-                            <td class="col text-center border-end" style="width:110px;">R$ 20,00</td>
-                            <td colspan="2" class="col text-center border-end" style="width:190px;"><a href="#"><i style="color:#FF331F;" class="fal fa-trash"></i></a></td>
+                            <td class="col text-center border-end border-start" style="width:60px;">{{$tabelapreco->tsano}}</td>
+                            <td class="col text-center border-end" style="width:80px">{{$tabelapreco->tsrubrica}}</td>
+                            <td class="col text-center border-end" style="width:900px">{{$tabelapreco->tsdescricao}}</td>
+                            <td class="col text-center border-end" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-end" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
+
+                            <td colspan="2" class="col text-center border-end" style="width:190px;">
+                                <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
+                                  @csrf
+                                  @method('delete')
+                                  <button type="submit" class="btn p-0 m-0"><i style="color:#FF331F;" class="fal fa-trash"></i></button>
+                                </form>
+                              </td>
                             </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                              <td colspan="8" class="bg-light text-black">
+                                <div class="alert alert-danger" role="alert">
+                                    Não á registro cadastrado!
+                                </div>
+                              </td>
+                            </tr>
+                            @endif
                         </tbody>
 
                         </table>
-              </form> 
-              
-              
               
               
               
@@ -150,67 +173,91 @@
                   </div>
                 </div>
               </div>
-
-            </body>
+</div>
             
             
-            <script>
+            
+      <script>
         $(document).ready(function(){
-        //   $( "#descricao" ).keyup(function() {
-        //         var dados = $(this).val();
-        //         $.ajax({
-        //             url: "{{url('rublica')}}/"+dados,
-        //             type: 'get',
-        //             contentType: 'application/json',
-        //             success: function(data) {
-        //                 $('#descricao').removeClass('is-invalid')
-        //                 $('#rublicamensagem').text(' ')
-        //                 let nome = ''
-        //                 if (data.length > 1) {
-        //                     data.forEach(element => {
-        //                       nome += `<option value="${element.rsdescricao}">`
-        //                     });
-        //                     $('#descricoes').html(nome)
-        //                 }else if (data.length === 1) {
-        //                   $('#rubricas').val(data[0].rsrublica)
-        //                 }else{
-        //                     $('#rubricas').val(' ')
-        //                     $('#descricao').addClass('is-invalid')
-        //                     $('#rublicamensagem').text('Esta rublica não esta cadastra.')
-        //                 }
-        //             }
-        //         });
-        //     });
-           
-        //     // $( ".pesquisa" ).keyup(function() {
-        //     //     var dados = $(this).val();
-        //     //     $.ajax({
-        //     //         url: "{{url('tabelapreco')}}/"+dados,
-        //     //         type: 'get',
-        //     //         contentType: 'application/json',
-        //     //         success: function(data) {
-        //     //             if (data.id) {
-        //     //                 $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
-        //     //                 $('#formdelete').attr('action',"{{ url('tabelapreco')}}/"+data.id)
-        //     //                 $('#incluir').attr('disabled','disabled')
-        //     //                 $('#atualizar').removeAttr( "disabled" )
-        //     //                 $('#deletar').removeAttr( "disabled" )
-        //     //                 $('#excluir').removeAttr( "disabled" )
-        //     //                 $('#method').val('PUT')
-        //     //             }else{
-        //     //                 $('#form').attr('action', "{{ route('tabelapreco.store') }}");
-        //     //                 $('#incluir').removeAttr( "disabled" )
-        //     //                 $('#atualizar').attr('disabled','disabled')
-        //     //                 $('#deletar').attr('disabled','disabled')
-        //     //                 $('#method').val(' ')
-        //     //                 $('#excluir').attr( "disabled","disabled" )
-        //     //             }
-        //     //           $('#ano').val(data.tsano)
-        //     //           $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
-        //     //           $('#descricao').val(data.tsdescricao)
-        //     //         }
-        //     //     });
-        //     // });
-        // });
+          $( ".pesquisa" ).keyup(function() {
+                var dados = $(this).val();
+                var tagname = $(this).attr('name');
+                if (dados) {
+                  $.ajax({
+                    url: "{{url('tabelapreco')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#rubrica').removeClass('is-invalid')
+                        $('#rubricamensagem').text(' ')
+                        $('#descricao').removeClass('is-invalid')
+                        $('#descricoesmensagem').text(' ')
+                        let nome = ''
+                        if (data.length > 1) {
+                            data.forEach(element => {
+                              nome += `<option value="${element.rsdescricao}">`
+                            });
+                            if (tagname === 'rubricas') {
+                              $('#rubricas').html(nome);
+                            }else{
+                              $('#descricoes').html(nome)
+                            }
+                        }else if (data.length === 1) {
+                          if (tagname === 'rubrica') {
+                            $('#rubricas').val(data[0].rsrublica)
+                          }else{
+                            $('#descricao').val(data[0].tsdescricao)
+                          }
+                          tabelapreco(data[0])
+                        }else{
+                          if (tagname === 'rubricas') {
+                            $('#rubrica').addClass('is-invalid')
+                            $('#rubricamensagem').text('Esta codigo não esta cadastra.')
+                          }else if (tagname === 'descricao'){
+                            $('#descricao').addClass('is-invalid')
+                            $('#descricoesmensagem').text('Esta rublica não esta cadastra.')
+                          }
+                        }
+                    }
+                  });
+                }else{
+                  if (tagname === 'rubricas') {
+                    $('#rubricas').val(' ');
+                    $('#ano').val(' ')
+                    $('#valor').val(' ')
+                    $('#descricao').val(' ')
+                    $('#valor__tomador').val(' ')
+                  }else{
+                    $('#rubricas').val(' ');
+                    $('#ano').val(' ')
+                    $('#valor').val(' ')
+                    $('#descricao').val(' ')
+                    $('#valor__tomador').val(' ')
+                  }
+                }
+            });
+           function tabelapreco(data) {
+              if (data.id) {
+                    $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
+                    $('#formdelete').attr('action',"{{ url('tabelapreco')}}/"+data.id)
+                    $('#incluir').attr('disabled','disabled')
+                    $('#atualizar').removeAttr( "disabled" )
+                    $('#deletar').removeAttr( "disabled" )
+                    $('#excluir').removeAttr( "disabled" )
+                    $('#method').val('PUT')
+                }else{
+                    $('#form').attr('action', "{{ route('tabelapreco.store') }}");
+                    $('#incluir').removeAttr( "disabled" )
+                    $('#atualizar').attr('disabled','disabled')
+                    $('#deletar').attr('disabled','disabled')
+                    $('#method').val(' ')
+                    $('#excluir').attr( "disabled","disabled" )
+                }
+              $('#ano').val(data.tsano)
+              $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
+              $('#valor__tomador').val( parseFloat(data.tstomvalor).toFixed(2).toString().replace(".", ","))
+              $('#descricao').val(data.tsdescricao)
+           }
+        });
     </script>   
-            @stop    
+  @stop    

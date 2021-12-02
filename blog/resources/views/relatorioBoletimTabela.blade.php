@@ -93,6 +93,10 @@
         .desc{
             width:400px;
         }
+        
+        .descri{
+            width:349px;
+        }
 
         .quant{
             width:110px;
@@ -100,6 +104,10 @@
 
         .valor__total{
             width:190px;
+        }
+        
+        .valor__totalss{
+            width:120px;
         }
 
         .total__receber{
@@ -225,9 +233,10 @@
             <table>
                  <tr>
                     <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
-                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center descri">Descrição</td>
                     <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
-                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__totalss">Valor Trabalhador</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__totalss">Valor Tomador</td>
                 </tr>
                 <?php
                     $dados = [];
@@ -241,21 +250,24 @@
                         $codigo = explode(':',$value);
                         $quantidade = 0;
                         $valor = 0;
+                        $valor2 = 0;
                         foreach ($lancamentotabelas as $key => $value) {
                             if ($value->licodigo == $codigo[0]) {
                                 $quantidade += $value->lsquantidade;
                                 $valor += ($value->lfvalor * $value->lsquantidade);
+                                $valor2 += ($value->lftomador * $value->lsquantidade);
                             }
                         }
                         echo'<tr>
                             <td class="border-left border-right border-top border-bottom small__font matric text-center">
                             '.$codigo[0].'
                             </td>
-                            <td class="border-left border-right border-top border-bottom small__font text-center desc">
+                            <td class="border-left border-right border-top border-bottom small__font text-center desc2">
                             '.$codigo[1].'
                             </td>
                             <td class="border-left border-right border-top border-bottom small__font text-center quant">'.$quantidade.'</td>
-                            <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ '.number_format((float)$valor, 2, ',', '').'</td>
+                            <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor, 2, ',', '').'</td>
+                            <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor2, 2, ',', '').'</td>
                         </tr>';
                         $total += $valor;
                     }

@@ -13,11 +13,12 @@ class TabelaPrecoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($tabelapreco)
+    public function index($id = null,$tomador)
     {
-        $id = $tabelapreco;
         $user = Auth::user();
-        return view('tomador.tabelapreco.index',compact('id','user'));
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->get($tomador);
+        return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 
     /**
@@ -39,6 +40,7 @@ class TabelaPrecoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $request->validate([
             'ano' => 'required|max:4',
             'rubricas'=>'required|max:30',
@@ -58,14 +60,18 @@ class TabelaPrecoController extends Controller
         // ]
         );
         $tabelapreco = new TabelaPreco;
-        $id = $dados['tomador'];
+      
         $tabelaprecos = $tabelapreco->cadastro($dados);
+        $novodados = [
+            $tabelaprecos['id'],
+            $dados['tomador']
+        ];
         if($tabelaprecos) {
             $condicao = 'cadastratrue';
         }else{
             $condicao = 'cadastrafalse';
         }
-        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
+        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -77,7 +83,7 @@ class TabelaPrecoController extends Controller
     public function show($id)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->first($id);
+        $tabelaprecos = $tabelapreco->get($id);
         return response()->json($tabelaprecos);
     }
     public function listaget($id)
@@ -134,13 +140,16 @@ class TabelaPrecoController extends Controller
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->first($id);
         $excluir = $tabelapreco->deletar($id);
-        $id = $tabelaprecos->tomador;
+        $novodados = [
+           $id,
+           $tabelaprecos->tomador
+        ];
         if ($excluir) {
             $condicao = 'deletatrue';
         }else{
             $condicao = 'deletafalse';
         }
         
-        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
+        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
     }
 }

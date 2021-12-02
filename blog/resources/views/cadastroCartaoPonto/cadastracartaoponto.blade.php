@@ -24,7 +24,16 @@
        
                         <button type="submit" id="incluir" class="btn botao">Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
-                        <button type="submit" id="atualizar" disabled class="btn botao">Relatório</button>
+                        <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Relatório
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.show',$boletim)}}">Relatório boletim cartão ponto</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      </ul>
+                        
+                        
                         <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                           Excluir
                       </button>
@@ -33,7 +42,7 @@
               </div>
             <input type="hidden" name="lancamento" value="{{$id}}"> 
             <input type="hidden" name="trabalhador" id="trabalhador">
-            
+            <input type="hidden" name="boletim" value="{{$boletim}}">
            
             
             
@@ -69,7 +78,7 @@
             <div class="col-md-3 input">
                 <label for="entrada1" class="form-label">Entrada</label>
                 <input type="time" class="form-control diaurno  @error('entrada1') is-invalid @enderror" name="entrada1" value="" id="entrada1">
-                <small class="mt-1">De (05:00 ás 12:00)</small>
+                <small style="font-size: 13px;">De (05:00 ás 12:00)</small>
                 @error('entrada1')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -78,7 +87,7 @@
             <div class="col-md-3 input">
                 <label for="saida1" class="form-label">Saída</label>
                 <input type="time" class="form-control diaurno @error('saida') is-invalid @enderror" name="saida" value="" id="saida">
-                <small class="mt-1">De (05:00 ás 15:00)</small>
+                <small style="font-size: 13px;">De (05:00 ás 15:00)</small>
                 @error('saida')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -87,7 +96,7 @@
             <div class="col-md-3 input">
                 <label for="entrada2" class="form-label">Entrada</label>
                 <input type="time" class="form-control diaurno @error('entrada2') is-invalid @enderror" name="entrada2" value="" id="entrada2">
-                <small class="mt-1">De (12:00 ás 22:00)</small>
+                <small style="font-size: 13px;">De (12:00 ás 22:00)</small>
                 @error('entrada2')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -96,7 +105,7 @@
             <div class="col-md-3 input">
                 <label for="saida2" class="form-label">Saída</label>
                 <input type="time" class="form-control diaurno @error('saida2') is-invalid @enderror" name="saida2" value="" id="saida2">
-                <small class="mt-1">De (12:00 ás 22:00)</small>
+                <small style="font-size: 13px;">De (12:00 ás 22:00)</small>
                 @error('saida2')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -107,7 +116,7 @@
             <div class="col-md-3 input">
                 <label for="entrada3" class="form-label">Entrada (adc.noturno)</label>
                 <input type="time" class="form-control adc__noturno @error('entrada3') is-invalid @enderror" name="entrada3" value="" id="entrada3">
-                <small class="mt-1">De (22:00 ás 03:00)</small>
+                <small style="font-size: 13px;">De (22:00 ás 03:00)</small>
                 @error('entrada3')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -116,7 +125,7 @@
             <div class="col-md-3 input">
                 <label for="saida3" class="form-label">Saída (adc.noturno)</label>
                 <input type="time" class="form-control adc__noturno  @error('saida3') is-invalid @enderror" name="saida3" value="" id="saida3">
-                <small class="fs-6">De (03:00 ás 05:00)</small>
+                <small style="font-size: 13px;">De (03:00 ás 05:00)</small>
                 @error('saida3')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -125,7 +134,7 @@
             <div class="col-md-3 input">
                 <label for="entrada4" class="form-label">Entrada (adc.noturno)</label>
                 <input type="time" class="form-control adc__noturno @error('entrada4') is-invalid @enderror" name="entrada4" value="" id="entrada4">
-                <small class="fs-6">De (00:00 ás 05:00)</small>
+                <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('entrada4')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -134,7 +143,7 @@
             <div class="col-md-3 input">
                 <label for="saida5" class="form-label">Saída (adc.noturno)</label>
                 <input type="time" class="form-control adc__noturno @error('saida4') is-invalid @enderror" name="saida4" value="" id="saida4">
-                <small class="fs-6">De (00:00 ás 05:00)</small>
+                <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('saida4')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -181,43 +190,42 @@
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
               
-              <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+              <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
             <thead>
-                <th class="col text-white">Matricula</th>
-                <th colspan="2" class="col text-white">Nome</th>
-                <th class="col text-white">Entrada</th>
-                <th class="col text-white">Saída</th>
-                <th class="col text-white">Entrada</th>
-                <th class="col text-white">Saída</th>
-                <th class="col text-white">HRS 50%</th>
-                <th class="col text-white">HRS 100%</th>
-                <th class="col text-white">Horas Normais</th>
-                <th class="col text-white">Total Geral</th>
+                <th class="col text-center border-start border-top" style="width:80px;">Matricula</th>
+                <th class="col text-center border-top" style="width:420px">Nome</th>
+                <th class="col text-center border-top" style="width:90px;">Entrada</th>
+                <th class="col text-center border-top" style="width:90px;">Saída</th>
+                <th class="col text-center border-top" style="width:90px;">Entrada</th>
+                <th class="col text-center border-top" style="width:90px;">Saída</th>
+                <th class="col text-center border-top" style="width:90px;">HRS 50%</th>
+                <th class="col text-center border-top" style="width:90px;">HRS 100%</th>
+                <th class="col text-center border-top" style="width:140px;">Horas Normais</th>
+                <th class="col text-center border-end border-top" style="width:140px;">Total Geral</th>
             </thead>
-            <tbody>
+            <tbody style="background-color: #081049; color: white;">
             @if(count($lista) > 0)
                 @foreach($lista as $listas)
                 @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
                 $listas->bsentradatarde && $listas->bssaidatarde)
                 <tr>
-                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
-                <td class="bg-light text-black">{{$listas->tsnome}}</td>
-                <td class="bg-light text-black"></td>
-                <td class="bg-light text-black">{{$listas->bsentradamanhao}}</td>
-                <td class="bg-light text-black">{{$listas->bssaidamanhao}}</td>
-                <td class="bg-light text-black">{{$listas->bsentradatarde}}</td>
-                <td class="bg-light text-black">{{$listas->bssaidatarde}}</td>
-                <td class="bg-light text-black">{{$listas->bshoraex}}</td>
-                <td class="bg-light text-black">{{$listas->bshoraexcem}}</td>
-                <td class="bg-light text-black">{{$listas->horas_normais}}</td>
-                <td class="bg-light text-black">{{$listas->bstotal}}</td>
+                <td class="col text-center border-bottom border-start" style="width:80px;">{{$listas->tsmatricula}}</td>
+                <td class="col text-center border-bottom text-capitalize" style="width:420px">{{$listas->tsnome}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradamanhao}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidamanhao}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradatarde}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidatarde}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraex}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraexcem}}</td>
+                <td class="col text-center border-bottom" style="width:140px;">{{$listas->horas_normais}}</td>
+                <td class="col text-center border-bottom border-end" style="width:140px;">{{$listas->bstotal}}</td>
                
                 </tr>
                @endif
                 @endforeach
                 @else
                     <tr>
-                        <td colspan="11" class="bg-light text-black">
+                        <td colspan="11" class="text-black">
                         <div class="alert alert-danger" role="alert">
                             Não a registro cadastrado!
                         </div>
@@ -242,46 +250,42 @@
           
   
           <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              
-              
-              
-              <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+
+              <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
             <thead>
-                <th class="col text-white">Matricula</th>
-                <th colspan="2" class="col text-white">Nome</th>
-                <th class="col text-white">Entrada</th>
-                <th class="col text-white">Saída</th>
-                <th class="col text-white">Entrada</th>
-                <th class="col text-white">Saída</th>
-                <th class="col text-white">HRS 50%</th>
-                <th class="col text-white">HRS 100%</th>
-                <th class="col text-white">AD.NOT</th>
-                <th class="col text-white">Total Geral</th>
+                <th class="col text-center border-start border-top" style="width:80px;">Matricula</th>
+                <th class="col text-center border-top" style="width:330px">Nome</th>
+                <th class="col text-center border-top" style="width:90px;">Entrada</th>
+                <th class="col text-center border-top" style="width:90px;">Saída</th>
+                <th class="col text-center border-top" style="width:90px;">Entrada</th>
+                <th class="col text-center border-top" style="width:90px;">Saída</th>
+                <th class="col text-center border-top" style="width:90px;">HRS 50%</th>
+                <th class="col text-center border-top" style="width:90px;">HRS 100%</th>
+                <th class="col text-center border-top" style="width:90px;">AD.NOT</th>
+                <th class="col text-center border-end border-top" style="width:140px;">Total Geral</th>
             </thead>
-            <tbody>
+            <tbody style="background-color: #081049; color: white;">
             @if(count($lista) > 0)
                 @foreach($lista as $listas)
                 @if($listas->bsentradanoite && $listas->bsentradanoite ||
                 $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                 <tr>
-                <td class="bg-light text-black">{{$listas->tsmatricula}}</td>
-                <td class="bg-light text-black">{{$listas->tsnome}}</td>
-                <td class="bg-light text-black"></td>
-                <td class="bg-light text-black">{{$listas->bsentradanoite}}</td>
-                <td class="bg-light text-black">{{$listas->bssaidanoite}}</td>
-                <td class="bg-light text-black">{{$listas->bsentradamadrugada}}</td>
-                <td class="bg-light text-black">{{$listas->bssaidamadrugada}}</td>
-                <td class="bg-light text-black">{{$listas->bshoraex}}</td>
-                <td class="bg-light text-black">{{$listas->bshoraexcem}}</td>
-                <td class="bg-light text-black">{{$listas->bsadinortuno}}</td>
-                <td class="bg-light text-black">{{$listas->bstotal}}</td>
-               
+                <td class="col text-center border-bottom border-start" style="width:80px;">{{$listas->tsmatricula}}</td>
+                <td class="col text-center border-bottom" style="width:330px">{{$listas->tsnome}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradanoite}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidanoite}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradamadrugada}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidamadrugada}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraex}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraexcem}}</td>
+                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsadinortuno}}</td>
+                <td class="col text-center border-end border-bottom" style="width:140px;">{{$listas->bstotal}}</td>
                 </tr>
                @endif
                 @endforeach
                 @else
                     <tr>
-                        <td colspan="11" class="bg-light text-black">
+                        <td colspan="11" class="text-black">
                         <div class="alert alert-danger" role="alert">
                             Não a registro cadastrado!
                         </div>

@@ -52,6 +52,7 @@
             <input type="hidden" name="lancamento" value="{{$id}}">
             <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
             <input type="hidden" name="valor" id="valor">
+            <input type="hidden" name="lftomador" id="lftomador">
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
@@ -77,15 +78,17 @@
 
             <div class="col-md-2 input">
                 <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control fw-bold @error('codigo') is-invalid @enderror" name="codigo" value="" id="codigo">
+                <input type="text" class="form-control rubrica fw-bold @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo">
                 @error('codigo')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
+                <datalist id="codigos">   
+                </datalist>
             </div>
 
             <div class="col-md-8 input">
                 <label for="rubrica" class="form-label">Desrição</label>
-                <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
+                <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror rubrica" list="rublicas" name="rubrica" value="" id="rubrica">
                 <datalist id="rublicas">   
                 </datalist>
                 @error('rubrica')
@@ -119,12 +122,14 @@
                 @if(count($lista) > 0)
                 @foreach($lista as $listas)
                     <tr>
-                        <td class="col text-center border-start border-end">Eliel Felipe dos Santos Rocha</td>
+                        <td class="col text-center border-start border-end">
+                            {{$listas->tsnome}}
+                        </td>
                         <td class="col text-center border-end">{{$listas->licodigo}}</td>
                         <td class="col text-center border-end">{{$listas->lshistorico}}</td>
                         <td class="col text-center border-end">{{$listas->lsquantidade}}</td>
-                        <td class="col text-center border-end">R$ 999.999.999,99</td>
-                        <td class="col text-center border-end">R$ 999.999.999,99</td>
+                        <td class="col text-center border-end">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
+                        <td class="col text-center border-end">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
                         <td class="col text-center border-end">
                         <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
                             @csrf
@@ -169,34 +174,52 @@
          </div>
 
           <script>
-            // if ( window.history.replaceState ) {
-            //     window.history.replaceState( null, null, window.location.href );
-            // }
             
-            $( "#rubrica" ).keyup(function() {
+            
+            $( ".rubrica" ).keyup(function() {
                 var dados = $(this).val();
-                $.ajax({
-                    url: "{{url('listatabelapreco')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        $('#rubrica').removeClass('is-invalid')
-                        $('#rublicamensagem').text(' ')
-                        let nome = ''
-                        if (data.length >= 1) {
-                            data.forEach(element => {
-                            nome += `<option value="${element.tsdescricao}">`
-                            });
-                            $('#rublicas').html(nome)
-                            $('#codigo').val(data[0].tsrubrica)
-                            $('#valor').val(data[0].tsvalor)
-                        }else{
-                            
-                            $('#rubrica').addClass('is-invalid')
-                            $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+                
+                var tagname = $(this).attr('name')
+                if (dados) {
+                    $.ajax({
+                        url: "{{url('listatabelapreco')}}/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            $('#rubrica').removeClass('is-invalid')
+                            $('#rublicamensagem').text(' ')
+                            let nome = ''
+                            let codigo = ''
+                            if (data.length > 1) {
+                                data.forEach(element => {
+                                nome += `<option value="${element.tsdescricao}">`
+                                });
+                                data.forEach(element => {
+                                codigo += `<option value="${element.tsdescricao}">`
+                                });
+                                if( tagname == 'codigo'){
+                                    $('#rubrica').val(' ')
+                                }else if(tagname == 'rubrica'){
+                                    $('#codigo').val(' ')
+                                }
+                                $('#rublicas').html(nome)
+                                $('#codigos').html(codigo)
+                            }else if(data.length === 1){
+                                if( tagname == 'codigo'){
+                                    $('#rubrica').val(data[0].tsdescricao)
+                                }else if( tagname == 'rubrica'){
+                                    $('#codigo').val(data[0].tsrubrica)
+                                }
+                                $('#valor').val(data[0].tsvalor)
+                                $('#lftomador').val(data[0].tstomvalor)
+                            }else{
+                                $('#rubrica').addClass('is-invalid')
+                                $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+                            }
                         }
-                    }
-                });
+                    });
+                }
+               
             });
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
@@ -232,38 +255,38 @@
                     }
                 });
             });
-            $( "#codigo" ).keyup(function() {
-                var dados = $(this).val();
-                $.ajax({
-                    url: "{{url('tabcadastro')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        if (data.id) {
-                            $('#form').attr('action', "{{ url('tabcadastro')}}/"+data.id);
-                            $('#formdelete').attr('action',"{{ url('tabcadastro')}}/"+data.id)
-                            $('#incluir').attr('disabled','disabled')
-                            $('#atualizar').removeAttr( "disabled" )
-                            $('#deletar').removeAttr( "disabled" )
-                            $('#excluir').removeAttr( "disabled" )
-                            $('#method').val('PUT')
-                            $('#trabalhador').val(data.trabalhador)
-                            $('#matricula').val(data.tsmatricula)
-                            $('#rubrica').val(data.lshistorico)
-                            $('#quantidade').val(data.lsquantidade)
-                            $('#nome__completo').val(data.tsnome)
-                        }else{
-                            $('#form').attr('action', "{{ route('tabcadastro.store') }}");
-                            $('#incluir').removeAttr( "disabled" )
-                            $('#atualizar').attr('disabled','disabled')
-                            $('#deletar').attr('disabled','disabled')
-                            $('#method').val(' ')
-                            $('#excluir').attr( "disabled",'disabled' )
-                        }
+            // $( "#codigo" ).keyup(function() {
+            //     var dados = $(this).val();
+            //     $.ajax({
+            //         url: "{{url('tabcadastro')}}/"+dados,
+            //         type: 'get',
+            //         contentType: 'application/json',
+            //         success: function(data) {
+            //             if (data.id) {
+            //                 $('#form').attr('action', "{{ url('tabcadastro')}}/"+data.id);
+            //                 $('#formdelete').attr('action',"{{ url('tabcadastro')}}/"+data.id)
+            //                 $('#incluir').attr('disabled','disabled')
+            //                 $('#atualizar').removeAttr( "disabled" )
+            //                 $('#deletar').removeAttr( "disabled" )
+            //                 $('#excluir').removeAttr( "disabled" )
+            //                 $('#method').val('PUT')
+            //                 $('#trabalhador').val(data.trabalhador)
+            //                 $('#matricula').val(data.tsmatricula)
+            //                 $('#rubrica').val(data.lshistorico)
+            //                 $('#quantidade').val(data.lsquantidade)
+            //                 $('#nome__completo').val(data.tsnome)
+            //             }else{
+            //                 $('#form').attr('action', "{{ route('tabcadastro.store') }}");
+            //                 $('#incluir').removeAttr( "disabled" )
+            //                 $('#atualizar').attr('disabled','disabled')
+            //                 $('#deletar').attr('disabled','disabled')
+            //                 $('#method').val(' ')
+            //                 $('#excluir').attr( "disabled",'disabled' )
+            //             }
                        
-                    }
-                })
-            })
+            //         }
+            //     })
+            // })
           
           </script>
 @stop

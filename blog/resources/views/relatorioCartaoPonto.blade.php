@@ -163,18 +163,25 @@
         </style>
 
         <body>
-
             <table>
                 <tr>
-                    <td class="name__title border-right border-left border-bottom border-top destaque text-center text-bold">Nome da Empresa</td>
+                    <td class="name__title border-right border-left border-bottom border-top destaque text-center text-bold">{{$lancamentotabelas[0]->esnome}}</td>
                 </tr>
             </table>
 
             <table>
                 <tr>
                     <td class="small__font planilha text-bold border-top border-bottom border-left border-right">Planilha do Cartão Ponto - 9999</td>
-                    <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim n° 999999</td>
-                    <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência: 99/99/9999</td>
+                    <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim n° {{$lancamentotabelas[0]->liboletim}}</td>
+                    <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência:
+                    @if(isset($lancamentotabelas[0]->lsdata))
+                        <?php
+                            $data = explode('-',$lancamentotabelas[0]->lsdata);
+                            $data2 = $data[2].'/'.$data[1].'/'.$data[0];
+                        ?>
+                        {{$data2}}
+                     @endif
+                    </td>
                 </tr>
             </table>
 
@@ -240,30 +247,31 @@
                     <td class="small__font border-top border-bottom border-left text-center valor text-bold destaque">Valor Folha</td>
                     <td class="small__font border-top border-bottom border-left border-right text-center valor text-bold destaque">Valor Total</td>
                 </tr>
-
+                @foreach($lancamentotabelas as $lancamentotabela)
                 <tr>
-                    <td class="small__font border-top border-bottom border-left nome spacing">Eliel Felipe dos Santos Rocha</td>
-                    <td class="small__font border-top border-bottom border-left ent text-center">00:00</td>
-                    <td class="small__font border-top border-bottom border-left pad text-center">00:00</td>
-                    <td class="small__font border-top border-bottom border-left ent  text-center">00:00</td>
-                    <td class="small__font border-top border-bottom border-left pad text-center">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center ent ">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center ent ">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center normais">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad">00:00</td>
-                    <td class="small__font border-top border-bottom border-left text-center adcnot">00:00</td>
+                    <td class="small__font border-top border-bottom border-left nome spacing">{{$lancamentotabela->trabalhadornome}}</td>
+                    <td class="small__font border-top border-bottom border-left ent text-center">{{$lancamentotabela->bsentradamanhao?$lancamentotabela->bsentradamanhao:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left pad text-center">{{$lancamentotabela->bssaidamanhao?$lancamentotabela->bssaidamanhao:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left ent  text-center">{{$lancamentotabela->bsentradatarde?$lancamentotabela->bsentradatarde:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left pad text-center">{{$lancamentotabela->bssaidatarde?$lancamentotabela->bssaidatarde:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center ent ">{{$lancamentotabela->bsentradanoite?$lancamentotabela->bsentradanoite:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bssaidanoite?$lancamentotabela->bssaidanoite:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center ent ">{{$lancamentotabela->bsentradamadrugada?$lancamentotabela->bsentradamadrugada:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bssaidamadrugada?$lancamentotabela->bssaidamadrugada:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center normais">{{$lancamentotabela->horas_normais?$lancamentotabela->horas_normais:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bshoraex?$lancamentotabela->bshoraex:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bshoraexcem?$lancamentotabela->bshoraexcem:'00:00'}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center adcnot">{{$lancamentotabela->bsadinortuno?$lancamentotabela->bsadinortuno:'00:00'}}</td>
                     <td class="small__font border-top border-bottom border-left text-center valor">999.999.999,99</td>
                     <td class="small__font border-top border-bottom border-left border-right text-center valor">999.999.999,99</td>
                 </tr>
+                @endforeach
             </table>
 
             <table>
                 <tr>
                     <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left totalizacao">Totalizações</td>
-                    <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left qtnd__trab">Quantidades de Trabalhadores: 9999999</td>
+                    <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left qtnd__trab">Quantidades de Trabalhadores: {{count($trabalhadors)}}</td>
                     <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left normais">99:99</td>
                     <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">99:99</td>
                     <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">99:99</td>

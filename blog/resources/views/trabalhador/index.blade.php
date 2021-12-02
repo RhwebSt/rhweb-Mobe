@@ -31,18 +31,30 @@
         
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST">
         
-        <div class="btn mt-5 " role="group" aria-label="Basic example">
-            <button type="submit" id="incluir" class="btn botao text-white">Incluir</button>
+        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+            <button type="submit" id="incluir" class="btn botao">Incluir</button>
             <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
             <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Excluir
                       </button>
                       
                 <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
+                
+                <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Relatórios
+                 </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Imprimir Ficha</a></li>
+                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">EPI</a></li>
+                  </ul>
                 <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
-                <a class="btn botao disabled"  id="fichaepi" role="button">EPI</a>
-                <a class="btn botao disabled"  id="imprimir" role="button">Imprimir Ficha</a>
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+        </div>
+        
+        <div class="text-center d-none">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
         </div>
         
         

@@ -16,16 +16,14 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
-            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
          <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
-        <script src="http://jqueryvalidation.org/files/dist
-/additional-methods.min.js"></script>
+        <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         
 
     </head>
@@ -40,8 +38,7 @@
     <main>
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
-              <!-- <a class="navbar-brand" href=""></a> -->
-              <img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px">
+            <a class="" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
@@ -99,7 +96,7 @@
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Planilha de Fechamento- Boletins</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol dos Boletins</a></li>
                               <li><a class="dropdown-item border-bottom border-secundary" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Recibos da Folha</a></li>
+                              <li><a class="dropdown-item border-secundary" href="#">Recibos da Folha</a></li>
                              
                             </ul>
                           </li>
@@ -145,7 +142,7 @@
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
                                 <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
                                 
-                                <li><a class="dropdown-item border-bottom border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
+                                <li><a class="dropdown-item border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
 
                                 
                               </ul>

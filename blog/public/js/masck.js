@@ -41,6 +41,7 @@ $('#operacao').mask('000')
 $('#conta').mask('00000000-0')
 $('#simples').mask('0')
 $('#valor_fatura').mask('000.000.000.000.000,00', {reverse: true});
+$('#valor__tomador').mask('000.000.000.000.000,00', {reverse: true});
 $('#matricula__trab').mask('0000')
 $('#indice').mask('0000')
 $('#folhartransporte').mask('000,00', {reverse: true});

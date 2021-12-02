@@ -25,9 +25,13 @@ class BoletimCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+   
+    public function create($id,$domingo,$sabado,$diasuteis,$data,$boletim)
     {
-        //
+        $user = Auth::user();
+        $bolcartaoponto = new Bolcartaoponto;
+        $lista = $bolcartaoponto->listacadastro($id);
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim'));
     }
 
     /**
@@ -39,10 +43,15 @@ class BoletimCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $novodados = [
+            $dados['lancamento'],
+            $dados['domingo'],
+            $dados['sabado'],
+            $dados['diasuteis'],
+            $dados['data'],
+            $dados['boletim']
+        ];
         $bolcartaoponto = new Bolcartaoponto;
-        $lista = $bolcartaoponto->listacadastro($dados['lancamento']);
-        $user = Auth::user();
-        $id = $dados['lancamento'];
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
             'trabalhador'=>'required',
@@ -74,22 +83,15 @@ class BoletimCartaoPontoController extends Controller
             'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
         if ($validator->fails()) {
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))  
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
-            ])->withErrors($validator);
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
         }
         $bolcartaopontos = $bolcartaoponto->cadastro($dados);
-        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))  
-        ->with([
-            'domingo'=>$dados['domingo'],
-            'sabado'=>$dados['sabado'],
-            'diasuteis'=>$dados['diasuteis'],
-            'data'=>$dados['data']
-        ])->withErrors(['true'=>'Cadastro realisado com sucesso!']);
+        if ($bolcartaopontos) {
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Cadastro realizado com sucesso!']);
+        }else{
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Cadastro realizado com sucesso!']);
+        }
+        
     }
 
     /**
@@ -126,10 +128,15 @@ class BoletimCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $user = Auth::user();
-        $bolcartaoponto = new Bolcartaoponto;
-        $lista = $bolcartaoponto->listacadastro($dados['lancamento']);
-     
+        $novodados = [
+            $dados['lancamento'],
+            $dados['domingo'],
+            $dados['sabado'],
+            $dados['diasuteis'],
+            $dados['data'],
+            $dados['boletim']
+        ];
+        $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
             'trabalhador'=>'required',
@@ -161,33 +168,13 @@ class BoletimCartaoPontoController extends Controller
             'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
         if ($validator->fails()) {
-            $id = $dados['lancamento'];
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))  
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
-            ])->withErrors($validator);
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
         }
         $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
         if ($bolcartaopontos) {
-            $id = $dados['lancamento'];
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
-            ])->withErrors(['true'=>'Atualizado com sucesso!']);
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso!']);
         }else{
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
-            ])->withErrors(['false'=>'Não foi porssível atualizar os dados!']);
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Não foi porssível atualizar os dados!']);
         }
     }
 

@@ -7,17 +7,19 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lfvalor','lsquantidade','licodigo','trabalhador','lancamento'
+        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','trabalhador','lancamento'
     ];
     public function cadastro($dados)
     {
+        // dd($dados);
        return Lancamentorublica::create([
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
-            'lfvalor'=>str_replace(",",".",$dados['valor'])
+            'lfvalor'=>str_replace(",",".",$dados['valor']),
+            'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);
     }
     public function listacadastro($id)
@@ -26,7 +28,7 @@ class Lancamentorublica extends Model
         ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
         ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->select(
-            'trabalhadors.*', 
+            'trabalhadors.tsnome', 
             'lancamentorublicas.*', 
             )
         ->where('lancamentotabelas.id', $id)
@@ -77,7 +79,8 @@ class Lancamentorublica extends Model
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
-            'lfvalor'=>str_replace(",",".",$dados['valor'])
+            'lfvalor'=>str_replace(",",".",$dados['valor']),
+            'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);
     }
     public function deletar($id)

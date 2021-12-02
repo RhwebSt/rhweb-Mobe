@@ -484,7 +484,7 @@
                     $('#atualizar').removeAttr( "disabled" )
                     $('#deletar').removeAttr( "disabled" )
                     $('#excluir').removeAttr( "disabled" )
-                    $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/"+data.tomador+"/mostrar")
+                    $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+data.tomador)
                     $('#method').val('PUT')
                 
                 }else{

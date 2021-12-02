@@ -21,8 +21,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('fichaepitrab/{id}','fichaEpi\\fichaEpiTrabController@ficha');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget');
-    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
-    Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');
+    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
+    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy','show']);
+    Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
     Route::get('tabcadastro/{quantidade}/{boletim}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
@@ -33,7 +34,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
     Route::get('fatura','Fatura\\FaturaController@index');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
-    Route::resource('tabelapreco.mostrar','TabelaPreco\\TabelaPrecoController')->only(['index', 'create']);
+
+    Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
+
     Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');

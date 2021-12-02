@@ -27,12 +27,34 @@
     
 }
 
+
+.dropdown-menu{
+    background-image: linear-gradient(120deg, #1250d6, #0751f3, rgb(71, 42, 236));
+    margin-top: 10px;
+}
+
+.dropdown-item{
+    color: white;
+    transition: ease-in-out 300ms;
+}
+
+.dropdown-item:hover{
+    color: black;
+    transition: ease-in-out 300ms;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--body-bg);
     color: var(--body-color);
 
 }
+
+form input[type="text"] {
+            text-transform: uppercase !important;
+            color:black !important;
+            font-weight: bold !important;
+        }
 
 
 input:hover{
@@ -42,6 +64,8 @@ input:hover{
     transition:  ease-in-out .4s;
 
 }
+
+
 
 .form-check-label{
     font-size: 16px;
@@ -122,6 +146,10 @@ input:hover{
 .trash__delete{
     background-color: red;
 }
+
+
+
+
 
 
 

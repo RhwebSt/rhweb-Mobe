@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
+use App\Trabalhador;
+use PDF;
 class CadastroCartaoPontoController extends Controller
 {
     /**
@@ -74,7 +76,8 @@ class CadastroCartaoPontoController extends Controller
                 'domingo'=>$dados['domingo'],
                 'sabado'=>$dados['sabado'],
                 'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
+                'data'=>$dados['data'],
+                'boletim'=>$dados['liboletim']
             ]);
         }else if($listalancamentotabela){
             $lista = $bolcartaoponto->listacadastro($listalancamentotabela->id);
@@ -84,7 +87,8 @@ class CadastroCartaoPontoController extends Controller
                 'domingo'=>$dados['domingo'],
                 'sabado'=>$dados['sabado'],
                 'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
+                'data'=>$dados['data'],
+                'boletim'=>$dados['liboletim']
             ]);
         }
         $condicao = 'cadastrafalse';
@@ -99,7 +103,17 @@ class CadastroCartaoPontoController extends Controller
      */
     public function show($id)
     {
-      
+        $lancamentotabela = new Lancamentotabela;
+        $trabalhador = new Trabalhador;
+        $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
+        
+        $dados = [];
+        foreach ($lancamentotabelas as $key => $value) {
+            array_push($dados,$value->trabalhador);
+        }
+        $trabalhadors = $trabalhador->relatorioboletim($dados);
+        $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors'));
+        return $pdf->setPaper('a4','landscape')->stream('relatório.pdf');
     }
 
     /**
@@ -110,7 +124,7 @@ class CadastroCartaoPontoController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -140,19 +154,21 @@ class CadastroCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $user = Auth::user();
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
             $lista = $bolcartaoponto->listacadastro($id);
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data']
-            ]);
+            $novodados = [
+                $id,
+                $dados['domingo'],
+                $dados['sabado'],
+                $dados['diasuteis'],
+                $dados['data'],
+                $dados['liboletim'],
+                
+            ];
+            return redirect()->route('boletimcartaoponto.create',$novodados);
         }else{
             $condicao = 'editfalse';
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
@@ -178,4 +194,5 @@ class CadastroCartaoPontoController extends Controller
         }
         return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors([$condicao]);
     }
+  
 }
