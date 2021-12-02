@@ -60,22 +60,20 @@ class TabCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $user = Auth::user(); 
-        $quantidade = $dados['num__trabalhador'];
-        $boletim = $dados['liboletim'];
+        $novodados = [
+            $dados['num__trabalhador'],
+            $dados['liboletim']
+        ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
-            $lista = $lancamentorublica->listacadastro($lancamentotabelas['id']);
-            $id = $lancamentotabelas['id'];
-            return view('tabelaCadastro.index',compact('user','boletim','quantidade','id','lista'));
+            array_push($novodados,$lancamentotabelas['id']);
+            return redirect()->route('tabcadastro.create',$novodados);
         }else if ($listalancamentotabela) {
-            $lista = $lancamentorublica->listacadastro($listalancamentotabela->id);
-            
-            $id =$listalancamentotabela->id;
-            return view('tabelaCadastro.index',compact('user','boletim','quantiade','id','lista'));
+            array_push($novodados,$listalancamentotabela->id);
+            return redirect()->route('tabcadastro.create',$novodados);
         }
         $condicao = 'cadastrafalse';
         return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
@@ -132,15 +130,18 @@ class TabCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $user = Auth::user();
-        $quantidade = $dados['num__trabalhador'];
-        $boletim = $dados['liboletim'];
+      
+        $novodados = [
+            $dados['num__trabalhador'],
+            $dados['liboletim'],
+            $id
+        ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
-            $lista = $lancamentorublica->listacadastro($id);
-            return view('tabelaCadastro.index',compact('boletim','user','id','lista','quantidade'));
+            return redirect()->route('tabcadastro.create',$novodados);
+            // return view('tabelaCadastro.index',compact('boletim','user','id','lista','quantidade'));
         }else{
             $condicao = 'editfalse';
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);

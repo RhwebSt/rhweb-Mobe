@@ -13,8 +13,9 @@
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
         <link rel="stylesheet" href="{{url('/css/style.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
             rel="stylesheet">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -150,13 +151,7 @@
                               </ul>
                             </li>
                           </ul>
-
-                          
-                            
-
-                          
-
-                         
+      
 
                   <div class="dbg-primary-flex align-items-end bguser "> 
                     <div class="flex-shrink-0 dropdown flex-row-reverse">
@@ -182,20 +177,20 @@
               </ul>
             </div>
           </div>
-          <div class="">
+            <div class="">
                 <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust"></i></button>
+            </div>
+            
         </div>
-</nav>
-
-
-
+        </div>
+    </nav>
+</main>
 
    @yield('conteine')
 
-    <footer class="mt-5" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
-        <p class="text-center p-4  col-md-12">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
+    <footer class="mt-5 footer d-none" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
+        <p class="text-center p-4">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
-    </main>
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>

@@ -24,7 +24,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->names('boletimcartaoponto');
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController')->names('cadastrocartaoponto');
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
-    Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->names('tabcadastro');
+    Route::get('tabcadastro/{quantidade}/{boletim}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
+    Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
     Route::resource('home','Home\\HomeController')->names('home');
    

@@ -40,28 +40,28 @@
             </div>
             <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
-                    <th class="col text-black border-right border-left text-white text-center" style="width: 400px;">Nome</th>
-                    <th class="col text-center" style="width:115px;">CPF</th>
-                    <th class="col text-center">Tipo</th>
-                    <th class="col text-center" style="width:170px">Data de nascimento</th>
-                    <th class="col text-center" style="width:110px;">IRRF</th>
-                    <th class="col text-center" style="width:110px;">SF</th>
-                    <th colspan="2" class="col text-center" style="width:190px;">Ações</th>
+                    <th class="col text-center border-start border-top" style="width: 400px;">Nome</th>
+                    <th class="col text-center border-top" style="width:115px;">CPF</th>
+                    <th class="col text-center border-top">Tipo</th>
+                    <th class="col text-center border-top" style="width:200px">Data de nascimento</th>
+                    <th class="col text-center border-top" style="width:110px;">IRRF</th>
+                    <th class="col text-center border-top" style="width:110px;">SF</th>
+                    <th colspan="2" class="col text-center border-end border-top" style="width:150px;">Ações</th>
                 </thead>
-                <tbody style="background-color: #4C5454; color: white;">
+                <tbody style="background-color: #081049; color: white;">
                 @if(count($depedentes) > 0)
                 @foreach ($depedentes as $depedente)
                     <tr>               
-                        <td class=" border-right border-left text-center  border-right border-left text-capitalize" style="width: 400px;">
+                        <td class="col text-center border-bottom border-start text-capitalize" style="width: 400px;">
                             {{$depedente->dsnome}}
                         </td>
-                        <td class=" text-center  border-right border-left" style="width:115px;">
+                        <td class="col text-center border-bottom" style="width:115px;">
                             {{$depedente->dscpf}}
                         </td>
-                        <td class=" text-center  border-right border-left text-capitalize">
+                        <td class="col text-center border-bottom text-capitalize">
                             {{$depedente->dstipo}}
                         </td>
-                        <td class=" text-center" style="width:170px">
+                        <td class="col text-center border-bottom" style="width:200px">
                             @if($depedente->dsdata)
                                 <?php
                                     $data = explode('-',$depedente->dsdata);
@@ -70,16 +70,19 @@
                                 {{$data}}
                             @endif
                         </td>
-                        <td class=" text-center  border-right border-left" style="width:110px;">
+                        <td class="col text-center border-bottom" style="width:110px;">
                             {{$depedente->dsirrf}}
                         </td>
-                        <td class=" text-center  border-right border-left" style="width:110px;">
+                        <td class="col text-center border-bottom" style="width:110px;">
                             {{$depedente->dssf}}
                         </td>
-                        <td class=" text-center" style="width:190px;">
-                            <a href="{{ route('depedente.edit',$depedente->id) }}" class="btn btn-block botao me-3">Editar</a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Excluir
+                        <td class="col text-center border-bottom border-end" style="width:150px;">
+                            <button class="btn" style="background-color:#204E83;">
+                            <a href="{{ route('depedente.edit',$depedente->id) }}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                            </button>
+                            
+                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#FF331F">
+                                <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
                             </button>
                             
                             <!-- Modal -->
@@ -94,7 +97,7 @@
                                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                        <p class="text-black">Deseja realmente excluir?</p>
+                                        <p class="text-black text-start">Deseja realmente excluir?</p>
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>

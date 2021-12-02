@@ -1,5 +1,5 @@
 :root{
-    --body-bg:#f8f8f8;
+    --body-bg:#F4F4F6;
     --body-color: black;
     --input-hover:1px 0.5px rgb(5, 133, 252), 0 0 1px rgba(0, 89, 255, 0.986);
     --input-focus-color: #6606e4;
@@ -28,7 +28,7 @@
 }
 
 body {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: var(--body-bg);
     color: var(--body-color);
 
@@ -118,6 +118,12 @@ input:hover{
     height: 100px;
     border: var(--img-trab-color) ;
 }
+
+.trash__delete{
+    background-color: red;
+}
+
+
 
 
 

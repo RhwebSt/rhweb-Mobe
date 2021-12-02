@@ -17,6 +17,10 @@
         table{
             border-collapse: collapse;
         }
+        
+        .padding-left{
+            padding-left: 5px;
+        }
 
         body{
             font-family:sans-serif;
@@ -71,7 +75,7 @@
         }
 
         .firtprad{
-            width: 190.8px;
+            width: 254px;
         }
 
         .tomador{
@@ -87,7 +91,7 @@
         }
 
         .desc{
-            width:480px;
+            width:400px;
         }
 
         .quant{
@@ -95,19 +99,43 @@
         }
 
         .valor__total{
-            width:110px;
+            width:190px;
         }
 
         .total__receber{
-            width:541px;
+            width:567px;
+        }
+        
+        .empregados{
+            width:456px;
         }
 
         .valor__receber{
-            width: 221px;
+            width: 190px;
+        }
+        
+        .total__geral{
+            width: 301px;
         }
 
         .font__receber{
             font-size: 14px;
+        }
+        
+        .margin-tp{
+            margin-top: 40px;
+        }
+        
+        .margin-bt{
+            margin-bottom: 15px;
+        }
+        
+        .erro{
+            width: 763px;
+        }
+        
+        .destaque2{
+            background-color: #BABAC9;
         }
         
 
@@ -115,18 +143,18 @@
 
     <table>
         <tr>
-            <td class="small__font border-top border-bottom border-left firtprad text-center">Folha Para Conferência - 999999</td>
-            <td class="small__font border-top border-bottom firtprad text-center">Data do Boletim:
+            <td class="small__font  border-top border-bottom border-right firtprad text-center border-left destaque2">Boletim Nº: {{$lancamentotabelas[0]->liboletim}}</td>
+            <td class="small__font border-top border-bottom border-right firtprad text-center destaque2">Data do Boletim:
                 @if(isset($lancamentotabelas[0]->lsdata))
                     <?php
                         $data = explode('-',$lancamentotabelas[0]->lsdata);
-                        $data = $data[2].'/'.$data[1].'/'.$data[0];
+                        $data2 = $data[2].'/'.$data[1].'/'.$data[0];
                     ?>
-                    {{$data}}
+                    {{$data2}}
                 @endif
             </td>
-            <td class="small__font border-top border-bottom firtprad text-center">Ano Referência: 2021</td>
-            <td class="small__font border-top border-bottom border-right firtprad text-center">Boletim Nº: {{$lancamentotabelas[0]->liboletim}}</td>
+            <td class="small__font border-top border-bottom border-right firtprad text-center destaque2">Ano Referência: {{$data[0]}}</td>
+            
         </tr>
     </table>
 
@@ -141,33 +169,114 @@
             <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$lancamentotabelas[0]->tsnome}}</td>
         </tr>
     </table>
-
+   @if(count($trabalhadors) > 0)
+     @foreach($trabalhadors as $trabalhador)
+     <?php
+        $valor = 0;
+    ?>
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center"></td>
-            <td class="border-left border-right border-top border-bottom small__font text-bold  text-center nome">Eliel Felipe dos Santos Rocha</td>
+            <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center destaque2">{{$trabalhador->tsmatricula}}</td>
+            <td class="border-left border-right border-top border-bottom small__font text-bold  text-center nome destaque2">{{$trabalhador->tsnome}}</td>
         </tr>
     </table>
-
-    <table>
-        <tr>
-            <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
-            <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
-            <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
-            <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
-        </tr>
-
-        <tr>
-            <td class="border-left border-right border-top border-bottom small__font matric text-center">0001</td>
-            <td class="border-left border-right border-top border-bottom small__font text-center desc">Hora Extra 50%</td>
-            <td class="border-left border-right border-top border-bottom small__font text-center quant">4</td>
-            <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ 999.999.999,99</td>
-        </tr>
-    </table>
-
-    <table>
-        <tr>
-            <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__receber font__receber">Total a Receber</td>
-            <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ 999.999.999,99</td>
-        </tr>
-    </table>
+     
+            <table>
+                <tr>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
+                </tr>
+                @foreach($lancamentotabelas as $lancamentotabela)
+                @if($lancamentotabela->trabalhador === $trabalhador->id)
+                <tr>
+                    <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
+                    <td class="border-left border-right border-top border-bottom small__font text-center desc">{{$lancamentotabela->lshistorico}}</td>
+                    <td class="border-left border-right border-top border-bottom small__font text-center quant">{{$lancamentotabela->lsquantidade}}</td>
+                    <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)$lancamentotabela->lsquantidade * $lancamentotabela->lfvalor, 2, ',', '')}}</td>
+                </tr>
+                <?php
+                    $valor += $lancamentotabela->lsquantidade * $lancamentotabela->lfvalor
+                ?>
+                @endif
+                @endforeach
+            </table>
+           
+            <table class="margin-bt">
+                <tr>
+                    <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__receber font__receber padding-left">Total</td>
+                    <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ {{number_format((float)$valor, 2, ',', '')}}
+                    </td>
+                </tr>
+            </table>
+            
+            
+          
+          
+       
+    @endforeach
+    <table class="margin-tp">
+                <tr>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Resumo do Boletim</td>
+                </tr>
+            </table>
+            
+            <table>
+                 <tr>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
+                    <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
+                </tr>
+                <?php
+                    $dados = [];
+                    $total = 0;
+                    foreach ($lancamentotabelas as $key => $value) {
+                        if (!in_array($value->licodigo, $dados)) {
+                            array_push($dados,$value->licodigo.':'.$value->lshistorico);
+                        }
+                    }
+                    foreach ($dados as $key => $value) {
+                        $codigo = explode(':',$value);
+                        $quantidade = 0;
+                        $valor = 0;
+                        foreach ($lancamentotabelas as $key => $value) {
+                            if ($value->licodigo == $codigo[0]) {
+                                $quantidade += $value->lsquantidade;
+                                $valor += ($value->lfvalor * $value->lsquantidade);
+                            }
+                        }
+                        echo'<tr>
+                            <td class="border-left border-right border-top border-bottom small__font matric text-center">
+                            '.$codigo[0].'
+                            </td>
+                            <td class="border-left border-right border-top border-bottom small__font text-center desc">
+                            '.$codigo[1].'
+                            </td>
+                            <td class="border-left border-right border-top border-bottom small__font text-center quant">'.$quantidade.'</td>
+                            <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ '.number_format((float)$valor, 2, ',', '').'</td>
+                        </tr>';
+                        $total += $valor;
+                    }
+                  
+                   
+                ?>
+                    
+                
+            </table>
+            
+            <table>
+                <tr>
+                    <td class="border-left border-right border-top border-bottom small__font destaque text-bold empregados font__receber padding-left">Numero de Empregados: {{count($trabalhadors)}}</td>
+                    <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__geral text-center font__receber">Total Geral: R$ {{number_format((float)$total, 2, ',', '')}}</td>
+                </tr>
+            </table>
+            @else
+            
+            <table>
+                <tr>
+                    <td class="border-right border-bottom border-top border-left destaque2 erro text-center text-bold" > Não á Nenhum Boletim Cadastrado</td>
+                </tr>
+            </table>
+        @endif

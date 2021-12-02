@@ -40,6 +40,7 @@ class Lancamentotabela extends Model
             'lancamentorublicas.licodigo',
             'lancamentorublicas.lshistorico',
             'lancamentorublicas.lsquantidade',
+            'lancamentorublicas.lfvalor',
             'lancamentorublicas.trabalhador',
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',

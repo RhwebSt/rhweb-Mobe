@@ -12,19 +12,19 @@
                         </div>
                     @elseif($error === 'editfalse')
                         <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi porssivél atualizar os dados!</strong>
+                            <strong>Não foi possível atualizar os dados!</strong>
                         </div>
                     @elseif($error === 'deletatrue')
                         <div class="alert alert-success mt-2 alert-block">
-                            <strong>Registro deletador com sucesso!</strong>
+                            <strong>Registro deletado com sucesso!</strong>
                         </div>
                     @elseif($error === 'cadastratrue')
                         <div class="alert alert-success mt-2 alert-block">
-                            <strong>Cadastrador realizada com sucesso!</strong>
+                            <strong>Cadastrado realizada com sucesso!</strong>
                         </div>
                     @elseif($error === 'cadastrafalse')
                         <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi porssivél realizar o cadastro !</strong>
+                            <strong>Não foi possível realizar o cadastro !</strong>
                         </div>
                     @endif
                     @endforeach
@@ -37,8 +37,8 @@
                   </div>
                   <div class="col">
                     <div class="btn text-end form-control" role="button" aria-label="Basic example">
-                      <a class="btn btn-primary ms-2 " href="{{ route('depedente.mostrar.index',$depedentes->trabalhador) }}"  role="button">Sair</a>
-                      <button type="submit" id="incluir" class="btn btn-primary">Atualizar</button>
+                      <a class="btn botao " href="{{ route('depedente.mostrar.index',$depedentes->trabalhador) }}"  role="button">Sair</a>
+                      <button type="submit" id="incluir" class="btn botao">Atualizar</button>
                     </div>
                   </div>
               </div>

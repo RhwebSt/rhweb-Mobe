@@ -41,7 +41,7 @@
     
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
                     <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
-                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" role="button">Relatório</a>
+                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button">Relatório</a>
                     <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       Excluir
                   </button>
@@ -51,7 +51,8 @@
               
             <input type="hidden" name="lancamento" value="{{$id}}">
             <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
-        
+            <input type="hidden" name="valor" id="valor">
+            <input type="hidden" name="boletim" value="{{$boletim}}">
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
@@ -83,7 +84,7 @@
             </div>
 
             <div class="col-md-8 input">
-                <label for="rubrica" class="form-label">Rúbrica</label>
+                <label for="rubrica" class="form-label">Desrição</label>
                 <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
                 <datalist id="rublicas">   
                 </datalist>
@@ -104,32 +105,31 @@
             
             </form>
 
-        <table class="table table-sm border-bottom  text-white table-responsive mt-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+        <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
             <thead>
-                <th colspan="2" class="col text-white">Nome do Trabalhador</th>
-                <th class="col text-white">Cod</th>
-                <th  class="col text-white">Rúbrica</th>
-                <th class="col text-white">Quantidade/Tonelada</th>
-                <th class="col text-white">Valor Unitário</th>
-                <th class="col text-white">Total R$</th>
-                <th class="col text-white">Ação</th>
+                <th class="col text-center border-end border-start border-top" style="width:400px">Nome do Trabalhador</th>
+                <th class="col text-center border-end border-top" style="width:70px">Cod</th>
+                <th  class="col text-center border-end border-top" style="width:400px">Descrição</th>
+                <th class="col text-center border-end border-top" style="width:100px">Quantidade/Tonelada</th>
+                <th class="col text-center border-end border-top" style="width:170px">Valor Unitário</th>
+                <th class="col text-center border-end border-top" style="width:170px">Total R$</th>
+                <th class="col text-center border-end border-top " style="width:70px">Ação</th>
             </thead>
-            <tbody>
+            <tbody style="background-color: #081049; color: white;">
                 @if(count($lista) > 0)
                 @foreach($lista as $listas)
                     <tr>
-                        <td class="bg-light text-black">{{$listas->licodigo}}</td>
-                        <td class="bg-light text-black">{{$listas->lshistorico}}</td>
-                        <td class="bg-light text-black">{{$listas->lsquantidade}}</td>
-                        <td class="bg-light text-black">{{$listas->lshistorico}}</td>
-                        <td class="bg-light text-black">{{$listas->lsquantidade}}</td>
-                        <td class="bg-light text-black"></td>
-                        <td class="bg-light text-black"></td>
-                        <td class="bg-light text-black">
+                        <td class="col text-center border-start border-end">Eliel Felipe dos Santos Rocha</td>
+                        <td class="col text-center border-end">{{$listas->licodigo}}</td>
+                        <td class="col text-center border-end">{{$listas->lshistorico}}</td>
+                        <td class="col text-center border-end">{{$listas->lsquantidade}}</td>
+                        <td class="col text-center border-end">R$ 999.999.999,99</td>
+                        <td class="col text-center border-end">R$ 999.999.999,99</td>
+                        <td class="col text-center border-end">
                         <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn "><i class="fal fa-trash"></i></button>
+                            <button type="submit" class="btn "><i style="color:#FF331F;" class="fal fa-trash"></i></button>
                         </form> 
                         </td>
                     </tr>
@@ -189,6 +189,7 @@
                             });
                             $('#rublicas').html(nome)
                             $('#codigo').val(data[0].tsrubrica)
+                            $('#valor').val(data[0].tsvalor)
                         }else{
                             
                             $('#rubrica').addClass('is-invalid')

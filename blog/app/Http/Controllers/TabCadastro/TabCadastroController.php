@@ -26,9 +26,12 @@ class TabCadastroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($quantidade,$boletim,$id)
     {
-        //
+        $user = Auth::user(); 
+        $lancamentorublica = new Lancamentorublica;
+        $lista = $lancamentorublica->listacadastro($id);
+        return view('tabelaCadastro.index',compact('user','boletim','quantidade','id','lista'));
     }
 
     /**
@@ -41,14 +44,15 @@ class TabCadastroController extends Controller
     {
         $dados = $request->all();
         $lancamentorublica = new Lancamentorublica;
-        $lista = $lancamentorublica->listacadastro($dados['lancamento']);
-        $user = Auth::user();
-        $quantidade = $dados['numtrabalhador'];
-        $id = $dados['lancamento'];
+        $novodados = [
+            $dados['numtrabalhador'],
+            $dados['boletim'],
+            $dados['lancamento'],
+        ];
         $lancamentorublicas = $lancamentorublica->verifica($dados);
         if ($lancamentorublicas) {
             $condicao = 'jacadastrador';
-            return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors($condicao);
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors($condicao);
         }
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
@@ -63,7 +67,7 @@ class TabCadastroController extends Controller
             ]
         );
         if ($validator->fails()) {
-            return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors($validator);
+           return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
         }
         $condicao = '';
         $lancamentorublicas = $lancamentorublica->cadastro($dados);
@@ -72,7 +76,7 @@ class TabCadastroController extends Controller
         }else{
             $condicao = 'cadastrafalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
+       return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
     }
 
     /**
@@ -96,7 +100,7 @@ class TabCadastroController extends Controller
      */
     public function edit($id)
     {
-        //
+       
     }
 
     /**
@@ -110,8 +114,11 @@ class TabCadastroController extends Controller
     {
         $dados = $request->all();
         $lancamentorublica = new Lancamentorublica;
-        $lista = $lancamentorublica->listacadastro($dados['lancamento']);
-        $user = Auth::user();
+        $novodados = [
+            $dados['numtrabalhador'],
+            $dados['boletim'],
+            $dados['lancamento'],
+        ];
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
             'matricula'=>'required|max:4',
@@ -119,18 +126,16 @@ class TabCadastroController extends Controller
             'quantidade'=>'required'
         ]);
         if ($validator->fails()) {
-            return view('tabelaCadastro.index',compact('user','id','lista'))->withErrors($validator);
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
         }
         $condicao = '';
         $lancamentorublicas = $lancamentorublica->editar($dados,$id);
-        $id = $dados['lancamento'];
-        $quantidade = $dados['numtrabalhador'];
         if ($lancamentorublicas) {
             $condicao = 'edittrue';
         }else{
             $condicao = 'editfalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
+        return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
     }
 
     /**
@@ -144,20 +149,18 @@ class TabCadastroController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
         $lancamentorublicas = $lancamentorublica->listafirst($id);
-        $delete = $id;
-        if ($lancamentorublicas) {
-            $id = $lancamentorublicas->lancamento;
-        }
         $lancamentotabelas = $lancamentotabela->listacomun($lancamentorublicas->lancamento);
-        $quantidade = $lancamentotabelas->lsnumero;
-        $user = Auth::user();
-        $lancamentorublicas = $lancamentorublica->deletar($delete);
-        $lista = $lancamentorublica->listacadastro($id);
+        $novodados = [
+            $lancamentotabelas->lsnumero,
+            $lancamentotabelas->liboletim,
+            $lancamentotabelas->id,
+        ];
+        $lancamentorublicas = $lancamentorublica->deletar($id);
         if ($lancamentorublicas) {
             $condicao = 'deletatrue';
         }else{
             $condicao = 'deletafalse';
         }
-        return view('tabelaCadastro.index',compact('user','id','lista','quantidade'))->withErrors([$condicao]);
+        return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
     }
 }

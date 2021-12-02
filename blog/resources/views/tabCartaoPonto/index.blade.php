@@ -50,6 +50,14 @@
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                   </div>
               </div>
+              
+                <div class="col-md-3">
+                    <label for="num__boletim" class="form-label">Nº do Boletim</label>
+                    <input type="text" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
+                    @error('liboletim')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
               
                 <div class="col-md-6 input">
@@ -67,7 +75,7 @@
                 
                   <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
                   
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <label for="matricula" class="form-label ">Matrícula</label>
                     <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
                     @error('matricula')
@@ -75,15 +83,9 @@
                     @enderror
                   </div>
 
-                <div class="col-md-2">
-                    <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                    <input type="text" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
-                    @error('liboletim')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="data" class="form-label">Data</label>
                   <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="" id="data">
                     @error('data')
@@ -91,7 +93,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="num__trabalhador" class="form-label">Nº de Trabalhador</label>
                   <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
                   @error('num__trabalhador')

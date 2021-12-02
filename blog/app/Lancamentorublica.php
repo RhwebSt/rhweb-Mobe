@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lsquantidade','licodigo','trabalhador','lancamento'
+        'lshistorico','lfvalor','lsquantidade','licodigo','trabalhador','lancamento'
     ];
     public function cadastro($dados)
     {
@@ -17,6 +17,7 @@ class Lancamentorublica extends Model
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
+            'lfvalor'=>str_replace(",",".",$dados['valor'])
         ]);
     }
     public function listacadastro($id)
@@ -66,6 +67,7 @@ class Lancamentorublica extends Model
             ['licodigo', '=', $dados['trabalhador']],
         ])->count();
     }
+
     public function editar($dados,$id)
     {
         return Lancamentorublica::where('id', $id)
@@ -75,6 +77,7 @@ class Lancamentorublica extends Model
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
+            'lfvalor'=>str_replace(",",".",$dados['valor'])
         ]);
     }
     public function deletar($id)
