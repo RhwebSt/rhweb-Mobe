@@ -30,7 +30,7 @@
         @endif     
         
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
-                    <input type="hidden" value="{{$tomador}}" name="tomador">
+                    <input type="hidden" value="{{$tomador}}" id="tomador" name="tomador">
                     @if($user->empresa)
                         <input type="hidden" name="empresa" value="{{$user->empresa}}">
                     @else
@@ -56,13 +56,7 @@
                       </div>
                   </div>
                   <h5 class="card-title text-center fs-3 ">Tabela de Preços</h5>
-                    <div class="col-md-2">
-                      <label for="ano" class="form-label">Ano</label>
-                      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="" id="ano">
-                      @error('ano')
-                        <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                    </div>
+                  
     
                     <div class="col-md-3">
                         <label for="rubricas" class="form-label">Código</label>
@@ -87,7 +81,13 @@
                       @enderror
                        <span class="text-danger" id="descricoesmensagem"></span>
                     </div>
-                  
+                    <div class="col-md-2">
+                      <label for="ano" class="form-label">Ano</label>
+                      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="" id="ano">
+                      @error('ano')
+                        <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                    </div>
                     <div class="col-md-3">
                       <label for="valor" class="form-label">Valor Trabalhador</label>
                       <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="" id="valor">
@@ -182,9 +182,10 @@
           $( ".pesquisa" ).keyup(function() {
                 var dados = $(this).val();
                 var tagname = $(this).attr('name');
+                var tomador = $('#tomador').val();
                 if (dados) {
                   $.ajax({
-                    url: "{{url('tabelapreco')}}/"+dados,
+                    url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+tomador,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -202,7 +203,7 @@
                             }else{
                               $('#descricoes').html(nome)
                             }
-                        }else if (data.length === 1) {
+                        }else if (data.length === 1 && dados.length > 3) {
                           if (tagname === 'rubrica') {
                             $('#rubricas').val(data[0].rsrublica)
                           }else{
@@ -217,10 +218,16 @@
                             $('#descricao').addClass('is-invalid')
                             $('#descricoesmensagem').text('Esta rublica não esta cadastra.')
                           }
+                          $('#form').attr('action', "{{ route('tabelapreco.store') }}");
+                          $('#incluir').removeAttr( "disabled" )
+                          $('#atualizar').attr('disabled','disabled')
+                          $('#deletar').attr('disabled','disabled')
+                          $('#method').val(' ')
+                          $('#excluir').attr( "disabled","disabled" )
                         }
                     }
                   });
-                }else{
+                }else if(dados.length < 3){
                   if (tagname === 'rubricas') {
                     $('#rubricas').val(' ');
                     $('#ano').val(' ')

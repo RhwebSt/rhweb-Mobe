@@ -28,7 +28,7 @@
                         Relatório
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.show',$boletim)}}">Relatório boletim cartão ponto</a></li>
+                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[$boletim,$tomador])}}">Relatório boletim cartão ponto</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                       </ul>
@@ -40,7 +40,7 @@
                     <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button">Sair</a>
                   </div>
               </div>
-            <input type="hidden" name="lancamento" value="{{$id}}"> 
+            <input type="hidden" name="lancamento" id="lancamento" value="{{$id}}"> 
             <input type="hidden" name="trabalhador" id="trabalhador">
             <input type="hidden" name="boletim" value="{{$boletim}}">
            
@@ -343,7 +343,44 @@
           </div>
 </div>
 <script>
-    
+    // $.ajax({
+    //     url: "{{route('listatabelapreco.lista',$tomador)}}",
+    //     type: 'get',
+    //     contentType: 'application/json',
+    //     success: function(data) {
+    //         console.log(data)
+    //         // $('#rubrica').removeClass('is-invalid')
+    //         // $('#rublicamensagem').text(' ')
+    //         // let nome = ''
+    //         // let codigo = ''
+    //         // if (data.length > 1) {
+    //         //     data.forEach(element => {
+    //         //     nome += `<option value="${element.tsdescricao}">`
+    //         //     });
+    //         //     data.forEach(element => {
+    //         //     codigo += `<option value="${element.tsdescricao}">`
+    //         //     });
+    //         //     if( tagname == 'codigo'){
+    //         //         $('#rubrica').val(' ')
+    //         //     }else if(tagname == 'rubrica'){
+    //         //         $('#codigo').val(' ')
+    //         //     }
+    //         //     $('#rublicas').html(nome)
+    //         //     $('#codigos').html(codigo)
+    //         // }else if(data.length === 1){
+    //         //     if( tagname == 'codigo'){
+    //         //         $('#rubrica').val(data[0].tsdescricao)
+    //         //     }else if( tagname == 'rubrica'){
+    //         //         $('#codigo').val(data[0].tsrubrica)
+    //         //     }
+    //         //     $('#valor').val(data[0].tsvalor)
+    //         //     $('#lftomador').val(data[0].tstomvalor)
+    //         // }else{
+    //         //     $('#rubrica').addClass('is-invalid')
+    //         //     $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+    //         // }
+    //     }
+    // });
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
@@ -376,7 +413,7 @@
             });
             function boletim(dados) {
                 $.ajax({
-                    url: "{{url('boletimcartaoponto')}}/"+dados,
+                    url: `{{url('boletimcartaoponto')}}/${dados}/${$('#lancamento').val()}`,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {

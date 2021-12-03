@@ -20,11 +20,21 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@ficha');
     Route::get('fichaepitrab/{id}','fichaEpi\\fichaEpiTrabController@ficha');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
-    Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget');
-    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
-    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy','show']);
+    Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
+    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
+    
+    Route::get('boletimcartaoponto/{boletim}/{trabalhador}','BoletimCartaoPonto\\BoletimCartaoPontoController@show');
+    
+    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
+
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
+
+    Route::get('cadastrocartaoponto/{id}/{tomador}','CadastroCartaoPonto\\CadastroCartaoPontoController@relatoriocartaoponto')->name('cadastrocartaoponto.relatoriocartaoponto');
+
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
+
+    Route::get('tabcartaoponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
+    
     Route::get('tabcadastro/{quantidade}/{boletim}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
@@ -35,9 +45,13 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('fatura','Fatura\\FaturaController@index');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
 
-    Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
 
-    Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit','show']);
+    Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
+    Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show')->name('tabelapreco.show');
+    Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit']);
+
+
+
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);

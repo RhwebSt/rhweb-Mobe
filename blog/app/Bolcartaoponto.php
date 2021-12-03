@@ -51,8 +51,8 @@ class Bolcartaoponto extends Model
             }
         })
         ->paginate(15);
-    }
-    public function listafirst($id)
+    } 
+    public function listafirst($id,$boletim)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
@@ -62,13 +62,17 @@ class Bolcartaoponto extends Model
             'trabalhadors.*', 
             'bolcartaopontos.*', 
             )
-        ->where(function($query) use ($id){
+        ->where(function($query) use ($id,$boletim){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%');
+                $query->where([
+                    ['trabalhadors.tsnome', 'like', '%'.$id.'%'],
+                    ['bolcartaopontos.lancamento',$boletim]
+                ]);
             }else{
                 $query->where([
                     ['trabalhadors.tsnome',$id],
+                    ['bolcartaopontos.lancamento',$boletim],
                     ['trabalhadors.empresa', $user->empresa]
                 ]);
             }

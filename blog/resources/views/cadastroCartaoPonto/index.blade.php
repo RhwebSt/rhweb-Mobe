@@ -31,6 +31,7 @@
                   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
                   @csrf
                   <input type="hidden" id="method" name="_method" value="">
+                  <input type="hidden" name="status" value="D" id="status">
                     <div class="row">
                       <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
            
@@ -125,9 +126,10 @@
             <script>
                $( "#num__boletim" ).keyup(function() {
                 var dados = $(this).val();
+                var status = $('#status').val();
                 if (dados) {
                     $.ajax({
-                        url: "{{url('tabcartaoponto')}}/"+dados,
+                        url: "{{url('tabcartaoponto')}}/"+dados+'/'+status,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {

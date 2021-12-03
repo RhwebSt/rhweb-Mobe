@@ -66,7 +66,7 @@ class TabCartaoPontoController extends Controller
         ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
+        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim'],$dados['status']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             array_push($novodados,$lancamentotabelas['id']);
@@ -87,8 +87,12 @@ class TabCartaoPontoController extends Controller
      */
     public function show($id)
     {
+       
+    }
+    public function pesquisa($id,$status)
+    {
         $lancamentotabela = new Lancamentotabela;
-        $lancamentotabelas = $lancamentotabela->listacomun($id);
+        $lancamentotabelas = $lancamentotabela->listacomun($id,$status);
         return response()->json($lancamentotabelas);
     }
 

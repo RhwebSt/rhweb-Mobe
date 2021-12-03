@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentotabela extends Model
 {
     protected $fillable = [
-        'liboletim','lsdata','lsnumero','tomador'
+        'liboletim','lsdata','lsnumero','lsstatus','tomador',
     ];
     public function cadastro($dados)
     {
@@ -15,12 +15,30 @@ class Lancamentotabela extends Model
             'liboletim'=>$dados['liboletim'],
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
+            'lsstatus'=>$dados['status'],
             'tomador'=>$dados['tomador'],
         ]);
     }
-    public function listacomun($id)
+    public function listacomun($id,$status)
     {
-        return Lancamentotabela::where('liboletim',$id)->orWhere('id',$id)->first();
+        return Lancamentotabela::where(function($query) use ($id,$status){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['liboletim',$id],
+                    ['lsstatus',$status]
+                ])->orWhere('id',$id);
+            }else{
+                $query->where([
+                    ['liboletim',$id],
+                    ['lsstatus',$status],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])->orWhere([
+                    ['id',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })->first();
     }
     public function listaget($id)
     {

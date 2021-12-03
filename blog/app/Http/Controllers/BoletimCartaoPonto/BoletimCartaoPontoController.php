@@ -26,12 +26,12 @@ class BoletimCartaoPontoController extends Controller
      * @return \Illuminate\Http\Response
      */
    
-    public function create($id,$domingo,$sabado,$diasuteis,$data,$boletim)
+    public function create($id,$domingo,$sabado,$diasuteis,$data,$boletim,$tomador)
     {
         $user = Auth::user();
         $bolcartaoponto = new Bolcartaoponto;
         $lista = $bolcartaoponto->listacadastro($id);
-        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim'));
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador'));
     }
 
     /**
@@ -100,13 +100,12 @@ class BoletimCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($trabalhador,$boletim)
     {
         $bolcartaoponto = new Bolcartaoponto;
-        $bolcartaopontos = $bolcartaoponto->listafirst($id);
+        $bolcartaopontos = $bolcartaoponto->listafirst($trabalhador,$boletim);
         return response()->json($bolcartaopontos);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

@@ -43,6 +43,7 @@ class TabCadastroController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        dd($dados);
         $lancamentorublica = new Lancamentorublica;
         $novodados = [
             $dados['numtrabalhador'],

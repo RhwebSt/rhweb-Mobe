@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
 use App\Trabalhador;
+use App\TabelaPreco;
 use PDF;
 class CadastroCartaoPontoController extends Controller
 {
@@ -62,34 +63,26 @@ class CadastroCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        
+        $novodados = [
+            $dados['domingo'],
+            $dados['sabado'],
+            $dados['diasuteis'],
+            $dados['data'],
+            $dados['liboletim'],
+            $dados['tomador'],
+        ];
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
-        $user = Auth::user();
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim']);
+        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim'],$dados['status']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
-            $lista = $bolcartaoponto->listacadastro($lancamentotabelas['id']);
-            $id = $lancamentotabelas['id'];
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data'],
-                'boletim'=>$dados['liboletim']
-            ]);
+            array_unshift($novodados, $lancamentotabelas['id']);
+            return redirect()->route('boletimcartaoponto.create',$novodados);
+           
         }else if($listalancamentotabela){
-            $lista = $bolcartaoponto->listacadastro($listalancamentotabela->id);
-            $id =$listalancamentotabela->id;
-            return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista'))
-            ->with([
-                'domingo'=>$dados['domingo'],
-                'sabado'=>$dados['sabado'],
-                'diasuteis'=>$dados['diasuteis'],
-                'data'=>$dados['data'],
-                'boletim'=>$dados['liboletim']
-            ]);
+            array_unshift($novodados, $listalancamentotabela->id);
+            return redirect()->route('boletimcartaoponto.create',$novodados);
+           
         }
         $condicao = 'cadastrafalse';
         return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors([$condicao]);
@@ -101,21 +94,26 @@ class CadastroCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$tomador)
     {
+      
+    }
+    public function relatoriocartaoponto($id,$tomador)
+    {
+        
         $lancamentotabela = new Lancamentotabela;
         $trabalhador = new Trabalhador;
+        $tabelapreco = new TabelaPreco; 
+        $tabelaprecos = $tabelapreco->lista($tomador);
         $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
-        
         $dados = [];
         foreach ($lancamentotabelas as $key => $value) {
             array_push($dados,$value->trabalhador);
         }
         $trabalhadors = $trabalhador->relatorioboletim($dados);
-        $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors'));
+        $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors','tabelaprecos'));
         return $pdf->setPaper('a4','landscape')->stream('relatório.pdf');
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -166,6 +164,7 @@ class CadastroCartaoPontoController extends Controller
                 $dados['diasuteis'],
                 $dados['data'],
                 $dados['liboletim'],
+                $dados['tomador']
                 
             ];
             return redirect()->route('boletimcartaoponto.create',$novodados);

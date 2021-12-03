@@ -18,7 +18,7 @@ class CreateLancamentotabelasTable extends Migration
             $table->char('liboletim', 50)->nullable();
             $table->char('lsdata', 10)->nullable();
             $table->char('lsnumero', 11)->nullable();
-           
+            $table->char('lsstatus', 2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->timestamps();

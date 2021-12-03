@@ -22,53 +22,51 @@ class TabelaPreco extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
-    public function first($id)
+    public function pesquisa($id,$tomador)
     {
-        return TabelaPreco::where(function($query) use ($id){
+        return TabelaPreco::where(function($query) use ($id,$tomador){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tsrubrica','like', '%'.$id.'%')
-                ->orWhere('tsdescricao', 'like', '%'.$id.'%')
-                ->orWhere('id',$id);
+                $query->where([
+                    ['tsrubrica','like', '%'.$id.'%'],
+                    ['tomador',$tomador]
+                ])
+                ->orWhere([
+                    ['tsdescricao', 'like', '%'.$id.'%'],
+                    ['tomador',$tomador]
+                ]);
+                // ->orWhere('id',$id);
             }else{
                  $query->where([
                         ['tsrubrica',$id],
+                        ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
                         ['tsdescricao',$id],
-                        ['empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['id',$id],
+                        ['tomador',$tomador],
                         ['empresa', $user->empresa],
                     ]);
+                    // ->orWhere([
+                    //     ['id',$id],
+                    //     ['empresa', $user->empresa],
+                    // ]);
             }
            
         })
-        ->first();
+        ->get();
     }
-    public function get($id)
+    public function lista($id)
     {
         return TabelaPreco::where(function($query) use ($id){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tsrubrica','like', '%'.$id.'%')
-                ->orWhere('tsdescricao', 'like', '%'.$id.'%')
-                ->orWhere('tomador',$id);
+                $query->where('tomador',$id);
             }else{
                  $query->where([
-                        ['tsrubrica',$id],
-                        ['empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['tsdescricao',$id],
-                        ['empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['tomador',$id],
-                        ['empresa', $user->empresa],
-                    ]);
+                    ['tomador',$id],
+                    ['empresa', $user->empresa]
+                ]);
             }
            
         })

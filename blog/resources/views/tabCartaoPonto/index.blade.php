@@ -74,6 +74,7 @@
                 </div>
                 
                   <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
+                  <input type="hidden" name="status" value="M" id="status">
                   
                 <div class="col-md-2">
                     <label for="matricula" class="form-label ">Matrícula</label>
@@ -130,9 +131,10 @@
             <script>
                $( "#num__boletim" ).keyup(function() {
                 var dados = $(this).val();
+                var status = $('#status').val();
                 if (dados) {
                     $.ajax({
-                        url: "{{url('tabcartaoponto')}}/"+dados,
+                        url: "{{url('tabcartaoponto')}}/"+dados+'/'+status,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {

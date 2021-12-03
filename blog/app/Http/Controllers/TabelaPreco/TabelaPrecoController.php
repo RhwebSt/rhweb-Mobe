@@ -17,7 +17,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->get($tomador);
+        $tabelaprecos = $tabelapreco->lista($tomador);
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 
@@ -80,18 +80,18 @@ class TabelaPrecoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$tomador)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->get($id);
+        $tabelaprecos = $tabelapreco->pesquisa($id,$tomador);
         return response()->json($tabelaprecos);
     }
-    public function listaget($id)
-    {
-        $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->get($id);
-        return response()->json($tabelaprecos);
-    }
+    // public function listaget($id)
+    // {
+    //     $tabelapreco = new TabelaPreco;
+    //     $tabelaprecos = $tabelapreco->get($id);
+    //     return response()->json($tabelaprecos);
+    // }
     /**
      * Show the form for editing the specified resource.
      *
