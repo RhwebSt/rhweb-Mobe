@@ -43,6 +43,7 @@ class BoletimCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        dd($dados);
         $novodados = [
             $dados['lancamento'],
             $dados['domingo'],

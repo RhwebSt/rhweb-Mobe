@@ -42,6 +42,7 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        
         $request->validate([
             'nome__completo' => 'required',
             'tomador'=>'required',
