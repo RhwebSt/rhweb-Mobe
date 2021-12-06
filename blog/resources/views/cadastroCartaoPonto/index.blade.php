@@ -33,7 +33,7 @@
                   <input type="hidden" id="method" name="_method" value="">
                   <input type="hidden" name="status" value="D" id="status">
                     <div class="row">
-                      <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
+                      <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
                             <button type="submit" id="incluir" class="btn botao">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
@@ -162,13 +162,13 @@
                $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
-                  url: "{{url('tomador')}}/"+dados,
+                  url: "{{url('tomador')}}/pesquisa/"+dados,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
                     tomador(' ')
                     let nome = ''
-                      if (data.length > 1) {
+                      if (data.length >= 1) {
                         data.forEach(element => {
                           nome += `<option value="${element.tsnome}">`
                           nome += `<option value="${element.tsmatricula}">`
@@ -176,13 +176,14 @@
                         });
                         $('#datalistOptions').html(nome)
                         
-                      }else if(data.length === 1){
-                        data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
-                          nome += `<option value="${element.tscpf}">`
-                        });
-                        $('#datalistOptions').html(nome)
+                      }
+                      if(data.length === 1 && dados.length > 4){
+                        // data.forEach(element => {
+                        //   nome += `<option value="${element.tsnome}">`
+                        //   nome += `<option value="${element.tsmatricula}">`
+                        //   nome += `<option value="${element.tscpf}">`
+                        // });
+                        // $('#datalistOptions').html(nome)
                         tomador(data[0])
                       }           
                   }
@@ -194,9 +195,9 @@
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
-                    if (data.length === 1) {
-                      tomador(data[0])
-                      $('#nome__completo').val(data[0].tsnome)
+                    if (data) {
+                      tomador(data)
+                      $('#nome__completo').val(data.tsnome)
                     }
                   }
               })

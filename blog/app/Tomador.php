@@ -58,9 +58,9 @@ class Tomador extends Model
             ->where(function($query) use ($id){
                 $user = auth()->user();
                 if ($user->hasPermissionTo('admin')) {
-                    $query->where('tsnome','like','%'.$id.'%')
-                    ->orWhere('tscnpj', 'like', '%'.$id.'%')
-                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                    $query->where('tsnome',$id)
+                    ->orWhere('tscnpj',$id)
+                    ->orWhere('tsmatricula',$id)
                     ->orWhere('tomadors.id',$id);
                 }else{
                      $query->where([
@@ -82,7 +82,48 @@ class Tomador extends Model
                 }
                
             })
-            ->get();
+            ->first();
+    }
+    public function pesquisa($id)
+    {
+        return DB::table('tomadors')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+        ->select(
+            'tomadors.tsnome',
+            'tomadors.tsmatricula',
+            'cartao_pontos.tomador',
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos',
+        ) 
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tsnome','like','%'.$id.'%')
+                ->orWhere('tscnpj', 'like', '%'.$id.'%')
+                ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                ->orWhere('tomadors.id',$id);
+            }else{
+                 $query->where([
+                        ['tsnome',$id],
+                        ['tomadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['tscnpj',$id],
+                        ['tomadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['tomadors.id',$id],
+                        ['tomadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['tsmatricula',$id],
+                        ['tomadors.empresa', $user->empresa],
+                    ]);
+            }
+           
+        })
+        ->get();
     }
     public function editar($dados,$id)
     {

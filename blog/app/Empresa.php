@@ -12,10 +12,10 @@ class Empresa extends Model
     public function cadastro($dados)
     {
        return Empresa::create([
-            'esnome'=>$dados['nome'],
+            'esnome'=>$dados['esnome'],
             'esfoto'=>$dados['foto'],
             'estelefone'=>$dados['telefone'],
-            'escnpj'=>$dados['cnpj_mf'],
+            'escnpj'=>$dados['escnpj'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],
             'esemail'=>$dados['email'],
@@ -30,7 +30,6 @@ class Empresa extends Model
     }
     public function first($id)
     {
-        
        return DB::table('empresas')
             ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
             ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
@@ -42,23 +41,23 @@ class Empresa extends Model
             ->where(function($query) use ($id){
                 $user = auth()->user();
                 if ($user->hasPermissionTo('admin')) {
-                    $query->where('empresas.esnome',$id)
-                    ->orWhere('empresas.escnpj',$id)
-                    ->orWhere('empresas.escnae',$id)
-                    ->orWhere('empresas.escodigomunicipio',$id)
+                    $query->where('empresas.esnome','like','%'.$id.'%')
+                    ->orWhere('empresas.escnpj','like','%'.$id.'%')
+                    ->orWhere('empresas.escnae','like','%'.$id.'%')
+                    ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%')
                     ->orWhere('empresas.id',$id);
                 }else{
                     $query->where([
-                        ['empresas.esnome',$id],
+                        ['empresas.esnome','like','%'.$id.'%'],
                         ['empresas.id', $user->empresa]
                     ])->orWhere([
-                        ['empresas.escnpj',$id],
+                        ['empresas.escnpj','like','%'.$id.'%'],
                         ['empresas.id', $user->empresa]
                     ])->orWhere([
-                        ['empresas.escnae',$id],
+                        ['empresas.escnae','like','%'.$id.'%'],
                         ['empresas.id', $user->empresa]
                     ])->orWhere([
-                        ['empresas.escodigomunicipio',$id],
+                        ['empresas.escodigomunicipio','like','%'.$id.'%'],
                         ['empresas.id', $user->empresa]
                     ])
                     ->orWhere([
@@ -67,8 +66,39 @@ class Empresa extends Model
                     ]);
                 }
             })
-           
             ->first();
+    }
+    public function pesquisa($id)
+    {
+        return Empresa::select('id','esnome','escnpj')->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('empresas.esnome','like','%'.$id.'%')
+                ->orWhere('empresas.escnpj','like','%'.$id.'%')
+                ->orWhere('empresas.escnae','like','%'.$id.'%')
+                ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%')
+                ->orWhere('empresas.id',$id);
+            }else{
+                $query->where([
+                    ['empresas.esnome','like','%'.$id.'%'],
+                    ['empresas.id', $user->empresa]
+                ])->orWhere([
+                    ['empresas.escnpj','like','%'.$id.'%'],
+                    ['empresas.id', $user->empresa]
+                ])->orWhere([
+                    ['empresas.escnae','like','%'.$id.'%'],
+                    ['empresas.id', $user->empresa]
+                ])->orWhere([
+                    ['empresas.escodigomunicipio','like','%'.$id.'%'],
+                    ['empresas.id', $user->empresa]
+                ])
+                ->orWhere([
+                    ['empresas.id',$id],
+                    ['empresas.id', $user->empresa]
+                ]);
+            }
+        })
+        ->get();
     }
     public function usuario($id)
     {
@@ -88,10 +118,10 @@ class Empresa extends Model
     {
         return Empresa::where('id', $id)
         ->update([
-            'esnome'=>$dados['nome'],
+            'esnome'=>$dados['esnome'],
             'esfoto'=>$dados['foto'],
             'estelefone'=>$dados['telefone'],
-            'escnpj'=>$dados['cnpj_mf'],
+            'escnpj'=>$dados['escnpj'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],
             'esemail'=>$dados['email'],

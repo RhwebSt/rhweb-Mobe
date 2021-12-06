@@ -21,7 +21,7 @@
                     <strong>Cadastrado realizada com sucesso!</strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
+                <div class="alert mt-2 alert-block" style="background-color: #CC2836;">
                     <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
             @endif
@@ -37,7 +37,7 @@
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">
-              <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
+              <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
                     <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
@@ -54,6 +54,7 @@
             <input type="hidden" name="valor" id="valor">
             <input type="hidden" name="lftomador" id="lftomador">
             <input type="hidden" name="boletim" value="{{$boletim}}">
+            <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
@@ -87,7 +88,7 @@
             </div>
 
             <div class="col-md-8 input">
-                <label for="rubrica" class="form-label">Desrição</label>
+                <label for="rubrica" class="form-label">Descrição</label>
                 <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror rubrica" list="rublicas" name="rubrica" value="" id="rubrica">
                 <datalist id="rublicas">   
                 </datalist>
@@ -107,49 +108,48 @@
             
             
             </form>
-
-        <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-            <thead>
-                <th class="col text-center border-end border-start border-top" style="width:400px">Nome do Trabalhador</th>
-                <th class="col text-center border-end border-top" style="width:70px">Cod</th>
-                <th  class="col text-center border-end border-top" style="width:400px">Descrição</th>
-                <th class="col text-center border-end border-top" style="width:100px">Quantidade/Tonelada</th>
-                <th class="col text-center border-end border-top" style="width:170px">Valor Unitário</th>
-                <th class="col text-center border-end border-top" style="width:170px">Total R$</th>
-                <th class="col text-center border-end border-top " style="width:70px">Ação</th>
-            </thead>
-            <tbody style="background-color: #081049; color: white;">
-                @if(count($lista) > 0)
-                @foreach($lista as $listas)
-                    <tr>
-                        <td class="col text-center border-start border-end">
-                            {{$listas->tsnome}}
-                        </td>
-                        <td class="col text-center border-end">{{$listas->licodigo}}</td>
-                        <td class="col text-center border-end">{{$listas->lshistorico}}</td>
-                        <td class="col text-center border-end">{{$listas->lsquantidade}}</td>
-                        <td class="col text-center border-end">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                        <td class="col text-center border-end">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
-                        <td class="col text-center border-end">
-                        <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn "><i style="color:#FF331F;" class="fal fa-trash"></i></button>
-                        </form> 
-                        </td>
-                    </tr>
-                @endforeach
-                @else
-                    <tr>
-                        <td colspan="8" class="bg-light text-black">
-                        <div class="alert alert-danger" role="alert">
-                            Não á registro cadastrado!
-                        </div>
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+        <div class="table-responsive-lg">
+            <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                <thead>
+                    <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
+                    <th class="col text-center border-top text-nowrap" style="width:70px">Cod</th>
+                    <th class="col text-center border-top text-nowrap" style="width:400px">Descrição</th>
+                    <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade/Tonelada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:170px">Valor Unitário</th>
+                    <th class="col text-center border-top text-nowrap" style="width:170px">Total R$</th>
+                    <th class="col text-center border-end border-top text-nowrap" style="width:70px">Ação</th>
+                </thead>
+                <tbody style="background-color: #081049; color: white;">
+                    @if(count($lista) > 0)
+                    @foreach($lista as $listas)
+                        <tr>
+                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap">{{$listas->tsnome}}</td>
+                            <td class="col text-center border-bottom text-nowrap">{{$listas->licodigo}}</td>
+                            <td class="col text-center border-bottom text-nowrap capitalize">{{$listas->lshistorico}}</td>
+                            <td class="col text-center border-bottom text-nowrap">{{$listas->lsquantidade}}</td>
+                            <td class="col text-center border-bottom text-nowrap">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom border-end text-nowrap">
+                            <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn "><i style="color:#FF331F;" class="fal fa-trash"></i></button>
+                            </form> 
+                            </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="text-center border-bottom border-end border-start text-nowrap" colspan="8" style="background-color: #081049; color: white;">
+                                <div class="alert" role="alert" style="background-color: #CC2836;">
+                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -182,39 +182,41 @@
                 var tagname = $(this).attr('name')
                 if (dados) {
                     $.ajax({
-                        url: "{{url('listatabelapreco')}}/"+dados,
+                        url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            $('#rubrica').removeClass('is-invalid')
-                            $('#rublicamensagem').text(' ')
+                            // $('#rubrica').removeClass('is-invalid')
+                            // $('#rublicamensagem').text(' ')
                             let nome = ''
-                            let codigo = ''
-                            if (data.length > 1) {
+                            // let codigo = ''
+                            if (data.length >= 1) {
+                                // data.forEach(element => {
+                                // nome += `<option value="${element.tsdescricao}">`
+                                // });
                                 data.forEach(element => {
-                                nome += `<option value="${element.tsdescricao}">`
-                                });
-                                data.forEach(element => {
-                                codigo += `<option value="${element.tsdescricao}">`
+                                    codigo += `<option value="${element.tsrubrica}">`
                                 });
                                 if( tagname == 'codigo'){
                                     $('#rubrica').val(' ')
                                 }else if(tagname == 'rubrica'){
                                     $('#codigo').val(' ')
                                 }
-                                $('#rublicas').html(nome)
+                                // $('#rublicas').html(nome)
                                 $('#codigos').html(codigo)
-                            }else if(data.length === 1){
+                            }
+                            if(data.length === 1 && dados.length > 3){
                                 if( tagname == 'codigo'){
                                     $('#rubrica').val(data[0].tsdescricao)
-                                }else if( tagname == 'rubrica'){
-                                    $('#codigo').val(data[0].tsrubrica)
                                 }
+                                // if( tagname == 'rubrica'){
+                                //     $('#codigo').val(data[0].tsrubrica)
+                                // }
                                 $('#valor').val(data[0].tsvalor)
                                 $('#lftomador').val(data[0].tstomvalor)
                             }else{
-                                $('#rubrica').addClass('is-invalid')
-                                $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+                                // $('#rubrica').addClass('is-invalid')
+                                // $('#rublicamensagem').text('Esta rublica não esta cadastra.')
                             }
                         }
                     });
@@ -231,7 +233,7 @@
                         $('#nomemensagem').text(' ')
                         $( "#nome__completo" ).removeClass('is-invalid')
                       let nome = ''
-                      if (data.length > 1) {
+                      if (data.length >= 1) {
                         data.forEach(element => {
                           nome += `<option value="${element.tsnome}">`
                           nome += `<option value="${element.tsmatricula}">`
@@ -239,7 +241,8 @@
                         });
                         $('#nomecompleto').html(nome)
                         
-                      }else if(data.length === 1){
+                      }
+                      if(data.length === 1 && dados.length > 4){
                         // data.forEach(element => {
                         //   nome += `<option value="${element.tsnome}">`
                         //   nome += `<option value="${element.tsmatricula}">`

@@ -121,7 +121,12 @@ class TomadorController extends Controller
         $tomadors = $tomador->first($id);
         return response()->json($tomadors);
     }
-
+    public function pesquisa($id)
+    {
+        $tomador = new Tomador;
+        $tomadors = $tomador->pesquisa($id);
+        return response()->json($tomadors);
+    }
     /**
      * Show the form for editing the specified resource.
      *

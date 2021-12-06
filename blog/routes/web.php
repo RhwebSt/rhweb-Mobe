@@ -35,7 +35,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('tabcartaoponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
     
-    Route::get('tabcadastro/{quantidade}/{boletim}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
+    Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
     Route::resource('home','Home\\HomeController')->names('home');
@@ -43,6 +43,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('comprovantepagamento','ComprovantePag\\ComprovantePagController@index');
     Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
     Route::get('fatura','Fatura\\FaturaController@index');
+
+    Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
 
 
@@ -57,6 +59,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
     Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);
+
+    Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
+    Route::get('empresa/pesquisa/{id}','Empresa\\EmpresaController@pesquisa');
+    
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
@@ -64,5 +70,6 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
         Route::resource('inss','Inss\\InssController')->names('inss');
         Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');
+       
     });
 });

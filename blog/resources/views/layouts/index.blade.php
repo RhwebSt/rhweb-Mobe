@@ -49,18 +49,18 @@
                       Cadastro
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item border-secundary border-bottom " href="{{ route('tomador.index') }}">Tomador</a></li>
-                      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
+                      <li><a class="dropdown-item border-secundary " href="{{ route('tomador.index') }}">Tomador</a></li>
+                      <li><a class="dropdown-item border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
                     
                       @can('admin')
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('inss.index')}}">INSS</a></li>
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('inss.index')}}">INSS</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('user.create')}}">Cadastro de Acesso</a></li>
-                          <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('user.create')}}">Cadastro de Acesso</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
                       @endcan
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
                     </ul>
@@ -70,12 +70,12 @@
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                       <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white disabled" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Recibos da Folha 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <li><a class="dropdown-item border-bottom border-secundary" href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/por tomador/Por-Tomador.php">Por Tomador</a></li>
-                          <li><a class="dropdown-item  " href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/Geral/Geral.php">Geral</a></li>
+                          <li><a class="dropdown-item border-secundary  d-none" href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/por tomador/Por-Tomador.php">Por Tomador</a></li>
+                          <li><a class="dropdown-item d-none" href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/Geral/Geral.php">Geral</a></li>
                         </ul>
                       </li>
                     </ul>
@@ -88,15 +88,15 @@
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletim Extra</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Descontos</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Calcular Folha</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Planilha de Fechamento- Boletins</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol dos Boletins</a></li>
-                              <li><a class="dropdown-item border-bottom border-secundary" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
-                              <li><a class="dropdown-item border-secundary" href="#">Recibos da Folha</a></li>
+                              <li><a class="dropdown-item border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
+                              <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Descontos</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Calcular Folha</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Planilha de Fechamento- Boletins</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletins</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
+                              <li><a class="dropdown-item border-secundary d-none" href="#">Recibos da Folha</a></li>
                              
                             </ul>
                           </li>
@@ -108,8 +108,8 @@
                                 Faturas
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{ url('fatura') }}">Recibos</a></li>
-                              <li><a class="dropdown-item " href="#">Rol dos recibos</a></li>
+                              <li><a class="dropdown-item border-secundary" href="{{ url('fatura') }}">Recibos</a></li>
+                              <li><a class="dropdown-item d-none" href="#">Rol dos recibos</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -122,7 +122,7 @@
                                 Recibo Avulsos
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-bottom border-secundary" href="{{ url('comprovantepagamento') }}">Recibos</a></li>
+                              <li><a class="dropdown-item border-secundary" href="{{ url('comprovantepagamento') }}">Recibos</a></li>
                               <li><a class="dropdown-item " href="{{ url('comprovantepagamentodiaria') }}">Rol dos recibos</a></li>
                             </ul>
                           </li>
@@ -134,13 +134,13 @@
                               <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Relatórios
                               </a>
-                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                              <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                
                                 
                                 
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Rol dos Boletin</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Boletins do Trabalhador</a></li>
-                                <li><a class="dropdown-item border-bottom border-secundary" href="#">Trabalhador no Boletim</a></li>
+                                <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletin</a></li>
+                                <li><a class="dropdown-item border-secundary d-none" href="#">Boletins do Trabalhador</a></li>
+                                <li><a class="dropdown-item border-secundary d-none" href="#">Trabalhador no Boletim</a></li>
                                 
                                 <li><a class="dropdown-item border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
 
@@ -154,7 +154,7 @@
                     <div class="flex-shrink-0 dropdown flex-row-reverse">
                       @if($user->name)
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user fa-md"></i> {{$user->name}}
+                        <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
                       </a>
                       @else
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -163,7 +163,7 @@
                       @endif
                      
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('listaempresa.create')}}">Meus da dados</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus da dados</a></li>
                         <li><a class="dropdown-item" href="{{route('logout.create')}}">Sair</a></li>
                       </ul>
                     </div>

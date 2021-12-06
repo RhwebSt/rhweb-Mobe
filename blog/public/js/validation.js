@@ -204,7 +204,7 @@ $("#form").validate({
     rules:{
         nome__completo:{
             required: true,
-            maxlength: 40,
+            maxlength: 100,
         },
         nome__fantasia:{
             required: true,
@@ -230,21 +230,27 @@ $("#form").validate({
         },
         cep:{
             required:true,
+            maxlength:16,
         },
         logradouro:{
             required:true,
+            maxlength:50,
         },
         numero:{
             required:true,
+            maxlength:10
         },
         bairro:{
             required:true,
+            maxlength:40
         },
         localidade:{
             required:true,
+            maxlength:30
         },
         uf:{
-            required:true
+            required:true,
+            maxlength:2
         },
         tipo:{
             required:true
@@ -414,10 +420,12 @@ $("#form").validate({
             required:true
         },
         cnae__codigo:{
-            required:true
+            required:true,
+            maxlength:10
         },
         cod__municipio:{
-            required:true
+            required:true,
+            maxlength:10
         },
         sincalizado:{
             required:true
@@ -426,37 +434,38 @@ $("#form").validate({
             required:true
         },
         vt__trabalhador:{
-            required:true,
+            required:false,
         },
         va__trabalhador:{
-            required:true
+            required:false
         },
         nro__fatura:{
-            required:true
+            required:false
         },
         nro__reciboavulso:{
-            required:true
+            required:false
         },
         matric__trabalhador:{
-            required:true
+            required:false
         },
         nro__requisicao:{
-            required:true
+            required:false
         },
         nro__boletins:{
-            required:true
+            required:false
         },
         nro__folha:{
-            required:true
+            required:false
         },
         nro__cartaoponto:{
-            required:true
+            required:false
         },
         seq__esocial:{
-            required:true
+            required:false
         },
         cbo:{
-            required:true
+            required:false,
+            maxlength:10
         },
         contribuicao__sindicato:{
             required:true
@@ -547,7 +556,7 @@ $("#form").validate({
         },
         rubricas:{
             required:true,
-            maxlength:30
+            maxlength:11
         },
         descricao:{
             required:true,
@@ -555,9 +564,25 @@ $("#form").validate({
         },
         valor:{
             required:true
+        },
+        esnome:{
+            required:true,
+            maxlength:100
+        },
+        escnpj:{
+            required:true,
+            maxlength:30
         }
     },
     messages:{
+        escnpj:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 30 caracteres'
+        },
+        esnome:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 100 caracteres'
+        },
         valor:{
             required:"O campo nome não pode esta vazio!",
         },
@@ -567,7 +592,7 @@ $("#form").validate({
         },
         rubricas:{
             required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mais de 30 caracteres'
+            maxlength:'O campo não pode ter mais de 11 caracteres'
         },
         ano:{
             required:"O campo nome não pode esta vazio!",
@@ -640,7 +665,7 @@ $("#form").validate({
         },
         categoria__contrato:{
             required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 20 caracteris'
+            maxlength:'O campo não pode ter mas de 20 caracteres'
         },
         pis:{
             required:"O campo nome não pode esta vazio!",
@@ -663,6 +688,7 @@ $("#form").validate({
         },
         cbo:{
             required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mas de 20 caracteres'
         },
         seq__esocial:{
             required:"O campo nome não pode esta vazio!",
@@ -702,9 +728,11 @@ $("#form").validate({
         },
         cod__municipio:{
             required: "O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode conter mais de 10 caracteres!'
         },
         cnae__codigo:{
             required: "O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode conter mais de 10 caracteres!'
         },
         email:{
             required: "O campo nome não pode esta vazio!",
@@ -724,7 +752,7 @@ $("#form").validate({
         },
         nome__completo: {
             required: "O campo nome não pode esta vazio!",
-            maxlength: "  O campo nome não pode tem mais de 40 caracteres!",
+            maxlength: "  O campo nome não pode tem mais de 100 caracteres!",
         },
         nome__fantasia: {
             required: "O campo nome fantasia não pode esta vazio!",
@@ -745,24 +773,30 @@ $("#form").validate({
         },
         cep:{
             required:'O campo CEP não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 16 caracteres!'
         },
         logradouro:{
             required:'O campo RUA não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 50 caracteres!'
         },
         numero:{
             required:'O campo NUMERO não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 10 caracteres!'
         },
         tipo:{
             required:'O campo não pode esta vazio!',
         },
         bairro:{
             required:'O campo BAIRRO não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 40 caracteres!'
         },
         localidade:{
             required:'O campo MUNICIPIO não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 30 caracteres!'
         },
         uf:{
-            required:'O campo UF não pode esta vazio!'
+            required:'O campo UF não pode esta vazio!',
+            maxlength:'O campo não pode ter mais de 2 caracteres!'
         },
         taxa_adm:{
             required:'O campo Taxa Adm % não pode esta vazio!'
@@ -843,9 +877,6 @@ $("#form").validate({
             required:'O campo não pode esta vazio!',
         },
         valor:{
-            required:'O campo não pode esta vazio!',
-        },
-        rubricas:{
             required:'O campo não pode esta vazio!',
         },
         nome_tomador:{

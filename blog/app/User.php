@@ -80,4 +80,8 @@ class User extends Authenticatable
     {
         return User::where('id', $id)->delete();
     }
+    public function deleteempresa($id)
+    {
+        return User::where('empresa', $id)->delete();
+    }
 }

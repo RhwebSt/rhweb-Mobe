@@ -106,6 +106,7 @@ class CadastroCartaoPontoController extends Controller
         $trabalhador = new Trabalhador;
         $tabelapreco = new TabelaPreco; 
         $tabelaprecos = $tabelapreco->lista($tomador);
+        
         $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
         $dados = [];
         foreach ($lancamentotabelas as $key => $value) {

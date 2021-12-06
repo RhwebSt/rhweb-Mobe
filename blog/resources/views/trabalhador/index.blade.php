@@ -44,8 +44,9 @@
                     Relatórios
                  </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Imprimir Ficha</a></li>
-                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">EPI</a></li>
+                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Ficha de Registro</a></li>
+                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">Ficha de EPI</a></li>
+                    <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="empresas__trab" role="button">Empresas Trabalhadas</a></li>
                   </ul>
                 <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
                 <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
@@ -78,7 +79,7 @@
         <input type="hidden" name="empresa" value="{{$user->empresa}}">
         
         <div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <img class="logfoto" id="trabfoto" src="" alt="foto do trabalhador">
             </div>
         </div>
@@ -368,7 +369,8 @@
           })
             $( ".pesquisa" ).on('keyup',function() {
                 var dados = $(this).val();
-                $.ajax({
+                if (dados) {
+                  $.ajax({
                     url: "{{url('trabalhador')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
@@ -376,7 +378,7 @@
                       campos(' ')
                       $('#trabfoto').removeAttr('src')
                       let nome = ''
-                      if (data.length > 1) {
+                      if (data.length >= 1) {
                         data.forEach(element => {
                           nome += `<option value="${element.tsnome}">`
                           nome += `<option value="${element.tsmatricula}">`
@@ -384,7 +386,8 @@
                         });
                         $('#datalistOptions').html(nome)
                         
-                      }else if(data.length === 1){
+                      } 
+                      if(data.length === 1 && dados.length > 4){
                         // data.forEach(element => {
                         //   nome += `<option value="${element.tsnome}">`
                         //   nome += `<option value="${element.tsmatricula}">`
@@ -394,7 +397,11 @@
                         campos(data[0])
                       }              
                     }
-                });
+                  });
+                }else{
+                  campos(' ')
+                  $('#trabfoto').removeAttr('src')
+                }
             });
             function campos(data) {
             if (data.trabalhador) {

@@ -26,12 +26,12 @@ class TabCadastroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($quantidade,$boletim,$id)
+    public function create($quantidade,$boletim,$tomador,$id)
     {
         $user = Auth::user(); 
         $lancamentorublica = new Lancamentorublica;
         $lista = $lancamentorublica->listacadastro($id);
-        return view('tabelaCadastro.index',compact('user','boletim','quantidade','id','lista'));
+        return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista'));
     }
 
     /**
@@ -43,11 +43,11 @@ class TabCadastroController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
         $lancamentorublica = new Lancamentorublica;
         $novodados = [
             $dados['numtrabalhador'],
             $dados['boletim'],
+            $dados['tomador'],
             $dados['lancamento'],
         ];
         $lancamentorublicas = $lancamentorublica->verifica($dados);
@@ -118,6 +118,7 @@ class TabCadastroController extends Controller
         $novodados = [
             $dados['numtrabalhador'],
             $dados['boletim'],
+            $dados['tomador'],
             $dados['lancamento'],
         ];
         $validator = Validator::make($request->all(), [
@@ -154,6 +155,7 @@ class TabCadastroController extends Controller
         $novodados = [
             $lancamentotabelas->lsnumero,
             $lancamentotabelas->liboletim,
+            $lancamentotabelas->tomador,
             $lancamentotabelas->id,
         ];
         $lancamentorublicas = $lancamentorublica->deletar($id);

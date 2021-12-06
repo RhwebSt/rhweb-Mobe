@@ -15,7 +15,6 @@ class relatorioBoletimTabelaController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $trabalhador = new Trabalhador;
         $lancamentotabelas = $lancamentotabela->relatorioboletimtabela($id);
-        // dd($lancamentotabelas);
         $dados = [];
         foreach ($lancamentotabelas as $key => $value) {
             array_push($dados,$value->trabalhador);

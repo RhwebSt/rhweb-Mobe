@@ -19,8 +19,9 @@
         <input type="hidden" name="sabado" id="sabado" value="{{$sabado}}">
         <input type="hidden" name="diasuteis" id="diasuteis" value="{{$diasuteis}}">
         <input type="hidden" name="data" value="{{$data}}">
+        <input type="hidden" name="tomador" value="{{$tomador}}">
         <div class="row">
-                  <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
+                  <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
                         <button type="submit" id="incluir" class="btn botao">Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
@@ -28,9 +29,7 @@
                         Relatório
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[$boletim,$tomador])}}">Relatório boletim cartão ponto</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[$boletim,$tomador])}}">Boletim Cartão ponto</a></li>
                       </ul>
                         
                         
@@ -77,7 +76,7 @@
             
             <div class="col-md-3 input">
                 <label for="entrada1" class="form-label">Entrada</label>
-                <input type="time" class="form-control diaurno  @error('entrada1') is-invalid @enderror" name="entrada1" value="" id="entrada1">
+                <input type="time" class="form-control diaurno horas  @error('entrada1') is-invalid @enderror" name="entrada1" value="" id="entrada1">
                 <small style="font-size: 13px;">De (05:00 ás 12:00)</small>
                 @error('entrada1')
                     <span class="text-danger">{{ $message }}</span>
@@ -86,7 +85,7 @@
 
             <div class="col-md-3 input">
                 <label for="saida1" class="form-label">Saída</label>
-                <input type="time" class="form-control diaurno @error('saida') is-invalid @enderror" name="saida" value="" id="saida">
+                <input type="time" class="form-control horas diaurno @error('saida') is-invalid @enderror" name="saida" value="" id="saida">
                 <small style="font-size: 13px;">De (05:00 ás 15:00)</small>
                 @error('saida')
                     <span class="text-danger">{{ $message }}</span>
@@ -95,7 +94,7 @@
 
             <div class="col-md-3 input">
                 <label for="entrada2" class="form-label">Entrada</label>
-                <input type="time" class="form-control diaurno @error('entrada2') is-invalid @enderror" name="entrada2" value="" id="entrada2">
+                <input type="time" class="form-control horas diaurno @error('entrada2') is-invalid @enderror" name="entrada2" value="" id="entrada2">
                 <small style="font-size: 13px;">De (12:00 ás 22:00)</small>
                 @error('entrada2')
                     <span class="text-danger">{{ $message }}</span>
@@ -104,7 +103,7 @@
 
             <div class="col-md-3 input">
                 <label for="saida2" class="form-label">Saída</label>
-                <input type="time" class="form-control diaurno @error('saida2') is-invalid @enderror" name="saida2" value="" id="saida2">
+                <input type="time" class="form-control horas diaurno @error('saida2') is-invalid @enderror" name="saida2" value="" id="saida2">
                 <small style="font-size: 13px;">De (12:00 ás 22:00)</small>
                 @error('saida2')
                     <span class="text-danger">{{ $message }}</span>
@@ -115,7 +114,7 @@
             
             <div class="col-md-3 input">
                 <label for="entrada3" class="form-label">Entrada (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno @error('entrada3') is-invalid @enderror" name="entrada3" value="" id="entrada3">
+                <input type="time" class="form-control horas adc__noturno @error('entrada3') is-invalid @enderror" name="entrada3" value="" id="entrada3">
                 <small style="font-size: 13px;">De (22:00 ás 03:00)</small>
                 @error('entrada3')
                     <span class="text-danger">{{ $message }}</span>
@@ -124,7 +123,7 @@
 
             <div class="col-md-3 input">
                 <label for="saida3" class="form-label">Saída (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno  @error('saida3') is-invalid @enderror" name="saida3" value="" id="saida3">
+                <input type="time" class="form-control horas adc__noturno  @error('saida3') is-invalid @enderror" name="saida3" value="" id="saida3">
                 <small style="font-size: 13px;">De (03:00 ás 05:00)</small>
                 @error('saida3')
                     <span class="text-danger">{{ $message }}</span>
@@ -133,7 +132,7 @@
             
             <div class="col-md-3 input">
                 <label for="entrada4" class="form-label">Entrada (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno @error('entrada4') is-invalid @enderror" name="entrada4" value="" id="entrada4">
+                <input type="time" class="form-control horas adc__noturno @error('entrada4') is-invalid @enderror" name="entrada4" value="" id="entrada4">
                 <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('entrada4')
                     <span class="text-danger">{{ $message }}</span>
@@ -142,7 +141,7 @@
 
             <div class="col-md-3 input">
                 <label for="saida5" class="form-label">Saída (adc.noturno)</label>
-                <input type="time" class="form-control adc__noturno @error('saida4') is-invalid @enderror" name="saida4" value="" id="saida4">
+                <input type="time" class="form-control horas adc__noturno @error('saida4') is-invalid @enderror" name="saida4" value="" id="saida4">
                 <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('saida4')
                     <span class="text-danger">{{ $message }}</span>
@@ -181,67 +180,69 @@
         
         <ul class="nav nav-pills " id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation" style="background-color: #9098A2; border-radius:3px;">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;">Diurno</button>
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-sun fa-lg"></i> Diurno</button>
           </li>
           <li class="nav-item ms-1" role="presentation" style="background-color: #9098A2; border-radius:3px;">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;">Noturno</button>
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-moon fa-lg"></i> Noturno</button>
           </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
               
-              <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-            <thead>
-                <th class="col text-center border-start border-top" style="width:80px;">Matricula</th>
-                <th class="col text-center border-top" style="width:420px">Nome</th>
-                <th class="col text-center border-top" style="width:90px;">Entrada</th>
-                <th class="col text-center border-top" style="width:90px;">Saída</th>
-                <th class="col text-center border-top" style="width:90px;">Entrada</th>
-                <th class="col text-center border-top" style="width:90px;">Saída</th>
-                <th class="col text-center border-top" style="width:90px;">HRS 50%</th>
-                <th class="col text-center border-top" style="width:90px;">HRS 100%</th>
-                <th class="col text-center border-top" style="width:140px;">Horas Normais</th>
-                <th class="col text-center border-end border-top" style="width:140px;">Total Geral</th>
-            </thead>
-            <tbody style="background-color: #081049; color: white;">
-            @if(count($lista) > 0)
-                @foreach($lista as $listas)
-                @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
-                $listas->bsentradatarde && $listas->bssaidatarde)
-                <tr>
-                <td class="col text-center border-bottom border-start" style="width:80px;">{{$listas->tsmatricula}}</td>
-                <td class="col text-center border-bottom text-capitalize" style="width:420px">{{$listas->tsnome}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradamanhao}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidamanhao}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradatarde}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidatarde}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraex}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraexcem}}</td>
-                <td class="col text-center border-bottom" style="width:140px;">{{$listas->horas_normais}}</td>
-                <td class="col text-center border-bottom border-end" style="width:140px;">{{$listas->bstotal}}</td>
-               
-                </tr>
-               @endif
-                @endforeach
-                @else
+             <div class="table-responsive-lg">
+                  <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                <thead>
+                    <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
+                    <th class="col text-center border-top text-nowrap capitalize" style="width:420px">Nome</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 50%</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 100%</th>
+                    <th class="col text-center border-top text-nowrap" style="width:140px;">Horas Normais</th>
+                    <th class="col text-center border-end border-top text-nowrap" style="width:140px;">Total Geral</th>
+                </thead>
+                <tbody style="background-color: #081049; color: white;">
+                @if(count($lista) > 0)
+                    @foreach($lista as $listas)
+                    @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
+                    $listas->bsentradatarde && $listas->bssaidatarde)
                     <tr>
-                        <td colspan="11" class="text-black">
-                        <div class="alert alert-danger" role="alert">
-                            Não a registro cadastrado!
-                        </div>
+                    <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
+                    <td class="col text-center border-bottom text-nowrap capitalize" style="width:420px">{{$listas->tsnome}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamanhao}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidamanhao}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradatarde}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidatarde}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraex}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraexcem}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:140px;">{{$listas->horas_normais}}</td>
+                    <td class="col text-center border-bottom border-end text-nowrap" style="width:140px;">{{$listas->bstotal}}</td>
+                   
+                    </tr>
+                   @endif
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                                <div class="alert" role="alert" style="background-color: #CC2836;">
+                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+                
+                <tfoot>
+                    <tr class=" border-end border-start border-bottom">
+                        <td colspan="11">
+                        {{ $lista->links() }}
                         </td>
                     </tr>
-                @endif
-            </tbody>
-            
-            <tfoot>
-                <tr>
-                    <td colspan="11">
-                    {{ $lista->links() }}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                </tfoot>
+            </table>
+        </div>
               
               
               
@@ -285,17 +286,17 @@
                 @endforeach
                 @else
                     <tr>
-                        <td colspan="11" class="text-black">
-                        <div class="alert alert-danger" role="alert">
-                            Não a registro cadastrado!
-                        </div>
+                        <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                            <div class="alert" role="alert" style="background-color: #CC2836;">
+                                Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                            </div>
                         </td>
                     </tr>
                 @endif
             </tbody>
             
             <tfoot>
-                <tr>
+                <tr class=" border-end border-start border-bottom">
                     <td colspan="11">
                     {{ $lista->links() }}
                     </td>
@@ -343,6 +344,193 @@
           </div>
 </div>
 <script>
+var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+var data = new Date('{{$data}} 08:24:30');
+var dias = data.getDay();
+//  var diurno = []
+$('.horas').keyup(function() {
+    var diurno = ['entrada1','saida','entrada2','saida2','entrada3','saida3','entrada4','saida4'];
+   
+    index(diurno);
+    // var input = $(this).attr('name');
+    // let segundo = '';
+    // if (diurno.indexOf(input) == -1 && $(this).val().length > 3) {
+    //     diurno.push(input);
+    //     if (diurno.length > 1) {
+    //         index(diurno);
+    //     }
+    // }else if(diurno.indexOf(input) != -1 && $(this).val().length > 3){
+    //     if (diurno.length > 1) {
+    //         index(diurno);
+    //     }
+    // }
+    
+});
+
+function index(diurno) {
+    var manhao = 0;
+    var tarde = 0;
+    var totaldiurno = 0
+    var noite = 0;
+    var madrugada = 0
+    var totalnoturno = 0
+    let segundo = 0;
+    let result = 0;
+    diurno.forEach(element => {
+        if ($(`input[name='${element}']`).val()) {
+            segundo = segundos($(`input[name='${element}']`).val());
+        }
+        if (element === 'entrada1' || element === 'saida') {
+            if (manhao < 1) {
+                manhao = segundo;
+            }else{
+                manhao = segundo - manhao 
+            }
+        }else if(element === 'entrada2' || element === 'saida2'){
+            if (tarde < 1) {
+                tarde = segundo;
+            }else{
+                tarde = segundo - tarde 
+            }
+        }else if(element === 'entrada3' || element === 'saida3'){
+            if (noite < 1) {
+                noite = segundo
+            }else{
+                if (noite < 86400 || segundo < 86400) {
+                    noite = (86400 - noite) - (86400 - segundo);
+                }else{
+                    noite = segundo - noite;
+                }
+            }
+        }else if(element === 'entrada4' || element === 'saida4'){
+            if (madrugada < 1) {
+                madrugada = segundo
+            }else{
+                if (madrugada < 86400 || segundo < 86400) {
+                    madrugada = (86400 - madrugada) - (86400 - segundo);
+                }else{
+                    madrugada = segundo - madrugada;
+                }
+            }
+            
+        }
+    });
+    totaldiurno = manhao + tarde
+    $('#horas_normais').val(horas(totaldiurno))
+    totalnoturno = noite +  madrugada
+    result = totaldiurno + totalnoturno
+    adnoturno(totalnoturno,result)
+    // totalgeral(result,'')
+}
+function segundos(segundos) {
+    let tempos = segundos.split(':');
+    let calc = parseInt(tempos[0])*3600+parseInt(tempos[1])*60
+    return calc;
+}
+function horas(valor) {
+    let horas = Math.floor(valor / 3600);
+    let minutos = Math.floor((valor - (horas * 3600)) / 60);
+    let segundos = Math.floor(valor % 60);
+    return `${horas}:${minutos < 10 ? '0':''}${minutos}`
+}
+function adnoturno(noturno,geral) {
+    let acresimo = (noturno/3150)
+    $('#adc__noturno').val(horasnotunas(acresimo.toString(),geral))
+}
+function horasnotunas(acresimo,geral) {
+    let novoacresimo = acresimo.split('.')
+    let novoacresimo1 = `0.${novoacresimo[1]}`
+    novoacresimo1 = novoacresimo1 * 0.6
+    novoacresimo1 = novoacresimo1.toFixed(2)
+    novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
+    novoacresimo1 =  novoacresimo1.toString()
+    let novoacresimo2 = novoacresimo1.split('.')
+    totalgeral(geral,novoacresimo2[1])
+     return `${novoacresimo2[0]}` != "NaN" ? `${novoacresimo2[0]}:${novoacresimo2[1]}`:'00:00'
+}
+function totalgeral(total,acresimo) {
+    let novototal = horas(total)
+    if (acresimo) {
+        novototal = novototal.split(':')
+        $('#total').val(`${novototal[0]}:${acresimo}`)
+    }else{
+        $('#total').val(`${novototal}`)
+    }
+    horaextra()
+    feriados()
+}
+function horaextra(params) {
+    semana.forEach((element,index) => {
+        if (dias == index) {
+            if (element === 'Sábado') {
+                sabado()
+            }else{
+                diasuteis()
+            }
+        }
+    })
+}
+function sabado() {
+    let total = $('#total').val();
+    let sabado = $('#sabado').val()
+    let result = '';
+    if (segundos(sabado) <  segundos(total)) {
+        result = (parseInt(segundos(sabado)) - parseInt(segundos(total))) * (-1);
+        $('#hora__extra').val(conversaohoras(result))
+    }else{
+        $('#hora__extra').val("0:00")
+    }
+}
+function diasuteis() {
+    let total = $('#total').val();
+    let diasuteis = $('#diasuteis').val()
+    let result = '';
+    if (segundos(diasuteis) < segundos(total)) {
+        result = (parseInt(segundos(diasuteis)) - parseInt(segundos(total))) * (-1);
+        $('#hora__extra').val(horas(result))
+    }else{
+        $('#hora__extra').val("0:00")
+        
+    }
+    
+}
+function feriados() {
+    let total = $('#total').val();
+    $.ajax({
+        url: "https://brasilapi.com.br/api/feriados/v1/2021",
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+            data.forEach(element => {
+                if (element.date === '{{$data}}') {
+                    domingo(total)
+                }else{
+                    $('#horas__cem').val("0:00")
+                }
+            });
+            semana.forEach((element,index) => {
+                if (dias == index) {
+                    if (element === 'Domingo') {
+                        domingo(total)
+                    }else{
+                        $('#horas__cem').val("0:00")
+                    }
+                }
+            })
+        }
+    })
+}
+function domingo(resutado) {
+    let domingo = $('#domingo').val()
+    let total = '';
+    if (segundos(domingo) <  segundos(resutado)) {
+        total = (parseInt(segundos(domingo)) - parseInt(segundos(resutado))) * (-1);
+        $('#horas__cem').val(horas(total))
+        $('#hora__extra').val("0:00")
+    }else{
+        $('#horas__cem').val("0:00")
+    }
+}
     // $.ajax({
     //     url: "{{route('listatabelapreco.lista',$tomador)}}",
     //     type: 'get',
@@ -389,7 +577,7 @@
                     contentType: 'application/json',
                     success: function(data) {
                       let nome = ''
-                      if (data.length > 1) {
+                      if (data.length >= 1) {
                         data.forEach(element => {
                           nome += `<option value="${element.tsnome}">`
                           nome += `<option value="${element.tsmatricula}">`
@@ -397,13 +585,14 @@
                         });
                         $('#datalistOptions').html(nome)
                         
-                      }else if(data.length === 1){
+                      }
+                      if(data.length === 1 && dados.length > 4){
                         // data.forEach(element => {
                         //   nome += `<option value="${element.tsnome}">`
                         //   nome += `<option value="${element.tsmatricula}">`
                         //   nome += `<option value="${element.tscpf}">`
                         // });
-                        $('#datalistOptions').html(nome)
+                        // $('#datalistOptions').html(nome)
                         $('#trabalhador').val(data[0].trabalhador)
                         $('#matricula').val(data[0].tsmatricula)
                         boletim(dados)
@@ -446,224 +635,224 @@
             }
            
     
-            var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
-            var data = new Date('{{$data}} 08:24:30');
-            var dias = data.getDay();
+        //     var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+        //     var data = new Date('{{$data}} 08:24:30');
+        //     var dias = data.getDay();
            
-            $('.adc__noturno').change(function () {
-                let segundos1 = 0
-                let segundos2 = 0
-                let segundos3 = 0
-                let segundos4 = 0
-                let primeiro = 0
-                let segundo = 0
-                let total = 0
-                let horario1 = $('#entrada3').val();
-                let horario2 =$('#saida3').val();
-                let horario3 = $('#entrada4').val();
-                let horario4 = $('#saida4').val();
-                let horasnormais =  $('#horas_normais').val()
-                if ( horasnormais) {
-                    horasnormais = segundos(horasnormais);
-                }
-                if (horario1) {
-                   segundos1 = segundos(horario1);
-                }
-                if (horario2) {
-                    segundos2 =  segundos(horario2);
-                }
-                if (horario3) {
-                    segundos3 = segundos(horario3);
-                }
-                if (horario4) {
-                    segundos4 = segundos(horario4);
-                }
+        //     $('.adc__noturno').change(function () {
+        //         let segundos1 = 0
+        //         let segundos2 = 0
+        //         let segundos3 = 0
+        //         let segundos4 = 0
+        //         let primeiro = 0
+        //         let segundo = 0
+        //         let total = 0
+        //         let horario1 = $('#entrada3').val();
+        //         let horario2 =$('#saida3').val();
+        //         let horario3 = $('#entrada4').val();
+        //         let horario4 = $('#saida4').val();
+        //         let horasnormais =  $('#horas_normais').val()
+        //         if ( horasnormais) {
+        //             horasnormais = segundos(horasnormais);
+        //         }
+        //         if (horario1) {
+        //            segundos1 = segundos(horario1);
+        //         }
+        //         if (horario2) {
+        //             segundos2 =  segundos(horario2);
+        //         }
+        //         if (horario3) {
+        //             segundos3 = segundos(horario3);
+        //         }
+        //         if (horario4) {
+        //             segundos4 = segundos(horario4);
+        //         }
                
-                if (segundos1 >= 79200 && segundos2 < 10800) {
-                    primeiro = (86400 - segundos1) + segundos2;
-                    segundo = segundos4 - segundos3;
-                    total = (primeiro + segundo)
-                    let acresimo = (total/3150)
-                    total += horasnormais
-                    acresimo = horasnotunas(acresimo.toString(),total)
-                     $('#adc__noturno').val(acresimo)
-                    console.log('1')
-                     diasuteis($('#total').val())
-                     feriados($('#total').val())
-                }else if (segundos1 >= 79200 && segundos2 >= 79200 && segundos4 <= 18000) {
-                    primeiro = segundos2 - segundos1;
-                    segundo = segundos4 - segundos3;
-                    total = primeiro + segundo
-                    console.log(total)
-                    let acresimo = (total/3150)
-                    total += horasnormais
-                    acresimo = horasnotunas(acresimo.toString(),total)
-                     $('#adc__noturno').val(acresimo)
-                     console.log('2')
-                    diasuteis($('#total').val())
-                    feriados($('#total').val())
-                }else if (segundos3 > 0 && segundos4 <= 18000) {
-                    primeiro = segundos2 - segundos1;
-                    segundo = segundos4 - segundos3;
-                    total = primeiro + segundo
-                    let acresimo = (total/3150)
-                    total += horasnormais
-                    acresimo = horasnotunas(acresimo.toString(),total)
-                     $('#adc__noturno').val(acresimo)
-                     console.log('3')
-                     diasuteis($('#total').val())
-                     feriados($('#total').val())
+        //         if (segundos1 >= 79200 && segundos2 < 10800) {
+        //             primeiro = (86400 - segundos1) + segundos2;
+        //             segundo = segundos4 - segundos3;
+        //             total = (primeiro + segundo)
+        //             let acresimo = (total/3150)
+        //             total += horasnormais
+        //             acresimo = horasnotunas(acresimo.toString(),total)
+        //              $('#adc__noturno').val(acresimo)
+        //             console.log('1')
+        //              diasuteis($('#total').val())
+        //              feriados($('#total').val())
+        //         }else if (segundos1 >= 79200 && segundos2 >= 79200 && segundos4 <= 18000) {
+        //             primeiro = segundos2 - segundos1;
+        //             segundo = segundos4 - segundos3;
+        //             total = primeiro + segundo
+        //             console.log(total)
+        //             let acresimo = (total/3150)
+        //             total += horasnormais
+        //             acresimo = horasnotunas(acresimo.toString(),total)
+        //              $('#adc__noturno').val(acresimo)
+        //              console.log('2')
+        //             diasuteis($('#total').val())
+        //             feriados($('#total').val())
+        //         }else if (segundos3 > 0 && segundos4 <= 18000) {
+        //             primeiro = segundos2 - segundos1;
+        //             segundo = segundos4 - segundos3;
+        //             total = primeiro + segundo
+        //             let acresimo = (total/3150)
+        //             total += horasnormais
+        //             acresimo = horasnotunas(acresimo.toString(),total)
+        //              $('#adc__noturno').val(acresimo)
+        //              console.log('3')
+        //              diasuteis($('#total').val())
+        //              feriados($('#total').val())
                
-                }
-                else{
-                     $('#adc__noturno').val('0:00')
-                }
-            })
-            $('.diaurno').change(function(){
-                let horario1 = $('#entrada1').val();
-                let horario2 =$('#saida').val();
-                let horario3 = $('#entrada2').val();
-                let horario4 = $('#saida2').val();
-                let adnotuno = 0
-                let segundos1 = 0
-                let segundos2 = 0
-                let segundos3 = 0
-                let segundos4 = 0
-                let horaextra = 0
-                let totalHoras = 0
-                if ($('#adc__noturno').val()) {
-                    adnotuno = $('#adc__noturno').val()
-                    adnotuno = segundos(adnotuno);
-                }
-                if (horario1) {
-                   segundos1 = segundos(horario1);
-                }
-                if (horario2) {
-                    segundos2 =  segundos(horario2);
-                }
-                if (horario3) {
-                    segundos3 = segundos(horario3);
-                }
-                if (horario4) {
-                    segundos4 = segundos(horario4);
-                }
-                if (segundos1 >= 18000 && segundos2 <= 54000) {
-                    totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                    $('#horas_normais').val(conversaohoras(totalHoras))
-                    totalHoras += adnotuno 
-                    $('#total').val(conversaohoras(totalHoras))
-                    feriados($('#total').val())
-                    semana.forEach((element,index) => {
-                        if (dias == index) {
-                            if (element === 'Sábado') {
-                                sabado($('#total').val())
-                            }else{
-                                diasuteis($('#total').val())
-                            }
-                        }
-                    })
+        //         }
+        //         else{
+        //              $('#adc__noturno').val('0:00')
+        //         }
+        //     })
+        //     $('.diaurno').change(function(){
+        //         let horario1 = $('#entrada1').val();
+        //         let horario2 =$('#saida').val();
+        //         let horario3 = $('#entrada2').val();
+        //         let horario4 = $('#saida2').val();
+        //         let adnotuno = 0
+        //         let segundos1 = 0
+        //         let segundos2 = 0
+        //         let segundos3 = 0
+        //         let segundos4 = 0
+        //         let horaextra = 0
+        //         let totalHoras = 0
+        //         if ($('#adc__noturno').val()) {
+        //             adnotuno = $('#adc__noturno').val()
+        //             adnotuno = segundos(adnotuno);
+        //         }
+        //         if (horario1) {
+        //            segundos1 = segundos(horario1);
+        //         }
+        //         if (horario2) {
+        //             segundos2 =  segundos(horario2);
+        //         }
+        //         if (horario3) {
+        //             segundos3 = segundos(horario3);
+        //         }
+        //         if (horario4) {
+        //             segundos4 = segundos(horario4);
+        //         }
+        //         if (segundos1 >= 18000 && segundos2 <= 54000) {
+        //             totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+        //             $('#horas_normais').val(conversaohoras(totalHoras))
+        //             totalHoras += adnotuno 
+        //             $('#total').val(conversaohoras(totalHoras))
+        //             feriados($('#total').val())
+        //             semana.forEach((element,index) => {
+        //                 if (dias == index) {
+        //                     if (element === 'Sábado') {
+        //                         sabado($('#total').val())
+        //                     }else{
+        //                         diasuteis($('#total').val())
+        //                     }
+        //                 }
+        //             })
                    
-                }else if(segundos4 <= 79200 && segundos3 > 43200){
-                    totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
-                    feriados($('#total').val())
-                    $('#horas_normais').val(conversaohoras(totalHoras))
-                    totalHoras += adnotuno 
-                    $('#total').val(conversaohoras(totalHoras))
-                    semana.forEach((element,index) => {
-                        if (dias == index) {
-                            if (element === 'Sábado') {
-                                sabado($('#total').val())
-                            }else{
-                                diasuteis($('#total').val())
-                            }
-                        }
-                    })
-                }
+        //         }else if(segundos4 <= 79200 && segundos3 > 43200){
+        //             totalHoras = (segundos2 - segundos1) + (segundos4 - segundos3);
+        //             feriados($('#total').val())
+        //             $('#horas_normais').val(conversaohoras(totalHoras))
+        //             totalHoras += adnotuno 
+        //             $('#total').val(conversaohoras(totalHoras))
+        //             semana.forEach((element,index) => {
+        //                 if (dias == index) {
+        //                     if (element === 'Sábado') {
+        //                         sabado($('#total').val())
+        //                     }else{
+        //                         diasuteis($('#total').val())
+        //                     }
+        //                 }
+        //             })
+        //         }
                 
-            })
-            function conversaohoras(valor) {
-                let horas = Math.floor(valor / 3600);
-                let minutos = Math.floor((valor - (horas * 3600)) / 60);
-                let segundos = Math.floor(valor % 60);
-                return `${horas}:${minutos < 10 ? '0':''}${minutos}`
-            }
-            function segundos(valor) {
-                let partes1 = valor.split(':');
-                let segundos = partes1[0] * 3600 + partes1[1] * 60;
-                return segundos;
-            }
-            function horasnotunas(acresimo,total) {
-                let novoacresimo = acresimo.split('.')
-                let novoacresimo1 = `0.${novoacresimo[1]}`
-                novoacresimo1 = novoacresimo1 * 0.6
-                novoacresimo1 = novoacresimo1.toFixed(2)
-                novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
-                novoacresimo1 =  novoacresimo1.toString()
-                let novoacresimo2 = novoacresimo1.split('.')
-                let novototal = conversaohoras(total)
-                novototal = novototal.split(':')
-                $('#total').val(`${novototal[0]}:${novoacresimo2[1]}`)
-                return `${novoacresimo2[0]}:${novoacresimo2[1]}`
-            }
-            function diasuteis(resutado) {
-                let diasuteis = $('#diasuteis').val()
-                let total = '';
-                if (segundos(diasuteis) < segundos(resutado)) {
-                    total = (parseInt(segundos(diasuteis)) - parseInt(segundos(resutado))) * (-1);
-                    $('#hora__extra').val(conversaohoras(total))
-                }else{
-                    $('#hora__extra').val("0:00")
+        //     })
+        //     function conversaohoras(valor) {
+        //         let horas = Math.floor(valor / 3600);
+        //         let minutos = Math.floor((valor - (horas * 3600)) / 60);
+        //         let segundos = Math.floor(valor % 60);
+        //         return `${horas}:${minutos < 10 ? '0':''}${minutos}`
+        //     }
+        //     function segundos(valor) {
+        //         let partes1 = valor.split(':');
+        //         let segundos = partes1[0] * 3600 + partes1[1] * 60;
+        //         return segundos;
+        //     }
+        //     function horasnotunas(acresimo,total) {
+        //         let novoacresimo = acresimo.split('.')
+        //         let novoacresimo1 = `0.${novoacresimo[1]}`
+        //         novoacresimo1 = novoacresimo1 * 0.6
+        //         novoacresimo1 = novoacresimo1.toFixed(2)
+        //         novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
+        //         novoacresimo1 =  novoacresimo1.toString()
+        //         let novoacresimo2 = novoacresimo1.split('.')
+        //         let novototal = conversaohoras(total)
+        //         novototal = novototal.split(':')
+        //         $('#total').val(`${novototal[0]}:${novoacresimo2[1]}`)
+        //         return `${novoacresimo2[0]}:${novoacresimo2[1]}`
+        //     }
+        //     function diasuteis(resutado) {
+        //         let diasuteis = $('#diasuteis').val()
+        //         let total = '';
+        //         if (segundos(diasuteis) < segundos(resutado)) {
+        //             total = (parseInt(segundos(diasuteis)) - parseInt(segundos(resutado))) * (-1);
+        //             $('#hora__extra').val(conversaohoras(total))
+        //         }else{
+        //             $('#hora__extra').val("0:00")
                     
-                }
+        //         }
                 
-            }
+        //     }
         
-           function sabado(resutado) {
-                let sabado = $('#sabado').val()
-                let total = '';
-                if (segundos(sabado) <  segundos(resutado)) {
-                    total = (parseInt(segundos(sabado)) - parseInt(segundos(resutado))) * (-1);
-                    $('#hora__extra').val(conversaohoras(total))
-                }else{
-                    $('#hora__extra').val("0:00")
-                    console.log('2')
-                }
-           }
-           function feriados(total) {
-            $.ajax({
-                url: "https://brasilapi.com.br/api/feriados/v1/2021",
-                type: 'get',
-                contentType: 'application/json',
-                success: function(data) {
-                    data.forEach(element => {
-                        if (element.date === '{{$data}}') {
-                            domingo(total)
-                        }else{
-                            $('#horas__cem').val("0:00")
-                        }
-                    });
-                    semana.forEach((element,index) => {
-                        if (dias == index) {
-                            if (element === 'Domingo') {
-                                domingo(total)
-                            }else{
-                                $('#horas__cem').val("0:00")
-                            }
-                        }
-                    })
-                }
-            })
-        }
-        function domingo(resutado) {
-            let domingo = $('#domingo').val()
-            let total = '';
-            if (segundos(domingo) <  segundos(resutado)) {
-                total = (parseInt(segundos(domingo)) - parseInt(segundos(resutado))) * (-1);
-                $('#horas__cem').val(conversaohoras(total))
-                $('#hora__extra').val("0:00")
-            }else{
-                $('#horas__cem').val("0:00")
-            }
-        }
+        //    function sabado(resutado) {
+        //         let sabado = $('#sabado').val()
+        //         let total = '';
+        //         if (segundos(sabado) <  segundos(resutado)) {
+        //             total = (parseInt(segundos(sabado)) - parseInt(segundos(resutado))) * (-1);
+        //             $('#hora__extra').val(conversaohoras(total))
+        //         }else{
+        //             $('#hora__extra').val("0:00")
+        //             console.log('2')
+        //         }
+        //    }
+        //    function feriados(total) {
+        //     $.ajax({
+        //         url: "https://brasilapi.com.br/api/feriados/v1/2021",
+        //         type: 'get',
+        //         contentType: 'application/json',
+        //         success: function(data) {
+        //             data.forEach(element => {
+        //                 if (element.date === '{{$data}}') {
+        //                     domingo(total)
+        //                 }else{
+        //                     $('#horas__cem').val("0:00")
+        //                 }
+        //             });
+        //             semana.forEach((element,index) => {
+        //                 if (dias == index) {
+        //                     if (element === 'Domingo') {
+        //                         domingo(total)
+        //                     }else{
+        //                         $('#horas__cem').val("0:00")
+        //                     }
+        //                 }
+        //             })
+        //         }
+        //     })
+        // }
+        // function domingo(resutado) {
+        //     let domingo = $('#domingo').val()
+        //     let total = '';
+        //     if (segundos(domingo) <  segundos(resutado)) {
+        //         total = (parseInt(segundos(domingo)) - parseInt(segundos(resutado))) * (-1);
+        //         $('#horas__cem').val(conversaohoras(total))
+        //         $('#hora__extra').val("0:00")
+        //     }else{
+        //         $('#horas__cem').val("0:00")
+        //     }
+        // }
           </script>
 @stop

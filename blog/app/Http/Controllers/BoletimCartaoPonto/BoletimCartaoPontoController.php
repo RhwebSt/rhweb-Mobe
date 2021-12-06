@@ -43,14 +43,14 @@ class BoletimCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
         $novodados = [
             $dados['lancamento'],
             $dados['domingo'],
             $dados['sabado'],
             $dados['diasuteis'],
             $dados['data'],
-            $dados['boletim']
+            $dados['boletim'],
+            $dados['tomador'],
         ];
         $bolcartaoponto = new Bolcartaoponto;
         $validator = Validator::make($request->all(), [
@@ -134,7 +134,8 @@ class BoletimCartaoPontoController extends Controller
             $dados['sabado'],
             $dados['diasuteis'],
             $dados['data'],
-            $dados['boletim']
+            $dados['boletim'],
+            $dados['tomador'],
         ];
         $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [

@@ -40,7 +40,7 @@
               <input type="hidden" id="method" name="_method" value="">
               
                 <div class="row">
-                  <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
+                  <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
                         <button type="submit" id="incluir" class="btn botao">Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
@@ -173,7 +173,7 @@
                   success: function(data) {
                     tomador(' ')
                     let nome = ''
-                      if (data.length > 1) {
+                      if (data.length >= 1) {
                         data.forEach(element => {
                           nome += `<option value="${element.tsnome}">`
                           nome += `<option value="${element.tsmatricula}">`
@@ -181,13 +181,14 @@
                         });
                         $('#datalistOptions').html(nome)
                         
-                      }else if(data.length === 1){
-                        data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
-                          nome += `<option value="${element.tscpf}">`
-                        });
-                        $('#datalistOptions').html(nome)
+                      }
+                      if(data.length === 1 && dados.length > 4){
+                        // data.forEach(element => {
+                        //   nome += `<option value="${element.tsnome}">`
+                        //   nome += `<option value="${element.tsmatricula}">`
+                        //   nome += `<option value="${element.tscpf}">`
+                        // });
+                        // $('#datalistOptions').html(nome)
                         tomador(data[0])
                       }           
                   }

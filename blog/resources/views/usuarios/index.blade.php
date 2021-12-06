@@ -192,19 +192,35 @@
                   dados = $(this).val();
                 }
                 $.ajax({
-                    url: "{{url('listaempresa')}}/"+dados,
+                    url: "{{url('empresa')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      if (data.empresa) {
-                        $('#idempresa').val(data.empresa)
-                        $('#datalistOptions').prepend(`<option value="${data.esnome}/>`)
-                        // $('#mensagemtomador').text(' ')
-                        // $( "#nome__completo" ).addClass('is-valid')
-                      }else{
-                        // $('#mensagemtomador').text('Não foi porssível encontra o tomador!')
-                        // $( "#nome__completo" ).addClass('is-invalid')
+                      let nome = '';
+                      $('#mensagemtomador').text(' ')
+                      $( "#nome__completo" ).removeClass('is-invalid')
+                      if (data.length >= 1) {
+                        data.forEach(element => {
+                          nome += `<option value="${element.esnome}">`
+                          nome += `<option value="${element.escnpj}">`
+                        });
+                        $('#datalistOptions').html(nome)    
                       }
+                      if(data.length === 1 && dados.length > 4){
+                        $('#idempresa').val(data[0].id)
+                      }else{
+                        $('#mensagemtomador').text('Não foi porssível encontra o tomador!')
+                        $( "#nome__completo" ).addClass('is-invalid')
+                      }
+                      // if (data.empresa) {
+                      //   $('#idempresa').val(data.empresa)
+                      //   $('#datalistOptions').prepend(`<option value="${data.esnome}/>`)
+                      //   // $('#mensagemtomador').text(' ')
+                      //   // $( "#nome__completo" ).addClass('is-valid')
+                      // }else{
+                      //   // $('#mensagemtomador').text('Não foi porssível encontra o tomador!')
+                      //   // $( "#nome__completo" ).addClass('is-invalid')
+                      // }
                     }
                 });
             });

@@ -62,7 +62,8 @@ class TabCartaoPontoController extends Controller
         ]);
         $novodados = [
             $dados['num__trabalhador'],
-            $dados['liboletim']
+            $dados['liboletim'],
+            $dados['tomador']
         ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
@@ -138,6 +139,7 @@ class TabCartaoPontoController extends Controller
         $novodados = [
             $dados['num__trabalhador'],
             $dados['liboletim'],
+            $dados['tomador'],
             $id
         ];
         $lancamentotabela = new Lancamentotabela;
@@ -145,7 +147,6 @@ class TabCartaoPontoController extends Controller
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
             return redirect()->route('tabcadastro.create',$novodados);
-            // return view('tabelaCadastro.index',compact('boletim','user','id','lista','quantidade'));
         }else{
             $condicao = 'editfalse';
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);

@@ -363,7 +363,7 @@
                         </div>
                         <div class="col-md-3">
                         <label for="valorfatura" class="form-label">Base da Fatura</label>
-                        <select class="form-select" id="valorfatura" name="valor_fatura" aria-label="Default select example">
+                        <select class="form-select fw-bold text-dark" id="valorfatura" name="valor_fatura" aria-label="Default select example">
                             <option selected>Produção</option>
                             <option>Fatura</option>
                         </select>
@@ -448,7 +448,7 @@
                     contentType: 'application/json',
                     success: function(data) {
                         let nome = ''
-                        if (data.length > 1) {
+                        if (data.length >= 1) {
                             data.forEach(element => {
                             nome += `<option value="${element.tsnome}">`
                             nome += `<option value="${element.tsmatricula}">`
@@ -456,14 +456,15 @@
                             });
                             $('#datalistOptions').html(nome)
                             
-                        }else if(data.length === 1){
-                            data.forEach(element => {
-                              nome += `<option value="${element.tsnome}">`
-                              nome += `<option value="${element.tsmatricula}">`
-                              nome += `<option value="${element.tscpf}">`
-                            });
-                            $('#datalistOptions').html(nome)
-                            tomador(data[0])
+                        } 
+                        if(data.length === 1 && dados.length > 4){
+                            // data.forEach(element => {
+                            //   nome += `<option value="${element.tsnome}">`
+                            //   nome += `<option value="${element.tsmatricula}">`
+                            //   nome += `<option value="${element.tscpf}">`
+                            // });
+                            // $('#datalistOptions').html(nome)
+                            tomador(data)
                         }else{
                             if (dados.length === 14) {
                                 pesquisa(dados)

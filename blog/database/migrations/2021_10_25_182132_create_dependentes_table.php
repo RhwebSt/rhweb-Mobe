@@ -19,7 +19,7 @@ class CreateDependentesTable extends Migration
             $table->char('dstipo', 10)->nullable();
             $table->char('dssexo', 10)->nullable();
             $table->char('dsdata', 10)->nullable();
-            $table->char('dscpf', 11)->nullable();
+            $table->char('dscpf', 14)->nullable();
             $table->char('dsirrf', 20)->nullable();
             $table->char('dssf', 10)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();

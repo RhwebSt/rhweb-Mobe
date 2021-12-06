@@ -11,7 +11,7 @@ class CreateValoresRublicasTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() 
     {
         Schema::create('valores_rublicas', function (Blueprint $table) {
             $table->increments('id');

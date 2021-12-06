@@ -26,7 +26,7 @@ class CreateEmpresasTable extends Migration
             $table->char('escodigomunicipio', 30)->nullable();
             $table->char('essindicalizado', 30)->nullable();
             $table->char('esretemferias', 10)->nullable();
-            $table->char('escondicaosindicato', 10)->nullable();
+            $table->char('escondicaosindicato', 30)->nullable();
            
             $table->timestamps();
         });

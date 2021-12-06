@@ -105,19 +105,22 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        
         $request->validate([
-            'usuario' => 'required',
-            'senha'=>'required|min:6',
+            'name' => 'required',
+            'senha'=>'min:6',
             'nome__completo'=>'required',
             'empresa'=>'required|min:1',
-        ],[
-            'nome__completo.required'=>'Campo não pode esta vazio!',
-            'usuario.required'=>'Campo não pode esta vazio!',
-            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
-            'senha.required'=>'Campo não pode esta vazio!',
-            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
-        ]);
+        ]
+        // [
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'usuario.required'=>'Campo não pode esta vazio!',
+        //     'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
+        //     'senha.required'=>'Campo não pode esta vazio!',
+        //     'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
+        //     'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
+        // ]
+        );
         $user = new User;
         $users = $user->editar($dados,$id);
         if ($users) {

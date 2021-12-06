@@ -18,6 +18,9 @@ $('#cnpj_mf').mask('00.000.000/0000-00', {reverse: true});
 $('#cpf').mask('000.000.000-00', {reverse: true});
 $('#pis').mask('000.00000.00-0', {reverse: true})
 $('#rubricas').mask('00000000000')
+$('#cod__municipio').mask('0000000000')
+$('#cnae__codigo').mask('0000000000')
+$('#cbo').mask('0000000000')
 $('#das').mask('00,00', {reverse: true});
 $('#ferias_trab').mask('000,00', {reverse: true});
 $('#rsr').mask('000,00', {reverse: true});
