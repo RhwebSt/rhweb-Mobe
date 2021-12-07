@@ -1,5 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
+
 <div class="container">
               <h5 class="card-title text-center fs-3 ">Cadastro de Usuários</h5>
 
@@ -86,30 +87,9 @@
               </div>
 
               
-
-                <div class="col-md-3">
-                  <label for="usuario" class="form-label">Usuario</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="" id="usuario">
-                  @error('name')
-                      <span class="">{{ $message }}</span>
-                  @enderror
-                </div>
-                <input type="hidden" name="email">
-                <div class="col-md-2">
-                  <label for="cargo" class="form-label">Cargo</label>
-                  <input type="text" class="form-control " name="cargo" value="" id="cargo">
-                </div>
-
-                <div class="col-md-3">
-                  <label for="senha" class="form-label">Senha</label>
-                  <input type="password" class="form-control @error('senha') is-invalid @enderror" name="senha" value="" id="senha">
-                  @error('senha')
-                      <span class="">{{ $message }}</span>
-                  @enderror
-                </div>
-                <div class="col-md-4">
+              <div class="col-md-4">
                   <label for="nome__completo" class="form-label">Nome do tomador</label>
-                  <input class="form-control @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" name="nome__completo" id="nome__completo" >
+                  <input class="form-control fw-bold @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" >
                   @error('nome__completo')
                       <span class="">{{ $message }}</span>
                   @enderror
@@ -120,6 +100,30 @@
                   <datalist id="datalistOptions">    
                   </datalist>
                 </div>
+                <div class="col-md-3">
+                  <label for="usuario" class="form-label">Usuario</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}"   name="name" value="" id="usuario">
+                  @error('name')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                  <span class="invalid-feedback" id="mensagemuser"></span>
+                  <datalist id="listusuario">    
+                  </datalist>
+                </div>
+                <input type="hidden" name="email">
+                <div class="col-md-2">
+                  <label for="cargo" class="form-label">Cargo</label>
+                  <input type="text" class="form-control " name="cargo" value="{{old('cargo')}}" id="cargo">
+                </div>
+
+                <div class="col-md-3">
+                  <label for="senha" class="form-label">Senha</label>
+                  <input type="password" class="form-control @error('senha') is-invalid @enderror" value="{{old('senha')}}" name="senha" value="" id="senha">
+                  @error('senha')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                </div>
+              
               </form>  
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -154,37 +158,64 @@
                       url: "{{url('user')}}/"+dados,
                       type: 'get',
                       success: function(data) {
-                          if (data.id) {
-                              $('#form').attr('action', "{{ url('user')}}/"+data.id);
-                              $('#formdelete').attr('action',"{{ url('user')}}/"+data.id)
-                              $('#incluir').attr('disabled','disabled')
-                              $('#atualizar').removeAttr( "disabled" )
-                              $('#deletar').removeAttr( "disabled" )
-                              $('#excluir').removeAttr( "disabled" )
-                              $('#permicao').removeAttr( "disabled" )
-                              $('#method').val('PUT')
-                              $('#nome__completo').val(data.esnome)
-                              $('#cargo').val(data.cargo)
-                              $('#senha').val('')
-                              $('#idempresa').val(data.empresa)
-                          }else{
-                          
-                              $('#form').attr('action', "{{ route('user.store') }}");
-                              $('#incluir').removeAttr( "disabled" )
-                              $('#depedente').removeAttr( "disabled" )
-                              $('#atualizar').attr('disabled','disabled')
-                              $('#deletar').attr('disabled','disabled')
-                              $('#permicao').attr('disabled','disabled')
-                              $('#method').val(' ')
-                              $('#excluir').attr( 'disabled','disabled' )
-                              $('#nome__completo').val('')
-                              $('#cargo').val('')
-                              $('#senha').val('')
+                      $('#mensagemtomador').text(' ')
+                      $( "#usuario" ).removeClass('is-invalid')
+                        if (data.id && dados.length >=3) {
+                          campos(data)
+                        }else{
+                          if (dados) {
+                            $('#mensagemuser').text('Não foi porssível encontra o usuario!')
+                            $( "#usuario" ).addClass('is-invalid')
                           }
+                          campos('')
+                        }
+                        // let nome = '';
+                        // if (data.length >= 1) {
+                        //     data.forEach(element => {
+                        //       nome += `<option value="${element.name}">`
+                        //     });
+                        //     $('#listusuario').html(nome)    
+                        // }
+                        // if(data.length === 1 && dados.length > 4){
+                        //   usuario(dados)
+                        // }
                       }
                   });
+                }else{
+                  campos('')
                 }
             });
+            function usuario(dados) {
+              console.log(dados)
+            }
+            function campos(data) {
+              if (data.id) {
+                  $('#form').attr('action', "{{ url('user')}}/"+data.id);
+                  $('#formdelete').attr('action',"{{ url('user')}}/"+data.id)
+                  $('#incluir').attr('disabled','disabled')
+                  $('#atualizar').removeAttr( "disabled" )
+                  $('#deletar').removeAttr( "disabled" )
+                  $('#excluir').removeAttr( "disabled" )
+                  $('#permicao').removeAttr( "disabled" )
+                  $('#method').val('PUT')
+                  $('#nome__completo').val(data.esnome)
+                  $('#cargo').val(data.cargo)
+                  $('#senha').val('')
+                  $('#idempresa').val(data.empresa)
+              }else{
+                  $('#form').attr('action', "{{ route('user.store') }}");
+                  $('#incluir').removeAttr( "disabled" )
+                  $('#depedente').removeAttr( "disabled" )
+                  $('#atualizar').attr('disabled','disabled')
+                  $('#deletar').attr('disabled','disabled')
+                  $('#permicao').attr('disabled','disabled')
+                  $('#method').val(' ')
+                  $('#excluir').attr( 'disabled','disabled' )
+                  // $('#nome__completo').val('')
+                  $('#cargo').val('')
+                  $('#senha').val('')
+              }
+            }
             $( "#nome__completo" ).keyup(function() {
                 var dados = $(this).val();
                 dados =  dados.replace(/\D/g, '');

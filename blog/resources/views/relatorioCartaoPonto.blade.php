@@ -368,7 +368,7 @@
                                     $valortomador += $horasextomador;
                                 }elseif($value->tsdescricao == 'hora extra 100%' && $lancamentotabela->bshoraexcem){
                                     $tomadorexcem = explode(':',$lancamentotabela->bshoraexcem);
-                                    $tomadorexcem = $tomadorexcem[0].'.'.$horaexcem[1];
+                                    $tomadorexcem = $tomadorexcem[0].'.'.$tomadorexcem[1];
                                     $tomadorexcem = $value->tstomvalor * $tomadorexcem;
                                     $valortomador += $tomadorexcem;
                                 }elseif ($value->tsdescricao == 'adicional noturno' && $lancamentotabela->bsadinortuno) {

@@ -66,6 +66,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
+        Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
         Route::resource('inss','Inss\\InssController')->names('inss');

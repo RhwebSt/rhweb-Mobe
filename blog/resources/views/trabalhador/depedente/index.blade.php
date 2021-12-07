@@ -4,24 +4,24 @@
 @if($errors->all())
                     @foreach($errors->all() as  $error)
                       @if($error === 'edittrue')
-                        <div class="alert alert-success mt-2 alert-block">
-                            <strong>Atualização realizada com sucesso!</strong>
+                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
+                            <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'editfalse')
-                        <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi possível atualizar os dados!</strong>
+                        <div class="alert mt-2 text-center" style="background-color: #CC2836;">
+                            <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'deletatrue')
-                        <div class="alert alert-success mt-2 alert-block">
-                            <strong>Registro deletado com sucesso!</strong>
+                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
+                            <strong>Dependente deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'cadastratrue')
-                        <div class="alert alert-success mt-2 alert-block">
-                            <strong>Cadastrado realizada com sucesso!</strong>
+                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
+                            <strong>Cadastrado realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'cadastrafalse')
-                        <div class="alert alert-danger mt-2 alert-block">
-                            <strong>Não foi possível realizar o cadastro !</strong>
+                        <div class="alert mt-2 text-center" style="background-color: #CC2836;">
+                            <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                         </div>
                     @endif
                     @endforeach
@@ -120,10 +120,10 @@
                         @endforeach
                     @else
                     <tr>
-                        <td class="text-black" colspan="7">
-                        <div class="alert alert-danger" role="alert">
-                        Não a registro cadastrado!
-                    </div>
+                        <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                            <div class="alert" role="alert" style="background-color: #CC2836;">
+                                Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                            </div>
                         </td>
                     </tr>
                     

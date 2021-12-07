@@ -54,12 +54,53 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $request->validate([
-            'nome__completo' => 'required|max:100',
-            // 'matricula'=>'required|max:6',
-            // 'num__trabalhador'=>'numeric',
-            // 'num__trabalhador'=>'required',
-            // 'data'=>'required'
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'cnpj' => 'required|max:19|cnpj',
+            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'telefone'=>'required|max:16|celular_com_ddd',
+            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'taxa_adm'=>'required',
+            'taxa__fed'=>'required',
+            'deflator'=>'required|max:100',
+            'das'=>'required',
+            'cod__fpas'=>'required',
+            'cod__grps'=>'required',
+            'cod__recol'=>'required',
+            'cnae'=>'required',
+            'fap__aliquota'=>'required',
+            'rat__ajustado'=>'required',
+            'fpas__terceiros'=>'required',
+            'aliq__terceiros'=>'required',
+            'alimentacao'=>'required',
+            'transporte'=>'required',
+            'epi'=>'required',
+            'seguro__trabalhador'=>'required',
+            'folhartransporte'=>'required',
+            'folhartipotrans'=>'required',
+            'folharalim'=>'required',
+            'folhartipoalim'=>'required',
+            'dias_uteis'=>'max:5',
+            'sabados'=>'max:5',
+            'domingos'=>'max:5',
+            'inss__empresa'=>'required',
+            'retencaoinss'=>'required',
+            'fgts__empresa'=>'required',
+            'retencaofgts'=>'required',
+            'valor_fatura'=>'required',
+            'banco'=>'max:100',
+            'agencia'=>'max:4',
+            'operacao'=>'max:3',
+            'conta'=>'max:10',
+            'pix'=>'max:255'
         ],
         // [
         //     'nome__completo.required'=>'Campo não pode esta vazio!',
@@ -149,6 +190,65 @@ class TomadorController extends Controller
     {
         $dados = $request->all();
         // dd($dados);
+        $request->validate([
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'cnpj' => 'required|max:19|cnpj',
+            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'telefone'=>'required|max:16|celular_com_ddd',
+            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'taxa_adm'=>'required',
+            'taxa__fed'=>'required',
+            'deflator'=>'required|max:100',
+            'das'=>'required',
+            'cod__fpas'=>'required',
+            'cod__grps'=>'required',
+            'cod__recol'=>'required',
+            'cnae'=>'required',
+            'fap__aliquota'=>'required',
+            'rat__ajustado'=>'required',
+            'fpas__terceiros'=>'required',
+            'aliq__terceiros'=>'required',
+            'alimentacao'=>'required',
+            'transporte'=>'required',
+            'epi'=>'required',
+            'seguro__trabalhador'=>'required',
+            'folhartransporte'=>'required',
+            'folhartipotrans'=>'required',
+            'folharalim'=>'required',
+            'folhartipoalim'=>'required',
+            'dias_uteis'=>'max:5',
+            'sabados'=>'max:5',
+            'domingos'=>'max:5',
+            'inss__empresa'=>'required',
+            'retencaoinss'=>'required',
+            'fgts__empresa'=>'required',
+            'retencaofgts'=>'required',
+            'valor_fatura'=>'required',
+            'banco'=>'max:100',
+            'agencia'=>'max:4',
+            'operacao'=>'max:3',
+            'conta'=>'max:10',
+            'pix'=>'max:255'
+        ],
+        // [
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'matricula.required'=>'Campo não pode esta vazio!',
+        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
+        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+        //     'liboletim.required'=>'Campo não pode esta vazio!',
+        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
+        //     'data.required'=>'O campo não pode esta vazio!'
+            
+        // ]
+        );
         $tomador = new Tomador;
         $endereco = new Endereco;
         $taxa = new Taxa;
@@ -217,7 +317,7 @@ class TomadorController extends Controller
         $lancamentotabelas = $lancamentotabela->deletar($id);
         $bancarios = $bancario->first($id,$campobacario);
         $exbancarios = $bancario->deletar($bancarios->biid);
-        $tabelaprecos = $tabelapreco->deletar($id);
+        $tabelaprecos = $tabelapreco->deletatomador($id);
         $enderecos = $endereco->first($id,$campoendereco); 
         $exenderecos = $endereco->deletar($enderecos->eiid); 
         $retencaofaturas = $retencaofatura->deletar($id);

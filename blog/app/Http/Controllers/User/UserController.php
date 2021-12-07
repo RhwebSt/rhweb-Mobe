@@ -41,17 +41,22 @@ class UserController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'name' => 'required|unique:users',
-            'senha'=>'required|min:6',
+            'name' => 'required|unique:users|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'required|max:20',
+            'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
             'nome__completo'=>'required',
             'empresa'=>'required|min:1',
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',
             'name.required'=>'Campo não pode esta vazio!',
+            'name.regex'=>'Campo não pode ter caracteres especiais!',
+            'name.max'=>'Campo não pode ter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
             'senha.required'=>'Campo não pode esta vazio!',
             'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
+            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!',
+            'cargo.max'=>'Campo não pode ter mais de 100 caracteres!',
+            'cargo.regex'=>'Campo não pode ter caracteres especiais!',
             
         ]);
         $user = new User;
@@ -83,6 +88,12 @@ class UserController extends Controller
         }
         
     }
+    public function pesquisa($id)
+    {
+        $user = new User;
+        $users = $user->busca($id);
+        return response()->json($users);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,22 +116,23 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        
         $request->validate([
-            'name' => 'required',
-            'senha'=>'min:6',
+            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'max:20',
+            'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
             'nome__completo'=>'required',
             'empresa'=>'required|min:1',
-        ]
-        // [
-        //     'nome__completo.required'=>'Campo não pode esta vazio!',
-        //     'usuario.required'=>'Campo não pode esta vazio!',
-        //     'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
-        //     'senha.required'=>'Campo não pode esta vazio!',
-        //     'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
-        //     'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!'
-        // ]
-        );
+        ],[
+            'nome__completo.required'=>'Campo não pode esta vazio!',
+            'name.required'=>'Campo não pode esta vazio!',
+            // 'name.regex'=>'Campo não pode ter caracteres especiais!',
+            'name.max'=>'Campo não pode ter mas de 20 caracteres!',
+            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
+            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
+            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!',
+            'cargo.max'=>'Campo não pode ter mais de 100 caracteres!',
+            // 'cargo.regex'=>'Campo não pode ter caracteres especiais!',
+        ]);
         $user = new User;
         $users = $user->editar($dados,$id);
         if ($users) {
@@ -139,6 +151,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = new User;
+        $users = $user->deletar($id);
+        if ($users) {
+            $condicao = 'deletatrue';
+        }else{
+            $condicao = 'deletafalse';
+        }
+        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
     }
 }

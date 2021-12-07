@@ -108,6 +108,7 @@ class CadastroCartaoPontoController extends Controller
         $tabelaprecos = $tabelapreco->lista($tomador);
         
         $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
+        // dd($tabelaprecos,$lancamentotabela);
         $dados = [];
         foreach ($lancamentotabelas as $key => $value) {
             array_push($dados,$value->trabalhador);

@@ -1,6 +1,6 @@
   
 :root{
-    --body-bg:#F4F4F6;
+    --body-bg:#EAEAEC;
     --body-color: black;
     --input-hover:1px 0.5px rgb(5, 133, 252), 0 0 1px rgba(0, 89, 255, 0.986);
     --input-focus-color: #6606e4;
@@ -11,21 +11,24 @@
     --hover-dark-mode-bg: rgb(14, 13, 13);
     --hover-dark-mode-color: white;
     --img-trab-color:1.7px solid #5345B0;
+    --pesq-background: #1D1D20;
+    --pesq-color-font: white;
 }
 
 .darkmode{
     --body-bg:#363636;
     --body-color: rgb(247, 243, 243);
-    --input-hover: 3px 2px rgb(5, 252, 252), 0 2px 2px rgba(0, 140, 255, 0.986);
+    --input-hover: 1px 1px rgb(5, 252, 252), 0 0px 1px rgba(0, 140, 255, 0.986);
     --input-focus-color: #060aff;
-    --input-focus-box: 3px 3px  rgba(18, 89, 243, 0.507), 0 0 2px rgba(96, 64, 240, 0.486);
+    --input-focus-box: 1px 1px  rgba(18, 89, 243, 0.507), 0 0 1px rgba(96, 64, 240, 0.486);
     --button-hover-color:#593CB9;
     --botao-dark-mode-color: rgb(14, 13, 13);
     --botao-dark-mode-icon-color: white;
     --hover-dark-mode-bg: rgb(252, 250, 250);
     --hover-dark-mode-color: black;
-    --img-trab-color:2px solid #241E4E;;
-    
+    --img-trab-color:2px solid #241E4E;
+    --pesq-background: #1D1D20;
+    --pesq-color-font: #FFFFFF;
 }
 
 
@@ -85,6 +88,18 @@ input:hover{
 }
 
 
+.inputfoto{
+    background-color:#474747;
+    color:white;
+    padding:8px;
+    border-radius: 7px;
+}
+
+.nice{
+    color:white;
+    background-color: gray;
+}
+
 
 
 
@@ -116,6 +131,20 @@ input:hover{
     transition: ease-in-out .2s;
 }
 
+.pesquisar{
+    background-color:var(--pesq-background);
+    color:var(--pesq-color-font);
+    border-radius: 8px;
+}
+
+.iconsear{
+    padding-top: 10px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+
+
 .bguser{
     background-color: #002B8F;
     border-radius: 10px;
@@ -125,8 +154,6 @@ input:hover{
 }
 
 .searhicon{
-    
-    
     border-radius: 3px;
     padding-right:10px;
     padding-left: 10px;
@@ -134,7 +161,7 @@ input:hover{
 
 .trabfoto{
     width: 100px; 
-    height: 120px;
+    height: 130px;
     border: var(--img-trab-color) ;
 }
 

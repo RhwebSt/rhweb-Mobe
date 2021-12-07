@@ -19,8 +19,8 @@ class CreateTaxasTable extends Migration
             // $table->float('tfbenef',8,2)->nullable();
             // $table->float('tfferias',8,2)->nullable();
             // $table->float('tf13',8,2)->nullable();
-            $table->float('tfdefaltor',8,2)->nullable();
-            $table->float('tftaxafed',8,2)->nullable();
+            $table->char('tfdefaltor',100)->nullable();
+            $table->float('tftaxafed',8,2)->nullable(); 
             $table->float('tfdas',8,2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');

@@ -150,7 +150,7 @@
                           </ul>
       
 
-                  <div class="dbg-primary-flex align-items-end bguser "> 
+                  <div class="dbg-primary-flex align-items-end "> 
                     <div class="flex-shrink-0 dropdown flex-row-reverse">
                       @if($user->name)
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">

@@ -64,17 +64,38 @@ class User extends Authenticatable
     {
         return User::where('name', $id)->first();
     }
+    public function busca($id)
+    {
+        return User::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->orWhere('name','like','%'.$id.'%');
+            }
+        })
+        ->get();
+    }
     public function editar($dados,$id)
     {
-        return User::where('id', $id)
-        ->update([
-            'name'=>$dados['name'],
-            'email'=>$dados['email'],
-            // 'usuario'=>$dados['usuario'],
-            'password'=> Hash::make($dados['senha']),
-            'cargo'=>$dados['cargo'],
-            'empresa'=>$dados['empresa'],
-        ]);
+        if ($dados['senha']) {
+            return User::where('id', $id)
+            ->update([
+                'name'=>$dados['name'],
+                'email'=>$dados['email'],
+                // 'usuario'=>$dados['usuario'],
+                'password'=>Hash::make($dados['senha']),
+                'cargo'=>$dados['cargo'],
+                'empresa'=>$dados['empresa'],
+            ]);
+        }else{
+            return User::where('id', $id)
+            ->update([
+                'name'=>$dados['name'],
+                'email'=>$dados['email'],
+                // 'usuario'=>$dados['usuario'],
+                'cargo'=>$dados['cargo'],
+                'empresa'=>$dados['empresa'],
+            ]);
+        }
     }
     public function deletar($id)
     {

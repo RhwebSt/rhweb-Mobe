@@ -424,7 +424,7 @@
                             if(data.length === 1 && novodados.length > 4){
                                 empresas(novodados)
                             }else if (novodados.length === 14) {
-                                pesquisa(novodados)
+                                pesquisa(dados)
                             }
                         }
                     });

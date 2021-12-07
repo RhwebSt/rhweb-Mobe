@@ -32,10 +32,10 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['liboletim',$id],
                     ['lsstatus',$status],
-                    ['trabalhadors.empresa', $user->empresa]
+                    // ['trabalhadors.empresa', $user->empresa]
                 ])->orWhere([
                     ['id',$id],
-                    ['trabalhadors.empresa', $user->empresa]
+                    // ['trabalhadors.empresa', $user->empresa]
                 ]);
             }
         })->first();

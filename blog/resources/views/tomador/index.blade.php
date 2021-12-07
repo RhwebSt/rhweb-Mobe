@@ -60,7 +60,7 @@
                        
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label ">Nome Completo</label>
-                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" name="nome__completo"  id="nome__completo">
+                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
                             @error('nome__completo')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -68,12 +68,18 @@
 
                         <div class="col-md-6">
                             <label for="nome__fantasia" class="form-label">Nome Fantasia</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="nome__fantasia" value="" id="nome__fantasia">
+                            <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
+                            @error('nome__fantasia')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2">
                             <label for="cnpj" class="form-label">CNPJ</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cnpj" value="" id="cnpj">
+                            <input type="text" class="form-control input fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
+                            @error('cnpj')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         
                         <div class="col-md-2">
@@ -87,17 +93,26 @@
 
                         <div class="col-md-2">
                             <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="matricula" value="" id="matricula">
+                            <input type="text" class="form-control input fw-bold text-dark @error('matricula') is-invalid @enderror" name="matricula" value="{{old('matricula')}}" id="matricula">
+                            @error('matricula')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="simples" class="form-label">Simples</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="simples" value="" id="simples">
+                            <input type="text" class="form-control input fw-bold text-dark @error('simples') is-invalid @enderror" name="simples" value="{{old('simples')}}" id="simples">
+                            @error('simples')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="telefone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="telefone" value="" id="telefone">
+                            <input type="text" class="form-control input fw-bold text-dark @error('telefone') is-invalid @enderror" name="telefone" value="{{old('telefone')}}" id="telefone">
+                            @error('telefone')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         
@@ -106,59 +121,81 @@
 
                         <div class="col-md-2">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cep"   id="cep">
+                            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror" name="cep" value="{{old('cep')}}"   id="cep">
+                            @error('cep')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         
                         <div class="col-md-6">
                             <label for="logradouro" class="form-label">Rua</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="logradouro" value="" id="logradouro">
+                            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror" name="logradouro" value="{{old('logradouro')}}" id="logradouro">
+                            @error('logradouro')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-1">
                             <label for="numero" class="form-label">Número</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="numero" value="" id="numero">
+                            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror" name="numero" value="{{old('numero')}}" id="numero">
+                            @error('numero')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3"> 
-                                <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
-                                <select name="tipoconstrucao" id="tipoconstrucao" class="form-select fw-bold text-dark">
+                                <label for="complemento__endereco" class="form-label">Tipo da construção</label>
+                                <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
                                 <option selected >Casa</option>
                                 <option >Apartamento</option>
+                                <option >Empresa</option>
                             </select>
                         </div>
 
                         <div class="col-md-5">
                             <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="bairro" value="" id="bairro">
+                            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror" name="bairro" value="{{old('bairro')}}" id="bairro">
+                            @error('bairro')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-5">
                             <label for="localidade" class="form-label">Municipio</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="localidade" value="" id="localidade">
+                            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror" name="localidade" value="{{old('localidade')}}" id="localidade">
+                            @error('localidade')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
                         <div class="col-md-2">
                             <label for="uf" class="form-label">UF</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="uf" value="" id="uf">
+                            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror" name="uf" value="{{old('uf')}}" id="uf">
+                            @error('uf')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <div class="col-md-5 d-none">
+                        <!-- <div class="col-md-5 d-none">
                             <label for="complemento" class="form-label">Complemento</label>
                             <input type="text" class="form-control input fw-bold text-dark" name="complemento__endereco" value="" id="complemento">
-                        </div>
+                        </div> -->
 
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Tomador Taxas</h1>
 
 
                         <div class="col-md-3">
                             <label for="taxa_adm" class="form-label">Taxa Adm %</label>
-                            <input type="text" class="form-control input fw-bold text-dark " name="taxa_adm" value="" id="taxa_adm">
+                            <input type="text" class="form-control input fw-bold text-dark @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{old('taxa_adm')}}" id="taxa_adm">
+                            @error('taxa_adm')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <div class="col-md-3 d-none">
+                        <!-- <div class="col-md-3 d-none">
                             <label for="caixa_benef" class="form-label">Caixa benef. %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="caixa_benef" value="" id="caixa_benef">
+                            <input type="text" class="form-control  input fw-bold text-dark " name="caixa_benef" value="" id="caixa_benef">
                         </div>
 
                         <div class="col-md-3 d-none">
@@ -169,24 +206,33 @@
                         <div class="col-md-3 d-none">
                             <label for="13_salario" class="form-label">13º Salário 0,66 %</label>
                             <input type="text" class="form-control input fw-bold text-dark" name="13_salario" value="" id="13_salario">
-                        </div>
+                        </div> -->
 
                         <div class="col-md-3">
                             <label for="taxa__fed" class="form-label">Taxa Fed. %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="taxa__fed" value="" id="taxa__fed">
+                            <input type="text" class="form-control input fw-bold text-dark  @error('taxa__fed') is-invalid @enderror" name="taxa__fed" value="{{old('taxa__fed')}}" id="taxa__fed">
+                            @error('taxa__fed')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                             <label for="deflator" class="form-label">% DEFLATOR</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="deflator" value="" id="deflator">
+                            <input type="text" class="form-control input fw-bold text-dark @error('deflator') is-invalid @enderror" name="deflator" value="{{old('deflator')}}" id="deflator">
+                            @error('deflator')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                             <label for="das" class="form-label">DAS %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="das" value="" id="das">
+                            <input type="text" class="form-control @error('das') is-invalid @enderror input fw-bold text-dark" name="das" value="{{old('das')}}" id="das">
+                            @error('das')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!-- <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1> -->
 
 
-                        <div class="col-md-3 d-none">
+                        <!-- <div class="col-md-3 d-none">
                             <label for="ferias_trab" class="form-label">Férias %</label>
                             <input type="text" class="form-control input fw-bold text-dark" name="ferias_trab" value="" id="ferias_trab">
                         </div>
@@ -199,7 +245,7 @@
                         <div class="col-md-3 d-none">
                             <label for="rsr" class="form-label">RSR %</label>
                             <input type="text" class="form-control input fw-bold text-dark" name="rsr" value="" id="rsr">
-                        </div>
+                        </div> -->
 
                         <!-- <div class="col-md-3">
                             <label for="das" class="form-label">DAS %</label>
@@ -212,93 +258,132 @@
 
                         <div class="col-md-3">
                             <label for="cod__fpas" class="form-label">Cod FPAS</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cod__fpas" value="" id="cod__fpas">
+                            <input type="text" class="form-control input fw-bold text-dark @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas')}}" id="cod__fpas">
+                            @error('cod__fpas')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="cod__grps" class="form-label">Cod GRPS</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cod__grps" value="" id="cod__grps">
+                            <input type="text" class="form-control @error('cod__grps') is-invalid @enderror input fw-bold text-dark" name="cod__grps" value="{{old('cod__grps')}}" id="cod__grps">
+                            @error('cod__grps')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="cod__recol" class="form-label">Cod Recol</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cod__recol" value="" id="cod__recol">
+                            <input type="text" class="form-control @error('cod__recol') is-invalid @enderror input fw-bold text-dark" name="cod__recol" value="{{old('cod__recol')}}" id="cod__recol">
+                            @error('cod__recol')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="cnae" class="form-label">CNAE</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="cnae" value="" id="cnae">
+                            <input type="text" class="form-control @error('cnae') is-invalid @enderror input fw-bold text-dark" name="cnae" value="{{old('cnae')}}" id="cnae">
+                            @error('cnae')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="fap__aliquota" class="form-label">FAP Aliquota %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="fap__aliquota" value="" id="fap__aliquota">
+                            <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror input fw-bold text-dark" name="fap__aliquota" value="{{old('fap__aliquota')}}" id="fap__aliquota">
+                            @error('fap__aliquota')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="rat__ajustado" class="form-label">RAT Ajustado %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="rat__ajustado" value="" id="rat__ajustado">
+                            <input type="text" class="form-control @error('rat__ajustado') is-invalid @enderror input fw-bold text-dark" name="rat__ajustado" value="{{old('rat__ajustado')}}" id="rat__ajustado">
+                            @error('rat__ajustado')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="fpas__terceiros" class="form-label">FPAS Terceiros</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="fpas__terceiros" value="" id="fpas__terceiros">
+                            <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror input fw-bold text-dark" name="fpas__terceiros" value="{{old('fpas__terceiros')}}" id="fpas__terceiros">
+                            @error('fpas__terceiros')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="aliq__terceiros" class="form-label">Aliq. Terceiros</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="aliq__terceiros" value="" id="aliq__terceiros">
+                            <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror input fw-bold text-dark" name="aliq__terceiros" value="{{old('aliq__terceiros')}}" id="aliq__terceiros">
+                            @error('aliq__terceiros')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <div class="col-md-3 d-none">
+                        <!-- <div class="col-md-3 d-none">
                             <label for="esocial" class="form-label">E-SOCIAL Nº</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="esocial" value="" id="esocial">
-                        </div>
+                            <input type="text" class="form-control  input fw-bold text-dark" name="esocial" id="esocial">
+                        </div> -->
 
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide Sobre Fatura</h1>
 
 
                         <div class="col-md-2">
                             <label for="alimentacao" class="form-label"> Alimentação</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="alimentacao" value="" id="alimentacao">
+                            <input type="text" class="form-control @error('alimentacao') is-invalid @enderror input fw-bold text-dark" name="alimentacao" value="{{old('alimentacao')}}" id="alimentacao">
+                            @error('alimentacao')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2">
                             <label for="transporte" class="form-label">Transporte</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="transporte" value="" id="transporte">
+                            <input type="text" class="form-control @error('transporte') is-invalid @enderror input fw-bold text-dark" name="transporte" value="{{old('transporte')}}" id="transporte">
+                            @error('transporte')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-5">
                             <label for="epi" class="form-label">EPI % (Sobre(PROD+RSR)Folha)</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="epi" value="" id="epi">
+                            <input type="text" class="form-control @error('epi') is-invalid @enderror input fw-bold text-dark" name="epi" value="{{old('epi')}}" id="epi">
+                            @error('epi')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3">
                             <label for="seguro__trabalhador" class="form-label">Seguro (Val.Trab)</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="seguro__trabalhador" value="" id="seguro__trabalhador">
+                            <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror input fw-bold text-dark" name="seguro__trabalhador" value="{{old('seguro__trabalhador')}}" id="seguro__trabalhador">
+                            @error('seguro__trabalhador')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
-                        <div class="col-md-4 d-none">
+                        <!-- <div class="col-md-4 d-none">
                             <label for="indice__folha" class="form-label">Indíce sobre Folha ( 1 Paga - 2 Desconta )</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="indice__folha" value="" id="indice__folha">
-                        </div>
+                            <input type="text" class="form-control  input fw-bold text-dark" name="indice__folha"  id="indice__folha">
+                        </div> -->
 
-                        <div class="col-md-2 d-none">
+                        <!-- <div class="col-md-2 d-none">
                             <label for="valor__transporte" class="form-label">Valor Vale Transporte</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="valor__transporte" value="" id="valor__transporte">
+                            <input type="text" class="form-control input fw-bold text-dark" name="valor__transporte"  id="valor__transporte">
                         </div>
 
                         <div class="col-md-3 d-none">
                             <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="valor__alimentacao" value="" id="valor__alimentacao">
-                        </div>
+                            <input type="text" class="form-control input fw-bold text-dark" name="valor__alimentacao"  id="valor__alimentacao">
+                        </div> -->
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide sobre a folha</h1>
 
 
                         <div class="col-md-3">
                             <label for="folhartransporte" class="form-label">VT Transporte</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="folhartransporte" value="" id="folhartransporte">
+                            <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror input fw-bold text-dark" name="folhartransporte" value="{{old('folhartransporte')}}" id="folhartransporte">
+                            @error('folhartransporte')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                         <label for="folhartipotrans" class="form-label">Tipo</label>
@@ -309,7 +394,10 @@
                         </div>
                         <div class="col-md-3">
                             <label for="folharalim" class="form-label">VA Alimentação</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="folharalim" value="" id="folharalim">
+                            <input type="text" class="form-control @error('folharalim') is-invalid @enderror input fw-bold text-dark" name="folharalim" value="{{old('folharalim')}}" id="folharalim">
+                            @error('folharalim')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                         <label for="folhartipoalim" class="form-label">Tipo</label>
@@ -322,17 +410,26 @@
 
                         <div class="col-md-4">
                             <label for="dias_uteis" class="form-label">Dias Úteis</label>
-                            <input type="time" class="form-control input fw-bold text-dark" name="dias_uteis" value="" id="dias_uteis">
+                            <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror input fw-bold text-dark" name="dias_uteis" value="{{old('dias_uteis')}}" id="dias_uteis">
+                            @error('dias_uteis')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-4">
                             <label for="sabados" class="form-label">Sábados</label>
-                            <input type="time" class="form-control input fw-bold text-dark" name="sabados" value="" id="sabados">
+                            <input type="time" class="form-control @error('sabados') is-invalid @enderror input fw-bold text-dark" name="sabados" value="{{old('sabados')}}" id="sabados">
+                            @error('sabados')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-4">
                             <label for="domingos" class="form-label">Domingos</label>
-                            <input type="time" class="form-control input fw-bold text-dark" name="domingos" value="" id="domingos">
+                            <input type="time" class="form-control @error('domingos') is-invalid @enderror input fw-bold text-dark" name="domingos" value="{{old('domingos')}}" id="domingos">
+                            @error('domingos')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -341,7 +438,10 @@
 
                         <div class="col-md-3">
                             <label for="inss__empresa" class="form-label">INSS Empresa %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="inss__empresa" value="" id="inss__empresa">
+                            <input type="text" class="form-control @error('inss__empresa') is-invalid @enderror input fw-bold text-dark" name="inss__empresa" value="{{old('inss__empresa')}}" id="inss__empresa">
+                            @error('inss__empresa')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-2">
                         <label for="retencaoinss" class="form-label">Retenção INSS</label>
@@ -352,7 +452,10 @@
                         </div>
                         <div class="col-md-2">
                             <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="fgts__empresa" value="" id="fgts__empresa">
+                            <input type="text" class="form-control @error('fgts__empresa') is-invalid @enderror input fw-bold text-dark" name="fgts__empresa" value="{{old('fgts__empresa')}}" id="fgts__empresa">
+                            @error('fgts__empresa')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-2">
                         <label for="retencaofgts" class="form-label">Retenção FGTS</label>
@@ -369,37 +472,52 @@
                         </select>
                         </div>
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Dados Bancários</h1>
-                        <div class="col-md-6 d-none">
+                        <!-- <div class="col-md-6 d-none">
                             <label for="nome__conta" class="form-label">Nome do Titular</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="nome__conta" value="" id="nome__conta">
-                        </div>
+                            <input type="text" class="form-control  input fw-bold text-dark" name="nome__conta"  id="nome__conta">
+                        </div> -->
 
                         <div class="col-md-3 mb-5">
                             <label for="banco" class="form-label">Banco</label>
-                            <input type="text" class="form-control input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="" id="banco">
+                            <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
                             <div id="menssagem-banco" class="valid-feedback">
                                
                             </div>
+                            @error('banco')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2 mb-5">
                             <label for="agencia" class="form-label">Agência</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="agencia" value="" id="agencia">
+                            <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia">
+                            @error('agencia')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2 mb-5">
                             <label for="operacao" class="form-label">Operação</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="operacao" value="" id="operacao">
+                            <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao">
+                            @error('aperacao')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-2 mb-5">
                             <label for="conta" class="form-label">Conta</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="conta" value="" id="conta">
+                            <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta">
+                            @error('conta')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="col-md-3 mb-5">
                             <label for="pix" class="form-label">PIX</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="pix" value="" id="pix">
+                            <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
+                            @error('pix')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                        
@@ -443,9 +561,9 @@
                 }
                 if (dados) {
                     $.ajax({
-                    url: "{{url('tomador')}}/"+dados,
+                    url: "{{url('tomador')}}/pesquisa/"+dados,
                     type: 'get',
-                    contentType: 'application/json',
+                    contentType: 'application/json', 
                     success: function(data) {
                         let nome = ''
                         if (data.length >= 1) {
@@ -464,7 +582,7 @@
                             //   nome += `<option value="${element.tscpf}">`
                             // });
                             // $('#datalistOptions').html(nome)
-                            tomador(data)
+                            tomador(dados)
                         }else{
                             if (dados.length === 14) {
                                 pesquisa(dados)
@@ -477,7 +595,17 @@
                 }
                
             })
-            function tomador(data) {
+            function tomador(dados) {
+                $.ajax({
+                    url: "{{url('tomador')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json', 
+                    success: function(data) {
+                        campos(data)
+                    }
+                })
+            }
+            function campos(data) {
                 if (data.id) {
                     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
                     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
@@ -550,7 +678,7 @@
                 $('#pix').val(data.bspix)
                 $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))
                 $('#folharalim').val(data.insalimentacao.toFixed(2).toString().replace(".", ","))
-                $('#deflator').val(data.tfdefaltor.toFixed(2).toString().replace(".", ","))
+                $('#deflator').val(data.tfdefaltor)
                 $('#endereco').val(data.eiid)
                 $('#bancario').val(data.biid)
                 for (let index = 0; index <  $('#tipo option').length; index++) {  
@@ -559,6 +687,14 @@
                         $('#tipo option').eq(index).attr('selected','selected')
                     }else  {
                         $('#tipo option').eq(index).removeAttr('selected')
+                    }
+                }
+                for (let index = 0; index <  $('#complemento__endereco option').length; index++) {  
+                    if (data.estipo == $('#complemento__endereco option').eq(index).text()) {
+                        
+                        $('#complemento__endereco option').eq(index).attr('selected','selected')
+                    }else  {
+                        $('#complemento__endereco option').eq(index).removeAttr('selected')
                     }
                 }
                 

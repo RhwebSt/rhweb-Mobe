@@ -87,4 +87,8 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where('id', $id)->delete();
     }
+    public function deletatomador($id)
+    {
+        return TabelaPreco::where('tomador', $id)->delete();
+    }
 }

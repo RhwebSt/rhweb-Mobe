@@ -105,19 +105,19 @@ class Tomador extends Model
                 ->orWhere('tomadors.id',$id);
             }else{
                  $query->where([
-                        ['tsnome',$id],
+                        ['tsnome','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['tscnpj',$id],
+                        ['tscnpj','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa],
                     ])
                     ->orWhere([
-                        ['tomadors.id',$id],
+                        ['tomadors.id','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa],
                     ])
                     ->orWhere([
-                        ['tsmatricula',$id],
+                        ['tsmatricula','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa],
                     ]);
             }

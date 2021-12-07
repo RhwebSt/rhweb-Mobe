@@ -58,7 +58,7 @@ class EmpresaController extends Controller
             'numero'=>'required|max:10',
             'bairro'=>'required:max:40',
             'localidade'=>'required|max:30',
-            'uf'=>'required|max:2',
+            'uf'=>'required|max:2|uf',
             'vt__trabalhador'=>'max:15',
             'va__trabalhador'=>'max:15',
             'nro__fatura'=>'max:15',

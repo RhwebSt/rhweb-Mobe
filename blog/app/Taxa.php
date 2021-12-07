@@ -14,7 +14,7 @@ class Taxa extends Model
         return Taxa::create([
             'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
             // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
+            'tfdefaltor'=>$dados['deflator'],
             'tfdas'=>str_replace(",",".",$dados['das']),
             'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
             'tomador'=>$dados['tomador']
@@ -26,7 +26,7 @@ class Taxa extends Model
       ->update([
         'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
             // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
+            'tfdefaltor'=>$dados['deflator'],
             'tfdas'=>str_replace(",",".",$dados['das']),
             'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
     ]);
