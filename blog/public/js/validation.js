@@ -220,7 +220,6 @@ $("#form").validate({
         },
         matricula:{
             required: true,
-            maxlength:10
         },
         telefone:{
             required: true,
@@ -394,21 +393,15 @@ $("#form").validate({
         },
         banco:{
             required:false,
-            maxlength:100
         },
         agencia:{
-            required:false,
-            maxlength:15
+            required:false
         },
         operacao:{
-            required:false,
-            maxlength:10,
-            number: true,
+            required:false
         },
         conta:{
-            required:false,
-            maxlength:10,
-            number: true,
+            required:false
         },
         nome:{
             required:true,
@@ -500,7 +493,8 @@ $("#form").validate({
             required:true
         },
         ctps:{
-            required:true
+            required:true,
+            maxlength:20
         },
         serie__ctps:{
             required:true
@@ -524,7 +518,8 @@ $("#form").validate({
             required:true
         },
         pais__nacionalidade:{
-            required:true
+            required:true,
+            maxlength:20
         },
         nome__mae:{
             required:true
@@ -534,7 +529,7 @@ $("#form").validate({
             maxlength:10
         },
         pix:{
-            maxlength:255
+            maxlength:50
         },
         liboletim:{
             required:true,
@@ -584,9 +579,15 @@ $("#form").validate({
         name:{
             required:true,
             maxlength:20
+        },
+        valor__tomador:{
+            required:true,
         }
     },
     messages:{
+        valor__tomador:{
+            required:"O campo nome não pode esta vazio!",
+        },
         name:{
             required:"O campo nome não pode esta vazio!",
             maxlength:'O campo não pode ter mais de 20 caracteres'
@@ -637,7 +638,7 @@ $("#form").validate({
             maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         pix:{
-            maxlength:'O campo não pode ter mas de 255 caracteres'
+            maxlength:'O campo não pode ter mas de 50 caracteres'
         },
         data__admissao:{
             required:"O campo nome não pode esta vazio!",
@@ -648,6 +649,7 @@ $("#form").validate({
         },
         pais__nacionalidade:{
             required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 20 caracteres',
         },
         pais__nascimento:{
             required:"O campo nome não pode esta vazio!",
@@ -672,6 +674,7 @@ $("#form").validate({
         },
         ctps:{
             required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mas de 20 caracteris'
         },
         sf:{
             required:"O campo nome não pode esta vazio!",
@@ -781,7 +784,6 @@ $("#form").validate({
         },
         matricula:{
             required: 'O campo MATRICULAR não pode esta vazio!',
-            maxlength: "  O campo não pode tem mais de 10 caracteres!",
         },
         simples:{
             required: 'O campo SIMPLES não pode esta vazio!',
@@ -948,21 +950,15 @@ $("#form").validate({
         },
         banco:{
             required:'O campo não pode esta vazio!',
-            maxlength:'O campo não pode ter mais de 100 caracteres!'
         },
         agencia:{
             required:'O campo não pode esta vazio!',
-            maxlength:'O campo não pode ter mais de 15 caracteres!'
         },
         operacao:{
             required:'O campo não pode esta vazio!',
-            maxlength:'O campo não pode ter mais de 10 caracteres!',
-            number: 'O campo só aceita valo númerico!',
         },
         conta:{
             required:'O campo não pode esta vazio!',
-            maxlength:'O campo não pode ter mais de 10 caracteres!',
-            number: 'O campo só aceita valo númerico!',
         }
     }
 });

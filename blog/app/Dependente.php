@@ -21,11 +21,11 @@ class Dependente extends Model
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
-    public function lista($id)
+    public function buscaListaDepedente($id)
     {
         return Dependente::where('trabalhador', $id)->get();
     }
-    public function first($id)
+    public function buscaUnidadeDepedente($id)
     {
         return Dependente::where('id', $id)->first();
     }

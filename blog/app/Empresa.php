@@ -28,7 +28,7 @@ class Empresa extends Model
 
         ]);
     }
-    public function first($id)
+    public function buscaUnidadeEmpresa($id)
     {
        return DB::table('empresas')
             ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
@@ -62,13 +62,13 @@ class Empresa extends Model
                     ])
                     ->orWhere([
                         ['empresas.id',$id],
-                        ['empresas.id', $user->empresa]
+                        ['empresas.id', $user->empresa] 
                     ]);
                 }
             })
             ->first();
     }
-    public function pesquisa($id)
+    public function buscaListaEmpresa($id)
     {
         return Empresa::select('id','esnome','escnpj')->where(function($query) use ($id){
             $user = auth()->user();

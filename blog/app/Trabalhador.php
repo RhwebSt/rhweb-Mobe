@@ -31,7 +31,43 @@ class Trabalhador extends Model
     {
         return Trabalhador::select('tsnome','id','tsmatricula')->whereIn('id', $dados)->get();
     }
-    public function pesquisa($id)
+    public function buscaListaTrabalhador($id)
+    {
+        return Trabalhador::select(
+            'tsnome',
+            'id',
+            'tscpf',
+            'tsmatricula'
+        ) 
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                if ($id) {
+                    $query->where('tsnome','like','%'.$id.'%') 
+                    ->orWhere('tscpf','like','%'.$id.'%')
+                    ->orWhere('tsmatricula','like','%'.$id.'%');
+                }
+               
+            }else{
+                $query->where([
+                    ['trabalhadors.tsnome','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['trabalhadors.tscpf','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ])
+                ->orWhere([
+                    ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ]);
+            }
+            
+        })
+        ->get();
+      
+    }
+    public function listaCompletaTrabalhador($id)
     {
         return DB::table('trabalhadors')
             ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
@@ -80,7 +116,7 @@ class Trabalhador extends Model
             })
             ->get();
     }
-    public function first($id)
+    public function buscaUnidadeTrabalhador($id)
     {
         return DB::table('trabalhadors')
             ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
@@ -100,7 +136,7 @@ class Trabalhador extends Model
                 'enderecos.esestado',
                 'enderecos.esmunicipio',
                 'enderecos.esuf',
-                'enderecos.escomplemento',
+                'enderecos.estipo',
                 'enderecos.esnum',
                 'enderecos.escep',
                 'enderecos.eiid'
@@ -108,11 +144,10 @@ class Trabalhador extends Model
             ->where(function($query) use ($id){
                 $user = auth()->user();
                 if ($user->hasPermissionTo('admin')) {
-                    $query->where('tsnome', 'like', '%'.$id.'%') 
+                    $query->where('tsnome',$id) 
                     ->orWhere('tscpf',$id)
                     ->orWhere('tsmatricula',$id)
                     ->orWhere('trabalhadors.id',$id);
-                    
                 }else{
                     $query->where([
                         ['trabalhadors.tsnome',$id],
@@ -133,7 +168,7 @@ class Trabalhador extends Model
                 }
                
             })
-    ->first();
+        ->first();
         }
     public function lista()
     {

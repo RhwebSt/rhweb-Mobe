@@ -16,9 +16,9 @@ Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
 
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
-    Route::get('ficharegitrotrab/{id}','Trabalhador\\fichaRegistroTrabController@ficha');
+    Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@ficha');
-    Route::get('fichaepitrab/{id}','fichaEpi\\fichaEpiTrabController@ficha');
+    Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
@@ -49,12 +49,15 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
-    Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show')->name('tabelapreco.show');
+    Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');
+    Route::get('tabelapreco/perfil/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show');
     Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit']);
 
 
 
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
+    Route::get('trabalhador/pesquisa/{id}','Trabalhador\\TrabalhadorController@pesquisa');
+
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
@@ -66,7 +69,6 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
-        Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
         Route::resource('inss','Inss\\InssController')->names('inss');

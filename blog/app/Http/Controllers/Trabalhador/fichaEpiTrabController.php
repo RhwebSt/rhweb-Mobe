@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\fichaEpi;
+namespace App\Http\Controllers\Trabalhador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class fichaEpiTrabController extends Controller
         $empresa = new Empresa;
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
         if ($trabalhadors) {
-            $empresas = $empresa->first($trabalhadors->empresa);
+            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
             $pdf = PDF::loadView('fichaEpi',compact('trabalhadors','empresas'));
             return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
         }

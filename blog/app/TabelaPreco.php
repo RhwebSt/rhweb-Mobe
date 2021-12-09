@@ -22,7 +22,7 @@ class TabelaPreco extends Model
             'tomador'=>$dados['tomador']
         ]);
     }
-    public function pesquisa($id,$tomador)
+    public function buscaListaTabela($id,$tomador)
     {
         return TabelaPreco::where(function($query) use ($id,$tomador){
             $user = auth()->user();
@@ -34,8 +34,8 @@ class TabelaPreco extends Model
                 ->orWhere([
                     ['tsdescricao', 'like', '%'.$id.'%'],
                     ['tomador',$tomador]
-                ]);
-                // ->orWhere('id',$id);
+                ])
+                ->orWhere('tomador',$tomador);
             }else{
                  $query->where([
                         ['tsrubrica',$id],
@@ -46,11 +46,11 @@ class TabelaPreco extends Model
                         ['tsdescricao',$id],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['tomador',$tomador],
+                        ['empresa', $user->empresa],
                     ]);
-                    // ->orWhere([
-                    //     ['id',$id],
-                    //     ['empresa', $user->empresa],
-                    // ]);
             }
            
         })
@@ -71,6 +71,40 @@ class TabelaPreco extends Model
            
         })
         ->get();
+    }
+    public function buscaUnidadeTabela($id,$tomador = null)
+    {
+        return TabelaPreco::where(function($query) use ($id,$tomador){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['tsrubrica',$id],
+                    ['tomador',$tomador]
+                ])
+                ->orWhere([
+                    ['tsdescricao',$id],
+                    ['tomador',$tomador]
+                ])
+                ->orWhere('id',$id);
+            }else{
+                $query->where([
+                    ['tsrubrica',$id],
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['tsdescricao',$id],
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa],
+                ])
+                ->orWhere([
+                    ['id',$id],
+                    ['empresa', $user->empresa]
+                ]);
+            }
+           
+        })
+        ->first();
     }
     public function editar($dados,$id)
     {

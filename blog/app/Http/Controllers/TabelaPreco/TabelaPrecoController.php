@@ -17,7 +17,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->lista($tomador);
+        $tabelaprecos = $tabelapreco->buscaListaTabela($id,$tomador);
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 
@@ -40,25 +40,13 @@ class TabelaPrecoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $request->validate([
             'ano' => 'required|max:4',
             'rubricas'=>'required|max:30',
-            'descricao'=>'required|max:60',
-            'valor'=>'required'
-        ]
-        // [
-        //     'nome__completo.required'=>'Campo não pode esta vazio!',
-        //     'matricula.required'=>'Campo não pode esta vazio!',
-        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
-        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
-        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
-        //     'liboletim.required'=>'Campo não pode esta vazio!',
-        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
-        //     'data.required'=>'O campo não pode esta vazio!'
-            
-        // ]
-        );
+            'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-%]*$/',
+            'valor'=>'required',
+            'valor__tomador'=>'required'
+        ]);
         $tabelapreco = new TabelaPreco;
       
         $tabelaprecos = $tabelapreco->cadastro($dados);
@@ -83,15 +71,16 @@ class TabelaPrecoController extends Controller
     public function show($id,$tomador)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->pesquisa($id,$tomador);
+        $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id,$tomador);
         return response()->json($tabelaprecos);
     }
-    // public function listaget($id)
-    // {
-    //     $tabelapreco = new TabelaPreco;
-    //     $tabelaprecos = $tabelapreco->get($id);
-    //     return response()->json($tabelaprecos);
-    // }
+    public function pesquisa($id,$tomador)
+    {
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->buscaListaTabela($id,$tomador);
+        return response()->json($tabelaprecos);
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -116,9 +105,14 @@ class TabelaPrecoController extends Controller
         $request->validate([
             'ano' => 'required|max:4',
             'rubricas'=>'required|max:30',
-            'descricao'=>'required|max:60',
-            'valor'=>'required'
+            'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-%]*$/',
+            'valor'=>'required',
+            'valor__tomador'=>'required'
         ]);
+        $novodados = [
+            $id,
+            $dados['tomador']
+        ];
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->editar($dados,$id);
         if($tabelaprecos) {
@@ -126,7 +120,7 @@ class TabelaPrecoController extends Controller
         }else{
             $condicao = 'editfalse';
         }
-        return redirect()->route('tabelapreco.mostrar.index',$id)->withInput()->withErrors([$condicao]);
+        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -138,7 +132,7 @@ class TabelaPrecoController extends Controller
     public function destroy($id)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->first($id);
+        $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
         $excluir = $tabelapreco->deletar($id);
         $novodados = [
            $id,

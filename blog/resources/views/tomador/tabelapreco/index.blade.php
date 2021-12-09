@@ -34,7 +34,7 @@
                   <h5 class="card-title text-center fs-3 ">Tabela de Preços</h5>
                   
                   
-                    <input type="hidden" value="{{$tomador}}" name="tomador">
+                    <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
                     @if($user->empresa)
                         <input type="hidden" name="empresa" value="{{$user->empresa}}">
                     @else
@@ -66,18 +66,14 @@
                         <label for="exampleDataList" class="form-label">Buscar</label>
                         <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
                         <datalist id="datalistOptions">
-                            <!-- <option value="San Francisco">
-                            <option value="New York">
-                            <option value="Seattle">
-                            <option value="Los Angeles">
-                            <option value="Chicago"> -->
+                          
                         </datalist>
                     </div>
                 </div>
                   
                     <div class="col-md-2">
                       <label for="ano" class="form-label">Ano</label>
-                      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="" id="ano">
+                      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
                       @error('ano')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -85,7 +81,7 @@
     
                     <div class="col-md-3">
                         <label for="rubricas" class="form-label">Código</label>
-                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="" id="rubricas">
+                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{old('rubricas')}}" id="rubricas">
                         @error('rubricas')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -97,11 +93,11 @@
     
                     <div class="col-md-7">
                       <label for="descricao" class="form-label">Descrição</label>
-                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao"  id="descricao">
+                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{old('descricao')}}"  id="descricao">
                       <datalist id="descricoes">
                        
                        </datalist>
-                       @error('rubricas')
+                       @error('descricao')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                        <span class="text-danger" id="descricoesmensagem"></span>
@@ -109,7 +105,7 @@
                   
                     <div class="col-md-3">
                       <label for="valor" class="form-label">Valor Trabalhador</label>
-                      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="" id="valor">
+                      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
                       @error('valor')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -117,8 +113,8 @@
                     
                     <div class="col-md-3">
                       <label for="valor__tomador" class="form-label">Valor Tomador</label>
-                      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor__tomador" value="" id="valor__tomador">
-                      @error('valor')
+                      <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
+                      @error('valor__tomador')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                     </div>
@@ -199,63 +195,57 @@
             
       <script>
         $(document).ready(function(){
-          $( ".pesquisa" ).keyup(function() {
-                var dados = $(this).val();
-                var tagname = $(this).attr('name');
-                if (dados) {
-                  $.ajax({
-                    url: "{{url('tabelapreco')}}/"+dados,
-                    type: 'get',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        $('#rubrica').removeClass('is-invalid')
-                        $('#rubricamensagem').text(' ')
-                        $('#descricao').removeClass('is-invalid')
-                        $('#descricoesmensagem').text(' ')
-                        let nome = ''
-                        if (data.length > 1) {
-                            data.forEach(element => {
-                              nome += `<option value="${element.rsdescricao}">`
-                            });
-                            if (tagname === 'rubricas') {
-                              $('#rubricas').html(nome);
-                            }else{
-                              $('#descricoes').html(nome)
-                            }
-                        }else if (data.length === 1) {
-                          if (tagname === 'rubrica') {
-                            $('#rubricas').val(data[0].rsrublica)
-                          }else{
-                            $('#descricao').val(data[0].tsdescricao)
-                          }
-                          tabelapreco(data[0])
-                        }else{
-                          if (tagname === 'rubricas') {
-                            $('#rubrica').addClass('is-invalid')
-                            $('#rubricamensagem').text('Esta codigo não esta cadastra.')
-                          }else if (tagname === 'descricao'){
-                            $('#descricao').addClass('is-invalid')
-                            $('#descricoesmensagem').text('Esta rublica não esta cadastra.')
-                          }
-                        }
+          $( "#pesquisa" ).keyup(function() {
+              var dados = $(this).val();
+              var tomador = $('#tomador').val();
+              if (dados) {
+                $.ajax({
+                  url: "{{url('tabelapreco')}}/pesquisa/"+dados+'/'+tomador,
+                  type: 'get',
+                  contentType: 'application/json',
+                  success: function(data) {
+                    let nome = ''
+                    if (data.length >= 1) {
+                      data.forEach(element => {
+                        nome += `<option value="${element.tsrubrica}">`
+                        nome += `<option value="${element.tsdescricao}">`
+                      });
+                      $('#datalistOptions').html(nome);
+                    } 
+                    if (data.length === 1 && dados.length > 3) {
+                      buscaIntem(dados,tomador)
+                    }else{
+                      campos()
                     }
-                  });
-                }else{
-                  if (tagname === 'rubricas') {
-                    $('#rubricas').val(' ');
-                    $('#ano').val(' ')
-                    $('#valor').val(' ')
-                    $('#descricao').val(' ')
-                    $('#valor__tomador').val(' ')
-                  }else{
-                    $('#rubricas').val(' ');
-                    $('#ano').val(' ')
-                    $('#valor').val(' ')
-                    $('#descricao').val(' ')
-                    $('#valor__tomador').val(' ')
                   }
+                })
+              }else{
+                campos()
+              }
+          });
+            function buscaIntem(dados,tomador) {
+              $.ajax({
+                url: "{{url('tabelapreco')}}/perfil/"+dados+'/'+tomador,
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                  tabelapreco(data)
                 }
-            });
+              })
+            }
+            function campos() {
+              $('#form').attr('action', "{{ route('tabelapreco.store') }}");
+              $('#incluir').removeAttr( "disabled" )
+              $('#atualizar').attr('disabled','disabled')
+              $('#deletar').attr('disabled','disabled')
+              $('#method').val(' ')
+              $('#excluir').attr( "disabled","disabled" )
+              $('#rubricas').val(' ');
+              $('#ano').val(' ')
+              $('#valor').val(' ')
+              $('#descricao').val(' ')
+              $('#valor__tomador').val(' ')
+            }
            function tabelapreco(data) {
               if (data.id) {
                     $('#form').attr('action', "{{ url('tabelapreco')}}/"+data.id);
@@ -273,6 +263,7 @@
                     $('#method').val(' ')
                     $('#excluir').attr( "disabled","disabled" )
                 }
+              $('#rubricas').val(data.tsrubrica);
               $('#ano').val(data.tsano)
               $('#valor').val(data.tsvalor.toFixed(2).toString().replace(".", ","))
               $('#valor__tomador').val( parseFloat(data.tstomvalor).toFixed(2).toString().replace(".", ","))

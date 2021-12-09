@@ -47,6 +47,50 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $request->validate([
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__social' => 'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'cpf' => 'required|max:15|cpf|formato_cpf',
+            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'pis'=>'required|max:20|pis',
+            'data_nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'pais__nascimento'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'pais__nacionalidade'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'telefone'=>'required|max:16|celular_com_ddd',
+            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'categoria__contrato'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'irrf'=>'required|max:18',
+            'sf'=>'required|max:18',
+            'ctps'=>'required|max:20',
+            'serie__ctps'=>'required|max:20',
+            'uf__ctps'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'data__afastamento'=>'max:10',
+            'banco'=>'max:100',
+            'agencia'=>'max:4',
+            'operacao'=>'max:3',
+            'conta'=>'max:10',
+            'pix'=>'max:255'
+        ],
+        // [
+        //     'nome__completo.required'=>'Campo não pode esta vazio!',
+        //     'matricula.required'=>'Campo não pode esta vazio!',
+        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
+        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
+        //     'liboletim.required'=>'Campo não pode esta vazio!',
+        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
+        //     'data.required'=>'O campo não pode esta vazio!'
+            
+        // ]
+        );
         // if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
         //     $novafoto = $request->foto;
         //     $extension = $novafoto->getClientOriginalExtension();
@@ -91,7 +135,13 @@ class TrabalhadorController extends Controller
     public function show($id)
     {
         $trabalhador = new Trabalhador;
-        $trabalhadors = $trabalhador->pesquisa($id);
+        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+        return response()->json($trabalhadors);
+    }
+    public function pesquisa($id = null)
+    {
+        $trabalhador = new Trabalhador;
+        $trabalhadors = $trabalhador->buscaListaTrabalhador($id);
         return response()->json($trabalhadors);
     }
 

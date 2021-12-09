@@ -101,13 +101,13 @@ class EmpresaController extends Controller
     public function show($id)
     {
         $empresa = new Empresa;
-        $empresas = $empresa->first($id);
+        $empresas = $empresa->buscaUnidadeEmpresa($id);
         return response()->json($empresas);
     }
     public function pesquisa($id)
     {
         $empresa = new Empresa;
-        $empresas = $empresa->pesquisa($id);
+        $empresas = $empresa->buscaListaEmpresa($id);
         return response()->json($empresas);
     }
     /**
@@ -131,6 +131,34 @@ class EmpresaController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'esnome'=>'required|max:100',
+            'escnpj'=>'required|max:100',
+            'dataregistro'=>'required|max:30',
+            'responsave'=>'required|max:30',
+            'email'=>'required|max:100|email',
+            'cnae__codigo'=>'required|max:10',
+            'contribuicao__sindicato'=>'required|max:30',
+            'telefone'=>'required|max:20|celular_com_ddd',
+            'cod__municipio'=>'required|max:10',
+            'cep'=>'required|max:16',
+            'logradouro'=>'required|max:50',
+            'numero'=>'required|max:10',
+            'bairro'=>'required:max:40',
+            'localidade'=>'required|max:30',
+            'uf'=>'required|max:2|uf',
+            'vt__trabalhador'=>'max:15',
+            'va__trabalhador'=>'max:15',
+            'nro__fatura'=>'max:15',
+            'nro__reciboavulso'=>'max:15',
+            'matric__trabalhador'=>'max:15',
+            'nro__requisicao'=>'max:15',
+            'nro__boletins'=>'max:15',
+            'nro__folha'=>'max:15',
+            'nro__cartaoponto'=>'max:15',
+            'seq__esocial'=>'max:15',
+            'cbo'=>'max:15'
+        ]);
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;

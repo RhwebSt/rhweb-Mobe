@@ -371,7 +371,7 @@
      <script>
          function encodeImageFileAsURL(element) {
             var file = element.files[0];
-            var ext = ['jpg','png','svg','tiff','webp']
+            var ext = ['jpg','jpeg','png','svg','tiff','webp']
             var type = file.type.split('/')
             console.log(file.type);
             console.log();
