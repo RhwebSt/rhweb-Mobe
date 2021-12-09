@@ -26,12 +26,12 @@ class TabCadastroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($quantidade,$boletim,$tomador,$id)
+    public function create($quantidade,$boletim,$tomador,$id,$data)
     {
         $user = Auth::user(); 
         $lancamentorublica = new Lancamentorublica;
         $lista = $lancamentorublica->listacadastro($id);
-        return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista'));
+        return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
     }
 
     /**
@@ -43,41 +43,47 @@ class TabCadastroController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $novadata = explode('-',$dados['data']);
         $lancamentorublica = new Lancamentorublica;
         $novodados = [
             $dados['numtrabalhador'],
             $dados['boletim'],
             $dados['tomador'],
             $dados['lancamento'],
+            $dados['data']
         ];
-        $lancamentorublicas = $lancamentorublica->verifica($dados);
-        if ($lancamentorublicas) {
-            $condicao = 'jacadastrador';
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors($condicao);
-        }
-        $validator = Validator::make($request->all(), [
-            'nome__completo' => 'required',
-            'matricula'=>'required|max:4',
-            'codigo'=>'required|max:4',
-            'rubrica'=>'required|max:60',
-            'quantidade'=>'required'
-        ],
-            [
-                'codigo.required'=>'O campo codigo é obrigatório.',
-                'codigo.max'=>'O campo codigo não pode ser superior a 4 caracteres.'
-            ]
-        );
-        if ($validator->fails()) {
-           return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
-        }
-        $condicao = '';
-        $lancamentorublicas = $lancamentorublica->cadastro($dados);
-        if ($lancamentorublicas) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
-        }
-       return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
+        try {
+            $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
+            if ($lancamentorublicas) {
+                $condicao = 'jacadastrador';
+                return redirect()->route('tabcadastro.create',$novodados)->withErrors($condicao);
+            }
+            $validator = Validator::make($request->all(), [
+                'nome__completo' => 'required',
+                'matricula'=>'required|max:4',
+                'codigo'=>'required|max:4',
+                'rubrica'=>'required|max:60',
+                'quantidade'=>'required'
+            ],
+                [
+                    'codigo.required'=>'O campo codigo é obrigatório.',
+                    'codigo.max'=>'O campo codigo não pode ser superior a 4 caracteres.'
+                ]
+            );
+            if ($validator->fails()) {
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
+            }
+            $condicao = '';
+            $lancamentorublicas = $lancamentorublica->cadastro($dados);
+            if ($lancamentorublicas) {
+                $condicao = 'cadastratrue';
+            }else{
+                $condicao = 'cadastrafalse';
+            }
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
+       } catch (\Exception $e) {
+            echo('Não foi porssivél realizar o cadastro.');
+       }
     }
 
     /**
@@ -120,6 +126,7 @@ class TabCadastroController extends Controller
             $dados['boletim'],
             $dados['tomador'],
             $dados['lancamento'],
+            $dados['data']
         ];
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required',
@@ -150,13 +157,15 @@ class TabCadastroController extends Controller
     {
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $lancamentorublicas = $lancamentorublica->listafirst($id);
-        $lancamentotabelas = $lancamentotabela->listacomun($lancamentorublicas->lancamento);
+        $lancamentorublicas = $lancamentorublica->UnidadeRublica($id);
+        $novadata = explode(' ',$lancamentorublicas->created_at);
+        $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($lancamentorublicas->lancamento);
         $novodados = [
             $lancamentotabelas->lsnumero,
             $lancamentotabelas->liboletim,
             $lancamentotabelas->tomador,
             $lancamentotabelas->id,
+            $novadata[0]
         ];
         $lancamentorublicas = $lancamentorublica->deletar($id);
         if ($lancamentorublicas) {

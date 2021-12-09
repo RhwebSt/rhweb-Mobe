@@ -53,10 +53,12 @@
               
                 <div class="col-md-3">
                     <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                    <input type="text" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
+                    <input type="text"  list="listaboletim" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
                     @error('liboletim')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
+                    <datalist id="listaboletim">
+                  </datalist>
                 </div>
 
               
@@ -134,40 +136,81 @@
                 var status = $('#status').val();
                 if (dados) {
                     $.ajax({
-                        url: "{{url('tabcartaoponto')}}/"+dados+'/'+status,
+                        url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                          if (data.id) {
-                                $('#form').attr('action', "{{ url('tabcartaoponto')}}/"+data.id);
-                                $('#formdelete').attr('action',"{{ url('tabcartaoponto')}}/"+data.id)
-                                $('#incluir').attr('disabled','disabled')
-                                $('#atualizar').removeAttr( "disabled" )
-                                $('#deletar').removeAttr( "disabled" )
-                                $('#excluir').removeAttr( "disabled" )
-                                $('#method').val('PUT')
-                                buscatomador(data.tomador)
-                            }else{
-                                $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
-                                $('#incluir').removeAttr( "disabled" )
-                                $('#atualizar').attr('disabled','disabled')
-                                $('#deletar').attr('disabled','disabled')
-                                $('#method').val(' ')
-                                $('#excluir').attr( "disabled",'disabled' )
-                            }
-                            $('#num__boletim').removeClass('is-invalid').next().text(' ')
-                            $('#matricula').removeClass('is-invalid').next().text(' ')
-                            $('#nome__completo').removeClass('is-invalid').next().text(' ')
-                            $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
-                            $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
+                        
+                          let nome = ''
+                          if (data.length >= 1) {
+                            data.forEach(element => {
+                              nome += `<option value="${element.tsnome}">`
+                              nome += `<option value="${element.tsmatricula}">`
+                              nome += `<option value="${element.tscpf}">`
+                            });
+                            $('#listaboletim').html(nome)
+                          }
+                          if(data.length === 1 && dados.length > 3){
+                            lancamentoTab(dados,status)
+                          }else{
+                            limpaCamposTab()
+                          }
                         }
                     });
+                }else{
+                  limpaCamposTab()
                 }
             });
+            function lancamentoTab(dados,status) {
+              $.ajax({
+                url: "{{url('tabela/cartao/ponto')}}/"+dados+'/'+status,
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                  camposLacamentoTab(data)
+                }
+              })
+            }
+            function limpaCamposTab() {
+              $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+              $('#incluir').removeAttr( "disabled" )
+              $('#atualizar').attr('disabled','disabled')
+              $('#deletar').attr('disabled','disabled')
+              $('#method').val(' ')
+              $('#excluir').attr( "disabled",'disabled' )
+              $('#matricula').val(' ')
+              $('#nome__completo').val(' ')
+              $('#data').val(' ')
+              $('#num__trabalhador').val(' ')
+            }
+            function camposLacamentoTab(data) {
+                  if (data.id) {
+                      $('#form').attr('action', "{{ url('tabcartaoponto')}}/"+data.id);
+                      $('#formdelete').attr('action',"{{ url('tabcartaoponto')}}/"+data.id)
+                      $('#incluir').attr('disabled','disabled')
+                      $('#atualizar').removeAttr( "disabled" )
+                      $('#deletar').removeAttr( "disabled" )
+                      $('#excluir').removeAttr( "disabled" )
+                      $('#method').val('PUT')
+                      buscatomador(data.tomador)
+                  }else{
+                    $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+                    $('#incluir').removeAttr( "disabled" )
+                    $('#atualizar').attr('disabled','disabled')
+                    $('#deletar').attr('disabled','disabled')
+                    $('#method').val(' ')
+                    $('#excluir').attr( "disabled",'disabled' )
+                  }
+                  $('#num__boletim').removeClass('is-invalid').next().text(' ')
+                  $('#matricula').removeClass('is-invalid').next().text(' ')
+                  $('#nome__completo').removeClass('is-invalid').next().text(' ')
+                  $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
+                  $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
+            }
                $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
-                  url: "{{url('tomador')}}/"+dados,
+                  url: "{{url('tomador')}}/pesquisa/"+dados,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
@@ -180,15 +223,8 @@
                           nome += `<option value="${element.tscpf}">`
                         });
                         $('#datalistOptions').html(nome)
-                        
                       }
                       if(data.length === 1 && dados.length > 4){
-                        // data.forEach(element => {
-                        //   nome += `<option value="${element.tsnome}">`
-                        //   nome += `<option value="${element.tsmatricula}">`
-                        //   nome += `<option value="${element.tscpf}">`
-                        // });
-                        // $('#datalistOptions').html(nome)
                         tomador(data[0])
                       }           
                   }
@@ -200,16 +236,15 @@
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
-                    if (data.length === 1) {
-                      tomador(data[0])
-                      $('#nome__completo').val(data[0].tsnome)
+                    if (data) {
+                      tomador(data)
+                      $('#nome__completo').val(data.tsnome)
                     }
                   }
               })
             }
             function tomador(data) {
               $('#tomador').val(data.tomador)
-              // $('#nome__completo').val(data.tsnome)
               $('#matricula').val(data.tsmatricula)
               $('#domingo').val(data.csdomingos)
               $('#sabado').val(data.cssabados)

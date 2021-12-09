@@ -17,7 +17,7 @@ Route::resource('login','Login\\LoginController')->only(['store'])->names('login
 
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
-    Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@ficha');
+    Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');
     Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador');
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
@@ -32,10 +32,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('cadastrocartaoponto/{id}/{tomador}','CadastroCartaoPonto\\CadastroCartaoPontoController@relatoriocartaoponto')->name('cadastrocartaoponto.relatoriocartaoponto');
 
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
-
-    Route::get('tabcartaoponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
+    Route::get('tabela/cartao/ponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
+    Route::get('tabela/cartao/ponto/pesquisa/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
     
-    Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
+    Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
     Route::resource('home','Home\\HomeController')->names('home');

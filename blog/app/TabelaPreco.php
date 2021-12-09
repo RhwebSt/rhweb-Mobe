@@ -28,7 +28,7 @@ class TabelaPreco extends Model
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where([
-                    ['tsrubrica','like', '%'.$id.'%'],
+                    ['tsrubrica','like',$id],
                     ['tomador',$tomador]
                 ])
                 ->orWhere([
@@ -38,12 +38,12 @@ class TabelaPreco extends Model
                 ->orWhere('tomador',$tomador);
             }else{
                  $query->where([
-                        ['tsrubrica',$id],
+                        ['tsrubrica','like',$id],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['tsdescricao',$id],
+                        ['tsdescricao','like',$id],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
                     ])

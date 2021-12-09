@@ -24,6 +24,10 @@
                 <div class="alert mt-2 alert-block" style="background-color: #CC2836;">
                     <strong>Não foi possível realizar o cadastro !</strong>
                 </div>
+            @elseif($error === 'jacadastrador')
+                <div class="alert mt-2 alert-block" style="background-color: #CC2836;">
+                    <strong>Este trabalhador já esta cadastro !</strong>
+                </div>
             @endif
             @endforeach
         @endif     
@@ -55,6 +59,7 @@
             <input type="hidden" name="lftomador" id="lftomador">
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
+            <input type="hidden" name="data" value="{{$data}}">
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
@@ -85,17 +90,18 @@
                 @enderror
                 <datalist id="codigos">   
                 </datalist>
+                <span class="text-danger" id="codigomensagem"></span>
             </div>
 
             <div class="col-md-8 input">
                 <label for="rubrica" class="form-label">Descrição</label>
-                <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror rubrica" list="rublicas" name="rubrica" value="" id="rubrica">
+                <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
                 <datalist id="rublicas">   
                 </datalist>
                 @error('rubrica')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <span class="text-danger" id="rublicamensagem"></span>
+               
             </div>
 
             <div class="col-md-2 input">
@@ -174,49 +180,36 @@
          </div>
 
           <script>
-            
-            
             $( ".rubrica" ).keyup(function() {
                 var dados = $(this).val();
-                
-                var tagname = $(this).attr('name')
                 if (dados) {
                     $.ajax({
                         url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            // $('#rubrica').removeClass('is-invalid')
-                            // $('#rublicamensagem').text(' ')
+                            $('#codigo').removeClass('is-invalid')
+                            $('#codigomensagem').text(' ')
+                            $('#valor').val(' ')
+                            $('#lftomador').val(' ')
+                            $('#rubrica').val(' ')
                             let nome = ''
-                            // let codigo = ''
                             if (data.length >= 1) {
-                                // data.forEach(element => {
-                                // nome += `<option value="${element.tsdescricao}">`
-                                // });
                                 data.forEach(element => {
-                                    codigo += `<option value="${element.tsrubrica}">`
+                                    nome += `<option value="${element.tsrubrica}">`
                                 });
-                                if( tagname == 'codigo'){
-                                    $('#rubrica').val(' ')
-                                }else if(tagname == 'rubrica'){
-                                    $('#codigo').val(' ')
-                                }
-                                // $('#rublicas').html(nome)
-                                $('#codigos').html(codigo)
+                                $('#codigos').html(nome)
                             }
                             if(data.length === 1 && dados.length > 3){
-                                if( tagname == 'codigo'){
-                                    $('#rubrica').val(data[0].tsdescricao)
-                                }
-                                // if( tagname == 'rubrica'){
-                                //     $('#codigo').val(data[0].tsrubrica)
-                                // }
                                 $('#valor').val(data[0].tsvalor)
                                 $('#lftomador').val(data[0].tstomvalor)
-                            }else{
-                                // $('#rubrica').addClass('is-invalid')
-                                // $('#rublicamensagem').text('Esta rublica não esta cadastra.')
+                                $('#rubrica').val(data[0].tsdescricao)
+                            }else if(dados.length > 3 && !data.length){
+                                $('#valor').val(' ')
+                                $('#lftomador').val(' ')
+                                $('#rubrica').val(' ')
+                                $('#codigo').addClass('is-invalid')
+                                $('#codigomensagem').text('Esta rublica não esta cadastra.')
                             }
                         }
                     });
@@ -226,12 +219,13 @@
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
-                    url: "{{url('trabalhador')}}/"+dados,
+                    url: "{{url('trabalhador/pesquisa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                        $('#nomemensagem').text(' ')
-                        $( "#nome__completo" ).removeClass('is-invalid')
+                      $('#nomemensagem').text(' ')
+                      $('#matricula').val(' ')
+                    //   $( "#nome__completo" ).removeClass('is-invalid')
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
@@ -240,20 +234,14 @@
                           nome += `<option value="${element.tscpf}">`
                         });
                         $('#nomecompleto').html(nome)
-                        
                       }
                       if(data.length === 1 && dados.length > 4){
-                        // data.forEach(element => {
-                        //   nome += `<option value="${element.tsnome}">`
-                        //   nome += `<option value="${element.tsmatricula}">`
-                        //   nome += `<option value="${element.tscpf}">`
-                        // });
                         $('#nomecompleto').html(nome)
-                        $('#trabalhador').val(data[0].trabalhador)
+                        $('#trabalhador').val(data[0].id)
                         $('#matricula').val(data[0].tsmatricula)
-                      }else{
-                          $('#nomemensagem').text('Este trabalhador não ta cadastrador!')
-                          $( "#nome__completo" ).addClass('is-invalid')
+                      }else if(!data.length && dados.length > 4){
+                        $('#nomemensagem').text('Este trabalhador não ta cadastrador!')
+                        // $( "#nome__completo" ).addClass('is-invalid')
                       }              
                     }
                 });

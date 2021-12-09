@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','trabalhador','lancamento'
+        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','trabalhador','lancamento','created_at'
     ];
     public function cadastro($dados)
     {
-        // dd($dados);
        return Lancamentorublica::create([
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
+            'created_at'=>$dados['data'],
             'lfvalor'=>str_replace(",",".",$dados['valor']),
             'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);
@@ -34,7 +34,7 @@ class Lancamentorublica extends Model
         ->where('lancamentotabelas.id', $id)
         ->get();
     }
-    public function listafirst($id)
+    public function buscaUnidadeRublica($id)
     {
         return DB::table('trabalhadors')
         ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
@@ -62,12 +62,19 @@ class Lancamentorublica extends Model
         })
         ->first();
     }
-    public function verifica($dados)
+    public function UnidadeRublica($id)
+    {
+        return Lancamentorublica::where('id',$id)->first();
+    }
+    public function verifica ($dados,$novadata)
     {
         return Lancamentorublica::where([
-            ['licodigo', '=', $dados['codigo']],
-            ['licodigo', '=', $dados['trabalhador']],
-        ])->count();
+            ['licodigo', $dados['codigo']],
+            ['trabalhador', $dados['trabalhador']],
+        ])
+        ->whereMonth('created_at',$novadata[1])
+        ->whereYear('created_at',$novadata[0])
+        ->count();
     }
 
     public function editar($dados,$id)
@@ -79,6 +86,7 @@ class Lancamentorublica extends Model
             'licodigo'=>$dados['codigo'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
+            'created_at'=>$dados['data'],
             'lfvalor'=>str_replace(",",".",$dados['valor']),
             'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);

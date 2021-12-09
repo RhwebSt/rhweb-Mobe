@@ -30,7 +30,7 @@ class EmpresaController extends Controller
     {
         $user = Auth::user();
         $empresa = new Empresa;
-        $empresas = $empresa->first($user->empresa);
+        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
         return view('usuarios.empresa.index',compact('user'));
     }
 

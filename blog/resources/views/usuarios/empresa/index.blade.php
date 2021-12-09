@@ -6,24 +6,24 @@
         @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
@@ -33,24 +33,24 @@
             @can('admin')
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                        <button type="submit" id="incluir" class="btn  text-white btn-primary "  >
+                        <button type="submit" id="incluir" class="btn botao"  >
                             Incluir
                         </button>
-                        <button type="submit" id="atualizar" disabled class="btn  text-white btn-primary "  >
+                        <button type="submit" id="atualizar" disabled class="btn botao"  >
                             Editar
                         </button>
-                        <button type="button" id="excluir" disabled class="btn  text-white btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                        <button type="button" id="excluir" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                             Excluir
                         </button>
-                    
-                        <a class="btn   text-white btn-primary " href="#" role="button" >Sair</a>
+                        <a class="btn botao" href="#" role="button" >Sair</a>
                     </div>
                 </div>
                 
-                <div>
-                            <div class="col-md-6 mt-5 mb-4">
-                                <label for="exampleDataList" class="form-label">Buscar</label>
-                                <input class="pesquisa form-control fw-bold" list="datalistOptions" name="pesquisa" id="pesquisa">
+                        <div>
+                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                                <div class="d-flex">
+                                <label for="exampleDataList" class="form-label"></label>
+                                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                                 <datalist id="datalistOptions">
                                     <!-- <option value="San Francisco">
                                     <option value="New York">
@@ -58,7 +58,11 @@
                                     <option value="Los Angeles">
                                     <option value="Chicago"> -->
                                 </datalist>
+                                <i class="fas fa-search fa-md iconsear"></i>
+                                </div>
                             </div>
+                            
+                            
                             
                             <div>
                                 <div class="col-md-5 mb-3">
@@ -67,10 +71,11 @@
                                 
                             </div>
                             
+
                             <div>
-                                <div class="mb-3 col-md-4">
-                                  <label for="formFileSm" class="form-label">Logo da Empresa</label>
-                                  <input class="form-control " type="file" name="file" onchange="encodeImageFileAsURL(this)">
+                                <div class="mb-4 col-md-4 inputfoto">
+                                  <label for="formFileSm" class="form-label"><i class="fas fa-file-image fa-lg"></i> Logo da Empresa</label>
+                                  <input class="form-control " type="file" name="file" onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
                                   <input type="hidden" name="foto" id="foto">
                                   <span id="msgfoto" class="text-danger"></span>
                                 </div>
@@ -373,10 +378,9 @@
             var file = element.files[0];
             var ext = ['jpg','jpeg','png','svg','tiff','webp']
             var type = file.type.split('/')
-            console.log(file.type);
-            console.log();
+            
             if (file.size < 3145728) {
-                if (ext.indexOf(type[1]) === 1) {
+                if (ext.indexOf(type[1]) >= 1) {
                     foto(file)
                 }else{
                     $('#msgfoto').text('A extensão não é suportada. Apenas(jpg, png,svg,tiff,webp)')

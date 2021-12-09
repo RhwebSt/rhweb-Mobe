@@ -70,12 +70,14 @@ class TabelaPrecoController extends Controller
      */
     public function show($id,$tomador)
     {
+        
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id,$tomador);
         return response()->json($tabelaprecos);
     }
     public function pesquisa($id,$tomador)
     {
+       
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->buscaListaTabela($id,$tomador);
         return response()->json($tabelaprecos);

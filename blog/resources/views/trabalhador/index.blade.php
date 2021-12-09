@@ -62,13 +62,8 @@
             <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
                 <div class="d-flex">
                 <label for="exampleDataList" class="form-label"></label>
-                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
                 <datalist id="datalistOptions">
-                    <!-- <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago"> -->
                 </datalist>
                 <i class="fas fa-search fa-md iconsear"></i>
                 </div>
@@ -491,7 +486,6 @@
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      console.log(data)
                       $('#trabfoto').removeAttr('src')
                       let nome = ''
                       if (data.length >= 1) {

@@ -27,7 +27,7 @@ class Trabalhador extends Model
             'empresa'=>$dados['empresa']
         ]);
     }
-    public function relatorioboletim($dados)
+    public function relatorioBoletimTabela($dados)
     {
         return Trabalhador::select('tsnome','id','tsmatricula')->whereIn('id', $dados)->get();
     }

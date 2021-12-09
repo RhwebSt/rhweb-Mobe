@@ -465,7 +465,7 @@ $("#form").validate({
         },
         cbo:{
             required:false,
-            maxlength:10
+            maxlength:20
         },
         contribuicao__sindicato:{
             required:true
@@ -598,9 +598,17 @@ $("#form").validate({
         cpf__dependente:{
             required:true,
             maxlength:16
+        },
+        codigo:{
+            required:true,
+            maxlength:4
         }
     },
     messages:{
+        codigo:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 4 caracteres'
+        },
         cpf__dependente:{
             required:"O campo nome não pode esta vazio!",
             maxlength:'O campo não pode ter mais de 16 caracteres'

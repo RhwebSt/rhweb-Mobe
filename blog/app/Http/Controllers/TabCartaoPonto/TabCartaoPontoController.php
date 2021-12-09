@@ -67,13 +67,15 @@ class TabCartaoPontoController extends Controller
         ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim'],$dados['status']);
+        $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             array_push($novodados,$lancamentotabelas['id']);
+            array_push($novodados,$dados['data']);
             return redirect()->route('tabcadastro.create',$novodados);
         }else if ($listalancamentotabela) {
             array_push($novodados,$listalancamentotabela->id);
+            array_push($novodados,$dados['data']);
             return redirect()->route('tabcadastro.create',$novodados);
         }
         $condicao = 'cadastrafalse';
@@ -86,14 +88,16 @@ class TabCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$status)
     {
-       
+        $lancamentotabela = new Lancamentotabela;
+        $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($id,$status);
+        return response()->json($lancamentotabelas);
     }
     public function pesquisa($id,$status)
     {
         $lancamentotabela = new Lancamentotabela;
-        $lancamentotabelas = $lancamentotabela->listacomun($id,$status);
+        $lancamentotabelas = $lancamentotabela->buscaListaLancamentoTab($id,$status);
         return response()->json($lancamentotabelas);
     }
 
@@ -140,7 +144,8 @@ class TabCartaoPontoController extends Controller
             $dados['num__trabalhador'],
             $dados['liboletim'],
             $dados['tomador'],
-            $id
+            $id,
+            $dados['data']
         ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
@@ -166,10 +171,21 @@ class TabCartaoPontoController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublicas = $lancamentorublica->deletar($id);
         if ($lancamentorublicas) {
-            $lancamentotabela->deletar($id);
-            $condicao = 'deletatrue';
+           $lancamentotabelas =  $lancamentotabela->deletar($id);
+           if ($lancamentotabelas) {
+                $condicao = 'deletatrue';
+           }else{
+                $condicao = 'deletafalse';
+           }
+           
         }else{
-            $condicao = 'deletafalse';
+            $lancamentotabelas =  $lancamentotabela->deletar($id);
+            if ($lancamentotabelas) {
+                $condicao = 'deletatrue';
+            }else{
+                $condicao = 'deletafalse';
+            }
+            
         }
         return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }

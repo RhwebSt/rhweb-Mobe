@@ -19,7 +19,28 @@ class Lancamentotabela extends Model
             'tomador'=>$dados['tomador'],
         ]);
     }
-    public function listacomun($id,$status)
+    public function buscaListaLancamentoTab($id,$status)
+    {
+        return Lancamentotabela::where(function($query) use ($id,$status){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['liboletim','like','%'.$id.'%'],
+                    ['lsstatus',$status]
+                ])->orWhere('id',$id);
+            }else{
+                $query->where([
+                    ['liboletim','like','%'.$id.'%'],
+                    ['lsstatus',$status],
+                    // ['trabalhadors.empresa', $user->empresa]
+                ])->orWhere([
+                    ['id',$id],
+                    // ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })->get();
+    }
+    public function buscaUnidadeLancamentoTab($id,$status = null)
     {
         return Lancamentotabela::where(function($query) use ($id,$status){
             $user = auth()->user();
@@ -40,11 +61,11 @@ class Lancamentotabela extends Model
             }
         })->first();
     }
-    public function listaget($id)
-    {
-        return Lancamentotabela::where('tomador',$id)->get();
-    }
-    public function relatorioboletimtabela($id)
+    // public function buscaListaLacamentoTab($id)
+    // {
+    //     return Lancamentotabela::where('tomador',$id)->get();
+    // }
+    public function relatorioBoletimTabela($id)
     {
         return DB::table('lancamentotabelas')
         // ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
