@@ -45,46 +45,73 @@
               @csrf
               <input type="hidden" id="method" name="_method" value="PUT">
               <input type="hidden" name="trabalhador" value="{{$depedentes->trabalhador}}">
+                
+                <input type="hidden" name="trabalhador" value="{{$id}}">
+              
                 <div class="col-md-2">
                   <label for="cpf__dependente" class="form-label">CPF do dependente</label>
-                  <input type="text" class="form-control" name="cpf__dependente" value="{{$depedentes->dscpf}}" id="cpf__dependente">
+                  <input type="text" class="form-control  @error('cpf__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dscpf}}" name="cpf__dependente"  id="cpf__dependente">
+                  @error('cpf__dependente')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
                 <input type="hidden" name="trabalhador" value="{{$id}}">
                 <div class="col-md-2">
                     <label for="data__nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control" name="data__nascimento" value="{{$depedentes->dsdata}}" id="data__nascimento">
+                    <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dsdata}}" name="data__nascimento"  id="data__nascimento">
+                    @error('data__nascimento')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <div class="col-md-2">
                     <label for="sexo" class="form-label">Sexo</label>
-                    <select id="sexo" name="sexo" class="form-select" value="">
+                    <select id="sexo" name="sexo" class="form-select fw-bold text-dark" value="">
                       <option selected>Masculino</option>
-                      <option  >Feminino</option>
+                      <option>Feminino</option>
                       <option>Outro</option>
                     </select>
                 </div>
 
                 <div class="col-md-6">
                   <label for="nome__dependente" class="form-label">Nome do dependente</label>
-                  <input type="text" class="form-control" name="nome__dependente" value="{{$depedentes->dsnome}}" id="nome__dependente">
+                  <input type="text" class="form-control  @error('nome__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dsnome}}" name="nome__dependente"  id="nome__dependente">
+                  @error('nome__dependente')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <div class="col-md-4">
                     <label for="tipo__dependente" class="form-label">Tipo do dependente</label>
-                    <input type="text" class="form-control" name="tipo__dependente" value="{{$depedentes->dstipo}}" id="tipo__dependente">
+                    <input type="text" class="form-control @error('tipo__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dstipo}}" name="tipo__dependente"  id="tipo__dependente">
+                    @error('tipo__dependente')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="irrf" class="form-label">IRRF</label>
-                    <input type="text" class="form-control" name="irrf" value="{{$depedentes->dsirrf}}" id="irrf">
+                    <input type="text" class="form-control @error('irrf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dsirrf}}" name="irrf" id="irrf">
+                    @error('irrf')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                    <!-- <select id="irrf" name="irrf" class="form-select" value="">
+                      <option selected>Sim</option>
+                      <option>Não</option>
+                    </select> -->
                 </div>
-
-
-                <div class="col-md-2">
-                    <label for="sf" class="form-label">SF</label>
-                    <input type="text" class="form-control" name="sf" value="{{$depedentes->dssf}}" id="sf">
+                
+                <div class="col-md-4">
+                    <label for="sf" class="form-label">Salário Familia</label>
+                    <input type="text" class="form-control @error('sf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dssf}}" name="sf" value="" id="sf">
+                    @error('sf')
+                      <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                    <!-- <select id="sf" name="sf" class="form-select" value="">
+                      <option selected>Sim</option>
+                      <option>Não</option>
+                    </select> -->
                 </div>
-
               </form> 
               
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

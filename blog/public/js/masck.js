@@ -16,6 +16,7 @@ $('#cod__recol').mask('000')
 $('#cnae').mask('0000000')
 $('#cnpj_mf').mask('00.000.000/0000-00', {reverse: true});
 $('#cpf').mask('000.000.000-00', {reverse: true});
+$('#cpf__dependente').mask('000.000.000-00', {reverse: true});
 $('#pis').mask('000.00000.00-0', {reverse: true})
 $('#rubricas').mask('00000000000')
 $('#cod__municipio').mask('0000000000')
@@ -51,8 +52,8 @@ $('#folhartransporte').mask('000,00', {reverse: true});
 $('#folharalim').mask('000,00', {reverse: true});
 
 
-$('#irrf').mask('00000000000000',{reverse:true});
-$('#sf').mask('00000000000000',{reverse:true});
+// $('#irrf').mask('00000000000000',{reverse:true});
+// $('#sf').mask('00000000000000',{reverse:true});
 $('#ctps').mask('00000000000000',{reverse:true});
 $('#serie__ctps').mask('00000000000000',{reverse:true});
 $('#vt__trabalhador').mask('000.000.000,00',{reverse:true});

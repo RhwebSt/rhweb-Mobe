@@ -18,7 +18,7 @@ class DepedenteController extends Controller
         
         $id = $depedente;
         $depedente = new Dependente;
-        $depedentes = $depedente->lista($id);
+        $depedentes = $depedente->buscaListaDepedente($id); 
         // dd($depedentes);
         $user = Auth::user();
         return view('trabalhador.depedente.index',compact('depedentes','id','user'));
@@ -44,6 +44,14 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $request->validate([
+            'cpf__dependente'=>'required|cpf|formato_cpf',
+            'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
+        ]);
         $id = $dados['trabalhador'];
         $depedente = new Dependente;
         $depedentes = $depedente->cadastro($dados);
@@ -74,8 +82,9 @@ class DepedenteController extends Controller
      */
     public function edit($id)
     {
+        
         $depedente = new Dependente;
-        $depedentes = $depedente->first($id);
+        $depedentes = $depedente->buscaUnidadeDepedente($id);
         $user = Auth::user();
         return view('trabalhador.depedente.edit',compact('depedentes','id','user'));
     }
@@ -90,6 +99,14 @@ class DepedenteController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'cpf__dependente'=>'required|cpf|formato_cpf',
+            'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
+        ]);
         $depedente = new Dependente;
         $depedentes = $depedente->editar($dados,$id);
         if($depedentes) {
@@ -109,7 +126,7 @@ class DepedenteController extends Controller
     public function destroy($id)
     {
         $depedente = new Dependente;
-        $depedentes = $depedente->first($id);
+        $depedentes = $depedente->buscaUnidadeDepedente($id);
         $trabalhador = $depedentes->trabalhador;
         $excluir = $depedente->deletar($id);
         if ($excluir) {

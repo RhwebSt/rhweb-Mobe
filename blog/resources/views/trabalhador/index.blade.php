@@ -42,10 +42,10 @@
                           
                     <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                     
-                    <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-alt fa-lg"></i> Relatórios
                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Ficha de Registro</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">Ficha de EPI</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="empresas__trab" role="button">Empresas Trabalhadas</a></li>
@@ -525,6 +525,7 @@
               });
             }
             function campo() {
+              $('#relatoriotrabalhador').addClass('disabled')
               $('#imprimir').addClass('disabled')
               $('#fichaepi').addClass('disabled')
               $('#depedente').addClass('disabled')
@@ -550,9 +551,11 @@
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
                   $('#method').val('PUT')
+                  $('#relatoriotrabalhador').removeClass('disabled')
                   $('#imprimir').removeClass('disabled').attr('href',"{{url('ficha/registro/trabalhador')}}/"+data.trabalhador)
                   $('#fichaepi').removeClass('disabled').attr('href',"{{url('ficha/epi/trabalhador')}}/"+data.trabalhador)
               }else{
+                $('#relatoriotrabalhador').addClass('disabled')
                 $('#imprimir').addClass('disabled')
                 $('#fichaepi').addClass('disabled')
                 $('#depedente').addClass('disabled')

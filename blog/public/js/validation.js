@@ -582,9 +582,41 @@ $("#form").validate({
         },
         valor__tomador:{
             required:true,
+        },
+        data__nascimento:{
+            required:true,
+            maxlength:10
+        },
+        nome__dependente:{
+            required:true,
+            maxlength:30
+        },
+        tipo__dependente:{
+            required:true,
+            maxlength:10
+        },
+        cpf__dependente:{
+            required:true,
+            maxlength:16
         }
     },
     messages:{
+        cpf__dependente:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 16 caracteres'
+        },
+        tipo__dependente:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 10 caracteres'
+        },
+        nome__dependente:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 30 caracteres'
+        },
+        data__nascimento:{
+            required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 10 caracteres'
+        },
         valor__tomador:{
             required:"O campo nome não pode esta vazio!",
         },
