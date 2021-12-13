@@ -34,39 +34,49 @@ class TabelaPreco extends Model
                 ->orWhere([
                     ['tsdescricao', 'like', '%'.$id.'%'],
                     ['tomador',$tomador]
-                ])
-                ->orWhere('tomador',$tomador);
+                ]);
             }else{
                  $query->where([
-                        ['tsrubrica','like',$id],
+                        ['tsrubrica','like','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['tsdescricao','like',$id],
-                        ['tomador',$tomador],
-                        ['empresa', $user->empresa],
-                    ])
-                    ->orWhere([
+                        ['tsdescricao','like','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
                     ]);
+                   
             }
            
         })
         ->get();
     }
-    public function lista($id)
+    public function buscaTabelaTomador($tomador)
     {
-        return TabelaPreco::where(function($query) use ($id){
+        return TabelaPreco::where(function($query) use ($tomador){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tomador',$id);
+                $query->where('tomador',$tomador);
             }else{
                  $query->where([
-                    ['tomador',$id],
+                    ['tomador',$tomador],
                     ['empresa', $user->empresa]
                 ]);
+            }
+           
+        })
+        ->get();
+    }
+    public function buscaTabelaTomadorInt($tomador)
+    {
+        return TabelaPreco::where(function($query) use ($tomador){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->whereIn('tomador', $tomador);
+            }else{
+                 $query->where('empresa', $user->empresa)
+                 ->whereIn('tomador', $tomador);
             }
            
         })

@@ -4,23 +4,23 @@
 @if($errors->all())
                     @foreach($errors->all() as  $error)
                       @if($error === 'edittrue')
-                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
+                        <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
                             <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'editfalse')
-                        <div class="alert mt-2 text-center" style="background-color: #CC2836;">
+                        <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
                             <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'deletatrue')
-                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
+                        <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
                             <strong>Dependente deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'cadastratrue')
-                        <div class="alert mt-2 text-center" style="background-color: #4EAA4B">
-                            <strong>Cadastrado realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                        <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                            <strong>Cadastro realizado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                         </div>
                     @elseif($error === 'cadastrafalse')
-                        <div class="alert mt-2 text-center" style="background-color: #CC2836;">
+                        <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
                             <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                         </div>
                     @endif
@@ -99,16 +99,16 @@
                                         <form action="{{ route('depedente.destroy',$depedente->id) }}" id="formdelete" method="post">
                                             @csrf
                                             @method('delete')
-                                            <div class="modal-header " style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236))">
-                                            <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                                            <div class="modal-header modal__delete">
+                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
                                             <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                            <p class="text-black text-start">Deseja realmente excluir?</p>
+                                            <div class="modal-body modal-delbody">
+                                                <p class="mb-1 text-start">Deseja realmente excluir?</p>
                                             </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>
-                                            <button type="submit" class="btn btn-danger">Deletar</button>
+                                            <div class="modal-footer modal-delfooter">
+                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn__deletar">Deletar</button>
     
                                             </div>
                                         </form>

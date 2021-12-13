@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
-
+ 
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');
@@ -56,7 +56,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
 
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
-    Route::get('trabalhador/pesquisa/{id}','Trabalhador\\TrabalhadorController@pesquisa');
+    Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');
+    Route::post('trabalhador/comprovante/pagamento/dia','Trabalhador\\comprovantePagDiaController@ComprovantePagDia')->name('trabalhador.comprovante.dia');
 
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
@@ -71,6 +72,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+        Route::get('rublica/pesquisa/{id}','Rublica\\RublicaController@pesquisa');
         Route::resource('inss','Inss\\InssController')->names('inss');
         Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');
        

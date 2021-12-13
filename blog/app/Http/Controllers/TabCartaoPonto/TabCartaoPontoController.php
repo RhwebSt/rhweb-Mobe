@@ -39,6 +39,12 @@ class TabCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $lancamentotabela = new Lancamentotabela;
+        $novadata = explode('-',$dados['data']);
+        $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata);
+        if ($lancamentotabelas) {
+            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este mês!']);
+        }
         $request->validate([
             'nome__completo' => 'required',
             'liboletim'=>'required|numeric|unique:lancamentotabelas',
@@ -65,7 +71,7 @@ class TabCartaoPontoController extends Controller
             $dados['liboletim'],
             $dados['tomador']
         ];
-        $lancamentotabela = new Lancamentotabela;
+      
         $lancamentorublica = new Lancamentorublica;
         $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
         if (!$listalancamentotabela) {

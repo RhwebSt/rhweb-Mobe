@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Bolcartaoponto extends Model
 {
     protected $fillable = [
-        'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador','lancamento'
+        'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador','lancamento','created_at'
     ];
     public function cadastro($dados)
     {
@@ -20,6 +20,7 @@ class Bolcartaoponto extends Model
             'bssaidanoite'=>$dados['saida3'],
             'bsentradamadrugada'=>$dados['entrada4'],
             'bssaidamadrugada'=>$dados['saida4'],
+            'created_at'=>$dados['data'],
             'bstotal'=>str_replace(",",".",$dados['total']),
             'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),
@@ -62,7 +63,7 @@ class Bolcartaoponto extends Model
             'trabalhadors.*', 
             'bolcartaopontos.*', 
             )
-        ->where(function($query) use ($id,$boletim){
+        ->where(function($query) use ($id,$boletim){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where([
@@ -79,6 +80,44 @@ class Bolcartaoponto extends Model
         })
         ->first();
     }
+   public function buscaListaRelatorioLancamentoBolcartao($dados,$mes)
+   {
+       return DB::table('lancamentotabelas')
+       ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+       ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+       ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
+       ->select(
+            'bolcartaopontos.*',
+            'lancamentotabelas.tomador',
+            'tabela_precos.tsvalor',
+            'tabela_precos.tsdescricao' 
+        )
+        ->where(function($query) use ($dados,$mes){ 
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('bolcartaopontos.trabalhador',$dados['trabalhador'])
+                ->whereMonth('bolcartaopontos.created_at',$mes[1])
+                ->whereYear('bolcartaopontos.created_at',$mes[0]);
+            }else{
+                $query->where([
+                    ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]) 
+                ->whereMonth('bolcartaopontos.created_at',$mes[1])
+                ->whereYear('bolcartaopontos.created_at',$mes[0]);
+            }
+        })
+        ->get();
+   }
+    public function verifica($dados)
+    {
+        return Bolcartaoponto::where([
+            ['lancamento', $dados['lancamento']],
+            ['trabalhador', $dados['trabalhador']],
+        ])
+        ->whereDate('created_at', $dados['data'])
+        ->count();
+    }
     public function editar($dados,$id)
     {
         return Bolcartaoponto::where('id', $id)
@@ -91,6 +130,7 @@ class Bolcartaoponto extends Model
             'bssaidanoite'=>$dados['saida3'],
             'bsentradamadrugada'=>$dados['entrada4'],
             'bssaidamadrugada'=>$dados['saida4'],
+            'created_at'=>$dados['data'],
             'bstotal'=>str_replace(",",".",$dados['total']),
             'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),

@@ -6,56 +6,52 @@
               @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
         @endif     
 
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
+                  
+                  <h5 class="card-title text-center mt-5 fs-3 ">Comissionado</h5>
                 @csrf
                 <input type="hidden" id="method" name="_method" value="">
                 <input type="hidden" name="tomador" id="idtomador">
                 <input type="hidden" name="trabalhador" id="idtrabalhador">
                 <div class="row">
-                  <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-                     
-                      <button type="submit" id="incluir" disabled class="btn botao" >
-                      Incluir
-                        </button>
-                        <button type="submit" id="atualizar" disabled class="btn botao" >
-                        Editar
-                        </button>
+                    <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+        
+                    <button type="submit" id="incluir" disabled class="btn botao" >Incluir</button>
+                    <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
                       <!-- <button type="button" id="excluir" disabled class="btn ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
                           Excluir
                         </button> -->
-                        
-                     
                       <a class="btn botao" href="{{route('home.index')}}"  role="button">Sair</a>
-                  </div>
-              </div>
-              <h5 class="card-title text-center fs-3 ">Comissionado</h5>
+                    </div>
+                </div>
+                
                 
 
 
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
                     <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
                     <datalist id="datalistOptions">
@@ -67,17 +63,17 @@
                     </datalist>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="matricula__trab" class="form-label">Matricula Trabalhador</label>
                   <input type="text" class="form-control" name="matricula__trab" value="" id="matricula__trab">
                 </div>
                 <input type="hidden" id="comissionado">
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="indice" class="form-label">Indíce %</label>
                   <input type="text" class="form-control" name="indice" value="" id="indice">
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Tomador</label>
                     <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
                     <datalist id="datalistOptions">
@@ -91,25 +87,28 @@
                 
               </form> 
               
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header " style="background-color:#000000;">
-                      <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                      <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="" id="formdelete" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <div class="modal-header modal__delete">
+                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body modal-delbody">
+                                            <p class="mb-2">Obs:( Caso exclua os dados do trabalhador seus depedentes serão excluidos.)</p>
+                                            <p class="mb-1">Deseja realmente excluir?</p>
+                                        </div>
+                                        <div class="modal-footer modal-delfooter">
+                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn__deletar">Deletar</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                      <p class="text-black text-start">Deseja realmente excluir?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                      <form action="">
-                      <a class="btn btn-danger ms-2" href="#" role="button">Deletar</a> 
-                    </form> 
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <script>
         $(document).ready(function(){

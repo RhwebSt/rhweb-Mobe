@@ -42,7 +42,7 @@ class BoletimCartaoPontoController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
+        $dados = $request->all(); 
         $novodados = [
             $dados['lancamento'],
             $dados['domingo'],
@@ -52,36 +52,41 @@ class BoletimCartaoPontoController extends Controller
             $dados['boletim'],
             $dados['tomador'],
         ];
+       
         $bolcartaoponto = new Bolcartaoponto;
+        $bolcartaopontos = $bolcartaoponto->verifica($dados);
+        if ($bolcartaopontos) {
+            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
+        }
         $validator = Validator::make($request->all(), [
-            'nome__completo' => 'required',
-            'trabalhador'=>'required',
-            'matricula'=>'required|min:4',
-            'entrada1'=>'max:5',
-            'saida'=>'max:5',
-            'entrada2'=>'max:5',
-            'saida2'=>'max:5',
-            'entrada3'=>'max:5',
-            'saida3'=>'max:5',
-            'entrada4'=>'max:5',
-            'saida4'=>'max:5',
-            'total'=>'max:5|required'
+            // 'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'trabalhador'=>'required',
+            // 'matricula'=>'required|min:4',
+            // 'entrada1'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'saida'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'entrada2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'saida2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'entrada3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'saida3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'entrada4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'saida4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'total'=>'max:5|required'
 
         ],[
-            'total.required'=>'O campo não pode esta vazio!',
-            'total.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            'nome__completo.required'=>'O campo não pode esta vazio!',
-            'trabalhador.required'=>'O campo não pode esta vazio!',
-            'matricula.required'=>'O campo não pode esta vazio!',
-            'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
+            // 'total.required'=>'O campo não pode esta vazio!',
+            // 'total.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
+            // 'nome__completo.required'=>'O campo não pode esta vazio!',
+            // 'trabalhador.required'=>'O campo não pode esta vazio!',
+            // 'matricula.required'=>'O campo não pode esta vazio!',
+            // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
         if ($validator->fails()) {
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
@@ -128,6 +133,7 @@ class BoletimCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        dd($dados);
         $novodados = [
             $dados['lancamento'],
             $dados['domingo'],
@@ -139,17 +145,17 @@ class BoletimCartaoPontoController extends Controller
         ];
         $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [
-            'nome__completo' => 'required',
+            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'trabalhador'=>'required',
             'matricula'=>'required|min:4',
-            'entrada1'=>'max:5',
-            'saida'=>'max:5',
-            'entrada2'=>'max:5',
-            'saida2'=>'max:5',
-            'entrada3'=>'max:5',
-            'saida3'=>'max:5',
-            'entrada4'=>'max:5',
-            'saida4'=>'max:5',
+            'entrada1'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'saida'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'entrada2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'saida2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'entrada3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'saida3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'entrada4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'saida4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'total'=>'max:5|required'
 
         ],[

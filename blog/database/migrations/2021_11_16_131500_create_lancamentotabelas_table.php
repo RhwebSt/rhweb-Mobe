@@ -21,6 +21,8 @@ class CreateLancamentotabelasTable extends Migration
             $table->char('lsstatus', 2)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->integer('empresa')->unsigned()->nullable();
+            $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

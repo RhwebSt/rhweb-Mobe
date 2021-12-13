@@ -94,7 +94,7 @@
                 <input type="hidden" name="trabalhador" >
                 <input type="hidden" name="tomador">
                 <input type="hidden" id="method" name="_method" value="">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <label for="nome" class="form-label">Nome</label>
                     <input type="text" class="form-control @error('esnome') is-invalid @enderror" value="{{old('esnome')}}" name="esnome" id="nome">
                     @error('esnome')
@@ -102,7 +102,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
                     <input type="text" class="form-control @error('escnpj') is-invalid @enderror" value="{{old('escnpj')}}" name="escnpj" id="cnpj_mf">
                     @error('escnpj')
@@ -119,7 +119,7 @@
                 </div>
 
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="cep" class="form-label">CEP</label>
                     <input type="text" class="form-control @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
                     @error('cep')
@@ -135,7 +135,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="numero" class="form-label">Número</label>
                     <input type="text" class="form-control @error('numero') is-invalid @enderror" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
                     @error('numero')
@@ -144,7 +144,7 @@
                 </div>
 
                 
-                <div class="col-md-2"> 
+                <div class="col-md-3"> 
                                 <label for="tipoconstrucao" class="form-label">Tipo</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
                                 <option selected >Casa</option>
@@ -169,7 +169,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="uf" class="form-label">UF</label>
                     <input type="text" class="form-control @error('uf') is-invalid @enderror" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
                     @error('uf')
@@ -177,7 +177,7 @@
                     @enderror
                 </div>
  
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="reponsave" class="form-label">Responsavel</label>
                     <input type="text" class="form-control @error('responsave') is-invalid @enderror" value="{{old('responsave')}}" name="responsave" id="responsave">
                     @error('responsave')
@@ -193,7 +193,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="cnae__codigo" class="form-label">CNAE código</label>
                     <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror" value="{{old('cnae__codigo')}}" name="cnae__codigo" id="cnae__codigo">
                     @error('cnae__codigo')
@@ -201,7 +201,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="cod__municipio" class="form-label">Código Município</label>
                     <input type="text" class="form-control @error('cod__municipio') is-invalid @enderror" value="{{old('cod__municipio')}}" name="cod__municipio" id="cod__municipio">
                     @error('cod__municipio')
@@ -378,9 +378,10 @@
             var file = element.files[0];
             var ext = ['jpg','jpeg','png','svg','tiff','webp']
             var type = file.type.split('/')
-            
+            console.log(file.type);
+            console.log();
             if (file.size < 3145728) {
-                if (ext.indexOf(type[1]) >= 1) {
+                if (ext.indexOf(type[1]) === 1) {
                     foto(file)
                 }else{
                     $('#msgfoto').text('A extensão não é suportada. Apenas(jpg, png,svg,tiff,webp)')

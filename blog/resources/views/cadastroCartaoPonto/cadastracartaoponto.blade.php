@@ -347,24 +347,28 @@
 var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
 var data = new Date('{{$data}} 08:24:30');
 var dias = data.getDay();
-//  var diurno = []
+ var diurno = []
 $('.horas').keyup(function() {
-    var diurno = ['entrada1','saida','entrada2','saida2','entrada3','saida3','entrada4','saida4'];
+    // var diurno = ['entrada1','saida','entrada2','saida2','entrada3','saida3','entrada4','saida4'];
    
-    index(diurno);
-    // var input = $(this).attr('name');
-    // let segundo = '';
-    // if (diurno.indexOf(input) == -1 && $(this).val().length > 3) {
-    //     diurno.push(input);
-    //     if (diurno.length > 1) {
-    //         index(diurno);
-    //     }
-    // }else if(diurno.indexOf(input) != -1 && $(this).val().length > 3){
-    //     if (diurno.length > 1) {
-    //         index(diurno);
-    //     }
-    // }
-    
+    // index(diurno);
+    var input = $(this).attr('name');
+    let segundo = '';
+    if (diurno.indexOf(input) == -1 && $(this).val().length > 3) {
+        diurno.push(input);
+        if (diurno.length >= 1) {
+            index(diurno);
+        }
+    }else if(diurno.indexOf(input) != -1 && $(this).val().length > 3){
+        if (diurno.length >= 1) {
+            index(diurno);
+        }
+    }else if (diurno.indexOf(input) != -1 && $(this).val().length == 0) {
+        
+        diurno.splice(diurno.indexOf(input), 1);
+        index(diurno);
+    }
+   
 });
 
 function index(diurno) {
@@ -386,40 +390,112 @@ function index(diurno) {
             }else{
                 manhao = segundo - manhao 
             }
+            console.log(segundo);
         }else if(element === 'entrada2' || element === 'saida2'){
             if (tarde < 1) {
                 tarde = segundo;
             }else{
-                tarde = segundo - tarde 
+                if (segundo > tarde) {
+                    tarde = segundo - tarde 
+                }else{
+                    tarde =  tarde - segundo
+                }
             }
+            
         }else if(element === 'entrada3' || element === 'saida3'){
             if (noite < 1) {
                 noite = segundo
             }else{
-                if (noite < 86400 || segundo < 86400) {
+                console.log(noite,segundo,'ok');
+                if (noite >= 79200 && noite < 86400 && segundo >= 79200 &&  segundo < 86400) {
                     noite = (86400 - noite) - (86400 - segundo);
-                }else{
-                    noite = segundo - noite;
+                    console.log(noite,segundo);
+                }else if (noite >= 79200 && segundo >= 0 && segundo <= 18000) {
+                    noite = (86400 - noite) + segundo
+                    console.log(noite,segundo);
+                }else if (noite >= 0 &&  segundo <= 18000) {
+                    noite = segundo - noite
+                    console.log(noite,segundo);
                 }
+                
             }
+           
         }else if(element === 'entrada4' || element === 'saida4'){
             if (madrugada < 1) {
                 madrugada = segundo
             }else{
-                if (madrugada < 86400 || segundo < 86400) {
+                if (madrugada >= 79200 && madrugada < 86400 && segundo >= 79200 &&  segundo < 86400) {
                     madrugada = (86400 - madrugada) - (86400 - segundo);
+                    console.log(madrugada,segundo);
                 }else{
-                    madrugada = segundo - madrugada;
+                    if (segundo > madrugada ) {
+                        madrugada = segundo - madrugada;
+                    }else{
+                        madrugada = madrugada - segundo;
+                    }
+                    console.log(madrugada,segundo);
+                   
                 }
             }
-            
+           
         }
     });
-    totaldiurno = manhao + tarde
-    $('#horas_normais').val(horas(totaldiurno))
-    totalnoturno = noite +  madrugada
-    result = totaldiurno + totalnoturno
-    adnoturno(totalnoturno,result)
+    if (diurno.indexOf('entrada1') != -1 && 
+    diurno.indexOf('saida') != -1 && 
+    diurno.length === 2 || diurno.indexOf('entrada1') != -1 && 
+    diurno.indexOf('saida') != -1 && 
+    diurno.length === 4) {
+        totaldiurno = manhao + tarde 
+        $('#horas_normais').val(horas(totaldiurno))
+        horaextra()
+    }else if (diurno.indexOf('entrada2') != -1 && 
+    diurno.indexOf('saida2') != -1 && 
+    diurno.length === 2 || diurno.indexOf('entrada2') != -1 && 
+    diurno.indexOf('saida2') != -1 && 
+    diurno.length === 4) {
+        totaldiurno = manhao + tarde
+        $('#horas_normais').val(horas(totaldiurno))
+        horaextra()
+    }else if (diurno.indexOf('entrada1') != -1 && 
+    diurno.indexOf('saida2') != -1 && 
+    diurno.length === 2 ) {
+        totaldiurno = tarde - manhao
+        $('#horas_normais').val(horas(totaldiurno))
+        horaextra()
+    }else{
+        $('#horas_normais').val('00:00')
+        horaextra()
+    }
+    if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2) {
+        totalnoturno = (86400 - noite) +  madrugada
+        adnoturno(totalnoturno)
+    }else if(diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida3') != -1 && diurno.length === 2){
+        totalnoturno =  noite +  madrugada
+        adnoturno(totalnoturno)
+    }else if(diurno.indexOf('entrada4') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2){
+        totalnoturno =  noite +  madrugada
+        adnoturno(totalnoturno)
+    }else if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida3') != -1 && diurno.indexOf('entrada4') != -1 && diurno.indexOf('saida4') != -1 && diurno.length === 4){
+        totalnoturno =  noite +  madrugada
+        adnoturno(totalnoturno)
+    }else if (diurno.indexOf('entrada3') != -1 && 
+    diurno.indexOf('saida3') != -1 && diurno.length === 4 || diurno.indexOf('entrada4') != -1 && 
+    diurno.indexOf('saida4') != -1 && diurno.length === 4) {
+        totalnoturno =  noite +  madrugada
+        adnoturno(totalnoturno)
+    }else{
+        $('#adc__noturno').val('00:00')
+    }
+    
+    totalgeral()
+    
+    // totalnoturno = noite +  madrugada
+    // if ( totaldiurno && totalnoturno) {
+    //     result = totaldiurno + totalnoturno
+    //     adnoturno(totalnoturno,result)
+    // }
+    
+    // adnoturno(totalnoturno,result)
     // totalgeral(result,'')
 }
 function segundos(segundos) {
@@ -433,33 +509,52 @@ function horas(valor) {
     let segundos = Math.floor(valor % 60);
     return `${horas}:${minutos < 10 ? '0':''}${minutos}`
 }
-function adnoturno(noturno,geral) {
+function adnoturno(noturno) {
     let acresimo = (noturno/3150)
-    $('#adc__noturno').val(horasnotunas(acresimo.toString(),geral))
+    $('#adc__noturno').val(horasnotunas(acresimo.toString()))
 }
-function horasnotunas(acresimo,geral) {
+function horasnotunas(acresimo) {
     let novoacresimo = acresimo.split('.')
-    let novoacresimo1 = `0.${novoacresimo[1]}`
+    let novoacresimo1 = 0
+    if (novoacresimo.length > 1) {
+        novoacresimo1 = `0.${novoacresimo[1]}`
+    }
     novoacresimo1 = novoacresimo1 * 0.6
     novoacresimo1 = novoacresimo1.toFixed(2)
     novoacresimo1 = (novoacresimo1 * 1) + parseInt(novoacresimo[0])
     novoacresimo1 =  novoacresimo1.toString()
     let novoacresimo2 = novoacresimo1.split('.')
-    totalgeral(geral,novoacresimo2[1])
-     return `${novoacresimo2[0]}` != "NaN" ? `${novoacresimo2[0]}:${novoacresimo2[1]}`:'00:00'
-}
-function totalgeral(total,acresimo) {
-    let novototal = horas(total)
-    if (acresimo) {
-        novototal = novototal.split(':')
-        $('#total').val(`${novototal[0]}:${acresimo}`)
+    if (novoacresimo2.length > 1) {
+        novoacresimo2 = `${novoacresimo2[0]}:${novoacresimo2[1]}`
     }else{
-        $('#total').val(`${novototal}`)
+        novoacresimo2 = `${novoacresimo2[0]}:00`
     }
-    horaextra()
-    feriados()
+     return `${novoacresimo2[0]}` != "NaN" ? novoacresimo2:'00:00'
 }
-function horaextra(params) {
+function totalgeral() {
+    let horas_normais = segundos($('#horas_normais').val());
+    let horas_extra =  segundos($('#hora__extra').val());
+    let noturno = segundos($('#adc__noturno').val());
+    let total = 0
+    if (horas_normais > 0) {
+        total += horas_normais
+    }
+    if (horas_extra > 0) {
+        total += horas_extra
+    }
+    if (noturno > 0) {
+        total += noturno
+    }
+    $('#total').val(horas(total))
+    // let novototal = horas(total)
+    // if (acresimo) {
+    //     novototal = novototal.split(':')
+    //     $('#total').val(`${novototal[0]}:${acresimo}`)
+    // }else{
+    //     $('#total').val(`${novototal}`)
+    // }
+}
+function horaextra() {
     semana.forEach((element,index) => {
         if (dias == index) {
             if (element === 'Sábado') {
@@ -471,7 +566,7 @@ function horaextra(params) {
     })
 }
 function sabado() {
-    let total = $('#total').val();
+    let total = $('#horas_normais').val();
     let sabado = $('#sabado').val()
     let result = '';
     if (segundos(sabado) <  segundos(total)) {
@@ -482,7 +577,7 @@ function sabado() {
     }
 }
 function diasuteis() {
-    let total = $('#total').val();
+    let total = $('#horas_normais').val();
     let diasuteis = $('#diasuteis').val()
     let result = '';
     if (segundos(diasuteis) < segundos(total)) {
@@ -572,7 +667,7 @@ function domingo(resutado) {
             $( "#nome__completo" ).keyup(function() {
                 var dados = $( "#nome__completo" ).val();
                 $.ajax({
-                    url: "{{url('trabalhador')}}/"+dados,
+                    url: "{{url('trabalhador/pesquisa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -593,7 +688,7 @@ function domingo(resutado) {
                         //   nome += `<option value="${element.tscpf}">`
                         // });
                         // $('#datalistOptions').html(nome)
-                        $('#trabalhador').val(data[0].trabalhador)
+                        $('#trabalhador').val(data[0].id)
                         $('#matricula').val(data[0].tsmatricula)
                         boletim(dados)
                       }              

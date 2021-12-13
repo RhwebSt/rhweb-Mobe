@@ -77,7 +77,7 @@
                 
                   <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
                   <input type="hidden" name="status" value="M" id="status">
-                  
+                  <input type="hidden" name="empresa" value="{{$user->empresa}}">
                 <div class="col-md-2">
                     <label for="matricula" class="form-label ">Matrícula</label>
                     <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
@@ -140,13 +140,13 @@
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                        
+                          console.log(data)
                           let nome = ''
                           if (data.length >= 1) {
                             data.forEach(element => {
-                              nome += `<option value="${element.tsnome}">`
-                              nome += `<option value="${element.tsmatricula}">`
-                              nome += `<option value="${element.tscpf}">`
+                              nome += `<option value="${element.liboletim}">`
+                              // nome += `<option value="${element.tsmatricula}">`
+                              // nome += `<option value="${element.tscpf}">`
                             });
                             $('#listaboletim').html(nome)
                           }

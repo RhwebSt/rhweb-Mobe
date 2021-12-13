@@ -5,31 +5,31 @@
             @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
         @endif     
         
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post" >
-                        <div class="btn " role="button" aria-label="Basic example">
+                        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
                            
@@ -41,12 +41,23 @@
                             <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                         </div> 
                         
-                        <div class="col-md-6 mt-5 mb-4">
-                            <label for="exampleDataList" class="form-label">Buscar</label>
-                            <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
+
+                        
+                        <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                            <div class="d-flex">
+                            <label for="exampleDataList" class="form-label"></label>
+                            <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                             <datalist id="datalistOptions">
+                                <!-- <option value="San Francisco">
+                                <option value="New York">
+                                <option value="Seattle">
+                                <option value="Los Angeles">
+                                <option value="Chicago"> -->
                             </datalist>
+                            <i class="fas fa-search fa-md iconsear"></i>
+                            </div>
                         </div>
+                        
                         
                         <input type="hidden" class="form-control is-invalid" id="validationServer05" aria-describedby="mensagem-pesquisa"" required>
                         <div id="mensagem-pesquisa" class="invalid-feedback"></div>
@@ -74,7 +85,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label for="cnpj" class="form-label">CNPJ</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
                             @error('cnpj')
@@ -82,7 +93,7 @@
                             @enderror
                         </div>
                         
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label for="tipo" class="form-label">Tipo</label>
                             <select id="tipo" name="tipo" class="form-select fw-bold text-dark">
                             <option selected >1</option>
@@ -91,7 +102,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label for="matricula" class="form-label">Matrícula</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('matricula') is-invalid @enderror" name="matricula" value="{{old('matricula')}}" id="matricula">
                             @error('matricula')
@@ -99,7 +110,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="simples" class="form-label">Simples</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('simples') is-invalid @enderror" name="simples" value="{{old('simples')}}" id="simples">
                             @error('simples')
@@ -107,7 +118,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="telefone" class="form-label">Telefone</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('telefone') is-invalid @enderror" name="telefone" value="{{old('telefone')}}" id="telefone">
                             @error('telefone')
@@ -119,7 +130,7 @@
                        
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Endereço</h1>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="cep" class="form-label">CEP</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror" name="cep" value="{{old('cep')}}"   id="cep">
                             @error('cep')
@@ -127,7 +138,7 @@
                             @enderror
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <label for="logradouro" class="form-label">Rua</label>
                             <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror" name="logradouro" value="{{old('logradouro')}}" id="logradouro">
                             @error('logradouro')
@@ -135,7 +146,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <label for="numero" class="form-label">Número</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror" name="numero" value="{{old('numero')}}" id="numero">
                             @error('numero')
@@ -143,7 +154,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3"> 
+                        <div class="col-md-4"> 
                                 <label for="complemento__endereco" class="form-label">Tipo da construção</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
                                 <option selected >Casa</option>
@@ -152,7 +163,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <label for="bairro" class="form-label">Bairro</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror" name="bairro" value="{{old('bairro')}}" id="bairro">
                             @error('bairro')
@@ -160,7 +171,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <label for="localidade" class="form-label">Municipio</label>
                             <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror" name="localidade" value="{{old('localidade')}}" id="localidade">
                             @error('localidade')
@@ -169,7 +180,7 @@
                         </div>
 
 
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label for="uf" class="form-label">UF</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror" name="uf" value="{{old('uf')}}" id="uf">
                             @error('uf')
@@ -443,21 +454,21 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                         <label for="retencaoinss" class="form-label">Retenção INSS</label>
                         <select class="form-select fw-bold text-dark" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
                             <option  selected>SIM</option>
                             <option>NÃO</option>
                         </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
                             <input type="text" class="form-control @error('fgts__empresa') is-invalid @enderror input fw-bold text-dark" name="fgts__empresa" value="{{old('fgts__empresa')}}" id="fgts__empresa">
                             @error('fgts__empresa')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                         <label for="retencaofgts" class="form-label">Retenção FGTS</label>
                         <select class="form-select fw-bold text-dark" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
                             <option selected>SIM</option>
@@ -477,7 +488,7 @@
                             <input type="text" class="form-control  input fw-bold text-dark" name="nome__conta"  id="nome__conta">
                         </div> -->
 
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-3">
                             <label for="banco" class="form-label">Banco</label>
                             <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
                             <div id="menssagem-banco" class="valid-feedback">
@@ -488,7 +499,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="agencia" class="form-label">Agência</label>
                             <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia">
                             @error('agencia')
@@ -496,7 +507,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="operacao" class="form-label">Operação</label>
                             <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao">
                             @error('aperacao')
@@ -504,7 +515,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="conta" class="form-label">Conta</label>
                             <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta">
                             @error('conta')
@@ -512,7 +523,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-3">
                             <label for="pix" class="form-label">PIX</label>
                             <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
                             @error('pix')
@@ -520,36 +531,34 @@
                             @enderror
                         </div>
 
-                       
+                    
                     <input type="hidden" name="endereco" id="endereco">
 
                     <input type="hidden" name="bancario" id="bancario">
                 </div>
             </form>
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                          <form action="" id="formdelete" method="post">
-                            @csrf
-                            @method('delete')
-                            <div class="modal-header " style="background-color:#000000;">
-                            <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                            
-                            
-                            <p class="text-black">Deseja realmente excluir?</p>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-danger">Deletar</button>
-
-                            </div>
-                        </form>
-                      </div>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="" id="formdelete" method="post">
+                                @csrf
+                                @method('delete')
+                                    <div class="modal-header modal__delete">
+                                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body modal-delbody">
+                                            <p class="mb-1">Deseja realmente excluir?</p>
+                                    </div>
+                                    <div class="modal-footer modal-delfooter">
+                                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn__deletar">Deletar</button>
+                                    </div>
+                            </form>
+                        </div>
                     </div>
-                  </div>
+                 </div>
+
 <script>
         $(document).ready(function(){
            
@@ -575,7 +584,7 @@
                             $('#datalistOptions').html(nome)
                             
                         } 
-                        if(data.length === 1 && dados.length > 4){
+                        if(data.length === 1 && dados.length >= 2){
                             // data.forEach(element => {
                             //   nome += `<option value="${element.tsnome}">`
                             //   nome += `<option value="${element.tsmatricula}">`

@@ -17,7 +17,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaListaTabela($id,$tomador);
+        $tabelaprecos = $tabelapreco->lista($id,$tomador);
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 

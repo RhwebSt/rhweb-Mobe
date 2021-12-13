@@ -42,7 +42,12 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        
+        $lancamentotabela = new Lancamentotabela;
+        $bolcartaoponto = new Bolcartaoponto;
+        $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);
+        if ($lancamentotabelas) {
+            return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este hoje!']);
+        }
         $request->validate([
             'nome__completo' => 'required',
             'tomador'=>'required',
@@ -70,23 +75,17 @@ class CadastroCartaoPontoController extends Controller
             $dados['diasuteis'],
             $dados['data'],
             $dados['liboletim'],
-            $dados['tomador'],
+            $dados['tomador']
         ];
-        $lancamentotabela = new Lancamentotabela;
-        $bolcartaoponto = new Bolcartaoponto;
-        $listalancamentotabela = $lancamentotabela->listacomun($dados['liboletim'],$dados['status']);
-        if (!$listalancamentotabela) {
-            $lancamentotabelas = $lancamentotabela->cadastro($dados);
-            array_unshift($novodados, $lancamentotabelas['id']);
-            return redirect()->route('boletimcartaoponto.create',$novodados);
-           
-        }else if($listalancamentotabela){
+        $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
+        if($listalancamentotabela){
             array_unshift($novodados, $listalancamentotabela->id);
             return redirect()->route('boletimcartaoponto.create',$novodados);
-           
         }
-        $condicao = 'cadastrafalse';
-        return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors([$condicao]);
+        $lancamentotabelas = $lancamentotabela->cadastro($dados);
+        array_unshift($novodados, $lancamentotabelas['id']);
+        return redirect()->route('boletimcartaoponto.create',$novodados);
+        // return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Não foi possivél realiza o cadastro!']);
     }
 
     /**
@@ -99,21 +98,19 @@ class CadastroCartaoPontoController extends Controller
     {
       
     }
-    public function relatoriocartaoponto($id,$tomador)
+    public function relatoriocartaoponto($id,$tomador) 
     {
         
         $lancamentotabela = new Lancamentotabela;
         $trabalhador = new Trabalhador;
         $tabelapreco = new TabelaPreco; 
-        $tabelaprecos = $tabelapreco->lista($tomador);
-        
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
         $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
-        // dd($tabelaprecos,$lancamentotabela);
         $dados = [];
         foreach ($lancamentotabelas as $key => $value) {
             array_push($dados,$value->trabalhador);
         }
-        $trabalhadors = $trabalhador->relatorioboletim($dados);
+        $trabalhadors = $trabalhador->relatorioBoletimTabela($dados);
         $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors','tabelaprecos'));
         return $pdf->setPaper('a4','landscape')->stream('relatório.pdf');
     }

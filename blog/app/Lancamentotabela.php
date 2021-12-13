@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentotabela extends Model
 {
     protected $fillable = [
-        'liboletim','lsdata','lsnumero','lsstatus','tomador',
+        'liboletim','lsdata','lsnumero','lsstatus','tomador','empresa'
     ];
     public function cadastro($dados)
     {
@@ -17,6 +17,7 @@ class Lancamentotabela extends Model
             'lsnumero'=>$dados['num__trabalhador'],
             'lsstatus'=>$dados['status'],
             'tomador'=>$dados['tomador'],
+            'empresa'=>$dados['empresa']
         ]);
     }
     public function buscaListaLancamentoTab($id,$status)
@@ -32,7 +33,7 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['liboletim','like','%'.$id.'%'],
                     ['lsstatus',$status],
-                    // ['trabalhadors.empresa', $user->empresa]
+                    ['empresa', $user->empresa]
                 ])->orWhere([
                     ['id',$id],
                     // ['trabalhadors.empresa', $user->empresa]
@@ -53,8 +54,9 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['liboletim',$id],
                     ['lsstatus',$status],
-                    // ['trabalhadors.empresa', $user->empresa]
-                ])->orWhere([
+                    ['empresa', $user->empresa]
+                ])
+                ->orWhere([
                     ['id',$id],
                     // ['trabalhadors.empresa', $user->empresa]
                 ]);
@@ -65,6 +67,48 @@ class Lancamentotabela extends Model
     // {
     //     return Lancamentotabela::where('tomador',$id)->get();
     // }
+    public function verificaBoletimMes($dados,$novadata)
+    {
+        return Lancamentotabela::where(function($query) use ($dados,$novadata){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['liboletim',$dados['liboletim']],
+                    ['lsstatus',$dados['status']]
+                ])
+                ->whereMonth('created_at',$novadata[1])
+                ->whereYear('created_at',$novadata[0]);
+            }else{
+                $query->where([
+                    ['liboletim',$dados['liboletim']],
+                    ['lsstatus',$dados['status']],
+                    ['empresa', $user->empresa]
+                ])
+                ->whereMonth('created_at',$novadata[1])
+                ->whereYear('created_at',$novadata[0]);
+            }
+        })->count();
+    }
+    public function verificaBoletimDias($dados)
+    {
+        return Lancamentotabela::where(function($query) use ($dados){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['liboletim',$dados['liboletim']],
+                    ['lsstatus',$dados['status']]
+                ])
+                ->whereDate('created_at',$dados['data']);
+            }else{
+                $query->where([
+                    ['liboletim',$dados['liboletim']],
+                    ['lsstatus',$dados['status']],
+                    ['empresa', $user->empresa]
+                ])
+                ->whereDate('created_at',$dados['data']);
+            }
+        })->count();
+    }
     public function relatorioBoletimTabela($id)
     {
         return DB::table('lancamentotabelas')
@@ -94,13 +138,13 @@ class Lancamentotabela extends Model
             }else{
                 $query->where([
                     ['lancamentotabelas.liboletim',$id],
-                    ['trabalhadors.empresa', $user->empresa]
+                    ['lancamentotabelas.empresa', $user->empresa]
                 ]);
             }
         })
         ->get();
     }
-    public function relatoriocartaoponto($id)
+    public function relatoriocartaoponto($id) 
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')

@@ -4,58 +4,66 @@
     @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletador com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrador realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi porssivél realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
         @endif   
-    <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('irrf.store')}}" >
+        <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('irrf.store')}}">
+            
+                <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">Faixa de Cálculos - IRRF</h1>
 
-<h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">Faixa de Cálculos</h1>
+                <div class="row">
+                    <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+                    <button type="submit" id="incluir" class="btn botao" >
+                        Incluir
+                    </button>
+                    <button type="button" id="deletar" disabled class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                        Excluir
+                    </button>
+                    <button type="submit" id="atualizar" disabled class="btn botao" >
+                    Editar
+                    </button>
+                    
+                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                    </div>
+                </div>
+                
+                <input type="hidden" name="user" value="{{$user->id}}">
+                @csrf
+                <input type="hidden" id="method" name="_method" value="">
+                <div class="container block">
+                    <div class="col-md-3">
+                        <label for="ano" class="form-label">Ano</label>
+                        <input type="text" class="form-control" name="ano" id="ano">
+                    </div>
+                </div>
+                
+                <div class="container block">
+                    <div class="col-md-3">
+                        <label for="ded__dependente" class="form-label">Dedução por Dependente</label>
+                        <input type="text" class="form-control" name="ded__dependente" id="ded__dependente">
+                    </div>
+                </div>
 
-<div class="row">
-    <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
-    <button type="submit" id="incluir" class="btn botao" >
-        Incluir
-    </button>
-    <button type="button" id="deletar" disabled class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-        Excluir
-    </button>
-    <button type="submit" id="atualizar" disabled class="btn botao" >
-    Editar
-    </button>
-    
-    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
-    </div>
-</div>
-<h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">IRRF</h1>
-<input type="hidden" name="user" value="{{$user->id}}">
-@csrf
-<input type="hidden" id="method" name="_method" value="">
-<div class="container block">
-    <div class="col-md-1">
-        <label for="ano" class="form-label">Ano</label>
-        <input type="text" class="form-control" name="ano" id="ano">
-    </div>
-</div>
-<div class="col-md-4">
+                <div class="col-md-4">
                     <label for="valor__inicial" class="form-label">Valor Inicial</label>
                     <input type="text" class="form-control" name="valor__inicial01" id="valor__inicial01">
                 </div>
@@ -144,27 +152,27 @@
                 <input type="hidden" name="id04" id="id04">
                 <input type="hidden" name="id05" id="id05">
 
-</form>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
-      <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body" style="background-color: #fffdfd;">
-      <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
-    </div>
-    <div class="modal-footer" style="background-color: #fffdfd;">
-      <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-      <form action="">
-      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
-    </form> 
-    </div>
-  </div>
-</div>
-</div>
-    </div>
+        </form>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
+                      <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #fffdfd;">
+                      <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fffdfd;">
+                      <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
+                      <form action="">
+                      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
+                    </form> 
+                    </div>
+                  </div>
+                </div>
+                </div>
+                    </div>
     <script>
         $(document).ready(function(){
            

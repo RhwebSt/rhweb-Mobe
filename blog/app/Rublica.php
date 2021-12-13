@@ -29,12 +29,26 @@ class Rublica extends Model
             'rsdc'=>$dados['dc'],
         ]);
     }
-    public function first($id)
+    public function buscaListaRublica($id)
     {
-        return Rublica::where('id',$id)->get();
+        return Rublica::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin') && $id) {
+                $query->where('rsrublica','like','%'.$id.'%')
+                ->orWhere('rsdescricao','like','%'.$id.'%');
+            }else if ($user->hasPermissionTo('admin') && empty($id)) {
+                $query->where('id','>',0);
+            }
+        })->get();
     }
-    public function listarublica($id)
+    public function buscaUnidadeRublica($id)
     {
-        return Rublica::where('rsrublica','like','%'.$id.'%')->orWhere('rsdescricao','like','%'.$id.'%')->get();
+        return Rublica::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin') && $id) {
+                $query->where('rsrublica',$id)
+                ->orWhere('rsdescricao',$id);
+            }
+        })->first();
     }
 }

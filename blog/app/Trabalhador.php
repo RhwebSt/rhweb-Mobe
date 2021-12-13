@@ -33,6 +33,7 @@ class Trabalhador extends Model
     }
     public function buscaListaTrabalhador($id)
     {
+        
         return Trabalhador::select(
             'tsnome',
             'id',

@@ -19,7 +19,7 @@
                 </div>
              @elseif($error === 'cadastratrue')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastrado realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
                 <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
@@ -39,7 +39,6 @@
                 <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             Excluir
                           </button>
-                          
                     <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                     
                     <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,6 +54,15 @@
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
                       </ul>
                     <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
+                    
+                    <button type="button" class="btn botao disabled" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Recibo de Pagamento
+                    </button>
+                    
+                    <!-- Modal -->
+                  
+                    
+                    
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
             </div>
             
@@ -62,8 +70,13 @@
             <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
                 <div class="d-flex">
                 <label for="exampleDataList" class="form-label"></label>
-                <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
+                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                 <datalist id="datalistOptions">
+                    <!-- <option value="San Francisco">
+                    <option value="New York">
+                    <option value="Seattle">
+                    <option value="Los Angeles">
+                    <option value="Chicago"> -->
                 </datalist>
                 <i class="fas fa-search fa-md iconsear"></i>
                 </div>
@@ -114,7 +127,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="cpf" class="form-label">CPF</label>
                   <input type="text" class="form-control fw-bold text-dark cpf-mask @error('cpf') is-invalid @enderror  fw-bold text-dark" value="{{old('cpf')}}" name="cpf" id="cpf" maxlength="15"  >
                   @error('cpf')
@@ -122,7 +135,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="matricula" class="form-label">Matrícula</label>
                   <input type="text" class="form-control fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{old('matricula')}}" name="matricula" id="matricula" >
                   @error('matricula')
@@ -130,7 +143,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="pis" class="form-label">PIS</label>
                   <input type="text" class="form-control fw-bold text-dark  @error('pis') is-invalid @enderror" value="{{old('pis')}}" name="pis" id="pis" >
                   @error('pis')
@@ -139,7 +152,7 @@
                 </div>
     
     
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="sexo" class="form-label">Sexo</label>
                     <select id="sexo" name="sexo" class="form-select fw-bold text-dark" >
                       <option selected>Masculino</option>
@@ -148,7 +161,7 @@
                     </select>
                 </div>
                 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="estado__civil" class="form-label">Estado Civil</label>
                     <select id="estado__civil" name="estado__civil" class="form-select fw-bold text-dark" >
                       <option selected>Solteiro</option>
@@ -159,7 +172,7 @@
                     </select>
                 </div>
     
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="raca" class="form-label">Raça</label>
                     <select id="raca" name="raca" class="form-select fw-bold text-dark">
                       <option selected>Negro</option>
@@ -221,7 +234,7 @@
     
                 <div class="container text-center  fs-4 fw-bold mt-4 mb-3">Local de Residência</div>
     
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="cep" class="form-label">CEP</label>
                     <input type="text" class="form-control @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
                     @error('cep')
@@ -229,7 +242,7 @@
                     @enderror
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <label for="logradouro" class="form-label">Rua</label>
                     <input type="text" class="form-control  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
                     @error('logradouro')
@@ -246,7 +259,7 @@
                 </div>
 
                 
-                <div class="col-md-2"> 
+                <div class="col-md-4"> 
                     <label for="tipoconstrucao" class="form-label">Tipo</label>
                     <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
                       <option selected >Casa</option>
@@ -254,7 +267,7 @@
                       <option >Empresa</option>
                     </select>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-8">
                     <label for="bairro" class="form-label">Bairro</label>
                     <input type="text" class="form-control @error('bairro') is-invalid @enderror" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
                     @error('bairro')
@@ -263,7 +276,7 @@
                 </div>
 
 
-                <div class="col-md-5">
+                <div class="col-md-7">
                     <label for="localidade" class="form-label">Municipio</label>
                     <input type="text" class="form-control @error('localidade') is-invalid @enderror" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
                     @error('localidade')
@@ -278,7 +291,7 @@
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <label for="telefone" class="form-label">Telefone</label>
                   <input type="text" class="form-control fw-bold text-dark  @error('telefone') is-invalid @enderror" value="{{old('telefone')}}" name="telefone" id="telefone" value="">
                   @error('telefone')
@@ -422,30 +435,59 @@
                 <input type="hidden" name="bancario" id="bancario">
             </div>
     </form>
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                          <div class="modal-content">
-                          <form action="" id="formdelete" method="post">
+                            <div class="modal-content">
+                                <form action="" id="formdelete" method="post">
                                         @csrf
                                         @method('delete')
-                                        <div class="modal-header " style="background-color:#000000;">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-header modal__delete">
+                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                        
-                                        <p class="text-black">Obs: Caso exclua os dados do trabalhador seus depedentes seram excluidor?</p>
-                                        <p class="text-black">Deseja realmente excluir?</p>
+                                        <div class="modal-body modal-delbody">
+                                            <p class="mb-2">Obs:( Caso exclua os dados do trabalhador seus depedentes serão excluidos.)</p>
+                                            <p class="mb-1">Deseja realmente excluir?</p>
                                         </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-danger">Deletar</button>
-
+                                        <div class="modal-footer modal-delfooter">
+                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn__deletar">Deletar</button>
                                         </div>
-                                    </form>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header modal__delete">
+                            <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
+                          <form action="{{route('trabalhador.comprovante.dia')}}" method="post">
+                          @csrf
+                          <input type="hidden" name="trabalhador" id="trabalhador">
+                         
+                          <div class="modal-body d-flex modal-delbody">
+                            <div class="col-md-5 input">
+                              <label for="ano" class="form-label">Data Inicial</label>
+                              <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
+                            </div>
+                            
+                            <div class="col-md-5 input ms-3">
+                              <label for="ano" class="form-label">Data Final</label>
+                              <input type="date" class="form-control " name="ano_final" value="" id="tano">
+                            </div>
+
+                          </div>
+                          <div class="modal-footer modal-delfooter">
+                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn__deletar">Imprimir</button>
+                          </div>
+                          </form>
                         </div>
                       </div>
+                    </div>
         <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
         <script>
          function encodeImageFileAsURL(element) {
@@ -545,9 +587,11 @@
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
                   $('#method').val('PUT')
+                  $('#recibopagamento').removeClass('disabled')
                   $('#relatoriotrabalhador').removeClass('disabled')
                   $('#imprimir').removeClass('disabled').attr('href',"{{url('ficha/registro/trabalhador')}}/"+data.trabalhador)
                   $('#fichaepi').removeClass('disabled').attr('href',"{{url('ficha/epi/trabalhador')}}/"+data.trabalhador)
+                  $('#trabalhador').val(data.trabalhador)
               }else{
                 $('#relatoriotrabalhador').addClass('disabled')
                 $('#imprimir').addClass('disabled')
@@ -558,6 +602,7 @@
                 $('#depedente').removeAttr( "disabled" )
                 $('#atualizar').attr('disabled','disabled')
                 $('#deletar').attr('disabled','disabled')
+                $('#recibopagamento').addClass('disabled')
                 $('#method').val(' ')
                 $('#excluir').attr('disabled','disabled')
               }
