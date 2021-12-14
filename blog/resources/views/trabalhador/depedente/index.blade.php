@@ -29,7 +29,7 @@
 
             <div class="container row">
                 <div class="col-12 mt-5">
-                    <h5 class="card-title text-start fs-3 ">Dependentes</h5>
+                    <h5 class="card-title text-start fs-3 ">Dependentes <i class="fad fa-users"></i></h5>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">

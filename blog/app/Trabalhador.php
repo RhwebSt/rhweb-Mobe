@@ -47,24 +47,35 @@ class Trabalhador extends Model
                     $query->where('tsnome','like','%'.$id.'%') 
                     ->orWhere('tscpf','like','%'.$id.'%')
                     ->orWhere('tsmatricula','like','%'.$id.'%');
+                }else{
+                    $query->where('id','>',$id);
                 }
-               
             }else{
-                $query->where([
-                    ['trabalhadors.tsnome','like','%'.$id.'%'],
-                    ['trabalhadors.empresa', $user->empresa]
-                ])
-                ->orWhere([
-                    ['trabalhadors.tscpf','like','%'.$id.'%'],
-                    ['trabalhadors.empresa', $user->empresa],
-                ])
-                ->orWhere([
-                    ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-                    ['trabalhadors.empresa', $user->empresa],
-                ]);
+                if ($id) {
+                    $query->where([
+                        ['trabalhadors.tsnome','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tscpf','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ]);
+                }else{
+                    $query->where([
+                        ['trabalhadors.id','>',$id],
+                        ['trabalhadors.empresa', $user->empresa]
+                    ]);
+                }
             }
             
         })
+        ->orderBy('tsnome')
+        ->distinct()
+        ->limit(100)
         ->get();
       
     }

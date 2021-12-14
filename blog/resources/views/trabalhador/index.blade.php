@@ -42,12 +42,11 @@
                     <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                     
                     <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-alt fa-lg"></i> Relatórios
+                        <i class="fad fa-file-invoice"></i> Relatórios
                      </button>
                       <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Ficha de Registro</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">Ficha de EPI</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="empresas__trab" role="button">Empresas Trabalhadas</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="declaracao__adm" role="button">Declaração de Admissão</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="cracha" role="button">Crachá</a></li>
@@ -55,14 +54,11 @@
                       </ul>
                     <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
                     
-                    <button type="button" class="btn botao disabled" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Recibo de Pagamento
+                    <button type="button" class="btn botao" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
-                    <!-- Modal -->
-                  
-                    
-                    
+
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
             </div>
             
@@ -72,23 +68,14 @@
                 <label for="exampleDataList" class="form-label"></label>
                 <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                 <datalist id="datalistOptions">
-                    <!-- <option value="San Francisco">
-                    <option value="New York">
-                    <option value="Seattle">
-                    <option value="Los Angeles">
-                    <option value="Chicago"> -->
                 </datalist>
                 <i class="fas fa-search fa-md iconsear"></i>
                 </div>
             </div>
             
-            <div class="text-center d-none">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Carregando...</span>
-              </div>
-            </div>
+           
             
-            <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador</div>
+            <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></div>
             @csrf
             <input type="hidden" id="method" name="_method" value="">
             <input type="hidden"  name="deflator" >
@@ -121,7 +108,7 @@
                 
                 <div class="col-md-6">
                   <label for="nome__social" class="form-label">Nome Social (OPICIONAL)</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__social')}}" maxlength="30" name="nome__social" id="nome__social" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__social')}}" maxlength="30" name="nome__social" id="nome__social" >
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -129,7 +116,7 @@
     
                 <div class="col-md-3">
                   <label for="cpf" class="form-label">CPF</label>
-                  <input type="text" class="form-control fw-bold text-dark cpf-mask @error('cpf') is-invalid @enderror  fw-bold text-dark" value="{{old('cpf')}}" name="cpf" id="cpf" maxlength="15"  >
+                  <input type="text" class="form-control input fw-bold text-dark cpf-mask @error('cpf') is-invalid @enderror  fw-bold text-dark" value="{{old('cpf')}}" name="cpf" id="cpf" maxlength="15"  >
                   @error('cpf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -137,7 +124,7 @@
     
                 <div class="col-md-3">
                   <label for="matricula" class="form-label">Matrícula</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{old('matricula')}}" name="matricula" id="matricula" >
+                  <input type="text" class="form-control input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{old('matricula')}}" name="matricula" id="matricula" >
                   @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -145,7 +132,7 @@
     
                 <div class="col-md-3">
                   <label for="pis" class="form-label">PIS</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('pis') is-invalid @enderror" value="{{old('pis')}}" name="pis" id="pis" >
+                  <input type="text" class="form-control input fw-bold text-dark  @error('pis') is-invalid @enderror" value="{{old('pis')}}" name="pis" id="pis" >
                   @error('pis')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -201,7 +188,7 @@
     
                 <div class="col-md-4">
                   <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                  <input type="date" class="form-control fw-bold text-dark  @error('data_nascimento') is-invalid @enderror"  value="{{old('data_nascimento')}}" maxlength="2" name="data_nascimento"  id="data_nascimento" >
+                  <input type="date" class="form-control input fw-bold text-dark  @error('data_nascimento') is-invalid @enderror"  value="{{old('data_nascimento')}}" maxlength="2" name="data_nascimento"  id="data_nascimento" >
                   @error('data_nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -210,7 +197,7 @@
     
                 <div class="col-md-4">
                   <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="10" name="pais__nascimento" id="pais__nascimento" >
+                  <input type="text" class="form-control input fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="10" name="pais__nascimento" id="pais__nascimento" >
                   @error('pais__nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -218,7 +205,7 @@
     
                 <div class="col-md-4">
                     <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-                    <input type="text" class="form-control fw-bold text-dark @error('pais__nacionalidade') is-invalid @enderror"  value="{{old('pais__nacionalidade')}}" maxlength="20" name="pais__nacionalidade" id="pais__nacionalidade" >
+                    <input type="text" class="form-control input fw-bold text-dark @error('pais__nacionalidade') is-invalid @enderror"  value="{{old('pais__nacionalidade')}}" maxlength="20" name="pais__nacionalidade" id="pais__nacionalidade" >
                     @error('pais__nacionalidade')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -226,17 +213,17 @@
     
                 <div class="col-md-8">
                   <label for="nome__mae" class="form-label">Nome da Mãe</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('nome__mae') is-invalid @enderror"  value="{{old('nome__mae')}}" maxlength="50" name="nome__mae" id="nome__mae" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__mae') is-invalid @enderror"  value="{{old('nome__mae')}}" maxlength="50" name="nome__mae" id="nome__mae" >
                   @error('nome__mae')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
     
-                <div class="container text-center  fs-4 fw-bold mt-4 mb-3">Local de Residência</div>
+                <div class="container text-center  fs-4 fw-bold mt-4 mb-3">Local de Residência <i class="fad fa-map-marked-alt"></i></div>
     
                 <div class="col-md-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
+                    <input type="text" class="form-control input @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
                     @error('cep')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -244,7 +231,7 @@
                 
                 <div class="col-md-7">
                     <label for="logradouro" class="form-label">Rua</label>
-                    <input type="text" class="form-control  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
+                    <input type="text" class="form-control input  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
                     @error('logradouro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -252,7 +239,7 @@
 
                 <div class="col-md-2">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control @error('numero') is-invalid @enderror" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
+                    <input type="text" class="form-control input @error('numero') is-invalid @enderror" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
                     @error('numero')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -269,7 +256,7 @@
                 </div>
                 <div class="col-md-8">
                     <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control @error('bairro') is-invalid @enderror" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
+                    <input type="text" class="form-control input @error('bairro') is-invalid @enderror" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
                     @error('bairro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -278,7 +265,7 @@
 
                 <div class="col-md-7">
                     <label for="localidade" class="form-label">Municipio</label>
-                    <input type="text" class="form-control @error('localidade') is-invalid @enderror" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
+                    <input type="text" class="form-control input @error('localidade') is-invalid @enderror" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
                     @error('localidade')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -286,24 +273,24 @@
 
                 <div class="col-md-2">
                     <label for="uf" class="form-label">UF</label>
-                    <input type="text" class="form-control @error('uf') is-invalid @enderror" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
+                    <input type="text" class="form-control input @error('uf') is-invalid @enderror" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
                     @error('uf')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-md-3">
                   <label for="telefone" class="form-label">Telefone</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('telefone') is-invalid @enderror" value="{{old('telefone')}}" name="telefone" id="telefone" value="">
+                  <input type="text" class="form-control input fw-bold text-dark  @error('telefone') is-invalid @enderror" value="{{old('telefone')}}" name="telefone" id="telefone" value="">
                   @error('telefone')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
     
-                <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Contrato de Trabalho</div>
+                <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Contrato de Trabalho <i class="fad fa-file-contract"></i></div>
     
                 <div class="col-md-4">
                   <label for="data__admissao" class="form-label">Data de Admissão</label>
-                  <input type="date" class="form-control fw-bold text-dark  @error('data__admissao') is-invalid @enderror" value="{{old('data__admissao')}}"  name="data__admissao" id="data__admissao" >
+                  <input type="date" class="form-control input fw-bold text-dark  @error('data__admissao') is-invalid @enderror" value="{{old('data__admissao')}}"  name="data__admissao" id="data__admissao" >
                   @error('data__admissao')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -311,7 +298,7 @@
     
                 <div class="col-md-4">
                   <label for="categoria" class="form-label">Categoria</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="20" name="categoria__contrato" id="categoria">
+                  <input type="text" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="20" name="categoria__contrato" id="categoria">
                   @error('categoria__contrato')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -319,7 +306,7 @@
     
                 <div class="col-md-4">
                   <label for="cbo" class="form-label">CBO</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('cbo') is-invalid @enderror" value="{{old('cbo')}}"  name="cbo" id="cbo" value="">
+                  <input type="text" class="form-control input fw-bold text-dark  @error('cbo') is-invalid @enderror" value="{{old('cbo')}}"  name="cbo" id="cbo" value="">
                   @error('cbo')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -327,7 +314,7 @@
     
                 <div class="col-md-3">
                   <label for="irrf" class="form-label">IRRF</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('irrf') is-invalid @enderror" value="{{old('irrf')}}" name="irrf" id="irrf">
+                  <input type="text" class="form-control input fw-bold text-dark @error('irrf') is-invalid @enderror" value="{{old('irrf')}}" name="irrf" id="irrf">
                   @error('irrf')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -335,7 +322,7 @@
     
                 <div class="col-md-3">
                   <label for="sf" class="form-label">SF</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('sf') is-invalid @enderror" value="{{old('sf')}}" name="sf" id="sf" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('sf') is-invalid @enderror" value="{{old('sf')}}" name="sf" id="sf" >
                   @error('sf')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -343,7 +330,7 @@
     
                 <div class="col-md-3">
                   <label for="ctps" class="form-label">CTPS</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('ctps') is-invalid @enderror" maxlength="20" value="{{old('ctps')}}" name="ctps" id="ctps">
+                  <input type="text" class="form-control input fw-bold text-dark @error('ctps') is-invalid @enderror" maxlength="20" value="{{old('ctps')}}" name="ctps" id="ctps">
                   @error('ctps')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -351,7 +338,7 @@
     
                 <div class="col-md-3">
                   <label for="serie__ctps" class="form-label">Série</label>
-                  <input type="text" class="form-control fw-bold text-dark @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps">
+                  <input type="text" class="form-control input fw-bold text-dark @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps">
                   @error('serie__ctps')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -359,7 +346,7 @@
     
                 <div class="col-md-3">
                   <label for="uf__ctps" class="form-label">UF</label>
-                  <input type="text" class="form-control fw-bold text-dark  @error('uf__ctps') is-invalid @enderror" value="{{old('uf__ctps')}}" name="uf__ctps" maxlength="2" id="uf__ctps">
+                  <input type="text" class="form-control input fw-bold text-dark  @error('uf__ctps') is-invalid @enderror" value="{{old('uf__ctps')}}" name="uf__ctps" maxlength="2" id="uf__ctps">
                   @error('uf__ctps')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -377,18 +364,18 @@
     
                 <div class="col-md-4">
                   <label for="data__afastamento" class="form-label">Data de Afastamento</label>
-                  <input type="date" class="form-control fw-bold text-dark  @error('data__afastamento') is-invalid @enderror" value="{{old('data__afastamento')}}" name="data__afastamento" id="data__afastamento">
+                  <input type="date" class="form-control input fw-bold text-dark  @error('data__afastamento') is-invalid @enderror" value="{{old('data__afastamento')}}" name="data__afastamento" id="data__afastamento">
                   @error('data__afastamento')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
                 
                 
-                <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador</div>
+                <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador <i class="fad fa-university"></i></div>
     
                 <div class="col-md-3 mb-5">
                             <label for="banco" class="form-label">Banco</label>
-                            <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
+                            <input type="text" class="form-control input @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
                             <div id="menssagem-banco" class="valid-feedback">
                                
                             </div>
@@ -399,7 +386,7 @@
 
                         <div class="col-md-2 mb-5">
                             <label for="agencia" class="form-label">Agência</label>
-                            <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia">
+                            <input type="text" class="form-control input @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia">
                             @error('agencia')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -407,7 +394,7 @@
 
                         <div class="col-md-2 mb-5">
                             <label for="operacao" class="form-label">Operação</label>
-                            <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao">
+                            <input type="text" class="form-control input @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao">
                             @error('aperacao')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -415,7 +402,7 @@
 
                         <div class="col-md-2 mb-5">
                             <label for="conta" class="form-label">Conta</label>
-                            <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta">
+                            <input type="text" class="form-control input @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta">
                             @error('conta')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -423,7 +410,7 @@
 
                         <div class="col-md-3 mb-5">
                             <label for="pix" class="form-label">PIX</label>
-                            <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
+                            <input type="text" class="form-control input @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
                             @error('pix')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -468,26 +455,44 @@
                           @csrf
                           <input type="hidden" name="trabalhador" id="trabalhador">
                          
-                          <div class="modal-body d-flex modal-delbody">
-                            <div class="col-md-5 input">
-                              <label for="ano" class="form-label">Data Inicial</label>
-                              <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
+                          <div class="modal-body modal-delbody">
+                            <div class="mb-3 bg-dark p-2 rounded">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox1">Recibo de Pagamento</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox2">Empresas Trabalhadas</label>
+                                </div>
+                                <div class="form-check d-none form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                                  <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
+                                </div>
                             </div>
-                            
-                            <div class="col-md-5 input ms-3">
-                              <label for="ano" class="form-label">Data Final</label>
-                              <input type="date" class="form-control " name="ano_final" value="" id="tano">
+                              
+                             <div class="d-flex">
+                                <div class="col-md-5 input">
+                                  <label for="ano" class="form-label">Data Inicial</label>
+                                  <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
+                                </div>
+                                
+                                <div class="col-md-5 input ms-3">
+                                  <label for="ano" class="form-label">Data Final</label>
+                                  <input type="date" class="form-control " name="ano_final" value="" id="tano">
+                                </div>
                             </div>
 
                           </div>
                           <div class="modal-footer modal-delfooter">
                             <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn__deletar">Imprimir</button>
+                            <button type="submit" class="btn btn__deletar"><i class="fas fa-print"></i> Imprimir</button>
                           </div>
                           </form>
                         </div>
                       </div>
                     </div>
+                 
         <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
         <script>
          function encodeImageFileAsURL(element) {
@@ -520,10 +525,16 @@
               }
             });
           })
-            $( "#pesquisa" ).on('keyup',function() {
-                var dados = $(this).val();
-                if (dados) {
-                  $.ajax({
+            $( "#pesquisa" ).on('keyup focus',function() {
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('_') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }else{
+                  dados = 0
+                }
+                $.ajax({
                     url: "{{url('trabalhador')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json',
@@ -532,31 +543,33 @@
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tsmatricula}_${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });
                         $('#datalistOptions').html(nome)
                       } 
-                      if(data.length === 1 && dados.length > 4){
+                      if(data.length === 1 && dados.length >= 4){
                         buscaItem(dados)
                       }else{
                         campo()
                       }              
                     }
                   });
-                }else{
-                  campos()
-                  $('#trabfoto').removeAttr('src')
-                }
             });
+            function monta_dados(dados) {
+              let novodados = dados.split('_')
+              return novodados[1];
+            }
             function buscaItem(dados) {
+              $('#carregamento').removeClass('d-none')
               $.ajax({
                   url: "{{url('trabalhador')}}/"+dados,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
                     trabalhador(data)
+                    $('#carregamento').addClass('d-none')
                   }
               });
             }
@@ -572,8 +585,8 @@
               $('#deletar').attr('disabled','disabled')
               $('#method').val(' ')
               $('#excluir').attr('disabled','disabled')
-              for (let index = 0; index < $('.form-control').length; index++) {
-                  $('.form-control').eq(index).val(' ') 
+              for (let index = 0; index < $('.input').length; index++) {
+                  $('.input').eq(index).val(' ') 
               }
             }
             function trabalhador(data) {

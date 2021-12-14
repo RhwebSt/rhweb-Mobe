@@ -24,22 +24,21 @@ class comprovantePagDiaController extends Controller
         $depedente = new Dependente;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentorublica = new Lancamentorublica;
-        $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados,$mes);
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
-        $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador'],'filho');
-        $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados,$mes);
-
-        $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-        $rublicas = $rublica->buscaUnidadeRublica('produção');
-        if ($trabalhadors) {
+        try {
+            $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados,$mes);
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
+            $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador'],'filho');
+            $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados,$mes);
+    
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','rublicas','dados','lancamentorublicas','bolcartaopontos','depedentes'));
-            return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
+            $rublicas = $rublica->buscaUnidadeRublica('produção');
+            if ($trabalhadors) {
+                $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
+                $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','rublicas','dados','lancamentorublicas','bolcartaopontos','depedentes'));
+                return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
+            }
+        } catch (\Throwable $th) {
+            echo('Não foi porssivél gerar o Recibo de pagamento de salálrio.');
         }
-        // try {
-           
-        // } catch (\Throwable $th) {
-        //     echo('Não foi porssivél gerar o Recibo de pagamento de salálrio.');
-        // }
     }
 }

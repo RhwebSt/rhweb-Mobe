@@ -4,40 +4,40 @@
       @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
         @endif    
               @error('false')
-                <div class="alert  alert-danger mt-2 alert-block">
-                  <strong>{{ $message }}</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                  <strong>{{ $message }} <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
               @enderror
               @error('true')
-                <div class="alert  alert-success mt-2 alert-block">
-                  <strong>{{ $message }}</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                  <strong>{{ $message }} <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
               @enderror
 
-              <h5 class="card-title text-center fs-3 ">Cartão Ponto</h5>
+              <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
               <div class="container">
                   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
                   @csrf

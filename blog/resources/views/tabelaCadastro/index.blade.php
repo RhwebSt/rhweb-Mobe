@@ -5,35 +5,35 @@
         @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 alert-block" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'jacadastrador')
-                <div class="alert mt-2 alert-block" style="background-color: #CC2836;">
-                    <strong>Este trabalhador já esta cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>O trabalhador já está cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
         @endif     
         @if(count($lista) >= $quantidade)
-            <div class="alert alert-danger mt-2 alert-block">
-                        <strong>Você ja tem {{$quantidade}} cadastrador!</strong>
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                        <strong>Você ja tem {{$quantidade}} cadastrador! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
             </div>
         @endif
         <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço</h1>
@@ -41,11 +41,11 @@
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">
-              <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+              <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
                     <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
-                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button">Relatório</a>
+                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-invoice"></i> Relatório</a>
                     <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       Excluir
                   </button>
@@ -60,6 +60,8 @@
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
             <input type="hidden" name="data" value="{{$data}}">
+            
+            
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
@@ -159,23 +161,23 @@
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
-                  <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background-color: #fffdfd;">
-                  <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
-                </div>
-                <div class="modal-footer" style="background-color: #fffdfd;">
-                  <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
+                <div class="modal-content">
                     <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                    </form> 
+                            @csrf
+                            @method('delete')
+                            <div class="modal-header modal__delete">
+                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body modal-delbody">
+                                <p class="mb-1">Deseja realmente excluir?</p>
+                            </div>
+                            <div class="modal-footer modal-delfooter">
+                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn__deletar">Deletar</button>
+                            </div>
+                    </form>
                 </div>
-              </div>
             </div>
          </div>
 

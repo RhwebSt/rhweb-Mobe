@@ -35,6 +35,13 @@
         }
     </style>
     <body >
+    <div style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.3);z-index:1; padding-top: 480px;" id="carregamento" class="d-none">
+                        <div class="text-center " >
+                          <div class="spinner-border" role="status" style="color:#48BEFF; background-color: #0085CC;">
+                            <span class="visually-hidden">Carregando...</span>
+                          </div>
+                        </div>
+                    </div>
     <main>
         <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
@@ -181,13 +188,14 @@
         </div>
         </div>
     </nav>
-</main>
 
+   
    @yield('conteine')
 
     <footer class="mt-5 footer d-none" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
         <p class="text-center p-4">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
+    </main>
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>

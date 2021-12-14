@@ -40,37 +40,8 @@
                             <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
                             
                             <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                              Boletins
+                              <i class="fad fa-file-invoice"></i> Boletins
                             </button>
-                            
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header modal__delete">
-                                    <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body d-flex modal-delbody">
-                                    <div class="col-md-5 input">
-                                      <label for="ano" class="form-label">Data Inicial</label>
-                                      <input type="date" class="form-control " name="ano" value="" id="tano">
-                                    </div>
-                                    
-                                    <div class="col-md-5 input ms-3">
-                                      <label for="ano" class="form-label">Data Final</label>
-                                      <input type="date" class="form-control " name="ano" value="" id="tano">
-                                    </div>
-        
-                                  </div>
-                                  <div class="modal-footer modal-delfooter">
-                                    <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn btn__deletar">Imprimir</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            
                             
                             <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                         </div> 
@@ -98,7 +69,7 @@
                         <div id="mensagem-pesquisa" class="invalid-feedback"></div>
                             
                             
-                        <div class="container text-center mb-3  fs-4 fw-bold">Dados da Empresa</div>
+                        <div class="container text-center mb-3  fs-4 fw-bold">Dados da Empresa <i class="fad fa-building"></i></div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
                         <input type="hidden" name="empresa" value="{{$user->empresa}}">
@@ -163,7 +134,7 @@
 
                         
                        
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Endereço</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Endereço <i class="fad fa-map-marked-alt"></i></h1>
 
                         <div class="col-md-3">
                             <label for="cep" class="form-label">CEP</label>
@@ -228,7 +199,7 @@
                             <input type="text" class="form-control input fw-bold text-dark" name="complemento__endereco" value="" id="complemento">
                         </div> -->
 
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Tomador Taxas</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Tomador Taxas <i class="fad fa-badge-percent"></i></h1>
 
 
                         <div class="col-md-3">
@@ -299,13 +270,21 @@
                         </div> -->
 
 
-                        <h1 class="container text-center mt-4 mb-3   fs-4 fw-bold">Parametros SEFIP</h1>
+                        <h1 class="container text-center mt-4 mb-3   fs-4 fw-bold">Parametros SEFIP <i class="fad fa-chart-bar"></i></h1>
 
 
                         <div class="col-md-3">
                             <label for="cod__fpas" class="form-label">Cod FPAS</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas')}}" id="cod__fpas">
                             @error('cod__fpas')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label for="cod__fap" class="form-label">Cod FAP</label>
+                            <input type="text" class="form-control input fw-bold text-dark @error('') is-invalid @enderror " name="cod__fap" value="" id="cod__fap">
+                            @error('cod__fap')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -371,7 +350,7 @@
                             <input type="text" class="form-control  input fw-bold text-dark" name="esocial" id="esocial">
                         </div> -->
 
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide Sobre Fatura</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide Sobre Fatura <i class="fad fa-chart-line"></i></h1>
 
 
                         <div class="col-md-2">
@@ -421,7 +400,7 @@
                             <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
                             <input type="text" class="form-control input fw-bold text-dark" name="valor__alimentacao"  id="valor__alimentacao">
                         </div> -->
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide sobre a folha</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide sobre a folha <i class="fad fa-chart-line"></i></h1>
 
 
                         <div class="col-md-3">
@@ -452,7 +431,7 @@
                             <option>2</option>
                         </select>
                         </div>
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Informação para o Cartão Ponto</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Informação para o Cartão Ponto <i class="fad fa-clock"></i></h1>
 
                         <div class="col-md-4">
                             <label for="dias_uteis" class="form-label">Dias Úteis</label>
@@ -479,7 +458,7 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Retenções na Fatura</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Retenções na Fatura <i class="fad fa-calculator"></i></h1>
 
 
                         <div class="col-md-3">
@@ -517,7 +496,7 @@
                             <option>Fatura</option>
                         </select>
                         </div>
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Dados Bancários</h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Dados Bancários <i class="fad fa-university"></i></h1>
                         <!-- <div class="col-md-6 d-none">
                             <label for="nome__conta" class="form-label">Nome do Titular</label>
                             <input type="text" class="form-control  input fw-bold text-dark" name="nome__conta"  id="nome__conta">
@@ -593,6 +572,56 @@
                         </div>
                     </div>
                  </div>
+                 
+                 
+                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header modal__delete">
+                            <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
+                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form action="{{route('trabalhador.comprovante.dia')}}" method="post">
+                          @csrf
+                          <input type="hidden" name="trabalhador" id="trabalhador">
+                         
+                          <div class="modal-body modal-delbody">
+                            <div class="mb-3 bg-dark p-2 rounded">
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox1">Boletins</label>
+                                </div>
+                                <div class="form-check form-check-inline d-none">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox2"></label>
+                                </div>
+                                <div class="form-check d-none form-check-inline">
+                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                                  <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
+                                </div>
+                            </div>
+                              
+                             <div class="d-flex">
+                                <div class="col-md-5 input">
+                                  <label for="ano" class="form-label">Data Inicial</label>
+                                  <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
+                                </div>
+                                
+                                <div class="col-md-5 input ms-3">
+                                  <label for="ano" class="form-label">Data Final</label>
+                                  <input type="date" class="form-control " name="ano_final" value="" id="tano">
+                                </div>
+                            </div>
+
+                          </div>
+                          <div class="modal-footer modal-delfooter">
+                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn__deletar"><i class="fas fa-print"></i> Imprimir</button>
+                          </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
 <script>
         $(document).ready(function(){
            

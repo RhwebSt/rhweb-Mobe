@@ -1,18 +1,20 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="container">
-        <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
+        
           @error('true')
-            <div class="alert alert-success"  role="alert">
-                {{$message}}
-            </div>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                </div>
         @enderror
         @error('false')
-            <div class="alert alert-danger"  role="alert">
-                {{$message}}
-            </div>
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+                </div>
         @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
+            
+            <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
@@ -26,7 +28,7 @@
                         <button type="submit" id="incluir" class="btn botao">Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
                         <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Relatório
+                        <i class="fad fa-file-invoice"></i> Relatório
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[$boletim,$tomador])}}">Boletim Cartão ponto</a></li>
@@ -72,7 +74,7 @@
                 <input type="date" class="form-control " name="data" value="" id="data">
             </div> -->
             
-            <h1 class="text-center fs-5 fw-bold">Diurno</h1>
+            <h1 class="text-center fs-5 fw-bold">Diurno <i class="fad fa-sun fa-lg"></i></h1>
             
             <div class="col-md-3 input">
                 <label for="entrada1" class="form-label">Entrada</label>
@@ -110,10 +112,10 @@
                 @enderror
             </div>
             
-            <h1 class="text-center fs-5 fw-bold">Noturno</h1>
+            <h1 class="text-center fs-5 fw-bold">Noturno <i class="fad fa-moon fa-md"></i></h1>
             
             <div class="col-md-3 input">
-                <label for="entrada3" class="form-label">Entrada (adc.noturno)</label>
+                <label for="entrada3" class="form-label">Entrada(adc.noturno)</label>
                 <input type="time" class="form-control horas adc__noturno @error('entrada3') is-invalid @enderror" name="entrada3" value="" id="entrada3">
                 <small style="font-size: 13px;">De (22:00 ás 03:00)</small>
                 @error('entrada3')
@@ -122,7 +124,7 @@
             </div>
 
             <div class="col-md-3 input">
-                <label for="saida3" class="form-label">Saída (adc.noturno)</label>
+                <label for="saida3" class="form-label">Saída(adc.noturno)</label>
                 <input type="time" class="form-control horas adc__noturno  @error('saida3') is-invalid @enderror" name="saida3" value="" id="saida3">
                 <small style="font-size: 13px;">De (03:00 ás 05:00)</small>
                 @error('saida3')
@@ -131,7 +133,7 @@
             </div>
             
             <div class="col-md-3 input">
-                <label for="entrada4" class="form-label">Entrada (adc.noturno)</label>
+                <label for="entrada4" class="form-label">Entrada(adc.noturno)</label>
                 <input type="time" class="form-control horas adc__noturno @error('entrada4') is-invalid @enderror" name="entrada4" value="" id="entrada4">
                 <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('entrada4')
@@ -140,16 +142,18 @@
             </div>
 
             <div class="col-md-3 input">
-                <label for="saida5" class="form-label">Saída (adc.noturno)</label>
+                <label for="saida5" class="form-label">Saída(adc.noturno)</label>
                 <input type="time" class="form-control horas adc__noturno @error('saida4') is-invalid @enderror" name="saida4" value="" id="saida4">
                 <small style="font-size: 13px;">De (00:00 ás 05:00)</small>
                 @error('saida4')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
+            
+            <h1 class="text-center fs-5 fw-bold">Totais <i class="fad fa-calculator fa-md"></i></h1>
 
             <div class="col-md-3 input">
-                <label for="horas_normais" class="form-label">Horas Normais </label>
+                <label for="horas_normais" class="form-label">Horas Normais</label>
                 <input type="text" class="form-control" name="horas_normais" value="" id="horas_normais">
             </div>
 

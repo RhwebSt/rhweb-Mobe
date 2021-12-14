@@ -31,7 +31,7 @@
         
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
                   
-                  <h5 class="card-title text-center fs-3 ">Tabela de Preços</h5>
+                  <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-usd-square fa-lg"></i></h5>
                   
                   
                     <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
