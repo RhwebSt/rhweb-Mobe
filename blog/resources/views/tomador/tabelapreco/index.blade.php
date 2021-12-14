@@ -6,24 +6,24 @@
                 @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
@@ -60,16 +60,23 @@
                           <a class="btn botao" href="{{ route('tomador.index') }}" role="button">Sair</a>
                       </div>
                   </div>
-                  
-                  <div>
-                      <div class="col-md-4 mt-2 mb-3">
-                        <label for="exampleDataList" class="form-label">Buscar</label>
-                        <input class="pesquisa form-control fw-bold text-dark" list="datalistOptions" name="pesquisa" id="pesquisa">
-                        <datalist id="datalistOptions">
-                          
-                        </datalist>
-                    </div>
-                </div>
+
+                        <div>
+                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                                <div class="d-flex">
+                                <label for="exampleDataList" class="form-label"></label>
+                                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                                <datalist id="datalistOptions">
+                                    <!-- <option value="San Francisco">
+                                    <option value="New York">
+                                    <option value="Seattle">
+                                    <option value="Los Angeles">
+                                    <option value="Chicago"> -->
+                                </datalist>
+                                <i class="fas fa-search fa-md iconsear"></i>
+                                </div>
+                            </div>
+                        </div>
                   
                     <div class="col-md-2">
                       <label for="ano" class="form-label">Ano</label>
@@ -103,7 +110,7 @@
                        <span class="text-danger" id="descricoesmensagem"></span>
                     </div>
                   
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <label for="valor" class="form-label">Valor Trabalhador</label>
                       <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
                       @error('valor')
@@ -111,7 +118,7 @@
                       @enderror
                     </div>
                     
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <label for="valor__tomador" class="form-label">Valor Tomador</label>
                       <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
                       @error('valor__tomador')
@@ -154,11 +161,11 @@
                             @endforeach
                             @else
                             <tr>
-                              <td colspan="8" class="bg-light text-black">
-                                <div class="alert alert-danger" role="alert">
-                                    Não á registro cadastrado!
+                              <td class="text-center border-bottom border-end border-start text-nowrap" colspan="8" style="background-color: #081049; color: white;">
+                                <div class="alert" role="alert" style="background-color: #CC2836;">
+                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
                                 </div>
-                              </td>
+                            </td>
                             </tr>
                             @endif
                         </tbody>
@@ -171,19 +178,19 @@
               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header " style="background-color:#000000;">
-                      <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
+                    <div class="modal-header modal__delete">
+                      <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
                       <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      <p class="text-black text-start">Deseja realmente excluir?</p>
+                    <div class="modal-body modal-delbody">
+                      <p class="mb-1">Deseja realmente excluir?</p>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                    <div class="modal-footer modal-delfooter">
+                      <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
                       <form action="" id="formdelete" method="post">
                       @csrf
                       @method('delete')
-                      <button type="submit" class="btn btn-danger">Deletar</button>
+                      <button type="submit" class="btn btn__deletar">Deletar</button>
                     </form> 
                     </div>
                   </div>

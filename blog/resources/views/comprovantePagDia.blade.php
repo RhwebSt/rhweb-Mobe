@@ -427,7 +427,7 @@
             <td class="little__font border-left border-top border-bottom fgtsmes text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom bairrf text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom fairrf text-center">999.999.999,99</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">99</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes}}</td>
         </tr>
     </table>
 
@@ -456,126 +456,1207 @@
             <td class="text-center border-left dia small__font border-bottom">1</td>
             
             <td  class="text-center border-left small__font border-bottom valor"> 
-                
+            <?php
+                    $valorgeral = 0;
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '01') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
             </td>
             <td  class="text-center border-left small__font border-bottom dia">9</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '09') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">17</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '17') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">25</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '25') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
         </tr>
       
         <tr>
             <td class="text-center border-left dia small__font border-bottom">2</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">10</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">18</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">26</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
-        </tr>
-
-
-        <tr>
-            <td class="text-center border-left dia small__font border-bottom">3</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">11</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">19</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">27</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
-        </tr>
-
-        <tr>
-            <td class="text-center border-left dia small__font border-bottom">4</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
-            <td  class="text-center border-left small__font border-bottom dia">12</td>
             <td  class="text-center border-left small__font border-bottom valor">
                 <?php
                     $valortotal = 0;
-                    foreach ($bolcartaopontos as $key => $value) {
-                        if (mb_strpos($value->created_at, '15')) {
-                            foreach ($bolcartaopontos as $key => $bolcartaoponto) {
-                                if ($value->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '02') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
                                     $horasex = explode(':',$bolcartaoponto->bshoraex);
                                     $horasex = $horasex[0].'.'.$horasex[1];
-                                    $horasex = $value->tsvalor * $horasex ;
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
                                     $valortotal += $horasex;
-                                }elseif($value->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
                                     $horasnormal = explode(':',$bolcartaoponto->horas_normais);
                                     $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
-                                    $horasnormal = $value->tsvalor * $horasnormal;
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
                                     $valortotal += $horasnormal;
-                                }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
                                     $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
                                     $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
-                                    $horaexcem = $value->tsvalor * $horaexcem;
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
                                     $valortotal += $horaexcem;
-                                }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
                                     $noturno = explode(':',$bolcartaoponto->bsadinortuno);
                                     $noturno = $noturno[0].'.'.$noturno[1];
-                                    $noturno = $value->tsvalor * $noturno;
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
                                     $valortotal += $noturno;
                                 }
                             }
-                           
-                           
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">10</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '10') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">18</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '18') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">26</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '26') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
                         }
                     }
                     echo(number_format((float)$valortotal, 2, ',', ''));
                 ?>
             </td>
+        </tr>
+
+
+        <tr>
+            <td class="text-center border-left dia small__font border-bottom">3</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '03') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">11</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '11') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">19</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '19') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">27</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '27') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="text-center border-left dia small__font border-bottom">4</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '04') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
+            <td  class="text-center border-left small__font border-bottom dia">12</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '12') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">20</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '20') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">28</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '28') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">5</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '05') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">13</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '13') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">21</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '21') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">29</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '29') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">6</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '06') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">14</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '14') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">22</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '22') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">30</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '30') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">7</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '07') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">15</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '15') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">23</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '23') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">31</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '31') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">8</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '08') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">16</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '16') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
-            <td  class="text-center border-left small__font border-bottom valor">999.999.999,99</td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                    $valortotal = 0;
+                    foreach ($bolcartaopontos as $key => $bolcartaoponto) {
+                        if ($bolcartaoponto->created_at) {
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode('-',$bolcartaoponto->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            if ($dia[0] === '24') {
+                                if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    $horasex = explode(':',$bolcartaoponto->bshoraex);
+                                    $horasex = $horasex[0].'.'.$horasex[1];
+                                    $horasex = $bolcartaoponto->tsvalor * $horasex ;
+                                    $valortotal += $horasex;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    $horasnormal = explode(':',$bolcartaoponto->horas_normais);
+                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
+                                    $horasnormal = $bolcartaoponto->tsvalor * $horasnormal;
+                                    $valortotal += $horasnormal;
+                                }elseif($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    $horaexcem = explode(':',$bolcartaoponto->bshoraexcem);
+                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
+                                    $horaexcem = $bolcartaoponto->tsvalor * $horaexcem;
+                                    $valortotal += $horaexcem;
+                                }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    $noturno = explode(':',$bolcartaoponto->bsadinortuno);
+                                    $noturno = $noturno[0].'.'.$noturno[1];
+                                    $noturno = $bolcartaoponto->tsvalor * $noturno;
+                                    $valortotal += $noturno;
+                                }
+                            }
+                        }
+                    }
+                    $valorgeral += $valortotal;
+                    echo(number_format((float)$valortotal, 2, ',', ''));
+                ?>
+            </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
-            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">999.999.999,99</td>
+            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">
+            {{number_format((float) $valorgeral, 2, ',', '')}}
+            </td>
         </tr> 
        
     </table>
@@ -619,6 +1700,5 @@
             <td class="fontDeclaracao text-center border-right border-bottom">Assinatura Trabalhador</td>
         </tr>
     </table>
-    {{dd($bolcartaopontos)}}
 </body>
 </html>

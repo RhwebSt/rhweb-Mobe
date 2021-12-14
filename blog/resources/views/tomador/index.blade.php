@@ -37,24 +37,59 @@
                             <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 Excluir
                             </button>
-                            <a class="btn botao disabled" href="" id="tabelapreco" role="button">Tabela de Preço</a>
+                            <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
+                            
+                            <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Boletins
+                            </button>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header modal__delete">
+                                    <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body d-flex modal-delbody">
+                                    <div class="col-md-5 input">
+                                      <label for="ano" class="form-label">Data Inicial</label>
+                                      <input type="date" class="form-control " name="ano" value="" id="tano">
+                                    </div>
+                                    
+                                    <div class="col-md-5 input ms-3">
+                                      <label for="ano" class="form-label">Data Final</label>
+                                      <input type="date" class="form-control " name="ano" value="" id="tano">
+                                    </div>
+        
+                                  </div>
+                                  <div class="modal-footer modal-delfooter">
+                                    <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn btn__deletar">Imprimir</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            
                             <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                         </div> 
                         
 
-                        
-                        <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
-                            <div class="d-flex">
-                            <label for="exampleDataList" class="form-label"></label>
-                            <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                            <datalist id="datalistOptions">
-                                <!-- <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago"> -->
-                            </datalist>
-                            <i class="fas fa-search fa-md iconsear"></i>
+                        <div>
+                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                                <div class="d-flex">
+                                <label for="exampleDataList" class="form-label"></label>
+                                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                                <datalist id="datalistOptions">
+                                    <!-- <option value="San Francisco">
+                                    <option value="New York">
+                                    <option value="Seattle">
+                                    <option value="Los Angeles">
+                                    <option value="Chicago"> -->
+                                </datalist>
+                                <i class="fas fa-search fa-md iconsear"></i>
+                                </div>
                             </div>
                         </div>
                         
@@ -531,7 +566,7 @@
                             @enderror
                         </div>
 
-                    
+                       
                     <input type="hidden" name="endereco" id="endereco">
 
                     <input type="hidden" name="bancario" id="bancario">
@@ -558,7 +593,6 @@
                         </div>
                     </div>
                  </div>
-
 <script>
         $(document).ready(function(){
            

@@ -6,24 +6,24 @@
         @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Atualização realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'editfalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível atualizar os dados!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @elseif($error === 'deletatrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Registro deletado com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastratrue')
-                <div class="alert alert-success mt-2 alert-block">
-                    <strong>Cadastrado realizada com sucesso!</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
              @elseif($error === 'cadastrafalse')
-                <div class="alert alert-danger mt-2 alert-block">
-                    <strong>Não foi possível realizar o cadastro !</strong>
+                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
             @endif
             @endforeach
@@ -40,17 +40,17 @@
                 <input type="hidden" name="trabalhador" >
                 <input type="hidden" name="tomador">
                 <input type="hidden" id="method" name="_method" value="">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <label for="nome" class="form-label">Nome</label>
                     <input type="text" class="form-control" name="nome" id="nome">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
                     <input type="text" class="form-control " name="cnpj_mf" id="cnpj_mf">
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="nome" class="form-label">Data de Registro</label>
                     <input type="date" class="form-control fw-bold" name="dataregistro" id="dataregistro">
                 </div>
@@ -66,26 +66,26 @@
                     <input type="text" class="form-control" name="logradouro" id="logradouro">
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <label for="numero" class="form-label">Número</label>
                     <input type="text" class="form-control" name="numero" id="numero">
                 </div>
 
                 
-                <div class="col-md-3"> 
+                <div class="col-md-4"> 
                                 <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
                                 <option selected >Casa</option>
                                 <option >Apartamento</option>
                             </select>
                         </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="bairro" class="form-label">Bairro</label>
                     <input type="text" class="form-control" name="bairro" id="bairro">
                 </div>
 
 
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="localidade" class="form-label">Municipio</label>
                     <input type="text" class="form-control" name="localidade" id="localidade">
                 </div>
@@ -95,7 +95,7 @@
                     <input type="text" class="form-control" name="uf" id="uf">
                 </div>
  
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="reponsave" class="form-label">Responsavel</label>
                     <input type="text" class="form-control" name="responsave" id="responsave">
                 </div>
@@ -105,17 +105,17 @@
                     <input type="email" class="form-control fw-bold" name="email" id="email">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="cnae__codigo" class="form-label">CNAE código</label>
                     <input type="text" class="form-control" name="cnae__codigo" id="cnae__codigo">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="cod__municipio" class="form-label">Código Município</label>
                     <input type="text" class="form-control" name="cod__municipio" id="cod__municipio">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="sincalizado" class="form-label">Sindicalizado</label>
                     <select id="sincalizado" name="sincalizado" class="form-select fw-bold">
                         <option>1-Sim</option>
@@ -131,12 +131,12 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="contribuicao__sindicato" class="form-label">Contribuição ao Sindicato</label>
                     <input type="text" class="form-control" name="contribuicao__sindicato" id="contribuicao__sindicato">
                 </div>
                 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="telefone" class="form-label">Telefone</label>
                     <input type="text" class="form-control" name="telefone" id="telefone">
                 </div>
@@ -144,63 +144,63 @@
                 <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
 
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="vt__trabalhador" class="form-label">VT Trabalhador</label>
                     <input type="text" class="form-control" name="vt__trabalhador" id="vt__trabalhador">
                 </div>
 
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="va__trabalhador" class="form-label">VA Trabalhador</label>
                     <input type="text" class="form-control" name="va__trabalhador" id="va__trabalhador">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__fatura" class="form-label">Nro Fatura</label>
                     <input type="text" class="form-control" name="nro__fatura" id="nro__fatura">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__reciboavulso" class="form-label">Nro Recibo Avulso</label>
                     <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso">
                 </div>
 
-                <div class="col-md-2 d-none">
+                <div class="col-md-4 d-none">
                     <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
                     <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__requisicao" class="form-label">Nro Requisição</label>
                     <input type="text" class="form-control" name="nro__requisicao" id="nro__requisicao">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__boletins" class="form-label">Nro Boletins</label>
                     <input type="text" class="form-control" name="nro__boletins" id="nro__boletins">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__folha" class="form-label">Nro da Folha</label>
                     <input type="text" class="form-control" name="nro__folha" id="nro__folha">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="nro__cartaoponto" class="form-label">Nro Cartão Ponto</label>
                     <input type="text" class="form-control" name="nro__cartaoponto" id="nro__cartaoponto">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="seq__esocial" class="form-label">Seque E-Social</label>
                     <input type="text" class="form-control" name="seq__esocial" id="seq__esocial">
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="cbo" class="form-label">CBO</label>
                     <input type="text" class="form-control" name="cbo" id="cbo">
                 </div>
 
-                <div class="col-md-2 mb-5 d-none">
+                <div class="col-md-4 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
                     <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">
                         <option>1-Produção </option>

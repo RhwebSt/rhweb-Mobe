@@ -13,6 +13,11 @@
     --img-trab-color:1.7px solid #5345B0;
     --pesq-background: #1D1D20;
     --pesq-color-font: white;
+    --modal-delete-bg: #2E50DC;
+    --modal-delbody-bg: #044C9F;
+    --modal-delfooter-bg: #2E50DC;
+    --btn-fechar-bg: #033977;
+    --btn-deletar-bg: #CB1531;
 }
 
 .darkmode{
@@ -29,6 +34,11 @@
     --img-trab-color:2px solid #241E4E;
     --pesq-background: #1D1D20;
     --pesq-color-font: #FFFFFF;
+    --modal-delete-bg: #333333;
+    --modal-delbody-bg: #7A7A7A;
+    --modal-delfooter-bg: #333333;
+    --btn-fechar-bg: #033977;
+    --btn-deletar-bg: #CB1531;
 }
 
 
@@ -47,11 +57,19 @@
     transition: ease-in-out 300ms;
 }
 
-body {
+
+body{
     font-family: 'Poppins', sans-serif;
     background-color: var(--body-bg);
     color: var(--body-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
+}
+
+.conteudo{
+    flex: 1 0 auto;
 }
 
 form input[type="text"] {
@@ -126,6 +144,8 @@ input:hover{
 
 }
 
+
+
 .table-hover:hover{
     background-color: var(--button-hover-color);
     transition: ease-in-out .2s;
@@ -141,6 +161,44 @@ input:hover{
     padding-top: 10px;
     padding-left:10px;
     padding-right:10px;
+}
+
+.modal__delete{
+    background-color: var(--modal-delete-bg);
+}
+
+.modal-delbody{
+    background-color: var(--modal-delbody-bg);
+    color:white;
+}
+
+.modal-delfooter{
+    background-color: var(--modal-delfooter-bg);
+    color:white;
+}
+
+.btn__fechar{
+    background-color: var(--btn-fechar-bg);
+    color:white;
+    border: 1px solid #477EFF;
+}
+
+.btn__fechar:hover{
+    background-color:#021D3C;
+    color:white;
+    transition: 600ms;
+}
+
+.btn__deletar{
+    background-color: var(--btn-deletar-bg);
+    color:white;
+    border: 1px solid #EE596F;
+}
+
+.btn__deletar:hover{
+    background-color: #810E1F;
+    color:white;
+    transition: 600ms;
 }
 
 
@@ -175,9 +233,13 @@ input:hover{
     background-color: red;
 }
 
-
-
-
+footer{
+    flex-shrink: 0;
+    background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197));
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
 
 
