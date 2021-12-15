@@ -94,10 +94,13 @@ class Empresa extends Model
                 ])
                 ->orWhere([
                     ['empresas.id',$id],
-                    ['empresas.id', $user->empresa]
+                    ['empresas.id', $user->empresa] 
                 ]);
             }
         })
+        ->orderBy('empresas.esnome')
+        ->distinct()
+        ->limit(100)
         ->get();
     }
     public function usuario($id)

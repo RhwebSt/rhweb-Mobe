@@ -27,26 +27,41 @@ class TabelaPreco extends Model
         return TabelaPreco::where(function($query) use ($id,$tomador){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['tsrubrica','like',$id],
-                    ['tomador',$tomador]
-                ])
-                ->orWhere([
-                    ['tsdescricao', 'like', '%'.$id.'%'],
-                    ['tomador',$tomador]
-                ]);
+                if ($id) {
+                    $query->where([
+                        ['tsrubrica','like',$id],
+                        ['tomador',$tomador]
+                    ])
+                    ->orWhere([
+                        ['tsdescricao', 'like', '%'.$id.'%'],
+                        ['tomador',$tomador]
+                    ]);
+                }else{
+                    $query->where([
+                        ['id','>',$id],
+                        ['tomador',$tomador]
+                    ]);
+                }
+               
             }else{
-                 $query->where([
+                if ($id) {
+                    $query->where([
                         ['tsrubrica','like','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['tsdescricao','like','%'.$id.'%'],
+                        ['id','>','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
                     ]);
-                   
+                }else{
+                    $query->where([
+                        ['tsrubrica','>',$id],
+                        ['tomador',$tomador],
+                        ['empresa', $user->empresa]
+                    ]);
+                }    
             }
            
         })

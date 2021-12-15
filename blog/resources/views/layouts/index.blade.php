@@ -35,9 +35,9 @@
         }
     </style>
     <body >
-    <div style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.3);z-index:1; padding-top: 480px;" id="carregamento" class="d-none">
+    <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
                         <div class="text-center " >
-                          <div class="spinner-border" role="status" style="color:#48BEFF; background-color: #0085CC;">
+                          <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: #393D3F;">
                             <span class="visually-hidden">Carregando...</span>
                           </div>
                         </div>

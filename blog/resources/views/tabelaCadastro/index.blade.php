@@ -30,7 +30,17 @@
                 </div>
             @endif
             @endforeach
-        @endif     
+        @endif
+        @error('true')
+            <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                <strong>{{ $message }}<i class="fad fa-check-circle fa-lg"></i></strong>
+            </div>
+        @enderror
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                <strong>{{ $message }} <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+            </div>
+        @enderror
         @if(count($lista) >= $quantidade)
             <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
                         <strong>Você ja tem {{$quantidade}} cadastrador! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
@@ -66,7 +76,7 @@
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
                 <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
                 @error('nome__completo')
-                      <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
                 <span class="text-danger" id="nomemensagem"></span>
                 <datalist id="nomecompleto">
@@ -182,44 +192,53 @@
          </div>
 
           <script>
-            $( ".rubrica" ).keyup(function() {
-                var dados = $(this).val();
-                if (dados) {
-                    $.ajax({
-                        url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
-                        type: 'get',
-                        contentType: 'application/json',
-                        success: function(data) {
-                            $('#codigo').removeClass('is-invalid')
-                            $('#codigomensagem').text(' ')
+            $( "#rubrica" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
+                $.ajax({
+                    url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        $('#codigo').val(' ')
+                        // $('#codigomensagem').text(' ')
+                        $('#valor').val(' ')
+                        $('#lftomador').val(' ')
+                        let nome = ''
+                        if (data.length >= 1) {
+                            data.forEach(element => {
+                                nome += `<option value="${element.tsrubrica}  ${element.tsdescricao}">`
+                            });
+                            $('#rublicas').html(nome)
+                        }
+                        if(data.length === 1 && dados.length > 3){
+                            $('#valor').val(data[0].tsvalor)
+                            $('#lftomador').val(data[0].tstomvalor)
+                            $('#rubrica').val(data[0].tsdescricao)
+                            $('#codigo').val(data[0].tsrubrica)
+                        }else if(dados.length > 3 && !data.length){
                             $('#valor').val(' ')
                             $('#lftomador').val(' ')
-                            $('#rubrica').val(' ')
-                            let nome = ''
-                            if (data.length >= 1) {
-                                data.forEach(element => {
-                                    nome += `<option value="${element.tsrubrica}">`
-                                });
-                                $('#codigos').html(nome)
-                            }
-                            if(data.length === 1 && dados.length > 3){
-                                $('#valor').val(data[0].tsvalor)
-                                $('#lftomador').val(data[0].tstomvalor)
-                                $('#rubrica').val(data[0].tsdescricao)
-                            }else if(dados.length > 3 && !data.length){
-                                $('#valor').val(' ')
-                                $('#lftomador').val(' ')
-                                $('#rubrica').val(' ')
-                                $('#codigo').addClass('is-invalid')
-                                $('#codigomensagem').text('Esta rublica não esta cadastra.')
-                            }
+                            // $('#codigo').addClass('is-invalid')
+                            // $('#codigomensagem').text('Esta rublica não esta cadastra.')
                         }
-                    });
-                }
-               
+                    }
+                });
             });
-            $( "#nome__completo" ).keyup(function() {
-                var dados = $( "#nome__completo" ).val();
+           
+            $( "#nome__completo" ).on('keyup focus',function() { 
+                let  dados = '0'
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
                 $.ajax({
                     url: "{{url('trabalhador/pesquisa')}}/"+dados,
                     type: 'get',
@@ -231,8 +250,8 @@
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });
                         $('#nomecompleto').html(nome)
@@ -248,38 +267,9 @@
                     }
                 });
             });
-            // $( "#codigo" ).keyup(function() {
-            //     var dados = $(this).val();
-            //     $.ajax({
-            //         url: "{{url('tabcadastro')}}/"+dados,
-            //         type: 'get',
-            //         contentType: 'application/json',
-            //         success: function(data) {
-            //             if (data.id) {
-            //                 $('#form').attr('action', "{{ url('tabcadastro')}}/"+data.id);
-            //                 $('#formdelete').attr('action',"{{ url('tabcadastro')}}/"+data.id)
-            //                 $('#incluir').attr('disabled','disabled')
-            //                 $('#atualizar').removeAttr( "disabled" )
-            //                 $('#deletar').removeAttr( "disabled" )
-            //                 $('#excluir').removeAttr( "disabled" )
-            //                 $('#method').val('PUT')
-            //                 $('#trabalhador').val(data.trabalhador)
-            //                 $('#matricula').val(data.tsmatricula)
-            //                 $('#rubrica').val(data.lshistorico)
-            //                 $('#quantidade').val(data.lsquantidade)
-            //                 $('#nome__completo').val(data.tsnome)
-            //             }else{
-            //                 $('#form').attr('action', "{{ route('tabcadastro.store') }}");
-            //                 $('#incluir').removeAttr( "disabled" )
-            //                 $('#atualizar').attr('disabled','disabled')
-            //                 $('#deletar').attr('disabled','disabled')
-            //                 $('#method').val(' ')
-            //                 $('#excluir').attr( "disabled",'disabled' )
-            //             }
-                       
-            //         }
-            //     })
-            // })
-          
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
           </script>
 @stop

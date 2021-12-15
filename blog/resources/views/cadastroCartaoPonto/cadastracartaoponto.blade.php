@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('conteine')
-<div class="container">
+<div class="container"> 
         
         @error('true')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
@@ -193,7 +193,7 @@
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
               
-             <div class="table-responsive-lg">
+             <div class="table-responsive-xl">
                   <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
@@ -255,62 +255,64 @@
           
   
           <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-              <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-            <thead>
-                <th class="col text-center border-start border-top" style="width:80px;">Matricula</th>
-                <th class="col text-center border-top" style="width:330px">Nome</th>
-                <th class="col text-center border-top" style="width:90px;">Entrada</th>
-                <th class="col text-center border-top" style="width:90px;">Saída</th>
-                <th class="col text-center border-top" style="width:90px;">Entrada</th>
-                <th class="col text-center border-top" style="width:90px;">Saída</th>
-                <th class="col text-center border-top" style="width:90px;">HRS 50%</th>
-                <th class="col text-center border-top" style="width:90px;">HRS 100%</th>
-                <th class="col text-center border-top" style="width:90px;">AD.NOT</th>
-                <th class="col text-center border-end border-top" style="width:140px;">Total Geral</th>
-            </thead>
-            <tbody style="background-color: #081049; color: white;">
-            @if(count($lista) > 0)
-                @foreach($lista as $listas)
-                @if($listas->bsentradanoite && $listas->bsentradanoite ||
-                $listas->bsentradamadrugada && $listas->bssaidamadrugada)
-                <tr>
-                <td class="col text-center border-bottom border-start" style="width:80px;">{{$listas->tsmatricula}}</td>
-                <td class="col text-center border-bottom" style="width:330px">{{$listas->tsnome}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradanoite}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidanoite}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsentradamadrugada}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bssaidamadrugada}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraex}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bshoraexcem}}</td>
-                <td class="col text-center border-bottom" style="width:90px;">{{$listas->bsadinortuno}}</td>
-                <td class="col text-center border-end border-bottom" style="width:140px;">{{$listas->bstotal}}</td>
-                </tr>
-               @endif
-                @endforeach
-                @else
+            
+            <div class="table-responsive-xl">
+                  <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                <thead>
+                    <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
+                    <th class="col text-center border-top text-nowrap" style="width:330px">Nome</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 50%</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 100%</th>
+                    <th class="col text-center border-top text-nowrap" style="width:90px;">AD.NOT</th>
+                    <th class="col text-center border-end border-top text-nowrap" style="width:140px;">Total Geral</th>
+                </thead>
+                <tbody style="background-color: #081049; color: white;">
+                @if(count($lista) > 0)
+                    @foreach($lista as $listas)
+                    @if($listas->bsentradanoite && $listas->bsentradanoite ||
+                    $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                     <tr>
-                        <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                            <div class="alert" role="alert" style="background-color: #CC2836;">
-                                Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                            </div>
+                    <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:330px">{{$listas->tsnome}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradanoite}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidanoite}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamadrugada}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidamadrugada}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraex}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraexcem}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsadinortuno}}</td>
+                    <td class="col text-center border-end border-bottom text-nowrap" style="width:140px;">{{$listas->bstotal}}</td>
+                    </tr>
+                   @endif
+                    @endforeach
+                    @else
+                        <tr>
+                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                                <div class="alert" role="alert" style="background-color: #CC2836;">
+                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+                
+                <tfoot>
+                    <tr class=" border-end border-start border-bottom">
+                        <td colspan="11">
+                        {{ $lista->links() }}
                         </td>
                     </tr>
-                @endif
-            </tbody>
-            
-            <tfoot>
-                <tr class=" border-end border-start border-bottom">
-                    <td colspan="11">
-                    {{ $lista->links() }}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-              
-              
-          </div>
-        </div>
+                </tfoot>
+            </table>
+                  
+                  
+              </div>
+            </div>
+         </div>
         
         
         
@@ -668,8 +670,14 @@ function domingo(resutado) {
     //         // }
     //     }
     // });
-            $( "#nome__completo" ).keyup(function() {
-                var dados = $( "#nome__completo" ).val();
+            $( "#nome__completo" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                    dados = $(this).val()
+                    if (dados.indexOf('  ') !== -1) {
+                        dados = monta_dados(dados);
+                    }
+                }
                 $.ajax({
                     url: "{{url('trabalhador/pesquisa')}}/"+dados,
                     type: 'get',
@@ -678,27 +686,48 @@ function domingo(resutado) {
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                        //nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });
                         $('#datalistOptions').html(nome)
                         
                       }
                       if(data.length === 1 && dados.length > 4){
-                        // data.forEach(element => {
-                        //   nome += `<option value="${element.tsnome}">`
-                        //   nome += `<option value="${element.tsmatricula}">`
-                        //   nome += `<option value="${element.tscpf}">`
-                        // });
-                        // $('#datalistOptions').html(nome)
                         $('#trabalhador').val(data[0].id)
                         $('#matricula').val(data[0].tsmatricula)
                         boletim(dados)
+                      }else{
+                        campos()
                       }              
                     }
                 });
             });
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
+            function campos() {
+                $('#form').attr('action', "{{route('boletimcartaoponto.store')}}");
+                $('#atualizar').attr('disabled','disabled')
+                $('#method').val(' ')
+                $('#incluir').removeAttr( "disabled" )
+                $('#trabalhador').val(' ')
+                $('#matricula').val(' ')
+                $('#entrada1').val(' ')
+                $('#saida').val(' ')
+                $('#entrada2').val(' ')
+                $('#saida2').val(' ')
+                $('#entrada3').val(' ')
+                $('#saida3').val(' ')
+                $('#entrada4').val(' ')
+                $('#saida4').val(' ')
+                $('#horas_normais').val(' ')
+                $('#total').val(' ')
+                $('#hora__extra').val(' ')
+                $('#horas__cem').val(' ')
+                $('#adc__noturno').val(' ')
+            }
             function boletim(dados) {
                 $.ajax({
                     url: `{{url('boletimcartaoponto')}}/${dados}/${$('#lancamento').val()}`,

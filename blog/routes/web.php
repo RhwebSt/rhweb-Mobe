@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
+Route::get('error/servidor','Sevidor\\ErrosSevidorController@index')->name('error.index');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');

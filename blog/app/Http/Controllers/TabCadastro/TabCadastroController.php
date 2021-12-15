@@ -49,14 +49,13 @@ class TabCadastroController extends Controller
             $dados['numtrabalhador'],
             $dados['boletim'],
             $dados['tomador'],
-            $dados['lancamento'],
+            $dados['lancamento'], 
             $dados['data']
         ];
         try {
             $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
             if ($lancamentorublicas) {
-                $condicao = 'jacadastrador';
-                return redirect()->route('tabcadastro.create',$novodados)->withErrors($condicao);
+                return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);
             }
             $validator = Validator::make($request->all(), [
                 'nome__completo' => 'required',
@@ -71,16 +70,10 @@ class TabCadastroController extends Controller
                 ]
             );
             if ($validator->fails()) {
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
+                return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
             }
-            $condicao = '';
             $lancamentorublicas = $lancamentorublica->cadastro($dados);
-            if ($lancamentorublicas) {
-                $condicao = 'cadastratrue';
-            }else{
-                $condicao = 'cadastrafalse';
-            }
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Cadastro realizado com sucesso.']);
        } catch (\Exception $e) {
             echo('Não foi porssivél realizar o cadastro.');
        }
@@ -137,14 +130,13 @@ class TabCadastroController extends Controller
         if ($validator->fails()) {
             return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
         }
-        $condicao = '';
-        $lancamentorublicas = $lancamentorublica->editar($dados,$id);
-        if ($lancamentorublicas) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $lancamentorublica->editar($dados,$id);
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso.']);
+        } catch (\Throwable $th) {
+            echo('Não foi porssivél realizar o cadastro.');
         }
-        return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
+      
     }
 
     /**
@@ -167,12 +159,15 @@ class TabCadastroController extends Controller
             $lancamentotabelas->id,
             $novadata[0]
         ];
-        $lancamentorublicas = $lancamentorublica->deletar($id);
-        if ($lancamentorublicas) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        if (!$lancamentotabelas) {
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
         }
-        return redirect()->route('tabcadastro.create',$novodados)->withErrors([$condicao]);
+        try {
+            $lancamentorublicas = $lancamentorublica->deletar($id);
+            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Registro deletado com sucesso.']);
+        } catch (\Throwable $th) {
+            echo('Não foi porssivél deleta o registro.');
+        }
+      
     }
 }

@@ -77,19 +77,21 @@ class EmpresaController extends Controller
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;
-        $empresas = $empresa->cadastro($dados);
-        if ($empresas) {
-            // $dados['tomador'] = $empresas['id'];
-            $dados['empresa'] = $empresas['id'];
-            $enderecos = $endereco->cadastro($dados);
-            $valoresrublicas = $valoresrublica->cadastro($dados);
-            if ($enderecos && $valoresrublicas) {
-                $condicao = 'cadastratrue';
-            }else{
-                $condicao = 'cadastrafalse';
+        try {
+            $empresas = $empresa->cadastro($dados);
+            if ($empresas) {
+                // $dados['tomador'] = $empresas['id'];
+                $dados['empresa'] = $empresas['id'];
+                $enderecos = $endereco->cadastro($dados);
+                $valoresrublicas = $valoresrublica->cadastro($dados);
+                if ($enderecos && $valoresrublicas) {
+                    return redirect()->route('listaempresa.create')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
+                }
             }
-            return redirect()->route('listaempresa.create')->withInput()->withErrors([$condicao]);
+        } catch (\Throwable $th) {
+            echo('Não foi porssivél efetua o cadastro.');
         }
+       
     }
 
     /**
@@ -166,11 +168,8 @@ class EmpresaController extends Controller
         $enderecos = $endereco->editar($dados,$dados['endereco']); 
         $valoresrublicas = $valoresrublica->editar($dados,$id);
         if ($empresas && $enderecos && $valoresrublicas) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+            return redirect()->route('listaempresa.create')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
         }
-        return redirect()->route('listaempresa.create')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -181,7 +180,6 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id);
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;

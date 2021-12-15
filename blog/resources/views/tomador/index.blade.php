@@ -1,33 +1,16 @@
 @extends('layouts.index')
 @section('conteine')
-    <div class="container ">
-            
-            @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
+    <div class="container ">    
+        @error('true')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+        @enderror
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
-        
+        @enderror
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
@@ -626,11 +609,6 @@
         $(document).ready(function(){
            
             $('#pesquisa').on('keyup focus',function(){
-                // let dados = $(this).val();
-                // dados =  dados.replace(/\D/g, ''); 
-                // if (!dados) {
-                //     dados = $(this).val();
-                // }
                 var dados = '0';
                 if ($(this).val()) {
                     dados = $(this).val();
@@ -653,17 +631,11 @@
                             $('#datalistOptions').html(nome)
                         } 
                         if(data.length === 1 && dados.length >= 2){
-                            // data.forEach(element => {
-                            //   nome += `<option value="${element.tsnome}">`
-                            //   nome += `<option value="${element.tsmatricula}">`
-                            //   nome += `<option value="${element.tscpf}">`
-                            // });
-                            // $('#datalistOptions').html(nome)
                             tomador(dados)
+                        }else if (dados.length === 14) {
+                            pesquisa(dados)
                         }else{
-                            if (dados.length === 14) {
-                                pesquisa(dados)
-                            }
+                            campo()
                         }         
                      }
                 });
@@ -679,12 +651,25 @@
                     type: 'get',
                     contentType: 'application/json', 
                     success: function(data) {
-                        campos(data)
+                        carregado(data)
                         $('#carregamento').addClass('d-none')
                     }
                 })
             }
-            function campos(data) {
+            function campo() {
+                $('#carregamento').addClass('d-none')
+                $('#form').attr('action', "{{ route('tomador.store') }}");
+                $('#incluir').removeAttr( "disabled" )
+                $('#atualizar').attr('disabled','disabled')
+                $('#deletar').attr('disabled','disabled')
+                $('#method').val(' ')
+                $('#excluir').attr( "disabled",'disabled' )
+                $('#tabelapreco').addClass('disabled').removeAttr('href')
+                for (let index = 0; index < $('.input').length; index++) {
+                   $('.input').eq(index).val(' ')
+                }
+            }
+            function carregado(data) {
                 if (data.id) {
                     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
                     $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
@@ -695,14 +680,6 @@
                     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+data.tomador)
                     $('#method').val('PUT')
                 
-                }else{
-                    $('#form').attr('action', "{{ route('tomador.store') }}");
-                    $('#incluir').removeAttr( "disabled" )
-                    $('#atualizar').attr('disabled','disabled')
-                    $('#deletar').attr('disabled','disabled')
-                    $('#method').val(' ')
-                    $('#excluir').attr( "disabled",'disabled' )
-                    $('#tabelapreco').addClass('disabled').removeAttr('href')
                 }
                 $('#nome__completo').val(data.tsnome)
                 $('#cnpj').val(data.tscnpj)

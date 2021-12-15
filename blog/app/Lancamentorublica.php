@@ -68,12 +68,15 @@ class Lancamentorublica extends Model
     }
     public function verifica ($dados,$novadata)
     {
-        return Lancamentorublica::where([
-            ['licodigo', $dados['codigo']],
-            ['trabalhador', $dados['trabalhador']],
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->where([
+            ['lancamentorublicas.licodigo', $dados['codigo']],
+            ['lancamentorublicas.trabalhador', $dados['trabalhador']],
+            ['lancamentotabelas.tomador',$dados['tomador']]
         ])
-        ->whereMonth('created_at',$novadata[1])
-        ->whereYear('created_at',$novadata[0])
+        ->whereMonth('lancamentorublicas.created_at',$novadata[1])
+        ->whereYear('lancamentorublicas.created_at',$novadata[0])
         ->count();
     }
     public function buscaListaRelatorioLancamentoRublica($dados,$mes)

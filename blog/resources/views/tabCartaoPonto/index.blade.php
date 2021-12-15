@@ -128,46 +128,47 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
             <script>
-               $( "#num__boletim" ).keyup(function() {
-                var dados = $(this).val();
-                var status = $('#status').val();
-                if (dados) {
-                    $.ajax({
-                        url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
-                        type: 'get',
-                        contentType: 'application/json',
-                        success: function(data) {
-                          console.log(data)
-                          let nome = ''
-                          if (data.length >= 1) {
-                            data.forEach(element => {
-                              nome += `<option value="${element.liboletim}">`
-                              // nome += `<option value="${element.tsmatricula}">`
-                              // nome += `<option value="${element.tscpf}">`
-                            });
-                            $('#listaboletim').html(nome)
-                          }
-                          if(data.length === 1 && dados.length > 3){
-                            lancamentoTab(dados,status)
-                          }else{
-                            limpaCamposTab()
-                          }
-                        }
-                    });
-                }else{
-                  limpaCamposTab()
+            $( "#num__boletim" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                  dados = $(this).val();
                 }
+                var status = $('#status').val();
+                $.ajax({
+                  url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
+                  type: 'get',
+                  contentType: 'application/json',
+                  success: function(data) {
+                    console.log(data)
+                    let nome = ''
+                    if (data.length >= 1) {
+                      data.forEach(element => {
+                        nome += `<option value="${element.liboletim}">`
+                        // nome += `<option value="${element.tsmatricula}">`
+                        // nome += `<option value="${element.tscpf}">`
+                      });
+                      $('#listaboletim').html(nome)
+                    }
+                    if(data.length === 1 && dados.length > 3){
+                      lancamentoTab(dados,status)
+                    }else{
+                      limpaCamposTab()
+                    }
+                  }
+                });
             });
             function lancamentoTab(dados,status) {
+              $('#carregamento').removeClass('d-none')
               $.ajax({
                 url: "{{url('tabela/cartao/ponto')}}/"+dados+'/'+status,
                 type: 'get',
                 contentType: 'application/json',
                 success: function(data) {
                   camposLacamentoTab(data)
+                  $('#carregamento').addClass('d-none')
                 }
               })
             }
@@ -207,9 +208,15 @@
                   $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
                   $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
             }
-               $( "#nome__completo" ).keyup(function() {
-                var dados = $( "#nome__completo" ).val();
-                $.ajax({
+            $( "#nome__completo" ).on('keyup focus',function() {
+              var dados = '0';
+              if ($(this).val()) {
+                dados = $(this).val();
+                if (dados.indexOf('  ') !== -1) {
+                  dados = monta_dados(dados);
+                }
+              }
+              $.ajax({
                   url: "{{url('tomador')}}/pesquisa/"+dados,
                   type: 'get',
                   contentType: 'application/json',
@@ -218,18 +225,22 @@
                     let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsnome}">`
-                          nome += `<option value="${element.tsmatricula}">`
-                          nome += `<option value="${element.tscpf}">`
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tscnpj}">`
                         });
                         $('#datalistOptions').html(nome)
                       }
-                      if(data.length === 1 && dados.length > 4){
+                      if(data.length === 1 && dados.length >= 4){
                         tomador(data[0])
                       }           
                   }
               });
             });
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
             function buscatomador(dados) {
               $.ajax({
                   url: "{{url('tomador')}}/"+dados,
@@ -250,5 +261,5 @@
               $('#sabado').val(data.cssabados)
               $('#diasuteis').val(data.csdiasuteis)
             }
-            </script>        
+      </script>     
 @stop

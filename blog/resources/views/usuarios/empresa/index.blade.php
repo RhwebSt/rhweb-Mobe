@@ -1,33 +1,16 @@
 @extends('layouts.index')
 @section('conteine')
-        <div class="container" >
-            
-            
-        @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
+        <div class="container" > 
+        @error('true')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+        @enderror
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
+        @enderror
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('empresa.store') }}" method="POST" action="" >
            
             @can('admin')
@@ -400,45 +383,41 @@
         }
         $(document).ready(function(){
            
-            $( "#pesquisa" ).keyup(function() {
-                var novodados = ''
-                var dados = $(this).val();
-                var cpf =  $(this).val() 
-                cpf = cpf.replace(/\D/g, '');
-                if (cpf) {
-                    novodados = cpf
-                }else{
-                    novodados = dados
+            $( "#pesquisa" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                    dados = $(this).val();
+                    // if (dados.indexOf('  ') !== -1) {
+                    //     dados = monta_dados(dados);
+                    // }
                 }
-                if (novodados) {
-                    $.ajax({
-                    url: "{{url('empresa')}}/pesquisa/"+novodados,
+                $.ajax({
+                    url: "{{url('empresa')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                            let nome = ''
-                            $('#trabfoto').removeAttr('src')
-                            if (data.length >= 1) {
-                                data.forEach(element => {
-                                nome += `<option value="${element.esnome}">`
-                                nome += `<option value="${element.escnae}">`
-                                nome += `<option value="${element.escnpj}">`
-                                });
-                                $('#datalistOptions').html(nome)
-                            }
-                            if(data.length === 1 && novodados.length > 4){
-                                empresas(novodados)
-                            }else if (novodados.length === 14) {
-                                pesquisa(dados)
-                            }
+                        let nome = ''
+                        $('#trabfoto').removeAttr('src')
+                        if (data.length >= 1) {
+                            data.forEach(element => {
+                            nome += `<option value="${element.esnome}">`
+                            // nome += `<option value="${element.escnae}">`
+                            // nome += `<option value="${element.escnpj}">`
+                            });
+                            $('#datalistOptions').html(nome)
                         }
-                    });
-                }else{
-                    empresas('')
-                    $('#trabfoto').removeAttr('src')
-                }
-               
+                        if(data.length === 1 && dados.length > 4){
+                            empresas(dados)
+                        }else if (dados.length === 14) {
+                            pesquisa(dados)
+                        }
+                    }
+                });
             });
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
             function empresas(dados) {
                 if (dados) {
                     $.ajax({

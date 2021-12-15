@@ -16,6 +16,7 @@ class comprovantePagDiaController extends Controller
     public function ComprovantePagDia(Request $request)
     {
         $dados = $request->all();
+        
         $mes = explode('-',$dados['ano_inicial']);
         $tomador = [];
         $trabalhador = new Trabalhador;
@@ -23,13 +24,12 @@ class comprovantePagDiaController extends Controller
         $rublica = new Rublica;
         $depedente = new Dependente;
         $bolcartaoponto = new Bolcartaoponto;
-        $lancamentorublica = new Lancamentorublica;
+        $lancamentorublica = new Lancamentorublica; 
         try {
             $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados,$mes);
             $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
             $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador'],'filho');
             $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados,$mes);
-    
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
             $rublicas = $rublica->buscaUnidadeRublica('produção');
             if ($trabalhadors) {

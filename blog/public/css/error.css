@@ -1,0 +1,151 @@
+body{
+    background-color:#266DD3;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+.error{
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.back{
+    background-color: #0E9534;
+    color: #fff;
+}
+
+.back:hover{
+    background-color: #036920;
+    color: #fff;
+}
+
+.imagem{
+    margin-top: 190px;
+}
+
+@media (max-width: 1024px){
+    body {
+        margin-top:160px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 800px){
+    body {
+        padding: 10px;
+        margin-top:220px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+
+@media (max-width: 768px){
+    body {
+        padding: 10px;
+        margin-top:140px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 712px){
+    body {
+        padding: 10px;
+        padding-right: 50px;
+        margin-top:260px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 600px){
+    body {
+        padding: 10px;
+        margin-top:260px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+
+@media (max-width: 596px){
+    body {
+        padding: 10px;
+        margin-top:180px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 480px){
+    body {
+        padding: 10px;
+        margin-top:330px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+
+
+@media (max-width: 464px){
+    body {
+        padding: 10px;
+        margin-top:300px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 411px){
+    body {
+        padding: 10px;
+        margin-top:390px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 375px){
+
+    body {
+        padding: 10px;
+        margin-top:430px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 360px){
+
+    body {
+        padding: 10px;
+        margin-top:340px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 320px){
+
+    body {
+        padding: 10px;
+        margin-top:420px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 280px){
+    body {
+        padding: 10px;
+        margin-top:600px;
+        display: flex;
+        flex-direction: column !important;
+    }
+}

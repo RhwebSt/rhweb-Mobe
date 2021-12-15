@@ -75,10 +75,10 @@ class Lancamentotabela extends Model
             }
         })->first();
     }
-    // public function buscaListaLacamentoTab($id)
-    // {
-    //     return Lancamentotabela::where('tomador',$id)->get();
-    // }
+    public function buscaTomador($id)
+    {
+        return Lancamentotabela::where('tomador',$id)->get();
+    }
     public function verificaBoletimMes($dados,$novadata)
     {
         return Lancamentotabela::where(function($query) use ($dados,$novadata){

@@ -54,20 +54,19 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'cnpj' => 'required|max:19|cnpj',
-            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'telefone'=>'required|max:16|celular_com_ddd',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'taxa_adm'=>'required',
             'taxa__fed'=>'required',
             'deflator'=>'required|max:100',
@@ -140,12 +139,8 @@ class TomadorController extends Controller
             && $bancarios && $retencaofaturas && 
             $cartaoponto && $parametrosefips && $incidefolhars &&
              $indicefaturas) {
-                $condicao = 'cadastratrue';
-            }else{
-                $condicao = 'cadastrafalse';
+                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
             }
-            return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
-            
         }
     }
 
@@ -189,20 +184,19 @@ class TomadorController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        // dd($dados);
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'cnpj' => 'required|max:19|cnpj',
-            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'telefone'=>'required|max:16|celular_com_ddd',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-]*$/',
+            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-()]*$/',
             'taxa_adm'=>'required',
             'taxa__fed'=>'required',
             'deflator'=>'required|max:100',
@@ -276,11 +270,8 @@ class TomadorController extends Controller
         if ($tomadors && $enderecos && $taxas
         && $bancarios && $retencaofaturas && $incidefolhars &&
         $cartaoponto && $parametrosefips && $indicefaturas) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+            return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
         }
-        return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -307,35 +298,36 @@ class TomadorController extends Controller
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabela = new Lancamentotabela;
-        $lancamentotabelas = $lancamentotabela->listaget($id);
-        foreach ($lancamentotabelas as $key => $value) {
-            $bolcartaopontos = $bolcartaoponto->deletar($value->id);
-            $lancamentorublicas = $lancamentorublica->deletar($value->id);
+        try {
+            $lancamentotabelas = $lancamentotabela->buscaTomador($id);
+            foreach ($lancamentotabelas as $key => $value) {
+                $bolcartaopontos = $bolcartaoponto->deletar($value->id);
+                $lancamentorublicas = $lancamentorublica->deletar($value->id);
+            }
+            $campoendereco = 'tomador';
+            $campobacario = 'tomador';
+            $lancamentotabelas = $lancamentotabela->deletar($id);
+            $bancarios = $bancario->first($id,$campobacario);
+            $exbancarios = $bancario->deletar($bancarios->biid);
+            $tabelaprecos = $tabelapreco->deletatomador($id);
+            $enderecos = $endereco->first($id,$campoendereco); 
+            $exenderecos = $endereco->deletar($enderecos->eiid); 
+            $retencaofaturas = $retencaofatura->deletar($id);
+            $cartaoponto = $cartaoponto->deletar($id);
+            $parametrosefips = $parametrosefip->deletar($id);
+            // $taxatrabalhador = $taxatrabalhador->deletar($id);
+            $indicefaturas = $indicefatura->deletar($id);
+            $taxas = $taxa->deletar($id);
+            $incidefolhars = $incidefolhar->deletar($id);
+            if ($exenderecos && $taxas
+            && $exbancarios && $retencaofaturas && 
+            $cartaoponto && $parametrosefips && $incidefolhars &&
+            $indicefaturas) {
+                $tomadors = $tomador->deletar($id);
+                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Deletador com sucesso.']);
+            }
+        } catch (\Throwable $th) {
+            echo('Error');
         }
-        $campoendereco = 'tomador';
-        $campobacario = 'tomador';
-        $lancamentotabelas = $lancamentotabela->deletar($id);
-        $bancarios = $bancario->first($id,$campobacario);
-        $exbancarios = $bancario->deletar($bancarios->biid);
-        $tabelaprecos = $tabelapreco->deletatomador($id);
-        $enderecos = $endereco->first($id,$campoendereco); 
-        $exenderecos = $endereco->deletar($enderecos->eiid); 
-        $retencaofaturas = $retencaofatura->deletar($id);
-        $cartaoponto = $cartaoponto->deletar($id);
-        $parametrosefips = $parametrosefip->deletar($id);
-        // $taxatrabalhador = $taxatrabalhador->deletar($id);
-        $indicefaturas = $indicefatura->deletar($id);
-        $taxas = $taxa->deletar($id);
-        $incidefolhars = $incidefolhar->deletar($id);
-        if ($exenderecos && $taxas
-        && $exbancarios && $retencaofaturas && 
-        $cartaoponto && $parametrosefips && $incidefolhars &&
-         $indicefaturas) {
-            $tomadors = $tomador->deletar($id);
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
-        }
-        return redirect()->route('tomador.index')->withInput()->withErrors([$condicao]);
     }
 }

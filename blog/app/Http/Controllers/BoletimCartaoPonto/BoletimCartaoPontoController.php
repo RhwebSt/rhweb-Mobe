@@ -59,18 +59,18 @@ class BoletimCartaoPontoController extends Controller
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
         }
         $validator = Validator::make($request->all(), [
-            // 'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'trabalhador'=>'required',
-            // 'matricula'=>'required|min:4',
-            // 'entrada1'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'total'=>'max:5|required'
+            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'trabalhador'=>'required',
+            'matricula'=>'required|max:4',
+            'entrada1'=>'max:5',
+            'saida'=>'max:5',
+            'entrada2'=>'max:5',
+            'saida2'=>'max:5',
+            'entrada3'=>'max:5',
+            'saida3'=>'max:5',
+            'entrada4'=>'max:5',
+            'saida4'=>'max:5',
+            'total'=>'max:5|required'
 
         ],[
             // 'total.required'=>'O campo não pode esta vazio!',
@@ -144,18 +144,18 @@ class BoletimCartaoPontoController extends Controller
         ];
         $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [
-            // 'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'trabalhador'=>'required',
-            // 'matricula'=>'required|min:4',
-            // 'entrada1'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida2'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida3'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'entrada4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'saida4'=>'max:5|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            // 'total'=>'max:5|required'
+            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            'trabalhador'=>'required',
+            'matricula'=>'required|max:4',
+            'entrada1'=>'max:5',
+            'saida'=>'max:5',
+            'entrada2'=>'max:5',
+            'saida2'=>'max:5',
+            'entrada3'=>'max:5',
+            'saida3'=>'max:5',
+            'entrada4'=>'max:5',
+            'saida4'=>'max:5',
+            'total'=>'max:5|required'
 
         ],[
             // 'total.required'=>'O campo não pode esta vazio!',
