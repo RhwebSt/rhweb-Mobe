@@ -142,4 +142,8 @@ class Bolcartaoponto extends Model
     {
       return Bolcartaoponto::where('lancamento', $id)->delete();
     }
+    public function deletarTrabalador($id)
+    {
+        return Bolcartaoponto::where('trabalhador', $id)->delete();
+    }
 }

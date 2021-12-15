@@ -101,4 +101,8 @@ class Lancamentorublica extends Model
     {
       return Lancamentorublica::where('id', $id)->orWhere('lancamento', $id)->delete();
     }
+    public function deletarTrabalhador($id)
+    {
+        return Lancamentorublica::where('trabalhador', $id)->delete();
+    }
 }

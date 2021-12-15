@@ -133,7 +133,6 @@ class BoletimCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        dd($dados);
         $novodados = [
             $dados['lancamento'],
             $dados['domingo'],

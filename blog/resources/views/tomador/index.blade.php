@@ -625,14 +625,20 @@
 <script>
         $(document).ready(function(){
            
-            $('#pesquisa').keyup(function(){
-                let dados = $(this).val();
-                dados =  dados.replace(/\D/g, '');
-                if (!dados) {
+            $('#pesquisa').on('keyup focus',function(){
+                // let dados = $(this).val();
+                // dados =  dados.replace(/\D/g, ''); 
+                // if (!dados) {
+                //     dados = $(this).val();
+                // }
+                var dados = '0';
+                if ($(this).val()) {
                     dados = $(this).val();
+                    if (dados.indexOf('  ') !== -1) {
+                        dados = monta_dados(dados);
+                    }
                 }
-                if (dados) {
-                    $.ajax({
+                $.ajax({
                     url: "{{url('tomador')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json', 
@@ -640,12 +646,11 @@
                         let nome = ''
                         if (data.length >= 1) {
                             data.forEach(element => {
-                            nome += `<option value="${element.tsnome}">`
-                            nome += `<option value="${element.tsmatricula}">`
+                            nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                            // nome += `<option value="${element.tsmatricula}">`
                             nome += `<option value="${element.tscnpj}">`
                             });
                             $('#datalistOptions').html(nome)
-                            
                         } 
                         if(data.length === 1 && dados.length >= 2){
                             // data.forEach(element => {
@@ -661,19 +666,21 @@
                             }
                         }         
                      }
-                    });
-                }else{
-                    tomador(' ')
-                }
-               
+                });
             })
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
             function tomador(dados) {
+                $('#carregamento').removeClass('d-none')
                 $.ajax({
                     url: "{{url('tomador')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json', 
                     success: function(data) {
                         campos(data)
+                        $('#carregamento').addClass('d-none')
                     }
                 })
             }

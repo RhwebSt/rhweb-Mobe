@@ -16,10 +16,9 @@ Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
-    Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');
-    Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador');
-    Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
+   
+   
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
     
@@ -58,6 +57,15 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');
     Route::post('trabalhador/comprovante/pagamento/dia','Trabalhador\\comprovantePagDiaController@ComprovantePagDia')->name('trabalhador.comprovante.dia');
+    Route::post('relatorio/empresa/trabalhada','Trabalhador\\RelatorioEmpresaTrabalhadaController@relatorioempresatrabalhada')->name('relatorio.empresa.trabalhada');
+    Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
+    Route::get('cracha/trabalhador/{id}','Trabalhador\\CrachaTrabalhadorController@cracha')->name('cracha.trabalhador');
+    Route::get('declaracao/admissao/trabalhador/{id}','Trabalhador\\declaracaoAdmissaoController@declarassaoadminssao')->name('declaracao.admissao.trabalhador');
+    Route::get('declaracao/afastamento/trabalhador/{id}','Trabalhador\\declaracaoAfastamentoController@declarassaoafastamento')->name('declaracao.afastamento.trabalhador');
+    Route::get('devolucao/ctps/trabalhador/{id}','Trabalhador\\devolucaoCtpsController@devolucaoctps')->name('devolucao.ctps.trabalhador');
+    Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador');
+    Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
+
 
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);

@@ -54,7 +54,7 @@
                       </ul>
                     <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
                     
-                    <button type="button" class="btn botao" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn botao disabled" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
@@ -451,24 +451,24 @@
                             <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <form action="{{route('trabalhador.comprovante.dia')}}" method="post">
+                          <form id="formrelatorioempresa" method="post">
                           @csrf
                           <input type="hidden" name="trabalhador" id="trabalhador">
                          
                           <div class="modal-body modal-delbody">
                             <div class="mb-3 bg-dark p-2 rounded">
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="tipo" value="option1">
                                   <label class="form-check-label mt-1" for="inlineCheckbox1">Recibo de Pagamento</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                  <input class="form-check-input" type="radio" id="inlineCheckbox2" name="tipo" value="option2">
                                   <label class="form-check-label mt-1" for="inlineCheckbox2">Empresas Trabalhadas</label>
                                 </div>
-                                <div class="form-check d-none form-check-inline">
+                                <!-- <div class="form-check d-none form-check-inline">
                                   <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
                                   <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
-                                </div>
+                                </div> -->
                             </div>
                               
                              <div class="d-flex">
@@ -518,6 +518,14 @@
             reader.readAsDataURL(file);
           }
         $(document).ready(function(){
+          $('.form-check-input').click(function() {
+            console.log($(this).val());
+            if ($(this).val() === 'option1') {
+              $('#formrelatorioempresa').attr('action',"{{route('trabalhador.comprovante.dia')}}")
+            }else if ($(this).val() === 'option2') {
+              $('#formrelatorioempresa').attr('action',"{{route('relatorio.empresa.trabalhada')}}")
+            }
+          })
           $('#cbo').keyup(function() {
             cbo.forEach(element => {
               if (element.code === $(this).val()) {
@@ -528,7 +536,7 @@
             $( "#pesquisa" ).on('keyup focus',function() {
                 if ($(this).val()) {
                   dados = $(this).val()
-                  if (dados.indexOf('_') !== -1) {
+                  if (dados.indexOf('  ') !== -1) {
                     dados = monta_dados(dados);
                   }
                 }else{
@@ -543,7 +551,7 @@
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsmatricula}_${element.tsnome}">`
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
                           // nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });
@@ -558,7 +566,7 @@
                   });
             });
             function monta_dados(dados) {
-              let novodados = dados.split('_')
+              let novodados = dados.split('  ')
               return novodados[1];
             }
             function buscaItem(dados) {
@@ -599,11 +607,16 @@
                   $('#atualizar').removeAttr( "disabled" )
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
+
                   $('#method').val('PUT')
                   $('#recibopagamento').removeClass('disabled')
                   $('#relatoriotrabalhador').removeClass('disabled')
                   $('#imprimir').removeClass('disabled').attr('href',"{{url('ficha/registro/trabalhador')}}/"+data.trabalhador)
                   $('#fichaepi').removeClass('disabled').attr('href',"{{url('ficha/epi/trabalhador')}}/"+data.trabalhador)
+                  $('#cracha').removeClass('disabled').attr('href',"{{url('cracha/trabalhador')}}/"+data.trabalhador)
+                  $('#declaracao__adm').removeClass('disabled').attr('href',"{{url('declaracao/admissao/trabalhador')}}/"+data.trabalhador)
+                  $('#declaracao__afas').removeClass('disabled').attr('href',"{{url('declaracao/afastamento/trabalhador')}}/"+data.trabalhador)
+                  $('#devolucao__ctps').removeClass('disabled').attr('href',"{{url('devolucao/ctps/trabalhador')}}/"+data.trabalhador)
                   $('#trabalhador').val(data.trabalhador)
               }else{
                 $('#relatoriotrabalhador').addClass('disabled')

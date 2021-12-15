@@ -2,14 +2,14 @@
 @section('conteine')
 <div class="container">
         
-          @error('true')
+        @error('true')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
         @enderror
         @error('false')
             <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
         @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">

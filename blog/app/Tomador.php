@@ -91,6 +91,7 @@ class Tomador extends Model
         ->select(
             'tomadors.tsnome',
             'tomadors.tsmatricula',
+            'tomadors.tscnpj',
             'cartao_pontos.tomador',
             'cartao_pontos.csdiasuteis',
             'cartao_pontos.cssabados',
@@ -99,11 +100,16 @@ class Tomador extends Model
         ->where(function($query) use ($id){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tsnome','like','%'.$id.'%')
-                ->orWhere('tscnpj', 'like', '%'.$id.'%')
-                ->orWhere('tsmatricula', 'like', '%'.$id.'%')
-                ->orWhere('tomadors.id',$id);
+                if ($id) {
+                    $query->where('tsnome','like','%'.$id.'%')
+                    ->orWhere('tscnpj', 'like', '%'.$id.'%')
+                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+                    ->orWhere('tomadors.id',$id);
+                }else{
+                    $query->where('tomadors.id','>',$id);
+                }
             }else{
+                if ($id) {
                  $query->where([
                         ['tsnome','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa]
@@ -120,9 +126,18 @@ class Tomador extends Model
                         ['tsmatricula','like','%'.$id.'%'],
                         ['tomadors.empresa', $user->empresa],
                     ]);
+                }else{
+                    $query->where([
+                        ['tsnome','like','%'.$id.'%'],
+                        ['tomadors.empresa', $user->empresa]
+                    ]);
+                }
             }
            
         })
+        ->orderBy('tomadors.tsnome')
+        ->distinct()
+        ->limit(100)
         ->get();
     }
     public function editar($dados,$id)

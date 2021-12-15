@@ -25,10 +25,18 @@ class Lancamentotabela extends Model
         return Lancamentotabela::where(function($query) use ($id,$status){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['liboletim','like','%'.$id.'%'],
-                    ['lsstatus',$status]
-                ])->orWhere('id',$id);
+                if ($id) {
+                    $query->where([
+                        ['liboletim','like','%'.$id.'%'],
+                        ['lsstatus',$status]
+                    ])->orWhere('id',$id);
+                }else{
+                    $query->where([
+                        ['id','>',$id],
+                        ['lsstatus',$status]
+                    ]);
+                }
+              
             }else{
                 $query->where([
                     ['liboletim','like','%'.$id.'%'],
@@ -39,7 +47,11 @@ class Lancamentotabela extends Model
                     // ['trabalhadors.empresa', $user->empresa]
                 ]);
             }
-        })->get();
+        })
+        ->orderBy('liboletim')
+        ->distinct()
+        ->limit(100)
+        ->get();
     }
     public function buscaUnidadeLancamentoTab($id,$status = null)
     {
