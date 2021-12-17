@@ -270,7 +270,7 @@
                         </div>
                         
                         <div class="col-md-3">
-                            <label for="cod__fap" class="form-label">Cod FAP</label>
+                            <label for="cod__fap" class="form-label">Cod RAT</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('') is-invalid @enderror " name="cod__fap" value="" id="cod__fap">
                             @error('cod__fap')
                                 <span class="text-danger">{{ $message }}</span>
@@ -391,28 +391,28 @@
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Incide sobre a folha <i class="fad fa-chart-line"></i></h1>
 
 
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label for="folhartransporte" class="form-label">VT Transporte</label>
                             <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror input fw-bold text-dark" name="folhartransporte" value="{{old('folhartransporte')}}" id="folhartransporte">
                             @error('folhartransporte')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                         <label for="folhartipotrans" class="form-label">Tipo</label>
                         <select class="form-select fw-bold text-dark" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
                             <option selected>1</option>
                             <option >2</option>
                         </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label for="folharalim" class="form-label">VA Alimentação</label>
                             <input type="text" class="form-control @error('folharalim') is-invalid @enderror input fw-bold text-dark" name="folharalim" value="{{old('folharalim')}}" id="folharalim">
                             @error('folharalim')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                         <label for="folhartipoalim" class="form-label">Tipo</label>
                         <select class="form-select fw-bold text-dark" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
                             <option  selected>1</option>
@@ -446,38 +446,38 @@
                         </div>
 
 
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Retenções na Fatura <i class="fad fa-calculator"></i></h1>
+                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold d-none">Retenções na Fatura <i class="fad fa-calculator"></i></h1>
 
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                             <label for="inss__empresa" class="form-label">INSS Empresa %</label>
                             <input type="text" class="form-control @error('inss__empresa') is-invalid @enderror input fw-bold text-dark" name="inss__empresa" value="{{old('inss__empresa')}}" id="inss__empresa">
                             @error('inss__empresa')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                         <label for="retencaoinss" class="form-label">Retenção INSS</label>
                         <select class="form-select fw-bold text-dark" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
                             <option  selected>SIM</option>
                             <option>NÃO</option>
                         </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                             <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
                             <input type="text" class="form-control @error('fgts__empresa') is-invalid @enderror input fw-bold text-dark" name="fgts__empresa" value="{{old('fgts__empresa')}}" id="fgts__empresa">
                             @error('fgts__empresa')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                         <label for="retencaofgts" class="form-label">Retenção FGTS</label>
                         <select class="form-select fw-bold text-dark" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
                             <option selected>SIM</option>
                             <option >NÃO</option>
                         </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none">
                         <label for="valorfatura" class="form-label">Base da Fatura</label>
                         <select class="form-select fw-bold text-dark" id="valorfatura" name="valor_fatura" aria-label="Default select example">
                             <option selected>Produção</option>
@@ -633,7 +633,7 @@
                             data.forEach(element => {
                             nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
                             // nome += `<option value="${element.tsmatricula}">`
-                            nome += `<option value="${element.tscnpj}">`
+                            // nome += `<option value="${element.tscnpj}">`
                             });
                             $('#datalistOptions').html(nome)
                         } 
@@ -730,8 +730,8 @@
                 $('#dias_uteis').val(data.csdiasuteis)
                 $('#sabados').val(data.cssabados)
                 $('#domingos').val(data.csdomingos)
-                $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
-                $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
+                // $('#inss__empresa').val(data.rsinssempresa.toFixed(2).toString().replace(".", ","))
+                // $('#fgts__empresa').val(data.rsfgts.toFixed(2).toString().replace(".", ","))
                 // $('#valor_fatura').val(data.rsvalorfatura.toFixed(2).toString().replace(".", ","))
                 $('#nome__conta').val(data.bstitular)
                 $('#banco').val(data.bsbanco)

@@ -98,12 +98,12 @@ class Empresa extends Model
                 ]);
             }
         })
-        ->orderBy('empresas.esnome')
+        ->orderBy('empresas.esnome','asc')
         ->distinct()
         ->limit(100)
         ->get();
     }
-    public function usuario($id)
+    public function buscaUsuario($id)
     {
         return DB::table('empresas')
             ->join('users', 'empresas.id', '=', 'users.empresa')

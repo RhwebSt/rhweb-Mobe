@@ -78,7 +78,7 @@
                   <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
                   <input type="hidden" name="status" value="M" id="status">
                   <input type="hidden" name="empresa" value="{{$user->empresa}}">
-                <div class="col-md-2">
+                <div class="col-md-2 d-none">
                     <label for="matricula" class="form-label ">Matrícula</label>
                     <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
                     @error('matricula')
@@ -103,6 +103,14 @@
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                
+                    <div class="col-md-3">
+                        <label for="feriado" class="form-label">Feriado</label>
+                        <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
+                          <option selected>Sim</option>
+                          <option>Não</option>
+                        </select>
+                    </div>
                 
                 </form> 
               </div>

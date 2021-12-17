@@ -56,4 +56,12 @@ class Comissionado extends Model
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
+    public function deletaTomador($id)
+    {
+        return Comissionado::where('tomador', $id)->delete();
+    }
+    public function deletaTrabalhador($id)
+    {
+        return Comissionado::where('trabalhador', $id)->delete();
+    }
 }

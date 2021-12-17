@@ -60,18 +60,25 @@ class User extends Authenticatable
             // 'remember_token'=>$dados['_token'],
         ])->givePermissionTo('user');
     }
-    public function first($id)
+    public function buscaUnidadeUser($id)
     {
         return User::where('name', $id)->first();
     }
-    public function busca($id)
+    public function buscaListaUser($id)
     {
         return User::where(function($query) use ($id){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->orWhere('name','like','%'.$id.'%');
+                if ($id) {
+                    $query->where('name',$id);
+                }else{
+                    $query->where('id','>',$id);
+                }
             }
         })
+        ->orderBy('name', 'asc')
+        ->distinct()
+        ->limit(100)
         ->get();
     }
     public function editar($dados,$id)

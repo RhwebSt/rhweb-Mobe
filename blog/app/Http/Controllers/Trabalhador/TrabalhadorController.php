@@ -15,7 +15,7 @@ use App\Dependente;
 use App\Bolcartaoponto;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
-
+use App\Comissionado;
 class TrabalhadorController extends Controller
 {
     /**
@@ -112,21 +112,23 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         $documento = new Documento;
-        $trabalhadors = $trabalhador->cadastro($dados);
-        if ($trabalhadors) {
-            $dados['trabalhador'] = $trabalhadors['id'];
-            $enderecos = $endereco->cadastro($dados); 
-            $bancarios = $bancario->cadastro($dados);
-            $nascimentos = $nascimento->cadastro($dados);
-            $categorias = $categoria->cadastro($dados);
-            $documentos = $documento->cadastro($dados);
-            if ($enderecos &&  $bancarios && 
-                $nascimentos && $categorias && $documentos) {
-                    $condicao = 'cadastratrue';
-                }else{
-                    $condicao = 'cadastrafalse';
+     
+        try {
+            $trabalhadors = $trabalhador->cadastro($dados);
+            if ($trabalhadors) {
+                $dados['trabalhador'] = $trabalhadors['id'];
+                $enderecos = $endereco->cadastro($dados); 
+                $bancarios = $bancario->cadastro($dados);
+                $nascimentos = $nascimento->cadastro($dados);
+                $categorias = $categoria->cadastro($dados);
+                $documentos = $documento->cadastro($dados);
+                if ($enderecos &&  $bancarios && 
+                    $nascimentos && $categorias && $documentos) {
+                    return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
                 }
-                return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]);  
+            }
+        } catch (\Throwable $th) {
+            echo('Não foi prossível cadastrar.');
         }
     }
 
@@ -223,20 +225,20 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         $documento = new Documento;
-        $trabalhadors = $trabalhador->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$dados['endereco']); 
-        $bancarios = $bancario->editar($dados,$dados['bancario']);
-        $nascimentos = $nascimento->editar($dados,$id);
-        $categorias = $categoria->editar($dados,$id);
-        $documentos = $documento->editar($dados,$id);
-        if ($trabalhadors && $enderecos &&  $bancarios && 
-        $nascimentos && $categorias && $documentos) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $trabalhadors = $trabalhador->editar($dados,$id);
+            $enderecos = $endereco->editar($dados,$dados['endereco']); 
+            $bancarios = $bancario->editar($dados,$dados['bancario']);
+            $nascimentos = $nascimento->editar($dados,$id);
+            $categorias = $categoria->editar($dados,$id);
+            $documentos = $documento->editar($dados,$id);
+            if ($trabalhadors && $enderecos &&  $bancarios && 
+            $nascimentos && $categorias && $documentos) {
+                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Atualizador com sucesso.']); 
+            }
+        } catch (\Throwable $th) {
+            echo('Não foi porssível realizar a atualização.');
         }
-            return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]); 
-        
     }
 
     /**
@@ -256,31 +258,34 @@ class TrabalhadorController extends Controller
         $dependente = new Dependente;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentorublica = new Lancamentorublica; 
+        $comissionado = new Comissionado;
         $campoendereco = 'trabalhador';
         $campobacario = 'trabalhador';
-        $bolcartaopontos = $bolcartaoponto->deletarTrabalador($id);
-        $lancamentorublicas = $lancamentorublica->deletarTrabalhador($id);
-        $dependentes = $dependente->deletar($id); 
-        $enderecos = $endereco->first($id,$campoendereco); 
-
-        $exenderecos = $endereco->deletar($enderecos->eiid); 
-
-        $bancarios = $bancario->first($id,$campobacario);
-        
-        $exbancarios = $bancario->deletar($bancarios->biid);
-
-        $nascimentos = $nascimento->deletar($id);
-        $categorias = $categoria->deletar($id);
-        $documentos = $documento->deletar($id);
-        // dd($exbancarios,$exenderecos,$nascimentos,$categorias,$documentos);
-        if ($exenderecos &&  $exbancarios  &&
-        $nascimentos && $categorias && $documentos) {
-            $trabalhadors = $trabalhador->deletar($id);
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+      
+        try {
+            $comissionados = $comissionado->deletaTrabalhador($id);
+            $bolcartaopontos = $bolcartaoponto->deletarTrabalador($id);
+            $lancamentorublicas = $lancamentorublica->deletarTrabalhador($id);
+            $dependentes = $dependente->deletar($id); 
+            $enderecos = $endereco->first($id,$campoendereco); 
+    
+            $exenderecos = $endereco->deletar($enderecos->eiid); 
+    
+            $bancarios = $bancario->first($id,$campobacario);
+            
+            $exbancarios = $bancario->deletar($bancarios->biid);
+    
+            $nascimentos = $nascimento->deletar($id);
+            $categorias = $categoria->deletar($id);
+            $documentos = $documento->deletar($id);
+            // dd($exbancarios,$exenderecos,$nascimentos,$categorias,$documentos);
+            if ($exenderecos &&  $exbancarios  &&
+            $nascimentos && $categorias && $documentos) {
+                $trabalhadors = $trabalhador->deletar($id);
+                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Deletado com sucesso.']);
+            }
+        } catch (\Throwable $th) {
+            echo('Não foi porssível deletar o registro.');
         }
-            return redirect()->route('trabalhador.index')->withInput()->withErrors([$condicao]); 
-        
     }
 }

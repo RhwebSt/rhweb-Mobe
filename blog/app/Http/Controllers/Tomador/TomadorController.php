@@ -19,6 +19,7 @@ use App\TabelaPreco;
 use App\Bolcartaoponto;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
+use App\Comissionado;
 class TomadorController extends Controller
 {
     /**
@@ -91,57 +92,50 @@ class TomadorController extends Controller
             'dias_uteis'=>'max:5',
             'sabados'=>'max:5',
             'domingos'=>'max:5',
-            'inss__empresa'=>'required',
-            'retencaoinss'=>'required',
-            'fgts__empresa'=>'required',
-            'retencaofgts'=>'required',
-            'valor_fatura'=>'required',
+            // 'inss__empresa'=>'required',
+            // 'retencaoinss'=>'required',
+            // 'fgts__empresa'=>'required',
+            // 'retencaofgts'=>'required',
+            // 'valor_fatura'=>'required',
             'banco'=>'max:100',
             'agencia'=>'max:4',
             'operacao'=>'max:3',
             'conta'=>'max:10',
             'pix'=>'max:255'
-        ],
-        // [
-        //     'nome__completo.required'=>'Campo não pode esta vazio!',
-        //     'matricula.required'=>'Campo não pode esta vazio!',
-        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
-        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
-        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
-        //     'liboletim.required'=>'Campo não pode esta vazio!',
-        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
-        //     'data.required'=>'O campo não pode esta vazio!'
-            
-        // ]
+        ]
         );
         $tomador = new Tomador;
         $taxa = new Taxa;
         $endereco = new Endereco;
         $bancario = new Bancario;
-        $retencaofatura = new RetencaoFatura;
+        // $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
         $incidefolhar = new IncideFolhar;
         // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
-        $tomadors = $tomador->cadastro($dados);
-        if ($tomadors) {
-            $dados['tomador'] = $tomadors['id'];
-            $incidefolhars = $incidefolhar->cadastro($dados);
-            $enderecos = $endereco->cadastro($dados); 
-            $taxas = $taxa->cadastro($dados);
-            $bancarios = $bancario->cadastro($dados);
-            $retencaofaturas = $retencaofatura->cadastro($dados);
-            $cartaoponto = $cartaoponto->cadastro($dados);
-            $parametrosefips = $parametrosefip->cadastro($dados);
-            // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
-            $indicefaturas = $indicefatura->cadastro($dados);
-            if ($enderecos && $taxas
-            && $bancarios && $retencaofaturas && 
-            $cartaoponto && $parametrosefips && $incidefolhars &&
-             $indicefaturas) {
-                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
+        try {
+            $tomadors = $tomador->cadastro($dados);
+            if ($tomadors) {
+                $dados['tomador'] = $tomadors['id'];
+                $incidefolhars = $incidefolhar->cadastro($dados);
+                $enderecos = $endereco->cadastro($dados); 
+                $taxas = $taxa->cadastro($dados);
+                $bancarios = $bancario->cadastro($dados);
+                // $retencaofaturas = $retencaofatura->cadastro($dados);
+                $cartaoponto = $cartaoponto->cadastro($dados);
+                $parametrosefips = $parametrosefip->cadastro($dados);
+                // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
+                $indicefaturas = $indicefatura->cadastro($dados);
+                if ($enderecos && $taxas
+                && $bancarios && 
+                $cartaoponto && $parametrosefips && $incidefolhars &&
+                 $indicefaturas) {
+                    return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
+                }
             }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 
@@ -222,11 +216,11 @@ class TomadorController extends Controller
             'dias_uteis'=>'max:5',
             'sabados'=>'max:5',
             'domingos'=>'max:5',
-            'inss__empresa'=>'required',
-            'retencaoinss'=>'required',
-            'fgts__empresa'=>'required',
-            'retencaofgts'=>'required',
-            'valor_fatura'=>'required',
+            // 'inss__empresa'=>'required',
+            // 'retencaoinss'=>'required',
+            // 'fgts__empresa'=>'required',
+            // 'retencaofgts'=>'required',
+            // 'valor_fatura'=>'required',
             'banco'=>'max:100',
             'agencia'=>'max:4',
             'operacao'=>'max:3',
@@ -249,30 +243,34 @@ class TomadorController extends Controller
         $endereco = new Endereco;
         $taxa = new Taxa;
         $bancario = new Bancario;
-        $retencaofatura = new RetencaoFatura;
+        // $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
         $incidefolhar = new IncideFolhar;
         // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
-        $condicao = '';
-        $tomadors = $tomador->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$dados['endereco']); 
-        $bancarios = $bancario->editar($dados,$dados['bancario']);
-        $retencaofaturas = $retencaofatura->editar($dados,$id);
-        $cartaoponto = $cartaoponto->editar($dados,$id);
-        $parametrosefips = $parametrosefip->editar($dados,$id);
-        // $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
-        $indicefaturas = $indicefatura->editar($dados,$id);
-        $incidefolhars = $incidefolhar->editar($dados,$id);
-        $taxas = $taxa->editar($dados,$id);
-        // dd($tomadors , $enderecos , $taxas
-        // , $bancarios , $retencaofaturas , 
-        // $cartaoponto , $parametrosefips , $indicefaturas);
-        if ($tomadors && $enderecos && $taxas
-        && $bancarios && $retencaofaturas && $incidefolhars &&
-        $cartaoponto && $parametrosefips && $indicefaturas) {
-            return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
+      
+        try {
+            $tomadors = $tomador->editar($dados,$id);
+            $enderecos = $endereco->editar($dados,$dados['endereco']); 
+            $bancarios = $bancario->editar($dados,$dados['bancario']);
+            // $retencaofaturas = $retencaofatura->editar($dados,$id);
+            $cartaoponto = $cartaoponto->editar($dados,$id);
+            $parametrosefips = $parametrosefip->editar($dados,$id);
+            // $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
+            $indicefaturas = $indicefatura->editar($dados,$id);
+            $incidefolhars = $incidefolhar->editar($dados,$id);
+            $taxas = $taxa->editar($dados,$id);
+            // dd($tomadors , $enderecos , $taxas
+            // , $bancarios , $retencaofaturas , 
+            // $cartaoponto , $parametrosefips , $indicefaturas);
+            if ($tomadors && $enderecos && $taxas
+            && $bancarios  && $incidefolhars &&
+            $cartaoponto && $parametrosefips && $indicefaturas) {
+                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
+            }
+        } catch (\Throwable $th) {
+            echo('Não foi porssível atualizar os dados.');
         }
     }
 
@@ -288,6 +286,7 @@ class TomadorController extends Controller
         $tomador = new Tomador;
         $endereco = new Endereco;
         $taxa = new Taxa;
+        $comissionado = new Comissionado;
         $bancario = new Bancario;
         $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
@@ -309,6 +308,7 @@ class TomadorController extends Controller
             $campoendereco = 'tomador';
             $campobacario = 'tomador';
             $lancamentotabelas = $lancamentotabela->deletar($id);
+            $comissionados = $comissionado->deletaTomador($id);
             $bancarios = $bancario->first($id,$campobacario);
             $exbancarios = $bancario->deletar($bancarios->biid);
             $tabelaprecos = $tabelapreco->deletatomador($id);
@@ -329,7 +329,7 @@ class TomadorController extends Controller
                 return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Deletador com sucesso.']);
             }
         } catch (\Throwable $th) {
-            echo('Error');
+            echo('Error ao deletar.');
         }
     }
 }

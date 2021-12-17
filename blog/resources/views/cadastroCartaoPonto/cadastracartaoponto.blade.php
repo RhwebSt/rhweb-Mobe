@@ -355,25 +355,25 @@ var data = new Date('{{$data}} 08:24:30');
 var dias = data.getDay();
  var diurno = []
 $('.horas').keyup(function() {
-    // var diurno = ['entrada1','saida','entrada2','saida2','entrada3','saida3','entrada4','saida4'];
+    var diurno = ['entrada1','saida','entrada2','saida2','entrada3','saida3','entrada4','saida4'];
    
-    // index(diurno);
-    var input = $(this).attr('name');
-    let segundo = '';
-    if (diurno.indexOf(input) == -1 && $(this).val().length > 3) {
-        diurno.push(input);
-        if (diurno.length >= 1) {
-            index(diurno);
-        }
-    }else if(diurno.indexOf(input) != -1 && $(this).val().length > 3){
-        if (diurno.length >= 1) {
-            index(diurno);
-        }
-    }else if (diurno.indexOf(input) != -1 && $(this).val().length == 0) {
+    index(diurno);
+    // var input = $(this).attr('name');
+    // let segundo = '';
+    // if (diurno.indexOf(input) == -1 && $(this).val().length > 3) {
+    //     diurno.push(input);
+    //     if (diurno.length >= 1) {
+    //         index(diurno);
+    //     }
+    // }else if(diurno.indexOf(input) != -1 && $(this).val().length > 3){
+    //     if (diurno.length >= 1) {
+    //         index(diurno);
+    //     }
+    // }else if (diurno.indexOf(input) != -1 && $(this).val().length == 0) {
         
-        diurno.splice(diurno.indexOf(input), 1);
-        index(diurno);
-    }
+    //     diurno.splice(diurno.indexOf(input), 1);
+    //     index(diurno);
+    // }
    
 });
 
@@ -396,32 +396,29 @@ function index(diurno) {
             }else{
                 manhao = segundo - manhao 
             }
-            console.log(segundo);
-        }else if(element === 'entrada2' || element === 'saida2'){
+        }else if(element === 'entrada2'  || element === 'saida2'){
             if (tarde < 1) {
                 tarde = segundo;
             }else{
-                if (segundo > tarde) {
-                    tarde = segundo - tarde 
-                }else{
-                    tarde =  tarde - segundo
-                }
+                tarde = segundo - tarde 
+                // if (segundo >= 46800 && tarde <= 79200) {
+                //     if (segundo > tarde) {
+                //         tarde = segundo - tarde 
+                //     }else{
+                //         tarde =  tarde - segundo
+                //     }
+                // }
             }
-            
         }else if(element === 'entrada3' || element === 'saida3'){
             if (noite < 1) {
                 noite = segundo
             }else{
-                console.log(noite,segundo,'ok');
                 if (noite >= 79200 && noite < 86400 && segundo >= 79200 &&  segundo < 86400) {
                     noite = (86400 - noite) - (86400 - segundo);
-                    console.log(noite,segundo);
                 }else if (noite >= 79200 && segundo >= 0 && segundo <= 18000) {
                     noite = (86400 - noite) + segundo
-                    console.log(noite,segundo);
                 }else if (noite >= 0 &&  segundo <= 18000) {
                     noite = segundo - noite
-                    console.log(noite,segundo);
                 }
                 
             }
@@ -432,77 +429,104 @@ function index(diurno) {
             }else{
                 if (madrugada >= 79200 && madrugada < 86400 && segundo >= 79200 &&  segundo < 86400) {
                     madrugada = (86400 - madrugada) - (86400 - segundo);
-                    console.log(madrugada,segundo);
                 }else{
                     if (segundo > madrugada ) {
                         madrugada = segundo - madrugada;
                     }else{
                         madrugada = madrugada - segundo;
                     }
-                    console.log(madrugada,segundo);
                    
                 }
             }
            
         }
     });
-    if (diurno.indexOf('entrada1') != -1 && 
-    diurno.indexOf('saida') != -1 && 
-    diurno.length === 2 || diurno.indexOf('entrada1') != -1 && 
-    diurno.indexOf('saida') != -1 && 
-    diurno.length === 4) {
-        totaldiurno = manhao + tarde 
-        $('#horas_normais').val(horas(totaldiurno))
-        horaextra()
-    }else if (diurno.indexOf('entrada2') != -1 && 
-    diurno.indexOf('saida2') != -1 && 
-    diurno.length === 2 || diurno.indexOf('entrada2') != -1 && 
-    diurno.indexOf('saida2') != -1 && 
-    diurno.length === 4) {
-        totaldiurno = manhao + tarde
-        $('#horas_normais').val(horas(totaldiurno))
-        horaextra()
-    }else if (diurno.indexOf('entrada1') != -1 && 
-    diurno.indexOf('saida2') != -1 && 
-    diurno.length === 2 ) {
-        totaldiurno = tarde - manhao
-        $('#horas_normais').val(horas(totaldiurno))
-        horaextra()
-    }else{
-        $('#horas_normais').val('00:00')
-        horaextra()
+    if (segundos($(`input[name='entrada1']`).val()) > 18000 && 
+    segundos($(`input[name='entrada1']`).val()) <= 43200 && 
+    segundos($(`input[name='saida']`).val()) >= 18000 && 
+    segundos($(`input[name='saida']`).val()) <= 54000 && diurno.length% 2 === 0) {
+            totaldiurno = manhao + tarde 
+            $('#horas_normais').val(horas(totaldiurno))
+            horaextra()
+            feriados()
+    }else if (segundos($(`input[name='entrada2']`).val()) > 43200 && 
+    segundos($(`input[name='entrada2']`).val()) <= 75600 && 
+    segundos($(`input[name='saida']`).val()) >= 46800 && 
+    segundos($(`input[name='saida']`).val()) <= 79200 && diurno.length% 2 === 0) {
+            totaldiurno = manhao + tarde 
+            $('#horas_normais').val(horas(totaldiurno))
+            horaextra()
+            feriados()
     }
-    if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2) {
-        totalnoturno = (86400 - noite) +  madrugada
-        adnoturno(totalnoturno)
-    }else if(diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida3') != -1 && diurno.length === 2){
+    // if (diurno.indexOf('entrada1') != -1 && 
+    // diurno.indexOf('saida') != -1 && 
+    // diurno.length === 2 || diurno.indexOf('entrada1') != -1 && 
+    // diurno.indexOf('saida') != -1 && 
+    // diurno.length === 4) {
+    //     totaldiurno = manhao + tarde 
+    //     $('#horas_normais').val(horas(totaldiurno))
+    //     horaextra()
+    // }else if (diurno.indexOf('entrada2') != -1 && 
+    // diurno.indexOf('saida2') != -1 && 
+    // diurno.length === 2 || diurno.indexOf('entrada2') != -1 && 
+    // diurno.indexOf('saida2') != -1 && 
+    // diurno.length === 4) {
+    //     totaldiurno = manhao + tarde
+    //     $('#horas_normais').val(horas(totaldiurno))
+    //     horaextra()
+    // }else if (diurno.indexOf('entrada1') != -1 && 
+    // diurno.indexOf('saida2') != -1 && 
+    // diurno.length === 2 ) {
+    //     totaldiurno = tarde - manhao
+    //     $('#horas_normais').val(horas(totaldiurno))
+    //     horaextra()
+    // }else{
+    //     $('#horas_normais').val('00:00')
+    //     horaextra()
+    // }
+    // if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2) {
+    //     totalnoturno = (86400 - noite) +  madrugada
+    //     adnoturno(totalnoturno)
+    // }else 
+    if(
+        segundos($(`input[name='entrada3']`).val()) >= 79200 &&  diurno.length% 2 === 0 || 
+       segundos($(`input[name='entrada3']`).val()) <= 10800 &&  diurno.length% 2 === 0 &&
+       segundos($(`input[name='saida3']`).val()) >= 79200 &&  diurno.length% 2 === 0 || 
+       segundos($(`input[name='saida3']`).val()) <= 18000 &&  diurno.length% 2 === 0){
         totalnoturno =  noite +  madrugada
         adnoturno(totalnoturno)
-    }else if(diurno.indexOf('entrada4') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2){
+    }else if (
+        segundos($(`input[name='entrada4']`).val()) > 0 &&  diurno.length% 2 === 0 || 
+       segundos($(`input[name='entrada4']`).val()) <= 18000 &&  diurno.length% 2 === 0 &&
+       segundos($(`input[name='saida4']`).val()) > 3600 &&  diurno.length% 2 === 0 || 
+       segundos($(`input[name='saida4']`).val()) <= 18000 &&  diurno.length% 2 === 0) {
         totalnoturno =  noite +  madrugada
         adnoturno(totalnoturno)
-    }else if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida3') != -1 && diurno.indexOf('entrada4') != -1 && diurno.indexOf('saida4') != -1 && diurno.length === 4){
-        totalnoturno =  noite +  madrugada
-        adnoturno(totalnoturno)
-    }else if (diurno.indexOf('entrada3') != -1 && 
-    diurno.indexOf('saida3') != -1 && diurno.length === 4 || diurno.indexOf('entrada4') != -1 && 
-    diurno.indexOf('saida4') != -1 && diurno.length === 4) {
-        totalnoturno =  noite +  madrugada
-        adnoturno(totalnoturno)
-    }else{
-        $('#adc__noturno').val('00:00')
     }
-    
+    //else 
+    // if(segundos($(`input[name='entrada3']`).val()) >= 79200 && 
+    // segundos($(`input[name='entrada3']`).val()) <= 10800  ||  
+    // segundos($(`input[name='saida3']`).val()) >= 79200 && 
+    // segundos($(`input[name='saida3']`).val()) <= 86400){
+    //     totalnoturno =  noite +  madrugada
+    //     adnoturno(totalnoturno)
+    // }
+    // else if(diurno.indexOf('entrada4') != -1 &&  diurno.indexOf('saida4') != -1 && diurno.length === 2){
+    //     totalnoturno =  noite +  madrugada
+    //     adnoturno(totalnoturno)
+    // }else if (diurno.indexOf('entrada3') != -1 &&  diurno.indexOf('saida3') != -1 && diurno.indexOf('entrada4') != -1 && diurno.indexOf('saida4') != -1 && diurno.length === 4){
+    //     totalnoturno =  noite +  madrugada
+    //     adnoturno(totalnoturno)
+    // }else if (diurno.indexOf('entrada3') != -1 && 
+    // diurno.indexOf('saida3') != -1 && diurno.length === 4 || diurno.indexOf('entrada4') != -1 && 
+    // diurno.indexOf('saida4') != -1 && diurno.length === 4) {
+    //     totalnoturno =  noite +  madrugada
+    //     adnoturno(totalnoturno)
+    // }else{
+    //     $('#adc__noturno').val('00:00')
+    // }
     totalgeral()
     
-    // totalnoturno = noite +  madrugada
-    // if ( totaldiurno && totalnoturno) {
-    //     result = totaldiurno + totalnoturno
-    //     adnoturno(totalnoturno,result)
-    // }
-    
-    // adnoturno(totalnoturno,result)
-    // totalgeral(result,'')
 }
 function segundos(segundos) {
     let tempos = segundos.split(':');
@@ -580,6 +604,9 @@ function sabado() {
         $('#hora__extra').val(conversaohoras(result))
     }else{
         $('#hora__extra').val("0:00")
+        let horas_normais = $('#horas_normais').val()
+        $('#horas__cem').val(horas_normais);
+        $('#horas_normais').val(' ')
     }
 }
 function diasuteis() {
@@ -622,15 +649,21 @@ function feriados() {
     })
 }
 function domingo(resutado) {
-    let domingo = $('#domingo').val()
-    let total = '';
-    if (segundos(domingo) <  segundos(resutado)) {
-        total = (parseInt(segundos(domingo)) - parseInt(segundos(resutado))) * (-1);
-        $('#horas__cem').val(horas(total))
-        $('#hora__extra').val("0:00")
-    }else{
-        $('#horas__cem').val("0:00")
+    let horas_normais = segundos($('#horas_normais').val())
+    if (horas_normais > 0) {
+        $('#horas_normais').val(' ')
+        $('#horas__cem').val(horas( horas_normais))
     }
+    
+    // let domingo = $('#domingo').val()
+    // let total = '';
+    // if (segundos(domingo) <  segundos(resutado)) {
+    //     total = (parseInt(segundos(domingo)) - parseInt(segundos(resutado))) * (-1);
+    //     $('#horas__cem').val(horas(total))
+    //     // $('#hora__extra').val("0:00")
+    // }else{
+    //     $('#horas__cem').val("0:00")
+    // }
 }
     // $.ajax({
     //     url: "{{route('listatabelapreco.lista',$tomador)}}",

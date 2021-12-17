@@ -307,7 +307,7 @@ $("#form").validate({
             required:true
         },
         inss__empresa:{
-            required:true
+            required:false
         },
         fgts__empresa:{
             required:true

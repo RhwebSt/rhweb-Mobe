@@ -2,32 +2,16 @@
 @section('conteine')
 
     <div class="container">
-    
-        @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
+        @error('true')
                 <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif    
+        @enderror
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+               <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+            </div>
+        @enderror  
                 
         
         
@@ -113,7 +97,7 @@
                 
                 <div class="col-md-6">
                   <label for="nome__social" class="form-label">Nome Social (OPICIONAL)</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__social')}}" maxlength="30" name="nome__social" id="nome__social" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="  {{ old('nome__social')}}" maxlength="30" name="nome__social" id="nome__social" >
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror

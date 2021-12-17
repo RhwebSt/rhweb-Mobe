@@ -38,7 +38,7 @@ class Tomador extends Model
        return DB::table('tomadors')
             ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador')
             ->join('taxas', 'tomadors.id', '=', 'taxas.tomador')
-            ->join('retencao_faturas', 'tomadors.id', '=', 'retencao_faturas.tomador')
+            // ->join('retencao_faturas', 'tomadors.id', '=', 'retencao_faturas.tomador')
             ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
             ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
             ->join('incide_folhars', 'tomadors.id', '=', 'incide_folhars.tomador')
@@ -48,7 +48,7 @@ class Tomador extends Model
                 'tomadors.*', 
                 'enderecos.*',
                 'taxas.*',
-                'retencao_faturas.*',
+                // 'retencao_faturas.*',
                 'cartao_pontos.*',
                 'parametrosefips.*',
                 'incide_folhars.*',

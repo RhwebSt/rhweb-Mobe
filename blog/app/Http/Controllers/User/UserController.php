@@ -79,19 +79,19 @@ class UserController extends Controller
     {
         $user = new User;
         $empresa = new Empresa;
-        $empresas = $empresa->usuario($id);
+        $empresas = $empresa->buscaUsuario($id);
         if ($empresas) {
             return response()->json($empresas);
         }else{
-            $users = $user->first($id);
+            $users = $user->buscaUnidadeUser($id);
             return response()->json($users);
         }
         
     }
     public function pesquisa($id)
-    {
+    { 
         $user = new User;
-        $users = $user->busca($id);
+        $users = $user->buscaListaUser($id);
         return response()->json($users);
     }
 
