@@ -19,6 +19,13 @@ class Comissionado extends Model
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
+    public function verifica($dados) 
+    {
+        return Comissionado::where([
+            ['tomador',$dados['tomador']],
+            ['trabalhador',$dados['trabalhador']],
+        ])->count();
+    }
     public function first($id)
     {
         return DB::table('comissionados')

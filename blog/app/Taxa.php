@@ -22,7 +22,7 @@ class Taxa extends Model
     }
     public function editar($dados,$id)
     {
-      return Taxa::where('id', $id)
+      return Taxa::where('tomador', $id)
       ->update([
         'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
             // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),

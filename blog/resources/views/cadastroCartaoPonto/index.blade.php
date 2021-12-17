@@ -264,8 +264,8 @@
             function tomador(data) {
               $('#tomador').val(data.tomador)
               $('#matricula').val(data.tsmatricula)
-              $('#domingo').val(data.csdomingos)
-              $('#sabado').val(data.cssabados)
+              $('#domingo').val(data.csdomingos?data.csdomingos: 0.00)
+              $('#sabado').val(data.cssabados?data.cssabados:0.00)
               $('#diasuteis').val(data.csdiasuteis)
             }
       </script>

@@ -205,6 +205,7 @@
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/paisnascimento.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/validation.js')}}"></script>
    
   </body>

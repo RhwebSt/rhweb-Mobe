@@ -169,8 +169,7 @@ class CadastroCartaoPontoController extends Controller
             ];
             return redirect()->route('boletimcartaoponto.create',$novodados);
         }else{
-            $condicao = 'editfalse';
-            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
+            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Não foi porssivél atualizar.']);
         }
     }
 
@@ -184,14 +183,18 @@ class CadastroCartaoPontoController extends Controller
     {
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabela = new Lancamentotabela;
-        $bolcartaopontos = $bolcartaoponto->deletar($id);
-        if ($bolcartaopontos) {
-            $lancamentotabela->deletar($id);
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        try {
+            $bolcartaopontos = $bolcartaoponto->deletar($id);
+            if ($bolcartaopontos) {
+                $lancamentotabela->deletar($id);
+                return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['true'=>'Registro deletador com sucesso.']);
+            }else{
+                return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Error ao deletar.']);
+            }
+        } catch (\Throwable $th) {
+            echo('Error ao deletar.');
         }
-        return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors([$condicao]);
+      
     }
   
 }

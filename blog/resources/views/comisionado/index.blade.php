@@ -1,45 +1,27 @@
 @extends('layouts.index')
 @section('conteine')
-<div class="container">
-              
-
-              @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
-
+<div class="container">    
+                @error('true')
+                        <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                            <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
+                        </div>
+                @enderror
+                @error('false')
+                    <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                            <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+                        </div>
+                @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
                   
                   <h5 class="card-title text-center mt-5 fs-3 ">Comissionado</h5>
                 @csrf
                 <input type="hidden" id="method" name="_method" value="">
-                <input type="hidden" name="tomador" id="idtomador">
-                <input type="hidden" name="trabalhador" id="idtrabalhador">
+                <input type="hidden" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">
+                <input type="hidden" name="trabalhador" id="idtrabalhador" class="@error('trabalhador') is-invalid @enderror">
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
         
-                    <button type="submit" id="incluir" disabled class="btn botao" >Incluir</button>
+                    <button type="submit" id="incluir"  class="btn botao" >Incluir</button>
                     <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
                       <!-- <button type="button" id="excluir" disabled class="btn ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #2A90CB; color: #f0f0f0">
                           Excluir
@@ -53,36 +35,45 @@
 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
-                    <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
-                    <datalist id="datalistOptions">
-                        <!-- <option value="San Francisco">
-                        <option value="New York">
-                        <option value="Seattle">
-                        <option value="Los Angeles">
-                        <option value="Chicago"> -->
+                    <input class="pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador">
+                    <datalist id="listatrabalhador">
                     </datalist>
+                    @error('nome__trabalhador')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    @error('trabalhador')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-md-4">
                   <label for="matricula__trab" class="form-label">Matricula Trabalhador</label>
-                  <input type="text" class="form-control" name="matricula__trab" value="" id="matricula__trab">
+                  <input type="text" class="form-control  @error('matricula__trab') is-invalid @enderror" name="matricula__trab"  value="{{old('matricula__trab')}}" id="matricula__trab">
+                    @error('matricula__trab')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <input type="hidden" id="comissionado">
                 <div class="col-md-4">
                   <label for="indice" class="form-label">Indíce %</label>
-                  <input type="text" class="form-control" name="indice" value="" id="indice">
+                  <input type="text" class="form-control @error('indice') is-invalid @enderror fw-bold text-dark" name="indice" value="{{old('indice')}}" id="indice">
+                    @error('indice')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Tomador</label>
-                    <input class="pesquisa form-control" list="datalistOptions" name="pesquisa" id="pesquisa">
-                    <datalist id="datalistOptions">
-                        <!-- <option value="San Francisco">
-                        <option value="New York">
-                        <option value="Seattle">
-                        <option value="Los Angeles">
-                        <option value="Chicago"> -->
+                    <input class=" form-control @error('nome_tomador') is-invalid @enderror fw-bold text-dark" list="listatomador" name="nome_tomador"  value="{{old('nome_tomador')}}" id="nome_tomador">
+                    <datalist id="listatomador">
+                      
                     </datalist>
+                    @error('nome_tomador')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    @error('tomador')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 
               </form> 
@@ -114,41 +105,78 @@
         $(document).ready(function(){
            
            
-            $( "#nome_tomador" ).keyup(function() {
-                var dados = $( "#nome_tomador" ).val();
+            $( "#nome_tomador" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                    dados = $(this).val();
+                    if (dados.indexOf('  ') !== -1) {
+                        dados = monta_dados(dados);
+                    }
+                }
                 $.ajax({
-                    url: "{{url('tomador')}}/"+dados,
+                    url: "{{url('tomador/pesquisa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                      if (data.tomador && $('#idtrabalhador').val() && $('#comissionado').val() || !data.tomador) {
-                        $('#incluir').attr('disabled','disabled')
-                      }else{
-                        $('#incluir').removeAttr( "disabled" )
-                      }
-                      $('#idtomador').val(data.tomador)
+                        let nome = ''
+                        if (data.length >= 1) {
+                            data.forEach(element => {
+                            nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                            // nome += `<option value="${element.tsmatricula}">`
+                            nome += `<option value="${element.tscnpj}">`
+                            });
+                            $('#listatomador').html(nome)
+                        } 
+                        if(data.length === 1 && dados.length >= 2){
+                            $('#idtomador').val(data[0].tomador)
+                        }
+                        if (data[0].tomador && $('#idtrabalhador').val() && $('#comissionado').val() || !data[0].tomador) {
+                            $('#incluir').attr('disabled','disabled')
+                        }else{
+                            $('#incluir').removeAttr( "disabled" )
+                        }
                     }
                 });
             });
-            $( "#nome__trabalhador" ).keyup(function() {
-                var dados = $( "#nome__trabalhador" ).val();
+            $( "#nome__trabalhador" ).on('keyup focus',function() {
+                var dados = '0';
+                if ($(this).val()) {
+                    dados = $(this).val();
+                    if (dados.indexOf('  ') !== -1) {
+                        dados = monta_dados(dados);
+                    }
+                }
                 $.ajax({
-                    url: "{{url('trabalhador')}}/"+dados,
+                    url: "{{url('trabalhador/pesquisa')}}/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
-                        if (data.trabalhador && $('#idtomador').val() && $('#comissionado').val() || !data.trabalhador) {
+                        let nome = ''
+                        if (data.length >= 1) {
+                            data.forEach(element => {
+                            nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                            // nome += `<option value="${element.tsmatricula}">`
+                            nome += `<option value="${element.tscpf}">`
+                            });
+                            $('#listatrabalhador').html(nome)
+                        } 
+                        if(data.length === 1 && dados.length >= 2){
+                            $('#idtrabalhador').val(data[0].id)
+                            $('#matricula__trab').val(data[0].tsmatricula)
+                            comissionador(data[0].id)
+                        }
+                        if (data[0].trabalhador && $('#idtomador').val() && $('#comissionado').val() || !data[0].trabalhador) {
                           $('#incluir').attr('disabled','disabled')
                         }else{
                           $('#incluir').removeAttr( "disabled" )
                         }
-                        $('#matricula__trab').val(data.tsmatricula)
-                        $('#idtrabalhador').val(data.trabalhador)
-                        comissionador(data.trabalhador)
-                       
                     }
                 });
             });
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
             function comissionador(id) {
                 $.ajax({
                     url: "{{url('comisionado')}}/"+id,
@@ -156,7 +184,6 @@
                     contentType: 'application/json',
                     success: function(data) {
                       if (data.id) {
-                       
                         $('#comissionado').val(data.id);
                         $('#atualizar').removeAttr( "disabled" )
                         $('#excluir').removeAttr( "disabled" )
@@ -165,6 +192,7 @@
                         $('#matricula__trab').val(data.csmatricula)
                         $('#indice').val(data.csindece);
                         $('#nome_tomador').val(data.tsnome)
+                        $('#idtomador').val(data.tomador)
                         $('#form').attr('action', "{{ url('comisionado')}}/"+data.id);
                       }else{
                           // $('#incluir').attr('disabled','disabled')

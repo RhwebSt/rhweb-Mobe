@@ -7,7 +7,7 @@ $(document).ready(function(){
             contentType: 'application/json',
             success: function(data) {
                 $("#banco").removeClass('is-valid').val(`${data.code} - ${data.name}`)
-                $('#menssagem-banco').toogleClass('valid-feedback invalid-feedback')
+                // $('#menssagem-banco').toogleClass('valid-feedback invalid-feedback')
                 
             },
             error: function(data){

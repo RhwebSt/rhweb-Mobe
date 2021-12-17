@@ -69,7 +69,12 @@
                 <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                 <datalist id="datalistOptions">
                 </datalist>
-                <i class="fas fa-search fa-md iconsear"></i>
+                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                <div class="text-center d-none" id="refres" >
+                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                </div>
                 </div>
             </div>
             
@@ -500,7 +505,7 @@
             var ext = ['jpg','jpeg','png','svg','tiff','webp']
             var type = file.type.split('/')
             if (file.size < 3145728) {
-                if (ext.indexOf(type[1]) === 1) {
+                if (ext.indexOf(type[1]) >= 1) {
                     foto(file)
                 }else{
                     $('#msgfoto').text('A extensão não é suportada. Apenas(jpg, png,svg,tiff,webp)')
@@ -533,21 +538,31 @@
               }
             });
           })
+          $('#pais__nascimento,#pais__nacionalidade').keyup(function () {
+            pais__nascimento.forEach(element => {
+              let dados = element.split('-')
+              console.log(dados.indexOf($(this).val()));
+              if (dados.indexOf($(this).val()) !== -1) {
+                $(this).val(`${element}`)
+              }
+            });
+          })
             $( "#pesquisa" ).on('keyup focus',function() {
+                let dados = '0'
                 if ($(this).val()) {
                   dados = $(this).val()
                   if (dados.indexOf('  ') !== -1) {
                     dados = monta_dados(dados);
                   }
-                }else{
-                  dados = 0
                 }
+                $('#icon').addClass('d-none').next().removeClass('d-none')
                 $.ajax({
                     url: "{{url('trabalhador')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
                       $('#trabfoto').removeAttr('src')
+                      $('#refres').addClass('d-none').prev().removeClass('d-none')
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {

@@ -38,14 +38,19 @@ class Lancamentotabela extends Model
                 }
               
             }else{
-                $query->where([
-                    ['liboletim','like','%'.$id.'%'],
-                    ['lsstatus',$status],
-                    ['empresa', $user->empresa]
-                ])->orWhere([
-                    ['id',$id],
-                    // ['trabalhadors.empresa', $user->empresa]
-                ]);
+                if ($id) {
+                    $query->where([
+                        ['liboletim','like','%'.$id.'%'],
+                        ['lsstatus',$status],
+                        ['empresa', $user->empresa]
+                    ]);
+                }else{
+                    $query->where([
+                        ['id','>',$id],
+                        ['lsstatus',$status],
+                        ['empresa', $user->empresa]
+                    ]);
+                }
             }
         })
         ->orderBy('liboletim')

@@ -38,15 +38,28 @@ class ComisionarioController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
-        $trabalhador = new Comissionado;
-        $trabalhadors = $trabalhador->cadastro($dados);
-        if ($trabalhadors) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+        $comissionado = new Comissionado;
+        $comissionados = $comissionado->verifica($dados);
+        if ($comissionados) {
+            return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Estes dados já tão cadastrados.']);  
         }
-        return redirect()->route('comisionado.index')->withInput()->withErrors([$condicao]);  
+        $request->validate([
+            'nome__trabalhador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'nome_tomador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'tomador'=>'required|numeric',
+            'trabalhador'=>'required|numeric',
+            'indice'=>'required|max:6',
+            'matricula__trab'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+        ]
+        );
+       
+        $comissionados = $comissionado->cadastro($dados);
+        if ($comissionados) {
+            return redirect()->route('comisionado.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
+        }else{
+            return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar o cadastro.']);  
+        }
+       
     }
 
     /**
@@ -83,15 +96,22 @@ class ComisionarioController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        // dd($dados);
+        $request->validate([
+            'nome__trabalhador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'nome_tomador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'tomador'=>'required|numeric',
+            'trabalhador'=>'required|numeric',
+            'indice'=>'required|max:6',
+            'matricula__trab'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+        ]
+        );
         $comissionado = new Comissionado;
         $comissionados = $comissionado->editar($dados,$id);
         if ($comissionados) {
-            $condicao = 'edittrue';
+            return redirect()->route('comisionado.index')->withInput()->withErrors(['true'=>'Cadastro atualizado com sucesso.']);  
         }else{
-            $condicao = 'editfalse';
+            return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível atualizar o registro.']);  
         }
-        return redirect()->route('comisionado.index')->withInput()->withErrors([$condicao]); 
     }
 
     /**

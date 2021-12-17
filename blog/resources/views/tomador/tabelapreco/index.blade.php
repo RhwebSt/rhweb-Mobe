@@ -73,7 +73,12 @@
                                     <option value="Los Angeles">
                                     <option value="Chicago"> -->
                                 </datalist>
-                                <i class="fas fa-search fa-md iconsear"></i>
+                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                <div class="text-center d-none" id="refres" >
+                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                        <span class="visually-hidden">Carregando...</span>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -202,20 +207,27 @@
             
       <script>
         $(document).ready(function(){
-          $( "#pesquisa" ).keyup(function() {
-              var dados = $(this).val();
+          $( "#pesquisa" ).on('keyup focus',function() { 
+                let dados = '0'
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
               var tomador = $('#tomador').val();
-              if (dados) {
-                $.ajax({
+              $('#icon').addClass('d-none').next().removeClass('d-none')
+              $.ajax({
                   url: "{{url('tabelapreco')}}/pesquisa/"+dados+'/'+tomador,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
+                    $('#refres').addClass('d-none').prev().removeClass('d-none')
                     let nome = ''
                     if (data.length >= 1) {
                       data.forEach(element => {
-                        nome += `<option value="${element.tsrubrica}">`
-                        nome += `<option value="${element.tsdescricao}">`
+                        nome += `<option value="${element.tsrubrica}  ${element.tsdescricao}">`
+                        // nome += `<option value="${element.tsdescricao}">`
                       });
                       $('#datalistOptions').html(nome);
                     } 
@@ -226,17 +238,20 @@
                     }
                   }
                 })
-              }else{
-                campos()
-              }
           });
+          function monta_dados(dados) {
+            let novodados = dados.split('  ')
+            return novodados[0];
+          }
             function buscaIntem(dados,tomador) {
+              $('#carregamento').removeClass('d-none')
               $.ajax({
                 url: "{{url('tabelapreco')}}/perfil/"+dados+'/'+tomador,
                 type: 'get',
                 contentType: 'application/json',
                 success: function(data) {
                   tabelapreco(data)
+                  $('#carregamento').addClass('d-none')
                 }
               })
             }

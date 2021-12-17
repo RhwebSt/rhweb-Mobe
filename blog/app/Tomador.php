@@ -128,7 +128,7 @@ class Tomador extends Model
                     ]);
                 }else{
                     $query->where([
-                        ['tsnome','like','%'.$id.'%'],
+                        ['tomadors.id','>',$id],
                         ['tomadors.empresa', $user->empresa]
                     ]);
                 }

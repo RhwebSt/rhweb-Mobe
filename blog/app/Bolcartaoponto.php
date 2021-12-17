@@ -101,7 +101,7 @@ class Bolcartaoponto extends Model
             }else{
                 $query->where([
                     ['bolcartaopontos.trabalhador',$dados['trabalhador']],
-                    ['trabalhadors.empresa', $user->empresa]
+                    ['lancamentotabelas.empresa', $user->empresa]
                 ]) 
                 ->whereMonth('bolcartaopontos.created_at',$mes[1])
                 ->whereYear('bolcartaopontos.created_at',$mes[0]);

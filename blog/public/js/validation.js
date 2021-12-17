@@ -316,15 +316,15 @@ $("#form").validate({
             required:true
         },
         dias_uteis:{
-            required:true,
+            required:false,
            
         },
         sabados:{
-            required:true,
+            required:false,
             
         },
         domingos:{
-            required:true,
+            required:false,
             
         },
         ano:{
@@ -515,11 +515,12 @@ $("#form").validate({
             maxlength:10
         },
         pais__nascimento:{
-            required:true
+            required:true,
+            maxlength:60
         },
         pais__nacionalidade:{
             required:true,
-            maxlength:20
+            maxlength:60
         },
         nome__mae:{
             required:true
@@ -602,9 +603,15 @@ $("#form").validate({
         codigo:{
             required:true,
             maxlength:4
-        }
+        },
+        nome__social:{
+            maxlength:30
+        },
     },
     messages:{
+        nome__social:{
+            maxlength:'O campo não pode ter mais de 30 caracteres'
+        },
         codigo:{
             required:"O campo nome não pode esta vazio!",
             maxlength:'O campo não pode ter mais de 4 caracteres'
@@ -689,10 +696,11 @@ $("#form").validate({
         },
         pais__nacionalidade:{
             required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mais de 20 caracteres',
+            maxlength:'O campo não pode ter mais de 60 caracteres',
         },
         pais__nascimento:{
             required:"O campo nome não pode esta vazio!",
+            maxlength:'O campo não pode ter mais de 60 caracteres',
         },
         data_nascimento:{
             required:"O campo nome não pode esta vazio!",

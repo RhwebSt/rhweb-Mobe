@@ -37,8 +37,10 @@ class comprovantePagDiaController extends Controller
                 $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','rublicas','dados','lancamentorublicas','bolcartaopontos','depedentes'));
                 return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
             }
-        } catch (\Throwable $th) {
-            echo('Não foi porssivél gerar o Recibo de pagamento de salálrio.');
+        } catch (\Exception $e) {
+            $error = $e->getTrace();
+            dd($error[0]['args'][4]['rublicas'],$error);
+            
         }
     }
 }

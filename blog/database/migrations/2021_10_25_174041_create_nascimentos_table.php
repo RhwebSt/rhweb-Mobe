@@ -17,8 +17,8 @@ class CreateNascimentosTable extends Migration
             $table->increments('id');
             $table->char('nsnascimento', 10)->nullable();
             $table->char('nscivil', 15)->nullable();
-            $table->char('nsnaturalidade', 20)->nullable();
-            $table->char('nsnacionalidade', 20)->nullable();
+            $table->char('nsnaturalidade', 60)->nullable();
+            $table->char('nsnacionalidade', 60)->nullable();
             $table->char('nsraca', 10)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();
             $table->foreign('trabalhador')->references('id')->on('trabalhadors');

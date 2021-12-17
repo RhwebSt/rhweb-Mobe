@@ -51,13 +51,13 @@ class TabelaPreco extends Model
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['id','>','%'.$id.'%'],
+                        ['tsdescricao','like','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
                     ]);
                 }else{
                     $query->where([
-                        ['tsrubrica','>',$id],
+                        ['id','>',$id],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ]);

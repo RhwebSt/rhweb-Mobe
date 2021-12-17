@@ -262,6 +262,20 @@
                         array_push($cartaoponto[0],$dia[0]);
                         array_push($cartaoponto[1],calculardia($bolcartaoponto->bsadinortuno,$bolcartaoponto->tsvalor));
                     }
+                }else if ($dia[0] === '16') {
+                    if ($bolcartaoponto->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                        array_push($cartaoponto[0],$dia[0]);
+                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bshoraex,$bolcartaoponto->tsvalor));
+                    }elseif ($bolcartaoponto->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem) {
+                        array_push($cartaoponto[0],$dia[0]);
+                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bshoraexcem,$bolcartaoponto->tsvalor));
+                    }elseif($bolcartaoponto->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                        array_push($cartaoponto[0],$dia[0]);
+                        array_push($cartaoponto[1],calculardia($bolcartaoponto->horas_normais,$bolcartaoponto->tsvalor));
+                    }elseif ($bolcartaoponto->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                        array_push($cartaoponto[0],$dia[0]);
+                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bsadinortuno,$bolcartaoponto->tsvalor));
+                    }
                 }
             }
         }
@@ -302,7 +316,7 @@
         $desconto_total = 0;
         $desconto_total_geral = 0;
         if ($rublicas->rsdc === 'Descontos') {
-            foreach ($lancamentorublicas as $key => $value) {
+            foreach ($lancamentorublicas as $key => $lancamentorublica) {
                 $dia = explode('-',$lancamentorublica->created_at);
                 $dia = explode('-',$lancamentorublica->created_at);
                 $dia = explode(' ',$dia[2]);
@@ -701,7 +715,21 @@
             </td>
             <td  class="text-center border-left small__font border-bottom dia">16</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto[0] as $key => $value) {
+                      if ($value === '16') {
+                          $vencimento += $cartaoponto[1][$key];
+                      }
+                  }
+                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '16') {
+                          $valorboletim += $boletimtabela[1][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
             </td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
             <td  class="text-center border-left small__font border-bottom valor">

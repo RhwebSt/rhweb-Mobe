@@ -377,7 +377,7 @@
             <table class="assinatura">
                 <tr>
                     <td class="fontDeclaracao data__ass">  <?php
-                        $today = date("m.d.y"); 
+                        $today = date("d/m/y"); 
                     ?>
                     Data: {{$today}}</td>
                     

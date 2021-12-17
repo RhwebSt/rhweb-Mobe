@@ -26,7 +26,7 @@ class BoletimCartaoPontoController extends Controller
      * @return \Illuminate\Http\Response
      */
    
-    public function create($id,$domingo,$sabado,$diasuteis,$data,$boletim,$tomador)
+    public function create($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador)
     {
         $user = Auth::user();
         $bolcartaoponto = new Bolcartaoponto;

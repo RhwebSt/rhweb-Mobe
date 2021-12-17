@@ -43,17 +43,17 @@ $('#matricula').mask('0000').val(Math.floor(Math.floor(Math.random() * 9999)))
 $('#agencia').mask('0000')
 $('#operacao').mask('000')
 $('#conta').mask('00000000-0')
-$('#simples').mask('0')
+$('#simples').mask('0000000000')
 $('#valor_fatura').mask('000.000.000.000.000,00', {reverse: true});
 $('#valor__tomador').mask('000.000.000.000.000,00', {reverse: true});
 $('#matricula__trab').mask('0000')
-$('#indice').mask('0000')
+$('#indice').mask('000,00')
 $('#folhartransporte').mask('000,00', {reverse: true});
 $('#folharalim').mask('000,00', {reverse: true});
 
-
-// $('#irrf').mask('00000000000000',{reverse:true});
-// $('#sf').mask('00000000000000',{reverse:true});
+$('#cod__fap').mask('000',{reverse:true});
+$('#irrf').mask('00000000000000',{reverse:true});
+$('#sf').mask('00000000000000',{reverse:true});
 $('#ctps').mask('00000000000000',{reverse:true});
 $('#serie__ctps').mask('00000000000000',{reverse:true});
 $('#vt__trabalhador').mask('000.000.000,00',{reverse:true});

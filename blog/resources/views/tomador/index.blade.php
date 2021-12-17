@@ -42,7 +42,12 @@
                                     <option value="Los Angeles">
                                     <option value="Chicago"> -->
                                 </datalist>
-                                <i class="fas fa-search fa-md iconsear"></i>
+                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                <div class="text-center d-none" id="refres" >
+                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                        <span class="visually-hidden">Carregando...</span>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -616,12 +621,14 @@
                         dados = monta_dados(dados);
                     }
                 }
+                $('#icon').addClass('d-none').next().removeClass('d-none')
                 $.ajax({
                     url: "{{url('tomador')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json', 
                     success: function(data) {
                         let nome = ''
+                        $('#refres').addClass('d-none').prev().removeClass('d-none')
                         if (data.length >= 1) {
                             data.forEach(element => {
                             nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`

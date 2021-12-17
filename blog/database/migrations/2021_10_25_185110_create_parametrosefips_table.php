@@ -16,6 +16,7 @@ class CreateParametrosefipsTable extends Migration
         Schema::create('parametrosefips', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('psfpas')->nullable();
+            $table->integer('psconfpas')->nullable();
             $table->integer('psgrps')->nullable();
             $table->integer('psresol')->nullable();
             $table->integer('pscnae')->nullable();
