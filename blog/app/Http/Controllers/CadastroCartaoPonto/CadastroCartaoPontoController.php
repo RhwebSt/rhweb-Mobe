@@ -42,6 +42,7 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        dd($dados);
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);
@@ -75,7 +76,8 @@ class CadastroCartaoPontoController extends Controller
             $dados['diasuteis'],
             $dados['data'],
             $dados['liboletim'],
-            $dados['tomador']
+            $dados['tomador'],
+            $dados['feriado']
         ];
         $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
         if($listalancamentotabela){
@@ -98,22 +100,7 @@ class CadastroCartaoPontoController extends Controller
     {
       
     }
-    public function relatoriocartaoponto($id,$tomador) 
-    {
-        
-        $lancamentotabela = new Lancamentotabela;
-        $trabalhador = new Trabalhador;
-        $tabelapreco = new TabelaPreco; 
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
-        $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($id);
-        $dados = [];
-        foreach ($lancamentotabelas as $key => $value) {
-            array_push($dados,$value->trabalhador);
-        }
-        $trabalhadors = $trabalhador->relatorioBoletimTabela($dados);
-        $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors','tabelaprecos'));
-        return $pdf->setPaper('a4','landscape')->stream('relatório.pdf');
-    }
+   
     /**
      * Show the form for editing the specified resource.
      *
@@ -156,7 +143,7 @@ class CadastroCartaoPontoController extends Controller
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
-            $lista = $bolcartaoponto->listacadastro($id);
+            $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id);
             $novodados = [
                 $id,
                 $dados['domingo'],
@@ -164,8 +151,8 @@ class CadastroCartaoPontoController extends Controller
                 $dados['diasuteis'],
                 $dados['data'],
                 $dados['liboletim'],
-                $dados['tomador']
-                
+                $dados['tomador'],
+                $dados['feriado']
             ];
             return redirect()->route('boletimcartaoponto.create',$novodados);
         }else{
@@ -184,7 +171,7 @@ class CadastroCartaoPontoController extends Controller
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabela = new Lancamentotabela;
         try {
-            $bolcartaopontos = $bolcartaoponto->deletar($id);
+            $bolcartaopontos = $bolcartaoponto->deletarLancamentoTabela($id);
             if ($bolcartaopontos) {
                 $lancamentotabela->deletar($id);
                 return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['true'=>'Registro deletador com sucesso.']);

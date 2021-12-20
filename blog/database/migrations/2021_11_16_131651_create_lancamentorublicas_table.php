@@ -18,6 +18,7 @@ class CreateLancamentorublicasTable extends Migration
             $table->char('lshistorico', 60)->nullable();
             $table->char('lsquantidade', 11)->nullable();
             $table->integer('licodigo')->nullable();
+            $table->char('lsdescricao', 100)->nullable();
             $table->float('lfvalor',8,2)->nullable();
             $table->float('lftomador',8,2)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();

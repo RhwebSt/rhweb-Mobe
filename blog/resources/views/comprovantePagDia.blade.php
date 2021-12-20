@@ -222,6 +222,7 @@
 </style>
 
 <body>
+    
     <?php
         $valorcartaopont = 0;
         $valortotal = 0;
@@ -292,41 +293,48 @@
        
         $vencimento = 0;
         $vecimento_total = 0;
+        $desconto_total = 0;
+        $desconto_total_geral = 0;
         $vecimento_total_geral = 0;
         $boletimtabela = [
             $dia = [],
-            $valor = []
+            $rubrica = [],
+            $valor = [],
+            $quantidade = []
         ]; 
-        if ($rublicas->rsdc === 'Créditos') {
+        // dd($rublicas,$lancamentorublicas);
+        foreach ($rublicas as $key => $rublica) {
             foreach ($lancamentorublicas as $key => $lancamentorublica) {
-                $dia = explode('-',$lancamentorublica->created_at);
-                $dia = explode('-',$lancamentorublica->created_at);
-                $dia = explode(' ',$dia[2]);
-                if ($dia[0] == '10') {
-                    array_push($boletimtabela[0],$dia[0]);
-                    $vencimento = $lancamentorublica->lfvalor * $lancamentorublica->lsquantidade;
-                    array_push($boletimtabela[1], $vencimento);
+                if ($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsdc === 'Créditos') {
+                    $dia = explode('-',$lancamentorublica->created_at);
+                    $dia = explode('-',$lancamentorublica->created_at);
+                    $dia = explode(' ',$dia[2]);
+                    if ($dia[0] == '20') {
+                        if (!in_array($dia[0],$boletimtabela[0])) {
+                            array_push($boletimtabela[0],$dia[0]);
+                        }
+                        $vencimento = $lancamentorublica->lfvalor * $lancamentorublica->lsquantidade;
+                        array_push($boletimtabela[2], $vencimento);
+                        array_push($boletimtabela[1], $lancamentorublica->lshistorico);
+                        array_push($boletimtabela[3], $lancamentorublica->lsquantidade);
+                    }else if ($dia[0] == '13') {
+                        if (!in_array($dia[0],$boletimtabela[0])) {
+                            array_push($boletimtabela[0],$dia[0]);
+                            array_push($boletimtabela[3], $lancamentorublica->lsquantidade);
+                        }
+                        $vencimento = $lancamentorublica->lfvalor * $lancamentorublica->lsquantidade;
+                        if (!in_array($vencimento,$boletimtabela[2])) {
+                            array_push($boletimtabela[2], $vencimento);
+                            array_push($boletimtabela[1], $lancamentorublica->lshistorico);
+                        }
+                    }
+                    $vecimento_total += $vencimento;
                 }
-                $vecimento_total += $vencimento;
             }
         }
-        foreach ($boletimtabela[1] as $key => $value) {
-            $valorcartaopont += $value;
-        }
-        $desconto_total = 0;
-        $desconto_total_geral = 0;
-        if ($rublicas->rsdc === 'Descontos') {
-            foreach ($lancamentorublicas as $key => $lancamentorublica) {
-                $dia = explode('-',$lancamentorublica->created_at);
-                $dia = explode('-',$lancamentorublica->created_at);
-                $dia = explode(' ',$dia[2]);
-                if ($dia[0] == '10') {
-                    array_push($boletimtabela[0],$dia[0]);
-                    $vencimento = $lancamentorublica->lfvalor * $lancamentorublica->lsquantidade;
-                    array_push($boletimtabela[1], $vencimento);
-                }
-                $desconto_total += $vencimento;
-            }
+        // dd($boletimtabela,$lancamentorublicas);
+        foreach ($boletimtabela[2] as $key => $value) {
+            $vecimento_total_geral += $value;
         }
     ?>
     <table>
@@ -338,7 +346,12 @@
     <table>
         <tr>
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
-            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência: Outubro - 2021</td>
+            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência: 
+                <?php
+                    $data = explode('-',$lancamentorublicas[0]-> created_at)
+                ?>
+                {{$data[1]}}/{{$data[0]}}
+            </td>
             <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ: {{$empresas->escnpj}}</td>
         </tr>
 
@@ -367,48 +380,153 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Vencimentos</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">{{$rublicas->rsrublica}}</td>
-            <td class="small__font border-left descricao border-bottom">{{$rublicas->rsdescricao}}</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-             <?php
-                $vecimento_total_geral += $vecimento_total;
-             ?>
-            {{number_format((float)$vecimento_total, 2, ',', '')}}
-            </td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
-            <?php
-                $desconto_total_geral += $desconto_total;
-            ?>
-            {{number_format((float)$desconto_total, 2, ',', '')}}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">HE 50%</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">Adc.Noturno S/H Normal</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">Gratificação</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
-        </tr>
+        @foreach($rublicas as $rublica)
+            @foreach ($lancamentorublicas as $lancamentorublica) {
+                @if($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsrublica === '1000')
+                    <tr>
+                        <td class="small__font border-left cod text-center border-bottom">{{$rublica->rsrublica}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$rublica->rsdescricao}}</td>
+                        <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            <?php
+                                $quantidade = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'diaria normal') {
+                                        $quantidade += $boletimtabela[3][$key];
+                                    }
+                                }
+                                echo($quantidade);
+                            ?>
+                        </td>
+                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                            <?php
+                                $valordiarianormal = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'diaria normal') {
+                                    $valordiarianormal += $boletimtabela[2][$key]; 
+                                    }
+                                }
+                            ?>
+                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                        </td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                        
+                        </td>
+                    </tr>
+                @elseif($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsrublica === '1003')
+                <tr>
+                <td class="small__font border-left cod text-center border-bottom">{{$rublica->rsrublica}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$rublica->rsdescricao}}</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            <?php
+                                $quantidade = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'hora extra 50%') {
+                                        $quantidade += $boletimtabela[3][$key];
+                                    }
+                                }
+                                echo($quantidade);
+                            ?>
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                            <?php
+                                $valordiarianormal = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'hora extra 50%') {
+                                    $valordiarianormal += $boletimtabela[2][$key]; 
+                                    }
+                                }
+                            ?>
+                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                </tr>
+                @elseif($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsrublica === '1004')
+                <tr>
+                <td class="small__font border-left cod text-center border-bottom">{{$rublica->rsrublica}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$rublica->rsdescricao}}</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            <?php
+                                $quantidade = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'hora extra 100%') {
+                                        $quantidade += $boletimtabela[3][$key];
+                                    }
+                                }
+                                echo($quantidade);
+                            ?>
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                            <?php
+                                $valordiarianormal = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'hora extra 100%') {
+                                    $valordiarianormal += $boletimtabela[2][$key]; 
+                                    }
+                                }
+                            ?>
+                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                </tr>
+                @elseif($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsrublica === '1005')
+                <tr>
+                <td class="small__font border-left cod text-center border-bottom">{{$rublica->rsrublica}}</td>
+                        <td class="small__font border-left descricao border-bottom">Adc.Noturno S/H Normal</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            <?php
+                                $quantidade = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'adicional noturno') {
+                                        $quantidade += $boletimtabela[3][$key];
+                                    }
+                                }
+                                echo($quantidade);
+                            ?>
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                            <?php
+                                $valordiarianormal = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'adicional noturno') {
+                                    $valordiarianormal += $boletimtabela[2][$key]; 
+                                    }
+                                }
+                            ?>
+                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                </tr>
+                @elseif($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsrublica === '1007')
+                <tr>
+                <td class="small__font border-left cod text-center border-bottom">{{$rublica->rsrublica}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$rublica->rsdescricao}}</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            <?php
+                                $quantidade = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'gratificação') {
+                                        $quantidade += $boletimtabela[3][$key];
+                                    }
+                                }
+                                echo($quantidade);
+                            ?>
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                            <?php
+                                $valordiarianormal = 0;
+                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
+                                    if ($boletimtabelas === 'gratificação') {
+                                    $valordiarianormal += $boletimtabela[2][$key]; 
+                                    }
+                                }
+                            ?>
+                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                </tr>
+                @endif
+            @endforeach
+         @endforeach
 
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
@@ -480,7 +598,7 @@
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
             <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">
-            {{number_format((float) $desconto_total_geral + $vecimento_total_geral, 2, ',', '')}}
+            {{number_format((float) $vecimento_total_geral - $desconto_total_geral , 2, ',', '')}}
             </td>
         </tr>
     </table>

@@ -70,6 +70,7 @@
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
             <input type="hidden" name="data" value="{{$data}}">
+            <input type="hidden" name="descricao" id="descricao">
             
             
             <div class="col-md-10 input">
@@ -221,6 +222,7 @@
                             $('#lftomador').val(data[0].tstomvalor)
                             $('#rubrica').val(data[0].tsdescricao)
                             $('#codigo').val(data[0].tsrubrica)
+                            $('#descricao').val(data[0].tsdescricao)
                         }else if(dados.length > 3 && !data.length){
                             $('#valor').val(' ')
                             $('#lftomador').val(' ')

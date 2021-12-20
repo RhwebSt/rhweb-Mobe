@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','trabalhador','lancamento','created_at'
+        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador','lancamento','created_at'
     ];
     public function cadastro($dados)
     {
@@ -15,6 +15,7 @@ class Lancamentorublica extends Model
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
             'licodigo'=>$dados['codigo'],
+            'lsdescricao'=>$dados['descricao'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
             'created_at'=>$dados['data'],
@@ -93,6 +94,7 @@ class Lancamentorublica extends Model
             'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
             'licodigo'=>$dados['codigo'],
+            'lsdescricao'=>$dados['descricao'],
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
             'created_at'=>$dados['data'],

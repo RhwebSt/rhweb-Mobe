@@ -25,12 +25,9 @@ class Dependente extends Model
     {
         return Dependente::where('trabalhador', $id)->get();
     }
-    public function buscaQuantidadeDepedente($id,$tipo)
+    public function buscaQuantidadeDepedente($id)
     {
-        return Dependente::where([
-            ['trabalhador', $id],
-            ['dstipo',$tipo]
-        ])->count();
+        return Dependente::where('trabalhador', $id)->count();
     }
     public function buscaUnidadeDepedente($id)
     {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Bolcartaoponto;
+use App\CartaoPonto;
 class BoletimCartaoPontoController extends Controller
 {
     /**
@@ -26,12 +27,12 @@ class BoletimCartaoPontoController extends Controller
      * @return \Illuminate\Http\Response
      */
    
-    public function create($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador)
+    public function create($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador,$feriado)
     {
         $user = Auth::user();
         $bolcartaoponto = new Bolcartaoponto;
-        $lista = $bolcartaoponto->listacadastro($id);
-        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador'));
+        $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id);
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
 
     /**
@@ -52,8 +53,8 @@ class BoletimCartaoPontoController extends Controller
             $dados['boletim'],
             $dados['tomador'],
         ];
-       
         $bolcartaoponto = new Bolcartaoponto;
+        try {
         $bolcartaopontos = $bolcartaoponto->verifica($dados);
         if ($bolcartaopontos) {
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
@@ -97,7 +98,10 @@ class BoletimCartaoPontoController extends Controller
         }else{
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Cadastro realizado com sucesso!']);
         }
-        
+        } catch (\Throwable $th) {
+            $id = 'cartao ponto';
+            return view('error',compact('id','novodados'));
+        }
     }
 
     /**
@@ -109,7 +113,7 @@ class BoletimCartaoPontoController extends Controller
     public function show($trabalhador,$boletim)
     {
         $bolcartaoponto = new Bolcartaoponto;
-        $bolcartaopontos = $bolcartaoponto->listafirst($trabalhador,$boletim);
+        $bolcartaopontos = $bolcartaoponto->buscaBoletimCartaoPonto($trabalhador,$boletim);
         return response()->json($bolcartaopontos);
     }
     /**
@@ -176,11 +180,16 @@ class BoletimCartaoPontoController extends Controller
         if ($validator->fails()) {
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
         }
-        $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
-        if ($bolcartaopontos) {
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso!']);
-        }else{
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Não foi porssível atualizar os dados!']);
+        try {
+            $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
+            if ($bolcartaopontos) {
+                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso!']);
+            }else{
+                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Não foi porssível atualizar os dados!']);
+            }
+        } catch (\Throwable $th) {
+            $id = 'cartao ponto';
+            return view('error',compact('id','novodados'));
         }
     }
 
@@ -192,6 +201,27 @@ class BoletimCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bolcartaoponto = new Bolcartaoponto; 
+        $cartaoponto = new CartaoPonto;
+        $bolcartaopontos = $bolcartaoponto->buscaUnidadeLancamento($id);
+        $cartaopontos = $cartaoponto->buscaTomador($bolcartaopontos->tomador);
+        $novodados = [
+            $bolcartaopontos->id,
+            $cartaopontos->csdomingos,
+            $cartaopontos->cssabados,
+            $cartaopontos->csdiasuteis,
+            $bolcartaopontos->lsdata,
+            $bolcartaopontos->liboletim,
+            $bolcartaopontos->tomador,
+        ];
+        try {
+            $bolcartaopontos = $bolcartaoponto->deletar($id);
+            if ($bolcartaopontos) {
+                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Deletador com sucesso!']);
+            }
+        } catch (\Throwable $th) {
+            $id = 'cartao ponto';
+            return view('error',compact('id','novodados'));
+        }
     }
 }

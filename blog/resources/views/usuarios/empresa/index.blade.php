@@ -364,7 +364,7 @@
             console.log(file.type);
             console.log();
             if (file.size < 3145728) {
-                if (ext.indexOf(type[1]) === 1) {
+                if (ext.indexOf(type[1]) >= 1) {
                     foto(file)
                 }else{
                     $('#msgfoto').text('A extensão não é suportada. Apenas(jpg, png,svg,tiff,webp)')

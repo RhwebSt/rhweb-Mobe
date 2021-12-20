@@ -165,7 +165,7 @@
                       });
                       $('#listaboletim').html(nome)
                     }
-                    if(data.length === 1 && dados.length > 3){
+                    if(data.length === 1 && dados.length >= 3){
                       lancamentoTab(dados,status)
                     }else{
                       limpaCamposTab()

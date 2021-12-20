@@ -50,7 +50,7 @@ class TabCadastroController extends Controller
             $dados['boletim'],
             $dados['tomador'],
             $dados['lancamento'], 
-            $dados['data']
+            $dados['data'] 
         ];
         try {
             $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);

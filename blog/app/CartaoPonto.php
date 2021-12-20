@@ -28,6 +28,10 @@ class CartaoPonto extends Model
             'csdomingos'=>$dados['domingos'],
         ]);
     }
+    public function buscaTomador($id)
+    {
+        return CartaoPonto::where('tomador', $id)->first();
+    }
     public function deletar($id)
     {
       return CartaoPonto::where('tomador', $id)->delete();

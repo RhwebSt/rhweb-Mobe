@@ -30,7 +30,7 @@ class Bolcartaoponto extends Model
             'lancamento'=>$dados['lancamento'],
         ]);
     }
-    public function listacadastro($id)
+    public function listaCartaoPontoPaginacao($id)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
@@ -53,7 +53,7 @@ class Bolcartaoponto extends Model
         })
         ->paginate(15);
     } 
-    public function listafirst($id,$boletim)
+    public function buscaBoletimCartaoPonto($id,$boletim)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
@@ -80,6 +80,19 @@ class Bolcartaoponto extends Model
         })
         ->first();
     }
+    public function buscaUnidadeLancamento($id)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+        ->select(
+            'lancamentotabelas.liboletim',
+            'lancamentotabelas.lsdata',
+            'lancamentotabelas.tomador',
+            'lancamentotabelas.id',
+            )
+        ->where('bolcartaopontos.id',$id)
+        ->first();
+    }
    public function buscaListaRelatorioLancamentoBolcartao($dados,$mes)
    {
        return DB::table('lancamentotabelas')
@@ -88,7 +101,7 @@ class Bolcartaoponto extends Model
        ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
        ->select(
             'bolcartaopontos.*',
-            'lancamentotabelas.tomador',
+            'lancamentotabelas.tomador', 
             'tabela_precos.tsvalor',
             'tabela_precos.tsdescricao' 
         )
@@ -138,9 +151,13 @@ class Bolcartaoponto extends Model
             'bsadinortuno'=>str_replace(",",".",$dados['adc__noturno']),
         ]);
     }
-    public function deletar($id)
+    public function deletar($id) 
     {
-      return Bolcartaoponto::where('lancamento', $id)->delete();
+      return Bolcartaoponto::where('id', $id)->delete();
+    }
+    public function deletarLancamentoTabela($id)
+    {
+        return Bolcartaoponto::where('lancamento', $id)->delete();
     }
     public function deletarTrabalador($id)
     {

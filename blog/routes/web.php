@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
-Route::get('error/servidor','Sevidor\\ErrosSevidorController@index')->name('error.index');
+Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');
    
    
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
-    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
+    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado?}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
     
     Route::get('boletimcartaoponto/{boletim}/{trabalhador}','BoletimCartaoPonto\\BoletimCartaoPontoController@show');
     
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
 
-    Route::get('cadastrocartaoponto/{id}/{tomador}','CadastroCartaoPonto\\CadastroCartaoPontoController@relatoriocartaoponto')->name('cadastrocartaoponto.relatoriocartaoponto');
+    Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
 
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
     Route::get('tabela/cartao/ponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');

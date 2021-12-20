@@ -20,7 +20,11 @@
             <div class="align-self-center">
                 <img src="{{url('/imagem/rhwebsmsm.png')}}" alt="" srcset="">
                 <p class="fs-1 fw-bold error">404 - Não Encontrado</p>
-                <button class="btn back"type="submit">Voltar</button>
+                @if($id === 'trabalhador')
+                    <a href="{{route('trabalhador.index')}}" class="btn back">Voltar</a>
+                @elseif($id === 'cartao ponto')
+                    <a href="{{route('boletimcartaoponto.create',$novodados)}}" class="btn back">Voltar</a>
+                @endif
             </div>
 
             <div class="align-self-center ">

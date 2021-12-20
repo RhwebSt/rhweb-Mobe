@@ -24,23 +24,27 @@ class comprovantePagDiaController extends Controller
         $rublica = new Rublica;
         $depedente = new Dependente;
         $bolcartaoponto = new Bolcartaoponto;
-        $lancamentorublica = new Lancamentorublica; 
+        $lancamentorublica = new Lancamentorublica;  
+       
         try {
             $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados,$mes);
             $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
-            $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador'],'filho');
+            $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador']);
             $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados,$mes);
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $rublicas = $rublica->buscaUnidadeRublica('produção');
+            $rublicas = $rublica->buscaListaRublica(0);
             if ($trabalhadors) {
                 $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
                 $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','rublicas','dados','lancamentorublicas','bolcartaopontos','depedentes'));
                 return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
             }
         } catch (\Exception $e) {
-            $error = $e->getTrace();
-            dd($error[0]['args'][4]['rublicas'],$error);
-            
+            // $error = $e->getTrace();
+            // dd($error[0]['args'][4]['rublicas'],$error); 
+            $url = [
+                'trabalhador'
+            ];
+            return redirect()->route('error.index',$url);
         }
     }
 }

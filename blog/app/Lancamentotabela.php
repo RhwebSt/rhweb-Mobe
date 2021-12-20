@@ -207,6 +207,6 @@ class Lancamentotabela extends Model
     }
     public function deletar($id)
     {
-      return Lancamentotabela::where('id', $id)->orWhere('tomador',$id)->delete();
+      return Lancamentotabela::where('id', $id)->delete();
     }
 }
