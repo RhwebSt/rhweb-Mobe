@@ -80,11 +80,27 @@ class Lancamentorublica extends Model
         ->whereYear('lancamentorublicas.created_at',$novadata[0])
         ->count();
     }
-    public function buscaListaRelatorioLancamentoRublica($dados,$mes)
+    public function buscaListaRelatorioLancamentoRublica($dados)
     {
-        return Lancamentorublica::where('trabalhador',$dados['trabalhador'])
-        ->whereMonth('created_at',$mes[1])
-        ->whereYear('created_at',$mes[0])
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentorublicas.*',
+        )
+        ->where(function($query) use ($dados){ 
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
+                ->whereBetween('lancamentotabelas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+            }else{
+                $query->where([
+                    ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                    ['lancamentorublicas.empresa', $user->empresa]
+                ]) 
+                ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+            }
+        })
         ->get();
     }
     public function editar($dados,$id)

@@ -52,6 +52,7 @@ class BoletimCartaoPontoController extends Controller
             $dados['data'],
             $dados['boletim'],
             $dados['tomador'],
+            $dados['feriado']
         ];
         $bolcartaoponto = new Bolcartaoponto;
         try {
@@ -145,6 +146,7 @@ class BoletimCartaoPontoController extends Controller
             $dados['data'],
             $dados['boletim'],
             $dados['tomador'],
+            $dados['feriado']
         ];
         $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [
@@ -207,12 +209,13 @@ class BoletimCartaoPontoController extends Controller
         $cartaopontos = $cartaoponto->buscaTomador($bolcartaopontos->tomador);
         $novodados = [
             $bolcartaopontos->id,
-            $cartaopontos->csdomingos,
-            $cartaopontos->cssabados,
+            $cartaopontos->csdomingos?$cartaopontos->csdomingos:0,
+            $cartaopontos->cssabados? $cartaopontos->cssabados:0,
             $cartaopontos->csdiasuteis,
             $bolcartaopontos->lsdata,
             $bolcartaopontos->liboletim,
             $bolcartaopontos->tomador,
+            $bolcartaopontos->lsferiado
         ];
         try {
             $bolcartaopontos = $bolcartaoponto->deletar($id);

@@ -88,36 +88,32 @@ class Bolcartaoponto extends Model
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
             'lancamentotabelas.tomador',
+            'lancamentotabelas.lsferiado',
             'lancamentotabelas.id',
             )
         ->where('bolcartaopontos.id',$id)
         ->first();
     }
-   public function buscaListaRelatorioLancamentoBolcartao($dados,$mes)
+   public function buscaListaRelatorioLancamentoBolcartao($dados)
    {
        return DB::table('lancamentotabelas')
        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-       ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
        ->select(
             'bolcartaopontos.*',
-            'lancamentotabelas.tomador', 
-            'tabela_precos.tsvalor',
-            'tabela_precos.tsdescricao' 
+            'lancamentotabelas.tomador',
         )
-        ->where(function($query) use ($dados,$mes){ 
+        ->where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where('bolcartaopontos.trabalhador',$dados['trabalhador'])
-                ->whereMonth('bolcartaopontos.created_at',$mes[1])
-                ->whereYear('bolcartaopontos.created_at',$mes[0]);
+                ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
             }else{
                 $query->where([
                     ['bolcartaopontos.trabalhador',$dados['trabalhador']],
                     ['lancamentotabelas.empresa', $user->empresa]
                 ]) 
-                ->whereMonth('bolcartaopontos.created_at',$mes[1])
-                ->whereYear('bolcartaopontos.created_at',$mes[0]);
+                ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
             }
         })
         ->get();

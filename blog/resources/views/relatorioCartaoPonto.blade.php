@@ -311,6 +311,14 @@
                 <?php
                     $totalfolhar = 0;
                     $totaltomador = 0;
+                    function calculovalores($horas,$valores)
+                    {
+                        list($horas,$minitos) = explode(':',$horas);
+                        $horasex = $horas * 3600 + $minitos * 60;
+                        $horasex = $horasex/60;
+                        $horasex = $valores * ($horasex/60);
+                        return $horasex;
+                    }
                 ?>
                 @foreach($lancamentotabelas as $lancamentotabela)
                 <tr>
@@ -332,25 +340,13 @@
                             $valortotal = 0;
                             foreach ($tabelaprecos as $key => $value) {
                                 if ($value->tsdescricao == 'hora extra 50%' && $lancamentotabela->bshoraex) {
-                                    $horasex = explode(':',$lancamentotabela->bshoraex);
-                                    $horasex = $horasex[0].'.'.$horasex[1];
-                                    $horasex = $value->tsvalor * $horasex ;
-                                    $valortotal += $horasex;
+                                    $valortotal += calculovalores($lancamentotabela->bshoraex,$value->tsvalor);
                                 }elseif($value->tsdescricao == 'hora normal' && $lancamentotabela->horas_normais){
-                                    $horasnormal = explode(':',$lancamentotabela->horas_normais);
-                                    $horasnormal = $horasnormal[0].'.'.$horasnormal[1];
-                                    $horasnormal = $value->tsvalor * $horasnormal;
-                                    $valortotal += $horasnormal;
+                                    $valortotal += calculovalores($lancamentotabela->horas_normais,$value->tsvalor);
                                 }elseif($value->tsdescricao == 'hora extra 100%' && $lancamentotabela->bshoraexcem){
-                                    $horaexcem = explode(':',$lancamentotabela->bshoraexcem);
-                                    $horaexcem = $horaexcem[0].'.'.$horaexcem[1];
-                                    $horaexcem = $value->tsvalor * $horaexcem;
-                                    $valortotal += $horaexcem;
+                                    $valortotal += calculovalores($lancamentotabela->bshoraexcem,$value->tsvalor);
                                 }elseif ($value->tsdescricao == 'adicional noturno' && $lancamentotabela->bsadinortuno) {
-                                    $noturno = explode(':',$lancamentotabela->bsadinortuno);
-                                    $noturno = $noturno[0].'.'.$noturno[1];
-                                    $noturno = $value->tsvalor * $noturno;
-                                    $valortotal += $noturno;
+                                    $valortotal += calculovalores($lancamentotabela->bsadinortuno,$value->tsvalor);
                                 }
                             }
                             $totalfolhar += $valortotal;
@@ -362,20 +358,13 @@
                             $valortomador = 0;
                             foreach ($tabelaprecos as $key => $value) {
                                 if ($value->tsdescricao == 'hora extra 50%' && $lancamentotabela->bshoraex) {
-                                    $horasextomador = explode(':',$lancamentotabela->bshoraex);
-                                    $horasextomador = $horasextomador[0].'.'.$horasextomador[1];
-                                    $horasextomador = $value->tstomvalor * $horasextomador ;
-                                    $valortomador += $horasextomador;
+                                    $valortomador += calculovalores($lancamentotabela->bshoraex,$value->tstomvalor);
+                                }elseif($value->tsdescricao == 'hora normal' && $lancamentotabela->horas_normais){
+                                    $valortomador += calculovalores($lancamentotabela->horas_normais,$value->tstomvalor);
                                 }elseif($value->tsdescricao == 'hora extra 100%' && $lancamentotabela->bshoraexcem){
-                                    $tomadorexcem = explode(':',$lancamentotabela->bshoraexcem);
-                                    $tomadorexcem = $tomadorexcem[0].'.'.$tomadorexcem[1];
-                                    $tomadorexcem = $value->tstomvalor * $tomadorexcem;
-                                    $valortomador += $tomadorexcem;
+                                    $valortomador += calculovalores($lancamentotabela->bshoraexcem,$value->tstomvalor);
                                 }elseif ($value->tsdescricao == 'adicional noturno' && $lancamentotabela->bsadinortuno) {
-                                    $tomadornoturno = explode(':',$lancamentotabela->bsadinortuno);
-                                    $tomadornoturno = $tomadornoturno[0].'.'.$tomadornoturno[1];
-                                    $tomadornoturno = $value->tstomvalor * $tomadornoturno;
-                                    $valortomador += $tomadornoturno;
+                                    $valortomador += calculovalores($lancamentotabela->bsadinortuno,$value->tstomvalor);
                                 }
                             }
                             $totaltomador += $valortomador;

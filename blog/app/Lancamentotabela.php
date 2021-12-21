@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentotabela extends Model
 {
     protected $fillable = [
-        'liboletim','lsdata','lsnumero','lsstatus','tomador','empresa'
+        'liboletim','lsdata','lsnumero','lsstatus','lsferiado','tomador','empresa'
     ];
     public function cadastro($dados)
     {
@@ -16,6 +16,7 @@ class Lancamentotabela extends Model
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
             'lsstatus'=>$dados['status'],
+            'lsferiado'=>$dados['feriado'],
             'tomador'=>$dados['tomador'],
             'empresa'=>$dados['empresa']
         ]);
@@ -203,6 +204,7 @@ class Lancamentotabela extends Model
             'liboletim'=>$dados['liboletim'],
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
+            'lsferiado'=>$dados['feriado']
         ]);
     }
     public function deletar($id)

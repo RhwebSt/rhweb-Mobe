@@ -42,7 +42,6 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);

@@ -27,7 +27,7 @@ class RelatorioCartaoPontoController extends Controller
         ];
         try {
             $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
-            $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($boletim);
+            $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($boletim); 
             $dados = [];
             foreach ($lancamentotabelas as $key => $value) {
                 array_push($dados,$value->trabalhador);

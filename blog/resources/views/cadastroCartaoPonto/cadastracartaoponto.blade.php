@@ -22,6 +22,7 @@
         <input type="hidden" name="diasuteis" id="diasuteis" value="{{$diasuteis}}">
         <input type="hidden" name="data" value="{{$data}}">
         <input type="hidden" name="tomador" value="{{$tomador}}">
+        <input type="hidden" name="feriado" value="{{$feriado}}">
         <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
