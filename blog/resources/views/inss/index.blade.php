@@ -55,103 +55,82 @@
                     </div>
                 </div>
                 
-                
-                <div class="col-md-3">
-                    <label for="valor__inicial" class="form-label">Valor Inicial</label>
-                    <input type="text" class="form-control" name="valor__inicial01" id="valor__inicial01">
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
                     <input type="text" class="form-control" name="valor__final01" id="valor__final01">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control" name="indice01" id="indice01">
+                    <input type="text" class="form-control resultado" name="indice01" id="indice01">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Fator de Redução</label>
                     <input type="text" class="form-control" name="fator01" id="fator01">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="valor__inicial" class="form-label">Valor Inicial</label>
-                    <input type="text" class="form-control" name="valor__inicial02" id="valor__inicial02">
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
                     <input type="text" class="form-control" name="valor__final02" id="valor__final02">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control" name="indice02" id="indice02">
+                    <input type="text" class="form-control resultado" name="indice02" id="indice02">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Fator de Redução</label>
                     <input type="text" class="form-control" name="fator02" id="fator02">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="valor__inicial" class="form-label">Valor Inicial</label>
-                    <input type="text" class="form-control" name="valor__inicial03" id="valor__inicial03">
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
                     <input type="text" class="form-control" name="valor__final03" id="valor__final03">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control" name="indice03" id="indice03">
+                    <input type="text" class="form-control resultado" name="indice03" id="indice03">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Fator de Redução</label>
                     <input type="text" class="form-control" name="fator03" id="fator03">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="valor__inicial" class="form-label">Valor Inicial</label>
-                    <input type="text" class="form-control" name="valor__inicial04" id="valor__inicial04">
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
-                    <input type="text" class="form-control" name="valor__final04" id="valor__final04">
+                    <input type="text" class="form-control resultado" name="valor__final04" id="valor__final04">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control" name="indice04" id="indice04">
+                    <input type="text" class="form-control resultado" name="indice04" id="indice04">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator04" id="fator04">
+                    <input type="text" class="form-control " name="fator04" id="fator04">
                 </div>
 
-                <div class="col-md-3">
-                    <label for="valor__inicial" class="form-label">Valor Inicial</label>
-                    <input type="text" class="form-control" name="valor__inicial05" id="valor__inicial05">
-                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
                     <input type="text" class="form-control" name="valor__final05" id="valor__final05">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control" name="indice05" id="indice05">
+                    <input type="text" class="form-control resultado" name="indice05" id="indice05">
                 </div>
 
-                <div class="col-md-3 ">
+                <div class="col-md-4 ">
                     <label for="indice" class="form-label">Fator de Redução</label>
                     <input type="text" class="form-control" name="fator05" id="fator05">
                 </div>
@@ -184,7 +163,7 @@
     <script>
         $(document).ready(function(){
            
-            $( "#ano" ).keyup(function() {
+            $( "#ano" ).change(function() {
                 var dados = $( this ).val();
                 $.ajax({
                     url: "{{url('inss')}}/"+dados,
@@ -221,6 +200,15 @@
                     }
                 });
             });
+            $('.resultado').keyup(function () {
+                let indice = $(this).attr('name')
+                indice = indice.split('')
+                let valor = $(`#valor__final${indice[6]}${indice[7]}`).val().replace(/\./g,"").replace(/,/g,".")
+                let resultado = (parseFloat($(this).val().toString().replace(",", ".")) / 100) *  parseFloat(valor);
+                if (resultado > 0) { 
+                    $(`#fator${indice[6]}${indice[7]}`).val(resultado.toFixed(2).replace(".", ","))
+                }
+            })
         });
     </script>
 @stop

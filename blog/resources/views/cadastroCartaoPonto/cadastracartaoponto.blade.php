@@ -366,16 +366,18 @@ function index() {
         adnoturno(noturno)
         $('#horas__cem').val(horas(diurno))
         $('#horas_normais').val('00:00')
+        console.log('1');
     }else if (verificardata(0) === 'feriador nacional' ) {
         horaextra()
         adnoturno(noturno)
         $('#horas__cem').val(horas(diurno))
         $('#horas_normais').val('00:00')
+        console.log('2');
     }else if (verificardata(0) === 'dia normal') {
         $('#horas_normais').val(horas(diurno))
         $('#horas__cem').val('00:00')
-        horaextra()
         adnoturno(noturno)
+        horaextra()
         if (noite() || madrugada()) {
             if (verificardata(1) === 'feriador nacional') {
                 $('#horas__cem').val(horas(diurno))
@@ -384,11 +386,8 @@ function index() {
                 adnoturno(noturno)
             }
         }
-    }else if (verificardata(0) === 'domingo') {
-        // $('#horas__cem').val(horas(diurno))
-        domingo(diurno)
-        adnoturno(noturno)
-    }else if (verificardata(0) === 'sabado') {
+        console.log('3');
+    }else if (verificardata(0) === 'sabado' &&  $('#sabado').val() !== '0') {
         if (noite() || madrugada()) {
             domingo(diurno)
             adnoturno(noturno)
@@ -397,6 +396,13 @@ function index() {
             $('#horas__cem').val('00:00')
             sabado();
         }
+        console.log('5');
+    }else if (verificardata(0) === 'domingo' && $('#domingo').val() ||  
+    $('#domingo').val() === '0' || $('#sabado').val() === '0' || $('#diasuteis').val() === '0') {
+        // $('#horas__cem').val(horas(diurno))
+        domingo(diurno)
+        adnoturno(noturno)
+        console.log('4');
     }
     totalgeral()
 }
@@ -538,6 +544,7 @@ function totalgeral() {
     let horas_normais = segundos($('#horas_normais').val());
     let horas_extra =  segundos($('#hora__extra').val());
     let noturno = segundos($('#adc__noturno').val());
+    let horas_cem = segundos($('#horas__cem').val());
     let total = 0
     if (horas_normais > 0) {
         total += horas_normais
@@ -547,6 +554,9 @@ function totalgeral() {
     }
     if (noturno > 0) {
         total += noturno
+    }
+    if (horas_cem) {
+        total += horas_cem
     }
     $('#total').val(horas(total))
 }
@@ -558,6 +568,7 @@ function sabado() {
     if (segundos(sabado) <  segundos(total)) {
         result = (parseInt(segundos(sabado)) - parseInt(segundos(total))) * (-1);
         $('#hora__extra').val(horas(result))
+        $('#horas_normais').val(horas(segundos(total) - result))
     }else{
         $('#hora__extra').val("0:00")
     }
@@ -565,12 +576,28 @@ function sabado() {
 function horaextra() {
     let total = $('#horas_normais').val();
     let diasuteis = $('#diasuteis').val()
+    let adc__noturno = $('#adc__noturno').val()
+    let sabado = $('#sabado').val();
+    let domingo =  $('#domingo').val();
+    let dias_uteis = $('#diasuteis').val();
     let result = '';
+    console.log('extra');
     if (segundos(diasuteis) < segundos(total)) {
         result = (parseInt(segundos(diasuteis)) - parseInt(segundos(total))) * (-1);
         $('#hora__extra').val(horas(result))
+        $('#horas_normais').val(horas(segundos(total) - result))
     }else{
         $('#hora__extra').val("0:00")
+    }
+    if (segundos(sabado) < segundos(adc__noturno)) {
+        sabado =  segundos(adc__noturno) - segundos(sabado)
+        $('#hora__extra').val(horas(result - sabado))
+    }else if (segundos(dias_uteis) < segundos(adc__noturno)) {
+        dias_uteis =  segundos(adc__noturno) - segundos(dias_uteis)
+        $('#hora__extra').val(horas(result + dias_uteis))
+    }else if (segundos(domingo) < segundos(adc__noturno)) {
+        domingo =  segundos(adc__noturno) - segundos(domingo)
+        $('#hora__extra').val(horas(result - domingo))
     }
     
 }

@@ -41,7 +41,7 @@ class TabCartaoPontoController extends Controller
         $dados = $request->all();
         $lancamentotabela = new Lancamentotabela;
         $novadata = explode('-',$dados['data']);
-        $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata);
+        $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata); 
         if ($lancamentotabelas) {
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este mês!']);
         }

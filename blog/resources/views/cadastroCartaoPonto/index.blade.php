@@ -213,13 +213,20 @@
                     $('#atualizar').attr('disabled','disabled')
                     $('#deletar').attr('disabled','disabled')
                     $('#method').val(' ')
-                    $('#excluir').attr( "disabled",'disabled' )
+                    $('#excluir').attr( "disabled",'disabled' ) 
                   }
                   $('#num__boletim').removeClass('is-invalid').next().text(' ')
                   $('#matricula').removeClass('is-invalid').next().text(' ')
                   $('#nome__completo').removeClass('is-invalid').next().text(' ')
                   $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
                   $('#num__trabalhador').val(data.lsnumero).removeClass('is-invalid').next().text(' ')
+                  for (let index = 0; index <  $('#feriado option').length; index++) {  
+                    if (data.lsferiado == $('#feriado option').eq(index).text()) {
+                      $('#feriado option').eq(index).attr('selected','selected')
+                    }else  {
+                      $('#feriado option').eq(index).removeAttr('selected')
+                    }
+                  }
             }
             $( "#nome__completo" ).on('keyup focus',function() {
               var dados = '0';

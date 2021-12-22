@@ -299,8 +299,7 @@ class TomadorController extends Controller
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabela = new Lancamentotabela;
-        try {
-            $lancamentotabelas = $lancamentotabela->buscaTomador($id);
+        $lancamentotabelas = $lancamentotabela->buscaTomador($id);
             foreach ($lancamentotabelas as $key => $value) {
                 $bolcartaopontos = $bolcartaoponto->deletar($value->id);
                 $lancamentorublicas = $lancamentorublica->deletar($value->id);
@@ -328,6 +327,8 @@ class TomadorController extends Controller
                 $tomadors = $tomador->deletar($id);
                 return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Deletador com sucesso.']);
             }
+        try {
+            
         } catch (\Throwable $th) {
             echo('Error ao deletar.');
         }

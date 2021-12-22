@@ -69,6 +69,7 @@ class Lancamentorublica extends Model
     }
     public function verifica ($dados,$novadata)
     {
+       
         return DB::table('lancamentotabelas')
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->where([
@@ -82,17 +83,17 @@ class Lancamentorublica extends Model
     }
     public function buscaListaRelatorioLancamentoRublica($dados)
     {
-        return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->select(
-            'lancamentorublicas.*',
-        )
-        ->where(function($query) use ($dados){ 
+        // return DB::table('lancamentotabelas')
+        // ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        // ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        // ->select(
+        //     'lancamentorublicas.*',
+        // )
+        return Lancamentorublica::where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
-                ->whereBetween('lancamentotabelas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+                ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
             }else{
                 $query->where([
                     ['lancamentorublicas.trabalhador',$dados['trabalhador']],

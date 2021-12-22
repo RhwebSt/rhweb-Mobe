@@ -18,7 +18,7 @@ class fichaRegistroTrabController extends Controller
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
         if ($trabalhadors) {
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa); 
-            $depedentes = $depedente->buscaListaDepedente($trabalhadors->id);
+            $depedentes = $depedente->buscaListaDepedente($id); 
             $pdf = PDF::loadView('fichaRegistroTrab',compact('trabalhadors','empresas','depedentes'));
             return $pdf->setPaper('a4')->stream('ficha_'.$trabalhadors->tsnome.'.pdf');
         }

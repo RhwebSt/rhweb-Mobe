@@ -31,6 +31,7 @@ class comprovantePagDiaController extends Controller
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
         $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador']);
         $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados);
+        // dd($bolcartaopontos, $lancamentorublicas);
         $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
         $rublicas = $rublica->buscaListaRublica(0);
         if ($trabalhadors) {

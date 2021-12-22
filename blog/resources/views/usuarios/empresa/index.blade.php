@@ -493,7 +493,7 @@
                 $('#cep').val(data.escep)
                 $('#logradouro').val(data.eslogradouro)
                 $('#numero').val(data.esnum)
-                $('#complemento__endereco').val(data.escomplemento)
+                // $('#complemento__endereco').val(data.escomplemento)
                 $('#bairro').val(data.esbairro)
                 $('#localidade').val(data.esmunicipio)
                 $('#uf').val(data.esuf)
@@ -516,7 +516,15 @@
                 $('#cbo').val(data.vscbo)
                 $('#endereco').val(data.eiid)
                 $('#bancario').val(data.biid)
-                for (let index = 0; index <  $('#sincalizado option').length; index++) {  
+                for (let index = 0; index <  $('#complemento__endereco option').length; index++) {  
+                    if (data.escomplemento == $('#complemento__endereco option').eq(index).text()) {
+                        
+                        $('#complemento__endereco option').eq(index).attr('selected','selected')
+                    }else  {
+                        $('#complemento__endereco option').eq(index).removeAttr('selected')
+                    }
+                }
+                 for (let index = 0; index <  $('#sincalizado option').length; index++) {  
                     if (data.essindicalizado == $('#sincalizado option').eq(index).text()) {
                         
                         $('#sincalizado option').eq(index).attr('selected','selected')

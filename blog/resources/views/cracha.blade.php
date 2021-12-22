@@ -8,6 +8,7 @@
     </head>
 
     <style>
+    
         body{
             font-family:sans-serif;
         }
@@ -134,6 +135,7 @@
 
         .nome{
             font-size: 13px;
+            width: 370px;
         }
 
         .container{
@@ -149,7 +151,7 @@
         .div2{
             width: 50%;
             order: 2;
-            ansform: rotate(180deg);
+            transform: rotate(180deg);
         }
 
         .tomador{
@@ -167,12 +169,20 @@
         .radius{
             border-radius: 3px;
         }
+        
+        .width{
+             width: 387.5px;
+        }
+        
+        .width2{
+             width: 382px;
+        }
 
     </style>
 
     <body>
         <div class="container">
-            <div class="div1 border-bottom border-right border-top border-left">
+            <div class="div1 border-bottom border-right border-top border-left width">
 
                 <div class="border-right border-bottom border-left border-top radius">
                     <table class="tomador">
@@ -234,8 +244,8 @@
 
             </div>
 
-            <div class="div2 border-right border-top border-left border-bottom">
-                <table class="tomador">
+            <div class="div2 border-right border-top border-left border-bottom width">
+                <table class="tomador width2">
                     <td rowspan="3" class=" fontnome text-center text-bold destaque break">{{$empresas->esnome}}</td>
                 </table>
 

@@ -57,28 +57,30 @@ class InssController extends Controller
                 $novodados['ano'] = $value;
             }
            
-            if($contador == 5)
-                $novodados['valor__inicial'] = $value;
-            elseif ($contador == 6) {
+            if ($contador == 5) {
                 $novodados['valor__final'] = $value;
+            }elseif ($contador == 6) {
+                $novodados['indice'] = $value;
             }elseif ($contador == 7) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 8) {
                 $novodados['fator'] = $value;
                 $inss->cadastro($novodados);
             }
-            elseif($contador == 9)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 10) {
+            elseif ($contador == 8) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 11) {
+            }elseif ($contador == 9) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 12) {
+            }elseif ($contador == 10) {
                 $novodados['fator'] = $value;
                 $inss->cadastro($novodados);
             }
-            elseif($contador == 13)
-            $novodados['valor__inicial'] = $value;
+            elseif ($contador == 11) {
+                $novodados['valor__final'] = $value;
+            }elseif ($contador == 12) {
+                $novodados['indice'] = $value;
+            }elseif ($contador == 13) {
+                $novodados['fator'] = $value;
+                $inss->cadastro($novodados);
+            }
             elseif ($contador == 14) {
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 15) {
@@ -86,25 +88,13 @@ class InssController extends Controller
             }elseif ($contador == 16) {
                 $novodados['fator'] = $value;
                 $inss->cadastro($novodados);
-            }
-            elseif($contador == 17)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 18) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 19) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
-                $novodados['fator'] = $value;
-                $inss->cadastro($novodados);
                
             }
-            elseif($contador == 21)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 22) {
+            elseif ($contador == 17) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 23) {
+            }elseif ($contador == 18) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 24) {
+            }elseif ($contador == 19) {
                 $novodados['fator'] = $value;
                 $inss->cadastro($novodados);
                
@@ -163,54 +153,44 @@ class InssController extends Controller
             if ($key === 'ano') {
                 $novodados['ano'] = $value;
             }
-            if($contador == 5)
-                $novodados['valor__inicial'] = $value;
-            elseif ($contador == 6) {
+           if ($contador == 5) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 7) {
+            }elseif ($contador == 6) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 8) {
+            }elseif ($contador == 7) {
                 $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id01']);
             }
-            elseif($contador == 9)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 10) {
+            elseif ($contador == 8) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 11) {
+            }elseif ($contador == 9) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 12) {
+            }elseif ($contador == 10) {
                 $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id02']);
             }
-            elseif($contador == 13)
-            $novodados['valor__inicial'] = $value;
+            elseif ($contador == 11) {
+                $novodados['valor__final'] = $value;
+            }elseif ($contador == 12) {
+                $novodados['indice'] = $value;
+            }elseif ($contador == 13) {
+                $novodados['fator'] = $value;
+                $inss->edita($novodados,$dados['id03']);
+            }
             elseif ($contador == 14) {
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 15) {
                 $novodados['indice'] = $value;
             }elseif ($contador == 16) {
                 $novodados['fator'] = $value;
-                $inss->edita($novodados,$dados['id03']);
-            }
-            elseif($contador == 17)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 18) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 19) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
-                $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id04']);
                
             }
-            elseif($contador == 21)
-            $novodados['valor__inicial'] = $value;
-            elseif ($contador == 22) {
+            elseif ($contador == 17) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 23) {
+            }elseif ($contador == 18) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 24) {
+            }elseif ($contador == 19) {
                 $novodados['fator'] = $value;
                 $inss->edita($novodados,$dados['id05']);
                

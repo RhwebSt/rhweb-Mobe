@@ -67,7 +67,7 @@ class TrabalhadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            // 'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'categoria__contrato'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
@@ -112,21 +112,21 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         $documento = new Documento;
-     
-        try {
-            $trabalhadors = $trabalhador->cadastro($dados);
-            if ($trabalhadors) {
-                $dados['trabalhador'] = $trabalhadors['id'];
-                $enderecos = $endereco->cadastro($dados); 
-                $bancarios = $bancario->cadastro($dados);
-                $nascimentos = $nascimento->cadastro($dados);
-                $categorias = $categoria->cadastro($dados);
-                $documentos = $documento->cadastro($dados);
-                if ($enderecos &&  $bancarios && 
-                    $nascimentos && $categorias && $documentos) {
-                    return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
-                }
+        $trabalhadors = $trabalhador->cadastro($dados);
+        if ($trabalhadors) {
+            $dados['trabalhador'] = $trabalhadors['id'];
+            $enderecos = $endereco->cadastro($dados); 
+            $bancarios = $bancario->cadastro($dados);
+            $nascimentos = $nascimento->cadastro($dados);
+            $categorias = $categoria->cadastro($dados);
+            $documentos = $documento->cadastro($dados);
+            if ($enderecos &&  $bancarios && 
+                $nascimentos && $categorias && $documentos) {
+                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
             }
+        }
+        try {
+
         } catch (\Throwable $th) {
             echo('Não foi prossível cadastrar.');
         }
@@ -191,7 +191,7 @@ class TrabalhadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            // 'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'categoria__contrato'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
@@ -225,17 +225,18 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         $documento = new Documento;
+        $trabalhadors = $trabalhador->editar($dados,$id);
+        $enderecos = $endereco->editar($dados,$dados['endereco']); 
+        $bancarios = $bancario->editar($dados,$dados['bancario']);
+        $nascimentos = $nascimento->editar($dados,$id);
+        $categorias = $categoria->editar($dados,$id);
+        $documentos = $documento->editar($dados,$id);
+        if ($trabalhadors && $enderecos &&  $bancarios && 
+        $nascimentos && $categorias && $documentos) {
+            return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Atualizador com sucesso.']); 
+        }
         try {
-            $trabalhadors = $trabalhador->editar($dados,$id);
-            $enderecos = $endereco->editar($dados,$dados['endereco']); 
-            $bancarios = $bancario->editar($dados,$dados['bancario']);
-            $nascimentos = $nascimento->editar($dados,$id);
-            $categorias = $categoria->editar($dados,$id);
-            $documentos = $documento->editar($dados,$id);
-            if ($trabalhadors && $enderecos &&  $bancarios && 
-            $nascimentos && $categorias && $documentos) {
-                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Atualizador com sucesso.']); 
-            }
+
         } catch (\Throwable $th) {
             echo('Não foi porssível realizar a atualização.');
         }

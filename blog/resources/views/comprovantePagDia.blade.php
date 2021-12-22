@@ -280,6 +280,7 @@
         foreach ($cartaoponto[1] as $key => $value) {
             $valorcartaopont += $value;
         }
+       
         $vencimento = 0;
         $vecimento_total = 0;
         $desconto_total = 0;
@@ -315,9 +316,20 @@
         }
         // dd($boletimtabela,$lancamentorublicas);
         foreach ($boletimtabela[2] as $key => $value) {
-            $vecimento_total_geral += $value;
+            // $vecimento_total_geral += $value;
             $valorcartaopont += $value;
         }
+        function calculoPocentagem($valor,$porcentagem)
+        {
+            $resultado = $valor * ($porcentagem / 100);
+            return $resultado;
+        }
+        $dsr1818 = calculoPocentagem($valorcartaopont,18.18);
+        // dd( $valorcartaopont,$vecimento_total_geral);
+        $ferias_decimoter = $dsr1818 + $valorcartaopont;
+        $decimo_ter = calculoPocentagem($ferias_decimoter,8.34);
+        $ferias_decimoter =  calculoPocentagem($ferias_decimoter,11.12);
+      
     ?>
     <table>
         <tr>
@@ -590,12 +602,14 @@
                 </tr>
                 @endif
             @endforeach
-
+        
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">RSR 18,18%</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">18,18</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                {{number_format((float)$dsr1818, 2, ',', '')}}
+            </td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
@@ -618,16 +632,20 @@
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                {{number_format((float)$ferias_decimoter, 2, ',', '')}}
+            </td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">8,34</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                {{number_format((float)$decimo_ter, 2, ',', '')}}
+            </td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
 
@@ -650,7 +668,7 @@
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">
-            {{number_format((float) $vecimento_total_geral, 2, ',', '')}}
+            {{number_format((float) $valorcartaopont, 2, ',', '')}}
             </td>
             <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">
             {{number_format((float) $desconto_total_geral, 2, ',', '')}}
@@ -661,7 +679,7 @@
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
             <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">
-            {{number_format((float) $vecimento_total_geral - $desconto_total_geral , 2, ',', '')}}
+            {{number_format((float) $valorcartaopont - $desconto_total_geral , 2, ',', '')}}
             </td>
         </tr>
     </table>
@@ -669,7 +687,7 @@
     <table>
         <tr>
             <td class="small__font border-left border-top servicosbase text-center  destaque">Serviços</td>
-            <td class="small__font border-left border-top servrsr text-center destaque">Serviços+RSR</td>
+            <td class="small__font border-left border-top servrsr text-center destaque">Serviços+DSR</td>
             <td class="small__font border-left border-top bainss text-center destaque">Base INSS</td>
             <td class="small__font border-left border-top bafgts text-center destaque">Base FGTS</td>
             <td class="small__font border-left border-top fgtsmes text-center destaque">FGTS Mês</td>
@@ -682,7 +700,7 @@
             <td class="little__font border-left border-top border-bottom servicosbase text-center">
             {{number_format((float)$valorcartaopont, 2, ',', '')}}
             </td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">999.999.999,99 </td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$valorcartaopont + $dsr1818, 2, ',', '')}}</td>
             <td class="little__font border-left border-top border-bottom bainss text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom bafgts text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom fgtsmes text-center">999.999.999,99</td>

@@ -84,8 +84,8 @@
                 <div class="col-md-4">
                     <label for="sexo" class="form-label">Sexo</label>
                     <select id="sexo" name="sexo" class="form-select fw-bold text-dark" value="">
-                      <option selected>Masculino</option>
-                      <option>Feminino</option>
+                      <option {{}}>Masculino</option>
+                      <option >Feminino</option>
                       <option>Outro</option>
                     </select>
                 </div>
