@@ -147,7 +147,7 @@
 
         
         .semdepe{
-            width:700px;
+            width:757px;
         }
         
         .natural{
@@ -381,11 +381,10 @@
                     </tr>
                 @endforeach
                 @else
-                <tr>
-                        <td  class="small__font semdepe border-top border-left nome text-center border-right"><strong>Não á depedentes.</strong></td>
-                        
+                    <tr>
+                        <td  class="small__font semdepe border-top border-bottom border-left nome text-center border-right"><strong>Não á depedentes.</strong></td>
                     </tr>
-            @endif
+             @endif
         </table>
 
         <table>
