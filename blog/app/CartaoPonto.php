@@ -30,7 +30,7 @@ class CartaoPonto extends Model
     }
     public function buscaTomador($id)
     {
-        return CartaoPonto::where('tomador', $id)->first();
+        return CartaoPonto::whereIn('tomador', $id)->get();
     }
     public function deletar($id)
     {

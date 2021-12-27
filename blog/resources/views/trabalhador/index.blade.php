@@ -2,11 +2,12 @@
 @section('conteine')
 
     <div class="container">
-        @error('true')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
+        @if(session('success'))
+              <h1></h1>
+              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-        @enderror
+          @endif
         @error('false')
             <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
                <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
@@ -186,18 +187,22 @@
     
                 <div class="col-md-4">
                   <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-                  <input type="text" class="form-control input fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="10" name="pais__nascimento" id="pais__nascimento" >
+                  <input type="text" list="pais_nascimento_list" class="form-control input fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="10" name="pais__nascimento" id="pais__nascimento" >
                   @error('pais__nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
+                  <datalist id="pais_nascimento_list">
+                  </datalist>
                 </div>
     
                 <div class="col-md-4">
                     <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-                    <input type="text" class="form-control input fw-bold text-dark @error('pais__nacionalidade') is-invalid @enderror"  value="{{old('pais__nacionalidade')}}" maxlength="20" name="pais__nacionalidade" id="pais__nacionalidade" >
+                    <input type="text" list="pais_nacionalidade_list" class="form-control input fw-bold text-dark @error('pais__nacionalidade') is-invalid @enderror"  value="{{old('pais__nacionalidade')}}" maxlength="20" name="pais__nacionalidade" id="pais__nacionalidade" >
                     @error('pais__nacionalidade')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
+                    <datalist id="pais_nacionalidade_list">
+                  </datalist>
                 </div>
     
                 <div class="col-md-8">
@@ -287,18 +292,22 @@
     
                 <div class="col-md-4">
                   <label for="categoria" class="form-label">Categoria</label>
-                  <input type="text" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="20" name="categoria__contrato" id="categoria">
+                  <input type="text" list="categoria_list" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="20" name="categoria__contrato" id="categoria">
                   @error('categoria__contrato')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
+                  <datalist id="categoria_list">
+                  </datalist>
                 </div>
     
                 <div class="col-md-4">
                   <label for="cbo" class="form-label">CBO</label>
-                  <input type="text" class="form-control input fw-bold text-dark  @error('cbo') is-invalid @enderror" value="{{old('cbo')}}"  name="cbo" id="cbo" value="">
+                  <input type="text" list="cbo_list" class="form-control input fw-bold text-dark  @error('cbo') is-invalid @enderror" value="{{old('cbo')}}"  name="cbo" id="cbo" value="">
                   @error('cbo')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
+                  <datalist id="cbo_list">
+                  </datalist>
                 </div>
     
                 <div class="col-md-3">
@@ -507,30 +516,29 @@
             reader.readAsDataURL(file);
           }
         $(document).ready(function(){
+          let paisnascimento = ''
+          let cbolist = ''
+          let categorialist = ''
+          pais__nascimento.forEach(element => {
+            paisnascimento += `<option value="${element}">`
+          });
+          $('#pais_nascimento_list').html(paisnascimento)
+          $('#pais_nacionalidade_list').html(paisnascimento)
           $('.form-check-input').click(function() {
-            console.log($(this).val());
             if ($(this).val() === 'option1') {
               $('#formrelatorioempresa').attr('action',"{{route('trabalhador.comprovante.dia')}}")
             }else if ($(this).val() === 'option2') {
               $('#formrelatorioempresa').attr('action',"{{route('relatorio.empresa.trabalhada')}}")
             }
           })
-          $('#cbo').keyup(function() {
-            cbo.forEach(element => {
-              if (element.code === $(this).val()) {
-                $(this).val(`${element.code} - ${element.name}`)
-              }
-            });
-          })
-          $('#pais__nascimento,#pais__nacionalidade').keyup(function () {
-            pais__nascimento.forEach(element => {
-              let dados = element.split('-')
-              console.log(dados.indexOf($(this).val()));
-              if (dados.indexOf($(this).val()) !== -1) {
-                $(this).val(`${element}`)
-              }
-            });
-          })
+          cbo.forEach(element => {
+            cbolist += `<option value="${element.code} - ${element.name}">`
+          });
+          $('#cbo_list').html(cbolist)
+          categoriatrabalhador.forEach(element => {
+            categorialist += `<option value="${element}">`
+          });
+          $('#categoria_list').html(categorialist);
             $( "#pesquisa" ).on('keyup focus',function() {
                 let dados = '0'
                 if ($(this).val()) {

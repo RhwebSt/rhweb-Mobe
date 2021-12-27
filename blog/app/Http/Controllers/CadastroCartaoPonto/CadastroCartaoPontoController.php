@@ -173,9 +173,7 @@ class CadastroCartaoPontoController extends Controller
             $bolcartaopontos = $bolcartaoponto->deletarLancamentoTabela($id);
             if ($bolcartaopontos) {
                 $lancamentotabela->deletar($id);
-                return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['true'=>'Registro deletador com sucesso.']);
-            }else{
-                return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Error ao deletar.']);
+                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {
             echo('Error ao deletar.');

@@ -33,4 +33,8 @@ class IncideFolhar extends Model
    {
      return IncideFolhar::where('tomador', $id)->delete();
    }
+   public function busca_va_vt($id)
+   {
+        return IncideFolhar::whereIn('tomador', $id)->get();
+   }
 }

@@ -12,14 +12,14 @@ class Irrf extends Model
     public function cadastro($dados)
     {
         return Irrf::create([
-            'irsano'=>$dados['ano'],
+            'irsano'=>$dados['irsano'],
             'irsvalorinicial'=>$dados['valor__inicial'],
             'irsvalorfinal'=>$dados['valor__final'],
             'irsindece'=>$dados['indice'],
             'user'=>$dados['user']
         ]);
     }
-    public function getlist($id)
+    public function buscaListaIrrf($id)
     {
         return Irrf::where('irsano',$id)->get();
     }
@@ -27,7 +27,7 @@ class Irrf extends Model
     {
         return Irrf::where('id', $id)
         ->update([
-            'irsano'=>$dados['ano'],
+            'irsano'=>$dados['irsano'],
             'irsvalorinicial'=>$dados['valor__inicial'],
             'irsvalorfinal'=>$dados['valor__final'],
             'irsindece'=>$dados['indice'],

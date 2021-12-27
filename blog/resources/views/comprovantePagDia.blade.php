@@ -222,115 +222,7 @@
 </style>
 
 <body>
-    
-    <?php
-        $valorcartaopont = 0;
-        $valortotal = 0;
-        $cartaoponto = [
-            $dia = [],
-            $valor = [],
-            $descricao = [],
-            $horas = [],
-        ]; 
-        foreach ($bolcartaopontos as $key => $bolcartaoponto) {
-            if ($bolcartaoponto->created_at) {
-                $dia = explode('-',$bolcartaoponto->created_at);
-                $dia = explode('-',$bolcartaoponto->created_at);
-                $dia = explode(' ',$dia[2]);
-                foreach ($tabelaprecos as $key => $tabelapreco) {
-                    if ($tabelapreco->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
-                        array_push($cartaoponto[0],$dia[0]);
-                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bshoraex,$tabelapreco->tsvalor));
-                        array_push($cartaoponto[2],$tabelapreco->tsdescricao);
-                        array_push($cartaoponto[3],calcularhoras($bolcartaoponto->bshoraex));
-                    }elseif ($tabelapreco->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem) {
-                        array_push($cartaoponto[0],$dia[0]);
-                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bshoraexcem,$tabelapreco->tsvalor));
-                        array_push($cartaoponto[2],$tabelapreco->tsdescricao);
-                        array_push($cartaoponto[3],calcularhoras($bolcartaoponto->bshoraexcem));
-                    }elseif($tabelapreco->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
-                        array_push($cartaoponto[0],$dia[0]);
-                        array_push($cartaoponto[1],calculardia($bolcartaoponto->horas_normais,$tabelapreco->tsvalor));
-                        array_push($cartaoponto[2],$tabelapreco->tsdescricao);
-                        array_push($cartaoponto[3],calcularhoras($bolcartaoponto->horas_normais));
-                    }elseif ($tabelapreco->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
-                        array_push($cartaoponto[0],$dia[0]);
-                        array_push($cartaoponto[1],calculardia($bolcartaoponto->bsadinortuno,$tabelapreco->tsvalor));
-                        array_push($cartaoponto[2],$tabelapreco->tsdescricao);
-                        array_push($cartaoponto[3],calcularhoras($bolcartaoponto->bsadinortuno));
-                    }
-                }
-            }
-        }
-        function calculardia($horas,$valores)
-        {
-            list($horas,$minitos) = explode(':',$horas);
-            $horasex = $horas * 3600 + $minitos * 60;
-            $horasex = $horasex/60;
-            $horasex = $valores * ($horasex/60);
-            return $horasex;
-        }
-        function calcularhoras($horas)
-        {
-            $hora = explode(':',$horas);
-            $hora = $hora[0].'.'.$hora[1];
-            return $hora;
-        }
-        // dd($cartaoponto);
-        foreach ($cartaoponto[1] as $key => $value) {
-            $valorcartaopont += $value;
-        }
-       
-        $vencimento = 0;
-        $vecimento_total = 0;
-        $desconto_total = 0;
-        $desconto_total_geral = 0;
-        $vecimento_total_geral = 0;
-        $boletimtabela = [
-            $dia = [],
-            $rubrica = [],
-            $valor = [],
-            $quantidade = [],
-            $codigo = [],
-            $descricao = []
-        ]; 
-        // dd($rublicas,$lancamentorublicas);
-        foreach ($rublicas as $key => $rublica) {
-            foreach ($lancamentorublicas as $key => $lancamentorublica) {
-                if ($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsdc === 'Créditos') {
-                    $dia = explode('-',$lancamentorublica->created_at);
-                    $dia = explode('-',$lancamentorublica->created_at);
-                    $dia = explode(' ',$dia[2]);
-                    array_push($boletimtabela[0],$dia[0]);
-                    $vencimento = $lancamentorublica->lfvalor * $lancamentorublica->lsquantidade;
-                    array_push($boletimtabela[2], $vencimento);
-                    array_push($boletimtabela[1], $lancamentorublica->lshistorico);
-                    array_push($boletimtabela[3], $lancamentorublica->lsquantidade);
-                    $vecimento_total += $vencimento;
-                    if (!in_array($rublica->rsrublica,$boletimtabela[4])) {
-                        array_push($boletimtabela[4], $rublica->rsrublica);
-                        array_push($boletimtabela[5], $rublica->rsdescricao);
-                    }
-                }
-            }
-        }
-        // dd($boletimtabela,$lancamentorublicas);
-        foreach ($boletimtabela[2] as $key => $value) {
-            // $vecimento_total_geral += $value;
-            $valorcartaopont += $value;
-        }
-        function calculoPocentagem($valor,$porcentagem)
-        {
-            $resultado = $valor * ($porcentagem / 100);
-            return $resultado;
-        }
-        $dsr1818 = calculoPocentagem($valorcartaopont,18.18);
-        // dd( $valorcartaopont,$vecimento_total_geral);
-        $ferias_decimoter = $dsr1818 + $valorcartaopont;
-        $decimo_ter = calculoPocentagem($ferias_decimoter,8.34);
-        $ferias_decimoter =  calculoPocentagem($ferias_decimoter,11.12);
-      
-    ?>
+   
     <table>
         <tr>
             <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$empresas->esnome}}</td>
@@ -374,235 +266,108 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Vencimentos</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
-            @foreach($boletimtabela[4] as $key => $rublica)
-                @if($rublica === '1000')
-                    <tr>
-                        <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">{{$boletimtabela[5][$key]}}</td>
-                        <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'diaria normal') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                               
-                               
-                            ?>
-                            {{number_format((float)$quantidade, 2, ',', '')}}
-                        </td>
-                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'diaria normal') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'diaria normal') {
-                                        $valordiarianormal += $cartaoponto[1][$key];
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
-                        </td>
-                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
-                        
-                        </td>
-                    </tr>
-                @elseif($rublica === '1002')
-                
+        @foreach($boletim_tabela as $key => $boletimtabela)
+            @if($key === 'diariaNormais' && $boletimtabela['quantidade'])
                 <tr>
-                        <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">{{$boletimtabela[5][$key]}}</td>
-                        <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                            
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora normal') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora normal') {
-                                        $quantidade += $cartaoponto[3][$key];
-                                    }
-                                }
-                            ?>
-                             {{number_format((float)$quantidade, 2, ',', '')}}
-                        </td>
-                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora normal') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora normal') {
-                                        $valordiarianormal += $cartaoponto[1][$key];
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
-                        </td>
-                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
-                        
-                        </td>
-                    </tr>
-                @elseif($rublica === '1003')
-                <tr>
-                <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">{{$boletimtabela[5][$key]}}</td>
+                    <td class="small__font border-left cod text-center border-bottom">1000</td>
+                    <td class="small__font border-left descricao border-bottom">Diaria normais</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora extra 50%') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora extra 50%') {
-                                        $quantidade += $cartaoponto[3][$key];
-                                    }
-                                }
-                               
-                            ?>
-                             {{number_format((float)$quantidade, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
                     </td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora extra 50%') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora extra 50%') {
-                                        $valordiarianormal += $cartaoponto[1][$key];
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
                     </td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
                 </tr>
-                @elseif($rublica === '1004')
+            @elseif($key === 'horasNormais' && $boletimtabela['quantidade'])
                 <tr>
-                <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">{{$boletimtabela[5][$key]}}</td>
+                    <td class="small__font border-left cod text-center border-bottom">1002</td>
+                    <td class="small__font border-left descricao border-bottom">Horas normais</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora extra 100%') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora extra 100%') {
-                                        $quantidade += $cartaoponto[3][$key];
-                                    }
-                                }
-                               
-                            ?>
-                             {{number_format((float)$quantidade, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
                     </td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'hora extra 100%') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'hora extra 100%') {
-                                        $valordiarianormal += $cartaoponto[1][$key];
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
                     </td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
                 </tr>
-                @elseif($rublica === '1005')
+            @elseif($key === 'hora extra 50%' && $boletimtabela['quantidade'])
                 <tr>
-                <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">Adc.Noturno S/H Normal</td>
+                    <td class="small__font border-left cod text-center border-bottom">1003</td>
+                    <td class="small__font border-left descricao border-bottom">hora extra 50%</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'adicional noturno') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'adicional noturno') {
-                                        $quantidade += $cartaoponto[3][$key];
-                                    }
-                                }
-                               
-                            ?>
-                             {{number_format((float)$quantidade, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
                     </td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'adicional noturno') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                                foreach ($cartaoponto[2] as $key => $cartaopontos) {
-                                    if ($cartaopontos === 'adicional noturno') {
-                                        $valordiarianormal += $cartaoponto[1][$key];
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
                     </td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
                 </tr>
-                @elseif($rublica === '1007')
+            @elseif($key === 'hora extra 100%' && $boletimtabela['quantidade'])
                 <tr>
-                <td class="small__font border-left cod text-center border-bottom">{{$rublica}}</td>
-                        <td class="small__font border-left descricao border-bottom">{{$boletimtabela[5][$key]}}</td>
+                    <td class="small__font border-left cod text-center border-bottom">1004</td>
+                    <td class="small__font border-left descricao border-bottom">Hora extra 100%</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            <?php
-                                $quantidade = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'gratificação') {
-                                        $quantidade += $boletimtabela[3][$key];
-                                    }
-                                }
-                               
-                            ?>
-                            {{number_format((float)$quantidade, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
                     </td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                            <?php
-                                $valordiarianormal = 0;
-                                foreach ($boletimtabela[1] as $key => $boletimtabelas) {
-                                    if ($boletimtabelas === 'gratificação') {
-                                    $valordiarianormal += $boletimtabela[2][$key]; 
-                                    }
-                                }
-                            ?>
-                            {{number_format((float)$valordiarianormal, 2, ',', '')}}
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
                     </td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
                 </tr>
-                @endif
-            @endforeach
-        
+            @elseif($key === 'adicional noturno' && $boletimtabela['quantidade'])
+                <tr>
+                    <td class="small__font border-left cod text-center border-bottom">1005</td>
+                    <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
+                </tr>
+            @elseif($key === 'adicional noturno' && $boletimtabela['quantidade'])
+                <tr>
+                    <td class="small__font border-left cod text-center border-bottom">1005</td>
+                    <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
+                </tr>
+            @elseif($key === 'gratificação' && $boletimtabela['quantidade'])
+                <tr>
+                    <td class="small__font border-left cod text-center border-bottom">1005</td>
+                    <td class="small__font border-left descricao border-bottom">Gratifição</td>
+                    <td class="small__font border-left text-center referencia text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['quantidade'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+                        {{number_format((float)$boletimtabela['valor'], 2, ',', '')}}
+                    </td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                    
+                    </td>
+                </tr>
+            @endif
+            
+        @endforeach
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
@@ -610,33 +375,41 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
                 {{number_format((float)$dsr1818, 2, ',', '')}}
             </td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+           
+            </td>
         </tr>
 
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">INSS</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+               {{$indece}}
+            </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                {{number_format((float)$resultadoinss, 2, ',', '')}}
+                
+            </td>
         </tr>
-
-        <tr>
+        
+        <!-- <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">Seguro</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
-        </tr>
+        </tr> -->
 
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                {{number_format((float)$ferias_decimoter, 2, ',', '')}}
+                {{number_format((float)$ferias_decimoter, 2, ',', '')}} 
+                
             </td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
         </tr>
 
         <tr>
@@ -646,7 +419,9 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
                 {{number_format((float)$decimo_ter, 2, ',', '')}}
             </td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+            
+            </td>
         </tr>
 
         <tr>
@@ -656,6 +431,19 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
         </tr>
+        @if($tomador_cartao_ponto_horas)
+        <tr>
+            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left descricao border-bottom">Vale transporte</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+                {{number_format((float) ceil($tomador_cartao_ponto_quantidade), 2, ',', '')}}
+            </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"> {{number_format((float)$tomador_cartao_ponto, 2, ',', '')}}
+                
+            </td>
+        </tr>
+        @endif
     </table>
 
     <table>
@@ -668,10 +456,10 @@
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">
-            {{number_format((float) $valorcartaopont, 2, ',', '')}}
+                {{number_format((float) $total_vencimento + $salario, 2, ',', '')}}
             </td>
             <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">
-            {{number_format((float) $desconto_total_geral, 2, ',', '')}}
+            {{number_format((float) $total_desconto, 2, ',', '')}}
             </td>
         </tr>
 
@@ -679,7 +467,7 @@
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
             <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">
-            {{number_format((float) $valorcartaopont - $desconto_total_geral , 2, ',', '')}}
+            {{number_format((float) ($total_vencimento + $salario)-$total_desconto, 2, ',', '')}}
             </td>
         </tr>
     </table>
@@ -698,15 +486,21 @@
 
         <tr>
             <td class="little__font border-left border-top border-bottom servicosbase text-center">
-            {{number_format((float)$valorcartaopont, 2, ',', '')}}
+                {{number_format((float)$salario, 2, ',', '')}}
             </td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$valorcartaopont + $dsr1818, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center">999.999.999,99</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">
+                {{number_format((float)$serviso_dsr, 2, ',', '')}}
+            </td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">
+                {{$valorbase}}
+            </td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center"></td>
             <td class="little__font border-left border-top border-bottom fgtsmes text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom bairrf text-center">999.999.999,99</td>
             <td class="little__font border-left border-top border-bottom fairrf text-center">999.999.999,99</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes}}
+            
+            </td>
         </tr>
     </table>
 
@@ -735,23 +529,25 @@
             <td class="text-center border-left dia small__font border-bottom">1</td>
             
             <td  class="text-center border-left small__font border-bottom valor"> 
+            
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
                   
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '01') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '01') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '01') {
-                          $valorboletim += $boletimtabela[1][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
              
                {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+               
               
             </td>
             <td  class="text-center border-left small__font border-bottom dia">9</td>
@@ -759,14 +555,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '09') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '09') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '09') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -778,14 +574,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '17') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '17') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '17') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -797,14 +593,14 @@
                 <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '25') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '25') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '25') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -819,14 +615,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '02') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '02') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '02') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -838,14 +634,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '10') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '10') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '10') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -857,14 +653,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '18') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '18') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '18') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -876,14 +672,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '26') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '26') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '26') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -899,14 +695,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '03') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '03') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '03') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -918,14 +714,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '11') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '11') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '11') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -937,14 +733,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '19') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '19') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '19') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -956,14 +752,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '27') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '27') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '27') {
-                          $valorboletim += $boletimtabela[1][$key];
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -979,14 +775,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '04') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '04') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '04') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1000,14 +796,14 @@
               <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '12') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '12') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '12') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1019,14 +815,14 @@
                   $vencimento = 0;
                   $valorboletim = 0;
                
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '20') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '20') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '20') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1037,14 +833,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '28') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '28') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '28') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1058,14 +854,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '05') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '05') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '05') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1076,14 +872,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '13') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '13') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '13') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1094,14 +890,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '21') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '21') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '21') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1112,14 +908,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '29') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '29') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '29') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1133,14 +929,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '06') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '06') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '06') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1151,14 +947,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '14') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '14') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '14') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1169,14 +965,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '22') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '22') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '22') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1187,14 +983,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '30') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '30') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '30') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1208,14 +1004,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '07') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '07') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '07') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1225,14 +1021,14 @@
             <td  class="text-center border-left small__font border-bottom valor">
             <?php
                   $vencimento = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '15') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '15') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                     if ($boletimtabelas === '15') {
-                        $valorboletim += $boletimtabela[2][$key];
+                        $valorboletim += $boletim_tabela['campos']['valor'][$key];
                     }
                   }
               ?>
@@ -1243,14 +1039,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '23') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '23') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '23') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1261,14 +1057,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '31') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '31') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '31') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1282,14 +1078,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '08') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '08') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '08') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1300,14 +1096,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '16') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '16') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '16') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1318,14 +1114,14 @@
             <?php
                   $vencimento = 0;
                   $valorboletim = 0;
-                  foreach ($cartaoponto[0] as $key => $value) {
-                      if ($value === '24') {
-                          $vencimento += $cartaoponto[1][$key];
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '24') {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
                       }
                   }
-                  foreach ($boletimtabela[0] as $key => $boletimtabelas) {
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
                       if ($boletimtabelas === '24') {
-                          $valorboletim += $boletimtabela[2][$key];
+                          $valorboletim += $boletim_tabela['campos']['valor'][$key];
                       }
                   }
               ?>
@@ -1333,9 +1129,9 @@
             </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
             <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">
-             {{number_format((float)$valorcartaopont, 2, ',', '')}}
+             {{number_format((float)$salario, 2, ',', '')}}
             </td>
-        </tr> 
+        </tr>  
        
     </table>
 
@@ -1369,7 +1165,7 @@
 
     <table>
         <tr class="assinatura">
-            <td class="fontDeclaracao data border-left">Data: {{date("m/d/y")}}</td>
+            <td class="fontDeclaracao data border-left">Data: {{date("d/m/y")}}</td>
             <td class="fontDeclaracao border-right linhaass text-center">__________________________________________________</td>
         </tr>
 

@@ -38,7 +38,11 @@ class InssController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        
+        $request->validate([
+            'isano'=>'required|max:4|numeric|unique:insses',
+        ],[
+            'isano.unique'=>'Esta ano já esta cadastrado.'
+        ]);
         $contador = 1;
         $novodados = [
             'ano'=>'',
@@ -49,6 +53,7 @@ class InssController extends Controller
             'user'=>''
         ];
         $inss = new Inss;
+        try {
         foreach ($dados as $key => $value) {
             if ($key === 'user') {
                 $novodados['user'] = $value;
@@ -56,7 +61,7 @@ class InssController extends Controller
             if ($key === 'ano') {
                 $novodados['ano'] = $value;
             }
-           
+            
             if ($contador == 5) {
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 6) {
@@ -101,8 +106,10 @@ class InssController extends Controller
             }
             $contador++;
         }
-        $condicao = 'cadastratrue';
-        return redirect()->route('inss.index')->withInput()->withErrors([$condicao]);
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->route('inss.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+        }
     }
 
     /**
@@ -114,7 +121,7 @@ class InssController extends Controller
     public function show($id)
     {
         $inss = new Inss;
-        $in = $inss->getlist($id);
+        $in = $inss->buscaUnidadeInss($id);
         return response()->json($in);
     }
 
@@ -139,6 +146,9 @@ class InssController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'isano'=>'required|max:4|numeric',
+        ]);
         $contador = 1;
         $novodados = [
             'ano'=>'',
@@ -148,6 +158,7 @@ class InssController extends Controller
             'fator'=>'',
         ];
         $inss = new Inss;
+        try {
         foreach ($dados as $key => $value) {
            
             if ($key === 'ano') {
@@ -198,11 +209,10 @@ class InssController extends Controller
             $contador++;
             
         }
-        $condicao = 'edittrue';
-        
-        return redirect()->route('inss.index')->withInput()->withErrors([$condicao]);
-        // print_r($novodados);
-        //     dd($dados);
+        return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+       } catch (\Throwable $th) {
+        return redirect()->route('inss.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+       }
     }
 
     /**

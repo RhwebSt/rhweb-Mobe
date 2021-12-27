@@ -12,7 +12,7 @@ class Inss extends Model
     public function cadastro($dados)
     {
         return Inss::create([
-            'isano'=>$dados['ano'],
+            'isano'=>$dados['isano'],
             'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>$dados['indice'],
@@ -24,14 +24,14 @@ class Inss extends Model
     {
         return Inss::where('id', $id)
         ->update([
-            'isano'=>$dados['ano'],
+            'isano'=>$dados['isano'],
             'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>$dados['indice'],
             'isreducao'=>$dados['fator']
         ]);
     }
-    public function getlist($id)
+    public function buscaUnidadeInss($id)
     {
         return Inss::where('isano',$id)->get();
     }

@@ -39,6 +39,7 @@ class ComisionarioController extends Controller
     {
         $dados = $request->all();
         $comissionado = new Comissionado;
+        try {
         $comissionados = $comissionado->verifica($dados);
         if ($comissionados) {
             return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Estes dados já tão cadastrados.']);  
@@ -55,11 +56,11 @@ class ComisionarioController extends Controller
        
         $comissionados = $comissionado->cadastro($dados);
         if ($comissionados) {
-            return redirect()->route('comisionado.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
-        }else{
-            return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar o cadastro.']);  
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }
-       
+       } catch (\Throwable $th) {
+        return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar o cadastro.']);  
+       }
     }
 
     /**
@@ -108,7 +109,7 @@ class ComisionarioController extends Controller
         $comissionado = new Comissionado;
         $comissionados = $comissionado->editar($dados,$id);
         if ($comissionados) {
-            return redirect()->route('comisionado.index')->withInput()->withErrors(['true'=>'Cadastro atualizado com sucesso.']);  
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');  
         }else{
             return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível atualizar o registro.']);  
         }

@@ -38,7 +38,11 @@ class IrrfController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
+        $request->validate([
+            'irsano'=>'required|max:4|numeric|unique:irrves',
+        ],[
+            'irsano.unique'=>'Esta ano já esta cadastrado.'
+        ]);
         $contador = 1;
         $novodados = [
             'ano'=>'',
@@ -48,6 +52,7 @@ class IrrfController extends Controller
             'user'=>''
         ];
         $irrf = new Irrf;
+        try {
         foreach ($dados as $key => $value) {
             if ($key === 'user') {
                 $novodados['user'] = $value;
@@ -98,8 +103,10 @@ class IrrfController extends Controller
             }
             $contador++;
         }
-        $condicao = 'cadastratrue';
-        return redirect()->route('irrf.index')->withInput()->withErrors([$condicao]);
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+        }
     }
 
     /**
@@ -111,7 +118,7 @@ class IrrfController extends Controller
     public function show($id)
     {
         $inss = new Irrf;
-        $in = $inss->getlist($id);
+        $in = $inss->buscaListaIrrf($id);
         return response()->json($in);
     }
 
@@ -136,6 +143,9 @@ class IrrfController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'irsano'=>'required|max:4|numeric',
+        ]);
         $contador = 1;
         $novodados = [
             'ano'=>'',
@@ -145,6 +155,7 @@ class IrrfController extends Controller
             'fator'=>'',
         ];
         $inss = new Irrf;
+        try {
         foreach ($dados as $key => $value) {
            
             if ($key === 'ano') {
@@ -191,10 +202,12 @@ class IrrfController extends Controller
                 $inss->edita($novodados,$dados['id05']);
             }
             $contador++;
-            
         }
-        $condicao = 'edittrue';
-        return redirect()->route('irrf.index')->withInput()->withErrors([$condicao]);
+        return redirect()->back()->withSuccess('Atualizador com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+        }
+        
     }
 
     /**

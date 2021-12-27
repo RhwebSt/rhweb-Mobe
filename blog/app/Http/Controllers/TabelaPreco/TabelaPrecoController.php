@@ -17,7 +17,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco; 
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador);
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 
@@ -55,11 +55,13 @@ class TabelaPrecoController extends Controller
             $dados['tomador']
         ];
         if($tabelaprecos) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }
-        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+        }
     }
 
     /**
@@ -116,13 +118,14 @@ class TabelaPrecoController extends Controller
             $dados['tomador']
         ];
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->editar($dados,$id);
-        if($tabelaprecos) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $tabelaprecos = $tabelapreco->editar($dados,$id);
+            if($tabelaprecos) {
+                return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
-        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -134,18 +137,19 @@ class TabelaPrecoController extends Controller
     public function destroy($id)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
-        $excluir = $tabelapreco->deletar($id);
-        $novodados = [
-           $id,
-           $tabelaprecos->tomador
-        ];
-        if ($excluir) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        try {
+            $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
+            $excluir = $tabelapreco->deletar($id);
+            $novodados = [
+            $id,
+            $tabelaprecos->tomador
+            ];
+            if ($excluir) {
+                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
         
-        return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors([$condicao]);
     }
 }

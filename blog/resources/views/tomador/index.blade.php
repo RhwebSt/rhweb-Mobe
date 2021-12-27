@@ -1,11 +1,12 @@
 @extends('layouts.index')
 @section('conteine')
     <div class="container ">    
-        @error('true')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
+        @if(session('success'))
+              <h1></h1>
+              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-        @enderror
+          @endif
         @error('false')
             <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
                     <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
@@ -36,11 +37,7 @@
                                 <label for="exampleDataList" class="form-label"></label>
                                 <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                                 <datalist id="datalistOptions">
-                                    <!-- <option value="San Francisco">
-                                    <option value="New York">
-                                    <option value="Seattle">
-                                    <option value="Los Angeles">
-                                    <option value="Chicago"> -->
+                                  
                                 </datalist>
                                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                 <div class="text-center d-none" id="refres" >
@@ -92,7 +89,6 @@
                             <select id="tipo" name="tipo" class="form-select fw-bold text-dark">
                             <option selected >1</option>
                             <option >2</option>
-                            <option >3</option>
                             </select>
                         </div>
 
@@ -105,8 +101,11 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="simples" class="form-label">Simples</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('simples') is-invalid @enderror" name="simples" value="{{old('simples')}}" id="simples">
+                            <label for="simple" class="form-label">Simples</label>
+                            <select name="simples" value="{{old('simples')}}" id="simple" class="form-select fw-bold text-dark">
+                                <option selected >Não</option>
+                                <option >Sim</option>
+                            </select>
                             @error('simples')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -744,16 +743,15 @@
                 $('#deflator').val(data.tfdefaltor)
                 $('#endereco').val(data.eiid)
                 $('#bancario').val(data.biid)
-                for (let index = 0; index <  $('#tipo option').length; index++) {  
-                    if (data.tstipo == $('#tipo option').eq(index).text()) {
-                        
-                        $('#tipo option').eq(index).attr('selected','selected')
+                for (let index = 0; index <  $('#simple option').length; index++) {  
+                    if (data.tssimples == $('#simple option').eq(index).text()) {
+                        $('#simple option').eq(index).attr('selected','selected')
                     }else  {
-                        $('#tipo option').eq(index).removeAttr('selected')
+                        $('#simple option').eq(index).removeAttr('selected')
                     }
                 }
                 for (let index = 0; index <  $('#complemento__endereco option').length; index++) {  
-                    if (data.estipo == $('#complemento__endereco option').eq(index).text()) {
+                    if (data.escomplemento == $('#complemento__endereco option').eq(index).text()) {
                         
                         $('#complemento__endereco option').eq(index).attr('selected','selected')
                     }else  {

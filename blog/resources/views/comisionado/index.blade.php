@@ -1,16 +1,16 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="container">    
-                @error('true')
-                        <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                            <strong>{{$message}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                        </div>
-                @enderror
-                @error('false')
-                    <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                            <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                        </div>
-                @enderror
+        @if(session('success'))
+              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
+                </div>
+          @endif
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+                </div>
+        @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
                   
                   <h5 class="card-title text-center mt-5 fs-3 ">Comissionado</h5>

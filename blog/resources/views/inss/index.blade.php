@@ -1,31 +1,17 @@
 @extends('layouts.index')
 @section('conteine')
     <div class="container">
-    @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+        @if(session('success'))
+              
+              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+        @endif
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif     
+        @enderror  
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('inss.store')}}" >
         
                 <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">INSS</h1>
@@ -51,7 +37,10 @@
                 <div class="container block">
                     <div class="col-md-1">
                         <label for="ano" class="form-label">Ano</label>
-                        <input type="text" class="form-control" name="ano" id="ano">
+                        <input type="text" class="form-control @error('isano') is-invalid @enderror" name="isano" value="  {{ old('ano')}}" id="ano">
+                        @error('isano')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 

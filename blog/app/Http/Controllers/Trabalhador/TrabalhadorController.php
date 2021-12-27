@@ -25,10 +25,8 @@ class TrabalhadorController extends Controller
      */
     public function index()
     {
-        $trabalhador = new Trabalhador;
-        $trabalhadors = $trabalhador->lista();
         $user = Auth::user();
-        return view('trabalhador.index',compact('trabalhadors','user'));
+        return view('trabalhador.index',compact('user'));
     }
 
     /**
@@ -67,9 +65,9 @@ class TrabalhadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            // 'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'uf'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            'categoria__contrato'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'categoria__contrato'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'irrf'=>'required|max:18',
             'sf'=>'required|max:18',
@@ -121,14 +119,14 @@ class TrabalhadorController extends Controller
             $categorias = $categoria->cadastro($dados);
             $documentos = $documento->cadastro($dados);
             if ($enderecos &&  $bancarios && 
-                $nascimentos && $categorias && $documentos) {
-                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);  
+                $nascimentos && $categorias && $documentos) {   
+                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         }
         try {
 
         } catch (\Throwable $th) {
-            echo('Não foi prossível cadastrar.');
+            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
 
@@ -159,10 +157,7 @@ class TrabalhadorController extends Controller
      */
     public function edit($id)
     {
-        $trabalhador = new Trabalhador;
-        $trabalhadors = $trabalhador->first($id);
-        dd($trabalhadors);
-        // return redirect()->route('trabalhador.edit');
+        
     }
 
     /**
@@ -191,9 +186,9 @@ class TrabalhadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            // 'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'uf'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
-            'categoria__contrato'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
+            'categoria__contrato'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-()]*$/',
             'irrf'=>'required|max:18',
             'sf'=>'required|max:18',
@@ -233,12 +228,12 @@ class TrabalhadorController extends Controller
         $documentos = $documento->editar($dados,$id);
         if ($trabalhadors && $enderecos &&  $bancarios && 
         $nascimentos && $categorias && $documentos) {
-            return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Atualizador com sucesso.']); 
+            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
         }
         try {
 
         } catch (\Throwable $th) {
-            echo('Não foi porssível realizar a atualização.');
+            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
     }
 
@@ -283,10 +278,10 @@ class TrabalhadorController extends Controller
             if ($exenderecos &&  $exbancarios  &&
             $nascimentos && $categorias && $documentos) {
                 $trabalhadors = $trabalhador->deletar($id);
-                return redirect()->route('trabalhador.index')->withInput()->withErrors(['true'=>'Deletado com sucesso.']);
+                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            echo('Não foi porssível deletar o registro.');
+            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
     }
 }

@@ -83,13 +83,14 @@ class Lancamentorublica extends Model
     }
     public function buscaListaRelatorioLancamentoRublica($dados)
     {
-        // return DB::table('lancamentotabelas')
-        // ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        // ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        // ->select(
-        //     'lancamentorublicas.*',
-        // )
-        return Lancamentorublica::where(function($query) use ($dados){ 
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentorublicas.*',
+            'lancamentotabelas.tomador'
+        )
+       ->where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])

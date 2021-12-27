@@ -1,41 +1,17 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="card-body">
-      @if($errors->all())
-            @foreach($errors->all() as  $error)
-              @if($error === 'edittrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
+      
+        @if(session('success'))
+              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
+                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
                 </div>
-             @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
+          @endif
+        @error('false')
+            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
+                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                 </div>
-            @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
-             @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-            @endif
-            @endforeach
-        @endif    
-              @error('false')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                  <strong>{{ $message }} <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-              @enderror
-              @error('true')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                  <strong>{{ $message }} <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
-              @enderror
+        @enderror
 
               <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
               <div class="container">

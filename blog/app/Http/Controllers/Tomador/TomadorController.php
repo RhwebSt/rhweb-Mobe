@@ -131,11 +131,11 @@ class TomadorController extends Controller
                 && $bancarios && 
                 $cartaoponto && $parametrosefips && $incidefolhars &&
                  $indicefaturas) {
-                    return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
+                    return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
 
@@ -267,10 +267,11 @@ class TomadorController extends Controller
             if ($tomadors && $enderecos && $taxas
             && $bancarios  && $incidefolhars &&
             $cartaoponto && $parametrosefips && $indicefaturas) {
-                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
+                return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+                
             }
         } catch (\Throwable $th) {
-            echo('Não foi porssível atualizar os dados.');
+            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi porssível atualizar os dados.']);
         }
     }
 
@@ -325,12 +326,12 @@ class TomadorController extends Controller
             $cartaoponto && $parametrosefips && $incidefolhars &&
             $indicefaturas) {
                 $tomadors = $tomador->deletar($id);
-                return redirect()->route('tomador.index')->withInput()->withErrors(['true'=>'Deletador com sucesso.']);
+                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         try {
             
         } catch (\Throwable $th) {
-            echo('Error ao deletar.');
+            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
     }
 }

@@ -90,12 +90,12 @@ class BoletimCartaoPontoController extends Controller
             // 'matricula.required'=>'O campo não pode esta vazio!',
             // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
-        if ($validator->fails()) {
+        if ($validator->fails()) { 
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
         }
         $bolcartaopontos = $bolcartaoponto->cadastro($dados);
         if ($bolcartaopontos) {
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Cadastro realizado com sucesso!']);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }else{
             return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Cadastro realizado com sucesso!']);
         }
@@ -185,9 +185,7 @@ class BoletimCartaoPontoController extends Controller
         try {
             $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
             if ($bolcartaopontos) {
-                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso!']);
-            }else{
-                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Não foi porssível atualizar os dados!']);
+                return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
         } catch (\Throwable $th) {
             $id = 'cartao ponto';
@@ -220,7 +218,7 @@ class BoletimCartaoPontoController extends Controller
         try {
             $bolcartaopontos = $bolcartaoponto->deletar($id);
             if ($bolcartaopontos) {
-                return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['true'=>'Deletador com sucesso!']);
+                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {
             $id = 'cartao ponto';
