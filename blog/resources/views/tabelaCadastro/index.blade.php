@@ -199,6 +199,9 @@
                   dados = $(this).val()
                   if (dados.indexOf('  ') !== -1) {
                     dados = monta_dados(dados);
+                    if (dados.indexOf('%') !== -1) {
+                        dados = dados.replace('%','')
+                    }
                   }
                 }
                 $.ajax({

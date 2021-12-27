@@ -120,6 +120,15 @@ class Empresa extends Model
             ->where('name', $id)
             ->first();
     }
+    public function buscaContribuicaoSidicato($id)
+    {
+        return Empresa::where([
+            ['id', $id],
+            ['essindicalizado','1-Sim']
+        ]) 
+        ->select('escondicaosindicato')
+        ->first();
+    }
     public function editar($dados,$id)
     {
         return Empresa::where('id', $id)

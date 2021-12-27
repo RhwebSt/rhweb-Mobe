@@ -389,18 +389,38 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
                 {{number_format((float)$resultadoinss, 2, ',', '')}}
-                
             </td>
         </tr>
-        
-        <!-- <tr>
+        @if($dados_irrf['resultado'])
+        <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">Seguro</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
-        </tr> -->
+            <td class="small__font border-left descricao border-bottom">IRRF</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+                {{$dados_irrf['indece']}}
+            </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
 
+            </td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                {{number_format((float)$dados_irrf['resultado'], 2, ',', '')}}
+            </td>
+        </tr>
+        @endif
+        @if($sindicator)
+        <tr>
+            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left descricao border-bottom">Sindicator</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+               
+            </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+
+            </td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+                {{number_format((float)$sindicator, 2, ',', '')}}
+            </td>
+        </tr>
+        @endif
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
@@ -427,19 +447,52 @@
         <tr>
             <td class="small__font border-left cod text-center border-bottom">9999</td>
             <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom">999.999.999,99</td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">999.999.999,99</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">7,5</td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
+            
+                {{number_format((float)$inss_sobre_ter, 2, ',', '')}}
+            </td>
         </tr>
-        @if($tomador_cartao_ponto_horas)
+        @if($tomador_cartao_ponto_vt)
         <tr>
             <td class="small__font border-left cod text-center border-bottom"></td>
             <td class="small__font border-left descricao border-bottom">Vale transporte</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                 {{number_format((float) ceil($tomador_cartao_ponto_quantidade), 2, ',', '')}}
             </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+            {{number_format((float)$tomador_cartao_ponto_vt, 2, ',', '')}}
+            </td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"> 
+                
+            </td>
+        </tr>
+        @endif
+        @if($tomador_cartao_ponto_va)
+        <tr>
+            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left descricao border-bottom">Vale alimentação</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+                {{number_format((float) ceil($tomador_cartao_ponto_quantidade), 2, ',', '')}}
+            </td>
+            <td class="small__font border-left text-center vencimentos text-bold border-bottom">
+            {{number_format((float)$tomador_cartao_ponto_va, 2, ',', '')}}
+            </td>
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"> 
+                
+            </td>
+        </tr>
+        @endif
+        @if($boletim_tabela['adiantamento']['valor'])
+        <tr>
+            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left descricao border-bottom">Adiantamento</td>
+            <td class="small__font border-left text-center referencia text-bold border-bottom">
+                {{number_format((float) $boletim_tabela['adiantamento']['quantidade'], 2, ',', '')}}
+            </td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"> {{number_format((float)$tomador_cartao_ponto, 2, ',', '')}}
+            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"> {{number_format((float)$boletim_tabela['adiantamento']['valor'], 2, ',', '')}}
                 
             </td>
         </tr>
@@ -492,13 +545,20 @@
                 {{number_format((float)$serviso_dsr, 2, ',', '')}}
             </td>
             <td class="little__font border-left border-top border-bottom bainss text-center">
-                {{$valorbase}}
+                {{number_format((float)$base_inss, 2, ',', '')}}
             </td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center"></td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">999.999.999,99</td>
-            <td class="little__font border-left border-top border-bottom fairrf text-center">999.999.999,99</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes}}
+            <td class="little__font border-left border-top border-bottom bafgts text-center">
+            {{number_format((float)$base_fgts, 2, ',', '')}}
+            </td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">
+            
+            {{number_format((float)$fgts_mes, 2, ',', '')}}
+            </td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">
+            {{number_format((float)$base_irrf, 2, ',', '')}}
+            </td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center"> {{$dados_irrf['indece']}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{count($depedentes)}}
             
             </td>
         </tr>

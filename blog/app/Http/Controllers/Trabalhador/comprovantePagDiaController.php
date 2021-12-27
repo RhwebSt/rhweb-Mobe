@@ -14,12 +14,14 @@ use App\TabelaPreco;
 use App\Inss;
 use App\IncideFolhar;
 use App\CartaoPonto;
+use App\Irrf;
 use PDF;
 class comprovantePagDiaController extends Controller
 {
     public function ComprovantePagDia(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $ano = explode('-',$dados['ano_final']);
         $tomador = [];
         $salario = 0;
@@ -51,6 +53,10 @@ class comprovantePagDiaController extends Controller
                 'valor'=> 0
             ],
             'gratificação'=>[
+                'quantidade'=> 0,
+                'valor'=> 0
+            ],
+            'adiantamento'=>[
                 'quantidade'=> 0,
                 'valor'=> 0
             ]
@@ -87,6 +93,10 @@ class comprovantePagDiaController extends Controller
             'gratificação'=>[
                 'quantidade'=> 0,
                 'valor'=> 0
+            ],
+            'adiantamento'=>[
+                'quantidade'=> 0,
+                'valor'=> 0
             ]
         ];
        
@@ -95,11 +105,23 @@ class comprovantePagDiaController extends Controller
         $tomador_incide_folha = 0;
         $tomador_cartao_ponto_quantidade = '';
         $valorfinal = [];
+        $valor_final_irrf = [];
+
+        $dados_irrf = [
+            'indece'=>'',
+            'valor'=>'',
+            'resutador'=>''
+        ];
         $valorbase = '';
         $resultadoinss = '';
         $indece = '';
         $total_vencimento = 0;
         $total_desconto = 0;
+        $base_inss = 0;
+        $base_fgts = 0;
+        $fgts_mes = 0;
+        $base_irrf = 0;
+        $inss_sobre_ter = 0;
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $rublica = new Rublica;
@@ -108,10 +130,13 @@ class comprovantePagDiaController extends Controller
         $lancamentorublica = new Lancamentorublica;   
         $tabelapreco = new TabelaPreco;
         $inss = new Inss;
+        $irrf = new Irrf;
         $indecefolha = new IncideFolhar;
         $cartaoponto = new CartaoPonto;
         
         $insslista = $inss->buscaUnidadeInss($ano[0]);
+        $irrflista = $irrf->buscaListaIrrf($ano[0]);
+       
         $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados);
         $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados);
         foreach ($bolcartaopontos as $key => $tomadores) {
@@ -125,10 +150,11 @@ class comprovantePagDiaController extends Controller
         $tabelaprecos = $tabelapreco->buscaTabelaTomadorInt($tomador); 
 
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']); 
-        $depedentes = $depedente->buscaQuantidadeDepedente($dados['trabalhador']);
-        
+        $depedentes = $depedente->buscaListaDepedente($dados['trabalhador']);
+       
         // dd($cartaopontos, $indecefolhas,$tomador,$tabelaprecos);
         $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
+        $sindicator = $empresa->buscaContribuicaoSidicato($trabalhadors->empresa);
         $rublicas = $rublica->buscaListaRublica(0);
 
 
@@ -158,11 +184,15 @@ class comprovantePagDiaController extends Controller
                         array_push($cartaoponto_diarias['campos']['valor'],self::calculardia($bolcartaoponto->bsadinortuno,$tabelapreco->tsvalor));
                         array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                         array_push($cartaoponto_diarias['campos']['horas'],self::calcularhoras($bolcartaoponto->bsadinortuno));
+                    }elseif ($tabelapreco->tsdescricao == 'adiantamento' && $tabelapreco->tsvalor) {
+                        $boletim_tabela['adiantamento']['valor'] = $tabelapreco->tsvalor;
+                        $boletim_tabela['adiantamento']['quantidade'] = 1;
+                        $total_desconto =  $boletim_tabela['adiantamento']['valor'];
                     }
                 }
             }
         }
-        
+        // dd($total_desconto);
         foreach ($rublicas as $key => $rublica) {
             foreach ($lancamentorublicas as $key => $lancamentorublica) {
                 if ($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsdc === 'Créditos') {
@@ -237,18 +267,24 @@ class comprovantePagDiaController extends Controller
                 $salario +=  $cartaoponto_diarias['campos']['valor'][$key];
             }
         }
-      
+        // dd($boletim_tabela,$lancamentorublicas);
         foreach ($cartaopontos as $key => $cartao) {
             $tomador_cartao_ponto_horas += self::calculardia($cartao->csdiasuteis,null);
         }
         
-        $tomador_cartao_ponto_quantidade = $boletim_tabela['horasNormais']['quantidade'] /  ceil($tomador_cartao_ponto_horas);
-        
+        $tomador_cartao_ponto_quantidade = ($boletim_tabela['horasNormais']['quantidade'] /  ceil($tomador_cartao_ponto_horas) + $boletim_tabela['diariaNormais']['quantidade']);
         foreach ($indecefolhas as $key => $indecefolha_valores) {
             $tomador_incide_folha += $indecefolha_valores->instransporte;
         }
-        $tomador_cartao_ponto = $tomador_incide_folha * ceil($tomador_cartao_ponto_quantidade);
-        $total_desconto += $tomador_cartao_ponto;
+        $tomador_cartao_ponto_vt = $tomador_incide_folha * ceil($tomador_cartao_ponto_quantidade);
+        $total_vencimento += $tomador_cartao_ponto_vt;
+      
+        $tomador_incide_folha = 0;
+        foreach ($indecefolhas as $key => $indecefolha_valores) {
+            $tomador_incide_folha += $indecefolha_valores->insalimentacao;
+        }
+        $tomador_cartao_ponto_va = $tomador_incide_folha * ceil($tomador_cartao_ponto_quantidade);
+        $total_vencimento += $tomador_cartao_ponto_va;
     
         $dsr1818 = self::calculoPocentagem($salario,18.18);
         $total_vencimento += $dsr1818;
@@ -264,6 +300,10 @@ class comprovantePagDiaController extends Controller
         $total_vencimento += $ferias_decimoter;
 
         $valor_inss = $ferias_decimoter +  $serviso_dsr;
+        $base_inss = $serviso_dsr + $ferias_decimoter;
+        $base_fgts = $serviso_dsr + $ferias_decimoter + $decimo_ter;
+        $fgts_mes = $base_fgts * 0.08;
+        $base_irrf =  str_replace(',','.',$irrflista[0]->irdepedente) * count($depedentes);
         foreach ($insslista as $key => $inss) {
             $novoinss =  str_replace(".","",$inss->isvalorfinal);
             $novoinss =  str_replace(',','.',$novoinss);
@@ -303,9 +343,60 @@ class comprovantePagDiaController extends Controller
             }
            
         }
+        $total_desconto += $resultadoinss;
+        // dd($base_fgts, $resultadoinss, $base_irrf);
+        $base_irrf = $base_fgts - $resultadoinss - $base_irrf;
+        if ($base_irrf < 0) {
+            $base_irrf = 0;
+        }
+        foreach ($irrflista as $key => $irrf) {
+            $novoirrf =  str_replace(".","",$irrf->irsvalorfinal);
+            $novoirrf =  str_replace(',','.',$novoirrf);
+            $novoirrf = (float) $novoirrf;
+            if (!in_array($novoirrf, $valor_final_irrf)) {
+                array_push($valor_final_irrf,$novoirrf);
+            }
+        }
+        foreach ($irrflista as $key => $irrf) {
+            if ($base_irrf < $valor_final_irrf[0]) {
+                $dados_irrf['indece'] = 0;
+                $dados_irrf['valor'] = 0;
+                $dados_irrf['resultado'] = 0;
+                break;
+            }elseif ($base_irrf > $valor_final_irrf[0] && $key === 0 && $base_irrf < $valor_final_irrf[1]) {
+                $dados_irrf['indece'] = $irrf->irsindece;
+                $dados_irrf['valor'] = $irrf->irsvalorfinal;
+                $dados_irrf['resultado'] = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                $total_desconto += $dados_irrf['resultado'];
+                break;
+            }elseif ($base_irrf > $valor_final_irrf[1] && $key === 1 && $base_irrf < $valor_final_irrf[2]) {
+                $dados_irrf['indece'] = $irrf->irsindece;
+                $dados_irrf['valor'] = $irrf->irsvalorfinal;
+                $dados_irrf['resultado'] = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                $total_desconto += $dados_irrf['resultado'];
+                break;
+            }elseif ($base_irrf > $valor_final_irrf[2] && $key === 2 && $base_irrf < $valor_final_irrf[3]) {
+                $dados_irrf['indece'] = $irrf->irsindece;
+                $dados_irrf['valor'] = $irrf->irsvalorfinal;
+                $dados_irrf['resultado'] = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                $total_desconto += $dados_irrf['resultado'];
+                break;
+            }elseif ($base_irrf > $valor_final_irrf[3] && $key === 3) {
+                $dados_irrf['indece'] = $irrf->irsindece;
+                $dados_irrf['valor'] = $irrf->irsvalorfinal;
+                $dados_irrf['resultado'] = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                $total_desconto += $dados_irrf['resultado'];
+                break;
+            }
+        }
+        $sindicator = str_replace(".","",$sindicator->escondicaosindicato);
+        $sindicator = str_replace(',','.',$sindicator);
+        $sindicator = (float) $sindicator;
+        $total_desconto += $sindicator;
+        $inss_sobre_ter += $decimo_ter * 0.075;
         if ($trabalhadors) {
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','dados','lancamentorublicas','depedentes','boletim_tabela','total_vencimento','total_desconto','cartaoponto_diarias','valorbase','serviso_dsr','salario','tomador_cartao_ponto','tomador_cartao_ponto_quantidade','tomador_cartao_ponto_horas','dsr1818','indece','resultadoinss','ferias_decimoter','decimo_ter'));
+            $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','dados','lancamentorublicas','depedentes','boletim_tabela','sindicator','inss_sobre_ter','base_fgts','fgts_mes','base_inss','base_irrf','dados_irrf','total_vencimento','total_desconto','cartaoponto_diarias','valorbase','serviso_dsr','salario','tomador_cartao_ponto_vt','tomador_cartao_ponto_va','tomador_cartao_ponto_quantidade','tomador_cartao_ponto_horas','dsr1818','indece','resultadoinss','ferias_decimoter','decimo_ter'));
             return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
         }
         try {

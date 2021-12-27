@@ -16,6 +16,7 @@ class CreateIrrvesTable extends Migration
         Schema::create('irrves', function (Blueprint $table) {
             $table->increments('id');
             $table->char('irsano', 10)->nullable();
+            $table->char('irdepedente',20)->nullable();
             $table->char('irsvalorinicial', 10)->nullable();
             $table->char('irsvalorfinal', 10)->nullable();
             $table->char('irsindece', 10)->nullable();
