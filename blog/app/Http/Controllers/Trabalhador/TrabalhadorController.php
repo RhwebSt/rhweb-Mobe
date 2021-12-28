@@ -14,7 +14,7 @@ use App\Documento;
 use App\Dependente;
 use App\Bolcartaoponto;
 use App\Lancamentorublica;
-use App\Lancamentotabela;
+use App\Lancamentotabela; 
 use App\Comissionado;
 class TrabalhadorController extends Controller
 {

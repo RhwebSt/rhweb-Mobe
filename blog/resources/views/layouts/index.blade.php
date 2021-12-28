@@ -97,6 +97,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
                               <li><a class="dropdown-item border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
                               <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
+                              <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Calculo da Folha</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Calcular Folha</a></li>

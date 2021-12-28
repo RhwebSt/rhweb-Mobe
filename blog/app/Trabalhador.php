@@ -201,6 +201,38 @@ class Trabalhador extends Model
                 )
                 ->paginate(20);
     }
+    public function listaTrabalhadorInt($trabalhador)
+    {
+        return DB::table('trabalhadors')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
+        ->join('enderecos', 'trabalhadors.id', '=', 'enderecos.trabalhador')
+        ->select(
+            'trabalhadors.*', 
+            'documentos.*', 
+            'bancarios.*',
+            'categorias.*',
+            'nascimentos.*',
+            'enderecos.eslogradouro',
+            'enderecos.esbairro',
+            'enderecos.esestado',
+            'enderecos.esmunicipio',
+            'enderecos.esuf',
+            'enderecos.estipo',
+            'enderecos.esnum',
+            'enderecos.escep',
+            'enderecos.eiid'
+            )
+        ->where(function($query) use ($trabalhador){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->whereIn('trabalhadors.id',$trabalhador);
+            }
+        })
+        ->get();
+    }
     public function editar($dados,$id)
     {
         return Trabalhador::where('id', $id)

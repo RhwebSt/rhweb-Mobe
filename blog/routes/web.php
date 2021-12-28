@@ -46,6 +46,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
+    Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
 
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
@@ -76,6 +77,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
     Route::get('empresa/pesquisa/{id}','Empresa\\EmpresaController@pesquisa');
     
+    Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index');
+    Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
+    Route::get('calculo/folha/tomador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTomadorController@calculoFolhaPorTomador')->name('calculo.folha.tomador');
+
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');

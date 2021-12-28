@@ -42,7 +42,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'user' => 'required',
-            'password'=>'required|min:6'
+            'password'=>'required'
         ],[
             'user.required'=>'Campo usuario não pode esta vazio!',
             'password.required'=>'Informe sua senha!',

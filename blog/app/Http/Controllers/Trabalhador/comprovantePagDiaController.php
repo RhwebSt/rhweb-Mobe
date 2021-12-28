@@ -21,7 +21,6 @@ class comprovantePagDiaController extends Controller
     public function ComprovantePagDia(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $ano = explode('-',$dados['ano_final']);
         $tomador = [];
         $salario = 0;
@@ -137,7 +136,8 @@ class comprovantePagDiaController extends Controller
         $insslista = $inss->buscaUnidadeInss($ano[0]);
         $irrflista = $irrf->buscaListaIrrf($ano[0]);
        
-        $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados);
+        $bolcartaopontos = $bolcartaoponto->buscaListaRelatorioLancamentoBolcartao($dados); 
+        
         $lancamentorublicas = $lancamentorublica->buscaListaRelatorioLancamentoRublica($dados);
         foreach ($bolcartaopontos as $key => $tomadores) {
             array_push($tomador,$tomadores->tomador);
@@ -148,7 +148,6 @@ class comprovantePagDiaController extends Controller
         $cartaopontos = $cartaoponto->buscaTomador($tomador);
         $indecefolhas = $indecefolha->busca_va_vt($tomador);
         $tabelaprecos = $tabelapreco->buscaTabelaTomadorInt($tomador); 
-
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']); 
         $depedentes = $depedente->buscaListaDepedente($dados['trabalhador']);
        
@@ -156,7 +155,7 @@ class comprovantePagDiaController extends Controller
         $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
         $sindicator = $empresa->buscaContribuicaoSidicato($trabalhadors->empresa);
         $rublicas = $rublica->buscaListaRublica(0);
-
+        
 
         foreach ($bolcartaopontos as $key => $bolcartaoponto) {
             if ($bolcartaoponto->created_at) {
@@ -192,7 +191,7 @@ class comprovantePagDiaController extends Controller
                 }
             }
         }
-        // dd($total_desconto);
+        
         foreach ($rublicas as $key => $rublica) {
             foreach ($lancamentorublicas as $key => $lancamentorublica) {
                 if ($lancamentorublica->lsdescricao === $rublica->rsdescricao && $rublica->rsdc === 'Créditos') {
@@ -242,6 +241,7 @@ class comprovantePagDiaController extends Controller
         
         foreach ($cartaoponto_diarias['campos']['descricao'] as $key => $cartaopontos_descricao) {
             if ($cartaopontos_descricao === 'hora normal') {
+                
                 $boletim_tabela['horasNormais']['valor'] += $cartaoponto_diarias['campos']['valor'][$key]; 
                 $boletim_tabela['horasNormais']['quantidade'] += $cartaoponto_diarias['campos']['horas'][$key];
                 $salario +=  $cartaoponto_diarias['campos']['valor'][$key];
@@ -267,15 +267,19 @@ class comprovantePagDiaController extends Controller
                 $salario +=  $cartaoponto_diarias['campos']['valor'][$key];
             }
         }
-        // dd($boletim_tabela,$lancamentorublicas);
+        // dd($boletim_tabela,$cartaoponto_diarias,$salario);
         foreach ($cartaopontos as $key => $cartao) {
             $tomador_cartao_ponto_horas += self::calculardia($cartao->csdiasuteis,null);
         }
         
-        $tomador_cartao_ponto_quantidade = ($boletim_tabela['horasNormais']['quantidade'] /  ceil($tomador_cartao_ponto_horas) + $boletim_tabela['diariaNormais']['quantidade']);
+        if (ceil($tomador_cartao_ponto_horas) > 0) {
+            $tomador_cartao_ponto_quantidade = ($boletim_tabela['horasNormais']['quantidade'] /  ceil($tomador_cartao_ponto_horas) + $boletim_tabela['diariaNormais']['quantidade']);
+        }
+        
         foreach ($indecefolhas as $key => $indecefolha_valores) {
             $tomador_incide_folha += $indecefolha_valores->instransporte;
         }
+        
         $tomador_cartao_ponto_vt = $tomador_incide_folha * ceil($tomador_cartao_ponto_quantidade);
         $total_vencimento += $tomador_cartao_ponto_vt;
       
@@ -283,6 +287,7 @@ class comprovantePagDiaController extends Controller
         foreach ($indecefolhas as $key => $indecefolha_valores) {
             $tomador_incide_folha += $indecefolha_valores->insalimentacao;
         }
+        
         $tomador_cartao_ponto_va = $tomador_incide_folha * ceil($tomador_cartao_ponto_quantidade);
         $total_vencimento += $tomador_cartao_ponto_va;
     
@@ -343,6 +348,7 @@ class comprovantePagDiaController extends Controller
             }
            
         }
+        
         $total_desconto += $resultadoinss;
         // dd($base_fgts, $resultadoinss, $base_irrf);
         $base_irrf = $base_fgts - $resultadoinss - $base_irrf;
@@ -389,11 +395,14 @@ class comprovantePagDiaController extends Controller
                 break;
             }
         }
+        
         $sindicator = str_replace(".","",$sindicator->escondicaosindicato);
         $sindicator = str_replace(',','.',$sindicator);
         $sindicator = (float) $sindicator;
         $total_desconto += $sindicator;
         $inss_sobre_ter += $decimo_ter * 0.075;
+        //dd($boletim_tabela,$lancamentorublicas,$cartaoponto_diarias,$bolcartaopontos);
+
         if ($trabalhadors) {
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
             $pdf = PDF::loadView('comprovantePagDia',compact('trabalhadors','empresas','dados','lancamentorublicas','depedentes','boletim_tabela','sindicator','inss_sobre_ter','base_fgts','fgts_mes','base_inss','base_irrf','dados_irrf','total_vencimento','total_desconto','cartaoponto_diarias','valorbase','serviso_dsr','salario','tomador_cartao_ponto_vt','tomador_cartao_ponto_va','tomador_cartao_ponto_quantidade','tomador_cartao_ponto_horas','dsr1818','indece','resultadoinss','ferias_decimoter','decimo_ter'));

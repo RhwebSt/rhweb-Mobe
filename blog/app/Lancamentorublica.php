@@ -93,14 +93,38 @@ class Lancamentorublica extends Model
        ->where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
-                ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+                if ($dados['idtomador']) {
+                    $query->where([
+                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                        ['tomadors.id',$dados['idtomador']]
+                    ])
+                    ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+                }else{
+                    $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
+                    ->whereBetween('lancamentorublicas.created_at',
+                    [$dados['ano_inicial'], 
+                    $dados['ano_final']]);
+                }
+               
             }else{
-                $query->where([
-                    ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                    ['lancamentorublicas.empresa', $user->empresa]
-                ]) 
-                ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+                if ($dados['idtomador']) {
+                    $query->where([
+                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                        ['lancamentorublicas.empresa', $user->empresa]
+                    ]) 
+                    ->whereBetween('lancamentorublicas.created_at',
+                    [$dados['ano_inicial'], 
+                    $dados['ano_final']]);
+                }else{
+                    $query->where([
+                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                        ['lancamentorublicas.empresa', $user->empresa],
+                        ['tomadors.id',$dados['idtomador']]
+                    ]) 
+                    ->whereBetween('lancamentorublicas.created_at',
+                    [$dados['ano_inicial'], 
+                    $dados['ano_final']]);
+                }
             }
         })
         ->get();

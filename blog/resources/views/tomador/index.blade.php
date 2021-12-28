@@ -575,26 +575,45 @@
                           <div class="modal-body modal-delbody">
                             <div class="mb-3 bg-dark p-2 rounded">
                                 <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                  <label class="form-check-label mt-1" for="inlineCheckbox1">Boletins</label>
+                                  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="tipo" value="option1">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox1">Recibo Geral</label>
                                 </div>
                                 <div class="form-check form-check-inline d-none">
-                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                  <label class="form-check-label mt-1" for="inlineCheckbox2"></label>
+                                  <input class="form-check-input" type="radio" id="inlineCheckbox2" name="tipo" value="option2">
+                                  <label class="form-check-label mt-1" for="inlineCheckbox2">Empresas Trabalhadas</label>
                                 </div>
-                                <div class="form-check d-none form-check-inline">
+                                <!-- <div class="form-check d-none form-check-inline">
                                   <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
                                   <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
+                                </div> -->
+                                
+                                
+                            </div>
+                            
+                            <div>
+                                <div class="col-md-12 mt-2 mb-2 p-1 pesquisar d-none">
+                                    <div class="d-flex">
+                                    <label for="exampleDataList" class="form-label"></label>
+                                    <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                                    <datalist id="datalistOptions">
+                                    </datalist>
+                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                    <div class="text-center d-none" id="refres" >
+                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                            <span class="visually-hidden">Carregando...</span>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                               
-                             <div class="d-flex">
-                                <div class="col-md-5 input">
+                             <div class="row">
+                                <div class="col-12  col-md-12  input">
                                   <label for="ano" class="form-label">Data Inicial</label>
                                   <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
                                 </div>
                                 
-                                <div class="col-md-5 input ms-3">
+                                <div class="col-12  mt-2 col-md-12 ms-1 input">
                                   <label for="ano" class="form-label">Data Final</label>
                                   <input type="date" class="form-control " name="ano_final" value="" id="tano">
                                 </div>

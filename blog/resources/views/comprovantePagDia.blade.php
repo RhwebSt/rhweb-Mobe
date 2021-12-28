@@ -234,7 +234,7 @@
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
             <td class=" small__font text-bold text-center border-top border-bottom comp">Competência: 
                 <?php
-                    $data = explode('-',$lancamentorublicas[0]-> created_at)
+                    $data = explode('-',$dados['ano_final'])
                 ?>
                 {{$data[1]}}/{{$data[0]}}
             </td>
@@ -369,7 +369,7 @@
             
         @endforeach
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1002</td>
             <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">18,18</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
@@ -381,7 +381,7 @@
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1003</td>
             <td class="small__font border-left descricao border-bottom">INSS</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                {{$indece}}
@@ -408,7 +408,7 @@
         @endif
         @if($sindicator)
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1011</td>
             <td class="small__font border-left descricao border-bottom">Sindicator</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                
@@ -422,7 +422,7 @@
         </tr>
         @endif
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1004</td>
             <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
@@ -433,7 +433,7 @@
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1005</td>
             <td class="small__font border-left descricao border-bottom">13º Salário</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">8,34</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom">
@@ -445,7 +445,7 @@
         </tr>
 
         <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
+            <td class="small__font border-left cod text-center border-bottom">1006</td>
             <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">7,5</td>
             <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
@@ -456,7 +456,7 @@
         </tr>
         @if($tomador_cartao_ponto_vt)
         <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left cod text-center border-bottom">1007</td>
             <td class="small__font border-left descricao border-bottom">Vale transporte</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                 {{number_format((float) ceil($tomador_cartao_ponto_quantidade), 2, ',', '')}}
@@ -471,7 +471,7 @@
         @endif
         @if($tomador_cartao_ponto_va)
         <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left cod text-center border-bottom">1008</td>
             <td class="small__font border-left descricao border-bottom">Vale alimentação</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                 {{number_format((float) ceil($tomador_cartao_ponto_quantidade), 2, ',', '')}}
@@ -486,7 +486,7 @@
         @endif
         @if($boletim_tabela['adiantamento']['valor'])
         <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
+            <td class="small__font border-left cod text-center border-bottom">1010</td>
             <td class="small__font border-left descricao border-bottom">Adiantamento</td>
             <td class="small__font border-left text-center referencia text-bold border-bottom">
                 {{number_format((float) $boletim_tabela['adiantamento']['quantidade'], 2, ',', '')}}

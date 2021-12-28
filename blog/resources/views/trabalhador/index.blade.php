@@ -452,7 +452,7 @@
                           <form id="formrelatorioempresa" method="post">
                           @csrf
                           <input type="hidden" name="trabalhador" id="trabalhador">
-                         
+                         <input type="hidden" name="idtomador" id='idtomador'>
                           <div class="modal-body modal-delbody">
                             <div class="mb-3 bg-dark p-2 rounded">
                                 <div class="form-check form-check-inline">
@@ -467,10 +467,29 @@
                                   <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
                                   <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
                                 </div> -->
+                                
+                                
+                            </div>
+                            
+                            <div>
+                                <div class="col-md-12 mt-2 mb-2 p-1 pesquisar">
+                                    <div class="d-flex">
+                                    <label for="exampleDataList" class="form-label"></label>
+                                    <input class="form-control fw-bold text-dark pesquisa" list="listatomador"  id="lista_tomador">
+                                    <datalist id="listatomador">
+                                    </datalist>
+                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                    <div class="text-center d-none" id="refres" >
+                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                            <span class="visually-hidden">Carregando...</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                               
                              <div class="d-flex">
-                                <div class="col-md-5 input">
+                                <div class="col-md-5 ms-1 input">
                                   <label for="ano" class="form-label">Data Inicial</label>
                                   <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
                                 </div>
@@ -538,6 +557,32 @@
           categoriatrabalhador.forEach(element => {
             categorialist += `<option value="${element}">`
           });
+          $('#lista_tomador').on('keyup focus',function() {
+            let dados = 0;
+            if ($(this).val()) {
+              dados = $(this).val()
+            }
+              $.ajax({
+                url: "{{url('tomador')}}/pesquisa/"+dados, 
+                type: 'get',
+                contentType: 'application/json', 
+                success: function(data) {
+                  let nome = ''
+                  if (data.length >= 1) {
+                    data.forEach(element => {
+                    nome += `<option value="${element.tsnome}">`
+                            // nome += `<option value="${element.tsmatricula}">`
+                            // nome += `<option value="${element.tscnpj}">`
+                    });
+                    $('#listatomador').html(nome)
+                  } 
+                  if(data.length === 1 && dados.length >= 2){
+                    $('#idtomador').val(data[0].tomador)
+                    
+                  }
+                }
+              })
+          })
           $('#categoria_list').html(categorialist);
             $( "#pesquisa" ).on('keyup focus',function() {
                 let dados = '0'
