@@ -40,9 +40,9 @@
                                   
                                 </datalist>
                                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                <div class="text-center d-none" id="refres" >
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                        <span class="visually-hidden">Carregando...</span>
+                                <div class="text-center d-none p-1" id="refres" >
+                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                                      <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
                                 </div>

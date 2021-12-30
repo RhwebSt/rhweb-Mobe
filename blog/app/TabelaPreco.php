@@ -133,6 +133,10 @@ class TabelaPreco extends Model
         })
         ->first();
     }
+    public function buscaUnidadeTabelaRelatorio($tomador)
+    {
+        return TabelaPreco::where('tomador',$tomador)->get();
+    }
     public function editar($dados,$id)
     {
         return TabelaPreco::where('id', $id)

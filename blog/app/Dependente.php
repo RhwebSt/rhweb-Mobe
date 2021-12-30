@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Dependente extends Model
 {
     protected $fillable = [
@@ -24,6 +24,13 @@ class Dependente extends Model
     public function buscaListaDepedente($id)
     {
         return Dependente::where('trabalhador', $id)->get();
+    }
+    public function buscaListaDepedenteInt($id)
+    {
+        return Dependente::select(DB::raw('count(*) as depedentes,trabalhador'))
+        ->groupBy('trabalhador')
+        ->whereIn('trabalhador', $id)
+        ->get();
     }
     public function buscaQuantidadeDepedente($id)
     {

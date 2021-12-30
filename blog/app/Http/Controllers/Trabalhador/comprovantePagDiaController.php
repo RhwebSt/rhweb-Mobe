@@ -145,7 +145,7 @@ class comprovantePagDiaController extends Controller
         foreach ($lancamentorublicas  as $key => $tomadores) {
             array_push($tomador,$tomadores->tomador);
         }
-        $cartaopontos = $cartaoponto->buscaTomador($tomador);
+        $cartaopontos = $cartaoponto->buscaTomador($tomador); 
         $indecefolhas = $indecefolha->busca_va_vt($tomador);
         $tabelaprecos = $tabelapreco->buscaTabelaTomadorInt($tomador); 
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']); 
@@ -350,7 +350,6 @@ class comprovantePagDiaController extends Controller
         }
         
         $total_desconto += $resultadoinss;
-        // dd($base_fgts, $resultadoinss, $base_irrf);
         $base_irrf = $base_fgts - $resultadoinss - $base_irrf;
         if ($base_irrf < 0) {
             $base_irrf = 0;

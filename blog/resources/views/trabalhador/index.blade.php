@@ -55,9 +55,9 @@
                 <datalist id="datalistOptions">
                 </datalist>
                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                <div class="text-center d-none" id="refres" >
-                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                        <span class="visually-hidden">Carregando...</span>
+                <div class="text-center d-none p-1" id="refres" >
+                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                      <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
                 </div>
@@ -326,7 +326,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="ctps" class="form-label">CTPS</label>
                   <input type="text" class="form-control input fw-bold text-dark @error('ctps') is-invalid @enderror" maxlength="20" value="{{old('ctps')}}" name="ctps" id="ctps">
                   @error('ctps')
@@ -334,7 +334,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="serie__ctps" class="form-label">Série</label>
                   <input type="text" class="form-control input fw-bold text-dark @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps">
                   @error('serie__ctps')
@@ -342,7 +342,7 @@
                   @enderror
                 </div>
     
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="uf__ctps" class="form-label">UF</label>
                   <input type="text" class="form-control input fw-bold text-dark  @error('uf__ctps') is-invalid @enderror" value="{{old('uf__ctps')}}" name="uf__ctps" maxlength="2" id="uf__ctps">
                   @error('uf__ctps')
@@ -371,7 +371,7 @@
                 
                 <div class="container text-center mt-4 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador <i class="fad fa-university"></i></div>
     
-                <div class="col-md-3 mb-5">
+                <div class="col-md-3">
                             <label for="banco" class="form-label">Banco</label>
                             <input type="text" class="form-control input @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
                             <div id="menssagem-banco" class="valid-feedback">
@@ -382,7 +382,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="agencia" class="form-label">Agência</label>
                             <input type="text" class="form-control input @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia">
                             @error('agencia')
@@ -390,7 +390,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="operacao" class="form-label">Operação</label>
                             <input type="text" class="form-control input @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao">
                             @error('aperacao')
@@ -398,7 +398,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 mb-5">
+                        <div class="col-md-2">
                             <label for="conta" class="form-label">Conta</label>
                             <input type="text" class="form-control input @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta">
                             @error('conta')
@@ -406,7 +406,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-3">
                             <label for="pix" class="form-label">PIX</label>
                             <input type="text" class="form-control input @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
                             @error('pix')
@@ -452,7 +452,7 @@
                           <form id="formrelatorioempresa" method="post">
                           @csrf
                           <input type="hidden" name="trabalhador" id="trabalhador">
-                         <input type="hidden" name="idtomador" id='idtomador'>
+                         
                           <div class="modal-body modal-delbody">
                             <div class="mb-3 bg-dark p-2 rounded">
                                 <div class="form-check form-check-inline">
@@ -475,8 +475,8 @@
                                 <div class="col-md-12 mt-2 mb-2 p-1 pesquisar">
                                     <div class="d-flex">
                                     <label for="exampleDataList" class="form-label"></label>
-                                    <input class="form-control fw-bold text-dark pesquisa" list="listatomador"  id="lista_tomador">
-                                    <datalist id="listatomador">
+                                    <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                                    <datalist id="datalistOptions">
                                     </datalist>
                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                     <div class="text-center d-none" id="refres" >
@@ -488,7 +488,7 @@
                                 </div>
                             </div>
                               
-                             <div class="d-flex">
+                             <div class="d-flex ">
                                 <div class="col-md-5 ms-1 input">
                                   <label for="ano" class="form-label">Data Inicial</label>
                                   <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
@@ -557,32 +557,6 @@
           categoriatrabalhador.forEach(element => {
             categorialist += `<option value="${element}">`
           });
-          $('#lista_tomador').on('keyup focus',function() {
-            let dados = 0;
-            if ($(this).val()) {
-              dados = $(this).val()
-            }
-              $.ajax({
-                url: "{{url('tomador')}}/pesquisa/"+dados, 
-                type: 'get',
-                contentType: 'application/json', 
-                success: function(data) {
-                  let nome = ''
-                  if (data.length >= 1) {
-                    data.forEach(element => {
-                    nome += `<option value="${element.tsnome}">`
-                            // nome += `<option value="${element.tsmatricula}">`
-                            // nome += `<option value="${element.tscnpj}">`
-                    });
-                    $('#listatomador').html(nome)
-                  } 
-                  if(data.length === 1 && dados.length >= 2){
-                    $('#idtomador').val(data[0].tomador)
-                    
-                  }
-                }
-              })
-          })
           $('#categoria_list').html(categorialist);
             $( "#pesquisa" ).on('keyup focus',function() {
                 let dados = '0'

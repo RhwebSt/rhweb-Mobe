@@ -216,21 +216,11 @@
             </tr>
         </table>
     </div>
-
-    @if( isset($empresas->esnome))
     <table>
         <tr>
             <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$empresas->esnome}}</td>
         </tr>
     </table>
-    @else
-    <table>
-        <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">MOBE PRESTADORA DE SERVIÇOS LTDA</td>
-        </tr>
-    </table>
-    @endif
-
       <table>
         <thead>
           <tr class="">

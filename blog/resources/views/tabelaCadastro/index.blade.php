@@ -133,26 +133,32 @@
                     <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
                     <th class="col text-center border-top text-nowrap" style="width:70px">Cod</th>
                     <th class="col text-center border-top text-nowrap" style="width:400px">Descrição</th>
-                    <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade/Tonelada</th>
+                    <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade</th>
                     <th class="col text-center border-top text-nowrap" style="width:170px">Valor Unitário</th>
                     <th class="col text-center border-top text-nowrap" style="width:170px">Total R$</th>
-                    <th class="col text-center border-end border-top text-nowrap" style="width:70px">Ação</th>
+                    <th class="col text-center border-top text-nowrap" style="width:70px">Editar</th>
+                    <th class="col text-center border-end border-top text-nowrap" style="width:70px">Excluir</th>
                 </thead>
                 <tbody style="background-color: #081049; color: white;">
                     @if(count($lista) > 0)
                     @foreach($lista as $listas)
                         <tr>
-                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap">{{$listas->tsnome}}</td>
-                            <td class="col text-center border-bottom text-nowrap">{{$listas->licodigo}}</td>
-                            <td class="col text-center border-bottom text-nowrap capitalize">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap">{{$listas->lsquantidade}}</td>
-                            <td class="col text-center border-bottom text-nowrap">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom border-start text-nowrap text-uppercase">{{$listas->tsnome}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->licodigo}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">
+                                <button class="btn" style="background-color:#204E83;">
+                                <a href="" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
+                                </button>
+                            </td>
                             <td class="col text-center border-bottom border-end text-nowrap">
                             <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn "><i style="color:#FF331F;" class="fal fa-trash"></i></button>
+                                <button type="submit" class="btn" style="background-color:#FF331F;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                             </form> 
                             </td>
                         </tr>

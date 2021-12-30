@@ -205,16 +205,21 @@ class Trabalhador extends Model
     {
         return DB::table('trabalhadors')
         ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa')
         ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
         ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
         ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
         ->join('enderecos', 'trabalhadors.id', '=', 'enderecos.trabalhador')
         ->select(
-            'trabalhadors.*', 
-            'documentos.*', 
+            'trabalhadors.id',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.tscpf',
+            'empresas.esnome',
+            'empresas.escnpj', 
+            'documentos.dspis', 
             'bancarios.*',
-            'categorias.*',
-            'nascimentos.*',
+            'categorias.cbo',
             'enderecos.eslogradouro',
             'enderecos.esbairro',
             'enderecos.esestado',

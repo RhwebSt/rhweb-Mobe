@@ -129,6 +129,24 @@ class Lancamentorublica extends Model
         })
         ->get();
     }
+    public function buscaListaLancamentoRublica($tomador,$ano_inicio,$ano_final)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentorublicas.*',
+            'lancamentotabelas.tomador'
+        )
+        ->where(function($query) use ($tomador,$ano_inicio,$ano_final){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.tomador',$tomador)
+                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+            }
+        })
+        ->get();
+    }
     public function editar($dados,$id)
     {
         return Lancamentorublica::where('id', $id)

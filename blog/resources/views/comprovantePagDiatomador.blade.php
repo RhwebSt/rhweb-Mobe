@@ -222,10 +222,10 @@
 </style>
 
 <body>
-   @foreach($trabalhados as $key => $trabalhado)
+   @foreach($trabalhadores as $key => $trabalhado)
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark"></td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$trabalhado->esnome}}</td>
         </tr>
     </table>
     
@@ -233,23 +233,23 @@
         <tr>
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
             <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:</td>
-            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:</td>
+            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$trabalhado->escnpj}}</td>
         </tr>
 
     </table>
     
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque"></td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$trabalhado->tsnome}}</td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong></td>
-            <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong></td>
-            <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong></td>
-            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong></td>
+            <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong>{{$trabalhado->tsmatricula}}</td>
+            <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong>{{$trabalhado->tscpf}}</td>
+            <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong>{{$trabalhado->dspis}}</td>
+            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>{{$trabalhado->cbo}}</td>
         </tr>
     </table>
 
@@ -261,141 +261,180 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Vencimentos</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
+                @foreach($boletim_tabela['diariaNormais']['id'] as $i => $boletim_tabela_diariaNormais_id)
+                    @if($boletim_tabela_diariaNormais_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1000</td>
+                            <td class="small__font border-left descricao border-bottom">Diaria normais</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['diariaNormais']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['diariaNormais']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['horasNormais']['id'] as $i => $boletim_tabela_horasNormais_id)
+                    @if($boletim_tabela_horasNormais_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1002</td>
+                            <td class="small__font border-left descricao border-bottom">Horas normais</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['horasNormais']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['horasNormais']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['hora extra 50%']['id'] as $i => $boletim_tabela_ex50_id)
+                    @if($boletim_tabela_ex50_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1003</td>
+                            <td class="small__font border-left descricao border-bottom">hora extra 50%</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 50%']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 50%']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['hora extra 100%']['id'] as $i => $boletim_tabela_ex100_id)
+                    @if($boletim_tabela_ex100_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1004</td>
+                            <td class="small__font border-left descricao border-bottom">Hora extra 100%</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 100%']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 100%']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['adicional noturno']['id'] as $i => $boletim_tabela_noturno_id)
+                    @if($boletim_tabela_noturno_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1005</td>
+                            <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['adicional noturno']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['adicional noturno']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['gratificação']['id'] as $i => $boletim_tabela_gradificacao_id)
+                    @if($boletim_tabela_gradificacao_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">1005</td>
+                            <td class="small__font border-left descricao border-bottom">Gratifição</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['gratificação']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['gratificação']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['dsr1818']['id'] as $i => $boletim_tabela_dsr1818_id)
+                    @if($boletim_tabela_dsr1818_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">18,18</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['dsr1818']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['inss']['id'] as $i => $boletim_tabela_inss_id)
+                    @if($boletim_tabela_inss_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">INSS</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['inss']['indece'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['inss']['resultadoinss'][$i], 2, ',', '')}}</td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['irrf']['id'] as $i => $boletim_tabela_irrf_id)
+                    @if($boletim_tabela_irrf_id === $trabalhado->id && $boletim_tabela['irrf']['resultadoinss'][$i])
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">IRRF</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['irrf']['indece'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['irrf']['resultadoinss'][$i], 2, ',', '')}}</td>
+                        </tr>
+                    @endif
+                @endforeach
+                @if($sindicator)
                 <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1000</td>
-                    <td class="small__font border-left descricao border-bottom">Diaria normais</td>
+                    <td class="small__font border-left cod text-center border-bottom">9999</td>
+                    <td class="small__font border-left descricao border-bottom">Sindicator</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$sindicator, 2, ',', '')}}</td>
                 </tr>
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1002</td>
-                    <td class="small__font border-left descricao border-bottom">Horas normais</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                </tr>
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1003</td>
-                    <td class="small__font border-left descricao border-bottom">hora extra 50%</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1004</td>
-                    <td class="small__font border-left descricao border-bottom">Hora extra 100%</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1005</td>
-                    <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1005</td>
-                    <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
-                    
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">1005</td>
-                    <td class="small__font border-left descricao border-bottom">Gratifição</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">18,18</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">INSS</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">IRRF</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">Sindicator</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">8,34</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom">9999</td>
-            <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom">7,5</td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
-            <td class="small__font border-left descricao border-bottom">Vale transporte</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
-            <td class="small__font border-left descricao border-bottom">Vale alimentação</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
-
-        <tr>
-            <td class="small__font border-left cod text-center border-bottom"></td>
-            <td class="small__font border-left descricao border-bottom">Adiantamento</td>
-            <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-        </tr>
+                @endif
+                @foreach($boletim_tabela['ferias_decimoter']['id'] as $i => $boletim_tabela_ferias_decimoter_id)
+                    @if($boletim_tabela_ferias_decimoter_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['ferias_decimoter']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['decimo_ter']['id'] as $i => $boletim_tabela_decimo_ter_id)
+                    @if($boletim_tabela_decimo_ter_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">13º Salário</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">8,34</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['decimo_ter']['valor'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['inss_sobre_ter']['id'] as $i => $boletim_tabela_inss_sobre_ter_id)
+                    @if($boletim_tabela_inss_sobre_ter_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom">9999</td>
+                            <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">7,5</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['inss_sobre_ter']['resultadoinss'][$i], 2, ',', '')}}</td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($dadosTrabalhador['id'] as $i => $boletim_tabela_vt_id)
+                    @if($boletim_tabela_vt_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom"></td>
+                            <td class="small__font border-left descricao border-bottom">Vale transporte</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_vt'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($dadosTrabalhador['id'] as $i => $boletim_tabela_vt_id)
+                    @if($boletim_tabela_vt_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom"></td>
+                            <td class="small__font border-left descricao border-bottom">Vale alimentação</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_va'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        </tr>
+                    @endif
+                @endforeach
+                @foreach($boletim_tabela['adiantamento']['id'] as $i => $boletim_tabela_adiantamento_id)
+                    @if($boletim_tabela_adiantamento_id === $trabalhado->id)
+                        <tr>
+                            <td class="small__font border-left cod text-center border-bottom"></td>
+                            <td class="small__font border-left descricao border-bottom">Adiantamento</td>
+                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float) $boletim_tabela['adiantamento']['quantidade'][$i], 2, ',', '')}}</td>
+                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
+                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['adiantamento']['valor'][$i], 2, ',', '')}}</td>
+                        </tr>
+                    @endif
+                @endforeach
 
     </table>
 
@@ -408,7 +447,7 @@
 
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
-            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right"></td>
+            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$boletim_tabela['vencimento']['valor'][$key], 2, ',', '')}}</td>
             <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom"></td>
         </tr>
 
@@ -432,14 +471,15 @@
         </tr>
 
         <tr>
-            <td class="little__font border-left border-top border-bottom servicosbase text-center"></td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center"></td>
-            <td class="little__font border-left border-top border-bottom bainss text-center"></td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center"></td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center"></td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center"></td>
-            <td class="little__font border-left border-top border-bottom fairrf text-center"></td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center"></td>
+            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$boletim_tabela['salario']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$boletim_tabela['serviso_dsr']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$boletim_tabela['base_inss']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$boletim_tabela['base_fgts']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$boletim_tabela['fgts_mes']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$boletim_tabela['base_irrf']['valor'][$key], 2, ',', '')}}</td>
+            
+            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$boletim_tabela['irrf']['indece'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes[$key]->depedentes}}</td>
         </tr>
     </table>
 
@@ -569,9 +609,9 @@
         </tr>
 
         <tr>
-            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong></strong> Agência: <strong></strong> Operação:<strong></strong> Conta: <strong></strong></td>
+            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong>{{$trabalhado->bsbanco}}</strong> Agência: <strong>{{$trabalhado->bsagencia}}</strong> Operação:<strong>{{$trabalhado->bsoperacao}}</strong> Conta: <strong>{{$trabalhado->bsconta}}</strong></td>
         </tr>
-    </table>
+    </table> 
 
     <table>
         <tr class="assinatura">
@@ -584,6 +624,7 @@
             <td class="fontDeclaracao text-center border-right border-bottom">Assinatura Trabalhador</td>
         </tr>
     </table>
+    
     <h1 style="page-break-after: always;">{{$key+1}}</h1>
     @endforeach
 </body>

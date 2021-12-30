@@ -37,4 +37,8 @@ class IncideFolhar extends Model
    {
         return IncideFolhar::whereIn('tomador', $id)->get();
    }
+   public function buscaUnidade_va_vt($id)
+   {
+    return IncideFolhar::where('tomador', $id)->first();
+   }
 }

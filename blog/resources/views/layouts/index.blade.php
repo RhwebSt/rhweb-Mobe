@@ -34,7 +34,7 @@
             font-weight: bold !important;
         }
     </style>
-    <body >
+    <body  class="body-content">
     <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
                         <div class="text-center " >
                           <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: #393D3F;">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
     <main>
-        <nav class="navbar navbar-expand-lg navbar-dark " style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
+        <nav class="navbar navbar-expand-lg navbar-dark mb-5" style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
             <a class="" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
             <div class="collapse navbar-collapse " id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                    <a class="nav-link dropdown-toggle text-white fonttop " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                       Cadastro
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -77,7 +77,7 @@
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                       <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white disabled" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white disabled fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Recibos da Folha 
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -91,13 +91,13 @@
                       <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                         <ul class="navbar-nav">
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
                               <li><a class="dropdown-item border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
                               <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
-                              <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Calculo da Folha</a></li>
+                              <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Calculo Folha</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Calcular Folha</a></li>
@@ -112,7 +112,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Faturas
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -126,7 +126,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Recibo Avulsos
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -139,7 +139,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Relatórios
                               </a>
                               <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
@@ -158,8 +158,8 @@
                           </ul>
       
 
-                  <div class="dbg-primary-flex align-items-end "> 
-                    <div class="flex-shrink-0 dropdown flex-row-reverse">
+                  <div class="userwidth"> 
+                    <div class="flex-shrink-0 dropdown flex-row-reverse fonttop">
                       @if($user->name)
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
@@ -183,7 +183,7 @@
             </div>
           </div>
             <div class="">
-                <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust"></i></button>
+                <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust iconbtn"></i></button>
             </div>
             
         </div>
@@ -193,10 +193,12 @@
    
    @yield('conteine')
 
-    <footer class="mt-5 footer d-none" style="background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197)); color: #ffff;">
-        <p class="text-center p-4">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
-    </footer>
+    
     </main>
+    
+    <footer>
+        <p class="text-nowrap">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
+    </footer>
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>

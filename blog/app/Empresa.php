@@ -71,6 +71,10 @@ class Empresa extends Model
             })
             ->first();
     }
+    public function buscaListaEmpresaInt($id)
+    {
+        return Empresa::whereIn('id',$id)->select('esnome')->get();
+    }
     public function buscaListaEmpresa($id)
     {
         return Empresa::select('id','esnome','escnpj')->where(function($query) use ($id){

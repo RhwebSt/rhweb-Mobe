@@ -31,16 +31,15 @@
                     <div class="row">
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                          
-                          <button type="submit" class="btn botao " id="incluir">
-                          Incluir
-                            </button>
-                            <button type="submit" disabled class="btn botao " id="atualizar">
-                          Atualizar
-                            </button>
-                          <button type="button" disabled id="excluir" class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                              Excluir
-                            </button>
+                        <button type="submit" class="btn botao " id="incluir">Incluir</button>
+                        <button type="submit" disabled class="btn botao " id="atualizar">Atualizar</button>
+                         <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fad fa-file-invoice"></i> Relatórios
+                        </button>
+                          <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
+                            <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
+                          </ul>
+                        <button type="button" disabled id="excluir" class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
                           <a class="btn botao" href="{{ route('tomador.index') }}" role="button">Sair</a>
@@ -60,9 +59,9 @@
                                     <option value="Chicago"> -->
                                 </datalist>
                                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                <div class="text-center d-none" id="refres" >
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                        <span class="visually-hidden">Carregando...</span>
+                                <div class="text-center d-none p-1" id="refres" >
+                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                                        <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
                                 </div>
@@ -101,7 +100,7 @@
                        <span class="text-danger" id="descricoesmensagem"></span>
                     </div>
                   
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="valor" class="form-label">Valor Trabalhador</label>
                       <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
                       @error('valor')
@@ -109,7 +108,7 @@
                       @enderror
                     </div>
                     
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <label for="valor__tomador" class="form-label">Valor Tomador</label>
                       <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
                       @error('valor__tomador')
@@ -125,23 +124,28 @@
                         <thead>
                             <th class="col text-center border-start border-top  text-nowrap" style="width:60px;">Ano</th>
                             <th class="col text-center border-top  text-nowrap" style="width:80px">Código</th>
-                            <th class="col text-center border-top  text-nowrap capitalize" style="width:890px">Descrição</th>
-                            <th class="col text-center border-top  text-nowrap" style="width:180px;">Valor Trabalhador</th>
-                            <th class="col text-center border-top  text-nowrap" style="width:180px;">Valor Tomador</th>
-                            <th colspan="2" class="col text-center border-end border-top  text-nowrap" style="width:190px;">Excluir</th>
+                            <th class="col text-center border-top  text-nowrap capitalize" style="width:900px">Descrição</th>
+                            <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Trabalhador</th>
+                            <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Tomador</th>
+                            <th class="col text-center border-top  text-nowrap" style="width:60px;">Editar</th>
+                            <th colspan="2" class="col text-center border-end border-top  text-nowrap" style="width:60px;">Excluir</th>
                         </thead>
                         
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($tabelaprecos) > 0)
                           @foreach($tabelaprecos as $tabelapreco)
                             <tr>
-                            <td class="col text-center border-start  border-bottom text-nowrap" style="width:60px;">{{$tabelapreco->tsano}}</td>
-                            <td class="col text-center   border-bottom text-nowrap" style="width:80px">{{$tabelapreco->tsrubrica}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap capitalize" style="width:900px">{{$tabelapreco->tsdescricao}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
-
-                            <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:190px;">
+                            <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:60px;">{{$tabelapreco->tsano}}</td>
+                            <td class="col text-center  border-bottom text-nowrap text-uppercase" style="width:80px">{{$tabelapreco->tsrubrica}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:900px">{{$tabelapreco->tsdescricao}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
+                                <button class="btn" style="background-color:#204E83;">
+                                <a href="" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                </button>
+                            </td>
+                            <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">
                                 <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
                                   @csrf
                                   @method('delete')
@@ -190,7 +194,7 @@
 </div>
             
             
-            
+     
       <script>
         $(document).ready(function(){
           $( "#pesquisa" ).on('keyup focus',function() { 
@@ -280,3 +284,6 @@
         });
     </script>   
   @stop    
+  
+  
+    

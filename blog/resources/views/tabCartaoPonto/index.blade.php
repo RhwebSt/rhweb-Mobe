@@ -30,7 +30,7 @@
             @endif
             @endforeach
         @endif        
-              <h5 class="card-title text-center fs-3 ">Lançamento com Tabela <i class="fad fa-browser"></i></h5>
+              <h5 class="card-title text-center fs-3 ">Lançamento com Tabela  <i class="fad fa-browser"></i></h5>
 
               
 

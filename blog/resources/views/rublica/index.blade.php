@@ -50,9 +50,13 @@
                         <label for="exampleDataList" class="form-label"></label>
                         <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                         <datalist id="datalistOptions">
-                          
                         </datalist>
                         <i class="fas fa-search fa-md iconsear"></i>
+                        <div class="text-center d-none p-1" id="refres" >
+                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -85,7 +89,7 @@
                 <div class="table-responsive-lg">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
-                        <th class="col text-center border-start border-top text-nowrap" style="width:200px;">Rúbricas</th>
+                        <th class="col text-center border-start border-top text-nowrap" style="width:120px;">Rúbricas</th>
                         <th class="col text-center border-top text-nowrap" style="width:500px;">Descrição</th>
                         <th class="col text-center border-top text-nowrap" style="width:100px;">Incidência</th>
                         <th class="col text-center border-top text-nowrap" style="width:250px">D/C</th>
@@ -94,7 +98,7 @@
                     </thead>
                     <tbody style="background-color: #081049; color: white;">
                         <tr>               
-                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 200px;">
+                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 120px;">
 
                             </td>
                             
