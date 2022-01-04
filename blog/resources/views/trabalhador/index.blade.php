@@ -545,9 +545,9 @@
           $('#pais_nacionalidade_list').html(paisnascimento)
           $('.form-check-input').click(function() {
             if ($(this).val() === 'option1') {
-              $('#formrelatorioempresa').attr('action',"{{route('trabalhador.comprovante.dia')}}")
+              $('#formrelatorioempresa').attr('action',"")
             }else if ($(this).val() === 'option2') {
-              $('#formrelatorioempresa').attr('action',"{{route('relatorio.empresa.trabalhada')}}")
+              $('#formrelatorioempresa').attr('action',"")
             }
           })
           cbo.forEach(element => {

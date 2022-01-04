@@ -93,10 +93,10 @@ class Lancamentorublica extends Model
        ->where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                if ($dados['idtomador']) {
+                if ($dados['tomador']) {
                     $query->where([
                         ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                        ['tomadors.id',$dados['idtomador']]
+                        ['tomadors.id',$dados['tomador']]
                     ])
                     ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
                 }else{
@@ -107,7 +107,7 @@ class Lancamentorublica extends Model
                 }
                
             }else{
-                if ($dados['idtomador']) {
+                if ($dados['tomador']) {
                     $query->where([
                         ['lancamentorublicas.trabalhador',$dados['trabalhador']],
                         ['lancamentorublicas.empresa', $user->empresa]
@@ -119,7 +119,7 @@ class Lancamentorublica extends Model
                     $query->where([
                         ['lancamentorublicas.trabalhador',$dados['trabalhador']],
                         ['lancamentorublicas.empresa', $user->empresa],
-                        ['tomadors.id',$dados['idtomador']]
+                        ['tomadors.id',$dados['tomador']]
                     ]) 
                     ->whereBetween('lancamentorublicas.created_at',
                     [$dados['ano_inicial'], 
@@ -142,6 +142,24 @@ class Lancamentorublica extends Model
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where('lancamentotabelas.tomador',$tomador)
+                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+            }
+        })
+        ->get();
+    }
+    public function buscaListaGeral($empresa,$ano_inicio,$ano_final)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentorublicas.*',
+            'lancamentotabelas.tomador'
+        )
+        ->where(function($query) use ($empresa,$ano_inicio,$ano_final){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.empresa',$empresa)
                 ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
             }
         })

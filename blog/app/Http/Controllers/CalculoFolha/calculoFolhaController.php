@@ -15,11 +15,17 @@ class calculoFolhaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $dados = $request->only('ano_inicial','ano_final');
+        return redirect()->route('calculo.folha.geral',$dados);
         // dd($dados);
-        if (isset($dados['todostrabalhador']) && isset($dados['umtomador'])) {
-            $dados = $request->only('trabalhador','tomador','ano_inicial','ano_final');
-            return redirect()->route('calculo.folha.tomador',$dados);
-        }
+        // if (isset($dados['todostrabalhador']) && isset($dados['umtomador'])) {
+        //     $dados = $request->only('trabalhador','tomador','ano_inicial','ano_final');
+        //     return redirect()->route('calculo.folha.tomador',$dados);
+        // }
+        // if (isset($dados['umtrabalhador']) && isset($dados['todostomador'])) {
+        //     $dados = $request->only('trabalhador','tomador','ano_inicial','ano_final');
+        //     return redirect()->route('calculo.folha.trabalhador',$dados);
+        // }
     }
     
 }

@@ -160,6 +160,24 @@ class Bolcartaoponto extends Model
         })
         ->get();
    }
+   public function buscaListaGeral($empresa,$ano_inicio,$ano_final)
+   {
+    return DB::table('lancamentotabelas')
+    ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+    ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+    ->select(
+        'bolcartaopontos.*',
+        'lancamentotabelas.tomador',
+    )
+    ->where(function($query) use ($empresa,$ano_inicio,$ano_final){
+        $user = auth()->user();
+        if ($user->hasPermissionTo('admin')) {
+            $query->where('lancamentotabelas.empresa',$empresa)
+            ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+        }
+    })
+    ->get();
+   }
     public function verifica($dados)
     {
         return Bolcartaoponto::where([

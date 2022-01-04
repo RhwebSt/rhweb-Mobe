@@ -33,6 +33,10 @@ class Tomador extends Model
     //         ->select('tomadors.*', 'enderecos.*')
     //         ->paginate(20);
     // }
+    public function buscaListaTomador($tomador)
+    {
+        return Tomador::where('empresa',$tomador)->select('id')->get();
+    }
     public function first($id)
     {
        return DB::table('tomadors')

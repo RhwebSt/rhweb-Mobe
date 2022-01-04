@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Trabalhador;
+namespace App\Http\Controllers\CalculoFolha;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,11 +16,16 @@ use App\IncideFolhar;
 use App\CartaoPonto;
 use App\Irrf;
 use PDF;
-class comprovantePagDiaController extends Controller
+class calculoFolhaPorTrabalhadorController extends Controller
 {
-    public function ComprovantePagDia(Request $request)
+    public function calculoFolhaPorTrabalhador($trabalhador = null,$tomador = null,$datainicio,$datafinal)
     {
-        $dados = $request->all();
+        $dados = [
+            'trabalhador'=>$trabalhador,
+            'tomador'=>$tomador,
+            'ano_inicial'=>$datainicio,
+            'ano_final'=>$datafinal
+        ];
         $ano = explode('-',$dados['ano_final']);
         $tomador = [];
         $salario = 0;
@@ -400,7 +405,7 @@ class comprovantePagDiaController extends Controller
         $sindicator = (float) $sindicator;
         $total_desconto += $sindicator;
         $inss_sobre_ter += $decimo_ter * 0.075;
-        //dd($boletim_tabela,$lancamentorublicas,$cartaoponto_diarias,$bolcartaopontos);
+        // dd($boletim_tabela,$lancamentorublicas,$cartaoponto_diarias,$bolcartaopontos);
 
         if ($trabalhadors) {
             $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);

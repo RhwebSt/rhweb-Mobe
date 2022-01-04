@@ -137,6 +137,7 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where('tomador',$tomador)->get();
     }
+    
     public function editar($dados,$id)
     {
         return TabelaPreco::where('id', $id)

@@ -18,6 +18,7 @@
     --modal-delfooter-bg: #2E50DC;
     --btn-fechar-bg: #033977;
     --btn-deletar-bg: #CB1531;
+    --btn-success-bg: #088f5b;
 }
 
 .darkmode{
@@ -39,6 +40,7 @@
     --modal-delfooter-bg: #333333;
     --btn-fechar-bg: #033977;
     --btn-deletar-bg: #CB1531;
+    --btn-success-bg: #088f5b;
 }
 
 html, body {
@@ -212,6 +214,19 @@ input:hover{
     transition: 600ms;
 }
 
+.btn__success{
+    background-color: var(--btn-success-bg);
+    color:white;
+    border: 1px solid #059f19;
+
+}
+
+.btn__success:hover{
+    background-color: #015a0d;
+    color:white;
+    transition: 600ms; 
+}
+
 
 
 .bguser{
@@ -244,6 +259,47 @@ input:hover{
     background-color: red;
 }
 
+.data{
+    display: flex;
+    justify-content: start;
+}
+
+.data2{
+    display: flex;
+
+}
+
+
+
+.dataFinal{
+    margin-left: 5px;
+}
+
+.quadro{
+    width: 60%;
+}
+
+.quadro__body{
+    background-color: rgb(61, 73, 245);
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
+
+.quadro__header{
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.title__quadro{
+    width:100%;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
 
 
 footer{
@@ -261,10 +317,53 @@ footer{
     font-size:14px;
 }
 
+@media only screen and (max-width: 280px) {
+    .quadro{
+        width: 95%;
+    }
+
+    .quadro__header{
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 392px) {
+    .quadro{
+        width: 90%;
+    }
+    
+    .title__quadro{
+        font-size:10px;
+    }
+}
+
+@media only screen and (max-width: 406px) {
+    .quadro{
+        width: 90%;
+    }
+    
+    .title__quadro{
+        font-size:10px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .quadro{
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 572px) {
+    .quadro{
+        width: 90%;
+    }
+
+}
+
 
 @media only screen and (max-width: 600px) {
   footer {
-    font-size:12px;
+    font-size:11px;
   }
   
   .botao__dark{
@@ -281,6 +380,34 @@ footer{
   .userwidth{
       margin-top:8px;
   }
+  
+  .data{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .dataFinal{
+        margin-top: 8px;
+        margin-left: 0px;
+    }
+
+    .data2{
+        display: flex;
+        flex-direction: column;
+    
+    }
+
+
+    .title__quadro{
+        font-size: 23px;
+        padding-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .quadro{
+        width: 80%;
+    }
 }
 
 @media only screen and (max-width: 1057px) {

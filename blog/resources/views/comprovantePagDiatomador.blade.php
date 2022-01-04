@@ -222,7 +222,7 @@
 </style>
 
 <body>
-   @foreach($trabalhadores as $key => $trabalhado)
+   @foreach($trabalhadores as $t => $trabalhado)
     <table>
         <tr>
             <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$trabalhado->esnome}}</td>
@@ -295,7 +295,7 @@
                     @endif
                 @endforeach
                 @foreach($boletim_tabela['hora extra 100%']['id'] as $i => $boletim_tabela_ex100_id)
-                    @if($boletim_tabela_ex100_id === $trabalhado->id)
+                    @if($boletim_tabela_ex100_id === $trabalhado->id && $boletim_tabela['hora extra 100%']['valor'][$i] > 0)
                         <tr>
                             <td class="small__font border-left cod text-center border-bottom">1004</td>
                             <td class="small__font border-left descricao border-bottom">Hora extra 100%</td>
@@ -306,7 +306,7 @@
                     @endif
                 @endforeach
                 @foreach($boletim_tabela['adicional noturno']['id'] as $i => $boletim_tabela_noturno_id)
-                    @if($boletim_tabela_noturno_id === $trabalhado->id)
+                    @if($boletim_tabela_noturno_id === $trabalhado->id && $boletim_tabela['adicional noturno']['valor'][$i] > 0)
                         <tr>
                             <td class="small__font border-left cod text-center border-bottom">1005</td>
                             <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
@@ -447,14 +447,14 @@
 
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
-            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$boletim_tabela['vencimento']['valor'][$key], 2, ',', '')}}</td>
-            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom"></td>
+            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$boletim_tabela['vencimento']['valor'][$t], 2, ',', '')}}</td>
+            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$boletim_tabela['novodesconto']['valor'][$t], 2, ',', '')}}</td>
         </tr>
 
         <tr>
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom"></td>
+            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$boletim_tabela['vencimento']['valor'][$t] - $boletim_tabela['novodesconto']['valor'][$t], 2, ',', '')}}</td>
         </tr>
     </table>
 
@@ -471,15 +471,15 @@
         </tr>
 
         <tr>
-            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$boletim_tabela['salario']['valor'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$boletim_tabela['serviso_dsr']['valor'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$boletim_tabela['base_inss']['valor'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$boletim_tabela['base_fgts']['valor'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$boletim_tabela['fgts_mes']['valor'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$boletim_tabela['base_irrf']['valor'][$key], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$boletim_tabela['salario']['valor'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$boletim_tabela['serviso_dsr']['valor'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$boletim_tabela['base_inss']['valor'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$boletim_tabela['base_fgts']['valor'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$boletim_tabela['fgts_mes']['valor'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$boletim_tabela['base_irrf']['valor'][$t], 2, ',', '')}}</td>
             
-            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$boletim_tabela['irrf']['indece'][$key], 2, ',', '')}}</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes[$key]->depedentes}}</td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$boletim_tabela['irrf']['indece'][$t], 2, ',', '')}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes[$t]->depedentes}}</td>
         </tr>
     </table>
 
@@ -506,89 +506,585 @@
             
         <tr>
             <td class="text-center border-left dia small__font border-bottom">1</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '01' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '01' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">9</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '09' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '09' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">17</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '17' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '17' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">25</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '25' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '25' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
       
         <tr>
             <td class="text-center border-left dia small__font border-bottom">2</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '02' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '02' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">10</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '10' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '10' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">18</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '18' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '18' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">26</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '26' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '26' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">3</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '03' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '03' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">11</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '11' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '11' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">19</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '19' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '19' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">27</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '27' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '27' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">4</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '04' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '04' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">12</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '12' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '12' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">20</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '20' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '20' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">28</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '28' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '28' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">5</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '05' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '05' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">13</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '13' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '13' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">21</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '21' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '21' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">29</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '29' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '29' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">6</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '06' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '06' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">14</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '14' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '14' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">22</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '22' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '22' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">30</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '30' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '30' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+              ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">7</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '07' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '07' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">15</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '15' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '15' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">23</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '23' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '23' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">31</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '31' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '31' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">8</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '08' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '08' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">16</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '16' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '16' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            <?php
+                  $vencimento = 0;
+                  $valorboletim = 0;
+                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                      if ($cartaopontodiarias === '24' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                      }
+                  }
+                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                      if ($boletimtabelas === '24' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
+                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                      }
+                  }
+            ?>
+               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
             <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold"></td>
         </tr>  
@@ -615,7 +1111,7 @@
 
     <table>
         <tr class="assinatura">
-            <td class="fontDeclaracao data border-left">Data:</td>
+            <td class="fontDeclaracao data border-left">Data:{{date("d/m/y")}}</td>
             <td class="fontDeclaracao border-right linhaass text-center">__________________________________________________</td>
         </tr>
 
@@ -625,7 +1121,7 @@
         </tr>
     </table>
     
-    <h1 style="page-break-after: always;">{{$key+1}}</h1>
+    <h1 style="page-break-after: always;">{{$t+1}}</h1>
     @endforeach
 </body>
 </html>

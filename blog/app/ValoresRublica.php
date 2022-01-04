@@ -44,6 +44,15 @@ class ValoresRublica extends Model
             'vsnroflha'=>$dados['nro__folha']
         ]);
     }
+    public function buscaUnidadeEmpresa($empresa)
+    {
+        return ValoresRublica::where('empresa', $empresa)->first();
+    }
+    public function editarUnidadeNuFolhar($empresa,$numerofolhar)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update(['vsnroflha'=>$numerofolhar]);
+    }
     public function deletar($id)
     {
         return ValoresRublica::where('empresa', $id)->delete();
