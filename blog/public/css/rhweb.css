@@ -301,6 +301,17 @@ input:hover{
 }
 
 
+.nav-pills .nav-link{
+    background-color: #194bf0 !important;
+    border:  1px solid #477EFF;
+    border-radius:3px;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #182D63 !important;
+}
+
+
 
 footer{
     

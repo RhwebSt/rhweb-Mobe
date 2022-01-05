@@ -20,6 +20,7 @@ use App\ValorCalculo;
 use App\ValoresRublica;
 use App\Folhar;
 use App\BaseCalculo;
+use App\RelacaoDia;
 use PDF;
 class calculoFolhaGeralController extends Controller
 {
@@ -32,6 +33,7 @@ class calculoFolhaGeralController extends Controller
             'inicio'=>$datainicio,
             'final'=>$datafinal
         ]; 
+        $dias = [];
         $numerofolhar = 0;
         $trabalhado = new Trabalhador;
         $empresa = new Empresa;
@@ -48,10 +50,14 @@ class calculoFolhaGeralController extends Controller
         $valoresrublica = new ValoresRublica;
         $folhar = new Folhar;
         $basecalculo = new BaseCalculo;
+        $valorcalculo = new ValorCalculo;
+        $relacaodia = new RelacaoDia;
         $insslista = $inss->buscaUnidadeInss($ano[0]);
         $irrflista = $irrf->buscaListaIrrf($ano[0]);
         $valoresrublicas = $valoresrublica->buscaUnidadeEmpresa($user->empresa);
-      
+        for ($i= 1 ; $i <= 31; $i++) { 
+            array_push($dias, $i < 10? '0'.$i:$i);
+        }
         if (empty($valoresrublicas->vsnroflha)) {
             $numerofolhar = 1;
             $dados_folhar['codigo'] = $numerofolhar;
@@ -69,6 +75,7 @@ class calculoFolhaGeralController extends Controller
                     'dia' => [],
                     'valor' => [],
                     'horas' => [],
+                    'codigo'=>[],
                     'descricao' => []
                 ],
                 'horasNormais'=>[
@@ -111,36 +118,57 @@ class calculoFolhaGeralController extends Controller
                     'descricao' => []
                 ],
                 'horasNormais'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'diariaNormais'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'hora extra 50%'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'hora extra 100%'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'adicional noturno'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'gratificação'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'id'=>[],
                     'valor'=> []
                 ],
                 'adiantamento'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
+                    'quantidade'=> [],
+                    'valor'=> [],
+                    'id'=>[],
+                ],
+                'producao'=>[
+                    'codigos'=>[],
+                    'rublicas'=>[],
                     'quantidade'=> [],
                     'valor'=> [],
                     'id'=>[],
@@ -253,30 +281,35 @@ class calculoFolhaGeralController extends Controller
                     $dia = explode(' ',$dia[2]);
                     foreach ($tabelaprecos as $key => $tabelapreco) {
                         if($tabelapreco->tsdescricao == 'hora extra 50%' && $bolcartaoponto_valor->bshoraex){
+                            array_push($cartaoponto_diarias['campos']['codigo'],$tabelapreco->tsrubrica);
                             array_push($cartaoponto_diarias['campos']['id'],$bolcartaoponto_valor->trabalhador);
                             array_push($cartaoponto_diarias['campos']['dia'],$dia[0]);
                             array_push($cartaoponto_diarias['campos']['valor'],self::calculardia($bolcartaoponto_valor->bshoraex,$tabelapreco->tsvalor));
                             array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                             array_push($cartaoponto_diarias['campos']['horas'],self::calcularhoras($bolcartaoponto_valor->bshoraex));
                         }else if($tabelapreco->tsdescricao == 'hora extra 100%' && $bolcartaoponto_valor->bshoraexcem){
+                            array_push($cartaoponto_diarias['campos']['codigo'],$tabelapreco->tsrubrica);
                             array_push($cartaoponto_diarias['campos']['id'],$bolcartaoponto_valor->trabalhador);
                             array_push($cartaoponto_diarias['campos']['dia'],$dia[0]);
                             array_push($cartaoponto_diarias['campos']['valor'],self::calculardia($bolcartaoponto_valor->bshoraexcem,$tabelapreco->tsvalor));
                             array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                             array_push($cartaoponto_diarias['campos']['horas'],self::calcularhoras($bolcartaoponto_valor->bshoraexcem));
                         }else if($tabelapreco->tsdescricao == 'hora normal' && $bolcartaoponto_valor->horas_normais){
+                            array_push($cartaoponto_diarias['campos']['codigo'],$tabelapreco->tsrubrica);
                             array_push($cartaoponto_diarias['campos']['id'],$bolcartaoponto_valor->trabalhador);
                             array_push($cartaoponto_diarias['campos']['dia'],$dia[0]);
                             array_push($cartaoponto_diarias['campos']['valor'],self::calculardia($bolcartaoponto_valor->horas_normais,$tabelapreco->tsvalor));
                             array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                             array_push($cartaoponto_diarias['campos']['horas'],self::calcularhoras($bolcartaoponto_valor->horas_normais));
                         }else if($tabelapreco->tsdescricao == 'adicional noturno' && $bolcartaoponto_valor->bsadinortuno){
+                            array_push($cartaoponto_diarias['campos']['codigo'],$tabelapreco->tsrubrica);
                             array_push($cartaoponto_diarias['campos']['id'],$bolcartaoponto_valor->trabalhador);
                             array_push($cartaoponto_diarias['campos']['dia'],$dia[0]);
                             array_push($cartaoponto_diarias['campos']['valor'],self::calculardia($bolcartaoponto_valor->bsadinortuno,$tabelapreco->tsvalor));
                             array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                             array_push($cartaoponto_diarias['campos']['horas'],self::calcularhoras($bolcartaoponto_valor->bsadinortuno));
                         }elseif ($tabelapreco->tsdescricao == 'adiantamento' && $tabelapreco->tsvalor) {
+                            array_push($cartaoponto_diarias['campos']['codigo'],$tabelapreco->tsrubrica);
                             array_push($cartaoponto_diarias['campos']['valor'],$tabelapreco->tsvalor);
                             array_push($cartaoponto_diarias['campos']['descricao'],$tabelapreco->tsdescricao);
                             array_push($cartaoponto_diarias['campos']['horas'],1);
@@ -287,23 +320,25 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
-            foreach ($rublicas as $key => $rublica) {
+            
                 foreach ($lancamentorublicas as $key => $lancamentorublica_valor) {
-                    if ($lancamentorublica_valor->lsdescricao === $rublica->rsdescricao && $rublica->rsdc === 'Créditos') {
-                        $dia = explode('-',$lancamentorublica_valor->created_at);
-                        $dia = explode('-',$lancamentorublica_valor->created_at);
-                        $dia = explode(' ',$dia[2]);
-                        array_push($boletim_tabela['campos']['id'],$lancamentorublica_valor->trabalhador);
-                        array_push($boletim_tabela['campos']['dia'],$dia[0]);
-                        $vencimento = $lancamentorublica_valor->lfvalor * $lancamentorublica_valor->lsquantidade;
-                        array_push($boletim_tabela['campos']['valor'], $vencimento);
-                        array_push($boletim_tabela['campos']['rubrica'], $lancamentorublica_valor->lshistorico);
-                        array_push($boletim_tabela['campos']['quantidade'], $lancamentorublica_valor->lsquantidade);
-                        array_push($boletim_tabela['campos']['codigo'], $rublica->rsrublica);
-                        array_push($boletim_tabela['campos']['descricao'], $rublica->rsdescricao);
+                    foreach ($tabelaprecos as $key => $tabelapreco) {
+                        if ($lancamentorublica_valor->lsdescricao === $tabelapreco->tsdescricao) {
+                            $dia = explode('-',$lancamentorublica_valor->created_at);
+                            $dia = explode('-',$lancamentorublica_valor->created_at);
+                            $dia = explode(' ',$dia[2]);
+                            array_push($boletim_tabela['campos']['id'],$lancamentorublica_valor->trabalhador);
+                            array_push($boletim_tabela['campos']['dia'],$dia[0]);
+                            $vencimento = $lancamentorublica_valor->lfvalor * $lancamentorublica_valor->lsquantidade;
+                            array_push($boletim_tabela['campos']['valor'], $vencimento);
+                            array_push($boletim_tabela['campos']['rubrica'], $lancamentorublica_valor->lshistorico);
+                            array_push($boletim_tabela['campos']['quantidade'], $lancamentorublica_valor->lsquantidade);
+                            array_push($boletim_tabela['campos']['codigo'], $tabelapreco->tsrubrica);
+                            array_push($boletim_tabela['campos']['descricao'], $tabelapreco->tsdescricao);
+                        }
                     }
                 }
-            }
+            // dd($boletim_tabela);
             foreach ($trabalhadores as $i => $trabalhadores_id) {
                 $boletim_valor = 0;
                 foreach ($boletim_tabela['campos']['rubrica'] as $key => $boletim_tabelas) {
@@ -315,7 +350,10 @@ class calculoFolhaGeralController extends Controller
                             array_push($boletim_tabela['horasNormais']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
                             array_push($boletim_tabela['horasNormais']['valor'],$boletim_tabela['campos']['valor'][$key]);
                             array_push($boletim_tabela['horasNormais']['id'],$boletim_tabela['campos']['id'][$key]);
+                            array_push($boletim_tabela['horasNormais']['codigos'],$boletim_tabela['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['horasNormais']['rublicas'],$boletim_tabela['campos']['rubrica'][$key]);
                         }
+                      
                     }elseif ($boletim_tabelas === 'hora extra 50%' && $boletim_tabela['campos']['id'][$key] === $trabalhadores_id->id) {
                        
                         if (in_array($boletim_tabela['campos']['id'][$key],$boletim_tabela['hora extra 50%']['id'])) {
@@ -325,6 +363,8 @@ class calculoFolhaGeralController extends Controller
                             array_push($boletim_tabela['hora extra 50%']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
                             array_push($boletim_tabela['hora extra 50%']['valor'],$boletim_tabela['campos']['valor'][$key]);
                             array_push($boletim_tabela['hora extra 50%']['id'],$boletim_tabela['campos']['id'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['codigos'],$boletim_tabela['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['rublicas'],$boletim_tabela['campos']['rubrica'][$key]);
                         }
                     }elseif ($boletim_tabelas === 'hora extra 100%' && $boletim_tabela['campos']['id'][$key] === $trabalhadores_id->id) {
                         if (in_array($boletim_tabela['campos']['id'][$key],$boletim_tabela['hora extra 100%']['id'])) {
@@ -334,6 +374,8 @@ class calculoFolhaGeralController extends Controller
                             array_push($boletim_tabela['hora extra 100%']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
                             array_push($boletim_tabela['hora extra 100%']['valor'],$boletim_tabela['campos']['valor'][$key]);
                             array_push($boletim_tabela['hora extra 100%']['id'],$boletim_tabela['campos']['id'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['codigos'],$boletim_tabela['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['rublicas'],$boletim_tabela['campos']['rubrica'][$key]);
                         }
                     }elseif($boletim_tabelas === 'adicional noturno' && $boletim_tabela['campos']['id'][$key] === $trabalhadores_id->id){
                         if (in_array($boletim_tabela['campos']['id'][$key],$boletim_tabela['adicional noturno']['id'])) {
@@ -352,6 +394,8 @@ class calculoFolhaGeralController extends Controller
                             array_push($boletim_tabela['diariaNormais']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
                             array_push($boletim_tabela['diariaNormais']['valor'],$boletim_tabela['campos']['valor'][$key]);
                             array_push($boletim_tabela['diariaNormais']['id'],$boletim_tabela['campos']['id'][$key]);
+                            array_push($boletim_tabela['diariaNormais']['codigos'],$boletim_tabela['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['diariaNormais']['rublicas'],$boletim_tabela['campos']['rubrica'][$key]);
                         }
                     }elseif ($boletim_tabelas === 'gratificação' && $boletim_tabela['campos']['id'][$key] === $trabalhadores_id->id) {
                         if (in_array($boletim_tabela['campos']['id'][$key],$boletim_tabela['gratificação']['id'])) {
@@ -361,6 +405,93 @@ class calculoFolhaGeralController extends Controller
                             array_push($boletim_tabela['gratificação']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
                             array_push($boletim_tabela['gratificação']['valor'],$boletim_tabela['campos']['valor'][$key]);
                             array_push($boletim_tabela['gratificação']['id'],$boletim_tabela['campos']['id'][$key]);
+                            array_push($boletim_tabela['gratificação']['codigos'],$boletim_tabela['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['gratificação']['rublicas'],$boletim_tabela['campos']['rubrica'][$key]);
+                            
+                        }
+                    }elseif($boletim_tabela['campos']['id'][$key] === $trabalhadores_id->id){
+                            if (in_array($boletim_tabela['campos']['id'][$key],$boletim_tabela['producao']['id'])) {
+                                $boletim_tabela['producao']['valor'][$i] += $boletim_tabela['campos']['valor'][$key];
+                                $boletim_tabela['producao']['quantidade'][$i] += $boletim_tabela['campos']['quantidade'][$key];
+                            }else{
+                                array_push($boletim_tabela['producao']['quantidade'],$boletim_tabela['campos']['quantidade'][$key]);
+                                array_push($boletim_tabela['producao']['valor'],$boletim_tabela['campos']['valor'][$key]);
+                                array_push($boletim_tabela['producao']['id'],$boletim_tabela['campos']['id'][$key]);
+                                array_push($boletim_tabela['producao']['codigos'],'1006');
+                                array_push($boletim_tabela['producao']['rublicas'],'produção');
+                            }
+                          
+                    }
+                }
+            }
+            foreach ($trabalhadores as $i => $trabalhadores_id) {
+                foreach ($cartaoponto_diarias['campos']['descricao'] as $key => $cartaopontos_descricao) {
+                    if ($cartaopontos_descricao === 'hora normal' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                        if (array_key_exists($i,$boletim_tabela['horasNormais']['valor'])) {
+                            $boletim_tabela['horasNormais']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['horasNormais']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['horasNormais']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['horasNormais']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['horasNormais']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['horasNormais']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['horasNormais']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
+                        }
+                    }elseif ($cartaopontos_descricao === 'hora extra 100%' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                        if (array_key_exists($i,$boletim_tabela['hora extra 100%']['valor'])) {
+                            $boletim_tabela['hora extra 100%']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['hora extra 100%']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['hora extra 100%']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['hora extra 100%']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
+                        }
+                    }elseif ($cartaopontos_descricao === 'hora extra 50%' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                        if (array_key_exists($i,$boletim_tabela['hora extra 50%']['valor'])) {
+                            $boletim_tabela['hora extra 50%']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['hora extra 50%']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['hora extra 50%']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['hora extra 50%']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
+                        }
+                    }elseif ($cartaopontos_descricao === 'adicional noturno' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                        if (array_key_exists($i,$boletim_tabela['adicional noturno']['valor'])) {
+                            $boletim_tabela['adicional noturno']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['adicional noturno']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['adicional noturno']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['adicional noturno']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['adicional noturno']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['adicional noturno']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['adicional noturno']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
+                        }
+                    }elseif ($cartaopontos_descricao === 'gratificação' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                        if (array_key_exists($i,$boletim_tabela['gratificação']['valor'])) {
+                            $boletim_tabela['gratificação']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['gratificação']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['gratificação']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['gratificação']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['gratificação']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['gratificação']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['gratificação']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
+                        }
+                    }elseif ($cartaopontos_descricao === 'adiantamento' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
+                       
+                        if (in_array($cartaoponto_diarias['campos']['id'][$key],$boletim_tabela['adiantamento']['id'])) {
+                            $boletim_tabela['adiantamento']['valor'][$i] += $cartaoponto_diarias['campos']['valor'][$key];
+                            $boletim_tabela['adiantamento']['quantidade'][$i] += $cartaoponto_diarias['campos']['horas'][$key];
+                        }else{
+                            array_push($boletim_tabela['adiantamento']['quantidade'],$cartaoponto_diarias['campos']['horas'][$key]);
+                            array_push($boletim_tabela['adiantamento']['valor'],$cartaoponto_diarias['campos']['valor'][$key]);
+                            array_push($boletim_tabela['adiantamento']['id'],$cartaoponto_diarias['campos']['id'][$key]);
+                            array_push($boletim_tabela['adiantamento']['codigos'],$cartaoponto_diarias['campos']['codigo'][$key]);
+                            array_push($boletim_tabela['adiantamento']['rublicas'],$cartaoponto_diarias['campos']['descricao'][$key]);
                         }
                     }
                 }
@@ -430,8 +561,15 @@ class calculoFolhaGeralController extends Controller
             foreach ($boletim_tabela['salario']['valor'] as $key => $valor_salario) {
                 array_push($boletim_tabela['dsr1818']['valor'],self::calculoPocentagem($valor_salario,18.18));
                 array_push($boletim_tabela['dsr1818']['id'],$boletim_tabela['salario']['id'][$key]);
-    
-                $boletim_tabela['vencimento']['valor'][$key] += $boletim_tabela['dsr1818']['valor'][$key] + $valor_salario;
+                
+                // echo($valor_salario).'<br>';
+                // echo($boletim_tabela['vencimento']['valor'][$key]).'<br>';
+                if (array_key_exists($key,$boletim_tabela['vencimento']['valor'])) {
+                    $boletim_tabela['vencimento']['valor'][$key] += $boletim_tabela['dsr1818']['valor'][$key] + $valor_salario;
+                }else{
+                    array_push($boletim_tabela['vencimento']['valor'],$boletim_tabela['dsr1818']['valor'][$key] + $valor_salario);
+                }
+               
     
                 $serviso_dsr = $boletim_tabela['dsr1818']['valor'][$key] + $valor_salario;
                 array_push($boletim_tabela['serviso_dsr']['valor'],$serviso_dsr);
@@ -588,7 +726,57 @@ class calculoFolhaGeralController extends Controller
                 array_push($boletim_tabela['novodesconto']['valor'],$desconto);
             }
             
-            dd($dadosTrabalhador,$boletim_tabela,$cartaoponto_diarias);
+            foreach ($trabalhadores as $key => $trabalhador) {
+                
+                $basecalculos = $basecalculo->cadastro($boletim_tabela,$depedentes,$tomador_id->id,null,$key);
+                if ($basecalculos['id']) {
+                    if (array_key_exists($key,$boletim_tabela['horasNormais']['id'])) {
+                        $valorcalculo->cadastroHorasnormais($boletim_tabela,$basecalculos['id'],$key);
+                    }
+                    if (array_key_exists($key,$boletim_tabela['hora extra 50%']['id'])) {
+                        $valorcalculo->cadastroHorasEx50($boletim_tabela,$basecalculos['id'],$key);
+                    }
+                    if (array_key_exists($key,$boletim_tabela['hora extra 100%']['id'])) {
+                        $valorcalculo->cadastroHorasEx100($boletim_tabela,$basecalculos['id'],$key);
+                    }
+                    if (array_key_exists($key,$boletim_tabela['diariaNormais']['id'])) {
+                        $valorcalculo->cadastrodiariaNormais($boletim_tabela,$basecalculos['id'],$key);
+                    }
+                    if (array_key_exists($key,$boletim_tabela['gratificação']['id'])) {
+                        $valorcalculo->cadastroGratificacao($boletim_tabela,$basecalculos['id'],$key);
+                    }
+                    if (array_key_exists($key,$boletim_tabela['adiantamento']['id'])) {
+                        $valorcalculo->cadastraAdiantamento($boletim_tabela,$basecalculos['id'],$key);
+                    }
+
+                    for ($i=1; $i <=31 ; $i++) { 
+                        $vencimento = 0;
+                        $valorboletim = 0;
+                        $novodia = 0;
+                        $resultador = 0;
+                        foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
+                            if ((int)$boletimtabelas === $i && $trabalhador->id == $boletim_tabela['campos']['id'][$key]) {
+                                $valorboletim += $boletim_tabela['campos']['valor'][$key];
+                                $novodia = $boletimtabelas;
+                            }
+                        }
+
+                        foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
+                            if ((int)$cartaopontodiarias === $i && $trabalhador->id == $cartaoponto_diarias['campos']['id'][$key]) {
+                                $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
+                                $novodia = $cartaopontodiarias;
+                            }
+                        }
+                        
+                        $resultador = $valorboletim + $vencimento;
+                        if ($resultador) {
+                            $relacaodia->cadastro($novodia,$resultador,$basecalculos['id']);
+                        }
+                    }
+                    // dd($resultador,$valorboletim,$novodia);
+                }
+            }
+        dd($lancamentorublicas,$dadosTrabalhador,$boletim_tabela,$cartaoponto_diarias);
         }
         
     }

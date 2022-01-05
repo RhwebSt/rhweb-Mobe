@@ -568,7 +568,7 @@
                             <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
                             <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                          <form action="{{route('trabalhador.comprovante.dia')}}" method="post">
+                          <form action="" method="post">
                           @csrf
                           <input type="hidden" name="trabalhador" id="trabalhador">
                          
