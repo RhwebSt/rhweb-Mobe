@@ -20,6 +20,8 @@ class CreateValorCalculosTable extends Migration
             $table->float('vireferencia',8,2)->nullable();
             $table->float('vivencimento',8,2)->nullable();
             $table->float('videscinto',8,2)->nullable();
+            $table->integer('trabalhador')->unsigned()->nullable();
+            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->integer('basecalculo')->unsigned()->nullable();
             $table->foreign('basecalculo')->references('id')->on('base_calculos');
             $table->timestamps();

@@ -17,6 +17,8 @@ class CreateRelacaoDiasTable extends Migration
             $table->increments('id');
             $table->char('rsdia', 2)->nullable();
             $table->float('rivalor',8,2)->nullable();
+            $table->integer('trabalhador')->unsigned()->nullable();
+            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->integer('basecalculo')->unsigned()->nullable();
             $table->foreign('basecalculo')->references('id')->on('base_calculos');
             $table->timestamps();

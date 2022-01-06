@@ -18,6 +18,8 @@ class CreateFolharsTable extends Migration
             $table->char('fscodigo', 10)->nullable();
             $table->char('fsinicio', 10)->nullable();
             $table->char('fsfinal', 10)->nullable();
+            $table->integer('empresa')->unsigned()->nullable();
+            $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();
         });
     }
