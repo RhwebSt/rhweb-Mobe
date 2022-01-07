@@ -216,7 +216,7 @@
                     $listas->bsentradatarde && $listas->bssaidatarde)
                     <tr>
                     <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
-                    <td class="col text-center border-bottom text-nowrap capitalize" style="width:420px">{{$listas->tsnome}}</td>
+                    <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:420px">{{$listas->tsnome}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamanhao}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidamanhao}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradatarde}}</td>
@@ -262,7 +262,7 @@
                   <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
-                    <th class="col text-center border-top text-nowrap" style="width:330px">Nome</th>
+                    <th class="col text-center border-top text-nowrap text-uppercase" style="width:330px">Nome</th>
                     <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
                     <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
                     <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
@@ -279,7 +279,7 @@
                     $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                     <tr>
                     <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:330px">{{$listas->tsnome}}</td>
+                    <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:330px;">{{$listas->tsnome}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradanoite}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidanoite}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamadrugada}}</td>
@@ -672,7 +672,7 @@ function domingo(horas_normais) {
             function boletim(dados) {
                 $('#carregamento').removeClass('d-none')
                 $.ajax({
-                    url: `{{url('boletimcartaoponto')}}/${dados}/${$('#lancamento').val()}`,
+                    url: `{{url('boletim/cartao/ponto')}}/${dados}/${$('#lancamento').val()}/{{$data}}`,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {

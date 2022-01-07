@@ -22,13 +22,23 @@ class RelacaoDia extends Model
     public function listaRelacaoDia($trabalhador,$data,$i)
     {
         return RelacaoDia::select(
-            DB::raw('SUM(rivalor) as valor,trabalhador,rsdia')
+            DB::raw('SUM(rivalor) as valor,trabalhador,rsdia,created_at')
         )
-        ->groupBy('trabalhador','rsdia')
+        ->groupBy('trabalhador','rsdia','created_at')
         ->where('rsdia',$i)
         ->whereIn('trabalhador',$trabalhador)
         ->whereDate('created_at', $data)
         ->get();
 
+    }
+    public function cadastroGeral($dados,$basecalculo)
+    {
+     return RelacaoDia::create([
+        'rsdia'=>$dados['rsdia'],
+        'rivalor'=>$dados['valor'],
+        'basecalculo'=>$basecalculo,
+        'trabalhador'=>$dados['trabalhador'],
+        'created_at'=>$dados['created_at']
+        ]);
     }
 }

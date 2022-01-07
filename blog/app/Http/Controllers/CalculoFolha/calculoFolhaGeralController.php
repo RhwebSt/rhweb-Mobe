@@ -26,6 +26,11 @@ class calculoFolhaGeralController extends Controller
 {
     public function calculoFolhaGeral($datainicio,$datafinal)
     {
+        $folhar = new Folhar;
+        $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
+        if ($folhas) {
+            return redirect()->route('calculo.folha.index')->withInput()->withErrors(['false'=>'Esta data e o número da folha já estão cadastrados.']);
+        }
         $ano = explode('-',$datafinal);
         $user = auth()->user();
          
@@ -165,20 +170,32 @@ class calculoFolhaGeralController extends Controller
                     'valor'=>[]
                 ],
                 'dsr1818'=>[
+                    'valor'=>[],
+                    'codigos'=>[],
+                    'quantidade'=> [],
+                    'rublicas'=>[],
+                    'valor'=> [],
                     'id'=>[],
-                    'valor'=>[]
                 ],
                 'serviso_dsr'=>[
                     'id'=>[],
                     'valor'=>[]
                 ],
                 'decimo_ter'=>[
+                    'valor'=>[],
+                    'codigos'=>[],
+                    'quantidade'=> [],
+                    'rublicas'=>[],
+                    'valor'=> [],
                     'id'=>[],
-                    'valor'=>[]
                 ],
                 'ferias_decimoter'=>[
-                    'id'=>[],
-                    'valor'=>[]
+                    'valor'=>[],
+                    'codigos'=>[],
+                    'quantidade'=> [],
+                    'rublicas'=>[],
+                    'valor'=> [],
+                    'id'=>[]
                 ],
                 'valor_inss'=>[
                     'id'=>[],
@@ -201,8 +218,12 @@ class calculoFolhaGeralController extends Controller
                     'valor'=>[],
                 ],
                 'inss_sobre_ter'=>[
-                    'id'=>[],
-                    'valor'=>[]
+                    'valor'=>[],
+                    'codigos'=>[],
+                    'quantidade'=> [],
+                    'rublicas'=>[],
+                    'valor'=> [],
+                    'id'=>[]
                 ],
                 'inss'=>[
                     'id'=>[],
@@ -556,6 +577,9 @@ class calculoFolhaGeralController extends Controller
             foreach ($boletim_tabela['salario']['valor'] as $key => $valor_salario) {
                 array_push($boletim_tabela['dsr1818']['valor'],self::calculoPocentagem($valor_salario,18.18));
                 array_push($boletim_tabela['dsr1818']['id'],$boletim_tabela['salario']['id'][$key]);
+                array_push($boletim_tabela['dsr1818']['codigos'],'1002');
+                array_push($boletim_tabela['dsr1818']['rublicas'],'DSR 18,18%');
+                array_push($boletim_tabela['dsr1818']['quantidade'],18.18);
                 
                 
                 if (array_key_exists($key,$boletim_tabela['vencimento']['valor'])) {
@@ -574,8 +598,15 @@ class calculoFolhaGeralController extends Controller
                 $boletim_tabela['vencimento']['valor'][$key] += $boletim_tabela['decimo_ter']['valor'][$key];
     
                 array_push($boletim_tabela['decimo_ter']['id'],$boletim_tabela['serviso_dsr']['id'][$key]);
+                array_push($boletim_tabela['decimo_ter']['codigos'],'1005');
+                array_push($boletim_tabela['decimo_ter']['rublicas'],'13º Salário');
+                array_push($boletim_tabela['decimo_ter']['quantidade'],8.34);
+
                 array_push($boletim_tabela['ferias_decimoter']['valor'],self::calculoPocentagem($serviso_dsr_valor,11.12));
                 array_push($boletim_tabela['ferias_decimoter']['id'],$boletim_tabela['serviso_dsr']['id'][$key]);
+                array_push($boletim_tabela['ferias_decimoter']['codigos'],'1004');
+                array_push($boletim_tabela['ferias_decimoter']['rublicas'],'Ferias + 1/3');
+                array_push($boletim_tabela['ferias_decimoter']['quantidade'],11.12);
     
                 $boletim_tabela['vencimento']['valor'][$key] += $boletim_tabela['ferias_decimoter']['valor'][$key];
     
@@ -705,6 +736,10 @@ class calculoFolhaGeralController extends Controller
             foreach ($boletim_tabela['decimo_ter']['valor'] as $key => $decimo_ter_valor) {
                 $inss_sobre_ter = $decimo_ter_valor * 0.075;
                 array_push($boletim_tabela['inss_sobre_ter']['valor'],$inss_sobre_ter);
+                array_push($boletim_tabela['inss_sobre_ter']['codigos'],'1006');
+                array_push($boletim_tabela['inss_sobre_ter']['rublicas'],'INSS Sobre 13º Salário');
+                array_push($boletim_tabela['inss_sobre_ter']['quantidade'],7.5);
+                array_push($boletim_tabela['inss_sobre_ter']['id'],$boletim_tabela['decimo_ter']['id'][$key]);
             }
             foreach ($trabalhadores as $i => $trabalhadores_id) {
                 $desconto = $sindicator;
@@ -721,31 +756,38 @@ class calculoFolhaGeralController extends Controller
                 array_push($boletim_tabela['novodesconto']['id'],$trabalhadores_id->id);
                 array_push($boletim_tabela['novodesconto']['valor'],$desconto);
             }
-            
+            // dd($boletim_tabela);
             foreach ($trabalhadores as $key => $trabalhador) {
                 
                 $basecalculos = $basecalculo->cadastro($boletim_tabela,$depedentes,$tomador_id->id,null,$key,$datafinal);
                 if ($basecalculos['id']) {
                     if (array_key_exists($key,$boletim_tabela['horasNormais']['id'])) {
                         $valorcalculo->cadastroHorasnormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
                     if (array_key_exists($key,$boletim_tabela['hora extra 50%']['id'])) {
                         $valorcalculo->cadastroHorasEx50($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
                     if (array_key_exists($key,$boletim_tabela['hora extra 100%']['id'])) {
                         $valorcalculo->cadastroHorasEx100($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                       
                     }
                     if (array_key_exists($key,$boletim_tabela['diariaNormais']['id'])) {
                         $valorcalculo->cadastrodiariaNormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
                     if (array_key_exists($key,$boletim_tabela['gratificação']['id'])) {
                         $valorcalculo->cadastroGratificacao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
                     if (array_key_exists($key,$boletim_tabela['adiantamento']['id'])) {
                         $valorcalculo->cadastraAdiantamento($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
                     if (array_key_exists($key,$boletim_tabela['producao']['id'])) {
                         $valorcalculo->cadastroProducao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
                     }
 
                     for ($i=1; $i <=31 ; $i++) { 
@@ -775,9 +817,11 @@ class calculoFolhaGeralController extends Controller
                     
                 }
             }
-            //dd($lancamentorublicas,$dadosTrabalhador,$boletim_tabela,$cartaoponto_diarias);
             if (($quantidadetomador - 1) === $t) {
-                self::calculoFolhar($trabalhado_cal_folha,$datainicio,$datafinal);
+                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$datainicio,$datafinal);
+                if ($calculofolhar) {
+                    return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
+                }
             }
         }
        
@@ -800,6 +844,8 @@ class calculoFolhaGeralController extends Controller
             'inicio'=>$datainicio,
             'final'=>$datafinal
         ];
+        $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
+        $descricao = ['hora normal','hora extra 50%','hora extra 100%','diaria normal','adiantamento','produção'];
         $valor_final_irrf = [];
         $folhas = $folhar->buscaUltimaoRegistroFolhar($user->empresa);
         if ($folhas) {
@@ -817,15 +863,23 @@ class calculoFolhaGeralController extends Controller
                 $folhas = $folhar->cadastro($dados_folhar,$user->empresa);
             }
         } 
+      
         $basecalculos = $basecalculo->calculoLista($trabalhador,$datafinal);
         foreach ($basecalculos as $i => $basecalculo) {
             $valorbase = 0;
             $indece = 0;
             // $resultadoinss = 0;
+
+            if (count($basecalculos_15) > 0) {
+                if ($basecalculo->trabalhador === $basecalculos_15[$i]->trabalhador) {
+                    $basecalculos[$i]->valorliquido -= $basecalculos_15[$i]->bivalorliquido;
+                    $basecalculos[$i]->valordesconto += $basecalculos_15[$i]->bivalorliquido;
+                }
+            }
+           
             $base_irrf = str_replace(',','.',$irrflista[0]->irdepedente) * $basecalculo->binumfilhos;
 
             $base_irrf = $basecalculo->bifgts - $basecalculo->biinss - $base_irrf;
-            $base_irrf = 2000.00;
             foreach ($irrflista as $key => $irrf) {
                 $novoirrf =  str_replace(".","",$irrf->irsvalorfinal);
                 $novoirrf =  str_replace(',','.',$novoirrf);
@@ -866,17 +920,29 @@ class calculoFolhaGeralController extends Controller
                     break;
                 }
             }
-            $basecalculo->cadastroFolhar($basecalculos[$i],$valorbase,$indece,$folhas['id']);
+            $novabasecalculo =  $basecalculo->cadastroFolhar($basecalculos[$i],$valorbase,$indece,$folhas['id']);
+            foreach ($descricao as $d => $descricoes) {
+                $valorcalculos = $valorcalculo->listaGeral($trabalhador,$datafinal,$descricoes);
+                
+                foreach ($valorcalculos as $v => $valorcalculo) {
+                    if ($v === $i) {
+                        $valorcalculo->cadastraGeral($valorcalculo,$novabasecalculo['id']);
+                    }
+                }
+            }
+            for ($d= 1; $d <= 31 ; $d++) { 
+                $relacaodias = $relacaodia->listaRelacaoDia($trabalhador,$datafinal,$d);
+                    if (isset($relacaodias[0]->valor)) {
+                        foreach ($relacaodias as $r => $relacaodia) {
+                            if ($r === $i) {
+                                $relacaodia->cadastroGeral($relacaodia,$novabasecalculo['id']);
+                            }
+                        }
+                    }
+            }
         }
-        dd($basecalculos);
-        // $valorcalculos = $valorcalculo->listaHorasnormais($trabalhador,$datafinal);
-        // for ($i= 1; $i <= 31 ; $i++) { 
-        //     $relacaodias = $relacaodia->listaRelacaoDia($trabalhador,$datafinal,$i);
-        //     if (isset($relacaodias[0]->valor)) {
-        //         dd($relacaodias);
-        //     }
-        //     echo($i).'<br>';
-        // }
+        return true;
+        
     }
     public function calculardia($horas,$valores)
     {
@@ -900,5 +966,20 @@ class calculoFolhaGeralController extends Controller
     {
         $resultado = $valor * ($porcentagem / 100);
         return $resultado;
+    }
+
+    public function imprimirFolhar($id)
+    {
+        $folhar = new Folhar;
+        $valorcalculo = new ValorCalculo;
+        $folhas = $folhar->buscaLista($id);
+        
+        $basecalculo_id = [];
+        foreach ($folhas as $key => $folhar) {
+            array_push($basecalculo_id,$folhar->id);
+        }
+        $valorcalculos = $valorcalculo->buscaImprimir($basecalculo_id);
+        $pdf = PDF::loadView('comprovantegeral',compact('folhas','valorcalculos'));
+        return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
 }

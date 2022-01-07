@@ -69,7 +69,7 @@ class BaseCalculo extends Model
             'bifaixairrf'=>str_replace(",",".",$faixa),
             'binumfilhos'=>$dados->binumfilhos,
             'bitotaldiaria'=>$dados->totaldiaria,
-            'bivalorliquido'=>$dados->bivalorliquido,
+            'bivalorliquido'=>$dados->valorliquido,
             'bivalorvencimento'=>$dados->valorvencimento,
             'bivalordesconto'=>$dados->valordesconto,
             'trabalhador'=>$dados->trabalhador,
@@ -84,4 +84,17 @@ class BaseCalculo extends Model
         ->whereIn('trabalhador',$trabalahdor)
         ->get();
     }
+    public function boletimBusca($trabalhador,$datainicio,$datafinal)
+    {
+        return DB::table('base_calculos')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->select(
+            'base_calculos.bivalorliquido',
+            'base_calculos.trabalhador'
+        )
+        ->whereIn('trabalhador',$trabalhador)
+        ->whereBetween('base_calculos.created_at',[$datainicio, $datafinal])
+        ->get();
+    }
+    
 }

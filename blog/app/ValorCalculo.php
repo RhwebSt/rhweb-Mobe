@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class ValorCalculo extends Model
 {
     protected $fillable = [
-        'vicodigo','vsdescricao','vireferencia','vivencimento','videsconto','basecalculo','trabalhador','created_at'
+        'vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo','trabalhador','created_at'
     ];
     public function cadastroHorasnormais($dados,$basecalculo,$trabalahdor,$i,$data)
     {
@@ -21,23 +21,9 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
-    public function listaHorasnormais($trabalhador,$data)
-    {
-        return ValorCalculo::select(
-            DB::raw(
-                'SUM(vivencimento) as vencimento,
-                SUM(vireferencia) as referencia,
-                trabalhador,
-                vicodigo,
-                vsdescricao'
-                )
-        )
-        ->groupBy('trabalhador','vicodigo','vsdescricao')
-        ->whereIn('trabalhador',$trabalhador)
-        ->where('vsdescricao','hora normal')
-        ->whereDate('created_at', $data)
-        ->get();
-    }
+   
+
+   
     public function cadastrodiariaNormais($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([
@@ -50,6 +36,7 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+   
     public function cadastroHorasEx50($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([
@@ -62,6 +49,8 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+
+    
     public function cadastroHorasEx100($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([
@@ -109,5 +98,42 @@ class ValorCalculo extends Model
             'trabalhador'=>$trabalahdor,
             'created_at'=>$data
         ]);
+    }
+    public function listaGeral($trabalhador,$data,$descricao)
+    {
+        return ValorCalculo::select(
+            DB::raw(
+                'SUM(vivencimento) as vencimento,
+                SUM(vireferencia) as referencia,
+                trabalhador,
+                vicodigo,
+                vsdescricao,
+                created_at'
+                )
+        )
+        ->groupBy('trabalhador','vicodigo','vsdescricao','created_at')
+        ->whereIn('trabalhador',$trabalhador)
+        ->where('vsdescricao',$descricao)
+        ->whereDate('created_at', $data)
+        ->get();
+    }
+    public function cadastraGeral($dados,$basecalculo)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['vicodigo'],
+            'vsdescricao'=>$dados['vsdescricao'],
+            'vireferencia'=>$dados['referencia'],
+            'vivencimento'=>$dados['vencimento'],
+            'basecalculo'=>$basecalculo,
+            'videscinto'=> 1.0,
+            'trabalhador'=>$dados['trabalhador'],
+            'created_at'=>$dados['created_at']
+        ]);
+    }
+    public function buscaImprimir($id)
+    {
+        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo')
+        ->whereIn('basecalculo',$id)
+        ->get();
     }
 }
