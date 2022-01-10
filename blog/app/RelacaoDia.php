@@ -41,4 +41,10 @@ class RelacaoDia extends Model
         'created_at'=>$dados['created_at']
         ]);
     }
+    public function buscaImprimir($id)
+    {
+        return RelacaoDia::select('rsdia','rivalor','basecalculo','trabalhador')
+        ->whereIn('basecalculo',$id)
+        ->get();
+    }
 }

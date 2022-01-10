@@ -7,25 +7,125 @@
               @if($errors->all())
             @foreach($errors->all() as  $error)
               @if($error === 'edittrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Atualização realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#5AA300',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Atualização realizada com sucesso!'
+                    })
+                </script>
              @elseif($error === 'editfalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível atualizar os dados! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Não foi possível atualizar os dados!!'
+                    })
+                </script>
             @elseif($error === 'deletatrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Registro deletado com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#5AA300',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Registro deletado com sucesso!'
+                    })
+                </script>
              @elseif($error === 'cadastratrue')
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>Cadastro realizada com sucesso! <i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#5AA300',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Cadastro realizado com Sucesso'
+                    })
+                </script>
              @elseif($error === 'cadastrafalse')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>Não foi possível realizar o cadastro! <i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Não foi possível realizar o cadastro!'
+                    })
+                </script>
             @endif
             @endforeach
         @endif     
@@ -127,29 +227,28 @@
                 </div>
               
               </form>  
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header " style="background-image: linear-gradient(50deg, rgb(69, 71, 243),rgb(91, 9, 199))">
-                    <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="" id="formdelete" method="post">
+                            @csrf
+                            @method('delete')
+                            <div class="modal-header modal__delete">
+                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body modal-delbody">
+                                <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                            </div>
+                            <div class="modal-footer modal-delfooter">
+                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn__deletar">Deletar</button>
+
+                            </div>
+                        </form>
                     </div>
-                    <div class="modal-body" style="background-image: linear-gradient(170deg, rgb(2, 19, 97),rgb(19, 1, 70));">
-                    <p class="text-white text-start fs-5">Deseja realmente excluir?</p>
-                    </div>
-                    <div class="modal-footer" style="background-image: linear-gradient(50deg, rgb(69, 71, 243),rgb(91, 9, 199))">
-                    <button type="button" class="btn btn-success btn-outline-light" data-bs-dismiss="modal">Fechar</button>
-                    <form action="" method="post" id="formdelete">
-                    @csrf
-                        @method('delete')
-                        
-                        
-                        <button type="submit" class="btn btn-danger" >Deletar</button>
-                    </form>
                     </div>
                 </div>
-                </div>
-            </div>
             </div> 
             <script>
         $(document).ready(function(){

@@ -3,15 +3,53 @@
 
     <div class="container">
         @if(session('success'))
-              <h1></h1>
-              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 6000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Cadastro realizado com Sucesso'
+                })
+            </script>
           @endif
         @error('false')
-            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-               <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-            </div>
+            <script>
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 6000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Não foi possível realizar o cadastro!'
+                    })
+                </script>
         @enderror  
                 
         
@@ -51,7 +89,7 @@
             <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
                 <div class="d-flex">
                 <label for="exampleDataList" class="form-label"></label>
-                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="datalistOptions" name="pesquisa" id="pesquisa">
                 <datalist id="datalistOptions">
                 </datalist>
                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
@@ -292,7 +330,7 @@
     
                 <div class="col-md-4">
                   <label for="categoria" class="form-label">Categoria</label>
-                  <input type="text" list="categoria_list" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="20" name="categoria__contrato" id="categoria">
+                  <input type="text" list="categoria_list" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}"  maxlength="100" name="categoria__contrato" id="categoria">
                   @error('categoria__contrato')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -534,15 +572,28 @@
             }
             reader.readAsDataURL(file);
           }
+          
         $(document).ready(function(){
           let paisnascimento = ''
           let cbolist = ''
           let categorialist = ''
-          pais__nascimento.forEach(element => {
-            paisnascimento += `<option value="${element}">`
-          });
-          $('#pais_nascimento_list').html(paisnascimento)
-          $('#pais_nacionalidade_list').html(paisnascimento)
+         
+          $('#pais__nacionalidade,#pais__nascimento').on('keyup focus',function () {
+            if (!$(this).val()) {
+              paisnascimento = ''
+              paisnascimentolista(pais__nascimento)
+            }
+          })
+          function paisnascimentolista(pais__nascimento) {
+            pais__nascimento.forEach(element => {
+              paisnascimento += `<option value="${element}">`
+            });
+            $('#pais_nascimento_list').html(paisnascimento)
+            $('#pais_nacionalidade_list').html(paisnascimento)
+          }
+          paisnascimentolista(pais__nascimento)
+
+
           $('.form-check-input').click(function() {
             if ($(this).val() === 'option1') {
               $('#formrelatorioempresa').attr('action',"")
@@ -550,14 +601,32 @@
               $('#formrelatorioempresa').attr('action',"")
             }
           })
-          cbo.forEach(element => {
-            cbolist += `<option value="${element.code} - ${element.name}">`
-          });
-          $('#cbo_list').html(cbolist)
-          categoriatrabalhador.forEach(element => {
-            categorialist += `<option value="${element}">`
-          });
-          $('#categoria_list').html(categorialist);
+          $('#cbo').on('keyup focus',function () {
+            if (!$(this).val()) {
+              cbolista(cbo);
+            }
+          })
+
+          $('#categoria').on('keyup focus',function () {
+            if (!$(this).val()) {
+              listacategoria(categoriatrabalhador);
+            }
+          })
+          function cbolista(cbo) {
+            cbo.forEach(element => {
+              cbolist += `<option value="${element.code} - ${element.name}">`
+            });
+            $('#cbo_list').html(cbolist)
+          }
+          cbolista(cbo)
+
+          function listacategoria(categoriatrabalhador) {
+            categoriatrabalhador.forEach(element => {
+                categorialist += `<option value="${element}">`
+            });
+            $('#categoria_list').html(categorialist);
+          }
+          listacategoria(categoriatrabalhador)
             $( "#pesquisa" ).on('keyup focus',function() {
                 let dados = '0'
                 if ($(this).val()) {

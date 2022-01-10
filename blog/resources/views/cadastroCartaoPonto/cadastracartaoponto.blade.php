@@ -3,15 +3,54 @@
 <div class="container"> 
         
         @if(session('success'))
-              
-              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Cadastro realizado com Sucesso'
+                })
+            </script>
           @endif
         @error('false')
-            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Não foi possível realizar o cadastro!'
+                })
+            </script>
         @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
             
@@ -332,26 +371,26 @@
         
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header " style="background-image: linear-gradient(-120deg, rgb(32, 36, 236),rgb(16, 78, 248));">
-                  <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="background-color: #fffdfd;">
-                  <p class="text-black text-start fs-5">Deseja realmente excluir?</p>
-                </div>
-                <div class="modal-footer" style="background-color: #fffdfd;">
-                  <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-                  <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn__deletar">Deletar</button>
-                </form> 
-                </div>
-              </div>
-            </div>
-          </div>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="" id="formdelete" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <div class="modal-header modal__delete">
+                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body modal-delbody">
+                                            <p class="mb-1">Deseja realmente excluir?</p>
+                                        </div>
+                                        <div class="modal-footer modal-delfooter">
+                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn__deletar">Deletar</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 </div>
 <script>
  var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];

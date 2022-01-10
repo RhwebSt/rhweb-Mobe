@@ -35,6 +35,7 @@ class Folhar extends Model
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
         ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
         ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
         ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
@@ -42,6 +43,8 @@ class Folhar extends Model
         ->select(
             'folhars.fsinicio',
             'folhars.fsfinal',
+            'empresas.esnome',
+            'empresas.escnpj',
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
             'trabalhadors.tscpf',

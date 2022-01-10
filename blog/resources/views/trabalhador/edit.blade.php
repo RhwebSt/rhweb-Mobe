@@ -4,19 +4,53 @@
         <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Identificação do Trabalhador</div>
           @if(isset($msg))
             @if($msg['status'])
-            <div class="alert alert-success d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-              <div>
-              {{$msg['mendagem']}}
-              </div>
-            </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#5AA300',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 6000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Cadastro realizado com Sucesso'
+                    })
+                </script>
             @else
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-              <div>
-              {{$msg['mendagem']}}
-              </div>
-            </div>
+                <script>
+                     
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 6000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'Não foi possível realizar o cadastro!'
+                    })
+                </script>
             @endif
           @endif
         <form class="row g-3" action="{{ route('trabalhador.update') }}"  method="POST" >

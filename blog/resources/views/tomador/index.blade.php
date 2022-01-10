@@ -2,15 +2,54 @@
 @section('conteine')
     <div class="container ">    
         @if(session('success'))
-              <h1></h1>
-              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+            <script>
+                 
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Cadastro realizado com Sucesso'
+                })
+            </script>
           @endif
         @error('false')
-            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Não foi possível realizar o cadastro!'
+                })
+            </script>
         @enderror
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post" >
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -23,7 +62,7 @@
                             </button>
                             <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
                             
-                            <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                               <i class="fad fa-file-invoice"></i> Boletins
                             </button>
                             

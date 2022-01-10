@@ -225,15 +225,20 @@
    @foreach($folhas as $f => $folhar)
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark"></td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$folhar->esnome}}</td>
         </tr>
     </table>
     
     <table>
         <tr>
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
-            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:</td>
-            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:</td>
+            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:
+                <?php
+                    $data = explode('-',$folhar->fsfinal)
+                ?>
+                {{$data[1]}}/{{$data[0]}}
+            </td>
+            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$folhar->escnpj}}</td>
         </tr>
 
     </table>
@@ -264,13 +269,15 @@
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
         @foreach($valorcalculos as $v => $valorcalculo)
-                @if($valorcalculo->basecalculo === $folhar->id && $valorcalculo->vivencimento)
+                @if($valorcalculo->basecalculo === $folhar->id && $valorcalculo->vivencimento || $valorcalculo->basecalculo === $folhar->id && $valorcalculo->videscinto)
                     <tr>
                         <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
                         <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
-                        <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$valorcalculo->vireferencia, 2, ',', '')}}</td>
+                        <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            {{number_format((float)$valorcalculo->vireferencia, 2, ',', '')}}
+                        </td>
                         <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$valorcalculo->vivencimento, 2, ',', '')}}</td>
-                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$valorcalculo->videscinto, 2, ',', '')}}</td>
                     </tr>
                 @endif
                 <!-- <tr>
@@ -472,89 +479,275 @@
             
         <tr>
             <td class="text-center border-left dia small__font border-bottom">1</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+            @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '01' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                    @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">9</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '09' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                    @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">17</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '17' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                    @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">25</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '25' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
       
         <tr>
             <td class="text-center border-left dia small__font border-bottom">2</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '02' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                    @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">10</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '10' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">18</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '18' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">26</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '26' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">3</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '03' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">11</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '11' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">19</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '19' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">27</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '27' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">4</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '04' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">12</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '12' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">20</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '20' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">28</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '28' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">5</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '05' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">13</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '13' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">21</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '21' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">29</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '29' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">6</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '06' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">14</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '14' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">22</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '22' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">30</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '30' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">7</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '07' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">15</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '15' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">23</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '23' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">31</td>
-            <td  class="text-center border-left small__font border-bottom border-right valor"></td>
+            <td  class="text-center border-left small__font border-bottom border-right valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '31' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">8</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '08' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">16</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '16' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
-            <td  class="text-center border-left small__font border-bottom valor"></td>
+            <td  class="text-center border-left small__font border-bottom valor">
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '24' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
+            </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
             <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">{{number_format((float)$folhar->bitotaldiaria, 2, ',', '')}}</td>
         </tr>  
@@ -585,13 +778,13 @@
         </tr>
 
         <tr>
-            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong></strong> Agência: <strong></strong> Operação:<strong></strong> Conta: <strong></strong></td>
+            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong>{{$folhar->bsbanco}}</strong> Agência: <strong>{{$folhar->bsagencia}}</strong> Operação:<strong>{{$folhar->bsoperacao}}</strong> Conta: <strong>{{$folhar->bsconta}}</strong></td>
         </tr>
     </table>
 
     <table>
         <tr class="assinatura">
-            <td class="fontDeclaracao data border-left">Data:</td>
+            <td class="fontDeclaracao data border-left">Data:{{date("d/m/y")}}</td>
             <td class="fontDeclaracao border-right linhaass text-center">__________________________________________________</td>
         </tr>
 

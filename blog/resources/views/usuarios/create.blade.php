@@ -183,19 +183,22 @@
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header " style="background-image: linear-gradient(50deg, rgb(69, 71, 243),rgb(91, 9, 199))">
-                    <h5 class="modal-title text-white" id="staticBackdropLabel">Excluir</h5>
-                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="background-image: linear-gradient(170deg, rgb(2, 19, 97),rgb(19, 1, 70));">
-                    <p class="text-white text-start fs-5">Deseja realmente excluir?</p>
-                    </div>
-                    <div class="modal-footer" style="background-image: linear-gradient(50deg, rgb(69, 71, 243),rgb(91, 9, 199))">
-                    <button type="button" class="btn btn-success btn-outline-light" data-bs-dismiss="modal">Fechar</button>
-                    <form action="">
-                        <a class="btn btn-danger btn-outline-light ms-2" href="#" role="button">Deletar</a>
+                    <form action="" id="formdelete" method="post">
+                        @csrf
+                        @method('delete')
+                        <div class="modal-header modal__delete">
+                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body modal-delbody">
+                            <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                        </div>
+                        <div class="modal-footer modal-delfooter">
+                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn__deletar">Deletar</button>
+
+                        </div>
                     </form>
-                    </div>
                 </div>
                 </div>
             </div>
