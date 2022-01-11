@@ -8,6 +8,7 @@ $('#taxa__fed').mask('9,9999', {reverse: true});
 $('#taxa_adm').mask('00,00', {reverse: true});
 $('#inss__empresa').mask('000,00', {reverse: true});
 $('#valor').mask('000.000.000.000.000,00', {reverse: true});
+$('#seguro').mask('000.000.000.000.000,00', {reverse: true});
 $('#contribuicao__sindicato').mask('000.000.000.000.000,00', {reverse: true});
 $('#ano').mask('0000')
 $('#cod__fpas').mask('000')

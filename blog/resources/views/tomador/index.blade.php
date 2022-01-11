@@ -3,7 +3,7 @@
     <div class="container ">    
         @if(session('success'))
             <script>
-                 
+                     
                 const Toast = Swal.mixin({
                   toast: true,
                   width: 500,
@@ -22,10 +22,10 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: 'Cadastro realizado com Sucesso'
+                  title: '{{$message}}'
                 })
             </script>
-          @endif
+        @endif
         @error('false')
             <script>
                      
@@ -47,7 +47,7 @@
                 
                 Toast.fire({
                   icon: 'error',
-                  title: 'Não foi possível realizar o cadastro!'
+                  title: '{{$message}}'
                 })
             </script>
         @enderror

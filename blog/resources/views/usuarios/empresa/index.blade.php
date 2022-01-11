@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('conteine')
-        <div class="container" > 
-        @error('true')
+        <div class="container"> 
+        @if(session('success'))
             <script>
                      
                 const Toast = Swal.mixin({
@@ -22,10 +22,10 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: 'Cadastro realizado com Sucesso'
+                  title: '{{$message}}'
                 })
             </script>
-        @enderror
+        @endif
         @error('false')
             <script>
                      
@@ -47,7 +47,7 @@
                 
                 Toast.fire({
                   icon: 'error',
-                  title: 'Não foi possível realizar o cadastro!'
+                  title: '{{$message}}'
                 })
             </script>
         @enderror
@@ -215,7 +215,13 @@
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <div class="col-md-4">
+                    <label for="seguro" class="form-label">Seguro</label>
+                    <input type="text" class="form-control fw-bold @error('seguro') is-invalid @enderror"  value="{{old('seguro')}}" name="seguro" id="seguro">
+                    @error('seguro')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="col-md-4">
                     <label for="cnae__codigo" class="form-label">CNAE código</label>
                     <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror" value="{{old('cnae__codigo')}}" name="cnae__codigo" id="cnae__codigo">
@@ -541,7 +547,7 @@
                 $('#cnae__codigo').val(data.escnae)
                 $('#cod__municipio').val(data.escodigomunicipio)
                 $('#contribuicao__sindicato').val(data.escondicaosindicato)
-
+                $('#seguro').val(data.esseguro);
                 $('#vt__trabalhador').val(data.vsvttrabalhador)
                 $('#va__trabalhador').val(data.vsvatrabalhador)
                 $('#nro__fatura').val(data.vsnrofatura)

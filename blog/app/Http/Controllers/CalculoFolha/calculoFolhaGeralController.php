@@ -207,6 +207,14 @@ class calculoFolhaGeralController extends Controller
                     'valor'=> [],
                     'id'=>[]
                 ],
+                'seguro'=>[
+                    'valor'=>[],
+                    'codigos'=>[],
+                    'quantidade'=> [],
+                    'rublicas'=>[],
+                    'valor'=> [],
+                    'id'=>[]
+                ],
                 'valor_inss'=>[
                     'id'=>[],
                     'valor'=>[]
@@ -817,17 +825,29 @@ class calculoFolhaGeralController extends Controller
                 $boletim_tabela['desconto']['valor'][$key] += $inss_sobre_ter;
             }
             foreach ($trabalhadores as $i => $trabalhadores_id) {
-                if ($sindicator->escondicaosindicato) {
-                    $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
-                    $sindicato = str_replace(',','.',$sindicato);
-                    $sindicato = (float) $sindicato;
-                    array_push($boletim_tabela['sindicator']['valor'],$sindicato);
-                    array_push($boletim_tabela['sindicator']['codigos'],'1011');
-                    array_push($boletim_tabela['sindicator']['quantidade'],1);
-                    array_push($boletim_tabela['sindicator']['rublicas'],'Sindicator');
-                    array_push($boletim_tabela['sindicator']['id'],$trabalhadores_id->trabalhador);
-                }
-                $desconto = $sindicato;
+                $desconto = 0;
+                // if ($sindicator->escondicaosindicato) {
+                //     $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
+                //     $sindicato = str_replace(',','.',$sindicato);
+                //     $sindicato = (float) $sindicato;
+                //     array_push($boletim_tabela['sindicator']['valor'],$sindicato);
+                //     array_push($boletim_tabela['sindicator']['codigos'],'1011');
+                //     array_push($boletim_tabela['sindicator']['quantidade'],1);
+                //     array_push($boletim_tabela['sindicator']['rublicas'],'Sindicator');
+                //     array_push($boletim_tabela['sindicator']['id'],$trabalhadores_id->trabalhador);
+                // }
+                // $desconto = $sindicato;
+                // if ($sindicator->esseguro) {
+                //     $seguro = str_replace(".","",$sindicator->esseguro);
+                //     $seguro = str_replace(',','.',$seguro);
+                //     $seguro = (float) $seguro;
+                //     array_push($boletim_tabela['seguro']['valor'],$seguro);
+                //     array_push($boletim_tabela['seguro']['codigos'],'1014');
+                //     array_push($boletim_tabela['seguro']['quantidade'],1);
+                //     array_push($boletim_tabela['seguro']['rublicas'],'Seguro');
+                //     array_push($boletim_tabela['seguro']['id'],$trabalhadores_id->trabalhador);
+                // }
+                // $desconto += $seguro;
                 foreach ($boletim_tabela['desconto']['id'] as $i => $desconto_id) {
                     if ($desconto_id === $trabalhadores_id->trabalhador) {
                         $desconto += $boletim_tabela['desconto']['valor'][$i];
@@ -901,6 +921,10 @@ class calculoFolhaGeralController extends Controller
                         $valorcalculo->cadastroSindicator($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
                         
                     }
+                    if (array_key_exists($key,$boletim_tabela['seguro']['id'])) {
+                        $valorcalculo->cadastroSeguro($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        
+                    }
                     if (array_key_exists($key,$boletim_tabela['vt']['id'])) {
                         $valorcalculo->cadastroVT($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
                     }
@@ -952,6 +976,7 @@ class calculoFolhaGeralController extends Controller
         
         $basecalculo = new BaseCalculo;
         $valorcalculo = new ValorCalculo;
+        $empresa = new Empresa;
         $relacaodia = new RelacaoDia;
         $valoresrublica = new ValoresRublica;
         $folhar = new Folhar;
@@ -966,6 +991,8 @@ class calculoFolhaGeralController extends Controller
             'final'=>$datafinal
         ];
         $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
+        $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
+        // dd($sindicator);
         $descricao = [
         '1002',
         '1003',
@@ -979,6 +1006,7 @@ class calculoFolhaGeralController extends Controller
         '1011',
         '1012',
         '1013',
+        '1014',
         '2002',
         '1007',
         '1005',
@@ -1014,6 +1042,20 @@ class calculoFolhaGeralController extends Controller
                     'valor'=> 0,
                     'id'=>0,
                 ],
+                'seguro'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'sindicator'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
             ];
 
             if (count($basecalculos_15) > 0) {
@@ -1022,7 +1064,18 @@ class calculoFolhaGeralController extends Controller
                     $basecalculos[$i]->valordesconto += $basecalculos_15[$i]->bivalorliquido;
                 }
             }
-           
+            $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
+            $sindicato = str_replace(',','.',$sindicato);
+            $sindicato = (float) $sindicato;
+            $basecalculos[$i]->valordesconto += $sindicato;
+            $basecalculos[$i]->valorliquido -= $sindicato;
+
+            $seguro = str_replace(".","",$sindicator->esseguro);
+            $seguro = str_replace(',','.',$seguro);
+            $seguro = (float) $seguro;
+            $basecalculos[$i]->valordesconto += $seguro;
+            $basecalculos[$i]->valorliquido -= $seguro;
+
             $base_irrf = str_replace(',','.',$irrflista[0]->irdepedente) * $basecalculo->binumfilhos;
 
             $base_irrf = $basecalculo->bifgts - $basecalculo->biinss - $base_irrf;
@@ -1087,6 +1140,19 @@ class calculoFolhaGeralController extends Controller
                     
                 }
             }
+
+            $boletim_tabela['seguro']['codigos'] = '1014';
+            $boletim_tabela['seguro']['rublicas'] = 'Seguro';
+            $boletim_tabela['seguro']['quantidade'] = 1;
+            $boletim_tabela['seguro']['valor'] = $seguro;
+            $valorcalculo->cadastroSeguro($boletim_tabela,$novabasecalculo['id'],$basecalculo->trabalhador,$datafinal);
+
+            $boletim_tabela['sindicator']['codigos'] = '1011';
+            $boletim_tabela['sindicator']['rublicas'] = 'Sindicator';
+            $boletim_tabela['sindicator']['quantidade'] = 1;
+            $boletim_tabela['sindicator']['valor'] = $sindicato;
+            $valorcalculo->cadastroSindicator($boletim_tabela,$novabasecalculo['id'],$basecalculo->trabalhador,$datafinal);
+
             for ($d= 1; $d <= 31 ; $d++) { 
                 $relacaodias = $relacaodia->listaRelacaoDia($trabalhador,$datafinal,$d);
                     if (isset($relacaodias[0]->valor)) {
@@ -1142,5 +1208,17 @@ class calculoFolhaGeralController extends Controller
         // dd($relacaodias);
         $pdf = PDF::loadView('comprovantegeral',compact('folhas','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
+    }
+    public function destroy($id)
+    {
+        $folhar = new Folhar;
+        $valorcalculo = new ValorCalculo;
+        $relacaodia = new RelacaoDia;
+        $basecalculo = new BaseCalculo;
+        $valorcalculos = $valorcalculo->deletar($id);
+        $relacaodias = $relacaodia->deletar($id);
+        $basecalculo = $basecalculo->deletar($id);
+        $folhas = $folhar->deletar($id);
+        return redirect()->back()->withSuccess('Deletado com sucesso.');
     }
 }

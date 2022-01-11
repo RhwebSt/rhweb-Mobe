@@ -4,131 +4,56 @@
             <div class="card-body">
               
 
-              @if($errors->all())
-                    @foreach($errors->all() as  $error)
-                      @if($error === 'edittrue')
-                         <script>
+              @if(session('success'))
+            <script>
                      
-                            const Toast = Swal.mixin({
-                              toast: true,
-                              width: 500,
-                              color: '#ffffff',
-                              background: '#5AA300',
-                              position: 'top-end',
-                              showCloseButton: true,
-                              showConfirmButton: false,
-                              timer: 6000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            
-                            Toast.fire({
-                              icon: 'success',
-                              title: 'Atualização realizada com sucesso!'
-                            })
-                        </script>
-                    @elseif($error === 'editfalse')
-                        <script>
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: '{{$message}}'
+                })
+            </script>
+        @endif
+        @error('false')
+            <script>
                      
-                            const Toast = Swal.mixin({
-                              toast: true,
-                              width: 500,
-                              color: '#ffffff',
-                              background: '#C53230',
-                              position: 'top-end',
-                              showCloseButton: true,
-                              showConfirmButton: false,
-                              timer: 6000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            
-                            Toast.fire({
-                              icon: 'error',
-                              title: 'Não foi possível atualizar os dados!!'
-                            })
-                        </script>
-                    @elseif($error === 'deletatrue')
-                        <script>
-                     
-                            const Toast = Swal.mixin({
-                              toast: true,
-                              width: 500,
-                              color: '#ffffff',
-                              background: '#5AA300',
-                              position: 'top-end',
-                              showCloseButton: true,
-                              showConfirmButton: false,
-                              timer: 6000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            
-                            Toast.fire({
-                              icon: 'success',
-                              title: 'Depedente deletado com sucesso!'
-                            })
-                        </script>
-                    @elseif($error === 'cadastratrue')
-                        <script>
-                     
-                            const Toast = Swal.mixin({
-                              toast: true,
-                              width: 500,
-                              color: '#ffffff',
-                              background: '#5AA300',
-                              position: 'top-end',
-                              showCloseButton: true,
-                              showConfirmButton: false,
-                              timer: 6000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            
-                            Toast.fire({
-                              icon: 'success',
-                              title: 'Cadastro realizado com Sucesso'
-                            })
-                        </script>
-                    @elseif($error === 'cadastrafalse')
-                        <script>
-                     
-                            const Toast = Swal.mixin({
-                              toast: true,
-                              width: 500,
-                              color: '#ffffff',
-                              background: '#C53230',
-                              position: 'top-end',
-                              showCloseButton: true,
-                              showConfirmButton: false,
-                              timer: 6000,
-                              timerProgressBar: true,
-                              didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                              }
-                            })
-                            
-                            Toast.fire({
-                              icon: 'error',
-                              title: 'Não foi possível realizar o cadastro!'
-                            })
-                        </script>
-                    @endif
-                    @endforeach
-                @endif  
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: '{{$message}}'
+                })
+            </script>
+        @enderror  
               <form class="row g-3 mt-1 mb-3"  action="{{ route('depedente.update',$id) }}" method="POST" id="form">
 
                 <div class="row">

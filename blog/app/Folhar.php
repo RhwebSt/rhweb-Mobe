@@ -81,4 +81,8 @@ class Folhar extends Model
         })
         ->get();
     }
+    public function deletar($id)
+    {
+        return Folhar::whereDate('fsfinal', $id)->delete();
+    }
 }

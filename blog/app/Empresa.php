@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Empresa extends Model
 {
     protected $fillable = [
-        'esnome','escnpj','esfoto','estelefone','esdataregitro','esresponsavel','esemail','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
+        'esnome','escnpj','esfoto','estelefone','esdataregitro','esresponsavel','esemail','esseguro','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
     ];
     public function cadastro($dados)
     {
@@ -24,7 +24,7 @@ class Empresa extends Model
             'esretemferias'=>$dados['retem__ferias'],
             'essindicalizado'=>$dados['sincalizado'],
             'escodigomunicipio'=>$dados['cod__municipio'],
-            
+            'esseguro'=>$dados['seguro']
 
         ]);
     }
@@ -130,7 +130,7 @@ class Empresa extends Model
             ['id', $id],
             ['essindicalizado','1-Sim']
         ]) 
-        ->select('escondicaosindicato')
+        ->select('escondicaosindicato','esseguro')
         ->first();
     }
     public function editar($dados,$id)
@@ -149,6 +149,7 @@ class Empresa extends Model
             'esretemferias'=>$dados['retem__ferias'],
             'essindicalizado'=>$dados['sincalizado'],
             'escodigomunicipio'=>$dados['cod__municipio'],
+            'esseguro'=>$dados['seguro']
         ]);
     }
     public function deletar($id)

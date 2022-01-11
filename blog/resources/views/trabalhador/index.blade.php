@@ -13,7 +13,7 @@
                   position: 'top-end',
                   showCloseButton: true,
                   showConfirmButton: false,
-                  timer: 6000,
+                  timer: 4000,
                   timerProgressBar: true,
                   didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -23,33 +23,34 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: 'Cadastro realizado com Sucesso'
+                  title: '{{ $message }}'
                 })
             </script>
-          @endif
+        @endif
         @error('false')
             <script>
-                    const Toast = Swal.mixin({
-                      toast: true,
-                      width: 500,
-                      color: '#ffffff',
-                      background: '#C53230',
-                      position: 'top-end',
-                      showCloseButton: true,
-                      showConfirmButton: false,
-                      timer: 6000,
-                      timerProgressBar: true,
-                      didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                      }
-                    })
-                    
-                    Toast.fire({
-                      icon: 'error',
-                      title: 'Não foi possível realizar o cadastro!'
-                    })
-                </script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: '{{ $message }}'
+                })
+            </script>
         @enderror  
                 
         

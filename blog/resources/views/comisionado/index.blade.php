@@ -1,56 +1,56 @@
 @extends('layouts.index')
 @section('conteine')
 <div class="container">    
-        @if(session('success'))
-            <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'success',
-                  title: 'Cadastro realizado com Sucesso'
-                })
-            </script>
-          @endif
-        @error('false')
-            <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: 'Não foi possível realizar o cadastro!'
-                })
-            </script>
-        @enderror
+             @if(session('success'))
+                <script>
+                         
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#5AA300',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'success',
+                      title: '{{ $message }}'
+                    })
+                </script>
+            @endif
+            @error('false')
+                <script>
+                         
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: '{{ $message }}'
+                    })
+                </script>
+            @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
                   
                   <h5 class="card-title text-center mt-5 fs-3 ">Comissionado</h5>

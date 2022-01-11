@@ -2,10 +2,9 @@
 @section('conteine')
     <main class="container ">
         <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Identificação do Trabalhador</div>
-          @if(isset($msg))
-            @if($msg['status'])
+              @if(session('success'))
                 <script>
-                     
+                         
                     const Toast = Swal.mixin({
                       toast: true,
                       width: 500,
@@ -14,7 +13,7 @@
                       position: 'top-end',
                       showCloseButton: true,
                       showConfirmButton: false,
-                      timer: 6000,
+                      timer: 4000,
                       timerProgressBar: true,
                       didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -24,12 +23,13 @@
                     
                     Toast.fire({
                       icon: 'success',
-                      title: 'Cadastro realizado com Sucesso'
+                      title: '{{$message}}'
                     })
                 </script>
-            @else
+            @endif
+            @error('false')
                 <script>
-                     
+                         
                     const Toast = Swal.mixin({
                       toast: true,
                       width: 500,
@@ -38,7 +38,7 @@
                       position: 'top-end',
                       showCloseButton: true,
                       showConfirmButton: false,
-                      timer: 6000,
+                      timer: 4000,
                       timerProgressBar: true,
                       didOpen: (toast) => {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -48,11 +48,10 @@
                     
                     Toast.fire({
                       icon: 'error',
-                      title: 'Não foi possível realizar o cadastro!'
+                      title: '{{$message}}'
                     })
                 </script>
-            @endif
-          @endif
+            @enderror
         <form class="row g-3" action="{{ route('trabalhador.update') }}"  method="POST" >
         <div class="container mt-5 ">
             <div class="btn  " role="group" aria-label="Basic example">

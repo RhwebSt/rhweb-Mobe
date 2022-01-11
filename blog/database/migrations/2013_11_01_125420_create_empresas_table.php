@@ -22,6 +22,7 @@ class CreateEmpresasTable extends Migration
             $table->char('esdataregitro', 30)->nullable();
             $table->char('esresponsavel', 30)->nullable();
             $table->char('esemail', 100)->nullable();
+            $table->char('esseguro', 30)->nullable();
             $table->char('escnae', 30)->nullable();
             $table->char('escodigomunicipio', 30)->nullable();
             $table->char('essindicalizado', 30)->nullable();

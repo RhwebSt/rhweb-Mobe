@@ -95,5 +95,8 @@ class BaseCalculo extends Model
         ->whereBetween('base_calculos.created_at',[$datainicio, $datafinal])
         ->get();
     }
-    
+    public function deletar($id)
+    {
+        return BaseCalculo::whereDate('created_at', $id)->delete();
+    }
 }

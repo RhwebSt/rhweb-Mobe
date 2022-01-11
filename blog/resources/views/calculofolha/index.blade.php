@@ -366,15 +366,14 @@
                                             </td>
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:50px;">
-                                                <button class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
+                                                <a href="{{route('calculo.folha.analitica',$folhar->id)}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
                                                     <i class="fal fa-analytics" style="color: white;"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                             
                                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                            <form action=""  method="post">
-                                                    <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                                </form> 
+                                            <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></a>
+                                         
                                                 </td>
                                             </td>
                                         </tr>

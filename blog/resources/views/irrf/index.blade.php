@@ -1,10 +1,9 @@
 @extends('layouts.index')
 @section('conteine')
     <div class="container">
-    @if(session('success'))
-              
-              <script>
-                     
+         @if(session('success'))
+                <script>
+                         
                     const Toast = Swal.mixin({
                       toast: true,
                       width: 500,
@@ -23,35 +22,35 @@
                     
                     Toast.fire({
                       icon: 'success',
-                      title: 'Cadastro realizado com Sucesso'
+                      title: '{{ $message }}'
                     })
                 </script>
-        @endif
-        @error('false')
-            <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: 'Não foi possível realizar o cadastro!'
-                })
-            </script>
-        @enderror    
+            @endif
+            @error('false')
+                <script>
+                         
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      width: 500,
+                      color: '#ffffff',
+                      background: '#C53230',
+                      position: 'top-end',
+                      showCloseButton: true,
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: '{{ $message }}'
+                    })
+                </script>
+            @enderror    
         <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('irrf.store')}}">
             
                 <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">Faixa de Cálculos - IRRF</h1>
