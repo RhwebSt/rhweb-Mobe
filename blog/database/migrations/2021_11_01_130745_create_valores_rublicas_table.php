@@ -26,6 +26,7 @@ class CreateValoresRublicasTable extends Migration
             $table->char('vsnrocartaoponto', 15)->nullable();
             $table->char('vsnroequesocial', 15)->nullable();
             $table->char('vscbo', 15)->nullable();
+            $table->integer('vimatricular')->nullable();
             $table->integer('empresa')->unsigned()->nullable();
             $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();

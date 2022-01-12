@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     protected $fillable = [
-        'cscategoria','cssituacao','csafastamento','csadmissao','cbo','cssf','csirrf','trabalhador'
+        'cscategoria','cssituacao','csafastamento','csadmissao','cbo','trabalhador'
     ];
     public function cadastro($dados)
     {
@@ -17,8 +17,6 @@ class Categoria extends Model
             'csafastamento'=>$dados['data__afastamento'],
             'csadmissao'=>$dados['data__admissao'],
             'cbo'=>$dados['cbo'],
-            'cssf'=>$dados['sf'],
-            'csirrf'=>$dados['irrf'],
             'trabalhador'=>$dados['trabalhador'],
         ]);
     }
@@ -31,8 +29,6 @@ class Categoria extends Model
             'csafastamento'=>$dados['data__afastamento'],
             'csadmissao'=>$dados['data__admissao'],
             'cbo'=>$dados['cbo'],
-            'cssf'=>$dados['sf'],
-            'csirrf'=>$dados['irrf'],
         ]);
     }
     public function deletar($id)

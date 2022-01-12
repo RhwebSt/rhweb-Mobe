@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{ $message }}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -78,7 +78,7 @@
                       </ul>
                     <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
                     
-                    <button type="button" class="btn botao disabled" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn botao disabled d-none" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
@@ -129,7 +129,7 @@
             <input type="hidden" name="foto" id="foto">
                 <div class="col-md-6">
                   <label for="nome__completo" class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
+                  <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo" maxlength="100" id="nome__completo">
                   @error('nome__completo')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -137,7 +137,7 @@
                 
                 <div class="col-md-6">
                   <label for="nome__social" class="form-label">Nome Social (OPICIONAL)</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="  {{ old('nome__social')}}" maxlength="30" name="nome__social" id="nome__social" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="  {{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social" >
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -226,7 +226,7 @@
     
                 <div class="col-md-4">
                   <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-                  <input type="text" list="pais_nascimento_list" class="form-control input fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="10" name="pais__nascimento" id="pais__nascimento" >
+                  <input type="text" list="pais_nascimento_list" class="form-control input fw-bold text-dark  @error('pais__nascimento') is-invalid @enderror"  value="{{old('pais__nascimento')}}" maxlength="20" name="pais__nascimento" id="pais__nascimento" >
                   @error('pais__nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -246,7 +246,7 @@
     
                 <div class="col-md-8">
                   <label for="nome__mae" class="form-label">Nome da Mãe</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('nome__mae') is-invalid @enderror"  value="{{old('nome__mae')}}" maxlength="50" name="nome__mae" id="nome__mae" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__mae') is-invalid @enderror"  value="{{old('nome__mae')}}" maxlength="100" name="nome__mae" id="nome__mae" >
                   @error('nome__mae')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -282,9 +282,58 @@
                 <div class="col-md-4"> 
                     <label for="tipoconstrucao" class="form-label">Tipo</label>
                     <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
-                      <option selected >Casa</option>
+                    <option selected >Casa</option>
                       <option >Apartamento</option>
                       <option >Empresa</option>
+                      <option >Área</option>
+                      <option >Acesso</option>
+                      <option >Acampamento</option>
+                      <option >Acesso Local</option>
+                      <option >Área Especial</option>
+                      <option >Aeroporto</option>
+                      <option >Aldeia</option>
+                      <option >Avenida Marginal Direita</option>
+                      <option >Avenida Marginal Esquerda</option>
+                      <option >Anel Viário</option>
+                      <option >Antiga Estrada</option>
+                      <option >Artéria</option>
+                      <option >Alto</option>
+                      <option >Atalho</option>
+                      <option >Área Verde</option>
+                      <option >Avenida</option>
+                      <option >Avenida Contorno</option>
+                      <option >Avenida Marginal</option>
+                      <option >Avenida Velha</option>
+                      <option >Balneário</option>
+                      <option >Beco</option>
+                      <option >Buraco</option>
+                      <option >Bloco</option>
+                      <option >Chácara</option>
+                      <option >Conjunto</option>
+                      <option >Colônia</option>
+                      <option >Comunidade</option>
+                      <option >Condomínio</option>
+                      <option >Distrito</option>
+                      <option >Estrada Intermunicipal</option>
+                      <option >Entrada Particular</option>
+                      <option >Estação</option>
+                      <option >Estância</option>
+                      <option >Eixo Industrial</option>
+                      <option >Favela</option>
+                      <option >Fazenda</option>
+                      <option >Núcleo Habitacional</option>
+                      <option >Jardim</option>
+                      <option >Loteamento</option>
+                      <option >Lote</option>
+                      <option >Morro</option>
+                      <option >Núcleo Rural</option>
+                      <option >Parque Residencial</option>
+                      <option >Quadra</option>
+                      <option >Rua</option>
+                      <option >Residencial</option>
+                      <option >Rodovia</option>
+                      <option >Trevo</option>
+                      <option >Outros</option>
                     </select>
                 </div>
                 <div class="col-md-8">
@@ -349,21 +398,7 @@
                   </datalist>
                 </div>
     
-                <div class="col-md-3">
-                  <label for="irrf" class="form-label">IRRF</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('irrf') is-invalid @enderror" value="{{old('irrf')}}" name="irrf" id="irrf">
-                  @error('irrf')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
-    
-                <div class="col-md-3">
-                  <label for="sf" class="form-label">SF</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('sf') is-invalid @enderror" value="{{old('sf')}}" name="sf" id="sf" >
-                  @error('sf')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
+
     
                 <div class="col-md-4">
                   <label for="ctps" class="form-label">CTPS</label>
@@ -751,8 +786,7 @@
               $('#data__admissao').val(data.csadmissao).next().text(' ')
               $('#categoria').val(data.cscategoria).next().text(' ')
               $('#cbo').val(data.cbo).next().text(' ')
-              $('#irrf').val(data.csirrf).next().text(' ')
-              $('#sf').val(data.cssf).next().text(' ')
+             
               $('#ctps').val(data.dsctps).next().text(' ')
               $('#serie__ctps').val(data.dsserie).next().text(' ')
               $('#uf__ctps').val(data.dsuf).next().text(' ')
@@ -783,7 +817,7 @@
                 }
               }
               for (let index = 0; index <  $('#complemento__endereco option').length; index++) {  
-                if (data.estipo == $('#complemento__endereco option').eq(index).text()) {
+                if (data.escomplemento == $('#complemento__endereco option').eq(index).text()) {
                   $('#complemento__endereco option').eq(index).attr('selected','selected')
                 }else  {
                   $('#complemento__endereco option').eq(index).removeAttr('selected')

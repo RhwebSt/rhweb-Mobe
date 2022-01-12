@@ -15,13 +15,13 @@ class CreateTrabalhadorsTable extends Migration
     {
         Schema::create('trabalhadors', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tsnome',40)->nullable();
+            $table->string('tsnome',100)->nullable();
             $table->longText('tsfoto')->nullable();
-            $table->string('tsnomesocial',30)->nullable();
+            $table->string('tsnomesocial',100)->nullable();
             $table->string('tscpf',15)->nullable();
             $table->integer('tsmatricula')->nullable();
             $table->integer('tsserie')->nullable();
-            $table->string('tsmae',50)->nullable();
+            $table->string('tsmae',100)->nullable();
             // $table->string('pai',30)->nullable();
             $table->string('tsuf',2)->nullable();
             $table->string('tstelefone',18)->nullable();

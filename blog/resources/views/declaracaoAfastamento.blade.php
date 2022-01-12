@@ -206,7 +206,17 @@
         </table>
 
         <div class="marginTerm border-top border-left border-bottom border-right">
-            <p class=" text name__title2">Declaro para todos os fins de direito, principalmente trabalhistas e previdênciários que irei me Afastar da<b>Atividade Movimentador de Mercadorias</b>, sob a responsabilidade do <b>{{$empresas->esnome}}</b> na condição de <b>"Trabalhador Avulso"</b>(sem vinculo empregatício), por minha vontade e iniciativa própria. Sei também do procedimento para saque do FGTS determinado pela legislação vigente, ou seja, <b>suspensão por periodo igual ou superior a 90 (noventa) dias</b>. Assim como declaro estar ciente de que, como trabalhador avulso, por ocasião do meu desligamento,<b>não haverá remuneração referente ao aviso prévio, multa FGTS, bem como "Seguro Desemprego".</b> Remunerações estas pertinentes somente aos trabalhadores com vinculo empregatício.</p>
+            <p class=" text name__title2">Declaro para todos os fins de direito, principalmente trabalhistas e previdênciários que irei me Afastar da<b>
+                <?php
+                    $cbo = explode('-',$trabalhadors->cbo);
+                ?>
+                {{$cbo[1]}}
+            </b>, sob a responsabilidade do <b>{{$empresas->esnome}}</b> na condição de <b>
+                <?php
+                    $categoria = explode('-',$trabalhadors->cscategoria);
+                ?>
+                "{{$categoria[1]}}"
+            </b>(sem vinculo empregatício), por minha vontade e iniciativa própria. Sei também do procedimento para saque do FGTS determinado pela legislação vigente, ou seja, <b>suspensão por periodo igual ou superior a 90 (noventa) dias</b>. Assim como declaro estar ciente de que, como trabalhador avulso, por ocasião do meu desligamento,<b>não haverá remuneração referente ao aviso prévio, multa FGTS, bem como "Seguro Desemprego".</b> Remunerações estas pertinentes somente aos trabalhadores com vinculo empregatício.</p>
 
             <p class="text name__title2 text-bold">Pelo que estou ciente, firmo a presente, em duas vias do mesmo teor e forma.</p>
            

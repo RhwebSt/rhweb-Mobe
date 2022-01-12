@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class ValoresRublica extends Model
 {
     protected $fillable = [
-        'vsvttrabalhador','vsvatrabalhador','vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','empresa'
+    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','empresa'
     ];
     public function cadastro($dados)
     {
         return ValoresRublica::create([
-            'vsvttrabalhador'=>$dados['vt__trabalhador'],
-            'vsvatrabalhador'=>$dados['va__trabalhador'],
             'vsnrofatura'=>$dados['nro__fatura'],
             'vsreciboavulso'=>$dados['nro__reciboavulso'],
             'vsmatricula'=>$dados['matric__trabalhador'],
@@ -23,6 +21,7 @@ class ValoresRublica extends Model
             'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
             'vsnroequesocial'=>$dados['seq__esocial'],
             'vsnroflha'=>$dados['nro__folha'],
+            'vimatricular'=>$dados['matricular'],
             'empresa'=>$dados['empresa'],
         ]);
     }
@@ -31,8 +30,6 @@ class ValoresRublica extends Model
         return ValoresRublica::where('id', $id)
         ->orWhere('empresa', $id)
         ->update([
-            'vsvttrabalhador'=>$dados['vt__trabalhador'],
-            'vsvatrabalhador'=>$dados['va__trabalhador'],
             'vsnrofatura'=>$dados['nro__fatura'],
             'vsreciboavulso'=>$dados['nro__reciboavulso'],
             'vsmatricula'=>$dados['matric__trabalhador'],
@@ -41,7 +38,15 @@ class ValoresRublica extends Model
             'vscbo'=>$dados['cbo'],
             'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
             'vsnroequesocial'=>$dados['seq__esocial'],
-            'vsnroflha'=>$dados['nro__folha']
+            'vsnroflha'=>$dados['nro__folha'],
+            'vimatricular'=>$dados['matricular'],
+        ]);
+    }
+    public function editarMatricular($dados,$empresa)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update([
+            'vimatricular'=>$dados['matricula'],
         ]);
     }
     public function buscaUnidadeEmpresa($empresa)
@@ -57,4 +62,5 @@ class ValoresRublica extends Model
     {
         return ValoresRublica::where('empresa', $id)->delete();
     }
+    
 }

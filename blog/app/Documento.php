@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Documento extends Model
 {
     protected $fillable = [
@@ -34,5 +34,27 @@ class Documento extends Model
     public function deletar($id)
     {
         return Documento::where('trabalhador', $id)->delete();
+    }
+    public function VerificarCadastroPis($dados)
+    {
+        $user = auth()->user();
+        return DB::table('trabalhadors')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->where([
+            ['documentos.dspis',$dados['pis']],
+            ['trabalhadors.empresa',$user->empresa]
+        ])
+        ->count();
+    }
+    public function VerificarCadastroCtps($dados)
+    {
+        $user = auth()->user();
+        return DB::table('trabalhadors')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->where([
+            ['documentos.dsctps',$dados['ctps']],
+            ['trabalhadors.empresa',$user->empresa]
+        ])
+        ->count();
     }
 }

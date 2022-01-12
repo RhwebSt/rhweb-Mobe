@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Trabalhador extends Model
 {
     protected $fillable = [
-        'tsnome','tsnomesocial','tsfoto','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','tsirrf','empresa'
+        'tsnome','tsnomesocial','tsfoto','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','empresa'
     ];
     public function cadastro($dados)
     {
@@ -23,9 +23,17 @@ class Trabalhador extends Model
             'tstelefone'=>$dados['telefone'],
             'tssexo'=>$dados['sexo'],
             'tsescolaridade'=>$dados['grau__instrucao'],
-            'tsirrf'=>$dados['irrf'],
             'empresa'=>$dados['empresa']
         ]);
+    }
+    public function VerificarCadastroCpf($dados)
+    {
+        $user = auth()->user();
+        return Trabalhador::where([
+            ['tscpf',$dados['cpf']],
+            ['empresa',$user->empresa]
+        ])
+        ->count();
     }
     public function relatorioBoletimTabela($dados)
     {
@@ -38,7 +46,8 @@ class Trabalhador extends Model
             'tsnome',
             'id',
             'tscpf',
-            'tsmatricula'
+            'tsmatricula',
+            'created_at'
         ) 
         ->where(function($query) use ($id){
             $user = auth()->user();
@@ -73,7 +82,7 @@ class Trabalhador extends Model
             }
             
         })
-        ->orderBy('tsnome')
+        ->orderBy('created_at','desc')
         ->distinct()
         ->limit(100)
         ->get();
@@ -148,7 +157,7 @@ class Trabalhador extends Model
                 'enderecos.esestado',
                 'enderecos.esmunicipio',
                 'enderecos.esuf',
-                'enderecos.estipo',
+                'enderecos.escomplemento',
                 'enderecos.esnum',
                 'enderecos.escep',
                 'enderecos.eiid'
@@ -225,7 +234,7 @@ class Trabalhador extends Model
             'enderecos.esestado',
             'enderecos.esmunicipio',
             'enderecos.esuf',
-            'enderecos.estipo',
+            'enderecos.escomplemento',
             'enderecos.esnum',
             'enderecos.escep',
             'enderecos.eiid'
@@ -252,7 +261,6 @@ class Trabalhador extends Model
             'tstelefone'=>$dados['telefone'],
             'tssexo'=>$dados['sexo'],
             'tsescolaridade'=>$dados['grau__instrucao'],
-            'tsirrf'=>$dados['irrf'],
         ]);
     }
    

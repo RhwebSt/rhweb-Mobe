@@ -44,8 +44,16 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $depedente = new Dependente;
+        $depedentes_cpf = $depedente->verificaCpf($dados);
+        $depedentes_quant = $depedente->quantidadeDependente($dados);
+        if ($depedentes_cpf) {
+            return redirect()->back()->withInput()->withErrors(['dscpf'=>'Este dependente já está cadastrado neste CPF.']);
+        }elseif ($depedentes_quant > 10) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já exedeu o limite de dependentes.']);
+        }
         $request->validate([
-            'cpf__dependente'=>'required|cpf|formato_cpf',
+            'dscpf'=>'required|cpf|formato_cpf',
             'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
@@ -53,14 +61,18 @@ class DepedenteController extends Controller
             'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
         $id = $dados['trabalhador'];
-        $depedente = new Dependente;
+        
         $depedentes = $depedente->cadastro($dados);
-       if($depedentes) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+        if ($depedentes) {
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         }
-        return redirect()->route('depedente.mostrar.create',$id)->withInput()->withErrors([$condicao]);
+         
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            return redirect()->route('depedente.mostrar.create',$id)->withInput()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
+        }
+        
     }
 
     /**
@@ -100,7 +112,7 @@ class DepedenteController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'cpf__dependente'=>'required|cpf|formato_cpf',
+            'dscpf'=>'required|cpf|formato_cpf',
             'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
@@ -108,13 +120,15 @@ class DepedenteController extends Controller
             'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
         $depedente = new Dependente;
-        $depedentes = $depedente->editar($dados,$id);
-        if($depedentes) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $depedentes = $depedente->editar($dados,$id);
+            if($depedentes) {
+                return redirect()->back()->withSuccess('Atualizador realizado com sucesso.');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('depedente.edit',$id)->withInput()->withErrors(['false'=>'Não foi porssivél atualizar os dados.']);
         }
-        return redirect()->route('depedente.edit',$id)->withInput()->withErrors([$condicao]);
+        
     }
 
     /**

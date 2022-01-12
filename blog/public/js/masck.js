@@ -22,7 +22,6 @@ $('#pis').mask('000.00000.00-0', {reverse: true})
 $('#rubricas').mask('00000000000')
 $('#cod__municipio').mask('0000000000')
 $('#cnae__codigo').mask('0000000000')
-$('#cbo').mask('0000000000')
 $('#das').mask('00,00', {reverse: true});
 $('#ferias_trab').mask('000,00', {reverse: true});
 $('#rsr').mask('000,00', {reverse: true});
@@ -40,7 +39,7 @@ $('#rat__ajustado').mask('0,00', {reverse: true});
 $('#fpas__terceiros').mask('0000', {reverse: true});
 $('#aliq__terceiros').mask('0,0', {reverse: true});
 $('#deflator').mask('000,0000', {reverse: true});
-$('#matricula').mask('0000').val(Math.floor(Math.floor(Math.random() * 9999)))
+// $('#matricula').mask('0000').val(Math.floor(Math.floor(Math.random() * 9999)))
 $('#agencia').mask('0000')
 $('#operacao').mask('000')
 $('#conta').mask('00000000-0')

@@ -4,7 +4,7 @@
             <div class="card-body">
               
 
-              @if(session('success'))
+            @if(session('success'))
             <script>
                      
                 const Toast = Swal.mixin({
@@ -25,7 +25,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{$message}}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -83,8 +83,8 @@
               
                 <div class="col-md-4">
                   <label for="cpf__dependente" class="form-label">CPF do dependente</label>
-                  <input type="text" class="form-control  @error('cpf__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dscpf}}" name="cpf__dependente"  id="cpf__dependente">
-                  @error('cpf__dependente')
+                  <input type="text" class="form-control  @error('dscpf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dscpf}}" name="dscpf"  id="cpf__dependente">
+                  @error('dscpf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
@@ -105,13 +105,22 @@
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
-
                 <div class="col-md-4">
                     <label for="sexo" class="form-label">Sexo</label>
                     <select id="sexo" name="sexo" class="form-select fw-bold text-dark" value="">
+                      @if($depedentes->dssexo === 'Masculino')
                       <option selected >Masculino</option>
                       <option >Feminino</option>
                       <option>Outro</option>
+                      @elseif($depedentes->dssexo === 'Feminino')
+                      <option  >Masculino</option>
+                      <option selected>Feminino</option>
+                      <option>Outro</option>
+                      @elseif($depedentes->dssexo === 'Outro')
+                      <option  >Masculino</option>
+                      <option >Feminino</option>
+                      <option selected>Outro</option>
+                      @endif
                     </select>
                 </div>
 
@@ -120,27 +129,37 @@
                 
 
                 <div class="col-md-4">
-                    <label for="irrf" class="form-label">IRRF</label>
-                    <input type="text" class="form-control @error('irrf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dsirrf}}" name="irrf" id="irrf">
+                    <label for="irrfs" class="form-label">IRRF</label>
+                    <!-- <input type="text" class="form-control @error('irrf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dsirrf}}" name="irrf" id="irrf">
                     @error('irrf')
                       <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                    <!-- <select id="irrf" name="irrf" class="form-select" value="">
+                  @enderror -->
+                    <select id="irrfs" name="irrf" class="form-select" value="">
+                      @if($depedentes->dsirrf === 'Sim')
                       <option selected>Sim</option>
                       <option>Não</option>
-                    </select> -->
+                      @else
+                      <option>Sim</option>
+                      <option selected>Não</option>
+                      @endif
+                    </select>
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="sf" class="form-label">Salário Familia</label>
-                    <input type="text" class="form-control @error('sf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dssf}}" name="sf" value="" id="sf">
+                    <label for="sfs" class="form-label">Salário Familia</label>
+                    <!-- <input type="text" class="form-control @error('sf') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dssf}}" name="sf" value="" id="sf">
                     @error('sf')
                       <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                    <!-- <select id="sf" name="sf" class="form-select" value="">
-                      <option selected>Sim</option>
+                  @enderror -->
+                    <select id="sfs" name="sf" class="form-select" value="">
+                      @if($depedentes->dsirrf === 'Sim')
+                      <option  selected>Sim</option>
                       <option>Não</option>
-                    </select> -->
+                      @else
+                      <option>Sim</option>
+                      <option selected>Não</option>
+                      @endif
+                    </select>
                 </div>
               </form> 
               

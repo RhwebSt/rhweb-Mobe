@@ -273,23 +273,7 @@
                 <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
 
 
-                <div class="col-md-3">
-                    <label for="vt__trabalhador" class="form-label">VT Trabalhador</label>
-                    <input type="text" class="form-control @error('vt__trabalhador') is-invalid @enderror" value="{{old('vt__trabalhador')}}" name="vt__trabalhador" id="vt__trabalhador">
-                    @error('vt__trabalhador')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-
-                <div class="col-md-3">
-                    <label for="va__trabalhador" class="form-label">VA Trabalhador</label>
-                    <input type="text" class="form-control  @error('va__trabalhador') is-invalid @enderror" value="{{old('va__trabalhador')}}" name="va__trabalhador" id="va__trabalhador">
-                    @error('va__trabalhador')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
+              
                 <div class="col-md-3">
                     <label for="nro__fatura" class="form-label">Nro Fatura</label>
                     <input type="text" class="form-control  @error('nro__fatura') is-invalid @enderror"  value="{{old('nro__fatura')}}"  name="nro__fatura" id="nro__fatura">
@@ -361,7 +345,13 @@
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <div class="col-md-3">
+                    <label for="matricular" class="form-label">N°Trabalhador</label>
+                    <input type="text" class="form-control @error('matricular') is-invalid @enderror"  value="{{old('matricular')}}" name="matricular" id="matricular">
+                    @error('matricular')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="col-md-2 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
                     <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">

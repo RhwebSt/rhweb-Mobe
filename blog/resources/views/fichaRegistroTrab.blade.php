@@ -292,7 +292,12 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Data de Admissão:</strong> {{$trabalhadors->csadmissao}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Data de Admissão:</strong> 
+                            <?php
+                                $data = explode('-',$trabalhadors->csadmissao)
+                            ?>
+                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                    </td>
                 </tr>
     
             </table>

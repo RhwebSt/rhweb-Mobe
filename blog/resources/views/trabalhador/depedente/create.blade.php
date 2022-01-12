@@ -23,7 +23,7 @@
                     
                     Toast.fire({
                       icon: 'success',
-                      title: '{{$message}}'
+                      title: '{{session("success")}}'
                     })
                 </script>
             @endif
@@ -78,8 +78,8 @@
               <input type="hidden" id="method" name="_method" value="">
                 <div class="col-md-4">
                   <label for="cpf__dependente" class="form-label">CPF do dependente</label>
-                  <input type="text" class="form-control  @error('cpf__dependente') is-invalid @enderror  fw-bold text-dark" value="{{old('cpf__dependente')}}" name="cpf__dependente"  id="cpf__dependente">
-                  @error('cpf__dependente')
+                  <input type="text" class="form-control  @error('dscpf') is-invalid @enderror  fw-bold text-dark" value="{{old('dscpf')}}" name="dscpf"  id="cpf__dependente">
+                  @error('dscpf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
@@ -111,27 +111,28 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="irrf" class="form-label">IRRF</label>
-                    <input type="text" class="form-control @error('irrf') is-invalid @enderror  fw-bold text-dark" value="{{old('irrf')}}" name="irrf" id="irrf">
+                    <label for="irrfs" class="form-label">IRRF</label>
+                    
+                    <!-- <input type="text" class="form-control @error('irrf') is-invalid @enderror  fw-bold text-dark" value="{{old('irrf')}}" name="irrf" id="irrf">
                     @error('irrf')
                       <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                    <!-- <select id="irrf" name="irrf" class="form-select" value="">
-                      <option selected>Sim</option>
-                      <option>Não</option>
-                    </select> -->
+                  @enderror -->
+                  <select id="irrfs" name="irrf" class="form-select" value="">
+                      <option >Sim</option>
+                      <option selected>Não</option>
+                  </select> 
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="sf" class="form-label">Salário Familia</label>
-                    <input type="text" class="form-control @error('sf') is-invalid @enderror  fw-bold text-dark" value="{{old('sf')}}" name="sf" value="" id="sf">
+                    <label for="sfs" class="form-label">Salário Familia</label>
+                    <!-- <input type="text" class="form-control @error('sf') is-invalid @enderror  fw-bold text-dark" value="{{old('sf')}}" name="sf" value="" id="sf">
                     @error('sf')
                       <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                    <!-- <select id="sf" name="sf" class="form-select" value="">
-                      <option selected>Sim</option>
-                      <option>Não</option>
-                    </select> -->
+                  @enderror -->
+                    <select id="sfs" name="sf" class="form-select" value="">
+                      <option >Sim</option>
+                      <option selected>Não</option>
+                    </select> 
                 </div>
 
 

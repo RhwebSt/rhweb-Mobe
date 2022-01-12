@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Dependente extends Model
 {
     protected $fillable = [
-        'dsnome','dstipo','dsdata','dscpf','dsirrf','dssf','trabalhador'
+        'dsnome','dstipo','dsdata','dscpf','dsirrf','dssexo','dssf','trabalhador'
     ];
     public function cadastro($dados)
     {
@@ -15,11 +15,23 @@ class Dependente extends Model
             'dsnome'=>$dados['nome__dependente'],
             'dstipo'=>$dados['tipo__dependente'],
             'dsdata'=>$dados['data__nascimento'],
-            'dscpf'=>$dados['cpf__dependente'],
+            'dssexo'=>$dados['sexo'],
+            'dscpf'=>$dados['dscpf'],
             'dsirrf'=>$dados['irrf'],
             'dssf'=>$dados['sf'],
             'trabalhador'=>$dados['trabalhador'],
         ]);
+    }
+    public function verificaCpf($dados)
+    {
+        return Dependente::where([
+            ['trabalhador', $dados['trabalhador']],
+            ['dscpf',$dados['dscpf']]
+        ])->count();
+    }
+    public function quantidadeDependente($dados)
+    {
+        return Dependente::where('trabalhador', $dados['trabalhador'])->count();
     }
     public function buscaListaDepedente($id)
     {
@@ -47,7 +59,8 @@ class Dependente extends Model
             'dsnome'=>$dados['nome__dependente'],
             'dstipo'=>$dados['tipo__dependente'],
             'dsdata'=>$dados['data__nascimento'],
-            'dscpf'=>$dados['cpf__dependente'],
+            'dscpf'=>$dados['dscpf'],
+            'dssexo'=>$dados['sexo'],
             'dsirrf'=>$dados['irrf'],
             'dssf'=>$dados['sf'],
         ]);
@@ -55,5 +68,9 @@ class Dependente extends Model
     public function deletar($id)
     {
         return Dependente::where('id', $id)->delete();
+    }
+    public function deletarTrabalhador($id)
+    {
+        return Dependente::where('trabalhador', $id)->delete();
     }
 }
