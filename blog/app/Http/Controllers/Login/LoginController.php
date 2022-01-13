@@ -14,11 +14,10 @@ class LoginController extends Controller
      */
     public function index()
     {
-
         if (auth()->check()){
             return redirect()->route('home.index');
         }
-        return view('login.index'); 
+        return view('index'); 
     }
 
     /**
@@ -28,8 +27,7 @@ class LoginController extends Controller
      */
     public function create()
     {
-        Auth::logout();
-        return redirect()->route('/.index');
+        return view('login.index'); 
     }
 
     /**
@@ -99,5 +97,10 @@ class LoginController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('/.index');
     }
 }

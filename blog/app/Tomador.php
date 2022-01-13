@@ -163,4 +163,10 @@ class Tomador extends Model
     {
       return Tomador::where('id', $id)->delete();
     }
+    public function buscaNomeTomadorTabelaPreco($id)
+    {
+        return Tomador::where('id', $id)
+        ->select('tsnome')
+        ->first();
+    }
 }

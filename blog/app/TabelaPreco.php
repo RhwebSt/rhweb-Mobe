@@ -157,4 +157,8 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where('tomador', $id)->delete();
     }
+    public function buscaTabelaPrecoEditar($id)
+    {
+        return TabelaPreco::where('id', $id)->first();
+    }
 }

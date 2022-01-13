@@ -271,12 +271,11 @@ class ValorCalculo extends Model
     public function calculoFolhaAnaliticaProducao($id,$codigo)
     {
         return DB::table('folhars')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
         ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
         ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
-        ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.bivalordesconto,base_calculos.bivalorvencimento,base_calculos.trabalhador,trabalhadors.tsmatricula,trabalhadors.tsnome,empresas.esnome')
-        ->groupBy('base_calculos.bivalordesconto','base_calculos.bivalorvencimento','base_calculos.trabalhador','trabalhadors.tsnome','empresas.esnome','trabalhadors.tsmatricula')
+        ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.bivalorliquido,base_calculos.bivalorvencimento,base_calculos.trabalhador,trabalhadors.tsmatricula,trabalhadors.tsnome')
+        ->groupBy('base_calculos.bivalorliquido','base_calculos.bivalorvencimento','base_calculos.trabalhador','trabalhadors.tsnome','trabalhadors.tsmatricula')
         ->where('folhars.id',$id)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
@@ -359,6 +358,28 @@ class ValorCalculo extends Model
         ->get();
     }
     public function calculoFolhaAnaliticaAdiantamento($id,$codigo)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->where('folhars.id',$id)
+        ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->get();
+    }
+    public function calculoFolhaAnaliticaIrrf($id,$codigo)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->where('folhars.id',$id)
+        ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->get();
+    }
+    public function calculoFolhaAnaliticaInss($id,$codigo)
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')

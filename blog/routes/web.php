@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
-Route::resource('login','Login\\LoginController')->only(['store'])->names('login');
+Route::resource('login','Login\\LoginController')->only(['store','create'])->names('login');
+
+
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
@@ -35,11 +37,13 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabela/cartao/ponto/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
     Route::get('tabela/cartao/ponto/pesquisa/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
     
+
     Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
-    Route::resource('logout','Login\\LoginController')->only(['create'])->names('logout');
+    Route::get('logout','Login\\LoginController@logout')->name('logout');
+    
     Route::resource('home','Home\\HomeController')->names('home');
-   
+    
     Route::get('comprovantepagamento','ComprovantePag\\ComprovantePagController@index');
     Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
     Route::get('fatura','Fatura\\FaturaController@index');
@@ -52,8 +56,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
     Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');
     Route::get('tabelapreco/perfil/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show');
-    Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy','edit']);
+    Route::get('tabela/preco/editar/{id}/{tomador}','TabelaPreco\\TabelaPrecoController@edit')->name('tabela.preco.editar');
+    Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy']);
 
+    Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio');
 
 
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');

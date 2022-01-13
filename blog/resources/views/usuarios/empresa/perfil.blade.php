@@ -172,16 +172,7 @@
                 <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
 
 
-                <div class="col-md-4">
-                    <label for="vt__trabalhador" class="form-label">VT Trabalhador</label>
-                    <input type="text" class="form-control" name="vt__trabalhador" id="vt__trabalhador">
-                </div>
-
-
-                <div class="col-md-4">
-                    <label for="va__trabalhador" class="form-label">VA Trabalhador</label>
-                    <input type="text" class="form-control" name="va__trabalhador" id="va__trabalhador">
-                </div>
+                
 
                 <div class="col-md-4">
                     <label for="nro__fatura" class="form-label">Nro Fatura</label>
@@ -193,10 +184,7 @@
                     <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso">
                 </div>
 
-                <div class="col-md-4 d-none">
-                    <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
-                    <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
-                </div>
+                
 
                 <div class="col-md-4">
                     <label for="nro__requisicao" class="form-label">Nro Requisição</label>
@@ -227,7 +215,10 @@
                     <label for="cbo" class="form-label">CBO</label>
                     <input type="text" class="form-control" name="cbo" id="cbo">
                 </div>
-
+                <div class="col-md-4 ">
+                    <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
+                    <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
+                </div>
                 <div class="col-md-4 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
                     <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">
@@ -300,12 +291,11 @@
                 $('#cnae__codigo').val(data.escnae)
                 $('#cod__municipio').val(data.escodigomunicipio)
                 $('#contribuicao__sindicato').val(data.escondicaosindicato)
-
-                $('#vt__trabalhador').val(data.vsvttrabalhador)
-                $('#va__trabalhador').val(data.vsvatrabalhador)
+                $('#seguro').val(data.esseguro)
+            
                 $('#nro__fatura').val(data.vsnrofatura)
                 $('#nro__reciboavulso').val(data.vsreciboavulso)
-                $('#matric__trabalhador').val(data.vsmatricula)
+                $('#matric__trabalhador').val(data.vimatricular)
                 $('#nro__requisicao').val(data.vsnrorequisicao)
                 $('#nro__boletins').val(data.vsnroboletins)
                 $('#nro__folha').val(data.vsnroflha)

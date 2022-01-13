@@ -150,10 +150,17 @@
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
-    
-                <div class="col-md-3">
+                <?php
+                  if ($valorrublica_matricular->vimatricular) {
+                    $matricular = $valorrublica_matricular->vimatricular + 1;
+                  }else{
+                    $matricular = 1;
+                  }
+                ?>
+                <div class="col-md-3 " >
                   <label for="matricula" class="form-label">Matrícula</label>
-                  <input type="text" class="form-control input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{old('matricula')}}" name="matricula" id="matricula" >
+                  <input type="text" disabled="" class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula" >
+                  <input type="hidden" value="{{$matricular}}" name="matricula">
                   @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror

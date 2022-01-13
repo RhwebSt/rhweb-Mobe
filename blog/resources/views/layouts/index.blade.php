@@ -175,7 +175,7 @@
                      
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus da dados</a></li>
-                        <li><a class="dropdown-item" href="{{route('logout.create')}}">Sair</a></li>
+                        <li><a class="dropdown-item" href="{{route('logout')}}">Sair</a></li>
                       </ul>
                     </div>
                   </div>

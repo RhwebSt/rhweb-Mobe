@@ -26,7 +26,9 @@ class TrabalhadorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('trabalhador.index',compact('user'));
+        $valorrublica = new ValoresRublica;
+        $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        return view('trabalhador.index',compact('user','valorrublica_matricular'));
     }
 
     /**
@@ -64,14 +66,7 @@ class TrabalhadorController extends Controller
         }elseif ($documentosctps) {
             return redirect()->back()->withInput()->withErrors(['ctps'=>'Este CTPS já esta cadastrador.']);
         }
-        $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        if (!$valorrublica_matricular->vimatricular) {
-            $dados['matricula'] = 1;
-            $valorrublica->editarMatricular($dados,$user->empresa);
-        }else{
-            $dados['matricula'] = $valorrublica_matricular->vimatricular + 1;
-            $valorrublica->editarMatricular($dados,$user->empresa);
-        }
+        
         $request->validate([
             'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'nome__social' => 'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
@@ -130,7 +125,7 @@ class TrabalhadorController extends Controller
         $nascimento = new Nascimento;
         $categoria = new Categoria;
         
-        try {
+        
         $trabalhadors = $trabalhador->cadastro($dados);
         if ($trabalhadors) {
             $dados['trabalhador'] = $trabalhadors['id'];
@@ -139,13 +134,14 @@ class TrabalhadorController extends Controller
             $nascimentos = $nascimento->cadastro($dados);
             $categorias = $categoria->cadastro($dados);
             $documentos = $documento->cadastro($dados);
+            $valorrublica->editarMatricular($dados,$user->empresa);
             if ($enderecos &&  $bancarios && 
                 $nascimentos && $categorias && $documentos) {   
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         }
         
-
+        try {
         } catch (\Throwable $th) {
             return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }

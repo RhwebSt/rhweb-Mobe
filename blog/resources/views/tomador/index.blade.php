@@ -704,6 +704,11 @@
                      }
                 });
             })
+            $('#cnpj').on('change',function(){
+                let dados = $(this).val();
+                dados = dados.replace(/\D/g, '');
+                pesquisa(dados)
+            })
             function monta_dados(dados) {
               let novodados = dados.split('  ')
               return novodados[1];
@@ -867,12 +872,37 @@
                         for (let index = 0; index < $('.input').length; index++) {
                             $('.input').eq(index).val(' ')
                         }
+                        if (data) {
+                            $('#nome__completo').val(data.razao_social)
+                            $('#nome__fantasia').val(data.nome_fantasia)
+                            $('#telefone').val(data.ddd_telefone_1)
+                            $('#cnae').val(data.cnae_fiscal)
+                            $('#cep').val(data.cep)
+                            // $('#cnpj').val(data.cnpj)
+                            $('#logradouro').val(data.logradouro)
+                            $('#numero').val(data.numero)
+                            $('#bairro').val(data.bairro)
+                            $('#localidade').val(data.municipio)
+                            $('#uf').val(data.uf)
+                            $('#telefone').val(data.ddd_telefone_1)
+                            $('#complemento').val(data.descricao_tipo_logradouro)
+                        }else{
+                            $('#nome__completo').val(' ')
+                            $('#nome__fantasia').val(' ')
+                            $('#telefone').val(' ')
+                            $('#cnae').val(' ')
+                            $('#cep').val(' ')
+                            $('#cnpj').val(' ')
+                            $('#logradouro').val(' ')
+                            $('#numero').val(' ')
+                            $('#bairro').val(' ')
+                            $('#localidade').val(' ')
+                            $('#uf').val(' ')
+                            $('#telefone').val(' ')
+                            $('#complemento').val(' ')
+                        }
                         $("#pesquisa").removeClass('is-invalid')
-                        $('#nome__completo').val(data.razao_social)
-                        $('#nome__fantasia').val(data.nome_fantasia)
-                        $('#cnpj').val(data.cnpj)
-                        $('#telefone').val(data.ddd_telefone_1)
-                        $('#cnae').val(data.cnae_fiscal)
+                        
                         $('#mensagem-pesquisa').text(' ').addClass('valid-feedback').removeClass('invalid-feedback')
                     },
                     error: function(data){
@@ -883,6 +913,19 @@
                         // $('#telefone').val(' ')
                         // $('#cnae').val(' ')
                         // $('#mensagem-pesquisa').text( data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
+                            $('#nome__completo').val(' ')
+                            $('#nome__fantasia').val(' ')
+                            $('#telefone').val(' ')
+                            $('#cnae').val(' ')
+                            $('#cep').val(' ')
+                            $('#cnpj').val(' ')
+                            $('#logradouro').val(' ')
+                            $('#numero').val(' ')
+                            $('#bairro').val(' ')
+                            $('#localidade').val(' ')
+                            $('#uf').val(' ')
+                            $('#telefone').val(' ')
+                            $('#complemento').val(' ')
                     }
                 })
             }

@@ -91,9 +91,14 @@ class TabelaPrecoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$tomador)
     {
-        //
+        $user = Auth::user();
+        $tabelapreco = new TabelaPreco;
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador);
+        
+        $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
+        return view('tomador.tabelapreco.edit',compact('tabelaprecos_editar','tabelaprecos','tomador','id','user'));
     }
 
     /**

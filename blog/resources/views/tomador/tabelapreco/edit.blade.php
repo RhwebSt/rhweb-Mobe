@@ -54,7 +54,7 @@
             </script>
         @enderror
         
-              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.update',$id) }}">
                   
                   <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-usd-square fa-lg"></i></h5>
                   
@@ -66,50 +66,30 @@
                         <input type="hidden" name="empresa" value="">
                     @endif
                     @csrf
-                    <input type="hidden" id="method" name="_method" value="">
+            
+                    <input type="hidden" id="method" name="_method" value="PUT">
                     <div class="row">
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" class="btn botao " id="incluir">Incluir</button>
-                        <button type="submit" disabled class="btn botao " id="atualizar">Atualizar</button>
+                        
+                        <button type="submit" class="btn botao " id="atualizar">Atualizar</button>
                          <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
                           <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                            <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
+                            <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
                           </ul>
-                        <button type="button" disabled id="excluir" class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
+                        <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
                           <a class="btn botao" href="{{ route('tomador.index') }}" role="button">Sair</a>
                       </div>
                   </div>
 
-                        <div>
-                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
-                                <div class="d-flex">
-                                <label for="exampleDataList" class="form-label"></label>
-                                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                <datalist id="datalistOptions">
-                                    <!-- <option value="San Francisco">
-                                    <option value="New York">
-                                    <option value="Seattle">
-                                    <option value="Los Angeles">
-                                    <option value="Chicago"> -->
-                                </datalist>
-                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                <div class="text-center d-none p-1" id="refres" >
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                  
+
                     <div class="col-md-2">
                       <label for="ano" class="form-label">Ano</label>
-                      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
+                      <input type="text" class=" form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{$tabelaprecos_editar->tsano}}" id="ano">
                       @error('ano')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -117,7 +97,7 @@
     
                     <div class="col-md-3">
                         <label for="rubricas" class="form-label">Código</label>
-                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{old('rubricas')}}" id="rubricas">
+                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas">
                         @error('rubricas')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -129,7 +109,7 @@
     
                     <div class="col-md-7">
                       <label for="descricao" class="form-label">Descrição</label>
-                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{old('descricao')}}"  id="descricao">
+                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}"  id="descricao">
                       <datalist id="descricoes">
                        
                        </datalist>
@@ -141,7 +121,7 @@
                   
                     <div class="col-md-6">
                       <label for="valor" class="form-label">Valor Trabalhador</label>
-                      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
+                      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{number_format((float)$tabelaprecos_editar->tsvalor, 2, ',', '')}}" id="valor">
                       @error('valor')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -149,7 +129,7 @@
                     
                     <div class="col-md-6">
                       <label for="valor__tomador" class="form-label">Valor Tomador</label>
-                      <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
+                      <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{number_format((float)$tabelaprecos_editar->tstomvalor, 2, ',', '')}}" id="valor__tomador">
                       @error('valor__tomador')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -237,7 +217,6 @@
      
       <script>
         $(document).ready(function(){
-          
           $( "#pesquisa" ).on('keyup focus',function() { 
                 let dados = '0'
                 if ($(this).val()) {

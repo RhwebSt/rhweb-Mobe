@@ -81,6 +81,14 @@ class Folhar extends Model
         })
         ->get();
     }
+    public function buscaFolhaAnalitica($id)
+    {
+        return DB::table('empresas')
+        ->join('folhars', 'empresas.id', '=', 'folhars.empresa')
+        ->select('folhars.*','empresas.esnome')
+        ->where('folhars.id',$id)
+        ->first();
+    }
     public function deletar($id)
     {
         return Folhar::whereDate('fsfinal', $id)->delete();

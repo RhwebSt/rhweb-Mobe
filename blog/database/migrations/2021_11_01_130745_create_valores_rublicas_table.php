@@ -15,8 +15,8 @@ class CreateValoresRublicasTable extends Migration
     {
         Schema::create('valores_rublicas', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('vsvttrabalhador', 15)->nullable();
-            $table->char('vsvatrabalhador', 15)->nullable();
+            // $table->char('vsvttrabalhador', 15)->nullable();
+            // $table->char('vsvatrabalhador', 15)->nullable();
             $table->char('vsnrofatura', 15)->nullable();
             $table->char('vsreciboavulso', 15)->nullable();
             $table->char('vsmatricula', 15)->nullable();
