@@ -159,7 +159,7 @@
                 ?>
                 <div class="col-md-3 " >
                   <label for="matricula" class="form-label">Matrícula</label>
-                  <input type="text" disabled="" class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula" >
+                  <input type="text" disabled class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula" >
                   <input type="hidden" value="{{$matricular}}" name="matricula">
                   @error('matricula')
                       <span class="text-danger">{{ $message }}</span>

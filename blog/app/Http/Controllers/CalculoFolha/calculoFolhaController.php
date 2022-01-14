@@ -6,14 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Folhar;
+use App\BaseCalculo;
 class calculoFolhaController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
         $folhar = new Folhar;
+        $basecalculo = new BaseCalculo;
+        $idfolhas = [];
         $folhas = $folhar->buscaListaFolhar($user->empresa);
-        return view('calculofolha.index',compact('user','folhas'));
+        foreach ($folhas as $key => $folha) {
+            array_push($idfolhas,$folha->id);
+        }
+        $trabalhadores = $basecalculo->listaTrabalhador($idfolhas);
+        return view('calculofolha.index',compact('user','folhas','trabalhadores'));
     }
     public function store(Request $request)
     {

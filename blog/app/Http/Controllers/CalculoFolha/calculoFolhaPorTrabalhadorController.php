@@ -15,6 +15,9 @@ use App\Inss;
 use App\IncideFolhar;
 use App\CartaoPonto;
 use App\Irrf;
+use App\Folhar;
+use App\ValorCalculo;
+use App\RelacaoDia;
 use PDF;
 class calculoFolhaPorTrabalhadorController extends Controller
 {
@@ -444,5 +447,22 @@ class calculoFolhaPorTrabalhadorController extends Controller
     {
         $resultado = $valor * ($porcentagem / 100);
         return $resultado;
+    }
+
+
+    public function imprimirTrabalhador(Request $request)
+    {
+        
+        $dados = $request->all();
+        
+        $folhar = new Folhar;
+        $valorcalculo = new ValorCalculo;
+        $relacaodia = new RelacaoDia;
+        $folhars = $folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],$dados['empresa']);
+        
+        $valorcalculos = $valorcalculo->buscaImprimirTrabalhador($folhars->id);
+        $relacaodias = $relacaodia->buscaImprimirTrabalhador($folhars->id);
+        $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','valorcalculos','relacaodias'));
+        return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
     }
 }

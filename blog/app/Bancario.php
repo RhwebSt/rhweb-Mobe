@@ -56,4 +56,8 @@ class Bancario extends Model
     {
       return Bancario::where('biid', $id)->delete();
     }
+    public function deletarTrabalhador($id)
+    {
+        return Bancario::where('trabalhador', $id)->delete();
+    }
 }

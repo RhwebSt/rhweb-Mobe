@@ -158,8 +158,9 @@
                                                     <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
                                                         <div class="d-flex">
                                                         <label for="exampleDataList" class="form-label"></label>
-                                                        <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                                        <datalist id="datalistOptions">
+                                                        <input class="form-control fw-bold text-dark pesquisa" list="lista" name="pesquisa" id="pesquisa">
+                                                        <datalist id="datalistOptions"> 
+                                                            <option value="logo">
                                                         </datalist>
                                                         <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                                         <div class="text-center d-none" id="refres" >
@@ -202,7 +203,7 @@
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <form class="row g-3" action="" method="POST">
                         @csrf
-                    
+                    </form>
                     <div class="container text-start fs-4 fw-bold mt-4 mb-3">Pesquisar <i class="fas fa-search"></i></div>
                 
                     <div class="d-flex justify-content-between mb-3">
@@ -279,6 +280,7 @@
                                                     $data = explode('-',$folhar->fsinicio)
                                                 ?>
                                                 {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+    
                                             </td>
                                             <td class="col text-center border-bottom text-nowrap" style="width:250px">
                                                 <?php
@@ -292,37 +294,53 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
-                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample1" role="button" aria-controls="offcanvasExample1" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
-                                                <i class="fal fa-print-search" style="color: white;"></i>
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample1{{$folhar->id}}" role="button" aria-controls="offcanvasExample1" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
+                                                    <i class="fal fa-print-search" style="color: white;"></i>
                                                 </a>
-                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1" aria-labelledby="offcanvasExampleLabel1">
+
+                                                
+                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel1">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                                     <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-print-search"></i></h5>
                                                     <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                                 </div>
-                                                <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
-                                                    
-                                                    <div class="d-flex justify-content-between mb-3">
+                                                <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
+                                                    @csrf
+                                                    <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
                                                         
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                            <label for="exampleDataList" class="form-label"></label>
-                                                            <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                                            <datalist id="datalistOptions">
-                                                            </datalist>
-                                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                            <div class="text-center d-none" id="refres" >
-                                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                    <span class="visually-hidden">Carregando...</span>
+                                                        <div class="d-flex justify-content-between mb-3">
+                                                            
+                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                                <div class="d-flex">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input type="hidden" name="folhar" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                                                                <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"  list="lista{{$folhar->id}}">
+                                                            
+                                                                <datalist id="lista{{$folhar->id}}">
+                                                                    @foreach($trabalhadores as $trabalhador)
+                                                                        @if($trabalhador->folhar === $folhar->id)
+                                                                            <option value="{{$trabalhador->tsnome}}">
+                                                                        @endif
+                                                                    @endforeach
+                                                                </datalist>
+                                                                <button type="submit" id="butao_trabalhador">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
                                                                 </div>
                                                             </div>
-                                                            </div>
+                                        
                                                         </div>
-                                    
+                                                        
                                                     </div>
-                                                    
-                                                </div>
+                                                </form>
                                                 </div>
                                                 
                                             </td>
@@ -340,7 +358,7 @@
                                                 </div>
                                                 <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                                     <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
-                                                    
+                                                    {{$folhar->id}}
                                                     <div class="d-flex justify-content-between mb-3">
                                                         
                                                         <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
@@ -372,10 +390,10 @@
                                             </td>
                                             
                                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                            <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></a>
+                                                <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></a>
                                          
-                                                </td>
                                             </td>
+                                        
                                         </tr>
                                         @endforeach
                                     @else
@@ -393,7 +411,7 @@
                         </div>
                         
                     
-                    </form>
+                    
                 </div>
             </div>
         </div>

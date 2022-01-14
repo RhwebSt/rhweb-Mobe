@@ -89,6 +89,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
     Route::get('calculo/folha/tomador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTomadorController@calculoFolhaPorTomador')->name('calculo.folha.tomador');
     Route::get('calculo/folha/trabalhador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTrabalhadorController@calculoFolhaPorTrabalhador')->name('calculo.folha.trabalhador');
+    Route::post('imprimir/calculo/folha/trabalhador','CalculoFolha\\calculoFolhaPorTrabalhadorController@imprimirTrabalhador')->name('calculo.folha.trabalhador.imprimir');
     Route::get('calculo/folha/geral/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaGeralController@calculoFolhaGeral')->name('calculo.folha.geral');
     Route::get('calculo/folha/imprimir/{id}','CalculoFolha\\calculoFolhaGeralController@imprimirFolhar')->name('calculo.folha.imprimir');
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');

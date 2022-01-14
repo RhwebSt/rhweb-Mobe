@@ -263,6 +263,13 @@ class ValorCalculo extends Model
         ->orderBy('vicodigo', 'asc')
         ->get();
     }
+    public function buscaImprimirTrabalhador($id)
+    {
+        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo')
+        ->where('basecalculo',$id)
+        ->orderBy('vicodigo', 'asc')
+        ->get();
+    }
     public function deletar($id)
     {
         return ValorCalculo::whereDate('created_at', $id)->delete();

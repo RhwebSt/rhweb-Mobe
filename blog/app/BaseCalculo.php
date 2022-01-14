@@ -99,4 +99,15 @@ class BaseCalculo extends Model
     {
         return BaseCalculo::whereDate('created_at', $id)->delete();
     }
+    public function listaTrabalhador($folhar)
+    {
+        return DB::table('base_calculos')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->select('trabalhadors.tsnome','trabalhadors.id','base_calculos.folhar')
+        ->whereIn('base_calculos.folhar',$folhar)
+        ->distinct()
+        ->orderBy('trabalhadors.tsnome', 'asc')
+        ->get();
+    }
+    
 }

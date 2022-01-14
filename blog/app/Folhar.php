@@ -81,6 +81,62 @@ class Folhar extends Model
         })
         ->get();
     }
+
+    public function buscaTrabalhadorUnidade($id,$trabalhador,$empresas)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->select(
+            'folhars.fsinicio',
+            'folhars.fsfinal',
+            'empresas.esnome',
+            'empresas.escnpj',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.tscpf',
+            'documentos.dspis',
+            'categorias.cbo',
+            'bancarios.bsbanco',
+            'bancarios.bsagencia',
+            'bancarios.bsoperacao',
+            'bancarios.bsconta',
+            'base_calculos.id',
+            'base_calculos.biservico',
+            'base_calculos.biservicodsr',
+            'base_calculos.biinss',
+            'base_calculos.bifgts',
+            'base_calculos.bifgtsmes',
+            'base_calculos.biirrf',
+            'base_calculos.bifaixairrf',
+            'base_calculos.binumfilhos',
+            'base_calculos.bitotaldiaria',
+            'base_calculos.bivalorliquido',
+            'base_calculos.bivalorvencimento',
+            'base_calculos.bivalordesconto'   
+        )
+        ->where(function($query) use ($id,$trabalhador,$empresas){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['folhars.id',$id],
+                    ['trabalhadors.tsnome',$trabalhador],
+                    ['trabalhadors.empresa', $empresas]
+                ]);
+            }else{
+                $query->where([
+                    ['folhars.id',$id],
+                    ['trabalhadors.tsnome',$trabalhador],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->first();
+    }
     public function buscaFolhaAnalitica($id)
     {
         return DB::table('empresas')
