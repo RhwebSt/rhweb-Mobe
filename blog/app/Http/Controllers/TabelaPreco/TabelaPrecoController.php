@@ -16,7 +16,7 @@ class TabelaPrecoController extends Controller
     public function index($id = null,$tomador)
     {
         $user = Auth::user();
-        $tabelapreco = new TabelaPreco; 
+        $tabelapreco = new TabelaPreco;  
         $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
@@ -145,15 +145,9 @@ class TabelaPrecoController extends Controller
         try {
             $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
             $excluir = $tabelapreco->deletar($id);
-            $novodados = [
-            $id,
-            $tabelaprecos->tomador
-            ];
-            if ($excluir) {
-                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
-            }
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
         
     }

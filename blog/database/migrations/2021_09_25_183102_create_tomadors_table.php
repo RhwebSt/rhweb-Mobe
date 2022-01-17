@@ -21,7 +21,7 @@ class CreateTomadorsTable extends Migration
             $table->char('tstelefone', 16)->nullable();
             $table->char('tsmatricula', 10)->nullable();
             $table->char('tssimples', 10)->nullable();
-            $table->char('tstipo', 10)->nullable();
+            $table->char('tstipo', 50)->nullable();
             $table->integer('empresa')->unsigned()->nullable();
             $table->foreign('empresa')->references('id')->on('empresas');
             $table->timestamps();

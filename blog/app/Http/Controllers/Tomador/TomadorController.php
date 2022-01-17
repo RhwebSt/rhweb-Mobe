@@ -20,6 +20,7 @@ use App\Bolcartaoponto;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
 use App\Comissionado;
+use App\ValoresRublica;
 class TomadorController extends Controller
 {
     /**
@@ -32,7 +33,9 @@ class TomadorController extends Controller
         // $tomador = new Tomador;
         // $tomadors = $tomador->lista();
         $user = Auth::user();
-        return view('tomador.index',compact('user'));
+        $valorrublica = new ValoresRublica;
+        $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        return view('tomador.index',compact('user','valorrublica_matricular'));
     }
 
     /**
@@ -43,7 +46,7 @@ class TomadorController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('tomador.create',compact('user'));
+        // return view('tomador.create',compact('user'));
     }
 
     /**
@@ -54,14 +57,17 @@ class TomadorController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
+        $dados = $request->all(); 
+        $user = auth()->user();
+        $tomador = new Tomador;
+        $valorrublica = new ValoresRublica;
         $request->validate([
             'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'cnpj' => 'required|max:19|cnpj',
             'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
-            'telefone'=>'required|max:16|celular_com_ddd',
+            'telefone'=>'required|max:16',
             'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
@@ -104,7 +110,10 @@ class TomadorController extends Controller
             'pix'=>'max:255'
         ]
         );
-        $tomador = new Tomador;
+        // $tomadores = $tomador->verificaCadastroCnpj($dados);
+        // if ($tomadores) {
+        //     return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já esta cadastrador.']);
+        // }
         $taxa = new Taxa;
         $endereco = new Endereco;
         $bancario = new Bancario;
@@ -127,14 +136,19 @@ class TomadorController extends Controller
                 $parametrosefips = $parametrosefip->cadastro($dados);
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
                 $indicefaturas = $indicefatura->cadastro($dados);
-                if ($enderecos && $taxas
-                && $bancarios && 
-                $cartaoponto && $parametrosefips && $incidefolhars &&
-                 $indicefaturas) {
-                    return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-                }
+                $valorrublica->editarMatricularTomador($dados,$user->empresa);
+                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
+        
         } catch (\Throwable $th) {
+            $cartaoponto = $cartaoponto->deletar($dados['tomador']);
+            $parametrosefips = $parametrosefip->deletar($dados['tomador']);
+            $indicefaturas = $indicefatura->deletar($dados['tomador']);
+            $taxas = $taxa->deletar($dados['tomador']);
+            $incidefolhars = $incidefolhar->deletar($dados['tomador']);
+            $endereco->deletarTomador($dados['tomador']);
+            $bancario->deletarTomador($dados['tomador']);
+            $tomador->deletar($dados['tomador']); 
             return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
@@ -185,7 +199,7 @@ class TomadorController extends Controller
             'cnpj' => 'required|max:19|cnpj',
             'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
-            'telefone'=>'required|max:16|celular_com_ddd',
+            'telefone'=>'required|max:16',
             'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
@@ -296,18 +310,22 @@ class TomadorController extends Controller
         // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
         $tabelapreco = new TabelaPreco;
-
+        $valorrublica = new ValoresRublica;
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabela = new Lancamentotabela;
+        $user = auth()->user();
+        $dados = ['matricula'=>''];
         $lancamentotabelas = $lancamentotabela->buscaTomador($id);
+        
             foreach ($lancamentotabelas as $key => $value) {
                 $bolcartaopontos = $bolcartaoponto->deletar($value->id);
                 $lancamentorublicas = $lancamentorublica->deletar($value->id);
             }
+            
             $campoendereco = 'tomador';
             $campobacario = 'tomador';
-            $lancamentotabelas = $lancamentotabela->deletar($id);
+            $lancamentotabelas = $lancamentotabela->deletarTomador($id);
             $comissionados = $comissionado->deletaTomador($id);
             $bancarios = $bancario->first($id,$campobacario);
             $exbancarios = $bancario->deletar($bancarios->biid);
@@ -321,13 +339,13 @@ class TomadorController extends Controller
             $indicefaturas = $indicefatura->deletar($id);
             $taxas = $taxa->deletar($id);
             $incidefolhars = $incidefolhar->deletar($id);
-            if ($exenderecos && $taxas
-            && $exbancarios && 
-            $cartaoponto && $parametrosefips && $incidefolhars &&
-            $indicefaturas) {
-                $tomadors = $tomador->deletar($id); 
-                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
+            $tomadors = $tomador->deletar($id); 
+            $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+            if (isset($valorrublica_matricular->vimatriculartomador)) {
+                $dados['matricula'] =  $valorrublica_matricular->vimatriculartomador - 1;
+                $valorrublica->editarMatricularTomador($dados,$user->empresa);
             }
+            return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         try {
             
         } catch (\Throwable $th) {

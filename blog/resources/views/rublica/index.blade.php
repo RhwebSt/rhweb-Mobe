@@ -22,7 +22,7 @@
                     
                     Toast.fire({
                       icon: 'success',
-                      title: '{{ $message }}'
+                      title: '{{ session("success") }}'
                     })
                 </script>
             @endif
@@ -115,7 +115,7 @@
                       <option>Descontos</option>
                     </select>
                 </div>
-                
+                </form>
                 <div class="table-responsive-lg">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
@@ -193,7 +193,7 @@
                     </tr>
 
 
-            </form>
+            
     </div>
     <script>
         $('#pesquisa').on('focus keyup',function() {

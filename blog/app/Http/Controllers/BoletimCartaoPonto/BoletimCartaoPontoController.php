@@ -31,7 +31,7 @@ class BoletimCartaoPontoController extends Controller
     {
         $user = Auth::user();
         $bolcartaoponto = new Bolcartaoponto;
-        $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id);
+        $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
         return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
 
@@ -111,11 +111,11 @@ class BoletimCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($trabalhador,$boletim)
+    public function show($trabalhador,$boletim,$data)
     {
         $bolcartaoponto = new Bolcartaoponto;
-        $bolcartaopontos = $bolcartaoponto->buscaBoletimCartaoPonto($trabalhador,$boletim);
-        return response()->json($bolcartaopontos);
+        $bolcartaopontos = $bolcartaoponto->buscaBoletimCartaoPonto($trabalhador,$boletim,$data);
+        return response()->json($bolcartaopontos); 
     }
     /**
      * Show the form for editing the specified resource.

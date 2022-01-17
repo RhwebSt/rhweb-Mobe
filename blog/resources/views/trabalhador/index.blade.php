@@ -150,6 +150,7 @@
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
+    
                 <?php
                   if ($valorrublica_matricular->vimatricular) {
                     $matricular = $valorrublica_matricular->vimatricular + 1;
@@ -160,7 +161,7 @@
                 <div class="col-md-3 " >
                   <label for="matricula" class="form-label">Matrícula</label>
                   <input type="text" disabled class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula" >
-                  <input type="hidden" value="{{$matricular}}" name="matricula">
+                  <input type="hidden" value="{{$matricular}}" name="matricula" id="matricularid">
                   @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -289,7 +290,7 @@
                 <div class="col-md-4"> 
                     <label for="tipoconstrucao" class="form-label">Tipo</label>
                     <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
-                    <option selected >Casa</option>
+                      <option selected >Casa</option>
                       <option >Apartamento</option>
                       <option >Empresa</option>
                       <option >Área</option>
@@ -707,6 +708,7 @@
               let novodados = dados.split('  ')
               return novodados[1];
             }
+
             function buscaItem(dados) {
               $('#carregamento').removeClass('d-none')
               $.ajax({
@@ -714,11 +716,15 @@
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
+                    localStorage.setItem('hdHlKMtd',btoa(data.trabalhador));
                     trabalhador(data)
                     $('#carregamento').addClass('d-none')
                   }
               });
             }
+            // if (localStorage.getItem('hdHlKMtd')) {
+            //   buscaItem(atob(localStorage.getItem('hdHlKMtd')))
+            // }
             function campo() {
               $('#relatoriotrabalhador').addClass('disabled')
               $('#imprimir').addClass('disabled')
@@ -776,6 +782,7 @@
               $('#trabfoto').attr('src',data.tsfoto)
               $('#cpf').val(data.tscpf).next().text(' ')
               $('#matricula').val(data.tsmatricula).next().text(' ')
+              $('#matricularid').val(data.tsmatricula).next().text(' ')
               $('#pis').val(data.dspis).next().text(' ')
               $('#data_nascimento').val(data.nsnascimento).next().text(' ')
               $('#telefone').val(data.tstelefone).next().text(' ')

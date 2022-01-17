@@ -83,7 +83,7 @@ class TabelaPreco extends Model
            
         })
         ->orderBy('tsrubrica', 'asc')
-        ->get();
+        ->paginate(5);
     }
     public function buscaTabelaTomadorInt($tomador)
     {

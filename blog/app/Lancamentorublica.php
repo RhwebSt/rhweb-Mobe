@@ -33,7 +33,7 @@ class Lancamentorublica extends Model
             'lancamentorublicas.*', 
             )
         ->where('lancamentotabelas.id', $id)
-        ->get();
+        ->paginate(5);
     }
     public function buscaUnidadeRublica($id)
     {

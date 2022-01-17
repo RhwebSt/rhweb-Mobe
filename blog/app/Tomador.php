@@ -25,14 +25,16 @@ class Tomador extends Model
 
         ]);
     }
-    // public function lista()
-    // {
-    //    return DB::table('tomadors')
-    //         ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador')
-    //         // ->join('orders', 'users.id', '=', 'orders.user_id')
-    //         ->select('tomadors.*', 'enderecos.*')
-    //         ->paginate(20);
-    // }
+    
+    public function verificaCadastroCnpj($dados)
+    {
+        $user = auth()->user();
+        return Tomador::where([
+            ['tscnpj',$dados['cnpj']],
+            ['empresa',$user->empresa]
+        ])
+        ->count();
+    }
     public function buscaListaTomador($tomador)
     {
         return Tomador::where('empresa',$tomador)->select('id')->get();
@@ -64,7 +66,7 @@ class Tomador extends Model
                 if ($user->hasPermissionTo('admin')) {
                     $query->where('tsnome',$id)
                     ->orWhere('tscnpj',$id)
-                    ->orWhere('tsmatricula',$id)
+                    // ->orWhere('tsmatricula',$id)
                     ->orWhere('tomadors.id',$id);
                 }else{
                      $query->where([
@@ -78,11 +80,11 @@ class Tomador extends Model
                         ->orWhere([
                             ['tomadors.id',$id],
                             ['tomadors.empresa', $user->empresa],
-                        ])
-                        ->orWhere([
-                            ['tsmatricula',$id],
-                            ['tomadors.empresa', $user->empresa],
                         ]);
+                        // ->orWhere([
+                        //     ['tsmatricula',$id],
+                        //     ['tomadors.empresa', $user->empresa],
+                        // ]);
                 }
                
             })

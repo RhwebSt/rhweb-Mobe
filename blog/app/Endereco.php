@@ -83,4 +83,8 @@ class Endereco extends Model
     {
         return Endereco::where('trabalhador', $id)->delete();
     }
+    public function deletarTomador($id)
+    {
+        return Endereco::where('tomador', $id)->delete();
+    }
 }

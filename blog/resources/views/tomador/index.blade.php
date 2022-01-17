@@ -22,7 +22,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{$message}}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -126,14 +126,29 @@
                         <div class="col-md-4">
                             <label for="tipo" class="form-label">Tipo</label>
                             <select id="tipo" name="tipo" class="form-select fw-bold text-dark">
-                            <option selected >1</option>
-                            <option >2</option>
+                                <option >SS - Sociedade Simples</option>
+                                <option >MEI - Micro Empreendedor Individual</option>
+                                <option >ME - Micro Empresal</option>
+                                <option >EPP - Empresa de Pequeno Porte</option>
+                                <option >EI - Empreendedor Individual</option>
+                                <option >CPF</option>
+                                <option >EIRELI - Empresa Individual de Responsabilidade Limitada</option>
+                                <option >SA - Sociedade Anônima</option>
+                                <option >LTDA - Sociedade Empresária Limitada</option>
+                                <option >SLU - Sociedade Limitada Unipessoal</option>
                             </select>
                         </div>
-
+                        <?php
+                            if ( isset($valorrublica_matricular->vimatriculartomador)) {
+                                $matricular = $valorrublica_matricular->vimatriculartomador + 1;
+                            }else{
+                                $matricular = 1; 
+                            }
+                        ?>
                         <div class="col-md-4">
                             <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('matricula') is-invalid @enderror" name="matricula" value="{{old('matricula')}}" id="matricula">
+                            <input type="text" disabled class="form-control  fw-bold text-dark @error('matricula') is-invalid @enderror"  value="{{$matricular}}" id="matricula">
+                            <input type="hidden" value="{{$matricular}}" name="matricula" id="matriculaid">
                             @error('matricula')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -190,8 +205,57 @@
                                 <label for="complemento__endereco" class="form-label">Tipo da construção</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
                                 <option selected >Casa</option>
-                                <option >Apartamento</option>
-                                <option >Empresa</option>
+                      <option >Apartamento</option>
+                      <option >Empresa</option>
+                      <option >Área</option>
+                      <option >Acesso</option>
+                      <option >Acampamento</option>
+                      <option >Acesso Local</option>
+                      <option >Área Especial</option>
+                      <option >Aeroporto</option>
+                      <option >Aldeia</option>
+                      <option >Avenida Marginal Direita</option>
+                      <option >Avenida Marginal Esquerda</option>
+                      <option >Anel Viário</option>
+                      <option >Antiga Estrada</option>
+                      <option >Artéria</option>
+                      <option >Alto</option>
+                      <option >Atalho</option>
+                      <option >Área Verde</option>
+                      <option >Avenida</option>
+                      <option >Avenida Contorno</option>
+                      <option >Avenida Marginal</option>
+                      <option >Avenida Velha</option>
+                      <option >Balneário</option>
+                      <option >Beco</option>
+                      <option >Buraco</option>
+                      <option >Bloco</option>
+                      <option >Chácara</option>
+                      <option >Conjunto</option>
+                      <option >Colônia</option>
+                      <option >Comunidade</option>
+                      <option >Condomínio</option>
+                      <option >Distrito</option>
+                      <option >Estrada Intermunicipal</option>
+                      <option >Entrada Particular</option>
+                      <option >Estação</option>
+                      <option >Estância</option>
+                      <option >Eixo Industrial</option>
+                      <option >Favela</option>
+                      <option >Fazenda</option>
+                      <option >Núcleo Habitacional</option>
+                      <option >Jardim</option>
+                      <option >Loteamento</option>
+                      <option >Lote</option>
+                      <option >Morro</option>
+                      <option >Núcleo Rural</option>
+                      <option >Parque Residencial</option>
+                      <option >Quadra</option>
+                      <option >Rua</option>
+                      <option >Residencial</option>
+                      <option >Rodovia</option>
+                      <option >Trevo</option>
+                      <option >Outros</option>
                             </select>
                         </div>
 
@@ -752,7 +816,8 @@
                 }
                 $('#nome__completo').val(data.tsnome)
                 $('#cnpj').val(data.tscnpj)
-                $('#matricula').val(data.tsmatricula)
+                $('#matricula').val(data.tsmatricula).next().text(' ')
+                $('#matricularid').val(data.tsmatricula).next().text(' ')
                 $('#nome__fantasia').val(data.tsfantasia)
                 $('#simples').val(data.tssimples)
                 $('#telefone').val(data.tstelefone)
@@ -806,6 +871,13 @@
                 $('#deflator').val(data.tfdefaltor)
                 $('#endereco').val(data.eiid)
                 $('#bancario').val(data.biid)
+                for (let index = 0; index <  $('#tipo option').length; index++) {  
+                    if (data.tstipo == $('#tipo option').eq(index).text()) {
+                        $('#tipo option').eq(index).attr('selected','selected')
+                    }else  {
+                        $('#tipo option').eq(index).removeAttr('selected')
+                    }
+                }
                 for (let index = 0; index <  $('#simple option').length; index++) {  
                     if (data.tssimples == $('#simple option').eq(index).text()) {
                         $('#simple option').eq(index).attr('selected','selected')
@@ -878,7 +950,7 @@
                             $('#telefone').val(data.ddd_telefone_1)
                             $('#cnae').val(data.cnae_fiscal)
                             $('#cep').val(data.cep)
-                            // $('#cnpj').val(data.cnpj)
+                            $('#cnpj').val(data.cnpj.replace(/(\d{2})?(\d{3})?(\d{3})?(\d{4})(\d{2})/, "$1.$2.$3/$4-$5"));
                             $('#logradouro').val(data.logradouro)
                             $('#numero').val(data.numero)
                             $('#bairro').val(data.bairro)

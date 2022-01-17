@@ -348,37 +348,45 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
-                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample2" role="button" aria-controls="offcanvasExample2" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample2{{$folhar->id}}" role="button" aria-controls="offcanvasExample2" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
                                                 <i class="fal fa-file-invoice-dollar" style="color: white;"></i>
                                                 </a>
-                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample2" aria-labelledby="offcanvasExampleLabel2">
+                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample2{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                                     <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-file-invoice-dollar"></i></h5>
                                                     <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                                 </div>
-                                                <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
-                                                    {{$folhar->id}}
-                                                    <div class="d-flex justify-content-between mb-3">
+                                                <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
+                                                    @csrf
+                                                    <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
                                                         
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                            <label for="exampleDataList" class="form-label"></label>
-                                                            <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                                            <datalist id="datalistOptions">
-                                                            </datalist>
-                                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                            <div class="text-center d-none" id="refres" >
-                                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                    <span class="visually-hidden">Carregando...</span>
+                                                        <div class="d-flex justify-content-between mb-3">
+                                                            
+                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                                <div class="d-flex">
+                                                                <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresabanco" value="{{$user->empresa}}">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control fw-bold text-dark banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa">
+                                                                <datalist id="listabanco{{$folhar->id}}">
+                                                                   
+                                                                </datalist>
+                                                                <button type="submit" id="butao_trabalhador">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
                                                                 </div>
                                                             </div>
-                                                            </div>
+                                        
                                                         </div>
-                                    
+                                                        
                                                     </div>
-                                                    
-                                                </div>
+                                                </form>
                                                 </div>
                                                 
                                             </td>
@@ -467,6 +475,23 @@
                 $('#campo_nao_2').click(function() {
                     $('#quadro2').addClass('d-none')
                     $('#quadro1').removeClass('d-none')
+                })
+                $('.banco').on('keyup',function () {
+                    let dados = $(this).val()
+                    let datalist = $(this).next().attr('id')
+                    $.ajax({
+                        url: "https://brasilapi.com.br/api/banks/v1/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            $(`#${datalist}`).html(`<option value="${data.code} - ${data.name}">`)
+                        },
+                        error: function(data){
+                            // $("#banco").addClass('is-invalid')
+                            // $('#menssagem-banco').text(data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
+                        }
+                    })
+                   
                 })
                 $('#pesquisatrabalhador').on('keyup focus',function () {
                     let dados = 0;

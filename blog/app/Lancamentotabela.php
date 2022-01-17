@@ -73,11 +73,11 @@ class Lancamentotabela extends Model
                     ['liboletim',$id],
                     ['lsstatus',$status],
                     ['empresa', $user->empresa]
-                ])
-                ->orWhere([
-                    ['id',$id],
-                    // ['trabalhadors.empresa', $user->empresa]
                 ]);
+                // ->orWhere([
+                //     ['id',$id],
+                //     //['trabalhadors.empresa', $user->empresa]
+                // ]);
             }
         })->first();
     }
@@ -210,5 +210,9 @@ class Lancamentotabela extends Model
     public function deletar($id)
     {
       return Lancamentotabela::where('id', $id)->delete();
+    }
+    public function deletarTomador($id)
+    {
+        return Lancamentotabela::where('tomador', $id)->delete();
     }
 }

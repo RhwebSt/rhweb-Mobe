@@ -77,12 +77,12 @@
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
                           <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                            <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
+                            <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
                           </ul>
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tomador.index') }}" role="button">Sair</a>
+                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',$tomador]) }}" role="button">Sair</a>
                       </div>
                   </div>
 
@@ -183,7 +183,13 @@
                             </tr>
                             @endif
                         </tbody>
-
+                          <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $tabelaprecos->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
               

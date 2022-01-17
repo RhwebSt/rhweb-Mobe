@@ -102,7 +102,8 @@ class TabCartaoPontoController extends Controller
     }
     public function pesquisa($id,$status) 
     {
-        $lancamentotabela = new Lancamentotabela;
+        
+        $lancamentotabela = new Lancamentotabela; 
         $lancamentotabelas = $lancamentotabela->buscaListaLancamentoTab($id,$status);
         return response()->json($lancamentotabelas);
     }

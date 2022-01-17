@@ -219,6 +219,10 @@
                     <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
                     <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
                 </div>
+                <div class="col-md-4 ">
+                    <label for="matric__tomador" class="form-label">Matrícula Tomador</label>
+                    <input type="text" class="form-control" name="matric__tomador" id="matric__tomador">
+                </div>
                 <div class="col-md-4 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
                     <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">

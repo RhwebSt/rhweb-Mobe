@@ -37,15 +37,14 @@ class RublicaController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $rublica = new Rublica;
-        $rublicas = $rublica->cadastro($dados);
-        if($rublicas){
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+        try {
+            $dados = $request->all();
+            $rublica = new Rublica;
+            $rublicas = $rublica->cadastro($dados); 
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
-    return redirect()->route('rublica.index')->withInput()->withErrors([$condicao]);
     }
 
     /**

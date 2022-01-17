@@ -92,7 +92,7 @@ class Folhar extends Model
         ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
         ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
         ->select(
-            'folhars.fsinicio',
+            'folhars.fsinicio', 
             'folhars.fsfinal',
             'empresas.esnome',
             'empresas.escnpj',
@@ -136,6 +136,45 @@ class Folhar extends Model
             }
         })
         ->first();
+    }
+    public function buscaListaBancos($id,$banco,$empresas)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
+        ->select(
+            'folhars.fsinicio', 
+            'folhars.fsfinal',
+            'empresas.esnome',
+            'empresas.escnpj',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.tscpf',
+            'bancarios.bsbanco',
+            'bancarios.bsagencia',
+            'bancarios.bsoperacao',
+            'bancarios.bsconta',
+            'base_calculos.bivalorliquido',
+        )
+        ->where(function($query) use ($id,$banco,$empresas){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['folhars.id',$id],
+                    ['bancarios.bsbanco',$banco],
+                    ['trabalhadors.empresa', $empresas]
+                ]);
+            }else{
+                $query->where([
+                    ['folhars.id',$id],
+                    ['bancarios.bsbanco',$banco],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->get();
     }
     public function buscaFolhaAnalitica($id)
     {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ValoresRublica extends Model
 {
     protected $fillable = [
-    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','empresa'
+    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','vitomador','empresa'
     ];
     public function cadastro($dados)
     {
@@ -22,6 +22,7 @@ class ValoresRublica extends Model
             'vsnroequesocial'=>$dados['seq__esocial'],
             'vsnroflha'=>$dados['nro__folha'],
             'vimatricular'=>$dados['matricular'],
+            'vimatriculartomador'=>$dados['matriculartomador'],
             'empresa'=>$dados['empresa'],
         ]);
     }
@@ -40,6 +41,7 @@ class ValoresRublica extends Model
             'vsnroequesocial'=>$dados['seq__esocial'],
             'vsnroflha'=>$dados['nro__folha'],
             'vimatricular'=>$dados['matricular'],
+            'vimatriculartomador'=>$dados['matriculartomador'],
         ]);
     }
     public function editarMatricular($dados,$empresa)
@@ -47,6 +49,13 @@ class ValoresRublica extends Model
         return ValoresRublica::where('empresa', $empresa)
         ->update([
             'vimatricular'=>$dados['matricula'],
+        ]);
+    }
+    public function editarMatricularTomador($dados,$empresa)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update([
+            'vimatriculartomador'=>$dados['matricula'],
         ]);
     }
     public function buscaUnidadeEmpresa($empresa)

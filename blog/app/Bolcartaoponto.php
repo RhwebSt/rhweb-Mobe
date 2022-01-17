@@ -30,7 +30,7 @@ class Bolcartaoponto extends Model
             'lancamento'=>$dados['lancamento'],
         ]);
     }
-    public function listaCartaoPontoPaginacao($id)
+    public function listaCartaoPontoPaginacao($id,$data)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
@@ -40,20 +40,22 @@ class Bolcartaoponto extends Model
             'bolcartaopontos.*', 
             )
         // ->where('lancamentotabelas.id', $id)
-        ->where(function($query) use ($id){
+        ->where(function($query) use ($id,$data){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.id',$id);
+                $query->where('lancamentotabelas.id',$id)
+                ->whereDate('bolcartaopontos.created_at', $data);
             }else{
                 $query->where([
                     ['lancamentotabelas.id',$id],
                     ['trabalhadors.empresa', $user->empresa]
-                ]);
+                ])
+                ->whereDate('bolcartaopontos.created_at', $data);
             }
         })
         ->paginate(15);
     } 
-    public function buscaBoletimCartaoPonto($id,$boletim)
+    public function buscaBoletimCartaoPonto($id,$boletim,$data)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
@@ -63,19 +65,21 @@ class Bolcartaoponto extends Model
             'trabalhadors.*', 
             'bolcartaopontos.*', 
             )
-        ->where(function($query) use ($id,$boletim){ 
+        ->where(function($query) use ($id,$boletim,$data){ 
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where([
                     ['trabalhadors.tsnome', 'like', '%'.$id.'%'],
                     ['bolcartaopontos.lancamento',$boletim]
-                ]);
+                ])
+                ->whereDate('bolcartaopontos.created_at', $data);
             }else{
                 $query->where([
                     ['trabalhadors.tsnome',$id],
                     ['bolcartaopontos.lancamento',$boletim],
                     ['trabalhadors.empresa', $user->empresa]
-                ]);
+                ])
+                ->whereDate('bolcartaopontos.created_at', $data);
             }
         })
         ->first();

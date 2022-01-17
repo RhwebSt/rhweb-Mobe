@@ -32,7 +32,7 @@
     </head>
     <style>
         form input[type="text"] {
-            text-transform: uppercase !important;
+            text-transform: uppercase;
             color:black !important;
             font-weight: bold !important;
         }
@@ -215,6 +215,7 @@
     <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/paisnascimento.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/categoriatrabalhador.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/criptografa.js')}}"></script>
     <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
    
   </body>

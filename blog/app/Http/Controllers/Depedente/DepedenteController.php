@@ -140,15 +140,11 @@ class DepedenteController extends Controller
     public function destroy($id)
     {
         $depedente = new Dependente;
-        $depedentes = $depedente->buscaUnidadeDepedente($id);
-        $trabalhador = $depedentes->trabalhador;
-        $excluir = $depedente->deletar($id);
-        if ($excluir) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        try {
+            $excluir = $depedente->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
-        
-        return redirect()->route('depedente.mostrar.index',$trabalhador)->withInput()->withErrors([$condicao]);
     }
 }

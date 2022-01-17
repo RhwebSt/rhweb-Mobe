@@ -40,7 +40,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'user' => 'required',
-            'password'=>'required'
+            'password'=>'required' 
         ],[
             'user.required'=>'Campo usuario não pode esta vazio!',
             'password.required'=>'Informe sua senha!',
@@ -51,7 +51,7 @@ class LoginController extends Controller
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
             return redirect()->route('home.index');
         }
-        return redirect()->route('/.index')->withInput()->withErrors(['mensagem'=>'Não foi possivel efetuar o login, tente novamento.']);
+        return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuario. Tente novamente.']);
     }
  
     /**

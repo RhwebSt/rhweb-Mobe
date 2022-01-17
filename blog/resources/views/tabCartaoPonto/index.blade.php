@@ -192,7 +192,7 @@
             function lancamentoTab(dados,status,data) {
               $('#carregamento').removeClass('d-none')
               $.ajax({
-                url: "{{url('tabela/cartao/ponto/unidade')}}/"+dados+'/'+status+'/'+data,
+                url: "{{url('tabela/cartao/ponto/unidade')}}/"+dados+'/'+status,
                 type: 'get',
                 contentType: 'application/json',
                 success: function(data) {

@@ -167,7 +167,7 @@ class Trabalhador extends Model
                 if ($user->hasPermissionTo('admin')) {
                     $query->where('tsnome',$id) 
                     ->orWhere('tscpf',$id)
-                    ->orWhere('tsmatricula',$id)
+                    // ->orWhere('tsmatricula',$id)
                     ->orWhere('trabalhadors.id',$id);
                 }else{
                     $query->where([
@@ -178,10 +178,10 @@ class Trabalhador extends Model
                         ['trabalhadors.tscpf',$id],
                         ['trabalhadors.empresa', $user->empresa],
                     ])
-                    ->orWhere([
-                        ['trabalhadors.tsmatricula',$id],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ])
+                    // ->orWhere([
+                    //     ['trabalhadors.tsmatricula',$id],
+                    //     ['trabalhadors.empresa', $user->empresa],
+                    // ])
                     ->orWhere([
                         ['trabalhadors.id',$id],
                         ['trabalhadors.empresa', $user->empresa],

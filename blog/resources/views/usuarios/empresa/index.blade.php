@@ -352,6 +352,13 @@
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="col-md-3">
+                    <label for="matriculartomador" class="form-label">N°Tomador</label>
+                    <input type="text" class="form-control @error('matriculartomador') is-invalid @enderror"  value="{{old('matriculartomador')}}" name="matriculartomador" id="matriculartomador">
+                    @error('matriculartomador')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="col-md-2 mb-5 d-none">
                     <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
                     <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">
