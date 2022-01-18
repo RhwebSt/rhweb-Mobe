@@ -52,6 +52,19 @@
                 })
             </script>
         @enderror
+        
+                <script>
+                    Swal.fire({
+                      title: '<strong>Algo deu Errado!</strong>',
+                      icon: 'error',
+                      html:
+                        '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
+                        '<a href="">Cadastrar</a> ',
+                      showCloseButton: true,
+                      allowOutsideClick: false,
+                      allowEnterKey: true,
+                    })
+                </script>
 
               <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
               <div class="container">
@@ -127,8 +140,8 @@
                     <div class="col-md-3">
                         <label for="feriado" class="form-label">Feriado</label>
                         <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
-                          <option selected>Sim</option>
-                          <option>Não</option>
+                          <option >Sim</option>
+                          <option selected>Não</option>
                         </select>
                     </div>
                         

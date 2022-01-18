@@ -121,6 +121,10 @@
                 .matric{
                   width: 55px;
                 }
+                
+                .matric2{
+                  width: 240px;
+                }
 
                 .nome{
                   width: 285px;
@@ -192,10 +196,11 @@
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center decimo">13º Salário</td>
                         <td class="border-top border-right border-bottom border-left text-bold small__font destaque text-center total">Total</td>
                     </tr>
-
+                </table>
+                <table>
                     <tr>
-                        <td class="border-top border-left border-bottom text-bold small__font destaque text-center matric"></td>
-                        <td class="border-top border-bottom text-bold small__font destaque text-center nome"></td>
+                        <td class="border-top border-left border-bottom text-bold small__font destaque text-center matric2"></td>
+                        <td class="border-top border-bottom border-left text-bold small__font destaque text-center total">INSS 13° Sal</td>
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center producao">IRRF</td>
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center dsr">INSS</td>
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center ferias">Vale</td>
@@ -240,10 +245,12 @@
                         <td class="border-top border-bottom border-left text-bold small__font text-center decimo">{{number_format((float)$dados['13salario'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$dados['vencimento'][$d], 2, ',', '')}}</td>
                     </tr>
-
+                    
+                    </table>
+                <table>
                     <tr>
-                        <td class="border-top border-left text-bold small__font text-center matric"></td>
-                        <td class="border-top text-bold small__font text-center nome"></td>
+                        <td class="border-top border-left text-bold small__font text-center matric2"></td>
+                        <td class="border-top text-bold small__font text-center total">INSS 13° Sal</td>
                         <td class="border-top border-bottom border-left text-bold destaque small__font text-center producao">IRRF</td>
                         <td class="border-top border-bottom border-left text-bold destaque small__font text-center dsr">INSS</td>
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center ferias">Vale</td>
@@ -254,8 +261,8 @@
                     </tr>
 
                     <tr>
-                        <td class="border-left border-bottom text-bold small__font text-center matric"></td>
-                        <td class="border-bottom text-bold small__font text-center nome"></td>
+                        <td class="border-left border-bottom text-bold small__font text-center matric2"></td>
+                        <td class="border-bottom text-bold small__font text-center total"> 0000000</td>
                         <td class="border-bottom text-bold border-left small__font text-center producao"></td>
                         <td class="border-bottom text-bold border-left small__font text-center dsr">{{number_format((float)$dados['inss'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center ferias"></td>

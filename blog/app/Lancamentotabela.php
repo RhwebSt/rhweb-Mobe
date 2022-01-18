@@ -54,7 +54,7 @@ class Lancamentotabela extends Model
                 }
             }
         })
-        ->orderBy('liboletim')
+        ->orderBy('created_at','desc')
         ->distinct()
         ->limit(100)
         ->get();
@@ -204,7 +204,8 @@ class Lancamentotabela extends Model
             'liboletim'=>$dados['liboletim'],
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
-            'lsferiado'=>$dados['feriado']
+            'lsferiado'=>$dados['feriado'],
+            'tomador'=>$dados['tomador']
         ]);
     }
     public function deletar($id)

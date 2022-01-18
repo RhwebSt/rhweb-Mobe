@@ -12,8 +12,8 @@ class Inss extends Model
     public function cadastro($dados)
     {
         return Inss::create([
-            'isano'=>$dados['isano'],
-            'isvalorinicial'=>$dados['valor__inicial'],
+            'isano'=>$dados['ano'],
+            // 'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>$dados['indice'],
             'isreducao'=>$dados['fator'],
@@ -25,7 +25,7 @@ class Inss extends Model
         return Inss::where('id', $id)
         ->update([
             'isano'=>$dados['isano'],
-            'isvalorinicial'=>$dados['valor__inicial'],
+            // 'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>$dados['indice'],
             'isreducao'=>$dados['fator']

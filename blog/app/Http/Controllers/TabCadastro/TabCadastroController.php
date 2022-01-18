@@ -52,7 +52,7 @@ class TabCadastroController extends Controller
             $dados['lancamento'], 
             $dados['data'] 
         ];
-        try { 
+        try {  
             $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
             if ($lancamentorublicas) {
                 return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);

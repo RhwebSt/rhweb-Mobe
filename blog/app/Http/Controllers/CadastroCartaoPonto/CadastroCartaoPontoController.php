@@ -142,7 +142,7 @@ class CadastroCartaoPontoController extends Controller
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabelas = $lancamentotabela->editar($dados,$id);
         if ($lancamentotabelas) {
-            $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id);
+            $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
             $novodados = [
                 $id,
                 $dados['domingo'],

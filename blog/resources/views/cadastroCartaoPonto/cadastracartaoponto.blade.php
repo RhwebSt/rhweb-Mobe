@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{ $message }}'
+                  title: 'Cadastrado.'
                 })
             </script>
         @endif

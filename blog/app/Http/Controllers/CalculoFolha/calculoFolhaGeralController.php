@@ -27,7 +27,7 @@ class calculoFolhaGeralController extends Controller
     public function calculoFolhaGeral($datainicio,$datafinal)
     {
         $folhar = new Folhar;
-        
+      
         $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
         
         // if ($folhas) {
@@ -38,6 +38,7 @@ class calculoFolhaGeralController extends Controller
          
         $dias = [];
         $trabalhado_cal_folha = [];
+        $tabelapreco_codigo = [];
         $numerofolhar = 0;
         $trabalhado = new Trabalhador;
         $empresa = new Empresa;
@@ -58,7 +59,18 @@ class calculoFolhaGeralController extends Controller
         $insslista = $inss->buscaUnidadeInss($ano[0]);
         $irrflista = $irrf->buscaListaIrrf($ano[0]);
         
-        
+        if (count($insslista) < 1) {
+            return redirect()->back()->withErrors(['false'=>'O inss '.$ano[0].' não esta cadastrado. Entre em contator com suporte.']);
+        }elseif (count($irrflista) < 1) {
+            return redirect()->back()->withErrors(['false'=>'O irrf '.$ano[0].' não esta cadastrado. Entre em contator com suporte.']);
+        }
+
+        $rublicas = $rublica->buscaListaRublica(0);
+        foreach ($rublicas as $key => $rublicas_valor) {
+            if (!in_array($rublicas_valor->tsrubrica,$tabelapreco_codigo)) {
+                array_push($tabelapreco_codigo,$rublicas_valor->rsrublica);
+            }
+        }
         $tomadores = $tomador->buscaListaTomador($user->empresa);
         $quantidadetomador = count($tomadores);
         foreach ($tomadores as $t => $tomador_id) {
@@ -301,9 +313,9 @@ class calculoFolhaGeralController extends Controller
                 'codigos'=>[]
             ];
             $valorfinal = [];
-            $valor_final_irrf = [];
             $bolcartaopontos = $bolcartaoponto->buscaListaLancamentoBolcartao($tomador_id->id,$datainicio,$datafinal);
             $lancamentorublicas = $lancamentorublica->buscaListaLancamentoRublica($tomador_id->id,$datainicio,$datafinal);
+            
             foreach ($bolcartaopontos as $key => $trabalhador) {
                 array_push($funcionario,$trabalhador->trabalhador);
                 array_push($trabalhado_cal_folha,$trabalhador->trabalhador);
@@ -320,6 +332,12 @@ class calculoFolhaGeralController extends Controller
             $depedentes = $depedente->buscaListaDepedenteInt($funcionario);
             $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
             $rublicas = $rublica->buscaListaRublica(0);
+            
+            foreach ($tabelaprecos as $key => $tabelapreco_valor) {
+                if (!in_array($tabelapreco_valor->tsrubrica,$tabelapreco_codigo)) {
+                    array_push($tabelapreco_codigo,$tabelapreco_valor->tsrubrica);
+                }
+            }
         
             foreach ($bolcartaopontos as $key => $bolcartaoponto_valor) {
                 if ($bolcartaoponto_valor->created_at) {
@@ -472,6 +490,7 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
+        
             foreach ($trabalhadores as $i => $trabalhadores_id) {
                 foreach ($cartaoponto_diarias['campos']['descricao'] as $key => $cartaopontos_descricao) {
                     if ($cartaopontos_descricao === 'hora normal' && $cartaoponto_diarias['campos']['id'][$key] === $trabalhadores_id->id) {
@@ -575,7 +594,6 @@ class calculoFolhaGeralController extends Controller
                         $boletim_tabela['vencimento']['valor'][$z] += $resultadova;
                     }
                 }
-                // dd($boletim_tabela);
             }
             // if (isset($cartaopontos->csdiasuteis)) {
             //     $dadosTrabalhador['tomador_cartao_ponto_horas'] += self::calculardia($cartaopontos->csdiasuteis,null);
@@ -632,6 +650,11 @@ class calculoFolhaGeralController extends Controller
                 foreach ($boletim_tabela['hora extra 50%']['id'] as $i => $boletim_tabela_ex50_id) {
                     if ($boletim_tabela_ex50_id === $trabalhador_id->trabalhador) {
                         $salario += $boletim_tabela['hora extra 50%']['valor'][$i];
+                    }
+                }
+                foreach ($boletim_tabela['hora extra 100%']['id'] as $i => $boletim_tabela_ex100_id) {
+                    if ($boletim_tabela_ex100_id === $trabalhador_id->trabalhador) {
+                        $salario += $boletim_tabela['hora extra 100%']['valor'][$i];
                     }
                 }
                 foreach ($boletim_tabela['diariaNormais']['id'] as $i => $boletim_tabela_diariaNormais_id) {
@@ -716,6 +739,7 @@ class calculoFolhaGeralController extends Controller
                     if (!in_array($novoinss, $valorfinal)) {
                         array_push($valorfinal,$novoinss);
                     }
+                    
                     if ($valor_inss <= $valorfinal[$key] && $key === 0) {
                         array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
                         array_push($boletim_tabela['inss']['indece'],$inss->isindece);
@@ -869,67 +893,97 @@ class calculoFolhaGeralController extends Controller
                 }
                 $basecalculos = $basecalculo->cadastro($boletim_tabela,$novodepedentes,$tomador_id->id,null,$key,$datafinal);
                 if ($basecalculos['id']) {
-                    if (array_key_exists($key,$boletim_tabela['horasNormais']['id'])) {
-                        $valorcalculo->cadastroHorasnormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    foreach ($boletim_tabela['horasNormais']['id'] as $key => $horasNormais_valor) {
+                        if ($horasNormais_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroHorasnormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['hora extra 50%']['id'])) {
-                        $valorcalculo->cadastroHorasEx50($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    foreach ($boletim_tabela['hora extra 50%']['id'] as $key => $horasex_50_valor) {
+                        if ($horasex_50_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroHorasEx50($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['hora extra 100%']['id'])) {
-                        $valorcalculo->cadastroHorasEx100($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                       
+                    foreach ($boletim_tabela['hora extra 100%']['id'] as $key => $horasex_100_valor) {
+                        if ($horasex_100_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroHorasEx100($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['diariaNormais']['id'])) {
-                        $valorcalculo->cadastrodiariaNormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    foreach ($boletim_tabela['diariaNormais']['id'] as $key => $diariaNormais_valor) {
+                        if($diariaNormais_valor === $trabalhador->id) {
+                            $valorcalculo->cadastrodiariaNormais($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['gratificação']['id'])) {
-                        $valorcalculo->cadastroGratificacao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                   
+                    foreach ($boletim_tabela['gratificação']['id'] as $key => $gratificacao_valor) {
+                        if($gratificacao_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroGratificacao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
                     // if (array_key_exists($key,$boletim_tabela['adiantamento']['id'])) {
                     //     $valorcalculo->cadastraAdiantamento($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
                         
                     // }
-                    if (array_key_exists($key,$boletim_tabela['producao']['id'])) {
-                        $valorcalculo->cadastroProducao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    
+                    foreach ($boletim_tabela['producao']['id'] as $key => $producao_valor) {
+                        if($producao_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroProducao($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['dsr1818']['id'])) {
-                        $valorcalculo->cadastrodsr1818($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    
+                    foreach ($boletim_tabela['dsr1818']['id'] as $key => $dsr1818_valor) {
+                        if($dsr1818_valor === $trabalhador->id) {
+                            $valorcalculo->cadastrodsr1818($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['ferias_decimoter']['id'])) {
-                        $valorcalculo->cadastraFeriasDecimoter($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                   
+                    foreach ($boletim_tabela['ferias_decimoter']['id'] as $key => $ferias_decimoter_valor) {
+                        if($ferias_decimoter_valor === $trabalhador->id) {
+                            $valorcalculo->cadastraFeriasDecimoter($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
                     if (array_key_exists($key,$boletim_tabela['decimo_ter']['id'])) {
-                        $valorcalculo->cadastraDecimoTer($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
                         
                     }
-                    if (array_key_exists($key,$boletim_tabela['inss_sobre_ter']['id'])) {
-                        $valorcalculo->cadastrainssSobreTer($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    foreach ($boletim_tabela['decimo_ter']['id'] as $key => $decimoter_valor) {
+                        if($decimoter_valor === $trabalhador->id) {
+                            $valorcalculo->cadastraDecimoTer($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['inss']['id'])) {
-                        $valorcalculo->cadastraInss($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                   
+                    foreach ($boletim_tabela['inss_sobre_ter']['id'] as $key => $inss_sobre_ter_valor) {
+                        if($inss_sobre_ter_valor === $trabalhador->id) {
+                            $valorcalculo->cadastrainssSobreTer($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['sindicator']['id'])) {
-                        $valorcalculo->cadastroSindicator($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                   
+                    foreach ($boletim_tabela['inss']['id'] as $key => $inss_valor) {
+                        if($inss_valor === $trabalhador->id) {
+                            $valorcalculo->cadastraInss($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['seguro']['id'])) {
-                        $valorcalculo->cadastroSeguro($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                        
+                    
+                    foreach ($boletim_tabela['sindicator']['id'] as $key => $sindicator_valor) {
+                        if($sindicator_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroSindicator($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['vt']['id'])) {
-                        $valorcalculo->cadastroVT($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                    
+                    foreach ($boletim_tabela['seguro']['id'] as $key => $seguro_valor) {
+                        if($seguro_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroSeguro($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
-                    if (array_key_exists($key,$boletim_tabela['va']['id'])) {
-                        $valorcalculo->cadastroVA($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                   
+                    foreach ($boletim_tabela['vt']['id'] as $key => $vt_valor) {
+                        if($vt_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroVT($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
+                    }
+                    
+                    foreach ($boletim_tabela['va']['id'] as $key => $va_valor) {
+                        if($va_valor === $trabalhador->id) {
+                            $valorcalculo->cadastroVA($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
                     }
                     for ($i=1; $i <=31 ; $i++) { 
                         $vencimento = 0;
@@ -957,12 +1011,13 @@ class calculoFolhaGeralController extends Controller
                     }
 
                     
-                    // dd($boletim_tabela,$cartaoponto_diarias);
+                   
                 }
             }
-            
+            //  dd($boletim_tabela,$cartaoponto_diarias)
             if (($quantidadetomador - 1) === $t) {
-                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$datainicio,$datafinal);
+                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal);
+                return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
                 if ($calculofolhar) {
                     return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
                 }
@@ -971,7 +1026,7 @@ class calculoFolhaGeralController extends Controller
        
         
     }
-    public function calculoFolhar($trabalhador,$datainicio,$datafinal)
+    public function calculoFolhar($trabalhador,$tabelapreco_codigo,$datainicio,$datafinal)
     {
         
         $basecalculo = new BaseCalculo;
@@ -992,26 +1047,6 @@ class calculoFolhaGeralController extends Controller
         ];
         $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
         $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
-        // dd($sindicator);
-        $descricao = [
-        '1002',
-        '1003',
-        '1004',
-        '1000',
-        '2003',
-        '1006',
-        '1008',
-        '1009',
-        '1010',
-        '1011',
-        '1012',
-        '1013',
-        '1014',
-        '2002',
-        '1007',
-        '1005',
-        '2001'
-        ];
         $valor_final_irrf = [];
         $folhas = $folhar->buscaUltimaoRegistroFolhar($user->empresa);
         if ($folhas) {
@@ -1120,12 +1155,10 @@ class calculoFolhaGeralController extends Controller
                 }
             }
             $novabasecalculo =  $basecalculo->cadastroFolhar($basecalculos[$i],$valorbase,$indece,$folhas['id']);
-            
-            
-            foreach ($descricao as $d => $descricoes) {
-                $valorcalculos = $valorcalculo->listaGeral($trabalhador,$datafinal,$descricoes);
+            foreach ($tabelapreco_codigo as $d => $tabelapreco_valor) {
+                $valorcalculos = $valorcalculo->listaGeral($trabalhador,$datafinal,$tabelapreco_valor);
                 foreach ($valorcalculos as $v => $valorcalculo) {
-                    if ($v === $i) {
+                    if ($basecalculo->trabalhador === $valorcalculo->trabalhador) {
                         $valorcalculo->cadastraGeral($valorcalculo,$novabasecalculo['id']);
                     }
                 }
@@ -1137,7 +1170,6 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['adiantamento']['quantidade'] = 1;
                     $boletim_tabela['adiantamento']['valor'] = $basecalculos_15[$i]->bivalorliquido;
                     $valorcalculo->cadastraAdiantamento($boletim_tabela,$novabasecalculo['id'],$basecalculos_15[$i]->trabalhador,$datafinal);
-                    
                 }
             }
 
@@ -1157,7 +1189,7 @@ class calculoFolhaGeralController extends Controller
                 $relacaodias = $relacaodia->listaRelacaoDia($trabalhador,$datafinal,$d);
                     if (isset($relacaodias[0]->valor)) {
                         foreach ($relacaodias as $r => $relacaodia) {
-                            if ($r === $i) {
+                            if ($basecalculo->trabalhador === $relacaodia->trabalhador) {
                                 $relacaodia->cadastroGeral($relacaodia,$novabasecalculo['id']);
                             }
                         }
@@ -1209,6 +1241,7 @@ class calculoFolhaGeralController extends Controller
         $pdf = PDF::loadView('comprovantegeral',compact('folhas','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
+   
     public function destroy($id)
     {
         $folhar = new Folhar;

@@ -83,6 +83,7 @@ class Lancamentorublica extends Model
     }
     public function buscaListaRelatorioLancamentoRublica($dados)
     {
+        
         return DB::table('lancamentotabelas')
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
@@ -98,10 +99,10 @@ class Lancamentorublica extends Model
                         ['lancamentorublicas.trabalhador',$dados['trabalhador']],
                         ['tomadors.id',$dados['tomador']]
                     ])
-                    ->whereBetween('lancamentorublicas.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+                    ->whereBetween('lancamentotabelas.lsdata',[$dados['ano_inicial'], $dados['ano_final']]);
                 }else{
                     $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
-                    ->whereBetween('lancamentorublicas.created_at',
+                    ->whereBetween('lancamentotabelas.lsdata',
                     [$dados['ano_inicial'], 
                     $dados['ano_final']]);
                 }
@@ -112,7 +113,7 @@ class Lancamentorublica extends Model
                         ['lancamentorublicas.trabalhador',$dados['trabalhador']],
                         ['lancamentorublicas.empresa', $user->empresa]
                     ]) 
-                    ->whereBetween('lancamentorublicas.created_at',
+                    ->whereBetween('lancamentotabelas.lsdata',
                     [$dados['ano_inicial'], 
                     $dados['ano_final']]);
                 }else{
@@ -121,7 +122,7 @@ class Lancamentorublica extends Model
                         ['lancamentorublicas.empresa', $user->empresa],
                         ['tomadors.id',$dados['tomador']]
                     ]) 
-                    ->whereBetween('lancamentorublicas.created_at',
+                    ->whereBetween('lancamentotabelas.lsdata',
                     [$dados['ano_inicial'], 
                     $dados['ano_final']]);
                 }
@@ -131,6 +132,7 @@ class Lancamentorublica extends Model
     }
     public function buscaListaLancamentoRublica($tomador,$ano_inicio,$ano_final)
     {
+        
         return DB::table('lancamentotabelas')
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
@@ -142,7 +144,7 @@ class Lancamentorublica extends Model
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 $query->where('lancamentotabelas.tomador',$tomador)
-                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+                ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
             }
         })
         ->get();

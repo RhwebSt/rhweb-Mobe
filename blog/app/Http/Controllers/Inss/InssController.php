@@ -39,7 +39,7 @@ class InssController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'isano'=>'required|max:4|numeric|unique:insses',
+            'isano'=>'required|max:4|unique:insses',
         ],[
             'isano.unique'=>'Esta ano já esta cadastrado.'
         ]);
@@ -53,12 +53,12 @@ class InssController extends Controller
             'user'=>''
         ];
         $inss = new Inss;
-        try {
+        
         foreach ($dados as $key => $value) {
             if ($key === 'user') {
                 $novodados['user'] = $value;
             }
-            if ($key === 'ano') {
+            if ($key === 'isano') {
                 $novodados['ano'] = $value;
             }
             
@@ -106,6 +106,7 @@ class InssController extends Controller
             }
             $contador++;
         }
+        try {
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->route('inss.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
