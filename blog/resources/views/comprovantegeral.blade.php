@@ -421,14 +421,14 @@
 
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
-            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhar->bivalorvencimento, 2, ',', '')}}</td>
-            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhar->bivalordesconto, 2, ',', '')}}</td>
+            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhar->bivalorvencimento, 2, ',', '.')}}</td>
+            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhar->bivalordesconto, 2, ',', '.')}}</td>
         </tr>
 
         <tr>
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$folhar->bivalorliquido, 2, ',', '')}}</td>
+            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$folhar->bivalorliquido, 2, ',', '.')}}</td>
         </tr>
     </table>
 
@@ -682,7 +682,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '30' && $relacaodia->basecalculo === $folhar->id)
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float) $relacaodia->rivalor, 2, ',', '')}}
                         @endif
                 @endforeach
             </td>

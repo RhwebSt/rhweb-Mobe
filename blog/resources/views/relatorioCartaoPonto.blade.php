@@ -376,7 +376,7 @@
                         <td class="small__font border-top border-bottom border-left text-center adcnot">{{$lancamentotabela->bsadinortuno?$lancamentotabela->bsadinortuno:' '}}</td>
                         <td class="small__font border-top border-bottom border-left text-center valor">
                            <?php
-                                $valortotal = 0;
+                                $valortotal = 0; 
                                 foreach ($tabelaprecos as $key => $value) {
                                     if ($value->tsdescricao == 'hora extra 50%' && $lancamentotabela->bshoraex) {
                                         $valortotal += calculovalores($lancamentotabela->bshoraex,$value->tsvalor);

@@ -171,4 +171,23 @@ class Tomador extends Model
         ->select('tsnome')
         ->first();
     }
+    public function tomadorBoletim($id)
+    {
+        return DB::table('tomadors')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->select('empresas.esnome','tomadors.tsnome')
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tomadors.id',$id);
+            }else{
+                $query->where([
+                    ['tomadors.id',$id],
+                    ['tomadors.empresa', $user->empresa]
+                ]);
+            }
+           
+        })
+        ->first();
+    }
 }

@@ -63,7 +63,7 @@
                                 <i class="fad fa-file-invoice"></i> Relatórios
                              </button>
                               <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                                <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" role="button">Rol dos Boletins</a></li>
+                                <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" onclick ="botaoModal ()" role="button">Rol dos Boletins</a></li>
                               </ul>
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
                             <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -98,28 +98,19 @@
                         </div>
                         
                          <script>
-                            const rolBol = document.querySelector('#rolBol');
-                            
-                            rolBol.addEventListener('click', function(){
-                                
-                                const { value: formValues } = await Swal.fire({
-                                  title: 'Multiple inputs',
-                                  html:
-                                    '<input id="swal-input1" class="swal2-input">' +
-                                    '<input id="swal-input2" class="swal2-input">',
-                                  focusConfirm: false,
-                                  preConfirm: () => {
-                                    return [
-                                      document.getElementById('swal-input1').value,
-                                      document.getElementById('swal-input2').value
-                                    ]
-                                  }
-                                })
-                                
-                                if (formValues) {
-                                  Swal.fire(JSON.stringify(formValues))
-                                }
-                            })
+                            function botaoModal (){
+                                 
+                            Swal.fire({
+                                title: 'de',
+                                html:  '<title>Data Inicial</title>' +'<input type="date" id="swal-input1" class="swal2-input">' +
+                                '<input type="date" id="swal-input2" class="swal2-input">',
+                                inputLabel: 'teste',
+                                confirmButtonText: 'Buscar',
+                                showDenyButton: true,
+                                denyButtonText: 'Sair',
+                                showConfirmButton: true,
+                            });
+                            }
                         </script>
                         
                         

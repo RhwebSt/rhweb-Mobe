@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
+        <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
         <link rel="stylesheet" href="{{url('/css/style.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
@@ -17,7 +18,8 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
          <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -25,8 +27,6 @@
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
-        
         
 
     </head>
@@ -37,6 +37,14 @@
             font-weight: bold !important;
         }
     </style>
+     <script>
+            function validarRobo(){
+                if(grecaptcha.getResponse() != "") return true;
+                $('#msgrecap').html("<div id='msgrecap' class=' rounded text-center text-wrap col-11 col-sm-11 col-md-11 col-lg-4' style='background-color:#8F0200; color: #FFF; font-size: 13px; padding: 3px; border: 1px solid #CA023B;'  '>Preencha a caixinha do 'Não sou o robô' <i class='fas fa-md fa-exclamation-triangle'></i></div>");
+
+                return false;}
+                window.location.href = '#password';
+        </script>
     <body  class="body-content">
     <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
                         <div class="text-center " >
@@ -175,7 +183,7 @@
                      
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus dados</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="">Alterar Senha</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="">Alterar Foto</a></li>
                         <li><a class="dropdown-item" href="{{route('logout')}}">Sair</a></li>
                       </ul>
@@ -204,14 +212,13 @@
     <footer>
         <p class="text-nowrap">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
-    
+    <script src="{{url('/js/alteracaoSenha.js')}}"></script>
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="sweetalert2.all.min.js"></script>
     <script src="{{url('/js/masck.js')}}"></script>
-    
-    
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>

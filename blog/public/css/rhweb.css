@@ -86,7 +86,7 @@ main{
 }
 
 form input[type="text"] {
-            text-transform: uppercase !important;
+            text-transform: uppercase;
             color:black !important;
             font-weight: bold !important;
         }
@@ -310,6 +310,40 @@ input:hover{
 .nav-pills .nav-link.active{
     background-color: #182D63 !important;
 }
+
+.offcanvas-end{
+    background-color: #1250d6;
+}
+
+.offcanvas-body{
+    background-color: #1250d6;
+}
+
+.botaoPesquisa{
+    border-radius: 10px;
+    margin-left: 5px;
+    background-color:#394041;
+    color: white;
+}
+
+.botaoPesquisa:hover{
+    background-color:#5F6B6D;
+    color: white;
+}
+
+
+.bodyTabela{
+    background-color: #081049;
+    color: white;
+    transition: 300ms;
+    transition-timing-function: ease-in-out;
+}
+
+.bodyTabela:hover{
+    background-color: #1427B8;
+    color: white;
+}
+
 
 
 

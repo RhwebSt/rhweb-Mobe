@@ -25,7 +25,7 @@ class RelatorioCartaoPontoController extends Controller
             $boletim,
             $tomador,
         ];
-        try {
+        try { 
             $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
             $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($boletim); 
             $dados = [];

@@ -190,4 +190,27 @@ class Lancamentorublica extends Model
     {
         return Lancamentorublica::where('trabalhador', $id)->delete();
     }
+    public function boletimTabela($id,$ano_inicio,$ano_final)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->selectRaw(
+            'SUM(lancamentorublicas.lfvalor) as totaltrabalhador,
+            SUM(lancamentorublicas.lftomador) as totaltomador,
+            lancamentotabelas.liboletim,
+            lancamentotabelas.lsdata,
+            lancamentorublicas.lshistorico,
+            lancamentorublicas.licodigo'
+        )
+        ->where(function($query) use ($id,$ano_inicio,$ano_final){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.tomador',$id)
+                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+            }
+        })
+        ->groupBy('lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
+        ->get();
+    }
 }

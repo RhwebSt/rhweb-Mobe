@@ -223,4 +223,23 @@ class Bolcartaoponto extends Model
     {
         return Bolcartaoponto::where('trabalhador', $id)->delete();
     }
+    public function boletimCartaoPonto($id,$ano_inicio,$ano_final)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'bolcartaopontos.*',
+            'lancamentotabelas.liboletim',
+            'lancamentotabelas.lsdata'
+        )
+        ->where(function($query) use ($id,$ano_inicio,$ano_final){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tomadors.id',$id)
+                ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+            }
+        })
+        ->get();
+    }
 }

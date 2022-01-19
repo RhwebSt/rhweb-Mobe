@@ -41,7 +41,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::get('logout','Login\\LoginController@logout')->name('logout');
-    
+    Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
+    Route::post('altera/editer','Login\\alteraSenhaController@store')->name('altera.store');
     Route::resource('home','Home\\HomeController')->names('home');
     
     Route::get('comprovantepagamento','ComprovantePag\\ComprovantePagController@index');
@@ -51,6 +52,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
+    Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
 
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');

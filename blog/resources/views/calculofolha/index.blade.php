@@ -14,6 +14,39 @@
             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" style="color: white;">Lista Geral <i class="fad fa-th-list"></i></button>
           </li>
         </ul>
+        
+        <script>
+            var Back = document.getElementById('pills-home-tab');
+            Back.addEventListener("click", function(){
+               console.log("clickou");
+               localStorage.setItem('Back', 'backpill1');
+               
+           })
+           
+           var Back1 = document.getElementById('pills-contact-tab');
+            Back.addEventListener("click", function(){
+               console.log("clickou");
+               localStorage.setItem('Back', 'backpill3');
+               
+           })
+           
+           var Back2 = document.getElementById('pills-profile-tab');
+            Back.addEventListener("click", function(){
+               console.log("clickou");
+               localStorage.setItem('Back', 'backpill2');
+               
+           })
+           
+            voltar = localStorage.getItem("Back");
+            
+            if(voltar === "backpill1"){
+                console.log("voltar para a primeira pagina");
+                window.location.href = "#pills-profile-tab";
+                document.getElementById("pills-profile-tab").click();
+                localStorage.setItem('Back', 'null');
+            }
+
+        </script>
        
         <div class="tab-content" id="pills-tabContent">
             @if(session('success'))
@@ -142,7 +175,7 @@
                                         
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                             
-                                            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
+                                            <a class="btn botao" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
                                               <i class="fal fa-print-search"></i>
                                             </a>
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -270,10 +303,10 @@
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
-                                <tbody style="background-color: #081049; color: white;">
+                                <tbody style="">
                                     @if(count($folhas) > 0)
                                         @foreach($folhas as $folhar)
-                                        <tr>               
+                                        <tr class="bodyTabela">               
                                             <td class="col text-center border-bottom border-start text-nowrap" style="width:150px;">{{$folhar->fscodigo}}</td>
                                             <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:250px">
                                                 <?php
@@ -306,7 +339,7 @@
                                                 </div>
                                                 <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
                                                     @csrf
-                                                    <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                    <div class="offcanvas-body">
                                                         <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
                                                         
                                                         <div class="d-flex justify-content-between mb-3">
@@ -325,7 +358,7 @@
                                                                         @endif
                                                                     @endforeach
                                                                 </datalist>
-                                                                <button type="submit" id="butao_trabalhador">
+                                                                <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
                                                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                                                 </button>
                                                                 
@@ -358,7 +391,7 @@
                                                 </div>
                                                 <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
                                                     @csrf
-                                                    <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                    <div class="offcanvas-body">
                                                         <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
                                                         
                                                         <div class="d-flex justify-content-between mb-3">
@@ -372,7 +405,7 @@
                                                                 <datalist id="listabanco{{$folhar->id}}">
                                                                    
                                                                 </datalist>
-                                                                <button type="submit" id="butao_trabalhador">
+                                                                <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
                                                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                                                 </button>
                                                                 <div class="text-center d-none" id="refres" >

@@ -112,4 +112,10 @@ class User extends Authenticatable
     {
         return User::where('empresa', $id)->delete();
     }
+
+    public function editarSenhar($dados)
+    {
+        return User::where('id', $dados['id'])
+        ->update(['password'=>Hash::make($dados['password1'])]);
+    }
 }
