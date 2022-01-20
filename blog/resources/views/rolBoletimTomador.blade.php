@@ -227,7 +227,20 @@
                     'quantidade'=>[],
                     'valor'=>[],
                     'total'=>[]
-                ]
+                ];
+                function horas_em_segundos($horas)
+                {
+                    $horas = explode(':',$horas);
+                    if (count($horas) > 1) {
+                        list($horas,$minitos) = $horas;
+                        $horasex = $horas * 3600 + $minitos * 60;
+                        $horasex = $horasex/60;
+                        $horasex = ($horasex/60);
+                        return $horasex;
+                    }else{
+                        return $horas[0] * 3600;
+                    }
+                };
             ?>
             <table>
                 @foreach($lancamentorublicas as $lancamentorublica)
@@ -238,6 +251,13 @@
                                 $quantboletim += 1 ;
                                 array_push($resultadogreal['historico'],$lancamentorublica->lshistorico);
                                 array_push($resultadogreal['item'],$lancamentorublica->licodigo);
+                                if ($lancamentorublica->licodigo == 1002 &&  $lancamentorublica->licodigo == 1003 && 
+                                $lancamentorublica->licodigo == 1004 && $lancamentorublica->licodigo == 1005) {
+                                    array_push($resultadogreal['quantidade'], horas_em_segundos($lancamentorublica->quantidade));
+                                }else{
+                                    array_push($resultadogreal['quantidade'], $lancamentorublica->quantidade);
+                                }
+                                
                             ?>
                         </td>
                         <td class="border-left border-top border-bottom border-right small__font text-center padrao">
@@ -247,17 +267,17 @@
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                         </td>
                         <td class="border-left border-top border-bottom border-right small__font text-center padrao"> 
-                            {{number_format((float)$lancamentorublica->totaltrabalhador, 2, ',', '.')}}
+                            {{number_format((float)$lancamentorublica->lfvalor * $lancamentorublica->quantidade, 2, ',', '.')}}
                             <?php 
-                                $totaltrabalhado += $lancamentorublica->totaltrabalhador; 
+                                $totaltrabalhado += ($lancamentorublica->lfvalor * $lancamentorublica->quantidade); 
                                 
                             ?>
                         </td>
                         <td class="border-left border-top border-bottom border-right small__font text-center padrao">
-                            {{number_format((float)$lancamentorublica->totaltomador, 2, ',', '.')}}
+                            {{number_format((float)$lancamentorublica->lftomador * $lancamentorublica->quantidade, 2, ',', '.')}}
                             <?php 
-                                $totaltomadors += $lancamentorublica->totaltomador; 
-                                array_push($resultadogreal['valor'],$lancamentorublica->totaltomador);
+                                $totaltomadors += ($lancamentorublica->lftomador * $lancamentorublica->quantidade); 
+                                array_push($resultadogreal['valor'],$lancamentorublica->lftomador);
                             ?>
                         </td>
                     </tr>
@@ -300,9 +320,10 @@
                         $horasex = $valores * ($horasex/60);
                         return $horasex;
                     }
+                    
                 ?>
             <table>
-            
+                
                 @foreach($bolcartaopontos as $bolcartaoponto)
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font text-center padrao">{{$bolcartaoponto->liboletim}}</td>
@@ -317,13 +338,13 @@
                             <?php
                                 $valortotal = 0; 
                                 foreach ($tabelaprecos as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    if ($value->tsrubrica == 1003 && $bolcartaoponto->bshoraex) {
                                         $valortotal += calculovalores($bolcartaoponto->bshoraex,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                    }elseif($value->tsrubrica == 1002 && $bolcartaoponto->horas_normais){
                                         $valortotal += calculovalores($bolcartaoponto->horas_normais,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                    }elseif($value->tsrubrica == 1004 && $bolcartaoponto->bshoraexcem){
                                         $valortotal += calculovalores($bolcartaoponto->bshoraexcem,$value->tsvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                    }elseif ($value->tsrubrica == 1005 && $bolcartaoponto->bsadinortuno) {
                                         $valortotal += calculovalores($bolcartaoponto->bsadinortuno,$value->tsvalor);
                                     }
                                 }
@@ -335,14 +356,30 @@
                             <?php
                                 $valortomador = 0;
                                 foreach ($tabelaprecos as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaoponto->bshoraex) {
+                                    if ($value->tsrubrica == 1003 && (int)$bolcartaoponto->bshoraex > 0) {
                                         $valortomador += calculovalores($bolcartaoponto->bshoraex,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais){
+                                        array_push($resultadogreal['historico'],$value->tsdescricao);
+                                        array_push($resultadogreal['item'],$value->tsrubrica);
+                                        array_push($resultadogreal['valor'],$valortomador);
+                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraex));
+                                    }elseif($value->tsrubrica == 1002 && (int)$bolcartaoponto->horas_normais > 0){
                                         $valortomador += calculovalores($bolcartaoponto->horas_normais,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaoponto->bshoraexcem){
+                                        array_push($resultadogreal['historico'],$value->tsdescricao);
+                                        array_push($resultadogreal['item'],$value->tsrubrica);
+                                        array_push($resultadogreal['valor'],$valortomador);
+                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->horas_normais));
+                                    }elseif($value->tsrubrica == 1004 &&  (int)$bolcartaoponto->bshoraexcem > 0){
                                         $valortomador += calculovalores($bolcartaoponto->bshoraexcem,$value->tstomvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaoponto->bsadinortuno) {
+                                        array_push($resultadogreal['historico'],$value->tsdescricao);
+                                        array_push($resultadogreal['item'],$value->tsrubrica);
+                                        array_push($resultadogreal['valor'],$valortomador);
+                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraexcem));
+                                    }elseif ($value->tsrubrica == 1005 && (int)$bolcartaoponto->bsadinortuno > 0) {
                                         $valortomador += calculovalores($bolcartaoponto->bsadinortuno,$value->tstomvalor);
+                                        array_push($resultadogreal['historico'],$value->tsdescricao);
+                                        array_push($resultadogreal['item'],$value->tsrubrica);
+                                        array_push($resultadogreal['valor'],$valortomador);
+                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bsadinortuno));
                                     }
                                 }
                                 $totaltomador += $valortomador;
@@ -352,7 +389,7 @@
                 </tr>
                 @endforeach
             </table>
-            {{dd($resultadogreal)}}
+           
             <table>
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font text-center padrao destaque text-bold">Quantidade:  {{$quantcartaoponto}} </td>
@@ -379,14 +416,49 @@
                     <td class="border-left border-top border-bottom border-right small__font text-center destaque text-bold pad2">Valor Item</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center destaque text-bold pad2">Valor Total</td>
                 </tr>
-
-                <tr>
+                
+                <?php
+                    $valortotal = 0;
+                    $valordiaria = 0;
+                    foreach ($tabelaprecos as $key => $tabelapreco) {
+                        $item = '';
+                        $historico = '';
+                        $quant = 0;
+                        $valor = 0;
+                        foreach ($resultadogreal['item'] as $r => $resul) {
+                            if ($tabelapreco->tsrubrica == $resul) {
+                                $item = $resul;
+                                $historico = $resultadogreal['historico'][$r];
+                                $quant += $resultadogreal['quantidade'][$r];
+                                $valor = $tabelapreco->tstomvalor;
+                               
+                            }
+                        }
+                       if ($item) {
+                            echo'<tr>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center cod">'.$item.'</td>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center desc">'.$historico.'</td>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.$quant.'</td>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.number_format((float)$valor, 2, ',', '.').'</td>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.number_format((float)$quant * $valor, 2, ',', '.').'</td>
+                                </tr>';
+                       }
+                       $valortotal += $quant * $valor;
+                      
+                    }
+                    foreach ($tabelaprecos as $key => $tabela) {
+                        if ($tabela->tsrubrica == 1000 && in_array(1000,$resultadogreal['item'])) {
+                            $valordiaria = $valortotal / $tabela->tstomvalor;
+                        }
+                    }
+                ?>
+                <!-- <tr>
                     <td class="border-left border-top border-bottom border-right small__font text-center cod">1005</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center desc">Hora Normal</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">999.999.999,99</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">999.999.999,99</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">999.999.999,99</td>
-                </tr>
+                </tr> -->
 
                 
             </table>
@@ -394,12 +466,12 @@
             <table>
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center total__bol">Total dos Boletins</td>
-                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">999.999.999,99</td>
+                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">{{number_format((float)$valortotal, 2, ',', '.')}}</td>
                 </tr>
 
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center total__bol">Total de Diárias</td>
-                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">999.999.999,99</td>
+                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">{{number_format((float)$valordiaria, 2, ',', '.')}}</td>
                 </tr>
             </table>
         </div>

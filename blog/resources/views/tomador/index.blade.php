@@ -51,18 +51,41 @@
                 })
             </script>
         @enderror
-        
+        @error('tabelavazia')
+            <script>
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Tabela de preço vazia',
+                  text: '{{ $message }}',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  allowEnterKey: true,
+                })
+            </script>
+        @enderror
+        @error('dadosvazia')
+            <script>
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Algo deu errado!',
+                  text: '{{ $message }}',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  allowEnterKey: true,
+                })
+            </script>
+        @enderror
        
         
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
-                
+                <input type="hidden" name="tomador" id="tomador">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
-                            <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fad fa-file-invoice"></i> Relatórios
                              </button>
-                              <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
+                              <ul class="dropdown-menu" aria-labelledby="relatoriotomador">
                                 <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" onclick ="botaoModal ()" role="button">Rol dos Boletins</a></li>
                               </ul>
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
@@ -101,14 +124,27 @@
                             function botaoModal (){
                                  
                             Swal.fire({
-                                title: 'de',
-                                html:  '<title>Data Inicial</title>' +'<input type="date" id="swal-input1" class="swal2-input">' +
-                                '<input type="date" id="swal-input2" class="swal2-input">',
+                                title: 'Periodo',
+                                html:
+                                '<input type="date" name="inicio" id="swal-input1" class="swal2-input">' +
+                                '<input type="date" name="final" id="swal-input2" class="swal2-input">',
                                 inputLabel: 'teste',
                                 confirmButtonText: 'Buscar',
                                 showDenyButton: true,
                                 denyButtonText: 'Sair',
                                 showConfirmButton: true,
+                                focusConfirm: false,
+                                preConfirm: () => {
+                                    if (!document.getElementById('swal-input1').value || !document.getElementById('swal-input1').value) {
+                                        Swal.showValidationMessage('Preencha todos os campos')   
+                                    }else{
+                                        let inicio =  document.getElementById('swal-input1').value
+                                        let final = document.getElementById('swal-input2').value
+                                        let tomador = document.getElementById('tomador').value
+                                        location.href=`{{url('boletim/tomador')}}/${tomador}/${inicio}/${final}`;
+                                    } 
+                                    
+                                }
                             });
                             }
                         </script>
@@ -124,22 +160,6 @@
                         <input type="hidden" name="empresa" value="{{$user->empresa}}">
                         <input type="hidden" name="trabalhador">
                        
-                        <div class="col-md-6">
-                            <label for="nome__completo" class="form-label ">Nome Completo</label>
-                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
-                            @error('nome__completo')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="nome__fantasia" class="form-label">Nome Fantasia</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
-                            @error('nome__fantasia')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
                         <div class="col-md-4">
                             <label for="cnpj" class="form-label">CNPJ</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
@@ -163,22 +183,7 @@
                                 <option >SLU - Sociedade Limitada Unipessoal</option>
                             </select>
                         </div>
-                        <?php
-                            if ( isset($valorrublica_matricular->vimatriculartomador)) {
-                                $matricular = $valorrublica_matricular->vimatriculartomador + 1;
-                            }else{
-                                $matricular = 1; 
-                            }
-                        ?>
-                        <div class="col-md-4">
-                            <label for="matricula" class="form-label">Matrícula</label>
-                            <input type="text" disabled class="form-control  fw-bold text-dark @error('matricula') is-invalid @enderror"  value="{{$matricular}}" id="matricula">
-                            <input type="hidden" value="{{$matricular}}" name="matricula" id="matriculaid">
-                            @error('matricula')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
+                        
                         <div class="col-md-4">
                             <label for="simple" class="form-label">Simples</label>
                             <select name="simples" value="{{old('simples')}}" id="simple" class="form-select fw-bold text-dark">
@@ -189,6 +194,41 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                       
+                        <div class="col-md-6">
+                            <label for="nome__completo" class="form-label ">Nome Completo</label>
+                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
+                            @error('nome__completo')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="nome__fantasia" class="form-label">Nome Fantasia</label>
+                            <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
+                            @error('nome__fantasia')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        
+                        <?php
+                            if ( isset($valorrublica_matricular->vimatriculartomador)) {
+                                $matricular = $valorrublica_matricular->vimatriculartomador + 1;
+                            }else{
+                                $matricular = 1; 
+                            }
+                        ?>
+                        <div class="col-md-4">
+                            <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock"></i></label>
+                            <input type="text" disabled class="form-control  fw-bold text-dark @error('matricula') is-invalid @enderror"  value="{{$matricular}}" id="matricula">
+                            <input type="hidden" value="{{$matricular}}" name="matricula" id="matriculaid">
+                            @error('matricula')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        
 
                         <div class="col-md-4">
                             <label for="telefone" class="form-label">Telefone</label>
@@ -197,7 +237,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         
                        
                         <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Endereço <i class="fad fa-map-marked-alt"></i></h1>
@@ -816,6 +855,7 @@
             }
             function campo() {
                 $('#carregamento').addClass('d-none')
+                $('#relatoriotomador').addClass('disabled')
                 $('#form').attr('action', "{{ route('tomador.store') }}");
                 $('#incluir').removeAttr( "disabled" )
                 $('#atualizar').attr('disabled','disabled')
@@ -837,7 +877,8 @@
                     $('#excluir').removeAttr( "disabled" )
                     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+data.tomador)
                     $('#method').val('PUT')
-                
+                    $('#tomador').val(data.tomador);
+                    $('#relatoriotomador').removeClass('disabled')
                 }
                 $('#nome__completo').val(data.tsnome)
                 $('#cnpj').val(data.tscnpj)

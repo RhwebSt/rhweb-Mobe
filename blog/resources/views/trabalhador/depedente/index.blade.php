@@ -79,7 +79,7 @@
                     <tbody style="background-color: #081049; color: white;">
                     @if(count($depedentes) > 0)
                     @foreach ($depedentes as $depedente)
-                        <tr>               
+                        <tr class="bodyTabela">               
                             <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 450px;">
                                 {{$depedente->dsnome}}
                             </td>

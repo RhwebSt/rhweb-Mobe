@@ -196,11 +196,13 @@ class Lancamentorublica extends Model
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
         ->selectRaw(
-            'SUM(lancamentorublicas.lfvalor) as totaltrabalhador,
-            SUM(lancamentorublicas.lftomador) as totaltomador,
+            '
+            SUM(lancamentorublicas.lsquantidade) as quantidade,
             lancamentotabelas.liboletim,
             lancamentotabelas.lsdata,
             lancamentorublicas.lshistorico,
+            lancamentorublicas.lfvalor,
+            lancamentorublicas.lftomador,
             lancamentorublicas.licodigo'
         )
         ->where(function($query) use ($id,$ano_inicio,$ano_final){
@@ -210,7 +212,7 @@ class Lancamentorublica extends Model
                 ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
             }
         })
-        ->groupBy('lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
+        ->groupBy('lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
         ->get();
     }
 }

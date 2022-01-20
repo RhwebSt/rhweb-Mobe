@@ -85,6 +85,23 @@ class TabelaPreco extends Model
         ->orderBy('tsrubrica', 'asc')
         ->paginate(5);
     }
+    public function listaUnidadeTomador($tomador)
+    {
+        return TabelaPreco::where(function($query) use ($tomador){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tomador',$tomador);
+            }else{
+                 $query->where([
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa]
+                ]);
+            }
+           
+        })
+        ->orderBy('tsrubrica', 'asc')
+        ->get();
+    }
     public function buscaTabelaTomadorInt($tomador)
     {
         return TabelaPreco::where(function($query) use ($tomador){
