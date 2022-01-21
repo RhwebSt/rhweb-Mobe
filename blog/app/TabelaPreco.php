@@ -154,7 +154,14 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where('tomador',$tomador)->get();
     }
-    
+    public function verificaRublica($dados)
+    {
+        return TabelaPreco::where([
+            ['tsano',$dados['ano']],
+            ['tsrubrica',$dados['rubricas']],
+            ['tomador',$dados['tomador']]
+        ])->count();
+    }
     public function editar($dados,$id)
     {
         return TabelaPreco::where('id', $id)

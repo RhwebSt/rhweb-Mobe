@@ -40,6 +40,7 @@ class TabelaPrecoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $tabelapreco = new TabelaPreco;
         $request->validate([
             'ano' => 'required|max:4',
             'rubricas'=>'required|max:30',
@@ -47,8 +48,11 @@ class TabelaPrecoController extends Controller
             'valor'=>'required',
             'valor__tomador'=>'required'
         ]);
-        $tabelapreco = new TabelaPreco;
-      
+        $tabelaprecos = $tabelapreco->verificaRublica($dados);
+        if ($tabelaprecos) {
+            return redirect()->back()->withInput()->withErrors(['descricao'=>'Essa rúbrica já esta cadastrada.']);; 
+        }
+        try {
         $tabelaprecos = $tabelapreco->cadastro($dados);
         $novodados = [
             $tabelaprecos['id'],
@@ -57,7 +61,7 @@ class TabelaPrecoController extends Controller
         if($tabelaprecos) {
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }
-        try {
+        
             //code...
         } catch (\Throwable $th) {
             return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
@@ -147,7 +151,7 @@ class TabelaPrecoController extends Controller
             $excluir = $tabelapreco->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
         
     }

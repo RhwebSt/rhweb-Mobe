@@ -9,10 +9,16 @@
 
     <style>
 
-        *{
-            margin: 5px;
-            padding: 0px;
-        }
+         @page { 
+                  margin-top: 44px; 
+                  margin-bottom: 30px;
+                  margin-left: 10px;
+                  margin-right: 10px;
+                }
+              #header { position: fixed; left: 0px; top: -44px; right: 0px; height: 44px; background-color:; text-align: center; }
+              #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 50px; text-align: end; }
+              #footer .page:after { content: counter(page, upper); }
+        
 
         table{
             border-collapse: collapse;
@@ -67,7 +73,7 @@
         }
 
         .name__title{
-            width: 763px;
+            width: 771px;
             
         }
         
@@ -86,37 +92,63 @@
         .valor{
             width: 120.5px;
         }
+        
+        .margin-top{
+            margin-top: 5px;
+        }
+        
+        .borderT{
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+        
+        .padding-footer{
+            padding: 2px;
+        }
     </style>
     
     
     <body>
+        <div id="header">
+            <table class="margin-top">
+                <tr>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$tomadores->tsnome}}</td>
+                </tr>
+            </table>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$tomadores->tsnome}}</td>
-            </tr>
-        </table>
-
-
-        <table>
-            <tr>
-                <td class="small__font border-top border-bottom border-left destaque ano text-center text-bold">Ano</td>
-                <td class="small__font border-top border-bottom border-left destaque text-center codigo text-bold">Código</td>
-                <td class="small__font border-top border-bottom border-left destaque text-center descricao text-bold">Descrição</td>
-                <td class="small__font border-top border-bottom border-left destaque text-center valor text-bold">Valor Trabalhador</td>
-                <td class="small__font border-top border-bottom border-left border-right destaque text-center valor text-bold">Valor Tomador</td>
-            </tr>
-            @foreach($tabelaprecos as $tabelapreco)
-            <tr>
-                <td class="small__font border-bottom border-left ano text-center">{{$tabelapreco->tsano}}</td>
-                <td class="small__font border-bottom border-left text-center codigo">{{$tabelapreco->tsrubrica}}</td>
-                <td class="small__font border-bottom border-left text-center descricao">{{$tabelapreco->tsdescricao}}</td>
-                <td class="small__font border-bottom border-left text-center valor">{{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
-                <td class="small__font border-bottom border-left border-right text-center valor">{{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
-            </tr>
-            @endforeach
-        </table>
+            <table>
+                <tr>
+                    <td class="small__font border-top border-bottom border-left destaque ano text-center text-bold">Ano</td>
+                    <td class="small__font border-top border-bottom border-left destaque text-center codigo text-bold">Código</td>
+                    <td class="small__font border-top border-bottom border-left destaque text-center descricao text-bold">Descrição</td>
+                    <td class="small__font border-top border-bottom border-left destaque text-center valor text-bold">Valor Trabalhador</td>
+                    <td class="small__font border-top border-bottom border-left border-right destaque text-center valor text-bold">Valor Tomador</td>
+                </tr>
+            </table>
+        
+        </div>
+        
+        <div id="footer">
+          <p class="page destaque borderT padding-footer">Página:  </p>
+        </div>
+        
+        <div id="content">
+            <table>
+                @foreach($tabelaprecos as $tabelapreco)
+                <tr>
+                    <td class="small__font border-top border-bottom border-left ano text-center">{{$tabelapreco->tsano}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center codigo">{{$tabelapreco->tsrubrica}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center descricao">{{$tabelapreco->tsdescricao}}</td>
+                    <td class="small__font border-top border-bottom border-left text-center valor">{{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
+                    <td class="small__font border-top border-bottom border-left border-right text-center valor">{{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
+        
     </body>
+    
+</html>
     
 
     

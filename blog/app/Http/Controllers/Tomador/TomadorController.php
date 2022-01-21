@@ -95,7 +95,7 @@ class TomadorController extends Controller
             'folhartipotrans'=>'required',
             'folharalim'=>'required',
             'folhartipoalim'=>'required',
-            'dias_uteis'=>'max:5',
+            'dias_uteis'=>'required|max:5',
             'sabados'=>'max:5',
             'domingos'=>'max:5',
             // 'inss__empresa'=>'required',
@@ -108,12 +108,80 @@ class TomadorController extends Controller
             'operacao'=>'max:3',
             'conta'=>'max:10',
             'pix'=>'max:255'
+        ],[
+            'nome__completo.required'=>'O campo é obrigatório.',
+            'nome__completo.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'nome__completo.regex'=>'O campo não pode ter caracteres especiais.',
+            'nome__fantasia.required'=>'O campo é obrigatório.',
+            'nome__fantasia.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'nome__fantasia.regex'=>'O campo não pode ter caracteres especiais.',
+            'cnpj.required'=>'O campo é obrigatório.',
+            'cnpj.max'=>'O campo não pode ter mais de 19 caracteres.',
+            'cnpj.cnpj'=>'Não e um CNPJ valido.',
+            'matricula.required'=>'O campo é obrigatório.',
+            'matricula.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'matricula.regex'=>'O campo não pode ter caracteres especiais.',
+            'simples.required'=>'O campo é obrigatório.',
+            'simples.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'simples.regex'=>'O campo não pode ter caracteres especiais.',
+            'telefone.required'=>'O campo é obrigatório.',
+            'telefone.max'=>'O campo não pode ter mais de 16 caracteres.',
+            'cep.required'=>'O campo é obrigatório.',
+            'cep.max'=>'O campo não pode ter mais de 16 caracteres.',
+            'cep.regex'=>'O campo não pode ter caracteres especiais.',
+            'logradouro.required'=>'O campo é obrigatório.',
+            'logradouro.max'=>'O campo não pode ter mais de 50 caracteres.',
+            'logradouro.regex'=>'O campo não pode ter caracteres especiais.',
+            'numero.required'=>'O campo é obrigatório.',
+            'numero.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'numero.regex'=>'O campo não pode ter caracteres especiais.',
+            'bairro.required'=>'O campo é obrigatório.',
+            'bairro.max'=>'O campo não pode ter mais de 40 caracteres.',
+            'bairro.regex'=>'O campo não pode ter caracteres especiais.',
+            'localidade.required'=>'O campo é obrigatório.',
+            'localidade.max'=>'O campo não pode ter mais de 30 caracteres.',
+            'localidade.regex'=>'O campo não pode ter caracteres especiais.',
+            'uf.required'=>'O campo é obrigatório.',
+            'uf.max'=>'O campo não pode ter mais de 2 caracteres.',
+            'uf.regex'=>'O campo não pode ter caracteres especiais.',
+            'uf.uf'=>'Esta sigla não esta correta.',
+            'deflator.required'=>'O campo é obrigatório.',
+            'deflator.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'taxa_adm.required'=>'O campo é obrigatório.',
+            'taxa__fed.required'=>'O campo é obrigatório.',
+            'das.required'=>'O campo é obrigatório.',
+            'cod__fpas.required'=>'O campo é obrigatório.',
+            'cod__fpas.required'=>'O campo é obrigatório.',
+            'cod__grps.required'=>'O campo é obrigatório.',
+            'cod__recol.required'=>'O campo é obrigatório.',
+            'cnae.required'=>'O campo é obrigatório.',
+            'fap__aliquota.required'=>'O campo é obrigatório.',
+            'rat__ajustado.required'=>'O campo é obrigatório.',
+            'fpas__terceiros.required'=>'O campo é obrigatório.',
+            'aliq__terceiros.required'=>'O campo é obrigatório.',
+            'alimentacao.required'=>'O campo é obrigatório.',
+            'transporte.required'=>'O campo é obrigatório.',
+            'epi.required'=>'O campo é obrigatório.',
+            'seguro__trabalhador.required'=>'O campo é obrigatório.',
+            'folhartransporte.required'=>'O campo é obrigatório.',
+            'folhartipotrans.required'=>'O campo é obrigatório.',
+            'folharalim.required'=>'O campo é obrigatório.',
+            'folhartipoalim.required'=>'O campo é obrigatório.',
+            'dias_uteis.required'=>'O campo é obrigatório.',
+            'dias_uteis.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'sabados.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'domingos.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'banco.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'agencia.max'=>'O campo não pode ter mais de 4 caracteres.',
+            'operacao.max'=>'O campo não pode ter mais de 3 caracteres.',
+            'conta.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'pix.max'=>'O campo não pode ter mais de 225 caracteres.'
         ]
         );
-        // $tomadores = $tomador->verificaCadastroCnpj($dados);
-        // if ($tomadores) {
-        //     return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já esta cadastrador.']);
-        // }
+        $tomadores = $tomador->verificaCadastroCnpj($dados);
+        if ($tomadores) {
+            return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já esta cadastrador.']);
+        }
         $taxa = new Taxa;
         $endereco = new Endereco;
         $bancario = new Bancario;
@@ -123,7 +191,7 @@ class TomadorController extends Controller
         $incidefolhar = new IncideFolhar;
         // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
-        try {
+        
             $tomadors = $tomador->cadastro($dados);
             if ($tomadors) {
                 $dados['tomador'] = $tomadors['id'];
@@ -139,7 +207,7 @@ class TomadorController extends Controller
                 $valorrublica->editarMatricularTomador($dados,$user->empresa);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
-        
+        try {
         } catch (\Throwable $th) {
             $cartaoponto = $cartaoponto->deletar($dados['tomador']);
             $parametrosefips = $parametrosefip->deletar($dados['tomador']);
@@ -241,17 +309,75 @@ class TomadorController extends Controller
             'conta'=>'max:10',
             'pix'=>'max:255'
         ],
-        // [
-        //     'nome__completo.required'=>'Campo não pode esta vazio!',
-        //     'matricula.required'=>'Campo não pode esta vazio!',
-        //     'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
-        //     'num__trabalhador.required'=>'Campo não pode esta vazio!',
-        //     'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
-        //     'liboletim.required'=>'Campo não pode esta vazio!',
-        //     'liboletim.numeric'=>'O campo naõ pode conter letras',
-        //     'data.required'=>'O campo não pode esta vazio!'
+        [
+            'nome__completo.required'=>'O campo é obrigatório.',
+            'nome__completo.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'nome__completo.regex'=>'O campo não pode ter caracteres especiais.',
+            'nome__fantasia.required'=>'O campo é obrigatório.',
+            'nome__fantasia.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'nome__fantasia.regex'=>'O campo não pode ter caracteres especiais.',
+            'cnpj.required'=>'O campo é obrigatório.',
+            'cnpj.max'=>'O campo não pode ter mais de 19 caracteres.',
+            'cnpj.cnpj'=>'Não e um CNPJ valido.',
+            'matricula.required'=>'O campo é obrigatório.',
+            'matricula.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'matricula.regex'=>'O campo não pode ter caracteres especiais.',
+            'simples.required'=>'O campo é obrigatório.',
+            'simples.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'simples.regex'=>'O campo não pode ter caracteres especiais.',
+            'telefone.required'=>'O campo é obrigatório.',
+            'telefone.max'=>'O campo não pode ter mais de 16 caracteres.',
+            'cep.required'=>'O campo é obrigatório.',
+            'cep.max'=>'O campo não pode ter mais de 16 caracteres.',
+            'cep.regex'=>'O campo não pode ter caracteres especiais.',
+            'logradouro.required'=>'O campo é obrigatório.',
+            'logradouro.max'=>'O campo não pode ter mais de 50 caracteres.',
+            'logradouro.regex'=>'O campo não pode ter caracteres especiais.',
+            'numero.required'=>'O campo é obrigatório.',
+            'numero.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'numero.regex'=>'O campo não pode ter caracteres especiais.',
+            'bairro.required'=>'O campo é obrigatório.',
+            'bairro.max'=>'O campo não pode ter mais de 40 caracteres.',
+            'bairro.regex'=>'O campo não pode ter caracteres especiais.',
+            'localidade.required'=>'O campo é obrigatório.',
+            'localidade.max'=>'O campo não pode ter mais de 30 caracteres.',
+            'localidade.regex'=>'O campo não pode ter caracteres especiais.',
+            'uf.required'=>'O campo é obrigatório.',
+            'uf.max'=>'O campo não pode ter mais de 2 caracteres.',
+            'uf.regex'=>'O campo não pode ter caracteres especiais.',
+            'uf.uf'=>'Esta sigla não esta correta.',
+            'deflator.required'=>'O campo é obrigatório.',
+            'deflator.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'taxa_adm.required'=>'O campo é obrigatório.',
+            'taxa__fed.required'=>'O campo é obrigatório.',
+            'das.required'=>'O campo é obrigatório.',
+            'cod__fpas.required'=>'O campo é obrigatório.',
+            'cod__fpas.required'=>'O campo é obrigatório.',
+            'cod__grps.required'=>'O campo é obrigatório.',
+            'cod__recol.required'=>'O campo é obrigatório.',
+            'cnae.required'=>'O campo é obrigatório.',
+            'fap__aliquota.required'=>'O campo é obrigatório.',
+            'rat__ajustado.required'=>'O campo é obrigatório.',
+            'fpas__terceiros.required'=>'O campo é obrigatório.',
+            'aliq__terceiros.required'=>'O campo é obrigatório.',
+            'alimentacao.required'=>'O campo é obrigatório.',
+            'transporte.required'=>'O campo é obrigatório.',
+            'epi.required'=>'O campo é obrigatório.',
+            'seguro__trabalhador.required'=>'O campo é obrigatório.',
+            'folhartransporte.required'=>'O campo é obrigatório.',
+            'folhartipotrans.required'=>'O campo é obrigatório.',
+            'folharalim.required'=>'O campo é obrigatório.',
+            'folhartipoalim.required'=>'O campo é obrigatório.',
+            'dias_uteis.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'sabados.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'domingos.max'=>'O campo não pode ter mais de 5 caracteres.',
+            'banco.max'=>'O campo não pode ter mais de 100 caracteres.',
+            'agencia.max'=>'O campo não pode ter mais de 4 caracteres.',
+            'operacao.max'=>'O campo não pode ter mais de 3 caracteres.',
+            'conta.max'=>'O campo não pode ter mais de 10 caracteres.',
+            'pix.max'=>'O campo não pode ter mais de 225 caracteres.'
             
-        // ]
+        ]
         );
         $tomador = new Tomador;
         $endereco = new Endereco;

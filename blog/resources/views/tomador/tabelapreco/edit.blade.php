@@ -73,7 +73,7 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         
                         <button type="submit" class="btn botao " id="atualizar">Atualizar</button>
-                         <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
+                         <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
                           <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
@@ -96,8 +96,8 @@
                     </div>
     
                     <div class="col-md-3">
-                        <label for="rubricas" class="form-label">Código</label>
-                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas">
+                        <label for="rubricas" class="form-label">Código <i class="fas fa-lock"></i></label>
+                        <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas" readonly>
                         @error('rubricas')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -108,8 +108,8 @@
                     </div>
     
                     <div class="col-md-7">
-                      <label for="descricao" class="form-label">Descrição</label>
-                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}"  id="descricao">
+                      <label for="descricao" class="form-label">Descrição <i class="fas fa-lock"></i></label>
+                      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}"  id="descricao" readonly>
                       <datalist id="descricoes">
                        
                        </datalist>
@@ -146,8 +146,8 @@
                             <th class="col text-center border-top  text-nowrap capitalize" style="width:900px">Descrição</th>
                             <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Trabalhador</th>
                             <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Tomador</th>
-                            <th class="col text-center border-top  text-nowrap" style="width:60px;">Editar</th>
-                            <th colspan="2" class="col text-center border-end border-top  text-nowrap" style="width:60px;">Excluir</th>
+                            <th class="col text-center border-top  text-nowrap d-none" style="width:60px;">Editar</th>
+                            <th colspan="2" class="col text-center border-end border-top d-none  text-nowrap" style="width:60px;">Excluir</th>
                         </thead>
                         
                         <tbody style="background-color: #081049; color: white;">
@@ -155,16 +155,16 @@
                           @foreach($tabelaprecos as $tabelapreco)
                             <tr>
                             <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:60px;">{{$tabelapreco->tsano}}</td>
-                            <td class="col text-center  border-bottom text-nowrap text-uppercase" style="width:80px">{{$tabelapreco->tsrubrica}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:900px">{{$tabelapreco->tsdescricao}}</td>
+                            <td class="col text-center  border-bottom text-nowrap text-uppercase"style="width:80px;" >{{$tabelapreco->tsrubrica}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase " style="width:900px;">{{$tabelapreco->tsdescricao}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
-                                <button class="btn" style="background-color:#204E83;">
+                            <td class="col text-center d-none  border-bottom  text-nowrap text-uppercase" style="width:60px;">
+                                <button class="btn " style="background-color:#204E83;">
                                 <a href="{{route('tabela.preco.editar',[$tabelapreco->id,$tomador])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                 </button>
                             </td>
-                            <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">
+                            <td colspan="2" class="col text-center d-none border-end border-bottom text-nowrap" style="width:60px;">
                                 <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
                                   @csrf
                                   @method('delete')

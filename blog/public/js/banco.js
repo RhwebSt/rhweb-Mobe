@@ -11,8 +11,8 @@ $(document).ready(function(){
                 
             },
             error: function(data){
-                $("#banco").addClass('is-invalid')
-                $('#menssagem-banco').text(data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
+                // $("#banco").addClass('is-invalid')
+                // $('#menssagem-banco').text(data.responseJSON.message).removeClass('valid-feedback').addClass('invalid-feedback')
             }
         })
     })

@@ -18,13 +18,13 @@
         <div class="container d-flex flex-row justify-content-between d-flex align-items-center">
 
             <div class="align-self-center">
-                <img src="/images/rhwebsmsm.png" alt="" srcset="">
+                <img src="{{url('/imagem/rhwebsmsm.png')}}" alt="" srcset="">
                 <p class="fs-1 fw-bold error">Sistema em Manutenção</p>
                 <!-- <button class="btn back"type="submit">Voltar</button> -->
             </div>
 
             <div class="align-self-center ">
-                <img class="imagem" src="/images/macoteMedium.png" alt="" srcset="" style="width:500px; height:500px;">
+                <img class="imagem" src="{{url('/imagem/macoteMedium.png')}}" alt="" srcset="" style="width:500px; height:500px;">
             </div>
             
 
