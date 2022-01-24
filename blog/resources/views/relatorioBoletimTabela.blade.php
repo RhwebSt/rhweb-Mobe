@@ -203,7 +203,32 @@
         <div id="footer">
           <p class="page destaque borderT padding-footer">Página:  </p>
         </div>
-        
+        <?php
+             function calculovalores($horas,$valores)
+             {
+                 if(strpos($horas,':')){
+                    list($horas,$minitos) = explode(':',$horas);
+                    $horasex = $horas * 3600 + $minitos * 60;
+                    $horasex = $horasex/60;
+                    $horasex = $valores * ($horasex/60);
+                 }else{
+                    $horasex = $valores * $horas;
+                 }
+                 return $horasex; 
+            }
+            function quantidade($horas)
+            {
+                if(strpos($horas,':')){
+                    list($horas,$minitos) = explode(':',$horas);
+                    $horasex = $horas * 3600 + $minitos * 60;
+                    $horasex = $horasex/60;
+                    $horasex = $horasex/60;
+                }else{
+                    $horasex = $horas;
+                }
+                return $horasex;
+            }
+        ?>
         <div id="content">
                @if(count($trabalhadors) > 0)
                  @foreach($trabalhadors as $trabalhador)
@@ -230,10 +255,10 @@
                                 <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font text-center desc uppercase">{{$lancamentotabela->lshistorico}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font text-center quant">{{$lancamentotabela->lsquantidade}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)$lancamentotabela->lsquantidade * $lancamentotabela->lfvalor, 2, ',', '')}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor), 2, ',', '.')}}</td>
                             </tr>
                             <?php
-                                $valor += $lancamentotabela->lsquantidade * $lancamentotabela->lfvalor
+                                $valor += calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor);
                             ?>
                             @endif
                             @endforeach
@@ -242,7 +267,7 @@
                         <table class="">
                             <tr>
                                 <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__receber font__receber padding-left">Total</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ {{number_format((float)$valor, 2, ',', '')}}
+                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ {{number_format((float)$valor, 2, ',', '.')}}
                                 </td>
                             </tr>
                         </table>
@@ -269,11 +294,13 @@
                             <?php
                                 $dados = [];
                                 $total = 0;
+                                $totaltomador = 0;
                                 foreach ($lancamentotabelas as $key => $value) {
                                     if (!in_array($value->licodigo, $dados)) {
                                         array_push($dados,$value->licodigo.':'.$value->lshistorico);
                                     }
                                 }
+                                // dd($dados);
                                 foreach ($dados as $key => $value) {
                                     $codigo = explode(':',$value);
                                     $quantidade = 0;
@@ -281,9 +308,9 @@
                                     $valor2 = 0;
                                     foreach ($lancamentotabelas as $key => $value) {
                                         if ($value->licodigo == $codigo[0]) {
-                                            $quantidade += $value->lsquantidade;
-                                            $valor += ($value->lfvalor * $value->lsquantidade);
-                                            $valor2 += ($value->lftomador * $value->lsquantidade);
+                                            $quantidade +=  quantidade($value->lsquantidade);
+                                            $valor +=  calculovalores($value->lsquantidade,$value->lfvalor);
+                                            $valor2 += calculovalores($value->lsquantidade,$value->lftomador);
                                         }
                                     }
                                     echo'<tr>
@@ -293,11 +320,12 @@
                                         <td class="border-left border-right border-top border-bottom small__font text-center desc2 uppercase">
                                         '.$codigo[1].'
                                         </td>
-                                        <td class="border-left border-right border-top border-bottom small__font text-center quant">'.$quantidade.'</td>
-                                        <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor, 2, ',', '').'</td>
-                                        <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor2, 2, ',', '').'</td>
+                                        <td class="border-left border-right border-top border-bottom small__font text-center quant">'. number_format((float)$quantidade, 2, ',', '.').'</td>
+                                        <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor, 2, ',', '.').'</td>
+                                        <td class="border-left border-right border-top border-bottom small__font text-center valor__totalss">R$ '.number_format((float)$valor2, 2, ',', '.').'</td>
                                     </tr>';
                                     $total += $valor;
+                                    $totaltomador += $valor2;
                                 }
                               
                                
@@ -309,8 +337,8 @@
                         <table>
                             <tr>
                                 <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold empregados small__font padding-left ">Numero de Empregados: {{count($trabalhadors)}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$total, 2, ',', '')}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ 999.999.999,99</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$totaltomador, 2, ',', '.')}}</td>
                             </tr>
                         </table>
                         @else

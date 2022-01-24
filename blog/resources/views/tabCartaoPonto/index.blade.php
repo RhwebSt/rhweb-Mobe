@@ -51,22 +51,24 @@
                         })
                     </script>
                 @enderror
-                <script>
-                    Swal.fire({
-                      title: '<strong>Algo deu Errado!</strong>',
-                      icon: 'error',
-                      html:
-                        '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
-                        '<a href="">Cadastrar</a> ',
-                      showCloseButton: true,
-                      allowOutsideClick: false,
-                      allowEnterKey: true,
-                    })
-                </script>
+               
                                 
               <h5 class="card-title text-center fs-3 ">Lançamento com Tabela<i class="fad fa-browser"></i></h5>
 
-              
+              <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                <div class="d-flex">
+                <label for="exampleDataList" class="form-label"></label>
+                <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
+                <datalist id="listapesquisa">
+                </datalist>
+                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                <div class="text-center d-none p-1" id="refres" >
+                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                </div>
+            </div>
 
                 <div class="container">
               <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">
@@ -85,9 +87,16 @@
                   </div>
               </div>
               
+                <?php
+                  if ($numboletimtabela->vsnroboletins) {
+                    $boletim = $numboletimtabela->vsnroboletins + 1;
+                  }else{
+                    $boletim = 1;
+                  }
+                ?>
                 <div class="col-md-3">
                     <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                    <input type="text"  list="listaboletim" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
+                    <input type="text" value="{{$boletim}}" list="listaboletim" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim">
                     @error('liboletim')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -173,7 +182,8 @@
                     </div>
             </div>
             <script>
-            $( "#num__boletim" ).on('keyup focus',function() {
+            localStorage.setItem('boletim','{{$boletim}}')
+            $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {
                   dados = $(this).val();
@@ -191,10 +201,9 @@
                         // nome += `<option value="${element.tsmatricula}">`
                         // nome += `<option value="${element.tscpf}">`
                       });
-                      $('#listaboletim').html(nome)
+                      $('#listapesquisa').html(nome)
                     }
-                    if(data.length === 1 && dados.length > 3){
-                      console.log(data[0].lsdata);
+                    if(data.length === 1 && dados.length >= 1){
                       lancamentoTab(dados,status,data[0].lsdata)
                     }else{
                       limpaCamposTab()
@@ -225,6 +234,7 @@
               $('#nome__completo').val(' ')
               $('#data').val(' ')
               $('#num__trabalhador').val(' ')
+              $('#num__boletim').val(localStorage.getItem('boletim'))
             }
             function camposLacamentoTab(data) {
                   if (data.id) {
@@ -244,7 +254,7 @@
                     $('#method').val(' ')
                     $('#excluir').attr( "disabled",'disabled' )
                   }
-                  $('#num__boletim').removeClass('is-invalid').next().text(' ')
+                  $('#num__boletim').val(data.liboletim).removeClass('is-invalid').next().text(' ')
                   $('#matricula').removeClass('is-invalid').next().text(' ')
                   $('#nome__completo').removeClass('is-invalid').next().text(' ')
                   $('#data').val(data.lsdata).removeClass('is-invalid').next().text(' ')
@@ -274,7 +284,12 @@
                         $('#datalistOptions').html(nome)
                       }
                       if(data.length === 1 && dados.length >= 4){
-                        tomador(data[0])
+                        let tabela = tabelaPreco(data[0].tomador);
+                        if (tabela) {
+                          tomador(data[0])
+                        }else{
+                          Alerta(data[0].tomador)
+                        }
                       }           
                   }
               });
@@ -282,6 +297,31 @@
             function monta_dados(dados) {
               let novodados = dados.split('  ')
               return novodados[1];
+            }
+            function Alerta(tomador) {
+                Swal.fire({
+                title: '<strong>Algo deu Errado!</strong>',
+                icon: 'error',
+                html:
+                  '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
+                  `<a href="{{url('tabelapreco')}}/ /${tomador}">Cadastrar</a> `,
+                showCloseButton: true,
+                allowOutsideClick: false,
+                allowEnterKey: true,
+              })
+            }
+            function tabelaPreco(tomador) {
+              var resul = false;
+              $.ajax({
+                  url: "{{url('verifica/tabela/preco')}}/"+tomador,
+                  type: 'get',
+                  contentType: 'application/json',
+                  async: false,
+                  success: function(data) {
+                    resul = data
+                  }
+              })
+              return resul;
             }
             function buscatomador(dados) {
               $.ajax({

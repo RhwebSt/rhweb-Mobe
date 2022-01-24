@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         // $users = $user->first('jose');
-        return view('usuarios.index',compact('user'));
+        // return view('usuarios.index',compact('user'));
     }
 
     /**

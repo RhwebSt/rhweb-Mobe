@@ -60,7 +60,7 @@ class TabCadastroController extends Controller
             $validator = Validator::make($request->all(), [
                 'nome__completo' => 'required',
                 'matricula'=>'required|max:4',
-                'codigo'=>'required|max:4',
+                'codigo'=>'required|max:4', 
                 'rubrica'=>'required|max:60',
                 'quantidade'=>'required'
             ],
@@ -98,9 +98,14 @@ class TabCadastroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($quantidade,$boletim,$tomador,$id,$trabalhador,$data)
     {
-       
+       $lancamentorublica = new Lancamentorublica;
+       $user = Auth::user();
+       $lista = $lancamentorublica->listacadastro($id);
+    
+       $lancamentorublicas = $lancamentorublica->buscaUnidadeRublica($trabalhador);
+       return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data'));
     }
 
     /**

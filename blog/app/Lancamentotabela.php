@@ -28,9 +28,10 @@ class Lancamentotabela extends Model
             if ($user->hasPermissionTo('admin')) {
                 if ($id) {
                     $query->where([
-                        ['liboletim','like','%'.$id.'%'],
+                        ['liboletim',$id],
                         ['lsstatus',$status]
-                    ])->orWhere('id',$id);
+                    ])
+                    ->orWhere('id',$id);
                 }else{
                     $query->where([
                         ['id','>',$id],
@@ -41,7 +42,7 @@ class Lancamentotabela extends Model
             }else{
                 if ($id) {
                     $query->where([
-                        ['liboletim','like','%'.$id.'%'],
+                        ['liboletim',$id],
                         ['lsstatus',$status],
                         ['empresa', $user->empresa]
                     ]);

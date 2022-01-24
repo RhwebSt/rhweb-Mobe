@@ -31,7 +31,7 @@ class Folhar extends Model
     {
         return Folhar::where('empresa',$empresa)->get();
     }
-    public function buscaLista($id)
+    public function buscaLista($id) 
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')

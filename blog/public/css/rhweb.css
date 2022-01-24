@@ -89,6 +89,7 @@ form input[type="text"] {
             text-transform: uppercase;
             color:black !important;
             font-weight: bold !important;
+            margin-left: 0 !important;
         }
 
 
@@ -97,6 +98,7 @@ input:hover{
     border-radius: 5px;
     box-shadow: var(--input-hover);
     transition:  ease-in-out .4s;
+    margin-left: 0 !important;
 
 }
 

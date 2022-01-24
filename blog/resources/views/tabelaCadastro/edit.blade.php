@@ -58,7 +58,7 @@
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
+                <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
                 <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
               </div>
           </div>
@@ -75,7 +75,7 @@
             
             <div class="col-md-10 input">
                 <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
+                <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -89,7 +89,7 @@
             
             <div class="col-md-2 input">
                 <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula">
+                <input type="text" value="{{$lancamentorublicas->tsmatricula}}" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula">
                 @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -97,7 +97,7 @@
 
             <div class="col-md-2 input">
                 <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control rubrica fw-bold @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo">
+                <input type="text" value="{{$lancamentorublicas->licodigo}}" class="form-control rubrica fw-bold @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo">
                 @error('codigo')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -108,7 +108,7 @@
 
             <div class="col-md-8 input">
                 <label for="rubrica" class="form-label">Descrição</label>
-                <input type="text" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
+                <input type="text" value="{{$lancamentorublicas->lshistorico}}" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
                 <datalist id="rublicas">   
                 </datalist>
                 @error('rubrica')
@@ -119,7 +119,7 @@
 
             <div class="col-md-2 input">
                 <label for="quantidade" class="form-label">Quantidade/Tonelada</label>
-                <input type="text" class="form-control fw-bold @error('quantidade') is-invalid @enderror" name="quantidade" value="" id="quantidade">
+                <input type="text" value="{{$lancamentorublicas->lsquantidade}}" class="form-control fw-bold @error('quantidade') is-invalid @enderror" name="quantidade" value="" id="quantidade">
                 @error('quantidade')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -151,7 +151,7 @@
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">
                                 <button class="btn" style="background-color:#204E83;">
-                                <a href="" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
+                                <a href="{{route('boletim.tabela.edit',[$quantidade,$boletim,$tomador,$listas->lancamento,$listas->id,$data])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom border-end text-nowrap">

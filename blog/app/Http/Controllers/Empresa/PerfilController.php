@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Empresa;
 class PerfilController extends Controller
 {
     /**
@@ -84,5 +85,17 @@ class PerfilController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function indexFoto()
+    {
+        $user = Auth::user();
+        return view('usuarios.empresa.alteracaoFoto',compact('user'));
+    }
+    public function editFoto(Request $request)
+    {
+        $dados = $request->all();
+        $empresa = new Empresa;
+        $empresas = $empresa->editarFoto($dados);
+        return response()->json($empresas);
     }
 }

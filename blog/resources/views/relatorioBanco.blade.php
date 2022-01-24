@@ -230,7 +230,7 @@
                         <td class="small__font border-top border-bottom border-right border-left text-bold text-center agencia">{{$folhar->bsagencia}}</td>
                         <td class="small__font border-top border-bottom border-right border-left text-bold text-center operacao">{{$folhar->bsoperacao}}</td>
                         <td class="small__font border-top border-bottom border-right border-left text-bold text-center conta">{{$folhar->bsconta}}</td>
-                        <td class="small__font border-top border-bottom border-right border-left text-bold text-center valor"> {{number_format((float)$folhar->bivalorliquido, 2, ',', '')}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-bold text-center valor"> {{number_format((float)$folhar->bivalorliquido, 2, ',', '.')}}</td>
                     </tr>
                     <?php
                         $total += $folhar->bivalorliquido;
@@ -242,7 +242,7 @@
 
                     <tr>
                         <td class="small__font border-top border-bottom border-right border-left text-bold text-center totalGeral destaqueDark">Total Geral</td>
-                        <td class="small__font border-top border-bottom border-right border-left text-bold text-center valorGeral destaqueDark">{{number_format((float)$total, 2, ',', '')}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-bold text-center valorGeral destaqueDark">{{number_format((float)$total, 2, ',', '.')}}</td>
                     </tr>
                 </table>
 

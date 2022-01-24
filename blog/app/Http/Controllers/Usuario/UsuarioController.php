@@ -109,4 +109,5 @@ class UsuarioController extends Controller
         }
         return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
     }
+  
 }

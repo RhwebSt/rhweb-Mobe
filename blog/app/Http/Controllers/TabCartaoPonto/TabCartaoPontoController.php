@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Lancamentotabela;
 use App\Lancamentorublica;
+use App\ValoresRublica;
 class TabCartaoPontoController extends Controller
 {
     /**
@@ -17,7 +18,10 @@ class TabCartaoPontoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('tabCartaoPonto.index',compact('user'));
+        $valorrublica = new ValoresRublica;
+        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        // dd($numboletimtabela);
+        return view('tabCartaoPonto.index',compact('user','numboletimtabela'));
     }
 
     /**
@@ -40,6 +44,8 @@ class TabCartaoPontoController extends Controller
     {
         $dados = $request->all();
         $lancamentotabela = new Lancamentotabela;
+        $valorrublica = new ValoresRublica;
+        $user = auth()->user();
         $novadata = explode('-',$dados['data']);
         $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata); 
         if ($lancamentotabelas) {
@@ -76,6 +82,7 @@ class TabCartaoPontoController extends Controller
         $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
         if (!$listalancamentotabela) {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
+            $valorrublica->editarBoletimTabela($dados,$user->empresa);
             array_push($novodados,$lancamentotabelas['id']);
             array_push($novodados,$dados['data']);
             return redirect()->route('tabcadastro.create',$novodados);

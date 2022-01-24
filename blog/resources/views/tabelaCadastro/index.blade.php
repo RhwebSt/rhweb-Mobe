@@ -133,6 +133,21 @@
             
             
             </form>
+        <?php
+            function calculovalores($horas,$valores)
+            {
+                if(strpos($horas,':')){
+                   list($horas,$minitos) = explode(':',$horas);
+                   $horasex = $horas * 3600 + $minitos * 60;
+                   $horasex = $horasex/60;
+                   $horasex = $valores * ($horasex/60);
+                }else{
+                   $horasex = $valores * $horas;
+                }
+                return $horasex; 
+           }
+        ?>
+        
         <div class="table-responsive-lg">
             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
@@ -154,10 +169,10 @@
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">
                                 <button class="btn" style="background-color:#204E83;">
-                                <a href="" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
+                                <a href="{{route('boletim.tabela.edit',[$quantidade,$boletim,$tomador,$listas->lancamento,$listas->id,$data])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom border-end text-nowrap">
@@ -212,6 +227,7 @@
          </div>
 
           <script>
+            let rublicas = ['1002','1003','1004','1005']
             $( "#rubrica" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {
@@ -229,9 +245,9 @@
                     contentType: 'application/json',
                     success: function(data) {
                         $('#codigo').val(' ')
-                        // $('#codigomensagem').text(' ')
                         $('#valor').val(' ')
                         $('#lftomador').val(' ')
+                        $('#quantidade').attr('type','text')
                         let nome = ''
                         if (data.length >= 1) {
                             data.forEach(element => {
@@ -245,11 +261,13 @@
                             $('#rubrica').val(data[0].tsdescricao)
                             $('#codigo').val(data[0].tsrubrica)
                             $('#descricao').val(data[0].tsdescricao)
+                            if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
+                                $('#quantidade').attr('type','time')
+                            }
                         }else if(dados.length > 3 && !data.length){
                             $('#valor').val(' ')
                             $('#lftomador').val(' ')
-                            // $('#codigo').addClass('is-invalid')
-                            // $('#codigomensagem').text('Esta rublica não esta cadastra.')
+                            $('#quantidade').attr('type','text')
                         }
                     }
                 });

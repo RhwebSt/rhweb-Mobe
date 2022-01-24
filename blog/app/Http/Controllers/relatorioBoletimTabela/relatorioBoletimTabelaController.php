@@ -11,21 +11,24 @@ class relatorioBoletimTabelaController extends Controller
 {
     public function fichaLancamentoTab($id)
     {
-        
         $lancamentotabela = new Lancamentotabela;
         $trabalhador = new Trabalhador;
+        $lancamentotabelas = $lancamentotabela->relatorioBoletimTabela($id);
+        if (count($lancamentotabelas) === 0) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera relatório.']);
+        }
+        $dados = [];
+        foreach ($lancamentotabelas as $key => $value) {
+            array_push($dados,$value->trabalhador);
+        }
+        $trabalhadors = $trabalhador->relatorioBoletimTabela($dados);
+        $pdf = PDF::loadView('relatorioBoletimTabela',compact('lancamentotabelas','trabalhadors'));
+        return $pdf->setPaper('a4')->stream('boletim_n°'.$id.'.pdf');
         try {
-            $lancamentotabelas = $lancamentotabela->relatorioBoletimTabela($id);
-            $dados = [];
-            foreach ($lancamentotabelas as $key => $value) {
-                array_push($dados,$value->trabalhador);
-            }
-            $trabalhadors = $trabalhador->relatorioBoletimTabela($dados);
-            // dd($lancamentotabelas, $trabalhadors);
-            $pdf = PDF::loadView('relatorioBoletimTabela',compact('lancamentotabelas','trabalhadors'));
-            return $pdf->setPaper('a4')->stream('boletim_n°'.$id.'.pdf');
+          
+           
         } catch (\Exception $e) {
-            return redirect()->route('error.index');
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
         }
     }
 }

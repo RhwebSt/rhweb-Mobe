@@ -118,4 +118,5 @@ class User extends Authenticatable
         return User::where('id', $dados['id'])
         ->update(['password'=>Hash::make($dados['password1'])]);
     }
+    
 }

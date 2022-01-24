@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
-        <link rel="stylesheet" href="{{url('/css/style.css')}}">
+        <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,18 +26,11 @@
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
         
 
     </head>
-    <style>
-        form input[type="text"] {
-            text-transform: uppercase;
-            color:black !important;
-            font-weight: bold !important;
-        }
-    </style>
-     <script>
+    <script>
             function validarRobo(){
                 if(grecaptcha.getResponse() != "") return true;
                 $('#msgrecap').html("<div id='msgrecap' class=' rounded text-center text-wrap col-11 col-sm-11 col-md-11 col-lg-4' style='background-color:#8F0200; color: #FFF; font-size: 13px; padding: 3px; border: 1px solid #CA023B;'  '>Preencha a caixinha do 'Não sou o robô' <i class='fas fa-md fa-exclamation-triangle'></i></div>");
@@ -216,7 +209,6 @@
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-    <script src="sweetalert2.all.min.js"></script>
     <script src="{{url('/js/masck.js')}}"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>

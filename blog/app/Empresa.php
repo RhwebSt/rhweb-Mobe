@@ -156,4 +156,9 @@ class Empresa extends Model
     {
         return Empresa::where('id', $id)->delete();
     }
+    public function editarFoto($dados)
+    {
+        return Empresa::where('id', $dados['empresa'])
+        ->update(['esfoto'=>$dados['image_file']]);
+    }
 }

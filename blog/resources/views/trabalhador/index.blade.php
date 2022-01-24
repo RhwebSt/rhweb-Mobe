@@ -129,7 +129,7 @@
             <input type="hidden" name="foto" id="foto">
                 <div class="col-md-6">
                   <label for="nome__completo" class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo" maxlength="100" id="nome__completo">
+                  <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo" maxlength="100" id="nome__completo">
                   @error('nome__completo')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -137,7 +137,7 @@
                 
                 <div class="col-md-6">
                   <label for="nome__social" class="form-label">Nome Social (OPICIONAL)</label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror  fw-bold text-dark" value="  {{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social" >
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror fw-bold text-dark" value="{{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social">
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -145,7 +145,7 @@
     
                 <div class="col-md-3">
                   <label for="cpf" class="form-label">CPF</label>
-                  <input type="text" class="form-control input fw-bold text-dark cpf-mask @error('cpf') is-invalid @enderror  fw-bold text-dark" value="{{old('cpf')}}" name="cpf" id="cpf" maxlength="15"  >
+                  <input type="text" class="form-control input fw-bold text-dark cpf-mask @error('cpf') is-invalid @enderror fw-bold text-dark" value="{{old('cpf')}}" name="cpf" id="cpf" maxlength="15">
                   @error('cpf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -159,8 +159,8 @@
                   }
                 ?>
                 <div class="col-md-3 " >
-                  <label for="matricula" class="form-label">Matrícula</label>
-                  <input type="text" disabled class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula" >
+                  <label for="matricula" class="form-label">Matrícula<i class="fas fa-lock"></i></label>
+                  <input type="text" disabled class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula">
                   <input type="hidden" value="{{$matricular}}" name="matricula" id="matricularid">
                   @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
@@ -169,7 +169,7 @@
     
                 <div class="col-md-3">
                   <label for="pis" class="form-label">PIS</label>
-                  <input type="text" class="form-control input fw-bold text-dark  @error('pis') is-invalid @enderror" value="{{old('pis')}}" name="pis" id="pis" >
+                  <input type="text" class="form-control input fw-bold text-dark  @error('pis') is-invalid @enderror" value="{{old('pis')}}" name="pis" id="pis">
                   @error('pis')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -225,7 +225,7 @@
     
                 <div class="col-md-4">
                   <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                  <input type="date" class="form-control input fw-bold text-dark  @error('data_nascimento') is-invalid @enderror"  value="{{old('data_nascimento')}}" maxlength="2" name="data_nascimento"  id="data_nascimento" >
+                  <input type="date" class="form-control input fw-bold text-dark  @error('data_nascimento') is-invalid @enderror" value="{{old('data_nascimento')}}" maxlength="2" name="data_nascimento"  id="data_nascimento" >
                   @error('data_nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -455,7 +455,7 @@
     
                 <div class="col-md-3">
                             <label for="banco" class="form-label">Banco</label>
-                            <input type="text" class="form-control input @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
+                            <input type="text" class="form-control input @error('banco') is-invalid @enderror input fw-bold text-dark" aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco">
                             <div id="menssagem-banco" class="valid-feedback">
                                
                             </div>

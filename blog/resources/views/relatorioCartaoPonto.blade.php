@@ -356,7 +356,7 @@
                             $horasex = $horas * 3600 + $minitos * 60;
                             $horasex = $horasex/60;
                             $horasex = $valores * ($horasex/60);
-                            return $horasex;
+                            return $horasex; 
                         }
                     ?>
                     @foreach($lancamentotabelas as $lancamentotabela)

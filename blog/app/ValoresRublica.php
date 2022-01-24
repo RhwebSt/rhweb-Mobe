@@ -58,6 +58,13 @@ class ValoresRublica extends Model
             'vimatriculartomador'=>$dados['matricula'],
         ]);
     }
+    public function editarBoletimTabela($dados,$empresa)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update([
+            'vsnroboletins'=>$dados['liboletim'],
+        ]);
+    }
     public function buscaUnidadeEmpresa($empresa)
     {
         return ValoresRublica::where('empresa', $empresa)->first();
