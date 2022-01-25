@@ -27,8 +27,9 @@ class UserController extends Controller
     public function create()
     {
         $user = Auth::user();
-        // $users = $user->first('jose');
-        // return view('usuarios.index',compact('user'));
+        $use = new User;
+        $users = $use->listaUser();
+        return view('usuarios.index',compact('user','users'));
     }
 
     /**
@@ -60,13 +61,12 @@ class UserController extends Controller
             
         ]);
         $user = new User;
-        $users = $user->cadastro($dados);
-        if ($users) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+        try {
+            $users = $user->cadastro($dados);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
-        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -103,7 +103,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $use = new User;
+        $users = $use->listaUser();
+        $editar = $use->edit($id); 
+        return view('usuarios.edit',compact('user','users','editar'));
     }
 
     /**
@@ -134,13 +138,12 @@ class UserController extends Controller
             // 'cargo.regex'=>'Campo não pode ter caracteres especiais!',
         ]);
         $user = new User;
-        $users = $user->editar($dados,$id);
-        if ($users) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $users = $user->editar($dados,$id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
-        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -152,12 +155,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = new User;
-        $users = $user->deletar($id);
-        if ($users) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        try {
+            $users = $user->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
-        return redirect()->route('user.create')->withInput()->withErrors([$condicao]);
+       
     }
 }

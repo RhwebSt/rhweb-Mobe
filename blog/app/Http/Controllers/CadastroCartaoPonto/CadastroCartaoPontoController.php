@@ -9,6 +9,7 @@ use App\Lancamentotabela;
 use App\Bolcartaoponto;
 use App\Trabalhador;
 use App\TabelaPreco;
+use App\ValoresRublica;
 use PDF;
 class CadastroCartaoPontoController extends Controller
 {
@@ -20,7 +21,9 @@ class CadastroCartaoPontoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('cadastroCartaoPonto.index',compact('user'));
+        $valorrublica = new ValoresRublica;
+        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela'));
     }
 
     /**
@@ -42,16 +45,25 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        
+        $user = Auth::user();
         $lancamentotabela = new Lancamentotabela;
+        $tabelapreco = new TabelaPreco;
         $bolcartaoponto = new Bolcartaoponto;
+        $valorrublica = new ValoresRublica;
         $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);
+        $tabelaprecos = $tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
+        dd($dados,$lancamentotabelas);
+        if (count($tabelaprecos) < 5) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rubricas necessárias do ano '.date('Y').'!']);
+        }
         if ($lancamentotabelas) {
             return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este hoje!']);
         }
         $request->validate([
             'nome__completo' => 'required',
             'tomador'=>'required',
-            'liboletim'=>'required|numeric|unique:lancamentotabelas',
+            'liboletim'=>'required|numeric',
             'matricula'=>'required|max:6',
             'num__trabalhador'=>'numeric',
             'num__trabalhador'=>'required',
@@ -84,6 +96,7 @@ class CadastroCartaoPontoController extends Controller
             return redirect()->route('boletimcartaoponto.create',$novodados);
         }
         $lancamentotabelas = $lancamentotabela->cadastro($dados);
+        $valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
         array_unshift($novodados, $lancamentotabelas['id']);
         return redirect()->route('boletimcartaoponto.create',$novodados);
         // return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Não foi possivél realiza o cadastro!']);

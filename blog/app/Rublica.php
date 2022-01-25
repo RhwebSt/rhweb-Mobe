@@ -29,6 +29,10 @@ class Rublica extends Model
             'rsdc'=>$dados['dc'],
         ]);
     }
+    public function deletar($id)
+    {
+        return Rublica::where('id', $id)->delete();
+    }
     public function buscaListaRublica($id)
     {
         return Rublica::where(function($query) use ($id){
@@ -50,5 +54,27 @@ class Rublica extends Model
                 ->orWhere('rsdescricao',$id);
             }
         })->first();
+    }
+    public function editarRublicas($id)
+    {
+        return Rublica::where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin') && $id) {
+                $query->where('id',$id);
+            }
+        })->first();
+    }
+    public function lista()
+    {
+        return Rublica::paginate(5);
+    }
+    public function listaRublicas()
+    {
+        return Rublica::whereBetween('rsrublica',[1000,1007])
+        ->get();
+    }
+    public function listaGeral()
+    {
+        return Rublica::get();
     }
 }

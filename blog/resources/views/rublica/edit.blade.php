@@ -52,57 +52,33 @@
                 </script>
             @enderror   
 
-    <form class="row g-3 mt-1 mb-3 mt-5" id="form" method="POST" action="{{route('rublica.store')}}" >
+    <form class="row g-3 mt-1 mb-3 mt-5" id="form" method="POST" action="{{route('rublica.update',$rublicas->id)}}" >
         
         
-            
+        @method('PATCH')
         <input type="hidden" name="empresa" value="{{$user->empresa}}">
-        <input type="hidden" id="method" name="_method" value="">
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn botao d-none">Atualizar</button>
-                            <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fad fa-file-invoice"></i> Relatórios
-                            </button>
-                              <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                                <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol das Rúbricas</a></li>
-                              </ul>
-                            <a class="btn botao" href="#" role="button">Sair</a>
+                            <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
+                            <a class="btn botao" href="{{route('rublica.index')}}" role="button">Sair</a>
                     </div>
                 </div>
-                
-                
 
-                <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
-                    <div class="d-flex">
-                        <label for="exampleDataList" class="form-label"></label>
-                        <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                        <datalist id="datalistOptions">
-                        </datalist>
-                        <i class="fas fa-search fa-md iconsear"></i>
-                        <div class="text-center d-none p-1" id="refres" >
-                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                              <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>
 
                 <div class="col-md-2">
-                    <label for="rubricas" class="form-label">Rúbricas</label>
-                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror"  name="rubricas" id="rubricas" value="{{old('rubricas')}}">
+                    <label for="rubricas" class="form-label">Rúbricas <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror"  name="rubricas" id="rubricas" value="{{$rublicas->rsrublica}}" Readonly>
                     @error('rubricas')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            
+
                 <div class="col-md-6">
-                    <label for="descricao" class="form-label">Descrição</label>
-                    <input type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" value="{{old('descricao')}}">
+                    <label for="descricao" class="form-label">Descrição <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" value="{{$rublicas->rsdescricao}}" Readonly>
                     @error('descricao')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -110,7 +86,7 @@
 
                 <div class="col-md-2">
                     <label for="incidencia" class="form-label">Incidência</label>
-                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror" name="incidencia" id="incidencia" value="{{old('incidencia')}}">
+                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror" name="incidencia" id="incidencia" value="{{$rublicas->rsincidencia}}">
                     @error('incidencia')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -119,11 +95,16 @@
                 <div class="col-md-2">
                     <label for="dc" class="form-label">D/C</label>
                     <select id="dc" name="dc" class="form-select fw-bold text-dark" value="">
-                      <option selected>Créditos</option>
-                      <option>Descontos</option>
+                        @if($rublicas->rsdc === 'Créditos')
+                            <option selected>Créditos</option>
+                            <option>Descontos</option>
+                        @else
+                            <option >Créditos</option>
+                            <option selected>Descontos</option>
+                        @endif
                     </select>
                 </div>
-                </form>
+    </form>
                 <div class="table-responsive-lg">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
@@ -131,67 +112,30 @@
                         <th class="col text-center border-top text-nowrap" style="width:500px;">Descrição</th>
                         <th class="col text-center border-top text-nowrap" style="width:100px;">Incidência</th>
                         <th class="col text-center border-top text-nowrap" style="width:250px">D/C</th>
-                        <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
-                        <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                     </thead>
                     <tbody style="background-color: #081049; color: white;">
-                    @if(count($rublicas) > 0)
-                        @foreach($rublicas as $rublica)
-                            <tr>               
+                    @if(count($lista) > 0)
+                        @foreach($lista as $listas)
+                        <tr>               
                                 <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 120px;">
-                                    {{$rublica->rsrublica}}
+                                    {{$listas->rsrublica}}
                                 </td>
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:500px;">
-                                    {{$rublica->rsdescricao}}
+                                    {{$listas->rsdescricao}}
                                 </td>
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
-                                {{$rublica->rsincidencia}}
+                                {{$listas->rsincidencia}}
                                 </td>
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:250px">
-                                {{$rublica->rsdc}}
+                                {{$listas->rsdc}}
                                 </td>
                                 
-                                
-                                <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                    <button class="btn" style="background-color:#204E83;">
-                                        <a href="{{route('rublica.edit',$rublica->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
-                                    </button>
-                                </td>
-                                <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                    
-                                    
-                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$rublica->id}}" style="background-color:#FF331F">
-                                        <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
-                                    </button>
-                                    
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="staticBackdrop{{$rublica->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{route('rublica.destroy',$rublica->id)}}" id="formdelete" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <div class="modal-header modal__delete">
-                                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body modal-delbody">
-                                                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                                                </div>
-                                                <div class="modal-footer modal-delfooter">
-                                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn__deletar">Deletar</button>
-        
-                                                </div>
-                                            </form>
-                                        </div>
-                                        </div>
-                                    </div></td>
-                                </td>
-                            </tr>
+                        </tr>
+
+
                         @endforeach
                         @else
                         <tr>
@@ -202,11 +146,10 @@
                             </td>
                         </tr>
                         @endif
-                    </tbody>
-                    <tfoot>
+                        <tfoot>
                     <tr>
                         <td colspan="8" class="text-end">
-                            {{$rublicas->links()}}
+                            {{$lista->links()}}
                         </td>
                     </tr>
                     </tfoot>

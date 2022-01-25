@@ -101,10 +101,9 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
                               <li><a class="dropdown-item border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
                               <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
-                              <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Calculo Folha</a></li>
+                              <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Cálculo da Folha</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
-                              <li><a class="dropdown-item border-secundary d-none" href="#">Descontos</a></li>
-                              <li><a class="dropdown-item border-secundary d-none" href="#">Calcular Folha</a></li>
+                              <li><a class="dropdown-item border-secundary" href="#">Descontos</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Planilha de Fechamento- Boletins</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletins</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
@@ -147,16 +146,8 @@
                                 Relatórios
                               </a>
                               <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                               
-                                
-                                
-                                <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletin</a></li>
-                                <li><a class="dropdown-item border-secundary d-none" href="#">Boletins do Trabalhador</a></li>
-                                <li><a class="dropdown-item border-secundary d-none" href="#">Trabalhador no Boletim</a></li>
-                                
                                 <li><a class="dropdown-item border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
-
-                                
+                                <li><a class="dropdown-item border-secundary"  href="{{route('relatorio.geral.tomador')}}">Rol Tomadores - Ordem Nome</a></li>
                               </ul>
                             </li>
                           </ul>
@@ -177,7 +168,7 @@
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus dados</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="">Alterar Foto</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Alterar Foto</a></li>
                         <li><a class="dropdown-item" href="{{route('logout')}}">Sair</a></li>
                       </ul>
                     </div>

@@ -190,4 +190,11 @@ class Tomador extends Model
         })
         ->first();
     }
+    public function relatorioGeral($empresa)
+    {
+        return Tomador::where('empresa', $empresa)
+        ->select('tsnome','tscnpj','tstelefone','tsmatricula')
+        ->orderBy('tsnome', 'asc')
+        ->get();
+    }
 }

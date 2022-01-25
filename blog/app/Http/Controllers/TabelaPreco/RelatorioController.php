@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TabelaPreco;
 use App\Tomador;
+use App\Empresa;
 use PDF;
 class RelatorioController extends Controller
 {
@@ -22,4 +23,5 @@ class RelatorioController extends Controller
         $pdf = PDF::loadView('relatorioTabpreco',compact('tabelaprecos','tomadores'));
         return $pdf->setPaper('a4')->stream('RELATÓRIO DA TABELA PRECO.pdf');
     }
+    
 }

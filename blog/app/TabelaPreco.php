@@ -68,12 +68,15 @@ class TabelaPreco extends Model
         ->orderBy('tsrubrica', 'asc')
         ->get();
     }
-    public function buscaTabelaTomador($tomador)
+    public function buscaTabelaTomador($tomador,$ano)
     {
-        return TabelaPreco::where(function($query) use ($tomador){
+        return TabelaPreco::where(function($query) use ($tomador,$ano){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tomador',$tomador);
+                $query->where([
+                    ['tomador',$tomador],
+                    ['tsano',$ano]
+                ]);
             }else{
                  $query->where([
                     ['tomador',$tomador],
@@ -184,5 +187,13 @@ class TabelaPreco extends Model
     public function buscaTabelaPrecoEditar($id)
     {
         return TabelaPreco::where('id', $id)->first();
+    }
+    public function verificaTabelaPrecoAtual($tomador,$ano)
+    {
+        return TabelaPreco::where([
+            ['tomador', $tomador],
+            ['tsano',$ano]
+        ])
+        ->get();
     }
 }

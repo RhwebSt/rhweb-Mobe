@@ -118,5 +118,19 @@ class User extends Authenticatable
         return User::where('id', $dados['id'])
         ->update(['password'=>Hash::make($dados['password1'])]);
     }
-    
+    public function listaUser()
+    {
+        return DB::table('users')
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->select('users.id','users.name','users.empresa','empresas.esnome')
+        ->paginate(10);
+    }
+    public function edit($id)
+    {
+        return DB::table('users')
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->select('users.id','users.name','users.cargo','users.empresa','empresas.esnome')
+        ->where('users.id', $id)
+        ->first();
+    }
 }

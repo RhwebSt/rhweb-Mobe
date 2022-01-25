@@ -200,7 +200,7 @@
     
                 <table>
                     <tr>
-                        <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center">Planilha do Cartão Ponto - 9999</td>
+                        <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center">Planilha do Cartão Ponto</td>
                         <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim N° {{$lancamentotabelas[0]->liboletim}}</td>
                         <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência:
                         @if(isset($lancamentotabelas[0]->lsdata))
@@ -228,35 +228,35 @@
                         <td class="small__font border-left border-bottom text-center valor__padrao">Base Empresa</td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'diaria normal')
+                                @if($tabelapreco->tsrubrica == 1000)
                                     {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora normal')
+                                @if($tabelapreco->tsrubrica == 1002)
                                     {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora extra 50%')
+                                @if($tabelapreco->tsrubrica == 1003)
                                     {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora extra 100%')
+                                @if($tabelapreco->tsrubrica == 1004)
                                     {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'adicional noturno')
+                                @if($tabelapreco->tsrubrica == 1005)
                                     {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
@@ -267,35 +267,35 @@
                         <td class="small__font border-left border-bottom text-center valor__padrao">Base Folha</td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'diaria normal')
+                                @if($tabelapreco->tsrubrica == 1000)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora normal')
+                                @if($tabelapreco->tsrubrica == 1002)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora extra 50%')
+                                @if($tabelapreco->tsrubrica == 1003)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'hora extra 100%')
+                                @if($tabelapreco->tsrubrica == 1004)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
                             @foreach($tabelaprecos as $tabelapreco)
-                                @if($tabelapreco->tsdescricao == 'adicional noturno')
+                                @if($tabelapreco->tsrubrica == 1005)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach

@@ -21,6 +21,7 @@ use App\Lancamentorublica;
 use App\Lancamentotabela;
 use App\Comissionado;
 use App\ValoresRublica;
+use App\Rublica;
 class TomadorController extends Controller
 {
     /**
@@ -58,6 +59,8 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all(); 
+        
+        $rublica = new Rublica;
         $user = auth()->user();
         $tomador = new Tomador;
         $valorrublica = new ValoresRublica;
@@ -185,16 +188,29 @@ class TomadorController extends Controller
         $taxa = new Taxa;
         $endereco = new Endereco;
         $bancario = new Bancario;
+        $tabelapreco = new TabelaPreco;
         // $retencaofatura = new RetencaoFatura;
         $cartaoponto = new CartaoPonto;
         $parametrosefip = new Parametrosefip;
         $incidefolhar = new IncideFolhar;
         // $taxatrabalhador = new TaxaTrabalhador;
         $indicefatura = new IndiceFatura; 
-        
+        $rublicas = $rublica->listaRublicas();
             $tomadors = $tomador->cadastro($dados);
             if ($tomadors) {
                 $dados['tomador'] = $tomadors['id'];
+                foreach ($rublicas as $key => $rublica) {
+                    $dadostabelapreco = [
+                        'ano'=>date('Y'),
+                        'rubricas'=>$rublica->rsrublica,
+                        'descricao'=>$rublica->rsdescricao,
+                        'valor'=>0,
+                        'valor__tomador'=>0,
+                        'empresa'=>$user->empresa,
+                        'tomador'=>$tomadors['id']
+                    ];
+                    $tabelapreco->cadastro($dadostabelapreco);
+                }
                 $incidefolhars = $incidefolhar->cadastro($dados);
                 $enderecos = $endereco->cadastro($dados); 
                 $taxas = $taxa->cadastro($dados);
@@ -205,6 +221,7 @@ class TomadorController extends Controller
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
                 $indicefaturas = $indicefatura->cadastro($dados);
                 $valorrublica->editarMatricularTomador($dados,$user->empresa);
+
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         try {

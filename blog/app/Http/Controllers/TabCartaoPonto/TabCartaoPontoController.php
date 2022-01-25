@@ -53,7 +53,7 @@ class TabCartaoPontoController extends Controller
         }
         $request->validate([
             'nome__completo' => 'required',
-            'liboletim'=>'required|numeric|unique:lancamentotabelas',
+            'liboletim'=>'required|numeric',
             'matricula'=>'required|max:6',
             'num__trabalhador'=>'numeric',
             'num__trabalhador'=>'required',

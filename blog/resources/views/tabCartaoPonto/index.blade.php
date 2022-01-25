@@ -55,20 +55,7 @@
                                 
               <h5 class="card-title text-center fs-3 ">Lançamento com Tabela<i class="fad fa-browser"></i></h5>
 
-              <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
-                <div class="d-flex">
-                <label for="exampleDataList" class="form-label"></label>
-                <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
-                <datalist id="listapesquisa">
-                </datalist>
-                <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                <div class="text-center d-none p-1" id="refres" >
-                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-                </div>
-            </div>
+              
 
                 <div class="container">
               <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">
@@ -85,6 +72,23 @@
                       </button>
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
                   </div>
+              </div>
+              
+              <div>
+                    <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                        <div class="d-flex">
+                        <label for="exampleDataList" class="form-label"></label>
+                        <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
+                        <datalist id="listapesquisa">
+                        </datalist>
+                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                        <div class="text-center d-none p-1" id="refres" >
+                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
               </div>
               
                 <?php
@@ -140,18 +144,18 @@
                 </div>
 
                 <div class="col-md-3">
-                  <label for="num__trabalhador" class="form-label">Nº de Trabalhador</label>
+                  <label for="num__trabalhador" class="form-label">Quantidade de cadastros</label>
                   <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
                   @error('num__trabalhador')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 
-                    <div class="col-md-3">
+                    <div class="col-md-3 d-none">
                         <label for="feriado" class="form-label">Feriado</label>
                         <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
-                          <option selected>Sim</option>
-                          <option>Não</option>
+                          <option>Sim</option>
+                          <option selected>Não</option>
                         </select>
                     </div>
                 

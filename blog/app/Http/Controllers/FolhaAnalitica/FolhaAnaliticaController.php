@@ -14,6 +14,7 @@ class FolhaAnaliticaController extends Controller
 {
     public function calculoFolhaAnalitica($id)
     {
+        
         $valorcalculo = new ValorCalculo;
         $folhar = new Folhar;
         $folhas = $folhar->buscaFolhaAnalitica($id);
@@ -67,6 +68,7 @@ class FolhaAnaliticaController extends Controller
         // dd($irrf);
         $inss_codigo = [2001];
         $inss = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$inss_codigo);
+        dd('ok');
         foreach ($producao as $p => $producoes) {
             array_push($dados['nome'],$producoes->tsnome);
             array_push($dados['matricula'],$producoes->tsmatricula);

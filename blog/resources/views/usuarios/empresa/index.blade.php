@@ -22,7 +22,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{$message}}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -47,10 +47,10 @@
                 
                 Toast.fire({
                   icon: 'error',
-                  title: '{{$message}}'
+                  title: '{{ $message }}'
                 })
             </script>
-        @enderror
+        @enderror  
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('empresa.store') }}" method="POST" action="" >
            
             @can('admin')

@@ -74,6 +74,11 @@ class ValoresRublica extends Model
         return ValoresRublica::where('empresa', $empresa)
         ->update(['vsnroflha'=>$numerofolhar]);
     }
+    public function editarUnidadeNuCartaoPonto($empresa,$dados)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update(['vsnrocartaoponto'=>$dados['liboletim']]);
+    }
     public function deletar($id)
     {
         return ValoresRublica::where('empresa', $id)->delete();

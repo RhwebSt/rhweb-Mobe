@@ -17,7 +17,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;  
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador); 
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,date('Y')); 
         return view('tomador.tabelapreco.index',compact('id','user','tabelaprecos','tomador'));
     }
 
@@ -99,8 +99,7 @@ class TabelaPrecoController extends Controller
     {
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador);
-        
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,date('Y'));
         $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
         return view('tomador.tabelapreco.edit',compact('tabelaprecos_editar','tabelaprecos','tomador','id','user'));
     }
@@ -158,7 +157,7 @@ class TabelaPrecoController extends Controller
     public function verificaTabelaPreco($tomador)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador);
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,date('Y'));
         if (count($tabelaprecos) > 0) {
             return response()->json(true);
         }else{

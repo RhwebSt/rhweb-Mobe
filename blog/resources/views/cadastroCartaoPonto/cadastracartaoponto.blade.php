@@ -317,7 +317,7 @@
                     @if($listas->bsentradanoite && $listas->bsentradanoite ||
                     $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                     <tr>
-                    <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
+                    <td   class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
                     <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:330px;">{{$listas->tsnome}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradanoite}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidanoite}}</td>

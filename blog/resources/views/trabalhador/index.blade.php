@@ -91,7 +91,7 @@
                 <div class="d-flex">
                 <label for="exampleDataList" class="form-label"></label>
                 <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="datalistOptions" name="pesquisa" id="pesquisa">
-                <datalist id="datalistOptions">
+                <datalist id="datalistOptions" class="text-uppercase">
                 </datalist>
                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
                 <div class="text-center d-none p-1" id="refres" >

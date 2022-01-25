@@ -74,8 +74,8 @@
             
             
             <div class="col-md-10 input">
-                <label for="nome__completo" class="form-label">Nome do Trabalhador</label>
-                <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo">
+                <label for="nome__completo" class="form-label">Nome do Trabalhador <i class="fas fa-lock"></i></label>
+                <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control fw-bold fw-bold  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo" Readonly>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -88,16 +88,16 @@
             <input type="hidden" name="trabalhador" id="trabalhador">
             
             <div class="col-md-2 input">
-                <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" value="{{$lancamentorublicas->tsmatricula}}" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula">
+                <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock"></i></label>
+                <input type="text" value="{{$lancamentorublicas->tsmatricula}}" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula" Readonly>
                 @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="col-md-2 input">
-                <label for="codigo" class="form-label">Código</label>
-                <input type="text" value="{{$lancamentorublicas->licodigo}}" class="form-control rubrica fw-bold @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo">
+                <label for="codigo" class="form-label">Código <i class="fas fa-lock"></i></label>
+                <input type="text" value="{{$lancamentorublicas->licodigo}}" class="form-control rubrica fw-bold @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo" Readonly>
                 @error('codigo')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -107,8 +107,8 @@
             </div>
 
             <div class="col-md-8 input">
-                <label for="rubrica" class="form-label">Descrição</label>
-                <input type="text" value="{{$lancamentorublicas->lshistorico}}" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica">
+                <label for="rubrica" class="form-label">Descrição <i class="fas fa-lock"></i></label>
+                <input type="text" value="{{$lancamentorublicas->lshistorico}}" class="form-control fw-bold @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica" Readonly>
                 <datalist id="rublicas">   
                 </datalist>
                 @error('rubrica')
@@ -136,8 +136,6 @@
                     <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade</th>
                     <th class="col text-center border-top text-nowrap" style="width:170px">Valor Unitário</th>
                     <th class="col text-center border-top text-nowrap" style="width:170px">Total R$</th>
-                    <th class="col text-center border-top text-nowrap" style="width:70px">Editar</th>
-                    <th class="col text-center border-end border-top text-nowrap" style="width:70px">Excluir</th>
                 </thead>
                 <tbody style="background-color: #081049; color: white;">
                     @if(count($lista) > 0)
@@ -149,18 +147,6 @@
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lsquantidade*$listas->lfvalor, 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">
-                                <button class="btn" style="background-color:#204E83;">
-                                <a href="{{route('boletim.tabela.edit',[$quantidade,$boletim,$tomador,$listas->lancamento,$listas->id,$data])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
-                                </button>
-                            </td>
-                            <td class="col text-center border-bottom border-end text-nowrap">
-                            <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn" style="background-color:#FF331F;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                            </form> 
-                            </td>
                         </tr>
                     @endforeach
                     @else

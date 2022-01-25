@@ -84,12 +84,10 @@ class EmpresaController extends Controller
                 $dados['empresa'] = $empresas['id'];
                 $enderecos = $endereco->cadastro($dados);
                 $valoresrublicas = $valoresrublica->cadastro($dados);
-                if ($enderecos && $valoresrublicas) {
-                    return redirect()->route('listaempresa.create')->withInput()->withErrors(['true'=>'Cadastro realizado com sucesso.']);
-                }
+                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
         } catch (\Throwable $th) {
-            echo('Não foi porssivél efetua o cadastro.');
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél efetua o cadastro.']);
         }
        
     }
@@ -164,11 +162,15 @@ class EmpresaController extends Controller
         $empresa = new Empresa;
         $endereco = new Endereco;
         $valoresrublica = new ValoresRublica;
+        try {
         $empresas = $empresa->editar($dados,$id);
         $enderecos = $endereco->editar($dados,$dados['endereco']); 
         $valoresrublicas = $valoresrublica->editar($dados,$id);
-        if ($empresas && $enderecos && $valoresrublicas) {
-            return redirect()->route('listaempresa.create')->withInput()->withErrors(['true'=>'Atualizado com sucesso.']);
+            if ($empresas && $enderecos && $valoresrublicas) {
+                return redirect()->back()->withSuccess('Atualizado com sucesso.');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
     }
 
@@ -185,16 +187,15 @@ class EmpresaController extends Controller
         $valoresrublica = new ValoresRublica;
         $user = new User;
         $campo = 'empresa';
+        try {
         $users = $user->deleteempresa($id);
         $enderecos = $endereco->first($id,$campo);
         $exenderecos = $endereco->deletar($enderecos->eiid);
         $valoresrublicas = $valoresrublica->deletar($enderecos->empresa); 
-        if ($exenderecos &&  $valoresrublicas && $users) {
-            $empresas = $empresa->deletar($enderecos->empresa);
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        $empresas = $empresa->deletar($enderecos->empresa);
+        return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
-            return redirect()->route('listaempresa.create')->withInput()->withErrors([$condicao]); 
     }
 }

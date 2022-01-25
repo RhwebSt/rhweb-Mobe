@@ -123,13 +123,14 @@
                 <td class="small__font border-left text-center border-bottom border-top text-bold destaque incidencia">Incidência</td>
                 <td class="small__font border-left border-right text-center border-bottom border-top text-bold destaque dc">D/C</td>
             </tr>
-
-            <tr>
-                <td class="small__font border-left text-center border-bottom border-top text-bold rubricas">1001</td>
-                <td class="small__font border-left text-center border-bottom border-top text-bold descricao capitalize">Hora Normal</td>
-                <td class="small__font border-left text-center border-bottom border-top text-bold incidencia capitalize">Sim</td>
-                <td class="small__font border-left border-right text-center border-bottom border-top text-bold dc capitalize">Desconto</td>
-            </tr>
+            @foreach($rubricas as $rubrica)
+                <tr>
+                    <td class="small__font border-left text-center border-bottom border-top text-bold rubricas">{{$rubrica->rsrublica}}</td>
+                    <td class="small__font border-left text-center border-bottom border-top text-bold descricao capitalize">{{$rubrica->rsdescricao	}}</td>
+                    <td class="small__font border-left text-center border-bottom border-top text-bold incidencia capitalize">{{$rubrica->rsincidencia}}</td>
+                    <td class="small__font border-left border-right text-center border-bottom border-top text-bold dc capitalize">{{$rubrica->rsdc}}</td>
+                </tr>
+            @endforeach
         </table>
     </body>
 
