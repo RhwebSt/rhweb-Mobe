@@ -103,7 +103,7 @@
                               <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
                               <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Cálculo da Folha</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
-                              <li><a class="dropdown-item border-secundary" href="#">Descontos</a></li>
+                              <li><a class="dropdown-item border-secundary" href="{{route('descontos.index')}}">Descontos</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Planilha de Fechamento- Boletins</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletins</a></li>
                               <li><a class="dropdown-item border-secundary d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>

@@ -82,7 +82,7 @@
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',$tomador]) }}" role="button">Sair</a>
+                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button">Sair</a>
                       </div>
                   </div>
 

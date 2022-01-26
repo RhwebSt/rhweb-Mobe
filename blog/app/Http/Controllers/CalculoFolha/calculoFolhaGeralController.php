@@ -21,6 +21,7 @@ use App\ValoresRublica;
 use App\Folhar;
 use App\BaseCalculo;
 use App\RelacaoDia;
+use App\Descontos;
 use PDF;
 class calculoFolhaGeralController extends Controller
 {
@@ -1036,6 +1037,7 @@ class calculoFolhaGeralController extends Controller
         $valoresrublica = new ValoresRublica;
         $folhar = new Folhar;
         $irrf = new Irrf;
+        $desconto = new Descontos;
         $user = auth()->user();
         $ano = explode('-',$datafinal);
         $irrflista = $irrf->buscaListaIrrf($ano[0]);
@@ -1045,6 +1047,7 @@ class calculoFolhaGeralController extends Controller
             'inicio'=>$datainicio,
             'final'=>$datafinal
         ];
+        $descontos = $desconto->buscaRelatorioTrabalhador($trabalhador,$datainicio,$datafinal);
         $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
         $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
         $valor_final_irrf = [];
@@ -1091,12 +1094,31 @@ class calculoFolhaGeralController extends Controller
                     'valor'=> 0,
                     'id'=>0,
                 ],
+                'descontos'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
             ];
 
             if (count($basecalculos_15) > 0) {
                 if ($basecalculo->trabalhador === $basecalculos_15[$i]->trabalhador) {
                     $basecalculos[$i]->valorliquido -= $basecalculos_15[$i]->bivalorliquido;
                     $basecalculos[$i]->valordesconto += $basecalculos_15[$i]->bivalorliquido;
+                }
+                foreach ($descontos as $d => $desconto) {
+                    if ($basecalculo->trabalhador === $desconto->id && $desconto->dsquinzena === '2 - Segunda') {
+                        $basecalculos[$i]->valorliquido -= $desconto->valor;
+                        $basecalculos[$i]->valordesconto += $desconto->valor;
+                    }
+                }
+            }
+            foreach ($descontos as $d => $desconto) {
+                if ($basecalculo->trabalhador === $desconto->id && $desconto->dsquinzena === '1 - Primeira') {
+                    $basecalculos[$i]->valorliquido -= $desconto->valor;
+                    $basecalculos[$i]->valordesconto += $desconto->valor;
                 }
             }
             $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
@@ -1172,7 +1194,24 @@ class calculoFolhaGeralController extends Controller
                     $valorcalculo->cadastraAdiantamento($boletim_tabela,$novabasecalculo['id'],$basecalculos_15[$i]->trabalhador,$datafinal);
                 }
             }
-
+            foreach ($descontos as $d => $desconto) {
+                if ($basecalculo->trabalhador === $desconto->id && $desconto->dsquinzena === '1 - Primeira') {
+                  
+                    $boletim_tabela['descontos']['codigos'] = 0;
+                    $boletim_tabela['descontos']['rublicas'] = $desconto->dsdescricao;
+                    $boletim_tabela['descontos']['quantidade'] = $desconto->quantidade;
+                    $boletim_tabela['descontos']['valor'] = $desconto->valor;
+                    $valorcalculo->cadastraDesconto($boletim_tabela,$novabasecalculo['id'],$basecalculo->trabalhador,$datafinal);
+                }
+                if ($basecalculo->trabalhador === $desconto->id && $desconto->dsquinzena === '2 - Segunda' && count($basecalculos_15) > 0) {
+                  
+                    $boletim_tabela['descontos']['codigos'] = 0;
+                    $boletim_tabela['descontos']['rublicas'] = $desconto->dsdescricao;
+                    $boletim_tabela['descontos']['quantidade'] = $desconto->quantidade;
+                    $boletim_tabela['descontos']['valor'] = $desconto->valor;
+                    $valorcalculo->cadastraDesconto($boletim_tabela,$novabasecalculo['id'],$basecalculo->trabalhador,$datafinal);
+                }
+            }
             $boletim_tabela['seguro']['codigos'] = '1014';
             $boletim_tabela['seguro']['rublicas'] = 'Seguro';
             $boletim_tabela['seguro']['quantidade'] = 1;
@@ -1196,7 +1235,8 @@ class calculoFolhaGeralController extends Controller
                     }
             }
         }
-    
+       
+        // dd($descontos);
         return true;
         
     }

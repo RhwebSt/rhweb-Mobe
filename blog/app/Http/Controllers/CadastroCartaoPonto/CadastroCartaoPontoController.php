@@ -53,7 +53,7 @@ class CadastroCartaoPontoController extends Controller
         $valorrublica = new ValoresRublica;
         $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);
         $tabelaprecos = $tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
-        dd($dados,$lancamentotabelas);
+        
         if (count($tabelaprecos) < 5) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rubricas necessárias do ano '.date('Y').'!']);
         }

@@ -102,8 +102,8 @@
                       }
                     ?>
                     <div class="col-md-3">
-                        <label for="num__boletim" class="form-label">Nº do Boletim</label>
-                        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim">
+                        <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
+                        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim" Readonly>
                         @error('liboletim')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -128,8 +128,8 @@
                       <input type="hidden" name="sabado" id="sabado">
                       <input type="hidden" name="diasuteis" id="diasuteis">
                     <div class="col-md-2 d-none">
-                        <label for="matricula" class="form-label ">Matrícula</label>
-                        <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula">
+                        <label for="matricula" class="form-label ">Matrícula <i class="fas fa-lock"></i></label>
+                        <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula" Readonly>
                         @error('matricula')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror

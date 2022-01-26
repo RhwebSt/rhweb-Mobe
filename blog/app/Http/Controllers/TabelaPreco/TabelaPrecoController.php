@@ -15,6 +15,7 @@ class TabelaPrecoController extends Controller
      */
     public function index($id = null,$tomador)
     {
+        $tomador = base64_decode($tomador);
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;  
         $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,date('Y')); 
@@ -97,6 +98,8 @@ class TabelaPrecoController extends Controller
      */
     public function edit($id,$tomador)
     {
+        $id = base64_decode($id);
+        $tomador = base64_decode($tomador);
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
         $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,date('Y'));

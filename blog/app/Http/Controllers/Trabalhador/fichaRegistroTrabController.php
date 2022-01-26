@@ -12,6 +12,7 @@ class fichaRegistroTrabController extends Controller
 {
     public function fichaRegistroTrabalhador($id)
     {
+        $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $depedente = new Dependente;

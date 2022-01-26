@@ -11,6 +11,7 @@ class declaracaoAfastamentoController extends Controller
 {
     public function declarassaoafastamento($id)
     {
+        $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);

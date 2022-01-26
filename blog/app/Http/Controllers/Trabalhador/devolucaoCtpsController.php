@@ -11,6 +11,7 @@ class devolucaoCtpsController extends Controller
 {
     public function devolucaoctps($id)
     {
+        $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);

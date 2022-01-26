@@ -102,6 +102,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('foto/index','Empresa\\PerfilController@indexFoto')->name('foto.index');
     Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer');
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
+
+    Route::resource('descontos','Descontos\\DescontosController')->names('descontos');
+    Route::get('relatorio/descontos/{inicio}/{final}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');

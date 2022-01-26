@@ -11,6 +11,7 @@ class declaracaoAdmissaoController extends Controller
 {
     public function declarassaoadminssao($id)
     {
+        $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);

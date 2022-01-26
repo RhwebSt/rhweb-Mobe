@@ -51,6 +51,7 @@ class UserController extends Controller
             'nome__completo.required'=>'Campo não pode esta vazio!',
             'name.required'=>'Campo não pode esta vazio!',
             'name.regex'=>'Campo não pode ter caracteres especiais!',
+            'name.unique'=>'Este usuario já esta cadastrado.',
             'name.max'=>'Campo não pode ter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
             'senha.required'=>'Campo não pode esta vazio!',
@@ -103,6 +104,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $id = base64_decode($id);
         $user = Auth::user();
         $use = new User;
         $users = $use->listaUser();

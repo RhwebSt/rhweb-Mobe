@@ -146,7 +146,7 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn" style="background-color:#204E83;">
-                                    <a href="{{route('user.edit',$user->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                    <a href="{{route('user.edit',base64_encode($user->id))}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">

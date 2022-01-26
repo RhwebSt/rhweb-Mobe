@@ -12,23 +12,23 @@
                 darkMode = localStorage.getItem("darkMode");
                 var img = document.querySelector("#image");
                 const darkModeToggle1 = document.querySelector('#flexSwitchCheckDefault');
-                console.log(darkMode);
+                
                 
                 if(darkMode === 'null'){
-                        img.setAttribute('src', '{{url('/imagem/rhwebll.png')}}');
-                        console.log('ok');
+                        img.setAttribute('src', "{{url('/imagem/logoAzul.png')}}");
+                        
                     }else if(darkMode === 'enabled'){
-                        img.setAttribute('src', '{{url('/imagem/logoBranca.png')}}');
-                        console.log('ok2');
+                        img.setAttribute('src', "{{url('/imagem/logoBranca.png')}}");
+                        
                     }
 
                 darkModeToggle1.addEventListener("click", () =>{
                     if(darkMode === 'null'){
-                        img.setAttribute('src', '{{url('/imagem/rhwebll.png')}}');
+                        img.setAttribute('src', "{{url('/imagem/logoAzul.png')}}");
                         console.log('ok');
                     }else if(darkMode === 'enabled'){
-                        img.setAttribute('src', '{{url('/imagem/logoBranca.png')}}');
-                        console.log('ok2');
+                        img.setAttribute('src', "{{url('/imagem/logoBranca.png')}}");
+                        
                     }
                 
                 })

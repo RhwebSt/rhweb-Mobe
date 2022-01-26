@@ -194,7 +194,7 @@
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
                                 <button class="btn" style="background-color:#204E83;">
-                                <a href="{{route('tabela.preco.editar',[$tabelapreco->id,$tomador])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                <a href="{{route('tabela.preco.editar',[base64_encode($tabelapreco->id),base64_encode($tomador)])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                 </button>
                             </td>
                             <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">

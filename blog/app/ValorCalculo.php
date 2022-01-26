@@ -87,6 +87,18 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+    public function cadastraDesconto($dados,$basecalculo,$trabalahdor,$data)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> (int)$dados['descontos']['codigos'],
+            'vsdescricao'=>$dados['descontos']['rublicas'],
+            'vireferencia'=>$dados['descontos']['quantidade'],
+            'videscinto'=>$dados['descontos']['valor'],
+            'basecalculo'=>$basecalculo,
+            'trabalhador'=>$trabalahdor,
+            'created_at'=>$data
+        ]);
+    }
     public function cadastroProducao($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([

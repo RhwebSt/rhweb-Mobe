@@ -875,7 +875,7 @@
                     $('#atualizar').removeAttr( "disabled" )
                     $('#deletar').removeAttr( "disabled" )
                     $('#excluir').removeAttr( "disabled" )
-                    $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+data.tomador)
+                    $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+btoa(data.tomador))
                     $('#method').val('PUT')
                     $('#tomador').val(data.tomador);
                     $('#relatoriotomador').removeClass('disabled')

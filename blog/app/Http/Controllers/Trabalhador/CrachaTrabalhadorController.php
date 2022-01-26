@@ -11,6 +11,7 @@ class CrachaTrabalhadorController extends Controller
 {
     public function cracha($id)
     {
+        $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
