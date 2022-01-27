@@ -48,6 +48,7 @@ class TabCartaoPontoController extends Controller
         $user = auth()->user();
         $novadata = explode('-',$dados['data']);
         $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata); 
+        
         if ($lancamentotabelas) {
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este mês!']);
         }

@@ -87,6 +87,18 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+    public function cadastraIrrf($dados,$basecalculo,$trabalahdor,$data)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> (int)$dados['irrf']['codigos'],
+            'vsdescricao'=>$dados['irrf']['rublicas'],
+            'vireferencia'=>$dados['irrf']['quantidade'],
+            'videscinto'=>$dados['irrf']['valor'],
+            'basecalculo'=>$basecalculo,
+            'trabalhador'=>$trabalahdor,
+            'created_at'=>$data
+        ]);
+    }
     public function cadastraDesconto($dados,$basecalculo,$trabalahdor,$data)
     {
         return ValorCalculo::create([
@@ -407,6 +419,28 @@ class ValorCalculo extends Model
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->get();
+    }
+    public function buscaInss($trabalhador,$data)
+    {
+        return DB::table('base_calculos')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->whereIn('base_calculos.trabalhador',$trabalhador)
+        ->whereDate('base_calculos.created_at', $data)
+        ->where('vicodigo',2001)
+        ->get();
+    }
+    public function buscaInss13($trabalhador,$data)
+    {
+        return DB::table('base_calculos')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->whereIn('base_calculos.trabalhador',$trabalhador)
+        ->whereDate('base_calculos.created_at', $data)
+        ->where('vicodigo',2002)
         ->get();
     }
 }

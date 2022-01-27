@@ -396,10 +396,10 @@ class calculoFolhaGeralController extends Controller
                             $dia = explode(' ',$dia[2]);
                             array_push($boletim_tabela['campos']['id'],$lancamentorublica_valor->trabalhador);
                             array_push($boletim_tabela['campos']['dia'],$dia[0]);
-                            $vencimento = $lancamentorublica_valor->lfvalor * $lancamentorublica_valor->lsquantidade;
+                            $vencimento =  self::calculovalores($lancamentorublica_valor->lsquantidade,$lancamentorublica_valor->lfvalor);
                             array_push($boletim_tabela['campos']['valor'], $vencimento);
                             array_push($boletim_tabela['campos']['rubrica'], $lancamentorublica_valor->lshistorico);
-                            array_push($boletim_tabela['campos']['quantidade'], $lancamentorublica_valor->lsquantidade);
+                            array_push($boletim_tabela['campos']['quantidade'], self::calcularhoras($lancamentorublica_valor->lsquantidade));
                             array_push($boletim_tabela['campos']['codigo'], $tabelapreco->tsrubrica);
                             array_push($boletim_tabela['campos']['descricao'], $tabelapreco->tsdescricao);
                         }
@@ -889,8 +889,10 @@ class calculoFolhaGeralController extends Controller
         //    dd($boletim_tabela);
             foreach ($trabalhadores as $key => $trabalhador) {
                 $novodepedentes = 0;
-                if (isset($depedentes[$key]->depedentes)) {
-                    $novodepedentes = $depedentes[$key]->depedentes;
+                foreach ($depedentes as $d => $depedente) {
+                    if ($trabalhador->id === $depedente->trabalhador) {
+                        $novodepedentes = $depedente->depedentes;
+                    }
                 }
                 $basecalculos = $basecalculo->cadastro($boletim_tabela,$novodepedentes,$tomador_id->id,null,$key,$datafinal);
                 if ($basecalculos['id']) {
@@ -1041,7 +1043,6 @@ class calculoFolhaGeralController extends Controller
         $user = auth()->user();
         $ano = explode('-',$datafinal);
         $irrflista = $irrf->buscaListaIrrf($ano[0]);
-        
         $dados_folhar = [
             'codigo'=>'',
             'inicio'=>$datainicio,
@@ -1068,6 +1069,9 @@ class calculoFolhaGeralController extends Controller
             }
         } 
         $basecalculos = $basecalculo->calculoLista($trabalhador,$datafinal);
+        $inss_valores = $valorcalculo->buscaInss($trabalhador,$datafinal);
+        $inss13_valores = $valorcalculo->buscaInss13($trabalhador,$datafinal);
+        // dd($inss_valores,$inss13_valores,$basecalculos);
         foreach ($basecalculos as $i => $basecalculo) {
             $valorbase = 0;
             $indece = 0;
@@ -1095,6 +1099,13 @@ class calculoFolhaGeralController extends Controller
                     'id'=>0,
                 ],
                 'descontos'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'irrf'=>[
                     'codigos'=>0,
                     'rublicas'=>0,
                     'quantidade'=>0,
@@ -1134,8 +1145,18 @@ class calculoFolhaGeralController extends Controller
             $basecalculos[$i]->valorliquido -= $seguro;
 
             $base_irrf = str_replace(',','.',$irrflista[0]->irdepedente) * $basecalculo->binumfilhos;
-
-            $base_irrf = $basecalculo->bifgts - $basecalculo->biinss - $base_irrf;
+            foreach ($inss_valores as $n => $inss_valor) {
+                if ($inss_valor->trabalhador === $basecalculo->trabalhador) {
+                    $base_irrf -= $inss_valor->desconto;
+                }
+            }
+            foreach ($inss13_valores as $s => $inss13_valor) {
+                if ($inss13_valor->trabalhador === $basecalculo->trabalhador) {
+                    $base_irrf -= $inss13_valor->desconto;
+                }
+            }
+            $base_irrf = $basecalculo->fgts  - $base_irrf;
+           
             foreach ($irrflista as $key => $irrf) {
                 $novoirrf =  str_replace(".","",$irrf->irsvalorfinal);
                 $novoirrf =  str_replace(',','.',$novoirrf);
@@ -1146,36 +1167,61 @@ class calculoFolhaGeralController extends Controller
             }
             foreach ($irrflista as $e => $irrf) {
                 if ($base_irrf < $valor_final_irrf[0] && $i === $e) {
-                    $valorbase = 0;
+                    $valorbase = $base_irrf;
                     $indece = 0;
-                    // $resultadoinss = 0;
+                    $resultadoinss = 0;
+                    $boletim_tabela['irrf']['rublicas'] = 'IRRF';
+                    $boletim_tabela['irrf']['valor'] = 0;
+                    $boletim_tabela['irrf']['quantidade'] = 0;
+                    $boletim_tabela['irrf']['codigos'] = 2012;
                     break;
                 }elseif ($base_irrf > $valor_final_irrf[0] && $e === 0 && $i === $e && $base_irrf < $valor_final_irrf[1]) {
                     $valorbase = $base_irrf;
                     $indece = $irrf->irsindece;
-                    // $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    // $resultadoinss =  $resultado ;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim_tabela['irrf']['rublicas'] = 'IRRF';
+                    $boletim_tabela['irrf']['valor'] = $resultado;
+                    $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $basecalculos[$i]->valorliquido -= $resultado;
+                    $basecalculos[$i]->valordesconto += $resultado;
                     break;
                 }elseif ($base_irrf > $valor_final_irrf[1] && $e === 1 && $i === $e && $base_irrf < $valor_final_irrf[2]) {
                     $valorbase = $base_irrf;
                     $indece = $irrf->irsindece;
-                    // $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    // $resultadoinss =  $resultado ;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim_tabela['irrf']['rublicas'] = 'IRRF';
+                    $boletim_tabela['irrf']['valor'] = $resultado;
+                    $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $basecalculos[$i]->valorliquido -= $resultado;
+                    $basecalculos[$i]->valordesconto += $resultado;
                     break;
                 }elseif ($base_irrf > $valor_final_irrf[2] && $e === 2 && $i === $e && $base_irrf < $valor_final_irrf[3]) {
                     $valorbase = $base_irrf;
                     $indece = $irrf->irsindece;
-                    // $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    // $resultadoinss =  $resultado ;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim_tabela['irrf']['rublicas'] = 'IRRF';
+                    $boletim_tabela['irrf']['valor'] = $resultado;
+                    $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $basecalculos[$i]->valorliquido -= $resultado;
+                    $basecalculos[$i]->valordesconto += $resultado;
                     break;
                 }elseif ($base_irrf > $valor_final_irrf[3] && $e === 3 && $i === $e) {
                     $valorbase = $base_irrf;
                     $indece = $irrf->irsindece;
-                    // $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    // $resultadoinss =  $resultado ;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim_tabela['irrf']['rublicas'] = 'IRRF';
+                    $boletim_tabela['irrf']['valor'] = $resultado;
+                    $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $basecalculos[$i]->valorliquido -= $resultado;
+                    $basecalculos[$i]->valordesconto += $resultado;
                     break;
                 }
             }
+            dd($valorbase,$valor_final_irrf);
             $novabasecalculo =  $basecalculo->cadastroFolhar($basecalculos[$i],$valorbase,$indece,$folhas['id']);
             foreach ($tabelapreco_codigo as $d => $tabelapreco_valor) {
                 $valorcalculos = $valorcalculo->listaGeral($trabalhador,$datafinal,$tabelapreco_valor);
@@ -1185,6 +1231,7 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
+            $valorcalculo->cadastraIrrf($boletim_tabela,$novabasecalculo['id'],$basecalculo->trabalhador,$datafinal);
             if (count($basecalculos_15) > 0) {
                 if ($basecalculo->trabalhador === $basecalculos_15[$i]->trabalhador) {
                     $boletim_tabela['adiantamento']['codigos'] = '2003';
@@ -1254,16 +1301,33 @@ class calculoFolhaGeralController extends Controller
     }
     public function calcularhoras($horas)
     {
-        $hora = explode(':',$horas);
-        $hora = $hora[0].'.'.$hora[1];
-        return $hora;
+        if(strpos($horas,':')){
+            list($horas,$minitos) = explode(':',$horas);
+            $horasex = $horas * 3600 + $minitos * 60;
+            $horasex = $horasex/60;
+            $horasex = ($horasex/60);
+        }else{
+            $horasex = $horas;
+        }
+        return $horasex; 
     }
    public function calculoPocentagem($valor,$porcentagem)
     {
         $resultado = $valor * ($porcentagem / 100);
         return $resultado;
     }
-
+   public function calculovalores($horas,$valores)
+    {
+        if(strpos($horas,':')){
+        list($horas,$minitos) = explode(':',$horas);
+        $horasex = $horas * 3600 + $minitos * 60;
+        $horasex = $horasex/60;
+        $horasex = $valores * ($horasex/60);
+        }else{
+        $horasex = $valores * $horas;
+        }
+        return $horasex; 
+    }
     public function imprimirFolhar($id)
     {
         $folhar = new Folhar;

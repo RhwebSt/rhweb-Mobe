@@ -61,7 +61,7 @@ class BaseCalculo extends Model
         return BaseCalculo::create([
             'biservico'=>$dados->servico,
             'biservicodsr'=>$dados->servicodsr,
-            'biinss'=>$dados->inss,
+            'biinss'=>$dados->inss, 
             'bifgts'=>$dados->fgts,
             'bifgtsmes'=>$dados->fgtsmes,
             'biirrf'=>$irrf,

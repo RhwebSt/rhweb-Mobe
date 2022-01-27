@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{$message}}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -167,7 +167,7 @@
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase">{{$listas->tsnome}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->licodigo}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}} </td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">
@@ -247,7 +247,7 @@
                         $('#codigo').val(' ')
                         $('#valor').val(' ')
                         $('#lftomador').val(' ')
-                        $('#quantidade').attr('type','text')
+                        $('#quantidade').val(' ').mask('000.000.000,00',{reverse:true})
                         let nome = ''
                         if (data.length >= 1) {
                             data.forEach(element => {
@@ -262,12 +262,12 @@
                             $('#codigo').val(data[0].tsrubrica)
                             $('#descricao').val(data[0].tsdescricao)
                             if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
-                                $('#quantidade').attr('type','time')
+                                $('#quantidade').mask('000:00',{reverse:true})
                             }
                         }else if(dados.length > 3 && !data.length){
                             $('#valor').val(' ')
                             $('#lftomador').val(' ')
-                            $('#quantidade').attr('type','text')
+                            $('#quantidade').mask('000.000.000,00',{reverse:true})
                         }
                     }
                 });

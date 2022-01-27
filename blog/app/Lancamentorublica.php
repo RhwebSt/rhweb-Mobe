@@ -13,7 +13,7 @@ class Lancamentorublica extends Model
     {
        return Lancamentorublica::create([
             'lshistorico'=>$dados['rubrica'],
-            'lsquantidade'=>$dados['quantidade'],
+            'lsquantidade'=>str_replace(",",".",$dados['quantidade']),
             'licodigo'=>$dados['codigo'],
             'lsdescricao'=>$dados['descricao'],
             'trabalhador'=>$dados['trabalhador'],
