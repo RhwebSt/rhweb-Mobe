@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/reset.css">
-    <title>Rol dos Descontos</title>
+    <title>Rol dos Descontos - Por trabalhador</title>
 </head>
 
 <style>
@@ -207,7 +207,7 @@
     }
 
     .totalGeral{
-        width: 230px;
+        width: 315px;
     }
 
 </style>
@@ -217,7 +217,7 @@
     <div id="header" class="margin-top">
         <table>
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Rol dos Descontos</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Rol dos Descontos - Por trabalhador</td>
             </tr>
         </table>
 
@@ -229,10 +229,10 @@
                         $datainicio = 0;
                         $datafinal = 0;
                         foreach ($descontos as $key => $desconto) {
-                            if ($desconto->dscompetencia == substr($inicio,0,7)) {
+                            if ($desconto->dscompetencia == substr($dados['ano_inicial'],0,7)) {
                                 $datainicio = explode('-',$desconto->dscompetencia);
                             }
-                            if ($desconto->dscompetencia == substr($final,0,7)) {
+                            if ($desconto->dscompetencia == substr($dados['ano_final'],0,7)) {
                                 $datafinal = explode('-',$desconto->dscompetencia);
                             }
                         }
@@ -249,14 +249,12 @@
 
         <table>
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->esnome}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->tsnome}}</td>
             </tr>
         </table>
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font matric">Matrícula</td>
-                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font trabalhador">Trabalhador</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font descri">Descrição</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font quinze">Quinzena</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font valor">Valor R$</td>
@@ -269,14 +267,13 @@
     </div>
 
     <div id="content">
+        <table>
         <?php
             $total = 0;
         ?>
-        <table>
             @foreach($descontos as $desconto)
                 <tr>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font matric">{{$desconto->tsmatricula}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font trabalhador">{{$desconto->tsnome}}</td>
+                    
                     <td class="border-left border-right border-top border-bottom text-center uppercase small__font font descri">{{$desconto->dsdescricao}}</td>
                     <td class="border-left border-right border-top border-bottom text-center uppercase small__font font quinze">{{$desconto->dsquinzena}}</td>
                     <td class="border-left border-right border-top border-bottom text-center uppercase small__font font valor">R$ {{number_format((float)$desconto->dfvalor, 2, ',', '.')}}</td>
@@ -289,8 +286,7 @@
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom text-center small__font destaque font text-bold matric">Quantidade trabalhador: {{count($descontos)}}</td>
-                <td class="border-left border-top border-bottom text-center small__font destaque font text-bold descri quinze"> Total ============></td>
+                <td class="border-left border-top border-bottom text-center small__font destaque font text-bold descri totalGeral"> Total ============></td>
                 <td class="border-right border-top border-bottom text-center small__font destaque font text-bold valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
             </tr>
         </table>

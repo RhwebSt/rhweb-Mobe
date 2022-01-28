@@ -66,7 +66,7 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
                             <button type="submit" id="incluir" class="btn botao">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
+                            <button type="submit" id="atualizar" disabled class="btn botao">Cartão Ponto</button>
                             <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                               Excluir
                           </button>
@@ -103,7 +103,7 @@
                     ?>
                     <div class="col-md-3">
                         <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
-                        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim" Readonly>
+                        <input type="text"  class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" value="{{$dados->liboletim}}" id="num__boletim" Readonly>
                         @error('liboletim')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -113,7 +113,7 @@
     
                     <div class="col-md-6 input">
                       <label for="tomador" class="form-label ">Tomador</label>
-                      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="" id="nome__completo">
+                      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{$dados->tsnome}}" id="nome__completo">
                       <datalist id="datalistOptions">
                       </datalist>
                       @error('nome__completo')
@@ -137,7 +137,7 @@
 
                     <div class="col-md-3">
                       <label for="data" class="form-label">Data</label>
-                      <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="" id="data">
+                      <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="{{$dados->lsdata}}" id="data">
                         @error('data')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -145,7 +145,7 @@
     
                     <div class="col-md-3">
                       <label for="num__trabalhador" class="form-label">Quantidade de Cadastros</label>
-                      <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
+                      <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="{{$dados->lsnumero}}" id="num__trabalhador">
                       @error('num__trabalhador')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -154,11 +154,16 @@
                     <div class="col-md-3">
                         <label for="feriado" class="form-label">Feriado</label>
                         <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
+                          @if($dados->lsferiado === 'Sim')
+                          <option selected>Sim</option>
+                          <option >Não</option>
+                          @else
                           <option >Sim</option>
                           <option selected>Não</option>
+                          @endif
                         </select>
                     </div>
-                    </form>
+                        
                     
                      <div class="d-flex justify-content-end">
         
@@ -186,14 +191,12 @@
                                     <th class="col text-center border-top text-nowrap " style="width:200px">Data</th>
                                     <th class="col text-center border-top text-nowrap" style="width:200px">Quantidade de Cadastro</th>
                                     <th class="col text-center border-top text-nowrap" style="width:120px">Feriado</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
-                                   @if(count($lancamentotabelas) > 0)
+                                @if(count($lancamentotabelas) > 0)
                                    @foreach($lancamentotabelas as $lancamentotabela)
                                     <tr>               
-                                       <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
+                                    <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
                                             <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
                                                 <a>{{$lancamentotabela->tsnome}}</a>
@@ -205,21 +208,8 @@
                                           ?>
                                           {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                         </td>
-
-                                        <td class="col text-center border-bottom text-nowrap" style="width:120px">
-                                          {{$lancamentotabela->lsferiado}}
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn" style="background-color:#204E83;">
-                                                <a href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action=""  method="post">
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                            </form> 
-                                            </td>
-                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">300</td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:120px">Sim</td>
                                     </tr>
                                     @endforeach
                                     @else
@@ -237,31 +227,9 @@
                         </div>
                     
                     
-                   
+                  </form> 
               </div>
-              
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="" id="formdelete" method="post">
-                            @csrf
-                            @method('delete')
-                            <div class="modal-header modal__delete">
-                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body modal-delbody">
-                                <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                            </div>
-                            <div class="modal-footer modal-delfooter">
-                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn__deletar">Deletar</button>
 
-                            </div>
-                        </form>
-                    </div>
-                    </div>
-                </div>
             </div>
             <script>
               localStorage.setItem('cartao','{{$boletim}}')

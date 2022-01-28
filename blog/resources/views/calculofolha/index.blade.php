@@ -4,8 +4,8 @@
 <div class="container responsive">
         
         <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
-          <li class="nav-item ms-2" role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</button>
+          <li class="nav-item ms-2 " role="presentation">
+            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</button>
           </li>
           <li class="nav-item ms-1 pillstop" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fas fa-list"></i> Lista Tomador</button>
@@ -15,38 +15,8 @@
           </li>
         </ul>
         
-        <script>
-            var Back = document.getElementById('pills-home-tab');
-            Back.addEventListener("click", function(){
-               console.log("clickou");
-               localStorage.setItem('Back', 'backpill1');
-               
-           })
-           
-           var Back1 = document.getElementById('pills-contact-tab');
-            Back.addEventListener("click", function(){
-               console.log("clickou");
-               localStorage.setItem('Back', 'backpill3');
-               
-           })
-           
-           var Back2 = document.getElementById('pills-profile-tab');
-            Back.addEventListener("click", function(){
-               console.log("clickou");
-               localStorage.setItem('Back', 'backpill2');
-               
-           })
-           
-            voltar = localStorage.getItem("Back");
-            
-            if(voltar === "backpill1"){
-                console.log("voltar para a primeira pagina");
-                window.location.href = "#pills-profile-tab";
-                document.getElementById("pills-profile-tab").click();
-                localStorage.setItem('Back', 'null');
-            }
+        
 
-        </script>
        
         <div class="tab-content" id="pills-tabContent">
             @if(session('success'))
@@ -59,7 +29,7 @@
                         <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
                     </div>
             @enderror
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <div class="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 
                 <form class="row g-3" action="{{route('calculo.folha.store')}}" method="POST">
                     @csrf
@@ -299,6 +269,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:250px">Data Final</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Imprimir</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Trabalhador</th>
+                                    <th class="col text-center border-top text-nowrap" style="width:50px;">Rúbricas</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Depósito</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
@@ -377,6 +348,56 @@
                                                 </div>
                                                 
                                             </td>
+                                            
+                                            
+                                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
+                                                
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample2" role="button" aria-controls="offcanvasExample2" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
+                                                <i class="fas fa-file-signature" style="color: white;"></i>
+                                                </a>
+                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample2" aria-labelledby="offcanvasExampleLabel2">
+                                                <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Rùbrica <i class="fas fa-file-signature"></i></h5>
+                                                    <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                </div>
+                                                <form action="" method="post">
+                                                    @csrf
+                                                    <div class="offcanvas-body">
+                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Rúbrica <i class="fas fa-search"></i></h1>
+                                                        
+                                                        <div class="d-flex justify-content-between mb-3">
+                                                            
+                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                                <div class="d-flex">
+                                                                <input type="hidden" name="folharbanco" value="">
+                                                                <input type="hidden" name="empresabanco" value="">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control fw-bold text-dark banco" list="listabanco" name="banco" id="pesquisa">
+                                                                <datalist id="">
+                                                                   
+                                                                </datalist>
+                                                                <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                        
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </form>
+                                                </div>
+                                                
+                                            </td>
+                                            
+                                            
+                                            
+                                            
 
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
@@ -456,6 +477,63 @@
                 </div>
             </div>
         </div>
+        
+        
+        
+        <script>
+            var Back = document.getElementById('pills-home-tab');
+            Back.addEventListener("click", function(){
+               localStorage.setItem('Back', 'backpill1');
+               
+           })
+           
+           var Back1 = document.getElementById('pills-contact-tab');
+            Back1.addEventListener("click", function(){
+               localStorage.setItem('Back', 'backpill3');
+               
+           })
+           
+           var Back2 = document.getElementById('pills-profile-tab');
+            Back2.addEventListener("click", function(){
+               localStorage.setItem('Back', 'backpill2');
+               
+           })
+           
+           backActive =  document.getElementById("pills-profile");
+           backActive1 =  document.getElementById("pills-home");
+           backActive2 =  document.getElementById("pills-contact");
+
+            voltar = localStorage.getItem("Back");
+            
+
+            if(voltar === "backpill1"){
+                Back.classList.add("active");
+                backActive1.classList.add("show", "active");
+                backActive.classList.remove("show", "active");
+                backActive2.classList.remove("show", "active");
+                document.getElementById("pills-home-tab").click();
+                
+
+            }else if (voltar === "backpill2"){
+                Back2.classList.add("active");
+                backActive.classList.add("show", "active");
+                backActive1.classList.remove("show", "active");
+                backActive2.classList.remove("show", "active");
+                document.getElementById("pills-profile-tab").click();
+
+                
+            }else if (voltar === "backpill3"){
+                Back1.classList.add("active");
+                backActive2.classList.add("show", "active");
+                backActive.classList.remove("show", "active");
+                backActive1.classList.remove("show", "active");
+                document.getElementById("pills-contact-tab").click();
+
+            }    
+
+        </script>
+        
+        
         
         
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

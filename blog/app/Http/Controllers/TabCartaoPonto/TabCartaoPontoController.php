@@ -19,9 +19,11 @@ class TabCartaoPontoController extends Controller
     {
         $user = Auth::user();
         $valorrublica = new ValoresRublica;
+        $lancamentotabela = new Lancamentotabela;
         $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        // dd($numboletimtabela);
-        return view('tabCartaoPonto.index',compact('user','numboletimtabela'));
+        $lancamentotabelas = $lancamentotabela->buscaListas('M');
+
+        return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
     /**
@@ -110,7 +112,6 @@ class TabCartaoPontoController extends Controller
     }
     public function pesquisa($id,$status) 
     {
-        
         $lancamentotabela = new Lancamentotabela; 
         $lancamentotabelas = $lancamentotabela->buscaListaLancamentoTab($id,$status);
         return response()->json($lancamentotabelas);
@@ -124,7 +125,14 @@ class TabCartaoPontoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $valorrublica = new ValoresRublica;
+        $lancamentotabela = new Lancamentotabela;
+        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $lancamentotabela->buscaListas('M');
+        $dados = $lancamentotabela->buscaUnidade($id);
+        
+        return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
 
     /**
@@ -137,16 +145,17 @@ class TabCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        
         $request->validate([
             'nome__completo' => 'required',
-            'matricula'=>'required|max:6',
+            // 'matricula'=>'required|max:6',
             'num__trabalhador'=>'numeric',
             'num__trabalhador'=>'required',
             'data'=>'required'
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',
-            'matricula.required'=>'Campo não pode esta vazio!',
-            'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
+            // 'matricula.required'=>'Campo não pode esta vazio!',
+            // 'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
             'num__trabalhador.required'=>'Campo não pode esta vazio!',
             'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
             'liboletim.required'=>'Campo não pode esta vazio!',

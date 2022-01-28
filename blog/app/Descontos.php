@@ -64,10 +64,28 @@ class Descontos extends Model
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
             'empresas.esnome',
-            'descontos.*'
+            'descontos.*' 
         )
         ->where('descontos.empresa',$empresa)
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
+        ->get();
+    }
+    public function relatorioTrabalhador($empresa,$dados)
+    {
+        return DB::table('trabalhadors')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
+        ->join('empresas', 'empresas.id', '=', 'descontos.empresa')
+        ->select(
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'empresas.esnome',
+            'descontos.*' 
+        )
+        ->where([
+            ['descontos.empresa',$empresa],
+            ['trabalhadors.id',$dados['idtrabalhador']]
+        ])
+        ->whereBetween('descontos.dscompetencia',[substr($dados['ano_inicial'], 0, 7),substr($dados['ano_final'], 0, 7)])
         ->get();
     }
     public function buscaRelatorioTrabalhador($trabalhador,$dataincio,$datafinal)

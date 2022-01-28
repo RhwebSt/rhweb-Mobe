@@ -43,6 +43,47 @@ class Comissionado extends Model
         })
         ->first();
     }
+    public function buscaListaComissionado()
+    {
+        return DB::table('comissionados')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador')
+        ->select(
+            'tomadors.tsnome as tomador',
+            'trabalhadors.tsnome as trabalhador',
+            'trabalhadors.tsmatricula',
+            'comissionados.csindece',
+            'comissionados.id',
+        )
+        ->where(function($query){
+            $user = auth()->user();
+            $query->where('trabalhadors.empresa',$user->empresa);
+        })
+        ->get();
+    }
+    public function buscaUnidadeComissionado($id)
+    {
+        return DB::table('comissionados')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador')
+        ->select(
+            'tomadors.tsnome as tomador',
+            'trabalhadors.tsnome as trabalhador',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.id as idtrabalhador',
+            'tomadors.id as idtomador',
+            'comissionados.csindece',
+            'comissionados.id',
+        )
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            $query->where([
+                ['trabalhadors.empresa',$user->empresa],
+                ['comissionados.id',$id]
+            ]);
+        })
+        ->first();
+    }
     public function editar($dados,$id)
     {
         return Comissionado::where('id', $id)
@@ -63,5 +104,9 @@ class Comissionado extends Model
     public function deletaTrabalhador($id)
     {
         return Comissionado::where('trabalhador', $id)->delete();
+    }
+    public function deletar($id)
+    {
+        return Comissionado::where('id', $id)->delete();
     }
 }

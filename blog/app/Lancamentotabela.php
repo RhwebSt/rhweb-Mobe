@@ -60,6 +60,49 @@ class Lancamentotabela extends Model
         ->limit(100)
         ->get();
     }
+    public function buscaListas($status)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'tomadors.tsnome', 
+            'lancamentotabelas.*', 
+            )
+        ->where(function($query) use ($status){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lsstatus',$status);
+            }else{
+                $query->where([
+                    ['lancamentotabelas.lsstatus',$status],
+                    ['empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->paginate(10);
+    }
+    public function buscaUnidade($id)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'tomadors.tsnome',
+            'tomadors.id as tomador', 
+            'lancamentotabelas.*', 
+            )
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('lancamentotabelas.id',$id);
+            }else{
+                $query->where([
+                    ['lancamentotabelas.id',$id],
+                    ['empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->first();
+    }
     public function buscaUnidadeLancamentoTab($id,$status = null)
     {
         return Lancamentotabela::where(function($query) use ($id,$status){

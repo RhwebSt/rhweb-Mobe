@@ -186,6 +186,23 @@
                     @enderror
                 </div>
                 </form>
+                
+                <div class="d-flex justify-content-end">
+        
+        
+                    <div class="dropdown  mt-2 p-1">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
+                            <i class="fas fa-sort"></i> Filtro 
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
                 <div class="table-responsive-lg">
                     <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                               <thead>
@@ -283,6 +300,9 @@
         
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+      <form action="{{route('descontos.relatorio.trabalhador')}}" method="POST">
+      @csrf
+      <input type="hidden" name="idtrabalhador" id="idtrabalhador">
       <div class="modal-content">
         <div class="modal-header modal__delete">
           <h5 class="modal-title text-white fs-6" id="exampleModalLabel">Rol dos Descontos - Por trabalhador</h5>
@@ -292,11 +312,11 @@
 
             <small class="fs-6">Pesquisar</small>
             <div>
-                <div class="col-md-12 mt-2 mb-2 p-1 pesquisar">
+                <div class="col-md-12 mt-2 mb-2 p-1 pesquisar"> 
                     <div class="d-flex">
                     <label for="exampleDataList" class="form-label"></label>
-                    <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                    <datalist id="datalistOptions">
+                    <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" name="pesquisa" id="pesquisa">
+                    <datalist id="listapesquisa">
                     </datalist>
                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                     <div class="text-center d-none" id="refres" >
@@ -326,12 +346,13 @@
             <button type="submit" class="btn btn__deletar"><i class="fas fa-print"></i> Imprimir</button>
           </div>
       </div>
+      </form>
     </div>
   </div>
         
         
         <script>
-             $( "#nome__trab" ).on('keyup focus',function() { 
+             $( "#nome__trab,#pesquisa" ).on('keyup focus',function() { 
                 let  dados = '0'
                 if ($(this).val()) {
                   dados = $(this).val()
@@ -353,11 +374,13 @@
                           // nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });
-                        $('#listatrabalhador').html(nome)
+                        $('#listatrabalhador').html(nome);
+                        $('#listapesquisa').html(nome);
                       }
                       if(data.length === 1 && dados.length > 4){
                         $('#nome__trab').html(nome)
                         $('#trabalhador').val(data[0].id)
+                        $('#idtrabalhador').val(data[0].id)
                         $('#matricula').val(data[0].tsmatricula)
                       }else if(!data.length && dados.length > 4){
                         $('#nomemensagem').text('Este trabalhador não ta cadastrador!')

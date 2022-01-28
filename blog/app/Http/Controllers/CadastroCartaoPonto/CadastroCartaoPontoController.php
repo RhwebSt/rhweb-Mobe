@@ -22,8 +22,10 @@ class CadastroCartaoPontoController extends Controller
     {
         $user = Auth::user();
         $valorrublica = new ValoresRublica;
+        $lancamentotabela = new Lancamentotabela;
         $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela'));
+        $lancamentotabelas = $lancamentotabela->buscaListas('D');
+        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
     /**
@@ -121,7 +123,13 @@ class CadastroCartaoPontoController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $user = Auth::user();
+        $valorrublica = new ValoresRublica;
+        $lancamentotabela = new Lancamentotabela;
+        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $lancamentotabela->buscaListas('D');
+        $dados = $lancamentotabela->buscaUnidade($id);
+        return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
 
     /**

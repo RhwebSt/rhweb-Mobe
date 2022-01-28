@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{session("success")}}'
+                  title: '{{$message}}'
                 })
             </script>
         @endif
@@ -60,12 +60,8 @@
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
-                    <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
                     <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-invoice"></i> Relatório</a>
-                    <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      Excluir
-                  </button>
-                <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
+                    <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
               </div>
           </div>
               
@@ -167,7 +163,7 @@
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase">{{$listas->tsnome}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->licodigo}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}} </td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">
@@ -247,7 +243,7 @@
                         $('#codigo').val(' ')
                         $('#valor').val(' ')
                         $('#lftomador').val(' ')
-                        $('#quantidade').val(' ').mask('000.000.000,00',{reverse:true})
+                        $('#quantidade').attr('type','text')
                         let nome = ''
                         if (data.length >= 1) {
                             data.forEach(element => {
@@ -262,12 +258,12 @@
                             $('#codigo').val(data[0].tsrubrica)
                             $('#descricao').val(data[0].tsdescricao)
                             if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
-                                $('#quantidade').mask('000:00',{reverse:true})
+                                $('#quantidade').attr('type','time')
                             }
                         }else if(dados.length > 3 && !data.length){
                             $('#valor').val(' ')
                             $('#lftomador').val(' ')
-                            $('#quantidade').mask('000.000.000,00',{reverse:true})
+                            $('#quantidade').attr('type','text')
                         }
                     }
                 });

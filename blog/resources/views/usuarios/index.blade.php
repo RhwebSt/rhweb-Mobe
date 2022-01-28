@@ -107,6 +107,24 @@
                   @enderror
                 </div>
                 </form>
+                
+                <div class="d-flex justify-content-end">
+        
+        
+                    <div class="dropdown  mt-2 p-1">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
+                            <i class="fas fa-sort"></i> Filtro 
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
                 <div class="table-responsive-xxl">
                     <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
@@ -146,7 +164,7 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn" style="background-color:#204E83;">
-                                    <a href="{{route('user.edit',base64_encode($user->id))}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                    <a href="{{route('user.edit',$user->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">

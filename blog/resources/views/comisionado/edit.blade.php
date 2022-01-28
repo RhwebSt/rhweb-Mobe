@@ -51,17 +51,17 @@
                     })
                 </script>
             @enderror
-              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.update',$dados->id)}}">
                   
                   <h5 class="card-title text-center mt-5 fs-3 ">Comissionado</h5>
                 @csrf
-                <input type="hidden" id="method" name="_method" value="">
-                <input type="hidden" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">
-                <input type="hidden" name="trabalhador" id="idtrabalhador" class="@error('trabalhador') is-invalid @enderror">
+                @method('PATCH')
+                <input type="hidden" value="{{$dados->idtomador}}" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">
+                <input type="hidden" value="{{$dados->idtrabalhador}}" name="trabalhador" id="idtrabalhador" class="@error('trabalhador') is-invalid @enderror">
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" id="incluir"  class="btn botao" >Incluir</button>
-                        <a class="btn botao" href="{{route('home.index')}}"  role="button">Sair</a>
+                        <button type="submit"   class="btn botao" >Atualizar</button>
+                        <a class="btn botao" href="{{route('comisionado.index')}}"  role="button">Sair</a>
                     </div>
                 </div>
                 
@@ -70,7 +70,7 @@
 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
-                    <input class="pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador">
+                    <input class="pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{$dados->trabalhador}}" id="nome__trabalhador">
                     <datalist id="listatrabalhador">
                     </datalist>
                     @error('nome__trabalhador')
@@ -83,7 +83,7 @@
 
                 <div class="col-md-4">
                   <label for="matricula__trab" class="form-label">Matricula Trabalhador <i class="fas fa-lock"></i></label>
-                  <input type="text" class="form-control  @error('matricula__trab') is-invalid @enderror" name="matricula__trab"  value="{{old('matricula__trab')}}" id="matricula__trab" Readonly>
+                  <input type="text" class="form-control  @error('matricula__trab') is-invalid @enderror" name="matricula__trab"  value="{{$dados->tsmatricula}}" id="matricula__trab" Readonly>
                     @error('matricula__trab')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -91,7 +91,7 @@
                 <input type="hidden" id="comissionado">
                 <div class="col-md-4">
                   <label for="indice" class="form-label">Indíce %</label>
-                  <input type="text" class="form-control @error('indice') is-invalid @enderror fw-bold text-dark" name="indice" value="{{old('indice')}}" id="indice">
+                  <input type="text" class="form-control @error('indice') is-invalid @enderror fw-bold text-dark" name="indice" value="{{$dados->csindece}}" id="indice">
                     @error('indice')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -99,7 +99,7 @@
                 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Tomador</label>
-                    <input class=" form-control @error('nome_tomador') is-invalid @enderror fw-bold text-dark" list="listatomador" name="nome_tomador"  value="{{old('nome_tomador')}}" id="nome_tomador">
+                    <input class=" form-control @error('nome_tomador') is-invalid @enderror fw-bold text-dark" list="listatomador" name="nome_tomador"  value="{{$dados->tomador}}" id="nome_tomador">
                     <datalist id="listatomador">
                       
                     </datalist>
@@ -138,81 +138,29 @@
                                     <th class="col text-center border-top text-nowrap" style="width: 300px;">Nome Trabalhador</th>
                                     <th class="col text-center border-top text-nowrap " style="width:200px">Indice %</th>
                                     <th class="col text-center border-top text-nowrap" style="width:300px">Nome Tomador</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
-                                   @if(count($comissionados) > 0)
-                                   @foreach($comissionados as $comissionado)
+                                   
                                     <tr>               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$comissionado->tsmatricula}}</td>
+                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;"></td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$comissionado->trabalhador}}</a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel FElipe dos Santos Rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                                <a>Eliel FElipe dos Santos Rocha</a>
                                             </button>
                                             
                                         </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">{{$comissionado->csindece}}</td>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px"></td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:300px">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$comissionado->tomador}}</a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe Maõ de obra Terceirizada LTDA" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
+                                                <a>Mobe Maõ de obra Terceirizada LTDA</a>
                                             </button>
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn" style="background-color:#204E83;">
-                                                <a href="{{route('comisionado.edit',$comissionado->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action="{{route('comisionado.destroy',$comissionado->id)}}"  method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                            </form> 
-                                            </td>
                                         </td>
                                     </tr>
-                                    @endforeach
-                                    @else
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endif
                                 </tbody>
                 
                             </table>
                         </div>
-                
-                
-                
-                
-              
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="" id="formdelete" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <div class="modal-header modal__delete">
-                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body modal-delbody">
-                                            <p class="mb-2">Obs:( Caso exclua os dados do trabalhador seus depedentes serão excluidos.)</p>
-                                            <p class="mb-1">Deseja realmente excluir?</p>
-                                        </div>
-                                        <div class="modal-footer modal-delfooter">
-                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                            <button type="submit" class="btn btn__deletar">Deletar</button>
-                                        </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
             </div>
             <script>
         $(document).ready(function(){
@@ -298,7 +246,7 @@
                     success: function(data) {
                       if (data.id) {
                         $('#comissionado').val(data.id);
-                        $('#atualizar').removeAttr( "disabled" )
+                        // $('#atualizar').removeAttr( "disabled" )
                         $('#excluir').removeAttr( "disabled" )
                         $('#incluir').attr('disabled','disabled')
                         $('#method').val('PUT')
@@ -309,7 +257,7 @@
                         $('#form').attr('action', "{{ url('comisionado')}}/"+data.id);
                       }else{
                           // $('#incluir').attr('disabled','disabled')
-                          $('#atualizar').attr('disabled','disabled')
+                        //   $('#atualizar').attr('disabled','disabled')
                           $('#excluir').attr( "disabled" )
                       }
                     }

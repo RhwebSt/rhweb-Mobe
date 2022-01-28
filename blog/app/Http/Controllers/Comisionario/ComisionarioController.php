@@ -16,7 +16,9 @@ class ComisionarioController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('comisionado.index',compact('user'));
+        $comissionado = new Comissionado;
+        $comissionados = $comissionado->buscaListaComissionado();
+        return view('comisionado.index',compact('user','comissionados'));
     }
 
     /**
@@ -84,7 +86,11 @@ class ComisionarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $comissionado = new Comissionado;
+        $comissionados = $comissionado->buscaListaComissionado();
+        $dados = $comissionado->buscaUnidadeComissionado($id);
+        return view('comisionado.edit',compact('comissionados','user','dados'));
     }
 
     /**
@@ -111,7 +117,7 @@ class ComisionarioController extends Controller
         if ($comissionados) {
             return redirect()->back()->withSuccess('Atualizador com sucesso.');  
         }else{
-            return redirect()->route('comisionado.index')->withInput()->withErrors(['false'=>'Não foi porssível atualizar o registro.']);  
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível atualizar o registro.']);  
         }
     }
 
@@ -123,6 +129,12 @@ class ComisionarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comissionado = new Comissionado;
+        try {
+            $comissionados = $comissionado->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+        }
     }
 }
