@@ -44,7 +44,7 @@ class RublicaController extends Controller
         $rublica = new Rublica;
         $request->validate([
             'rubricas'=>'required|max:15',
-            'descricao'=>'required|max:15|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'incidencia'=>'required'
         ],[
             'rubricas.required'=>'Campo não pode esta vazio.',

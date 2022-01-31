@@ -222,6 +222,7 @@
 </style>
 
 <body>
+    
    @foreach($folhas as $f => $folhar)
     <table>
         <tr>
@@ -450,7 +451,7 @@
             <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$folhar->biinss, 2, ',', '.')}}</td>
             <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$folhar->bifgts, 2, ',', '.')}}</td>
             <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$folhar->bifgtsmes, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhar->biirrf, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhar->biirrf > 0 ? $folhar->biirrf : 0, 2, ',', '.')}}</td>
             <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$folhar->bifaixairrf, 2, ',', '.')}}</td>
             <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$folhar->binumfilhos}}</td>
         </tr>

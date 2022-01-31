@@ -190,6 +190,36 @@ class Tomador extends Model
         })
         ->first();
     }
+
+    public function tomadorFatura($id)
+    {
+        return DB::table('enderecos')
+        ->join('tomadors', 'tomadors.id', '=', 'enderecos.tomador')
+        ->select(
+            'tomadors.tsnome',
+            'tomadors.tsmatricula',
+            'tomadors.tscnpj',
+            'tomadors.tstelefone',
+            'enderecos.escep',
+            'enderecos.eslogradouro',
+            'enderecos.esnum',
+            'enderecos.esmunicipio',
+            'enderecos.esuf'
+        )
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tomadors.id',$id);
+            }else{
+                $query->where([
+                    ['tomadors.id',$id],
+                    ['tomadors.empresa', $user->empresa]
+                ]);
+            }
+           
+        })
+        ->first();
+    }
     public function relatorioGeral($empresa)
     {
         return Tomador::where('empresa', $empresa)

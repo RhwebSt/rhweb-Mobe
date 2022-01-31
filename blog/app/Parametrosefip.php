@@ -45,4 +45,8 @@ class Parametrosefip extends Model
     {
       return Parametrosefip::where('tomador', $id)->delete();
     }
+    public function buscaUnidadeTomador($tomador)
+    {
+        return Parametrosefip::where('tomador', $tomador)->first();
+    }
 }

@@ -20,15 +20,68 @@
        
         <div class="tab-content" id="pills-tabContent">
             @if(session('success'))
-                <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                        <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                    </div>
+                <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: '{{session("success")}}'
+                })
+            </script>
             @endif
             @error('false')
-                <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                        <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                    </div>
+                <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: '{{ $message }}'
+                })
+            </script>
             @enderror
+            
+            <!--fazer erro para quando não existir nenhum dado para calcular a folha-->
+            
+            <!--<script>-->
+            <!--    Swal.fire({-->
+            <!--      icon: 'error',-->
+            <!--      title: 'Algo deu errado!',-->
+            <!--      text: 'Não possui nenhum dado para fazer o cálculo',-->
+            <!--    })-->
+            <!--</script>-->
+            
+            
+            
             <div class="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 
                 <form class="row g-3" action="{{route('calculo.folha.store')}}" method="POST">
@@ -481,6 +534,10 @@
         
         
         <script>
+        
+            
+        
+        
             var Back = document.getElementById('pills-home-tab');
             Back.addEventListener("click", function(){
                localStorage.setItem('Back', 'backpill1');
@@ -504,7 +561,16 @@
            backActive2 =  document.getElementById("pills-contact");
 
             voltar = localStorage.getItem("Back");
+
             
+            if(voltar === null){
+                localStorage.setItem('Back', 'backpill1');
+                Back.classList.add("active");
+                backActive1.classList.add("show", "active");
+                backActive.classList.remove("show", "active");
+                backActive2.classList.remove("show", "active");
+                document.getElementById("pills-home-tab").click();
+            }
 
             if(voltar === "backpill1"){
                 Back.classList.add("active");

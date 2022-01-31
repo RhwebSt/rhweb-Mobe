@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
+        <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
@@ -30,6 +31,11 @@
         
 
     </head>
+    
+    
+    
+    
+    
     <script>
             function validarRobo(){
                 if(grecaptcha.getResponse() != "") return true;
@@ -39,6 +45,30 @@
                 window.location.href = '#password';
         </script>
     <body  class="body-content">
+        
+        
+    <!--<script>-->
+    <!--    const Toast = Swal.mixin({-->
+    <!--      toast: true,-->
+    <!--      position: 'top-end',-->
+    <!--      background: '#F2F6F8' ,-->
+    <!--      showConfirmButton: false,-->
+    <!--      padding: 25,-->
+    <!--      timer: 4000,-->
+    <!--      width: 500,-->
+    <!--      timerProgressBar: true,-->
+    <!--      didOpen: (toast) => {-->
+    <!--        toast.addEventListener('mouseenter', Swal.stopTimer)-->
+    <!--        toast.addEventListener('mouseleave', Swal.resumeTimer)-->
+    <!--      }-->
+    <!--    })-->
+        
+    <!--    Toast.fire({-->
+    <!--      html:'<p style="color:black;"><i class="fas fa-xl fa-user-circle" style="color: black;"></i>  Seja bem vindo (Nome).</p>',-->
+    <!--    })-->
+    <!--</script>    -->
+        
+        
     <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
                         <div class="text-center " >
                           <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: #393D3F;">

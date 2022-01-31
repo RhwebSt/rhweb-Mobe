@@ -135,6 +135,23 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+    public function buscaUnidaderdsr1818($trabalhador,$codigo,$data)
+    {
+        return ValorCalculo::selectRaw(
+            'SUM(vivencimento) as vencimento,
+            SUM(videscinto) as desconto,
+            vireferencia as referencia,
+            trabalhador,
+            vicodigo,
+            vsdescricao,
+            created_at'
+        )
+        ->groupBy('trabalhador','vicodigo','vsdescricao','referencia','created_at')
+        ->where('vicodigo',$codigo)
+        ->where('trabalhador',$trabalhador)
+        ->whereDate('created_at', $data)
+        ->first();
+    }
     public function cadastraFeriasDecimoter($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([
@@ -146,6 +163,23 @@ class ValorCalculo extends Model
             'trabalhador'=>$trabalahdor,
             'created_at'=>$data
         ]);
+    }
+    public function buscaUnidaderFeriasDecimoter($trabalhador,$codigo,$data)
+    {
+        return ValorCalculo::selectRaw(
+            'SUM(vivencimento) as vencimento,
+            SUM(videscinto) as desconto,
+            vireferencia as referencia,
+            trabalhador,
+            vicodigo,
+            vsdescricao,
+            created_at'
+        )
+        ->groupBy('trabalhador','vicodigo','vsdescricao','referencia','created_at')
+        ->where('vicodigo',$codigo)
+        ->where('trabalhador',$trabalhador)
+        ->whereDate('created_at', $data)
+        ->first();
     }
     public function cadastraDecimoTer($dados,$basecalculo,$trabalahdor,$i,$data)
     {
@@ -171,13 +205,13 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
-    public function cadastraInss($dados,$basecalculo,$trabalahdor,$i,$data)
+    public function cadastraInss($dados,$basecalculo,$trabalahdor,$data)
     {
         return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['inss']['codigos'][$i],
-            'vsdescricao'=>$dados['inss']['rublicas'][$i],
-            'vireferencia'=>str_replace(',', '.', $dados['inss']['indece'][$i]),
-            'videscinto'=>$dados['inss']['resultadoinss'][$i],
+            'vicodigo'=> (int)$dados['inss']['codigos'],
+            'vsdescricao'=>$dados['inss']['rublicas'],
+            'vireferencia'=>$dados['inss']['quantidade'],
+            'videscinto'=>$dados['inss']['valor'],
             'basecalculo'=>$basecalculo,
             'trabalhador'=>$trabalahdor,
             'created_at'=>$data
@@ -441,6 +475,40 @@ class ValorCalculo extends Model
         ->whereIn('base_calculos.trabalhador',$trabalhador)
         ->whereDate('base_calculos.created_at', $data)
         ->where('vicodigo',2002)
+        ->get();
+    }
+
+    public function producaoFatura($dados)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw(
+            'SUM(valor_calculos.vivencimento) as vencimento,
+            valor_calculos.vireferencia'
+        )
+        ->groupBy('valor_calculos.vireferencia')
+        ->where('base_calculos.tomador',$dados['tomador'])
+        ->whereBetween('valor_calculos.vicodigo',[1000,1007])
+        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->get();
+    }
+    public function rublicasFatura($dados)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw(
+            'SUM(valor_calculos.vivencimento) as vencimento,
+            SUM(valor_calculos.videscinto) as desconto,
+            valor_calculos.vireferencia,
+            valor_calculos.vicodigo,
+            valor_calculos.vsdescricao'
+        )
+        ->groupBy('valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
+        ->where('base_calculos.tomador',$dados['tomador'])
+        ->whereBetween('valor_calculos.vicodigo',[1008,2003])
+        ->whereDate('base_calculos.created_at', $dados['ano_final'])
         ->get();
     }
 }
