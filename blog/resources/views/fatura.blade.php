@@ -283,14 +283,14 @@
     <div id="header">
         <table class="margin-top">
             <tr>
-                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">Sindicato dos Trabalhadores na Movimentação de Mercadoria em Geral de São José</td>
+                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">{{$empresas->esnome}}</td>
             </tr>
         </table>
 
         <div class="borderT margin-top margin-bottom">
         <table >
             <tr>
-                <td rowspan="10"><img class="logo" src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/115442785/original/d79b5cceb8e8404cefc54d297bd1d1a25717bb97/make-your-portrait-in-pixel-art.jpg" alt="" srcset=""></td>
+                <td rowspan="10"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset=""></td>
             </tr>
 
             <tr>
@@ -305,7 +305,7 @@
                 <td></td>
                 <td></td>
                 <td> </td>
-                <td class="small__font width__padrao border-right"><strong>CNPJ/MF Nroº : 343509150001.49</strong></td>
+                <td class="small__font width__padrao border-right"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
                 <td class="small__font border-top text-center border-left border-right font__destak text-bold last destaque">Valor a Pagar</td>
             </tr>
 
@@ -313,7 +313,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Rua:</strong> Nereu Ramos, 646 </td>
+                <td class="small__font width__padrao  border-right"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} </td>
                 <td class="small__font border-bottom text-center border-left border-right font__destak text-bold last destaque">R$ 999.999.999,99</td>
                 
             </tr>
@@ -322,7 +322,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Bairro:</strong> Jardim Eldorado</td>
+                <td class="small__font width__padrao  border-right"><strong>Bairro:</strong> {{$empresas->esbairro}}</td>
                 <td class="small__font text-center text-bold border-right border-left last">Período</td>
                 
             </tr>
@@ -331,7 +331,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Tel:</strong> (48) 3086-0103</td>
+                <td class="small__font width__padrao  border-right"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 <td class="small__font  border-right border-left border-bottom text-center last">00/00/0000 a 00/00/0000</td>
             </tr>
 
@@ -339,7 +339,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao  border-right"><strong>CEP:</strong>  88133-330 - SC</td>
+                <td class="small__font width__padrao  border-right"><strong>CEP:</strong>  {{$empresas->escep}} - {{$empresas->esuf}}</td>
                 <td class="small__font  border-right border-left border-bottom text-center text-bold last">Vencimento 00/00/0000</td>
             </tr>
 
@@ -347,7 +347,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Email:</strong>fulano@fulano.com</td>
+                <td class="small__font width__padrao  border-right"><strong>Email:</strong>{{$empresas->esemail}}</td>
                 <td class="small__font border-right border-left border-bottom text-center text-bold last">Nº Folha pgto: 00000</td>
             </tr>
 
@@ -357,45 +357,45 @@
 
         <table>
             <tr>
-                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">Nome do Tomador</td>
+                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">{{$tomadores->tsnome}}</td>
             </tr>
         </table>
 
         <table>
             <tr>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Matrícula:</strong> 000000</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>CNPJ:</strong> 00000000000000000</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Telefone: </strong>(00) 00000-0000</td>
+                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Matrícula:</strong> {{$tomadores->tsmatricula}}</td>
+                <td class="border-bottom border-right border-left border-top small__font padr"><strong>CNPJ:</strong> {{$tomadores->tscnpj}}</td>
+                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Telefone: </strong>{{$tomadores->tstelefone}}</td>
             </tr>
 
             <tr>
-                <td class="border-bottom border-right border-left border-top small__font cep"><strong>CEP:</strong> 00000-000</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Cidade:</strong>Palhoça</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>UF: </strong>SC</td>
+                <td class="border-bottom border-right border-left border-top small__font cep"><strong>CEP:</strong> {{$tomadores->escep}}</td>
+                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Cidade:</strong>{{$tomadores->esmunicipio}}</td>
+                <td class="border-bottom border-right border-left border-top small__font padr"><strong>UF: </strong>{{$tomadores->esuf}}</td>
             </tr>
         </table>
 
 
         <table>
             <tr>
-                <td class="border-top border-right border-bottom small__font border-left empresa"><strong>Endereço: </strong>Rua Qualquer, 999</td>
+                <td class="border-top border-right border-bottom small__font border-left empresa"><strong>Endereço: </strong>{{$tomadores->eslogradouro}}, {{$tomadores->esnum}}</td>
             </tr>
         </table>
         
         <table class="margin-top">
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">Produção</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">0,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[0]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[0]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[0]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">INSS Trabalhador</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">DSR</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">18,18</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[1]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[1]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[1]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">FGTS</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
@@ -411,18 +411,18 @@
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Férias</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[2]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[2]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[2]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Retênção</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">13º Salário</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[3]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[3]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[3]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Adiantamentos</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
@@ -438,18 +438,18 @@
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Férias Sindicato</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">1,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[4]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[4]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[4]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-top text-bold dsr destaque">Total Líquido</td>
                 <td class="small__font border-bottom border-top indice  text-center destaque"></td>
                 <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ 999.999.999,99</td>
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">13º Salário Sindicato</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">0,66</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[5]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[5]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[5]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-top text-bold dsr destaqueDark"></td>
                 <td class="small__font border-bottom border-top indice  text-center destaqueDark"></td>
                 <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaqueDark"></td>
@@ -457,9 +457,9 @@
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Taxa ADM/Trab.Avulso</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">1,99</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[6]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[6]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[6]->fivalor, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-top text-bold dsr destaqueDark"></td>
                 <td class="small__font border-bottom border-top indice  text-center destaqueDark"></td>
                 <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaqueDark"></td>
@@ -533,12 +533,12 @@
         <table class="margin-top">
             <tr>
                 <td class="text-bold small__font destaque border-top border-left border-bottom border-right text-center sefip">SEFIP</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FPAS:</strong> 515</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Terceiros:</strong> 0115</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>CNAE:</strong> 4711302</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FAP:</strong> 1,1700</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>RAT:</strong> 2,0</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Ajustado:</strong> 2,34</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FPAS:</strong> {{$tomadores->psfpas}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Terceiros:</strong> {{$tomadores->psfpasterceiros}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>CNAE:</strong> {{$tomadores->pscnae}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FAP:</strong> {{$tomadores->psfapaliquota}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>RAT:</strong> {{$tomadores->psconfpas}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Ajustado:</strong> {{$tomadores->psratajustados}}</td>
                 <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Trabalhadores:</strong>10000</td>
             </tr>
         </table>
@@ -584,9 +584,9 @@
 
         <table class="margin-top">
             <tr>
-                <td class="small__font text-center footer"><strong>Banco:</strong> 001 Banco do Brasil</td>
-                <td class="small__font text-center footer"><strong>Agência:</strong> 99999 9999</td>
-                <td class="small__font text-center footer"><strong>Conta:</strong> 9999999999999</td>
+                <td class="small__font text-center footer"><strong>Banco:</strong> {{$tomadores->bsbanco}}</td>
+                <td class="small__font text-center footer"><strong>Agência:</strong> {{$tomadores->bsagencia}}</td>
+                <td class="small__font text-center footer"><strong>Conta:</strong> {{$tomadores->bsconta}}</td>
             </tr>
         </table>
 
@@ -603,8 +603,8 @@
 
             <table class="margin-top">
                 <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">00/00/0000</td>
-                    <td class="fontDeclaracao data__ass  text-center cidade">Palhoça - SC</td>
+                <td class="fontDeclaracao data__ass  text-center cidade">{{date("d/m/y")}}</td>
+                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->esmunicipio}} - {{$empresas->esuf}}</td>
                 </tr>
             </table>
         </div>

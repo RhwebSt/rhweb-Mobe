@@ -117,7 +117,7 @@
                                 </ul>
                             </div>
                         </div>
-
+                        </form>
 
                         <div class="table-responsive-lg">
                             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -132,23 +132,36 @@
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
-
+                                @if(count($faturas) > 0)
+                                    @foreach($faturas as $fatura)
                                     <tr class="bodyTabela">  
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:60px;">521623</td>             
+                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:60px;">{{$fatura->tsmatricula}}</td>             
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 450px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe mao de obra" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>Mobe mao de obra </a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$fatura->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>{{$fatura->tsnome}}</a>
                                             </button>
                                         
                                         </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap">00/00/0000</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">00/00/0000</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:110px;">521</td>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap">
+                                            <?php
+                                                $data = explode('-',$fatura->fsinicio);
+                                            ?>
+                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">
+                                            <?php
+                                                $data = explode('-',$fatura->fsfinal);
+                                            ?>
+                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:110px;">
+                                            {{$fatura->fsnumero}}
+                                        </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                         
                                             <button class="btn" style="background-color:#53A548;">
-                                                <a href="" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fas fa-lg fa-print"></i></a>
-                                                </button>
+                                                <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fas fa-lg fa-print"></i></a>
+                                            </button>
                                         </td>                               
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                             
@@ -181,7 +194,8 @@
                                         </td>
                                     </td>
                                 </tr>
-
+                                @endforeach
+                            @else
 
                                 <tr>
                                     <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
@@ -190,13 +204,13 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            @endif
                                 </tbody>
                 
                             </table>
                         </div>
 
-                    </form> 
+                     
 
 
             </div>

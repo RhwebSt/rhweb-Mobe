@@ -48,6 +48,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
     Route::get('fatura','Fatura\\FaturaController@index');
     Route::post('fatura/gera','Fatura\\FaturaController@store')->name('fatura.gera');
+    Route::get('relatorio/fatura/{tomador}/{inicio}/{final}','Fatura\\FaturaController@relatorio')->name('fatura.relatorio');
 
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');

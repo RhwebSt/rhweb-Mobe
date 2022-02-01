@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFaturaDemostrativasTable extends Migration
+class CreateFaturaTotalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateFaturaDemostrativasTable extends Migration
      */
     public function up()
     {
-        Schema::create('fatura_demostrativas', function (Blueprint $table) {
+        Schema::create('fatura_totals', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('dsdescricao', 50)->nullable();
-            $table->float('fiindece',8,2)->nullable();
+            $table->char('fstitulo', 50)->nullable();
             $table->float('fivalor',8,2)->nullable();
-            $table->integer('primario')->unsigned()->nullable();
-            $table->foreign('primario')->references('id')->on('fatura_principals');
+            $table->integer('fatura')->unsigned()->nullable();
+            $table->foreign('fatura')->references('id')->on('faturas');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateFaturaDemostrativasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fatura_demostrativas');
+        Schema::dropIfExists('fatura_totals');
     }
 }

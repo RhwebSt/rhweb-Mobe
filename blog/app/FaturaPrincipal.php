@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class FaturaPrincipal extends Model
 {
     protected $fillable = [
-        'dsdescricao', 'fiindece', 'fivalor', 'tomador', 'empresa'
+        'dsdescricao', 'fiindece', 'fivalor', 'fatura'
     ];
     public function cadastro($dados)
     {
@@ -15,8 +15,13 @@ class FaturaPrincipal extends Model
             'dsdescricao'=>$dados['descricao'],
             'fiindece'=>$dados['indice'],
             'fivalor'=>$dados['valor'],
-            'tomador'=>$dados['tomador'],
-            'empresa'=>$dados['empresa'],
+            'fatura'=>$dados['fatura']
         ]);
+    }
+    public function buscaRelatorio($fatura)
+    {
+        return FaturaPrincipal::where('fatura',$fatura)
+        ->get();
+
     }
 }

@@ -191,30 +191,51 @@ class Tomador extends Model
         ->first();
     }
 
-    public function tomadorFatura($id)
+    public function tomadorFatura($tomador,$inicio,$final)
     {
         return DB::table('enderecos')
         ->join('tomadors', 'tomadors.id', '=', 'enderecos.tomador')
+        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
+        ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
         ->select(
+            'folhars.fscodigo',
             'tomadors.tsnome',
             'tomadors.tsmatricula',
             'tomadors.tscnpj',
             'tomadors.tstelefone',
+            'tomadors.empresa',
             'enderecos.escep',
             'enderecos.eslogradouro',
             'enderecos.esnum',
             'enderecos.esmunicipio',
-            'enderecos.esuf'
+            'enderecos.esuf',
+            'bancarios.bsbanco',
+            'bancarios.bsagencia',
+            'bancarios.bsoperacao',
+            'bancarios.bsconta',
+            'parametrosefips.psfpas',
+            'parametrosefips.psconfpas',
+            'parametrosefips.psgrps',
+            'parametrosefips.psresol',
+            'parametrosefips.pscnae',
+            'parametrosefips.psfapaliquota',
+            'parametrosefips.psrataaliquota',
+            'parametrosefips.psratajustados',
+            'parametrosefips.psfpasterceiros',
+            'parametrosefips.psaliquotaterceiros',
         )
-        ->where(function($query) use ($id){
+        ->where(function($query) use ($tomador,$inicio,$final){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tomadors.id',$id);
+                $query->where('tomadors.id',$tomador) 
+                ->whereDate('folhars.fsfinal', $final);
             }else{
                 $query->where([
-                    ['tomadors.id',$id],
+                    ['tomadors.id',$tomador],
                     ['tomadors.empresa', $user->empresa]
-                ]);
+                ])->whereDate('folhars.fsfinal', $final);
             }
            
         })
