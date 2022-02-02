@@ -17,4 +17,14 @@ class FaturaTotal extends Model
             'fatura'=>$dados['fatura']
         ]);
     }
+    public function buscaRelatorio($fatura)
+    {
+        return FaturaTotal::where('fatura',$fatura)
+        ->get();
+
+    }
+    public function deletarFatura($id)
+    {
+        return FaturaTotal::where('fatura',$id)->delete();
+    }
 }

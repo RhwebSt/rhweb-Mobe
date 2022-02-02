@@ -24,7 +24,7 @@
                         <button type="submit" id="incluir" class="btn botao" >
                             Incluir
                         </button>
-                        <button type="button" id="deletar" disabled class="btn botao  col-md-1 d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" id="deletar" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             Excluir
                         </button>
                         <button type="submit" id="atualizar" disabled class="btn botao" >
@@ -141,8 +141,10 @@
                     </div>
                     <div class="modal-footer" style="background-color: #fffdfd;">
                       <button type="button" class="btn text-white" data-bs-dismiss="modal" style="background-color:#1e53ff;">Fechar</button>
-                      <form action="">
-                      <a class="btn ms-2 text-white" href="#" role="button" style="background-color:#bb0202;">Deletar</a> 
+                      <form action=""  id="formdelete" method="post">
+                        @csrf
+                        @method('delete')
+                      <button class="btn ms-2 text-white" type="submit" role="button" style="background-color:#bb0202;">Deletar</button> 
                     </form> 
                     </div>
                   </div>
@@ -162,7 +164,7 @@
                        
                         if (data[0].user) {
                             $('#form').attr('action', "{{ url('inss')}}/"+data[0].user);
-                            // $('#formdelete').attr('action',"{{ url('inss')}}/"+data.user)
+                            $('#formdelete').attr('action',"{{ url('inss')}}/"+data[0].isano)
                             $('#incluir').attr('disabled','disabled')
                             $('#atualizar').removeAttr( "disabled" )
                             $('#deletar').removeAttr( "disabled" )

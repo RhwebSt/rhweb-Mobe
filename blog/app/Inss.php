@@ -35,4 +35,8 @@ class Inss extends Model
     {
         return Inss::where('isano',$id)->get();
     }
+    public function deletar($id)
+    {
+        return Inss::where('isano',$id)->delete();
+    }
 }

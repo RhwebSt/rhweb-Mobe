@@ -24,4 +24,8 @@ class FaturaPrincipal extends Model
         ->get();
 
     }
+    public function deletarFatura($id)
+    {
+        return FaturaPrincipal::where('fatura',$id)->delete();
+    }
 }

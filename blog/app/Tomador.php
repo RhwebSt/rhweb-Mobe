@@ -225,6 +225,34 @@ class Tomador extends Model
             'parametrosefips.psratajustados',
             'parametrosefips.psfpasterceiros',
             'parametrosefips.psaliquotaterceiros',
+             DB::raw('count(base_calculos.trabalhador) as trabalhador')
+        )
+        ->groupBy(
+            'folhars.fscodigo',
+            'tomadors.tsnome',
+            'tomadors.tsmatricula',
+            'tomadors.tscnpj',
+            'tomadors.tstelefone',
+            'tomadors.empresa',
+            'enderecos.escep',
+            'enderecos.eslogradouro',
+            'enderecos.esnum',
+            'enderecos.esmunicipio',
+            'enderecos.esuf',
+            'bancarios.bsbanco',
+            'bancarios.bsagencia',
+            'bancarios.bsoperacao',
+            'bancarios.bsconta',
+            'parametrosefips.psfpas',
+            'parametrosefips.psconfpas',
+            'parametrosefips.psgrps',
+            'parametrosefips.psresol',
+            'parametrosefips.pscnae',
+            'parametrosefips.psfapaliquota',
+            'parametrosefips.psrataaliquota',
+            'parametrosefips.psratajustados',
+            'parametrosefips.psfpasterceiros',
+            'parametrosefips.psaliquotaterceiros',
         )
         ->where(function($query) use ($tomador,$inicio,$final){
             $user = auth()->user();

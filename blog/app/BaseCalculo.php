@@ -72,7 +72,6 @@ class BaseCalculo extends Model
             'bivalorvencimento'=>$dados->valorvencimento,
             'bivalordesconto'=>$dados->valordesconto,
             'trabalhador'=>$dados->trabalhador,
-            'tomador'=>1,
             'folhar'=>$folhar,
             'created_at'=>$dados->created_at
         ]);
@@ -94,6 +93,14 @@ class BaseCalculo extends Model
         ->whereIn('trabalhador',$trabalhador)
         ->whereBetween('base_calculos.created_at',[$datainicio, $datafinal])
         ->get();
+    }
+    public function editerFk($tomador,$data,$folhar)
+    {
+        return BaseCalculo::whereIn('tomador',$tomador)
+        ->whereDate('created_at', $data)
+        ->update([
+            'folhar'=>$folhar
+        ]);
     }
     public function deletar($id)
     {

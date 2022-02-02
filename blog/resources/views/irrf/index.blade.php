@@ -60,7 +60,7 @@
                     <button type="submit" id="incluir" class="btn botao" >
                         Incluir
                     </button>
-                    <button type="button" id="deletar" disabled class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+                    <button type="button" id="deletar" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                         Excluir
                     </button>
                     <button type="submit" id="atualizar" disabled class="btn botao" >

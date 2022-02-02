@@ -24,4 +24,8 @@ class FaturaSecundaria extends Model
         ->get();
 
     }
+    public function deletarFatura($id)
+    {
+        return FaturaSecundaria::where('fatura',$id)->delete();
+    }
 }

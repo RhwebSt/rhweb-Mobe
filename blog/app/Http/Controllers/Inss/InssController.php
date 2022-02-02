@@ -224,6 +224,12 @@ class InssController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inss = new Inss;
+        try {
+            $inss->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+        }
     }
 }

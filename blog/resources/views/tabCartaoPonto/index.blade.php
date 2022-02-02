@@ -22,7 +22,7 @@
                         
                         Toast.fire({
                           icon: 'success',
-                          title: '{{ $message }}'
+                          title: '{{ session("success") }}'
                         })
                     </script>
                 @endif
@@ -229,7 +229,13 @@
                                 </tr>
                                 @endif
                                 </tbody>
-                
+                            <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $lancamentotabelas->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                 

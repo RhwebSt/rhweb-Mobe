@@ -493,6 +493,21 @@ class ValorCalculo extends Model
         ->whereDate('base_calculos.created_at', $dados['ano_final'])
         ->get();
     }
+    public function producaoFaturaIn($dados)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw(
+            'SUM(valor_calculos.vireferencia) as referencia,
+            valor_calculos.vicodigo'
+        )
+        ->groupBy('valor_calculos.vicodigo')
+        ->where('base_calculos.tomador',$dados['tomador'])
+        ->whereBetween('valor_calculos.vicodigo',[1000,1007])
+        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->get();
+    }
     public function rublicasFatura($dados)
     {
         return DB::table('folhars')

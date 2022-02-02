@@ -59,4 +59,8 @@ class Fatura extends Model
         })
         ->first();
     }
+    public function deletar($id)
+    {
+        return Fatura::where('id',$id)->delete();
+    }
 }

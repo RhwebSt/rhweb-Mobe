@@ -42,8 +42,6 @@
     }
 
     table{
-     
-      width:100%;
       margin: 0;
       padding: 0;
       text-transform: capitalize;
@@ -53,36 +51,36 @@
     }
 
     .matricula{
-      width:50px;
+      width:57px;
     }
 
     .matricula2{
-        width:52.7px;
+        width:55.5px;
     }
 
     .nome{
-      width:260px;
+      width:467px;
     }
 
     .nome2{
-      width:260px;
+      width:290px;
       border-right: 1px solid;
     }
 
     .cnpj{
-      width:93px;
+      width:120px;
     }
 
     .cnpj2{
-        width:px;
+        width:60px;
     }
 
     .telefone{
-      width:60px;
+      width:102px;
     }
 
     .telefone2{
-        width:px;
+        width:40px;
     }
 
     .nasc{
@@ -196,7 +194,7 @@
     }
 
     .name__title{
-        width: 758px;
+        width: 767px;
     }
 
 
@@ -252,7 +250,7 @@
             
             <tr>
                 <td></td>
-                <td class="text-bold">ROL DOS TOMADORES - ORDEM ALFABÉTICA</td>
+                <td class="text-bold text-center">ROL DOS TOMADORES - ORDEM ALFABÉTICA</td>
             </tr>
         </table>
     </div>
@@ -283,8 +281,8 @@
             <table>
                 @foreach($tomadores as $tomador)
                 <tr class="bottom">
-                    <td class="matricula2 small__font border-right border-top text-center border-left border-bottom uppercase">{{$tomador->tsmatricula}}</td>
-                    <td class="nome2 small__font border-right border-left border-bottom border-top text-center  uppercase">{{$tomador->tsnome}}</td>
+                    <td class="matricula small__font border-right border-top text-center border-left border-bottom uppercase">{{$tomador->tsmatricula}}</td>
+                    <td class="nome small__font border-right border-left border-bottom border-top  uppercase">{{$tomador->tsnome}}</td>
                     <td class="cnpj small__font border-right border-left border-bottom text-center border-top  uppercase">{{$tomador->tscnpj}}</td>
                     <td class="telefone small__font border-right border-left border-bottom text-center border-top  uppercase">{{$tomador->tstelefone}}</td>
                 </tr>

@@ -205,6 +205,10 @@
                                           ?>
                                           {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                         </td>
+                                        
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
+                                         
+                                        </td>
 
                                         <td class="col text-center border-bottom text-nowrap" style="width:120px">
                                           {{$lancamentotabela->lsferiado}}
@@ -219,7 +223,6 @@
                                                 <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                                             </form> 
                                             </td>
-                                        </td>
                                     </tr>
                                     @endforeach
                                     @else

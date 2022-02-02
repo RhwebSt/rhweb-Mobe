@@ -47,26 +47,33 @@
     <body  class="body-content">
         
         
-    <!--<script>-->
-    <!--    const Toast = Swal.mixin({-->
-    <!--      toast: true,-->
-    <!--      position: 'top-end',-->
-    <!--      background: '#F2F6F8' ,-->
-    <!--      showConfirmButton: false,-->
-    <!--      padding: 25,-->
-    <!--      timer: 4000,-->
-    <!--      width: 500,-->
-    <!--      timerProgressBar: true,-->
-    <!--      didOpen: (toast) => {-->
-    <!--        toast.addEventListener('mouseenter', Swal.stopTimer)-->
-    <!--        toast.addEventListener('mouseleave', Swal.resumeTimer)-->
-    <!--      }-->
-    <!--    })-->
-        
-    <!--    Toast.fire({-->
-    <!--      html:'<p style="color:black;"><i class="fas fa-xl fa-user-circle" style="color: black;"></i>  Seja bem vindo (Nome).</p>',-->
-    <!--    })-->
-    <!--</script>    -->
+    <script>
+      
+        if (!localStorage.getItem('bemvindo')) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+                background: '#F2F6F8' ,
+                showConfirmButton: false,
+                padding: 25,
+                timer: 4000,
+                width: 500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                html:'<p style="color:black;"><i class="fas fa-xl fa-user-circle" style="color: black;"></i>  Seja bem vindo {{$user->name}}.</p>',
+              })
+        }
+        localStorage.setItem('bemvindo',1)
+        function bemvindo() {
+          localStorage.removeItem('bemvindo')
+        }
+    </script>   
         
         
     <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
@@ -199,7 +206,7 @@
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus dados</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Alterar Foto</a></li>
-                        <li><a class="dropdown-item" href="{{route('logout')}}">Sair</a></li>
+                        <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
                       </ul>
                     </div>
                   </div>
@@ -223,6 +230,13 @@
     
     </main>
     
+        
+        <!--<div class="d-flex align-items-center">-->
+        <!--    <div class="fixed-bottom mb-5 ms-5 align-items-end ms-auto">-->
+        <!--      <button type="submit" class="btn btn-success"><i class="fas fa-comment-dots"></i></button>-->
+        <!--    </div>-->
+        <!--</div>-->
+    
     <footer>
         <p class="text-nowrap">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
     </footer>
@@ -239,6 +253,9 @@
     <script type="text/javascript" src="{{url('/js/categoriatrabalhador.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/criptografa.js')}}"></script>
     <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
+    <script src="">
+     
+    </script>
    
   </body>
 </html>

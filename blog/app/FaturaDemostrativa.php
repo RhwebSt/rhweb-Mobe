@@ -12,9 +12,19 @@ class FaturaDemostrativa extends Model
     public function cadastro($dados)
     {
         return FaturaDemostrativa::create([
-            'fsdescricao'=>$dados['descricao'],
+            'dsdescricao'=>$dados['descricao'],
             'fivalor'=>$dados['valor'],
             'fatura'=>$dados['fatura']
         ]);
+    }
+    public function buscaRelatorio($fatura)
+    {
+        return FaturaDemostrativa::where('fatura',$fatura)
+        ->get();
+
+    }
+    public function deletarFatura($id)
+    {
+        return FaturaDemostrativa::where('fatura',$id)->delete();
     }
 }

@@ -39,6 +39,7 @@ class calculoFolhaGeralController extends Controller
          
         $dias = [];
         $trabalhado_cal_folha = [];
+        $tomador_cal_folha = [];
         $tabelapreco_codigo = [];
         $numerofolhar = 0;
         $trabalhado = new Trabalhador;
@@ -73,9 +74,11 @@ class calculoFolhaGeralController extends Controller
             }
         }
         $tomadores = $tomador->buscaListaTomador($user->empresa);
-
         $quantidadetomador = count($tomadores);
         foreach ($tomadores as $t => $tomador_id) {
+            if (!in_array($tomador_id->id,$tomador_cal_folha)) {
+                array_push($tomador_cal_folha,$tomador_id->id);
+            }
             $funcionario = [];
             $cartaoponto_diarias = [
                 'campos'=>[
@@ -1021,7 +1024,7 @@ class calculoFolhaGeralController extends Controller
             }
              
             if (($quantidadetomador - 1) === $t) {
-                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal);
+                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tomador_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal);
                 return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
                 if ($calculofolhar) {
                     return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
@@ -1032,7 +1035,7 @@ class calculoFolhaGeralController extends Controller
        
         
     }
-    public function calculoFolhar($trabalhador,$tabelapreco_codigo,$datainicio,$datafinal)
+    public function calculoFolhar($trabalhador,$tomador,$tabelapreco_codigo,$datainicio,$datafinal)
     {
         
         $basecalculo = new BaseCalculo;
@@ -1053,6 +1056,7 @@ class calculoFolhaGeralController extends Controller
             'inicio'=>$datainicio,
             'final'=>$datafinal
         ];
+    
         $descontos = $desconto->buscaRelatorioTrabalhador($trabalhador,$datainicio,$datafinal);
         $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
         $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
@@ -1073,7 +1077,9 @@ class calculoFolhaGeralController extends Controller
                 $folhas = $folhar->cadastro($dados_folhar,$user->empresa);
             }
         } 
+        $basecalculo->editerFk($tomador,$datafinal,$folhas['id']);
         $basecalculos = $basecalculo->calculoLista($trabalhador,$datafinal);
+        // dd($basecalculos);
         $inss_valores = $valorcalculo->buscaInss($trabalhador,$datafinal);
         $inss13_valores = $valorcalculo->buscaInss13($trabalhador,$datafinal);
         // dd($inss_valores,$inss13_valores,$basecalculos);

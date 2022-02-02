@@ -166,16 +166,18 @@
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                             
                                             
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#FF331F">
+                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$fatura->id}}" style="background-color:#FF331F">
                                                 <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
                                             </button>
                                             
                                             <!-- Modal -->
-                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" id="staticBackdrop{{$fatura->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action="" id="formdelete" method="post">
+                                                    <form action="{{route('fatura.deleta',$fatura->id)}}" id="formdelete" method="post">
                                                         <div class="modal-header modal__delete">
+                                                        @csrf
+                                                        @method('delete')
                                                         <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
                                                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>

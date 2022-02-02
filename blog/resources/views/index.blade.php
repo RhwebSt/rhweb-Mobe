@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content=" Empresa com o foco em desenvolvimento de software para web" />
-        <meta name="author" content="José Luis da costa soares"/>
+        <meta name="author" content="José Luis da costa soares, Eliel Felipe dos Santos Rocha"/>
         <meta name="keywords" content="recursos humanos, software, software web, e-social, sistemas inteligentes, sistemas, sindicato, desenvolvimento de software">
         <meta name="copyright" content="© 2022 RHWeb sistemas inteligentes" />
         <title>RHWEB - Sistemas Inteligentes</title>
