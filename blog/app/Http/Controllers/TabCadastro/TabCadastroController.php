@@ -28,6 +28,11 @@ class TabCadastroController extends Controller
      */
     public function create($quantidade,$boletim,$tomador,$id,$data)
     {
+        $quantidade = base64_decode($quantidade);
+        $boletim = base64_decode($boletim);
+        $tomador = base64_decode($tomador);
+        $id = base64_decode($id);
+        $data = base64_decode($data);
         $user = Auth::user(); 
         $lancamentorublica = new Lancamentorublica;
         $lista = $lancamentorublica->listacadastro($id);
@@ -52,7 +57,7 @@ class TabCadastroController extends Controller
             $dados['lancamento'], 
             $dados['data'] 
         ];
-        try {  
+          
             $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
            
             if ($lancamentorublicas) {
@@ -79,8 +84,9 @@ class TabCadastroController extends Controller
             }else{
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
+            try {
        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possivél realizar o cadastro.']);
        }
     }
 
@@ -110,6 +116,7 @@ class TabCadastroController extends Controller
        $lista = $lancamentorublica->listacadastro($id);
     
        $lancamentorublicas = $lancamentorublica->buscaUnidadeRublica($trabalhador);
+    //    dd($lancamentorublicas);
        return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data'));
     }
 
@@ -124,27 +131,35 @@ class TabCadastroController extends Controller
     {
         $dados = $request->all();
         $lancamentorublica = new Lancamentorublica;
-        $novodados = [
-            $dados['numtrabalhador'],
-            $dados['boletim'],
-            $dados['tomador'],
-            $dados['lancamento'],
-            $dados['data']
-        ];
-        $validator = Validator::make($request->all(), [
+        // $novodados = [
+        //     $dados['numtrabalhador'],
+        //     $dados['boletim'],
+        //     $dados['tomador'],
+        //     $dados['lancamento'],
+        //     $dados['data']
+        // ];
+        // $validator = Validator::make($request->all(), [
+        //     'nome__completo' => 'required',
+        //     'matricula'=>'required|max:4',
+        //     'rubrica'=>'required|max:60',
+        //     'quantidade'=>'required'
+        // ]);
+        $request->validate([
             'nome__completo' => 'required',
             'matricula'=>'required|max:4',
             'rubrica'=>'required|max:60',
             'quantidade'=>'required'
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
-        }
-        try {
+        // if ($validator->fails()) { 
+        //     return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
+        // }
+        
             $lancamentorublica->editar($dados,$id);
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso.']);
+            // return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso.']);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            try {
         } catch (\Throwable $th) {
-            echo('Não foi porssivél realizar o cadastro.');
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
       
     }

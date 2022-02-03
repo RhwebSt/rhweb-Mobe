@@ -135,7 +135,7 @@ class Empresa extends Model
     }
     public function editar($dados,$id)
     {
-        return Empresa::where('id', $id)
+        return Empresa::where('id', $id) 
         ->update([
             'esnome'=>$dados['esnome'],
             'esfoto'=>$dados['foto'],

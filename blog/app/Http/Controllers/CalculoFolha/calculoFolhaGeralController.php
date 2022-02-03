@@ -1410,10 +1410,13 @@ class calculoFolhaGeralController extends Controller
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
         $folhas = $folhar->buscaLista($id);
-        
+    
+        if (!$folhas) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+        }
         $basecalculo_id = [];
         foreach ($folhas as $key => $folhar) {
-            array_push($basecalculo_id,$folhar->id);
+            array_push($basecalculo_id,$folhar->id); 
         }
         $valorcalculos = $valorcalculo->buscaImprimir($basecalculo_id);
         $relacaodias = $relacaodia->buscaImprimir($basecalculo_id);

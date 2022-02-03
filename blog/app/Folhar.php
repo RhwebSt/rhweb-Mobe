@@ -71,10 +71,16 @@ class Folhar extends Model
         ->where(function($query) use ($id){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('folhars.id',$id);
+                $query->where([
+                    ['folhars.id',$id],
+                    ['base_calculos.tomador',null],
+                    ['base_calculos.bivalorliquido','>',0]
+                ]);
             }else{
                 $query->where([
                     ['folhars.id',$id],
+                    ['base_calculos.tomador',null],
+                    ['base_calculos.bivalorliquido','>',0],
                     ['trabalhadors.empresa', $user->empresa]
                 ]);
             }
@@ -125,12 +131,14 @@ class Folhar extends Model
                 $query->where([
                     ['folhars.id',$id],
                     ['trabalhadors.tsnome',$trabalhador],
-                    ['trabalhadors.empresa', $empresas]
+                    // ['trabalhadors.empresa', $empresas],
+                    ['base_calculos.tomador',null]
                 ]);
             }else{
                 $query->where([
                     ['folhars.id',$id],
                     ['trabalhadors.tsnome',$trabalhador],
+                    ['base_calculos.tomador',null],
                     ['trabalhadors.empresa', $user->empresa]
                 ]);
             }
@@ -176,7 +184,50 @@ class Folhar extends Model
         })
         ->get();
     }
-    public function buscaFolhaAnalitica($id)
+    public function buscaListaRublica($dados)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->select(
+            'folhars.fscodigo',
+            'folhars.fsinicio', 
+            'folhars.fsfinal',
+            'empresas.esnome',
+            'empresas.escnpj',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.tscpf',
+            'valor_calculos.vicodigo',
+            'valor_calculos.vireferencia',
+            'valor_calculos.vsdescricao',
+            'valor_calculos.vivencimento'
+        )
+        ->where(function($query) use ($dados){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['folhars.id',$dados['folharublica']],
+                    ['valor_calculos.vsdescricao',$dados['rublica']],
+                    ['base_calculos.tomador',null]
+                    // ['trabalhadors.empresa', $dados['empresarublica']]
+                ])
+                ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
+            }else{
+                $query->where([
+                    ['folhars.id',$dados['folharublica']],
+                    ['valor_calculos.vsdescricao',$dados['rublica']],
+                    ['trabalhadors.empresa', $dados['empresarublica']],
+                    ['base_calculos.tomador',null]
+                ])
+                ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
+            }
+        })
+        ->get();
+    }
+    public function buscaFolhaAnalitica($id) 
     {
         return DB::table('empresas')
         ->join('folhars', 'empresas.id', '=', 'folhars.empresa')

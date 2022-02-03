@@ -1,9 +1,11 @@
 
 @extends('layouts.index')
 @section('conteine')
+
+    <div class="container">
         <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
             <li class="nav-item ms-2 " role="presentation">
-            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-calculator-alt"></i>Gerar Fatura <i class="fas fa-file-invoice-dollar"></i></button>
+            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;">Gerar Fatura <i class="fas fa-file-invoice-dollar"></i></button>
             </li>
             <li class="nav-item ms-1 pillstop" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fas fa-list"></i> Lista de Faturas</button>
@@ -218,6 +220,7 @@
             </div>
 
         </div>
+    </div>
         
         </main>
 

@@ -327,7 +327,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
-                                <tbody style="">
+                                <tbody >
                                     @if(count($folhas) > 0)
                                         @foreach($folhas as $folhar)
                                         <tr class="bodyTabela">               
@@ -405,15 +405,15 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
-                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample2" role="button" aria-controls="offcanvasExample2" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#rublica{{$folhar->id}}" role="button" aria-controls="rublica" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
                                                 <i class="fas fa-file-signature" style="color: white;"></i>
                                                 </a>
-                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample2" aria-labelledby="offcanvasExampleLabel2">
+                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="rublica{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                                     <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Rùbrica <i class="fas fa-file-signature"></i></h5>
                                                     <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                                 </div>
-                                                <form action="" method="post">
+                                                <form action="{{route('calculo.folha.rublica.imprimir')}}" method="post">
                                                     @csrf
                                                     <div class="offcanvas-body">
                                                         <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Rúbrica <i class="fas fa-search"></i></h1>
@@ -422,11 +422,13 @@
                                                             
                                                             <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
                                                                 <div class="d-flex">
-                                                                <input type="hidden" name="folharbanco" value="">
-                                                                <input type="hidden" name="empresabanco" value="">
+                                                                <input type="hidden" name="folharublica" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresarublica" value="{{$user->empresa}}">
+                                                                <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
+                                                                <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
                                                                 <label for="exampleDataList" class="form-label"></label>
-                                                                <input class="form-control fw-bold text-dark banco" list="listabanco" name="banco" id="pesquisa">
-                                                                <datalist id="">
+                                                                <input class="form-control fw-bold text-dark pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="">
+                                                                <datalist id="listarublica{{$folhar->fscodigo}}">
                                                                    
                                                                 </datalist>
                                                                 <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
@@ -455,10 +457,10 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
-                                                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample2{{$folhar->id}}" role="button" aria-controls="offcanvasExample2" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#banco{{$folhar->id}}" role="button" aria-controls="banco" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
                                                 <i class="fal fa-file-invoice-dollar" style="color: white;"></i>
                                                 </a>
-                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample2{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
+                                                <div class="offcanvas offcanvas-end" tabindex="-1" id="banco{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                                     <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-file-invoice-dollar"></i></h5>
                                                     <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -669,6 +671,35 @@
                         }
                     })
                    
+                })
+                $('.pesquisarublica').on('focus keyup',function() {
+                    let dados = 0;
+                    if ($(this).val()) {
+                        dados = $(this).val()
+                    }
+                    // console.log($(this).attr('data-id'));
+                    let id = $(this).attr('data-id');
+                    $.ajax({
+                        url: "{{url('rublica/pesquisa')}}/"+dados,
+                        type: 'get',
+                        contentType: 'application/json',
+                        async:false,
+                        success: function(data) {
+                           
+                            let nome = ''
+                            if (data.length >= 1) {
+                                data.forEach(element => {
+                                nome += `<option value="${element.rsdescricao}">`
+                                // nome += `<option value="${element.rsrublica}">`
+                                });
+                            $(`#listarublica${id}`).html(nome)
+                            // $(this).next().html(nome)
+                            }
+                            // if(data.length === 1 && dados.length >= 4){
+                            //     buscaItem(dados)
+                            // }
+                        }
+                    })
                 })
                 $('#pesquisatrabalhador').on('keyup focus',function () {
                     let dados = 0;

@@ -459,7 +459,12 @@ class calculoFolhaPorTrabalhadorController extends Controller
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
         $folhars = $folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],$dados['empresa']);
-        
+        if (!$folhars) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+        }
+        if ($folhars->bivalorliquido <= 0) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não possui valor suficiente.']);
+        }
         $valorcalculos = $valorcalculo->buscaImprimirTrabalhador($folhars->id);
         $relacaodias = $relacaodia->buscaImprimirTrabalhador($folhars->id);
         $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','valorcalculos','relacaodias'));

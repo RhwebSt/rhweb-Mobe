@@ -53,9 +53,9 @@
             </script>
         @enderror  
         <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço</h1>
-        <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.store')}}">
+        <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.update',$lancamentorublicas->id)}}">
         @csrf
-        <input type="hidden" id="method" name="_method" value="">
+        <input type="hidden" id="method" name="_method" value="put">
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                 <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
@@ -65,8 +65,8 @@
               
             <input type="hidden" name="lancamento" value="{{$id}}">
             <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
-            <input type="hidden" name="valor" id="valor">
-            <input type="hidden" name="lftomador" id="lftomador">
+            <input type="hidden" name="valor" id="valor" value="{{$lancamentorublicas->lfvalor}}">
+            <input type="hidden" name="lftomador" id="lftomador" value="{{$lancamentorublicas->lftomador}}">
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
             <input type="hidden" name="data" value="{{$data}}">
@@ -85,7 +85,7 @@
                 </datalist>
             </div>
             
-            <input type="hidden" name="trabalhador" id="trabalhador">
+            <input type="hidden" name="trabalhador" id="trabalhador" value="{{$lancamentorublicas->trabalhador}}">
             
             <div class="col-md-2 input">
                 <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock"></i></label>

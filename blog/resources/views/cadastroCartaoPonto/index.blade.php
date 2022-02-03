@@ -52,7 +52,23 @@
                 })
             </script>
         @enderror
-        
+            
+            <!--<script>-->
+            <!--    Swal.fire({-->
+            <!--          title: '<strong>Boletim Cartão Ponto</strong>',-->
+            <!--          html:-->
+            <!--            'Você deseja entrar no boletim? ',-->
+            <!--          showCloseButton: true,-->
+            <!--          showCancelButton: true,-->
+            <!--          focusConfirm: false,-->
+            <!--          confirmButtonText:-->
+            <!--            'Sim <i class="far fa-check-circle"></i>',-->
+            <!--            confirmButtonColor: "#1A7552",-->
+            <!--          cancelButtonText:-->
+            <!--            'Não <i class="far fa-times-circle"></i>',-->
+            <!--            cancelButtonColor: "#CA2B3B",-->
+            <!--        })-->
+            <!--</script>-->
              
 
               <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
@@ -65,14 +81,15 @@
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
-                            <button type="submit" id="incluir" class="btn botao">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
+                            <button type="submit" id="incluir" class="btn botao">Incluir <i class="fas fa-save"></i></button>
+                            <button type="submit" id="atualizar" disabled class="btn botao">Boletim <i class="fas fa-door-open"></i></button>
+                            <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fas fa-edit"></i></button>
                             <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                              Excluir
+                              Excluir <i class="fas fa-trash"></i>
                           </button>
                           
                    
-                        <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                        <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fas fa-sign-out-alt"></i></a>
                       </div>
                   </div>
                     

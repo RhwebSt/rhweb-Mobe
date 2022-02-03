@@ -74,6 +74,19 @@ class Endereco extends Model
             'esnum'=>$dados['numero'],
         ]);
     }
+    public function editarEmpresa($dados,$id)
+    {
+        return Endereco::where('empresa', $id)
+        ->update([
+            'eslogradouro'=>$dados['logradouro'],
+            'esbairro'=>$dados['bairro'],
+            'escep'=>$dados['cep'],
+            'esmunicipio'=>$dados['localidade'],
+            'esuf'=>$dados['uf'],
+            'escomplemento'=>$dados['complemento__endereco'],
+            'esnum'=>$dados['numero'],
+        ]);
+    }
     
     public function deletar($id)
     {

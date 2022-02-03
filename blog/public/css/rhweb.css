@@ -85,22 +85,34 @@ main{
     flex: 1 0 auto;
 }
 
-form input[type="text"] {
-            text-transform: uppercase;
-            color:black !important;
-            font-weight: bold !important;
-            margin-left: 0 !important;
-        }
-
-
-input:hover{
-    border-color: #4f29f89a;
-    border-radius: 5px;
-    box-shadow: var(--input-hover);
-    transition:  ease-in-out .4s;
-    margin-left: 0 !important;
-
+.swal2-file{
+    background-color:red;
 }
+
+.swal2-file:hover{
+    border-color:none;
+    border-radius:none;
+    box-shadow:none;
+    transition:none;
+    margin-left:none;
+}
+
+/*form input[type="text"] {*/
+/*            text-transform: uppercase;*/
+/*            color:black !important;*/
+/*            font-weight: bold !important;*/
+/*            margin-left: 0 !important;*/
+/*        }*/
+
+
+/*input:hover{*/
+/*    border-color: #4f29f89a;*/
+/*    border-radius: 5px;*/
+/*    box-shadow: var(--input-hover);*/
+/*    transition:  ease-in-out .4s;*/
+/*    margin-left: 0 !important;*/
+
+/*}*/
 
 
 

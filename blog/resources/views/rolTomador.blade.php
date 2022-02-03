@@ -237,10 +237,8 @@
     <div id="header">
         
         <p class="title-data">
-         <?php
-            $today = date("m/d/y"); 
-          ?>
-         Data: {{$today}}
+       
+         Data: {{date("d/m/y")}}
     </p>
     <div class="borderT widthHeader margin-top">
         <table>

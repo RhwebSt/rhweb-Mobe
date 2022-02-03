@@ -272,16 +272,16 @@
                     <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
                     <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
                     <td class="small__font border-left text-center referencia text-bold border-bottom">
-                        {{number_format((float)$valorcalculo->vireferencia, 2, ',', '')}}
+                        {{number_format((float)$valorcalculo->vireferencia, 2, ',', '.')}}
                     </td>
                     <td class="small__font border-left text-center vencimentos text-bold border-bottom">
                         @if($valorcalculo->vivencimento)
-                            {{number_format((float)$valorcalculo->vivencimento, 2, ',', '')}}
+                            {{number_format((float)$valorcalculo->vivencimento, 2, ',', '.')}}
                         @endif
                     </td>
                     <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
                         @if($valorcalculo->videscinto)
-                            {{number_format((float)$valorcalculo->videscinto, 2, ',', '')}}
+                            {{number_format((float)$valorcalculo->videscinto, 2, ',', '.')}}
                         @endif
                     </td>
                 </tr>
@@ -298,14 +298,14 @@
 
         <tr>
             <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
-            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhars->bivalorvencimento, 2, ',', '')}}</td>
-            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhars->bivalordesconto, 2, ',', '')}}</td>
+            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhars->bivalorvencimento, 2, ',', '.')}}</td>
+            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhars->bivalordesconto, 2, ',', '.')}}</td>
         </tr>
 
         <tr>
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$folhars->bivalorliquido, 2, ',', '')}}</td>
+            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$folhars->bivalorliquido, 2, ',', '.')}}</td>
         </tr>
     </table>
 
@@ -322,13 +322,13 @@
         </tr>
 
         <tr>
-        <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$folhars->biservico, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$folhars->biservicodsr, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$folhars->biinss, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$folhars->bifgts, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$folhars->bifgtsmes, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhars->biirrf, 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$folhars->bifaixairrf, 2, ',', '')}}</td>
+        <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$folhars->biservico, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$folhars->biservicodsr, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$folhars->biinss, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$folhars->bifgts, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$folhars->bifgtsmes, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhars->biirrf > 0 ? $folhars->biirrf : 0, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$folhars->bifaixairrf, 2, ',', '.')}}</td>
             <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$folhars->binumfilhos}}</td>
         </tr>
     </table>
@@ -359,7 +359,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
             @foreach($relacaodias as $r => $relacaodia)
                     @if($relacaodia->rsdia === '01' && $relacaodia->basecalculo === $folhar->id)
-                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                     @endif
                 @endforeach
             </td>
@@ -367,7 +367,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                     @if($relacaodia->rsdia === '09' && $relacaodia->basecalculo === $folhar->id)
-                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                     @endif
                 @endforeach
             </td>
@@ -375,7 +375,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                     @if($relacaodia->rsdia === '17' && $relacaodia->basecalculo === $folhar->id)
-                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                     @endif
                 @endforeach
             </td>
@@ -383,7 +383,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '25' && $relacaodia->basecalculo === $folhar->id)
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -394,7 +394,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                     @if($relacaodia->rsdia === '02')
-                        {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                     @endif
                 @endforeach
             </td>
@@ -402,7 +402,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '10')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -410,7 +410,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '18')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -418,7 +418,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '26')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -430,7 +430,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '03')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -438,7 +438,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '11')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -446,7 +446,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '19')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -454,7 +454,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '27')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -465,7 +465,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '04')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -473,7 +473,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '12')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -481,7 +481,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '20')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -489,7 +489,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '28')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -500,7 +500,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '05')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -508,7 +508,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '13')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -516,7 +516,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '21')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -524,7 +524,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '29')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -535,7 +535,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '06')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -543,7 +543,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '14')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -551,7 +551,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '22')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -559,7 +559,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '30')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -570,7 +570,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '07')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -578,7 +578,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '15')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -586,7 +586,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '23')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -594,7 +594,7 @@
             <td  class="text-center border-left small__font border-bottom border-right valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '31')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -605,7 +605,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '08')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -613,7 +613,7 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '16')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
@@ -621,12 +621,12 @@
             <td  class="text-center border-left small__font border-bottom valor">
                 @foreach($relacaodias as $r => $relacaodia)
                         @if($relacaodia->rsdia === '24')
-                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
                         @endif
                 @endforeach
             </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
-            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">{{number_format((float)$folhars->bitotaldiaria, 2, ',', '')}}</td>
+            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">{{number_format((float)$folhars->bitotaldiaria, 2, ',', '.')}}</td>
         </tr>    
        
     </table>

@@ -101,6 +101,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');
     Route::get('analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaController@calculoFolhaAnalitica')->name('calculo.folha.analitica');
     Route::post('imprimir/calculo/folha/banco','CalculoFolha\\relatorioBancoController@imprimirBanco')->name('calculo.folha.banco.imprimir');
+    Route::post('imprimir/calculo/folha/rublica','CalculoFolha\\relatorioRublicaCFController@imprimir')->name('calculo.folha.rublica.imprimir');
 
     Route::get('foto/index','Empresa\\PerfilController@indexFoto')->name('foto.index');
     Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer');

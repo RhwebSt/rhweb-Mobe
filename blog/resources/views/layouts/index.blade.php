@@ -150,30 +150,18 @@
                           </li>
                         </ul>
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                          <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Faturas
-                              </a>
-                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-secundary" href="{{ url('fatura') }}">Recibos</a></li>
-                              <li><a class="dropdown-item d-none" href="#">Rol dos recibos</a></li>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                  <a class="nav-link text-white" href="{{ url('fatura') }}">Fatura</a>
+                                </li>
                             </ul>
-                          </li>
-                        </ul>
 
 
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Recibo Avulsos
-                              </a>
-                              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                              <li><a class="dropdown-item border-secundary" href="{{ url('comprovantepagamento') }}">Recibos</a></li>
-                              <li><a class="dropdown-item " href="{{ url('comprovantepagamentodiaria') }}">Rol dos recibos</a></li>
-                            </ul>
-                          </li>
+                            <li class="nav-item">
+                              <a class="nav-link text-white" href="#">Recibo Avulso</a>
+                            </li>
                         </ul>
 
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
@@ -205,7 +193,7 @@
                       <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Meus dados</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Alterar Foto</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Atualizar os dados</a></li>
                         <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
                       </ul>
                     </div>

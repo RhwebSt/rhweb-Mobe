@@ -75,27 +75,13 @@ class TabCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $novodados = [
-            $dados['num__trabalhador'],
-            $dados['liboletim'],
-            $dados['tomador']
-        ];
-      
-        $lancamentorublica = new Lancamentorublica;
-        $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
-        if (!$listalancamentotabela) {
+        try {
             $lancamentotabelas = $lancamentotabela->cadastro($dados);
             $valorrublica->editarBoletimTabela($dados,$user->empresa);
-            array_push($novodados,$lancamentotabelas['id']);
-            array_push($novodados,$dados['data']);
-            return redirect()->route('tabcadastro.create',$novodados);
-        }else if ($listalancamentotabela) {
-            array_push($novodados,$listalancamentotabela->id);
-            array_push($novodados,$dados['data']);
-            return redirect()->route('tabcadastro.create',$novodados);
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
-        $condicao = 'cadastrafalse';
-        return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -163,22 +149,13 @@ class TabCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-      
-        $novodados = [
-            $dados['num__trabalhador'],
-            $dados['liboletim'],
-            $dados['tomador'],
-            $id,
-            $dados['data']
-        ];
         $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $lancamentotabelas = $lancamentotabela->editar($dados,$id);
-        if ($lancamentotabelas) {
-            return redirect()->route('tabcadastro.create',$novodados);
-        }else{
-            $condicao = 'editfalse';
-            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
+        try {
+            $lancamentotabelas = $lancamentotabela->editar($dados,$id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
         
     }
