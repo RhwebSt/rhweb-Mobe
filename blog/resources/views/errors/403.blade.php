@@ -27,7 +27,7 @@
 
                         <h1 class=" text-center manutencao">Error 403</h1>
 
-                        <h2 class="fs-5 text-center mt-3 mb-5">Acesso negado.</h2>
+                        <h2 class="fs-5 text-center mt-3 mb-5">Acesso negado. <a class="" href="{{route('logout')}}">Voltar</a></h2>
                       </form>
       
                     </div>

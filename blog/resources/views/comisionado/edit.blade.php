@@ -60,8 +60,8 @@
                 <input type="hidden" value="{{$dados->idtrabalhador}}" name="trabalhador" id="idtrabalhador" class="@error('trabalhador') is-invalid @enderror">
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit"   class="btn botao" >Atualizar</button>
-                        <a class="btn botao" href="{{route('comisionado.index')}}"  role="button">Sair</a>
+                        <button type="submit"   class="btn botao" ><i class="fas fa-sync-alt"></i> Atualizar</button>
+                        <a class="btn botao" href="{{route('comisionado.index')}}"  role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
@@ -144,14 +144,14 @@
                                     <tr>               
                                         <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;"></td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel FElipe dos Santos Rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <button type="button" class="btn text-white text-uppercase" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel FElipe dos Santos Rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
                                                 <a>Eliel FElipe dos Santos Rocha</a>
                                             </button>
                                             
                                         </td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px"></td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:300px">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe Maõ de obra Terceirizada LTDA" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <button type="button" class="btn text-white text-uppercase" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe Maõ de obra Terceirizada LTDA" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
                                                 <a>Mobe Maõ de obra Terceirizada LTDA</a>
                                             </button>
                                         </td>

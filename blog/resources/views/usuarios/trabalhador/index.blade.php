@@ -1,4 +1,5 @@
 @extends('layouts.index')
+
 @section('conteine')
         <div class="container">
             

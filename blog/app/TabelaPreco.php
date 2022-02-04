@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class TabelaPreco extends Model
 {
     protected $fillable = [
@@ -164,6 +164,15 @@ class TabelaPreco extends Model
             ['tsrubrica',$dados['rubricas']],
             ['tomador',$dados['tomador']]
         ])->count();
+    }
+    public function tomadorFolhar($id)
+    {
+        return DB::table('base_calculos')
+        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
+        ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
+        ->select('tabela_precos.tsrubrica')
+        ->where('base_calculos.folhar',$id)
+        ->get();
     }
     public function editar($dados,$id)
     {

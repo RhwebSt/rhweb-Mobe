@@ -205,6 +205,18 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+    public function cadastraInssTomador($dados,$basecalculo,$trabalahdor,$i,$data)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> (int)$dados['inss']['codigos'][$i],
+            'vsdescricao'=>$dados['inss']['rublicas'][$i],
+            'vireferencia'=>$dados['inss']['quantidade'][$i],
+            'videscinto'=>$dados['inss']['valor'][$i],
+            'basecalculo'=>$basecalculo,
+            'trabalhador'=>$trabalahdor,
+            'created_at'=>$data
+        ]);
+    }
     public function cadastraInss($dados,$basecalculo,$trabalahdor,$data)
     {
         return ValorCalculo::create([
@@ -342,6 +354,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.bivalorliquido,base_calculos.bivalorvencimento,base_calculos.trabalhador,trabalhadors.tsmatricula,trabalhadors.tsnome')
         ->groupBy('base_calculos.bivalorliquido','base_calculos.bivalorvencimento','base_calculos.trabalhador','trabalhadors.tsnome','trabalhadors.tsmatricula')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -353,6 +366,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -364,6 +378,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -375,6 +390,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -386,6 +402,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -397,6 +414,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -408,6 +426,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -419,6 +438,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -430,6 +450,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -441,6 +462,7 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -452,6 +474,31 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
         ->groupBy('base_calculos.trabalhador')
         ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
+        ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->get();
+    }
+    public function calculoFolhaAnaliticaInssSobre13($id,$codigo)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
+        ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->get();
+    }
+    public function calculoFolhaAnaliticaDesconto($id,$codigo)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw('SUM(videscinto) as desconto,base_calculos.trabalhador')
+        ->groupBy('base_calculos.trabalhador')
+        ->where('folhars.id',$id)
+        ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }

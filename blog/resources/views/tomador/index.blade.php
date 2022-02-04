@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Tomador')
 @section('conteine')
     <div class="container ">    
         @if(session('success'))
@@ -80,8 +81,8 @@
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
                 <input type="hidden" name="tomador" id="tomador">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
+                            <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fas fa-save"></i> Incluir </button>
+                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar </button>
                             <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fad fa-file-invoice"></i> Relatórios
                              </button>
@@ -90,7 +91,7 @@
                               </ul>
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
                             <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Excluir
+                                <i class="fas fa-trash"></i> Excluir 
                             </button>
                             <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
                             
@@ -98,12 +99,13 @@
                               <i class="fad fa-file-invoice"></i> Boletins
                             </button>
                             
-                            <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                            <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
                         </div> 
                         
-
+                        <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
+                        
                         <div>
-                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                            <div class="col-md-5 mb-5 p-1 pesquisar">
                                 <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
                                 <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
@@ -176,7 +178,6 @@
                                 <option >ME - Micro Empresal</option>
                                 <option >EPP - Empresa de Pequeno Porte</option>
                                 <option >EI - Empreendedor Individual</option>
-                                <option >CPF</option>
                                 <option >EIRELI - Empresa Individual de Responsabilidade Limitada</option>
                                 <option >SA - Sociedade Anônima</option>
                                 <option >LTDA - Sociedade Empresária Limitada</option>
@@ -266,60 +267,58 @@
                         </div>
 
                         <div class="col-md-4"> 
-                                <label for="complemento__endereco" class="form-label">Tipo da construção</label>
+                                <label for="complemento__endereco" class="form-label">Tipo</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
-                                <option selected >Casa</option>
-                      <option >Apartamento</option>
-                      <option >Empresa</option>
-                      <option >Área</option>
-                      <option >Acesso</option>
-                      <option >Acampamento</option>
-                      <option >Acesso Local</option>
-                      <option >Área Especial</option>
-                      <option >Aeroporto</option>
-                      <option >Aldeia</option>
-                      <option >Avenida Marginal Direita</option>
-                      <option >Avenida Marginal Esquerda</option>
-                      <option >Anel Viário</option>
-                      <option >Antiga Estrada</option>
-                      <option >Artéria</option>
-                      <option >Alto</option>
-                      <option >Atalho</option>
-                      <option >Área Verde</option>
-                      <option >Avenida</option>
-                      <option >Avenida Contorno</option>
-                      <option >Avenida Marginal</option>
-                      <option >Avenida Velha</option>
-                      <option >Balneário</option>
-                      <option >Beco</option>
-                      <option >Buraco</option>
-                      <option >Bloco</option>
-                      <option >Chácara</option>
-                      <option >Conjunto</option>
-                      <option >Colônia</option>
-                      <option >Comunidade</option>
-                      <option >Condomínio</option>
-                      <option >Distrito</option>
-                      <option >Estrada Intermunicipal</option>
-                      <option >Entrada Particular</option>
-                      <option >Estação</option>
-                      <option >Estância</option>
-                      <option >Eixo Industrial</option>
-                      <option >Favela</option>
-                      <option >Fazenda</option>
-                      <option >Núcleo Habitacional</option>
-                      <option >Jardim</option>
-                      <option >Loteamento</option>
-                      <option >Lote</option>
-                      <option >Morro</option>
-                      <option >Núcleo Rural</option>
-                      <option >Parque Residencial</option>
-                      <option >Quadra</option>
-                      <option >Rua</option>
-                      <option >Residencial</option>
-                      <option >Rodovia</option>
-                      <option >Trevo</option>
-                      <option >Outros</option>
+
+                          <option >Área</option>
+                          <option >Acesso</option>
+                          <option >Acampamento</option>
+                          <option >Acesso Local</option>
+                          <option >Área Especial</option>
+                          <option >Aeroporto</option>
+                          <option >Aldeia</option>
+                          <option >Avenida Marginal Direita</option>
+                          <option >Avenida Marginal Esquerda</option>
+                          <option >Anel Viário</option>
+                          <option >Antiga Estrada</option>
+                          <option >Artéria</option>
+                          <option >Alto</option>
+                          <option >Atalho</option>
+                          <option >Área Verde</option>
+                          <option >Avenida</option>
+                          <option >Avenida Contorno</option>
+                          <option >Avenida Marginal</option>
+                          <option >Avenida Velha</option>
+                          <option >Balneário</option>
+                          <option >Beco</option>
+                          <option >Buraco</option>
+                          <option >Bloco</option>
+                          <option >Chácara</option>
+                          <option >Conjunto</option>
+                          <option >Colônia</option>
+                          <option >Comunidade</option>
+                          <option >Condomínio</option>
+                          <option >Distrito</option>
+                          <option >Estrada Intermunicipal</option>
+                          <option >Entrada Particular</option>
+                          <option >Estação</option>
+                          <option >Estância</option>
+                          <option >Eixo Industrial</option>
+                          <option >Favela</option>
+                          <option >Fazenda</option>
+                          <option >Núcleo Habitacional</option>
+                          <option >Jardim</option>
+                          <option >Loteamento</option>
+                          <option >Lote</option>
+                          <option >Morro</option>
+                          <option >Núcleo Rural</option>
+                          <option >Parque Residencial</option>
+                          <option >Quadra</option>
+                          <option selected>Rua</option>
+                          <option >Residencial</option>
+                          <option >Rodovia</option>
+                          <option >Trevo</option>
+                          <option >Outros</option>
                             </select>
                         </div>
 

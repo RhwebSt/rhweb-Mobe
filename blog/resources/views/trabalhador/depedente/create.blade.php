@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Cadastrar depedente')
 @section('conteine')
 <main class="container">
             <div class="card-body">
@@ -60,8 +61,8 @@
                     </div>
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn form-control" role="button" aria-label="Basic example">
-                      <a class="btn botao" href="{{ route('depedente.mostrar.index',$id) }}" role="button">Sair</a>
-                      <button type="submit" id="incluir" class="btn botao">Incluir</button>
+                      <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
+                      <a class="btn botao" href="{{ route('depedente.mostrar.index',$id) }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                   </div>
               </div>

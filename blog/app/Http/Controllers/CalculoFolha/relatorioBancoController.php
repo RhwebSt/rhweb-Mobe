@@ -13,6 +13,11 @@ class relatorioBancoController extends Controller
         $dados = $request->all();
         $folhar = new Folhar;
         $folhars = $folhar->buscaListaBancos($dados['folharbanco'],$dados['banco'],$dados['empresabanco']);
+        
+        if (count($folhars) < 1) {
+            $banco = explode('-',$dados['banco']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à registro cadastrado do '.$banco[1].'.']);
+        }
         $pdf = PDF::loadView('relatorioBanco',compact('folhars'));
         return $pdf->setPaper('a4')->stream('RELATÓRIO BANCÁRIO MENSAL.pdf');
     }

@@ -18,8 +18,8 @@ class CreateInssesTable extends Migration
             $table->char('isano', 10)->nullable();
             $table->char('isvalorinicial', 10)->nullable();
             $table->char('isvalorfinal', 10)->nullable();
-            $table->char('isindece', 10)->nullable();
-            $table->char('isreducao', 10)->nullable();
+            $table->float('isindece',8,2)->nullable();
+            $table->float('isreducao',8,2)->nullable();
             $table->integer('user')->unsigned()->nullable();
             $table->foreign('user')->references('id')->on('users');
             $table->timestamps();

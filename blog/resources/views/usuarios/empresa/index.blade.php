@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Cadastro de Usuário')
 @section('conteine')
         <div class="container"> 
         @if(session('success'))
@@ -57,20 +58,21 @@
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao"  >
-                            Incluir
+                            <i class="fas fa-save"></i> Incluir
                         </button>
                         <button type="submit" id="atualizar" disabled class="btn botao"  >
-                            Editar
+                            <i class="fas fa-edit"></i> Editar
                         </button>
                         <button type="button" id="excluir" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                            Excluir
+                            <i class="fas fa-trash"></i> Excluir
                         </button>
-                        <a class="btn botao" href="#" role="button" >Sair</a>
+                        <a class="btn botao" href="#" role="button" ><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
+                        <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
                         <div>
-                            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                            <div class="col-md-5 mb-5 p-1 pesquisar">
                                 <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
                                 <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">

@@ -221,7 +221,7 @@
 
             <div id="content">
               <table class="margin-top">
-                @foreach($dados['nome'] as $d => $dado)
+                @foreach($producao as $d => $valor)
                     <tr>
                         <td class="border-top border-left border-bottom text-bold small__font destaque text-center matric">Matrícula</td>
                         <td class="border-top border-bottom border-left text-bold small__font destaque text-center nome">Nome</td>
@@ -235,8 +235,8 @@
                     </tr>
 
                     <tr>
-                        <td class="border-top border-left border-bottom text-bold small__font text-center matric">{{$dados['matricula'][$d]}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center nome">{{$dado}}</td>
+                        <td class="border-top border-left border-bottom text-bold small__font text-center matric">{{$valor->tsmatricula}}</td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center nome">{{$valor->tsnome}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center producao">{{number_format((float)$dados['producao'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center dsr">{{number_format((float)$dados['dsr'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center ferias">{{number_format((float)$dados['ferias'][$d], 2, ',', '')}}</td>
@@ -262,16 +262,24 @@
 
                     <tr>
                         <td class="border-left border-bottom text-bold small__font text-center matric2"></td>
-                        <td class="border-bottom text-bold small__font text-center total"> 0000000</td>
-                        <td class="border-bottom text-bold border-left small__font text-center producao"></td>
+                        <td class="border-bottom text-bold small__font text-center total"> {{number_format((float)$dados['inss_sobre_13'][$d], 2, ',', '')}}</td>
+                        <td class="border-bottom text-bold border-left small__font text-center producao">{{number_format((float)$dados['irrf'][$d], 2, ',', '')}}</td>
                         <td class="border-bottom text-bold border-left small__font text-center dsr">{{number_format((float)$dados['inss'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center ferias"></td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
+                        @foreach($vale as $valhes)
+                            @if($valhes->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valhes->desconto, 2, ',', '.')}}
+                            @endif
+                         @endforeach
+                        </td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center vt">{{number_format((float)$dados['seguro'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center va">{{number_format((float)$dados['sindicato'][$d], 2, ',', '')}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center decimo">
-                          @if(array_key_exists($d,$dados['adiantamento']))
-                          {{number_format((float)$dados['adiantamento'][$d], 2, ',', '')}}
-                          @endif
+                         @foreach($adiantamento as $adiantamentos)
+                            @if($adiantamentos->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$adiantamentos->desconto, 2, ',', '.')}}
+                            @endif
+                         @endforeach
                         </td>
                         <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$dados['liquido'][$d], 2, ',', '')}}</td>
                     </tr>

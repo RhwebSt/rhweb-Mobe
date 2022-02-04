@@ -240,7 +240,7 @@ class FaturaController extends Controller
         $faturatotais = $faturatotal->buscaRelatorio($faturas->id);
         $tomadores = $tomador->tomadorFatura($id,$inicio,$final);
         $empresas = $empresa->buscaUnidadeEmpresa($tomadores->empresa);
-        // dd($tomadores);
+        // dd($faturasecundarios);
         $pdf = PDF::loadView('fatura',compact('tomadores','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
         return $pdf->setPaper('a4')->stream('fatura.pdf');
     }

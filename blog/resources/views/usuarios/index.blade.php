@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Cadastro de Acesso')
 @section('conteine')
 
 <div class="container">
@@ -63,9 +64,9 @@
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                   <button type="submit" id="incluir" class="btn botao "  >
-                        Incluir
+                        <i class="fas fa-save"></i> Incluir
                       </button>
-                      <a class="btn btn botao " href="{{route('home.index')}}" role="button" >Sair</a>
+                      <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fas fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
 

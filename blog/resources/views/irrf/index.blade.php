@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - IRRF')
 @section('conteine')
     <div class="container">
          @if(session('success'))
@@ -58,16 +59,16 @@
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn botao" >
-                        Incluir
+                        <i class="fas fa-save"></i> Incluir
                     </button>
                     <button type="button" id="deletar" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                        Excluir
+                        <i class="fas fa-trash"></i> Excluir
                     </button>
                     <button type="submit" id="atualizar" disabled class="btn botao" >
-                    Editar
+                        <i class="fas fa-edit"></i> Editar
                     </button>
                     
-                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 

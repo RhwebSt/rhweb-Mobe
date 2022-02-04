@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Comissionado')
 @section('conteine')
 <div class="container">    
              @if(session('success'))
@@ -60,8 +61,8 @@
                 <input type="hidden" name="trabalhador" id="idtrabalhador" class="@error('trabalhador') is-invalid @enderror">
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" id="incluir"  class="btn botao" >Incluir</button>
-                        <a class="btn botao" href="{{route('home.index')}}"  role="button">Sair</a>
+                        <button type="submit" id="incluir"  class="btn botao" ><i class="fas fa-save"></i> Incluir</button>
+                        <a class="btn botao" href="{{route('home.index')}}"  role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
@@ -70,7 +71,7 @@
 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
-                    <input class="pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador">
+                    <input class="text-uppercase pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador">
                     <datalist id="listatrabalhador">
                     </datalist>
                     @error('nome__trabalhador')
@@ -99,7 +100,7 @@
                 
                 <div class="col-md-8">
                     <label for="exampleDataList" class="form-label">Tomador</label>
-                    <input class=" form-control @error('nome_tomador') is-invalid @enderror fw-bold text-dark" list="listatomador" name="nome_tomador"  value="{{old('nome_tomador')}}" id="nome_tomador">
+                    <input class="text-uppercase form-control @error('nome_tomador') is-invalid @enderror fw-bold text-dark" list="listatomador" name="nome_tomador"  value="{{old('nome_tomador')}}" id="nome_tomador">
                     <datalist id="listatomador">
                       
                     </datalist>
@@ -147,14 +148,14 @@
                                     <tr>               
                                         <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$comissionado->tsmatricula}}</td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <button type="button" class="text-uppercase btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
                                                 <a>{{$comissionado->trabalhador}}</a>
                                             </button>
                                             
                                         </td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">{{$comissionado->csindece}}</td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:300px">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <button type="button" class="text-uppercase btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
                                                 <a>{{$comissionado->tomador}}</a>
                                             </button>
                                         </td>

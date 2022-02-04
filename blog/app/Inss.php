@@ -15,9 +15,9 @@ class Inss extends Model
             'isano'=>$dados['ano'],
             // 'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
-            'isindece'=>$dados['indice'],
-            'isreducao'=>$dados['fator'],
-            'user'=>$dados['user']
+            'isindece'=>str_replace(",",".",$dados['indice']),
+            'isreducao'=>str_replace(",",".",$dados['fator']),
+            'user'=>$dados['user'] 
         ]);
     }
     public function edita($dados,$id)

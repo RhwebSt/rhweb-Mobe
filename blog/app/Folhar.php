@@ -164,7 +164,20 @@ class Folhar extends Model
             'bancarios.bsagencia',
             'bancarios.bsoperacao',
             'bancarios.bsconta',
-            'base_calculos.bivalorliquido',
+            DB::raw('SUM(base_calculos.bivalorliquido) as bivalorliquido')
+        )
+        ->groupBy(
+            'folhars.fsinicio', 
+            'folhars.fsfinal',
+            'empresas.esnome',
+            'empresas.escnpj',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.tscpf',
+            'bancarios.bsbanco',
+            'bancarios.bsagencia',
+            'bancarios.bsoperacao',
+            'bancarios.bsconta',
         )
         ->where(function($query) use ($id,$banco,$empresas){
             $user = auth()->user();

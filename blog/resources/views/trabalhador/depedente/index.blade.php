@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Depedentes')
 @section('conteine')
 <div class="container">
         @if(session('success'))
@@ -59,12 +60,12 @@
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn " role="button" aria-label="Basic example">
-                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button">Incluir</a>
-                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button">Sair</a>
+                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button"><i class="fas fa-save"></i> Incluir</a>
+                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div> 
             </div>
-            <div class="table-responsive-lg">
+            <div class="table-responsive-xxl">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
                         <th class="col text-center border-start border-top text-nowrap" style="width: 450px;">Nome</th>
@@ -80,13 +81,13 @@
                     @if(count($depedentes) > 0)
                     @foreach ($depedentes as $depedente)
                         <tr class="bodyTabela">               
-                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 450px;">
+                            <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width: 450px;">
                                 {{$depedente->dsnome}}
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:115px;">
                                 {{$depedente->dscpf}}
                             </td>
-                            <td class="col text-center border-bottom text-capitalize text-nowrap">
+                            <td class="col text-center border-bottom text-uppercase text-nowrap">
                                 {{$depedente->dstipo}}
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:200px">
@@ -98,10 +99,10 @@
                                     {{$data}}
                                 @endif
                             </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:110px;">
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:110px;">
                                 {{$depedente->dsirrf}}
                             </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:110px;">
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:110px;">
                                 {{$depedente->dssf}}
                             </td>
                             

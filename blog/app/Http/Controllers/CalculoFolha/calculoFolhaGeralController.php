@@ -265,8 +265,8 @@ class calculoFolhaGeralController extends Controller
                     'valorbase'=>[],
                     'rublicas'=>[],
                     'codigos'=>[],
-                    'indece'=>[],
-                    'resultadoinss'=>[]
+                    'quantidade'=>[],
+                    'valor'=>[]
                 ],
                 'vt'=>[
                     'id'=>[],
@@ -320,7 +320,7 @@ class calculoFolhaGeralController extends Controller
             $valorfinal = [];
             $bolcartaopontos = $bolcartaoponto->buscaListaLancamentoBolcartao($tomador_id->id,$datainicio,$datafinal);
             $lancamentorublicas = $lancamentorublica->buscaListaLancamentoRublica($tomador_id->id,$datainicio,$datafinal);
-            
+            // dd($bolcartaopontos,$lancamentorublicas);
             foreach ($bolcartaopontos as $key => $trabalhador) {
                 array_push($funcionario,$trabalhador->trabalhador);
                 array_push($trabalhado_cal_folha,$trabalhador->trabalhador);
@@ -394,7 +394,7 @@ class calculoFolhaGeralController extends Controller
             
                 foreach ($lancamentorublicas as $key => $lancamentorublica_valor) {
                     foreach ($tabelaprecos as $key => $tabelapreco) {
-                        if ($lancamentorublica_valor->lsdescricao === $tabelapreco->tsdescricao) {
+                        if ($lancamentorublica_valor->licodigo == $tabelapreco->tsrubrica) {
                             $dia = explode('-',$lancamentorublica_valor->created_at);
                             $dia = explode('-',$lancamentorublica_valor->created_at);
                             $dia = explode(' ',$dia[2]);
@@ -572,7 +572,12 @@ class calculoFolhaGeralController extends Controller
             if (isset($cartaopontos->csdiasuteis)) {
                 $tomador_cartao_ponto_horas = self::calculardia($cartaopontos->csdiasuteis,null);
                 foreach ($trabalhadores as $z => $trabalhador) {
-                    $horasnormais = $boletim_tabela['horasNormais']['quantidade'][$z];
+                    if (isset($boletim_tabela['horasNormais']['quantidade'][$z])) {
+                        $horasnormais = $boletim_tabela['horasNormais']['quantidade'][$z];
+                    }else{
+                        $horasnormais = 0;
+                    }
+                    
                     if (isset($boletim_tabela['diariaNormais']['quantidade'][$z])) {
                         $diarianormal = $boletim_tabela['diariaNormais']['quantidade'][$z];
                     }else{
@@ -696,6 +701,7 @@ class calculoFolhaGeralController extends Controller
                
     
                 $serviso_dsr = $boletim_tabela['dsr1818']['valor'][$key] + $valor_salario;
+
                 array_push($boletim_tabela['serviso_dsr']['valor'],$serviso_dsr);
                 array_push($boletim_tabela['serviso_dsr']['id'],$boletim_tabela['salario']['id'][$key]);
             }
@@ -717,6 +723,8 @@ class calculoFolhaGeralController extends Controller
                 $boletim_tabela['vencimento']['valor'][$key] += $boletim_tabela['ferias_decimoter']['valor'][$key];
     
                 $valor_inss = $boletim_tabela['ferias_decimoter']['valor'][$key] + $serviso_dsr_valor;
+            
+
                 array_push($boletim_tabela['valor_inss']['valor'],$valor_inss);
                 array_push($boletim_tabela['valor_inss']['id'],$boletim_tabela['serviso_dsr']['id'][$key]);
                 $base_inss = $boletim_tabela['ferias_decimoter']['valor'][$key] + $serviso_dsr_valor;
@@ -735,61 +743,61 @@ class calculoFolhaGeralController extends Controller
             //     array_push($boletim_tabela['base_irrf']['id'],$depedentes_valor->trabalhador);
             // }
 
-            // foreach ($boletim_tabela['valor_inss']['valor'] as $i => $valor_inss) {
-            //     $resultadoinss = 0;
-            //     array_push($boletim_tabela['inss']['id'],$boletim_tabela['valor_inss']['id'][$i]);
-            //     foreach ($insslista as $key => $inss) {
-            //         $novoinss =  str_replace(".","",$inss->isvalorfinal);
-            //         $novoinss =  str_replace(',','.',$novoinss);
-            //         $novoinss = (float) $novoinss;
-            //         if (!in_array($novoinss, $valorfinal)) {
-            //             array_push($valorfinal,$novoinss);
-            //         }
+            foreach ($boletim_tabela['valor_inss']['valor'] as $i => $valor_inss) {
+                $resultadoinss = 0;
+                array_push($boletim_tabela['inss']['id'],$boletim_tabela['valor_inss']['id'][$i]);
+                foreach ($insslista as $key => $inss) {
+                    $novoinss =  str_replace(".","",$inss->isvalorfinal);
+                    $novoinss =  str_replace(',','.',$novoinss);
+                    $novoinss = (float) $novoinss;
+                    if (!in_array($novoinss, $valorfinal)) {
+                        array_push($valorfinal,$novoinss);
+                    }
                     
-            //         if ($valor_inss <= $valorfinal[$key] && $key === 0) {
-            //             array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
-            //             array_push($boletim_tabela['inss']['indece'],$inss->isindece);
-            //             $resultadoinss = $valor_inss * ((float)str_replace(',','.',$inss->isindece)/100);
-            //             array_push($boletim_tabela['inss']['resultadoinss'],$resultadoinss);
-            //             array_push($boletim_tabela['inss']['codigos'],'2001');
-            //             array_push($boletim_tabela['inss']['rublicas'],'INSS');
+                    if ($valor_inss <= $valorfinal[$key] && $key === 0) {
+                        array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
+                        array_push($boletim_tabela['inss']['quantidade'],$inss->isindece);
+                        $resultadoinss = $valor_inss * ((float)str_replace(',','.',$inss->isindece)/100);
+                        array_push($boletim_tabela['inss']['valor'],$resultadoinss);
+                        array_push($boletim_tabela['inss']['codigos'],'2001');
+                        array_push($boletim_tabela['inss']['rublicas'],'INSS');
                         
-            //             break;
-            //         }elseif ($valor_inss > $valorfinal[0] && $valor_inss <= $valorfinal[$key] && $key === 1) {
-            //             array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
-            //             array_push($boletim_tabela['inss']['indece'],$inss->isindece);
-            //             $resultadoinss = $valor_inss - $valorfinal[0];
-            //             $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
-            //             $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[0]->isreducao));
-            //             array_push($boletim_tabela['inss']['resultadoinss'],$resultadoinss);
-            //             array_push($boletim_tabela['inss']['codigos'],'2001');
-            //             array_push($boletim_tabela['inss']['rublicas'],'INSS');
-            //           break;
-            //         }elseif ($valor_inss <= $valorfinal[$key] && $key === 2) {
-            //             array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
-            //             array_push($boletim_tabela['inss']['indece'],$inss->isindece);
-            //             $resultadoinss = $valor_inss - $valorfinal[1];
-            //             $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
-            //             $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[1]->isreducao));
-            //             array_push($boletim_tabela['inss']['resultadoinss'],$resultadoinss);
-            //             array_push($boletim_tabela['inss']['codigos'],'2001');
-            //             array_push($boletim_tabela['inss']['rublicas'],'INSS');
-            //           break;
-            //         }elseif ($valor_inss <= $valorfinal[$key] && $key === 3) {
-            //             array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
-            //             array_push($boletim_tabela['inss']['indece'],$inss->isindece);
-            //             $resultadoinss = $valor_inss - $valorfinal[2];
-            //             $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
-            //             $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[2]->isreducao));
-            //             array_push($boletim_tabela['inss']['resultadoinss'],$resultadoinss);
-            //             array_push($boletim_tabela['inss']['codigos'],'2001');
-            //             array_push($boletim_tabela['inss']['rublicas'],'INSS');
-            //           break;
-            //         }
-            //     }
-            //     array_push($boletim_tabela['desconto']['valor'],$resultadoinss);
-            //     array_push($boletim_tabela['desconto']['id'],$boletim_tabela['valor_inss']['id'][$i]);
-            // }
+                        break;
+                    }elseif ($valor_inss > $valorfinal[0] && $valor_inss <= $valorfinal[$key] && $key === 1) {
+                        array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
+                        array_push($boletim_tabela['inss']['quantidade'],$inss->isindece);
+                        $resultadoinss = $valor_inss - $valorfinal[0];
+                        $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
+                        $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[0]->isreducao));
+                        array_push($boletim_tabela['inss']['valor'],$resultadoinss);
+                        array_push($boletim_tabela['inss']['codigos'],'2001');
+                        array_push($boletim_tabela['inss']['rublicas'],'INSS');
+                      break;
+                    }elseif ($valor_inss <= $valorfinal[$key] && $key === 2) {
+                        array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
+                        array_push($boletim_tabela['inss']['quantidade'],$inss->isindece);
+                        $resultadoinss = $valor_inss - $valorfinal[1];
+                        $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
+                        $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[1]->isreducao));
+                        array_push($boletim_tabela['inss']['valor'],$resultadoinss);
+                        array_push($boletim_tabela['inss']['codigos'],'2001');
+                        array_push($boletim_tabela['inss']['rublicas'],'INSS');
+                      break;
+                    }elseif ($valor_inss <= $valorfinal[$key] && $key === 3) {
+                        array_push($boletim_tabela['inss']['valorbase'],$inss->isvalorfinal);
+                        array_push($boletim_tabela['inss']['quantidade'],$inss->isindece);
+                        $resultadoinss = $valor_inss - $valorfinal[2];
+                        $resultadoinss = $resultadoinss * ((float)str_replace(',','.',$inss->isindece)/100);
+                        $resultadoinss = $resultadoinss + ((float)str_replace(',','.',$insslista[2]->isreducao));
+                        array_push($boletim_tabela['inss']['valor'],$resultadoinss);
+                        array_push($boletim_tabela['inss']['codigos'],'2001');
+                        array_push($boletim_tabela['inss']['rublicas'],'INSS');
+                      break;
+                    }
+                }
+                array_push($boletim_tabela['desconto']['valor'],$resultadoinss);
+                array_push($boletim_tabela['desconto']['id'],$boletim_tabela['valor_inss']['id'][$i]);
+            }
             // foreach ($boletim_tabela['base_irrf']['valor'] as $key => $base_irrf_valor) {
             //     $boletim_tabela['base_irrf']['valor'][$key] = $boletim_tabela['base_fgts']['valor'][$key]- $boletim_tabela['inss']['resultadoinss'][$key] - $boletim_tabela['base_irrf']['valor'][$key];
         
@@ -852,11 +860,11 @@ class calculoFolhaGeralController extends Controller
                 array_push($boletim_tabela['inss_sobre_ter']['rublicas'],'INSS Sobre 13º Salário');
                 array_push($boletim_tabela['inss_sobre_ter']['quantidade'],7.5);
                 array_push($boletim_tabela['inss_sobre_ter']['id'],$boletim_tabela['decimo_ter']['id'][$key]);
-                // $boletim_tabela['desconto']['valor'][$key] += $inss_sobre_ter;
-                array_push($boletim_tabela['desconto']['valor'],$inss_sobre_ter);
-                array_push($boletim_tabela['desconto']['id'],$boletim_tabela['inss_sobre_ter']['id'][$key]);
+                $boletim_tabela['desconto']['valor'][$key] += $inss_sobre_ter;
+                // array_push($boletim_tabela['desconto']['valor'],$inss_sobre_ter);
+                // array_push($boletim_tabela['desconto']['id'],$boletim_tabela['inss_sobre_ter']['id'][$key]);
             }
-            // dd($boletim_tabela);
+            // dd($boletim_tabela,$tomador_id->id);
             foreach ($trabalhadores as $i => $trabalhadores_id) {
                 $desconto = 0;
                 // if ($sindicator->escondicaosindicato) {
@@ -967,11 +975,11 @@ class calculoFolhaGeralController extends Controller
                         }
                     }
                    
-                    // foreach ($boletim_tabela['inss']['id'] as $key => $inss_valor) {
-                    //     if($inss_valor === $trabalhador->id) {
-                    //         $valorcalculo->cadastraInss($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
-                    //     }
-                    // }
+                    foreach ($boletim_tabela['inss']['id'] as $key => $inss_valor) {
+                        if($inss_valor === $trabalhador->id) {
+                            $valorcalculo->cadastraInssTomador($boletim_tabela,$basecalculos['id'],$trabalhador->id,$key,$datafinal);
+                        }
+                    }
                     
                     foreach ($boletim_tabela['sindicator']['id'] as $key => $sindicator_valor) {
                         if($sindicator_valor === $trabalhador->id) {
@@ -1060,6 +1068,7 @@ class calculoFolhaGeralController extends Controller
         $descontos = $desconto->buscaRelatorioTrabalhador($trabalhador,$datainicio,$datafinal);
         $basecalculos_15 = $basecalculo->boletimBusca($trabalhador,$datainicio,$datafinal);
         $sindicator = $empresa->buscaContribuicaoSidicato($user->empresa);
+        $seguros = $empresa->buscaSeguro($user->empresa);
         $valor_final_irrf = [];
         $folhas = $folhar->buscaUltimaoRegistroFolhar($user->empresa);
         if ($folhas) {
@@ -1151,14 +1160,20 @@ class calculoFolhaGeralController extends Controller
                     $basecalculos[$i]->valordesconto += $desconto->valor;
                 }
             }
-            $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
+        
+            if (isset($sindicator->escondicaosindicato)) {
+                $sindicato = str_replace(".","",$sindicator->escondicaosindicato);
+            }else{
+                $sindicato = 0;
+            }
+            
             $sindicato = str_replace(',','.',$sindicato);
             $sindicato = (float) $sindicato;
             $basecalculos[$i]->valordesconto += $sindicato;
             $basecalculos[$i]->valorliquido -= $sindicato;
-
-            $seguro = str_replace(".","",$sindicator->esseguro);
-            $seguro = str_replace(',','.',$seguro);
+            // dd(str_replace(",",".",$seguro->esseguro));
+            // $seguro = str_replace(".","",$seguro->esseguro);
+            $seguro = str_replace(',','.',$seguros->esseguro);
             $seguro = (float) $seguro;
             $basecalculos[$i]->valordesconto += $seguro;
             $basecalculos[$i]->valorliquido -= $seguro;
@@ -1192,7 +1207,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['irrf']['rublicas'] = 'IRRF';
                     $boletim_tabela['irrf']['valor'] = 0;
                     $boletim_tabela['irrf']['quantidade'] = 0;
-                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $boletim_tabela['irrf']['codigos'] = 2004;
                     break;
                 }elseif ($base_irrf > $valor_final_irrf[0] && $e === 0 && $i === $e && $base_irrf < $valor_final_irrf[1]) {
                     $valorbase = $base_irrf;
@@ -1201,7 +1216,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['irrf']['rublicas'] = 'IRRF';
                     $boletim_tabela['irrf']['valor'] = $resultado;
                     $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $boletim_tabela['irrf']['codigos'] = 2004;
                     $basecalculos[$i]->valorliquido -= $resultado;
                     $basecalculos[$i]->valordesconto += $resultado;
                     break;
@@ -1212,7 +1227,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['irrf']['rublicas'] = 'IRRF';
                     $boletim_tabela['irrf']['valor'] = $resultado;
                     $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $boletim_tabela['irrf']['codigos'] = 2004;
                     $basecalculos[$i]->valorliquido -= $resultado;
                     $basecalculos[$i]->valordesconto += $resultado;
                     break;
@@ -1223,7 +1238,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['irrf']['rublicas'] = 'IRRF';
                     $boletim_tabela['irrf']['valor'] = $resultado;
                     $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $boletim_tabela['irrf']['codigos'] = 2004;
                     $basecalculos[$i]->valorliquido -= $resultado;
                     $basecalculos[$i]->valordesconto += $resultado;
                     break;
@@ -1234,7 +1249,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['irrf']['rublicas'] = 'IRRF';
                     $boletim_tabela['irrf']['valor'] = $resultado;
                     $boletim_tabela['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim_tabela['irrf']['codigos'] = 2012;
+                    $boletim_tabela['irrf']['codigos'] = 2004;
                     $basecalculos[$i]->valorliquido -= $resultado;
                     $basecalculos[$i]->valordesconto += $resultado;
                     break;
@@ -1243,7 +1258,8 @@ class calculoFolhaGeralController extends Controller
             // dd($valorbase,$valor_final_irrf);
             $inssferiasdecimoter =  $valorcalculo->buscaUnidaderFeriasDecimoter($basecalculo->trabalhador,1009,$datafinal);
             $inssdsr1818 = $valorcalculo->buscaUnidaderFeriasDecimoter($basecalculo->trabalhador,1008,$datafinal);
-            $valor_inss = $inssferiasdecimoter->vencimento + $inssdsr1818->vencimento;
+            $valor_inss = $inssferiasdecimoter->vencimento + $inssdsr1818->vencimento + $basecalculo->servico;
+            // dd($valor_inss);
             foreach ($insslista as $key => $inss) {
                 $novoinss =  str_replace(".","",$inss->isvalorfinal);
                 $novoinss =  str_replace(',','.',$novoinss);
@@ -1258,8 +1274,8 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['inss']['valor'] = $resultadoinss;
                     $boletim_tabela['inss']['codigos'] = '2001';
                     $boletim_tabela['inss']['rublicas'] = 'INSS';
-                    $basecalculos[$i]->valorliquido -= $resultadoinss;
-                    $basecalculos[$i]->valordesconto += $resultadoinss;
+                    // $basecalculos[$i]->valorliquido -= $resultadoinss;
+                    // $basecalculos[$i]->valordesconto += $resultadoinss;
                     break;
                 }elseif ($valor_inss > $valorfinal[0] && $valor_inss <= $valorfinal[$key] && $key === 1) {
                     $boletim_tabela['inss']['quantidade'] = str_replace(',','.',$inss->isindece);
@@ -1269,8 +1285,8 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['inss']['valor'] = $resultadoinss;
                     $boletim_tabela['inss']['codigos'] = '2001';
                     $boletim_tabela['inss']['rublicas'] = 'INSS';
-                    $basecalculos[$i]->valorliquido -= $resultadoinss;
-                    $basecalculos[$i]->valordesconto += $resultadoinss;
+                    // $basecalculos[$i]->valorliquido -= $resultadoinss;
+                    // $basecalculos[$i]->valordesconto += $resultadoinss;
                   break;
                 }elseif ($valor_inss <= $valorfinal[$key] && $key === 2) {
                     $boletim_tabela['inss']['quantidade'] = str_replace(',','.',$inss->isindece);
@@ -1280,8 +1296,8 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['inss']['valor'] = $resultadoinss;
                     $boletim_tabela['inss']['codigos'] = '2001';
                     $boletim_tabela['inss']['rublicas'] = 'INSS';
-                    $basecalculos[$i]->valorliquido -= $resultadoinss;
-                    $basecalculos[$i]->valordesconto += $resultadoinss;
+                    // $basecalculos[$i]->valorliquido -= $resultadoinss;
+                    // $basecalculos[$i]->valordesconto += $resultadoinss;
                   break;
                 }elseif ($valor_inss <= $valorfinal[$key] && $key === 3) {
                     $boletim_tabela['inss']['quantidade'] = str_replace(',','.',$inss->isindece);
@@ -1291,8 +1307,8 @@ class calculoFolhaGeralController extends Controller
                     $boletim_tabela['inss']['valor'] = $resultadoinss;
                     $boletim_tabela['inss']['codigos'] = '2001';
                     $boletim_tabela['inss']['rublicas'] = 'INSS';
-                    $basecalculos[$i]->valorliquido -= $resultadoinss;
-                    $basecalculos[$i]->valordesconto += $resultadoinss;
+                    // $basecalculos[$i]->valorliquido -= $resultadoinss;
+                    // $basecalculos[$i]->valordesconto += $resultadoinss;
                   break;
                 }
             }
@@ -1301,7 +1317,7 @@ class calculoFolhaGeralController extends Controller
             foreach ($tabelapreco_codigo as $d => $tabelapreco_valor) {
                 $valorcalculos = $valorcalculo->listaGeral($trabalhador,$datafinal,$tabelapreco_valor);
                 foreach ($valorcalculos as $v => $valorcalculo) {
-                    if ($basecalculo->trabalhador === $valorcalculo->trabalhador) {
+                    if ($basecalculo->trabalhador === $valorcalculo->trabalhador && $valorcalculo->vicodigo != 2001) {
                         $valorcalculo->cadastraGeral($valorcalculo,$novabasecalculo['id']);
                     }
                 }
@@ -1328,7 +1344,7 @@ class calculoFolhaGeralController extends Controller
                 }
                 if ($basecalculo->trabalhador === $desconto->id && $desconto->dsquinzena === '2 - Segunda' && count($basecalculos_15) > 0) {
                   
-                    $boletim_tabela['descontos']['codigos'] = 0;
+                    $boletim_tabela['descontos']['codigos'] = '';
                     $boletim_tabela['descontos']['rublicas'] = $desconto->dsdescricao;
                     $boletim_tabela['descontos']['quantidade'] = $desconto->quantidade;
                     $boletim_tabela['descontos']['valor'] = $desconto->valor;

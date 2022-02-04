@@ -133,6 +133,12 @@ class Empresa extends Model
         ->select('escondicaosindicato','esseguro')
         ->first();
     }
+    public function buscaSeguro($id)
+    {
+        return Empresa::where('id', $id) 
+        ->select('esseguro')
+        ->first();
+    }
     public function editar($dados,$id)
     {
         return Empresa::where('id', $id) 

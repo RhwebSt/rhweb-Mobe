@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Editar tabela de preço')
 @section('conteine')
 
 
@@ -72,7 +73,7 @@
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         
-                        <button type="submit" class="btn botao " id="atualizar">Atualizar</button>
+                        <button type="submit" class="btn botao " id="atualizar"><i class="fas fa-sync-alt"></i> Atualizar </button>
                          <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
@@ -82,7 +83,7 @@
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button">Sair</a>
+                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
                       </div>
                   </div>
 
@@ -108,7 +109,7 @@
                     </div>
     
                     <div class="col-md-7">
-                      <label for="descricao" class="form-label">Descrição <i class="fas fa-lock"></i></label>
+                      <label for="descricao" class="form-label text-uppercase">Descrição <i class="fas fa-lock"></i></label>
                       <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}"  id="descricao" readonly>
                       <datalist id="descricoes">
                        
@@ -138,14 +139,14 @@
                     
                  
               </form> 
-              <div class="table-responsive-lg">
+              <div class="table-responsive-xxl">
               <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
                             <th class="col text-center border-start border-top  text-nowrap" style="width:60px;">Ano</th>
                             <th class="col text-center border-top  text-nowrap" style="width:80px">Código</th>
                             <th class="col text-center border-top  text-nowrap capitalize" style="width:900px">Descrição</th>
                             <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Trabalhador</th>
-                            <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor Tomador</th>
+                            <th class="col text-center border-top  text-nowrap border-end" style="width:110px;">Valor Tomador</th>
                             <th class="col text-center border-top  text-nowrap d-none" style="width:60px;">Editar</th>
                             <th colspan="2" class="col text-center border-end border-top d-none  text-nowrap" style="width:60px;">Excluir</th>
                         </thead>
@@ -158,7 +159,7 @@
                             <td class="col text-center  border-bottom text-nowrap text-uppercase"style="width:80px;" >{{$tabelapreco->tsrubrica}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase " style="width:900px;">{{$tabelapreco->tsdescricao}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase border-end" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
                             <td class="col text-center d-none  border-bottom  text-nowrap text-uppercase" style="width:60px;">
                                 <button class="btn " style="background-color:#204E83;">
                                 <a href="{{route('tabela.preco.editar',[$tabelapreco->id,$tomador])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>

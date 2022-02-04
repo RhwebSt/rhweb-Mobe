@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Tabela de preço')
 @section('conteine')
 
 
@@ -81,8 +82,8 @@
                     <div class="row">
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" class="btn botao " id="incluir">Incluir</button>
-                        <button type="submit" disabled class="btn botao  d-none" id="atualizar">Atualizar</button>
+                        <button type="submit" class="btn botao " id="incluir"><i class="fas fa-save"></i> Incluir </button>
+                        <button type="submit" disabled class="btn botao  d-none" id="atualizar"><i class="fas fa-sync-alt"></i> Atualizar</button>
                          <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
@@ -92,7 +93,7 @@
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tomador.index') }}" role="button">Sair</a>
+                          <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
                       </div>
                   </div>
 
@@ -171,7 +172,7 @@
                     
                  
               </form> 
-              <div class="table-responsive-lg">
+              <div class="table-responsive-xxl">
               <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
                             <th class="col text-center border-start border-top  text-nowrap" style="width:60px;">Ano</th>

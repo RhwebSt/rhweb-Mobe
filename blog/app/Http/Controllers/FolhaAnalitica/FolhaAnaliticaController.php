@@ -9,6 +9,7 @@ use App\ValorCalculo;
 use App\BaseCalculo;
 use App\RelacaoDia;
 use App\Empresa;
+use App\TabelaPreco;
 use PDF;
 class FolhaAnaliticaController extends Controller
 {
@@ -17,7 +18,10 @@ class FolhaAnaliticaController extends Controller
         
         $valorcalculo = new ValorCalculo;
         $folhar = new Folhar;
+        $tabelhapreco = new TabelaPreco;
         $folhas = $folhar->buscaFolhaAnalitica($id);
+        $tabelhaprecos = $tabelhapreco->tomadorFolhar($id);
+       
         $total = 0; 
         $dados = [
             'nome'=>[],
@@ -34,7 +38,7 @@ class FolhaAnaliticaController extends Controller
             'sindicato'=>[],
             'irrf'=>[],
             'inss'=>[],
-            'adiantamento'=>[],
+            'inss_sobre_13'=>[],
             'total'=>[],
         ];
         $producao_codigo = [1000,1001,1002,1003,1004,1005,1006,1007];
@@ -63,12 +67,18 @@ class FolhaAnaliticaController extends Controller
 
         $adiantamento_codigo = [2003];
         $adiantamento = $valorcalculo->calculoFolhaAnaliticaAdiantamento($id,$adiantamento_codigo);
-        // $irrf_codigo = [2003];
-        // $irrf = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$irrf_codigo);
-        // dd($irrf);
+        $irrf_codigo = [2004];
+        $irrf = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$irrf_codigo);
+        // dd($adiantamento);
         $inss_codigo = [2001];
-        $inss = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$inss_codigo);
-        dd('ok');
+        $inss = $valorcalculo->calculoFolhaAnaliticaInss($id,$inss_codigo);
+
+        $inss_sobre13_codigo = [2002];
+        $inss_sobre13 = $valorcalculo->calculoFolhaAnaliticaInssSobre13($id,$inss_sobre13_codigo);
+
+        $vale_codigo = [0];
+        $vale = $valorcalculo->calculoFolhaAnaliticaDesconto($id,$vale_codigo);
+        // dd($vale,$producao);
         foreach ($producao as $p => $producoes) {
             array_push($dados['nome'],$producoes->tsnome);
             array_push($dados['matricula'],$producoes->tsmatricula);
@@ -83,12 +93,12 @@ class FolhaAnaliticaController extends Controller
             array_push($dados['seguro'],$seguro[$p]->desconto);
             array_push($dados['sindicato'],$sindicator[$p]->desconto);
             array_push($dados['inss'],$inss[$p]->desconto);
-            if (isset($adiantamento[$p]->desconto)) {
-                array_push($dados['adiantamento'],$adiantamento[$p]->desconto);
-            }
+            array_push($dados['irrf'],$irrf[$p]->desconto);
+            array_push($dados['inss_sobre_13'],$inss_sobre13[$p]->desconto);
+           
         }
-        // dd($adiantamento,$dados,$producao,$dsr,$ferias,$vt,$va,$salario13);
-        $pdf = PDF::loadView('folhaAnalitica',compact('dados','folhas'));
+        //dd($adiantamento,$dados,$producao,$dsr,$ferias,$vt,$va,$salario13);
+        $pdf = PDF::loadView('folhaAnalitica',compact('dados','adiantamento','vale','producao','folhas'));
         return $pdf->setPaper('a4','landscape')->stream('CALCULO DA FOLHA ANALITICA.pdf');
     }
 }

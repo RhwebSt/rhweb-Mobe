@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Trabalhador')
 @section('conteine')
 
     <div class="container">
@@ -58,10 +59,10 @@
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST">
         
             <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                <button type="submit" id="incluir" class="btn botao">Incluir</button>
-                <button type="submit" id="atualizar" disabled class="btn botao">Atualizar</button>
+                <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
+                <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
                 <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            Excluir
+                            <i class="fas fa-trash"></i> Excluir
                           </button>
                     <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                     
@@ -76,18 +77,19 @@
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="cracha" role="button">Crachá</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
                       </ul>
-                    <a class="btn botao disabled"  id="depedente" role="button">Dependentes</a>
+                    <a class="btn botao disabled"  id="depedente" role="button"><i class="fas fa-users"></i> Dependentes</a>
                     
                     <button type="button" class="btn botao disabled d-none" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
 
-                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
             </div>
             
+            <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
  
-            <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+            <div class="col-md-5 mb-5 p-1 pesquisar">
                 <div class="d-flex">
                 <label for="exampleDataList" class="form-label"></label>
                 <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="datalistOptions" name="pesquisa" id="pesquisa">
