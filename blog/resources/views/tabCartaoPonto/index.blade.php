@@ -231,7 +231,9 @@
                                             </button>
                                         </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action=""  method="post">
+                                           <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
+                                            @csrf
+                                            @method('delete')
                                                 <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                                             </form> 
                                             </td>

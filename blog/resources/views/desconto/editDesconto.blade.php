@@ -83,8 +83,8 @@
                 @csrf
                 @method('PATCH')
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao">Atualizar</button>
-                      <a class="btn botao" href="{{route('descontos.index')}}" role="button">Sair</a>
+                    <button type="submit" id="incluir" class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                      <a class="btn botao" href="{{route('descontos.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                 </div>
 
                 <script>
@@ -165,7 +165,7 @@
                         @enderror
                 </div>
 
-                <div class="table-responsive-lg">
+                <div class="table-responsive-xxl">
                     <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                               <thead>
                                   <th class="col text-center border-start border-top  text-nowrap" style="width:80px;">Matrícula</th>

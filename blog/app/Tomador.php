@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class Tomador extends Model
 {
     protected $fillable = [
-        'tsnome','tsfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','empresa'
+        'tsnome','tsfantasia','tsstatusfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','empresa'
     ];
     public function cadastro($dados)
     {
@@ -16,6 +16,7 @@ class Tomador extends Model
        return Tomador::create([
             'tsnome'=>$dados['nome__completo'],
             'tsfantasia'=>$dados['nome__fantasia'],
+            'tsstatusfantasia'=>isset($dados['radio_fantasia'])?$dados['radio_fantasia']:null,
             'tscnpj'=>$dados['cnpj'],
             'tsmatricula'=>$dados['matricula'],
             'tssimples'=>$dados['simples'],

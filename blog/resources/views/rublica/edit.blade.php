@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Editar rúbricas')
 @section('conteine')
     <div class="container">
          @if(session('success'))
@@ -60,8 +61,8 @@
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
-                            <a class="btn botao" href="{{route('rublica.index')}}" role="button">Sair</a>
+                            <button type="submit" id="atualizar"  class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                            <a class="btn botao" href="{{route('rublica.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
 

@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Rúbricas')
 @section('conteine')
     <div class="container">
          @if(session('success'))
@@ -61,7 +62,7 @@
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao" value="Validar!">Incluir</button>
+                    <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fas fa-save"></i> Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao d-none">Atualizar</button>
                             <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fad fa-file-invoice"></i> Relatórios
@@ -69,13 +70,13 @@
                               <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                                 <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol das Rúbricas</a></li>
                               </ul>
-                            <a class="btn botao" href="#" role="button">Sair</a>
+                            <a class="btn botao" href="#" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
                 
-
-                <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
+                <div class="col-md-5 mb-5 p-1 pesquisar">
                     <div class="d-flex">
                         <label for="exampleDataList" class="form-label"></label>
                         <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">

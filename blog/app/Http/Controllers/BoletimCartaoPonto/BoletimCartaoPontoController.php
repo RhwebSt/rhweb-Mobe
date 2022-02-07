@@ -25,10 +25,18 @@ class BoletimCartaoPontoController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
    
     public function create($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador,$feriado)
     {
+        $id =  base64_decode($id);
+        $domingo = base64_decode($domingo);
+        $sabado = base64_decode($sabado);
+        $diasuteis = base64_decode($diasuteis);
+        $data = base64_decode($data);
+        $boletim = base64_decode($boletim);
+        $tomador = base64_decode($tomador);
+        $feriado = base64_decode($feriado);
         $user = Auth::user();
         $bolcartaoponto = new Bolcartaoponto;
         $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);

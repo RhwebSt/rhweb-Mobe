@@ -160,7 +160,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
                             <li class="nav-item">
-                              <a class="nav-link text-white" href="#">Recibo Avulso</a>
+                              <a class="nav-link text-white" href="{{route('avuso.index')}}">Recibo Avulso</a>
                             </li>
                         </ul>
 

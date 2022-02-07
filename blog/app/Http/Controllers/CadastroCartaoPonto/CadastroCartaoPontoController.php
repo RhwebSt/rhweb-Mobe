@@ -129,6 +129,7 @@ class CadastroCartaoPontoController extends Controller
         $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
         $lancamentotabelas = $lancamentotabela->buscaListas('D');
         $dados = $lancamentotabela->buscaUnidade($id);
+        // dd($numboletimtabela,$lancamentotabelas,$dados);
         return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
 
@@ -144,39 +145,25 @@ class CadastroCartaoPontoController extends Controller
         $dados = $request->all();
         $request->validate([
             'nome__completo' => 'required',
-            'matricula'=>'required|max:6',
-            'num__trabalhador'=>'numeric',
             'num__trabalhador'=>'required',
-            'data'=>'required'
+            'data'=>'required',
+            'feriado'=>'required',
+            'liboletim'=>'required'
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',
-            'matricula.required'=>'Campo não pode esta vazio!',
-            'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
             'num__trabalhador.required'=>'Campo não pode esta vazio!',
-            'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
             'liboletim.required'=>'Campo não pode esta vazio!',
-            'liboletim.numeric'=>'O campo naõ pode conter letras',
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
         $lancamentotabela = new Lancamentotabela;
         $bolcartaoponto = new Bolcartaoponto;
-        $lancamentotabelas = $lancamentotabela->editar($dados,$id);
-        if ($lancamentotabelas) {
+        try {
+            $lancamentotabelas = $lancamentotabela->editar($dados,$id);
             $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
-            $novodados = [
-                $id,
-                $dados['domingo'],
-                $dados['sabado'],
-                $dados['diasuteis'],
-                $dados['data'],
-                $dados['liboletim'],
-                $dados['tomador'],
-                $dados['feriado']
-            ];
-            return redirect()->route('boletimcartaoponto.create',$novodados);
-        }else{
-            return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Não foi porssivél atualizar.']);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
     }
 
@@ -197,7 +184,7 @@ class CadastroCartaoPontoController extends Controller
                 return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            echo('Error ao deletar.');
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
       
     }

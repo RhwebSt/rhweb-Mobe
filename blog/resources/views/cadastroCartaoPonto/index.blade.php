@@ -82,7 +82,7 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
                             <button type="submit" id="incluir" class="btn botao">Incluir <i class="fas fa-save"></i></button>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Boletim <i class="fas fa-door-open"></i></button>
+                            <a  id="boletim"  class="btn botao disabled">Boletim <i class="fas fa-door-open"></i></a>
                             <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fas fa-edit"></i></button>
                             <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                               Excluir <i class="fas fa-trash"></i>
@@ -224,7 +224,7 @@
                                         </td>
                                         
                                         <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
-                                         
+                                        {{$lancamentotabela->lsnumero}}
                                         </td>
 
                                         <td class="col text-center border-bottom text-nowrap" style="width:120px">
@@ -252,7 +252,13 @@
                                 </tr>
                                 @endif
                                 </tbody>
-                
+                                <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $lancamentotabelas->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                     
@@ -341,14 +347,16 @@
             }
             function camposLacamentoTab(data) {
                   if (data.id) {
+                      buscatomador(data)
                       $('#form').attr('action', "{{ url('cadastrocartaoponto')}}/"+data.id);
                       $('#formdelete').attr('action',"{{ url('cadastrocartaoponto')}}/"+data.id)
                       $('#incluir').attr('disabled','disabled')
-                      $('#atualizar').removeAttr( "disabled" )
+                      // $('#atualizar').removeAttr( "disabled" )
                       $('#deletar').removeAttr( "disabled" )
                       $('#excluir').removeAttr( "disabled" )
                       $('#method').val('PUT')
-                      buscatomador(data.tomador)
+                      
+                      
                   }else{
                     $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
                     $('#incluir').removeAttr( "disabled" )
@@ -435,13 +443,14 @@
             }
             function buscatomador(dados) {
               $.ajax({
-                  url: "{{url('tomador')}}/"+dados,
+                  url: "{{url('tomador')}}/"+dados.tomador,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
                     if (data) {
                       tomador(data)
                       $('#nome__completo').val(data.tsnome)
+                      $('#boletim').removeClass('disabled').attr('href',`{{url('boletimcartaoponto')}}/${btoa(dados.id)}/${btoa(data.csdomingos)}/${btoa(data.cssabados)}/${btoa(data.csdiasuteis)}/${btoa(dados.lsdata)}/${btoa(dados.liboletim)}/${btoa(dados.tomador)}/${btoa(dados.lsferiado)}`);
                     }
                   }
               })

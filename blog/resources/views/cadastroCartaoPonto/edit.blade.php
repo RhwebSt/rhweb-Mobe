@@ -57,22 +57,22 @@
 
               <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
               <div class="container">
-                  <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
+                  <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
                   @csrf
-                  <input type="hidden" id="method" name="_method" value="">
+                  <input type="hidden" id="method" name="_method" value="PUT">
                   <input type="hidden" name="status" value="D" id="status">
                   <input type="hidden" name="empresa" value="{{$user->empresa}}">
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
-                            <button type="submit" id="incluir" class="btn botao">Incluir</button>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Cartão Ponto</button>
-                            <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <button type="submit" id="incluir" class="btn botao">Atualizar</button>
+                            <a type="submit" href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados),base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao">Cartão Ponto</a>
+                            <button type="button" class="btn botao  "  id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                               Excluir
-                          </button>
+                          </button> 
                           
                    
-                        <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                        <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button">Sair</a>
                       </div>
                   </div>
                     
@@ -123,10 +123,10 @@
                           <span class="text-danger">{{ $message }}</span>
                       @enderror
                     </div>
-                      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
-                      <input type="hidden" id="domingo" name="domingo">
-                      <input type="hidden" name="sabado" id="sabado">
-                      <input type="hidden" name="diasuteis" id="diasuteis">
+                      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador}}">
+                      <input type="hidden" id="domingo" name="domingo" value="{{$dados->csdomingos}}">
+                      <input type="hidden" name="sabado" id="sabado" value="{{$dados->cssabados}}">
+                      <input type="hidden" name="diasuteis" id="diasuteis" value="{{$dados->csdiasuteis}}">
                     <div class="col-md-2 d-none">
                         <label for="matricula" class="form-label ">Matrícula <i class="fas fa-lock"></i></label>
                         <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula" Readonly>
@@ -208,8 +208,8 @@
                                           ?>
                                           {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                         </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">300</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:120px">Sim</td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:120px">{{$lancamentotabela->lsferiado}}</td>
                                     </tr>
                                     @endforeach
                                     @else
@@ -222,7 +222,13 @@
                                 </tr>
                                 @endif
                                 </tbody>
-                
+                                <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $lancamentotabelas->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                     

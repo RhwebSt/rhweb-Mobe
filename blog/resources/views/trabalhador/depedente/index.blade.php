@@ -82,7 +82,9 @@
                     @foreach ($depedentes as $depedente)
                         <tr class="bodyTabela">               
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width: 450px;">
-                                {{$depedente->dsnome}}
+                                <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$depedente->dsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                    <a class="text-uppercase text-decoration-none text-white">{{$depedente->dsnome}}</a>
+                                </button>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:115px;">
                                 {{$depedente->dscpf}}

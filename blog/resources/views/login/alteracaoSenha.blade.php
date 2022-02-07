@@ -83,10 +83,10 @@
                             <div class="col-11 col-sm-11 col-md-11 col-lg-4">
                             <label for="nome__social" class="form-label text-white">Nova Senha</label>
                             <input type="hidden" name="id" value="{{$user->id}}">
-                            <input type="password" id="password1" class="form-control input @error('password1') is-invalid @enderror fw-bold text-dark fw-bold text-dark password1 pass" onKeyUp="verificaForcaSenha();"   value="" maxlength="100" name="password1">
-                                @error('password1')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                            <input type="password" id="password1" class="form-control input fw-bold text-dark fw-bold text-dark password1 pass" onKeyUp="verificaForcaSenha();"   value="" maxlength="100" name="password1">
+                                <!--@error('password1')-->
+                                <!--    <span class="text-danger">{{ $message }}</span>-->
+                                <!--@enderror-->
                             </div>
 
                             <div class="align-self-center mt-4 ms-2" >
@@ -108,10 +108,10 @@
                                 <div class="d-flex align-items-center">
                                     <div class="col-11 col-sm-11 col-md-11 col-lg-4">
                                     <label for="nome__social" class="form-label text-white">Confirme sua senha</label>
-                                    <input type="password" id="password2" class="form-control input @error('password2') is-invalid @enderror fw-bold text-dark fw-bold text-dark password2 pass" onblur="validarSenha()" value="" maxlength="100" name="password2">
-                                    @error('password2')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <input type="password" id="password2" class="form-control input fw-bold text-dark fw-bold text-dark password2 pass" onblur="validarSenha()" value="" maxlength="100" name="password2">
+                                    <!--@error('password2')-->
+                                    <!--    <span class="text-danger">{{ $message }}</span>-->
+                                    <!--@enderror-->
                                     </div>
 
                                     <div class="align-self-center mt-4 ms-2">

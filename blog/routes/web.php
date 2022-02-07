@@ -110,6 +110,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('descontos','Descontos\\DescontosController')->names('descontos');
     Route::get('relatorio/descontos/{inicio}/{final}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
+
+    Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');

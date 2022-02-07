@@ -17,6 +17,7 @@ class CreateTomadorsTable extends Migration
             $table->increments('id');
             $table->char('tsnome', 100)->nullable();
             $table->char('tsfantasia', 100)->nullable();
+            $table->string('tsstatusfantasia',5)->nullable();
             $table->char('tscnpj', 19)->nullable();
             $table->char('tstelefone', 16)->nullable();
             $table->char('tsmatricula', 10)->nullable();

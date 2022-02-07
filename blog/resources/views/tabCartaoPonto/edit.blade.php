@@ -65,7 +65,8 @@
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao">Atualizar</button>
-                        <a class="btn botao" href="{{route('home.index')}}" role="button">Sair</a>
+                        <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao">Boletim <i class="fas fa-door-open"></i></a>
+                        <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
                   </div>
               </div>
               

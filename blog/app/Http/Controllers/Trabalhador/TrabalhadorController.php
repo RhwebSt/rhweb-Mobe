@@ -51,6 +51,7 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $user = auth()->user();
         $trabalhador = new Trabalhador;
         $documento = new Documento;

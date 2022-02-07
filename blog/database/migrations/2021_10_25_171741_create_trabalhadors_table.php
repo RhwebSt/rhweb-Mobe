@@ -18,6 +18,7 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tsnome',100)->nullable();
             $table->longText('tsfoto')->nullable();
             $table->string('tsnomesocial',100)->nullable();
+            $table->string('tssocial',5)->nullable();
             $table->string('tscpf',15)->nullable();
             $table->integer('tsmatricula')->nullable();
             $table->integer('tsserie')->nullable();

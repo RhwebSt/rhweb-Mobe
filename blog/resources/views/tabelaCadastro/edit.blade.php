@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: '{{$message}}'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -59,7 +59,7 @@
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                 <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
-                <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
+                <a class="btn botao" href="{{route('tabcadastro.create',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($id),base64_encode($data)])}}" role="button">Sair</a>
               </div>
           </div>
               

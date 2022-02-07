@@ -32,7 +32,7 @@ class TabCadastroController extends Controller
         $boletim = base64_decode($boletim);
         $tomador = base64_decode($tomador);
         $id = base64_decode($id);
-        $data = base64_decode($data);
+        $data = base64_decode($data); 
         $user = Auth::user(); 
         $lancamentorublica = new Lancamentorublica;
         $lista = $lancamentorublica->listacadastro($id);
@@ -111,6 +111,13 @@ class TabCadastroController extends Controller
      */
     public function edit($quantidade,$boletim,$tomador,$id,$trabalhador,$data)
     {
+        
+       $quantidade = base64_decode($quantidade);
+       $boletim = base64_decode($boletim);
+       $tomador = base64_decode($tomador);
+       $id = base64_decode($id);
+       $trabalhador = base64_decode($trabalhador);
+       $data = base64_decode($data);
        $lancamentorublica = new Lancamentorublica;
        $user = Auth::user();
        $lista = $lancamentorublica->listacadastro($id);

@@ -12,20 +12,18 @@ class RelatorioCartaoPontoController extends Controller
 {
     public function relatorioCartaoPonto($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador) 
     {
-        
+        $id =  base64_decode($id);
+        $domingo = base64_decode($domingo);
+        $sabado = base64_decode($sabado);
+        $diasuteis = base64_decode($diasuteis);
+        $data = base64_decode($data);
+        $boletim = base64_decode($boletim);
+        $tomador = base64_decode($tomador);
         $lancamentotabela = new Lancamentotabela;
         $trabalhador = new Trabalhador;
         $tabelapreco = new TabelaPreco; 
         $ano = explode('-',$data);
-        $novodados = [
-            $id,
-            $domingo,
-            $sabado,
-            $diasuteis,
-            $data,
-            $boletim,
-            $tomador,
-        ];
+      
         try {
          
             $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,$ano[0]); 

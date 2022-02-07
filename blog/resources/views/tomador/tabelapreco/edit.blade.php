@@ -157,7 +157,11 @@
                             <tr>
                             <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:60px;">{{$tabelapreco->tsano}}</td>
                             <td class="col text-center  border-bottom text-nowrap text-uppercase"style="width:80px;" >{{$tabelapreco->tsrubrica}}</td>
-                            <td class="col text-center  border-bottom  text-nowrap text-uppercase " style="width:900px;">{{$tabelapreco->tsdescricao}}</td>
+                            <td class="col text-center  border-bottom  text-nowrap text-uppercase " style="width:900px;">
+                                <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tabelapreco->tsdescricao}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                    <a class="text-uppercase text-decoration-none text-white">{{$tabelapreco->tsdescricao}}</a>
+                                </button>
+                            </td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase border-end" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
                             <td class="col text-center d-none  border-bottom  text-nowrap text-uppercase" style="width:60px;">

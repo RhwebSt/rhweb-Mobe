@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Trabalhador extends Model
 {
     protected $fillable = [
-        'tsnome','tsnomesocial','tsfoto','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','empresa'
+        'tsnome','tsnomesocial','tssocial','tsfoto','tscpf','tsmatricula','tsmae','tspai','tsuf','tstelefone','tssexo','tsescolaridade','tsindice','empresa'
     ];
     public function cadastro($dados)
     {
@@ -15,6 +15,7 @@ class Trabalhador extends Model
        return Trabalhador::create([
             'tsnome'=>$dados['nome__completo'],
             'tsnomesocial'=>$dados['nome__social'],
+            'tssocial'=> isset($dados['radio_social'])?$dados['radio_social']:null,
             'tsfoto'=>$dados['foto'],
             'tscpf'=>$dados['cpf'],
             'tsmatricula'=>$dados['matricula'],

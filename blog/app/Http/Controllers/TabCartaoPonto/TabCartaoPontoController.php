@@ -117,7 +117,7 @@ class TabCartaoPontoController extends Controller
         $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
         $lancamentotabelas = $lancamentotabela->buscaListas('M');
         $dados = $lancamentotabela->buscaUnidade($id);
-        
+        // dd($dados);
         return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
 
@@ -168,26 +168,15 @@ class TabCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
+        
         $lancamentorublica = new Lancamentorublica;
         $lancamentotabela = new Lancamentotabela;
-        $lancamentorublicas = $lancamentorublica->deletar($id);
-        if ($lancamentorublicas) {
-           $lancamentotabelas =  $lancamentotabela->deletar($id);
-           if ($lancamentotabelas) {
-                $condicao = 'deletatrue';
-           }else{
-                $condicao = 'deletafalse';
-           }
-           
-        }else{
-            $lancamentotabelas =  $lancamentotabela->deletar($id);
-            if ($lancamentotabelas) {
-                $condicao = 'deletatrue';
-            }else{
-                $condicao = 'deletafalse';
-            }
-            
+        try {
+            $lancamentorublica->deletar($id);
+            $lancamentotabela->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
-        return redirect()->route('tabcartaoponto.index')->withInput()->withErrors([$condicao]);
     }
 }

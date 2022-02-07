@@ -51,7 +51,7 @@
     }
 
     .matricula{
-      width:57px;
+      width:24px;
     }
 
     .matricula2{
@@ -59,7 +59,7 @@
     }
 
     .nome{
-      width:467px;
+      width:500px;
     }
 
     .nome2{
@@ -170,7 +170,7 @@
     }
 
     .small__font{
-        font-size:12px
+        font-size:11.5px
     }
 
     .little__font{
@@ -260,7 +260,7 @@
 
     <table>
         <tr class="">
-            <td class="matricula small__font border-top border-left border-bottom border-right text-center text-bold destaque">Matrícula</td>
+            <td class="matricula small__font border-top border-left border-bottom border-right text-center text-bold destaque">Mat.</td>
             <td class="nome small__font border-top border-left border-bottom border-right text-center text-bold destaque">Nome</td>
             <td class="cnpj small__font border-top border-left border-bottom border-right text-center text-bold destaque">CNPJ</td>
             <td class="telefone small__font border-top border-left border-bottom border-right text-center text-bold destaque">Telefone</td>

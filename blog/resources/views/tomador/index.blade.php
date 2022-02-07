@@ -205,12 +205,45 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="nome__fantasia" class="form-label">Nome Fantasia</label>
+                            <label for="nome__fantasia" class="form-label"><input type="checkbox" id="radio" name="radio_fantasia"/> Nome Fantasia</label>
                             <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
                             @error('nome__fantasia')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        
+                        <script>
+                            var radio = document.getElementById("radio");
+                            var radioResult = radio.value;
+                            
+                            
+                            radio.addEventListener('click', function(){
+                                
+                                if(radio.checked){
+                                    
+                                    Swal.fire({
+                                    icon: 'warning',
+                                      title: 'Deseja definir esse nome como padrão?',
+                                      showDenyButton: true,
+                                      allowOutsideClick: false,
+                                      allowEscapeKey: false,
+                                      confirmButtonText: 'Sim <i class="far fa-check-circle"></i>',
+                                      confirmButtonColor: '#40A06B',
+                                      denyButtonText: `Não <i class="far fa-times-circle"></i>`,
+                                    }).then((result) => {
+                                      /* Read more about isConfirmed, isDenied below */
+                                      if (result.isConfirmed) {
+                                        Swal.fire('Definido com sucesso!!', '', 'success');
+                                        radio.checked = true;
+                                      } else if (result.isDenied) {
+                                        Swal.fire('Nada foi alterado!!', '', 'info')
+                                        radio.checked = false;
+                                      }
+                                    })
+        
+                                }
+                            })
+                        </script>
 
                         
                         <?php

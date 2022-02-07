@@ -72,7 +72,7 @@
                         <i class="fad fa-file-invoice"></i> Relatório
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[$id,$domingo,$sabado,$diasuteis,$data,$boletim,$tomador])}}">Boletim Cartão ponto</a></li>
+                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($id),$domingo?base64_encode($domingo):' ',base64_encode($sabado),base64_encode($diasuteis),base64_encode($data),base64_encode($boletim),base64_encode($tomador)])}}">Boletim Cartão ponto</a></li>
                       </ul>
                         
                         

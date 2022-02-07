@@ -138,12 +138,45 @@
                 </div>
                 
                 <div class="col-md-6">
-                  <label for="nome__social" class="form-label">Nome Social (OPICIONAL)</label>
+                  <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio"/> Nome Social (Opcional) </label>
                   <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror fw-bold text-dark" value="{{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social">
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
+                
+                <script>
+                    var radio = document.getElementById("radio");
+                    var radioResult = radio.value;
+                    
+                    
+                    radio.addEventListener('click', function(){
+                        
+                        if(radio.checked){
+                            
+                            Swal.fire({
+                            icon: 'warning',
+                              title: 'Deseja definir esse nome como padrão?',
+                              showDenyButton: true,
+                              allowOutsideClick: false,
+                              allowEscapeKey: false,
+                              confirmButtonText: 'Sim <i class="far fa-check-circle"></i>',
+                              confirmButtonColor: '#40A06B',
+                              denyButtonText: `Não <i class="far fa-times-circle"></i>`,
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                Swal.fire('Definido com sucesso!!', '', 'success');
+                                radio.checked = true;
+                              } else if (result.isDenied) {
+                                Swal.fire('Nada foi alterado!!', '', 'info')
+                                radio.checked = false;
+                              }
+                            })
+
+                        }
+                    })
+                </script>
     
                 <div class="col-md-3">
                   <label for="cpf" class="form-label">CPF</label>
@@ -161,7 +194,7 @@
                   }
                 ?>
                 <div class="col-md-3 " >
-                  <label for="matricula" class="form-label">Matrícula<i class="fas fa-lock"></i></label>
+                  <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock"></i></label>
                   <input type="text" disabled class="form-control  input fw-bold text-dark  @error('matricula') is-invalid @enderror" value="{{$matricular}}" id="matricula">
                   <input type="hidden" value="{{$matricular}}" name="matricula" id="matricularid">
                   @error('matricula')

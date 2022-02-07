@@ -84,7 +84,7 @@
                 <input type="hidden" name="empresa" value="{{$user->empresa}}">
                 <input type="hidden" name="trabalhador" id="trabalhador">
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao">Incluir</button>
+                    <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
                     <button class="btn botao dropdown-toggle" type="button" id="rolDescontos"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                      </button>
@@ -96,7 +96,7 @@
                               </button>
                         </li>
                       </ul>
-                    <a class="btn botao" href="" role="button">Sair</a>
+                    <a class="btn botao" href="" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                 </div>
 
                 <script>
@@ -203,7 +203,7 @@
                     </div>
                 </div>
                 
-                <div class="table-responsive-lg">
+                <div class="table-responsive-xxl">
                     <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                               <thead>
                                   <th class="col text-center border-start border-top  text-nowrap" style="width:80px;">Matrícula</th>
@@ -222,7 +222,7 @@
                                   <tr class="bodyTabela">
                                   <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:80px;">{{$desconto->tsmatricula}}</td>
                                   <td class="col text-center  border-bottom text-nowrap text-uppercase" style="width:400px">
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel Felipedos santos rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$desconto->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
                                         <a>{{$desconto->tsnome}}</a>
                                     </button>    
                                 </td>

@@ -85,18 +85,33 @@
                   @enderror
                 </div>
                 <input type="hidden" name="trabalhador" value="{{$id}}">
-
+                
                 <div class="col-md-4">
-                    <label for="tipo__dependente" class="form-label">Tipo do dependente</label>
-                    <input type="text" class="form-control @error('tipo__dependente') is-invalid @enderror  fw-bold text-dark" value="{{old('tipo__dependente')}}" name="tipo__dependente"  id="tipo__dependente">
-                    @error('tipo__dependente')
-                      <span class="text-danger">{{ $message }}</span>
-                  @enderror
+                    <label for="tipo__dependente" class="form-label">Tipo de Depedente</label>
+                    <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark" value="{{old('tipo__dependente')}}">
+                      <option>Cônjuge</option>
+                      <option>Filho(a) ou enteado(a)</option>
+                      <option>Irmão(ã), neto(a) ou bisneto(a)</option>
+                      <option>Pais, avós e bisavós</option>
+                      <option>Tutor ou Cuidador</option>
+                      <option>Ex-cônjuge</option>
+                      <option>Menor com guarda judicial</option>
+                      <option selected>Agregado/Outros</option>
+                    </select>
                 </div>
+
+
+                <!--<div class="col-md-4">-->
+                <!--    <label for="tipo__dependente" class="form-label">Tipo do dependente</label>-->
+                <!--    <input type="text" class="form-control @error('tipo__dependente') is-invalid @enderror  fw-bold text-dark" value="{{old('tipo__dependente')}}" name="tipo__dependente"  id="tipo__dependente">-->
+                <!--    @error('tipo__dependente')-->
+                <!--      <span class="text-danger">{{ $message }}</span>-->
+                <!--  @enderror-->
+                <!--</div>-->
                 
                 <div class="col-md-4">
                     <label for="data__nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror  fw-bold text-dark" value="{{old('data__nascimento')}}" name="data__nascimento"  id="data__nascimento">
+                    <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror text-dark" value="{{old('data__nascimento')}}" name="data__nascimento"  id="data__nascimento">
                     @error('data__nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -104,7 +119,7 @@
 
                 <div class="col-md-4">
                     <label for="sexo" class="form-label">Sexo</label>
-                    <select id="sexo" name="sexo" class="form-select fw-bold text-dark" value="">
+                    <select id="sexo" name="sexo" class="form-select text-dark" value="">
                       <option selected>Masculino</option>
                       <option>Feminino</option>
                       <option>Outro</option>

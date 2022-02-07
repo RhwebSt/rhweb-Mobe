@@ -1,4 +1,5 @@
 let btnShow = document.querySelector('.show');
+
     
     btnShow.addEventListener('click', function(){
         let inputpass = document.querySelector('.password');
@@ -57,6 +58,7 @@ let btnShow1 = document.querySelector('.show1');
         var msg = document.getElementById("span");
         var s1 = senha1.value;
         var s2 = senha2.value;
+
         if(s2 != s1) {
             senha1.classList.add('is-invalid');
             senha2.classList.add('is-invalid');
@@ -64,7 +66,7 @@ let btnShow1 = document.querySelector('.show1');
             return false;
         }
 
-        if (s2 === s1 && s2 > 0 && s1 > 0) {
+        if (s2 == s1) {
             senha1.classList.add('is-valid');
             senha1.classList.remove('is-invalid');
             senha2.classList.add('is-valid');

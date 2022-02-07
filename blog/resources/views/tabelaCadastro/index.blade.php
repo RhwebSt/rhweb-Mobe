@@ -168,8 +168,8 @@
                             <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">
                                 <button class="btn" style="background-color:#204E83;">
-                                <a href="{{route('boletim.tabela.edit',[$quantidade,$boletim,$tomador,$listas->lancamento,$listas->id,$data])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
-                                </button>
+                                <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
+                                </button> 
                             </td>
                             <td class="col text-center border-bottom border-end text-nowrap">
                             <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
