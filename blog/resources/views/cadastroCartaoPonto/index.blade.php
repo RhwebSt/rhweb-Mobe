@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Boletim Cartão Ponto')
 @section('conteine')
 <div class="card-body">
       
@@ -81,20 +82,21 @@
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
-                            <button type="submit" id="incluir" class="btn botao">Incluir <i class="fas fa-save"></i></button>
-                            <a  id="boletim"  class="btn botao disabled">Boletim <i class="fas fa-door-open"></i></a>
-                            <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fas fa-edit"></i></button>
+                            <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                            <a  id="boletim"  class="btn botao disabled"><i class="fad fa-door-open"></i> Boletim</a>
+                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-edit"></i> Editar</button>
                             <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                              Excluir <i class="fas fa-trash"></i>
+                              Excluir <i class="fad fa-trash"></i>
                           </button>
                           
                    
-                        <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fas fa-sign-out-alt"></i></a>
+                        <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                       </div>
                   </div>
+                  <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                     
                     <div>
-                        <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                        <div class="col-md-5 mb-5 p-1 pesquisar">
                             <div class="d-flex">
                             <label for="exampleDataList" class="form-label"></label>
                             <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
@@ -209,7 +211,7 @@
                                 <tbody style="background-color: #081049; color: white;">
                                    @if(count($lancamentotabelas) > 0)
                                    @foreach($lancamentotabelas as $lancamentotabela)
-                                    <tr>               
+                                    <tr class="bodyTabela">               
                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
                                             <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
@@ -231,13 +233,13 @@
                                           {{$lancamentotabela->lsferiado}}
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn" style="background-color:#204E83;">
-                                                <a href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                            <button class="btn">
+                                                <a class="btn__padrao--editar" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
                                             </button>
                                         </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                            <form action=""  method="post">
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
                                             </form> 
                                             </td>
                                     </tr>

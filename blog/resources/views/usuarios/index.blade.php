@@ -58,15 +58,15 @@
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('user.store')}}">
               @csrf
               
-              <h5 class="card-title text-center mt-5 fs-3 ">Cadastro de Usuários</h5>
+              <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Usuários <i class="fas fa-user"></i></h5>
                 <input type="hidden" id="method" name="_method" value="">
                 <input type="hidden" name="empresa" id="idempresa">
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                   <button type="submit" id="incluir" class="btn botao "  >
-                        <i class="fas fa-save"></i> Incluir
+                        <i class="fad fa-save"></i> Incluir
                       </button>
-                      <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fas fa-sign-out-alt"></i> Sair</a>
+                      <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
 
@@ -114,13 +114,13 @@
         
                     <div class="dropdown  mt-2 p-1">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fas fa-sort"></i> Filtro 
+                            <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($users) > 0)
                         @foreach($users as $valoruser)
-                            <tr>   
+                            <tr class="bodyTabela">   
                                 
                                 <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
                                     <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
@@ -150,27 +150,27 @@
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
                                     <div class="dropdown">
-                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #7EB356;">
-                                        <i class="fas fa-user-lock"></i>
+                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #51039E;">
+                                        <i class="fad fa-user-lock"></i>
                                       </button>
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#">Usuário</a></li>
-                                        <li><a class="dropdown-item" href="#">Administrador</a></li>
-                                        <li><a class="dropdown-item" href="#">Bloquear</a></li>
-                                        <li><a class="dropdown-item" href="#">Suporte</a></li>
+                                        <li><a class="dropdown-item" href="#">Usuário <i class="fad fa-user"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Administrador <i class="fad fa-user-lock"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Bloquear <i class="fas fa-ban" style="color:#A30E00;"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Suporte <i class="fad fa-headset"></i></a></li>
                                       </ul>
                                     </div>
                                 </td>
 
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                    <button class="btn" style="background-color:#204E83;">
-                                    <a href="{{route('user.edit',$valoruser->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                    <button class="btn">
+                                    <a href="{{route('user.edit',$valoruser->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#FF331F">
-                                        <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
+                                    <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
                                     </button>
                                     
                                 </td>

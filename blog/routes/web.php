@@ -112,6 +112,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
 
     Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
+    Route::get('relatorio/avuso/{id}/{trabalhado}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
+    Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');

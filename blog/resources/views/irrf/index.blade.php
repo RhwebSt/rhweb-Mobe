@@ -59,16 +59,16 @@
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn botao" >
-                        <i class="fas fa-save"></i> Incluir
+                        <i class="fad fa-save"></i> Incluir
                     </button>
                     <button type="button" id="deletar" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                        <i class="fas fa-trash"></i> Excluir
+                        <i class="fad fa-trash"></i> Excluir
                     </button>
                     <button type="submit" id="atualizar" disabled class="btn botao" >
-                        <i class="fas fa-edit"></i> Editar
+                        <i class="fad fa-edit"></i> Editar
                     </button>
                     
-                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 

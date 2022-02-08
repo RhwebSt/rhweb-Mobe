@@ -2,7 +2,7 @@
 @section('titulo','Rhweb - Recibo Avuso')
 @section('conteine')
 
-    {{-- @if(session('success'))
+    @if(session('success'))
             <script>
                      
                 const Toast = Swal.mixin({
@@ -23,7 +23,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: 'Recibo gerado com sucesso!'
+                  title: '{{session("success")}}'
                 })
             </script>
         @endif
@@ -51,7 +51,7 @@
                   title: 'Não foi possível gerar o recibo'
                 })
             </script>
-        @enderror   --}}
+        @enderror  
 
 
     {{-- Erro de nao possuir nenhuma recibo em determinado período --}}
@@ -93,8 +93,10 @@
                                             <div class="d-flex">
                                             <label for="exampleDataList" class="form-label"></label>
                                             <input class="form-control fw-bold text-dark pesquisa" list="listatomador" name="pesquisatomador" id="pesquisatomador">
+                                        
                                             <datalist id="listatomador">
                                             </datalist>
+                                            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
                                             {{-- <i class="fas fa-search fa-md iconsear" id="icon"></i> --}}
                                             <div class="text-center d-none" id="refres">
                                                 <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
@@ -102,7 +104,11 @@
                                                 </div>
                                             </div>
                                             </div>
+                                            @error('tomador')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
+                                        
                     
                                     </div>
 
@@ -115,6 +121,7 @@
                                             <input class="form-control fw-bold text-dark pesquisa" list="listatrabalhador" name="pesquisatrabalhador" id="pesquisatrabalhador">
                                             <datalist id="listatrabalhador">
                                             </datalist>
+                                            <input type="hidden" name="trabalhador" class="@error('trabalhador') is-invalid @enderror" id="trabalhador">
                                             {{-- <i class="fas fa-search fa-md iconsear" id="icon"></i> --}}
                                             <div class="text-center d-none" id="refres">
                                                 <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
@@ -122,21 +129,35 @@
                                                 </div>
                                             </div>
                                             </div>
+                                            @error('trabalhador')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                     
                                     </div>
-
+                                    <?php
+                                        if ($valorrublica_avuso->vsreciboavulso) {
+                                            $avuso = $valorrublica_avuso->vsreciboavulso + 1;
+                                        }else{
+                                            $avuso = 1;
+                                        }
+                                    ?>
+                                    <input type="hidden" name="codigo" value="{{$avuso}}">
                             <div class="data mt-4 mb-5">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                                 <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control" name="ano_inicial" value="" id="tano">
-                                    <span class="text-danger"></span>
+                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="" id="tano">
+                                @error('ano_inicial')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                 </div>
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control" name="ano_final" value="" id="tano">
-                                    <span class="text-danger"></span>
+                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="" id="tano">
+                                @error('ano_final')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                 </div>
                             </div>
 
@@ -144,17 +165,23 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <label for="descricao" class="form-label">Descrição</label>
-                                        <input type="text" class="form-control input fw-bold text-dark" value="" name="descricao" maxlength="100" id="descricao">
+                                        <input type="text" class="form-control input fw-bold text-dark @error('descricao0') is-invalid @enderror" name="descricao0" maxlength="100" id="descricao">
+                                        @error('descricao0')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                     </div>
 
                                     <div class="col-md-3">
                                         <label for="valor" class="form-label">Valor</label>
-                                        <input type="text" class="form-control input fw-bold text-dark" value="" name="valor" maxlength="100" id="valor">
+                                        <input type="text" class="form-control input fw-bold text-dark @error('valor0') is-invalid @enderror"  name="valor0" maxlength="100" id="valor">
+                                        @error('valor0')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                     </div>
 
                                         <div class="col-md-4">
                                             <label for="cd" class="form-label">Crédito/Desconto</label>
-                                            <select id="cd" name="cd" class="form-select fw-bold text-dark" >
+                                            <select id="cd" name="cd0" class="form-select fw-bold text-dark" >
                                             <option selected>Crédito</option>
                                             <option>Desconto</option>
                                             </select>
@@ -204,7 +231,7 @@
 
                         
 
-                            <input type="hidden" name="quantidade" id="quantidade">
+                            <input type="hidden" name="quantidade" value="1" id="quantidade">
 
                                 <div class="d-grid d-md-flex justify-content-md-end">
                                     <div class="mt-2">
@@ -275,7 +302,7 @@
                                 </ul>
                             </div>
                         </div>
-
+                    </form>
 
                         <div class="table-responsive-lg">
                             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -291,43 +318,54 @@
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
-
+                                @if(count($lista)>0)
+                                @foreach($lista as $listas)
                                     <tr class="bodyTabela">  
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:60px;">521623</td>             
+                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:60px;">{{$listas->tsmatricula}}</td>             
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 350px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel Felipe dos Santos Rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>Eliel Felipe dos Santos Rocha </a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>{{$listas->trabalhador}} </a>
                                             </button>
                                         
                                         </td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 350px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe mao de obra" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>Mobe mao de obra </a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->tomador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>{{$listas->tomador}} </a>
                                             </button>
                                         
                                         </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap">00/00/0000</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">00/00/0000</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:110px;">521</td>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap">
+                                            <?php
+                                                $inicio = explode('-',$listas->asinicial);
+                                            ?>
+                                            {{$inicio[2]}}/{{$inicio[1]}}/{{$inicio[0]}}
+                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">
+                                            <?php
+                                                $final = explode('-',$listas->asfinal);
+                                            ?>
+                                            {{$final[2]}}/{{$final[1]}}/{{$final[0]}}
+                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:110px;">{{$listas->aicodigo}}</td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                        
-                                            <button class="btn" style="background-color:#53A548;">
-                                                <a href="" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fas fa-lg fa-print"></i></a>
-                                            </button>
+                                        <a href="{{route('recibo.avulso',[base64_encode($listas->id),base64_encode($listas->idtrabalhador)])}}" class="btn" style="background-color:#53A548;"><i style="color:#FFFFFF; padding-left: 3px;" class="fas fa-lg fa-print"></i></a>
+                                            
                                         </td>                               
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                             
                                             
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#FF331F">
+                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$listas->id}}" style="background-color:#FF331F">
                                                 <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
                                             </button>
                                             
                                             <!-- Modal -->
-                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal fade" id="staticBackdrop{{$listas->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action="" id="formdelete" method="post">
+                                                    <form action="{{route('avuso.destroy',$listas->id)}}"  method="post">
                                                         <div class="modal-header modal__delete">
+                                                        @csrf
+                                                @method('delete')
                                                         <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
                                                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
@@ -344,10 +382,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    </td>
-                                </tr>
-
-
+                                    </tr>
+                                @endforeach
+                                @else
                                 <tr>
                                     <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
                                         <div class="alert" role="alert" style="background-color: #CC2836;">
@@ -355,13 +392,13 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                @endif
                                 </tbody>
                 
                             </table>
                         </div>
 
-                    </form> 
+                     
 
 
             </div>
@@ -369,16 +406,18 @@
 
 
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <form class="row g-3" action="" method="POST">
+                <form class="row g-3" action="{{route('recibo.avulso.trabalhador')}}" method="POST">
                     <div class="container text-start fs-5 fw-bold mt-4 mb-3">Pesquisar trabalhador <i class="fas fa-search"></i></div>
-                        
+                    @csrf
                     <div class="d-flex justify-content-between mb-3">
                         <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
                             <div class="d-flex">
                             <label for="exampleDataList" class="form-label"></label>
-                            <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                            <datalist id="datalistOptions">
+                            <input class="form-control fw-bold text-dark " list="listatrabalhador01" id="pesquisatrabalhador01">
+                            
+                            <datalist id="listatrabalhador01">
                             </datalist>
+                            <input type="hidden" name="trabalhador01" class="@error('trabalhador01') is-invalid @enderror" id="idlistatrabalhador01">
                             {{-- <i class="fas fa-search fa-md iconsear" id="icon"></i> --}}
                             <div class="text-center d-none" id="refres">
                                 <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
@@ -386,6 +425,9 @@
                                 </div>
                             </div>
                             </div>
+                            @error('trabalhador01')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                         </div>
     
                     </div>
@@ -393,17 +435,23 @@
                     <div class="data mt-4">
                             <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                             <label for="ano" class="form-label">Data Inicial</label>
-                            <input type="date" class="form-control " name="ano_inicial1" value="" id="tano1">
+                            <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
+                            @error('ano_inicial1')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                             </div>
                             
                             <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                             <label for="ano" class="form-label">Data Final</label>
-                            <input type="date" class="form-control " name="ano_final1" value="" id="tano1">
+                            <input type="date" class="form-control @error('ano_final1') is-invalid @enderror" name="ano_final1" value="" id="tano1">
+                            @error('ano_final1')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                             </div>
                         </div>
     
                         <div class="mt-5">
-                            <a class="btn botao filtrar" id="">Imprimir <i class="fas fa-print"></i></a>
+                            <button type="submit" class="btn botao filtrar" id="">Imprimir <i class="fas fa-print"></i></button>
                         </div>
                         
                 </form>
@@ -441,6 +489,9 @@
         }
         $('#adicinar').click(function () {
             index += 1;
+            let quantidade =  parseInt($('#quantidade').val());
+            quantidade += 1;
+            $('#quantidade').val(quantidade)
             $('#conteiner').append(conteiner(index));
         })
         $('#pesquisatomador').on('keyup focus',function(){
@@ -467,13 +518,9 @@
                             });
                             $('#listatomador').html(nome)
                         } 
-                        // if(data.length === 1 && dados.length >= 2){
-                        //     tomador(dados)
-                        // }else if (dados.length === 14) {
-                        //     pesquisa(dados)
-                        // }else{
-                        //     campo()
-                        // }         
+                        if(data.length === 1 && dados.length >= 2){
+                            $('#tomador').val(data[0].tomador)
+                        }         
                      }
                 });
             })
@@ -502,11 +549,40 @@
                         });
                         $('#listatrabalhador').html(nome)
                       } 
-                    //   if(data.length === 1 && dados.length >= 4){
-                    //     buscaItem(dados)
-                    //   }else{
-                    //     campo()
-                    //   }              
+                      if(data.length === 1 && dados.length >= 4){
+                        $('#trabalhador').val(data[0].id)
+                      }              
+                    }
+                  });
+            });
+            $( "#pesquisatrabalhador01" ).on('keyup focus',function() {
+                let dados = '0'
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
+                $('#icon').addClass('d-none').next().removeClass('d-none')
+                $.ajax({
+                    url: "{{url('trabalhador')}}/pesquisa/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                      $('#trabfoto').removeAttr('src')
+                      $('#refres').addClass('d-none').prev().removeClass('d-none')
+                      let nome = ''
+                      if (data.length >= 1) {
+                        data.forEach(element => {
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tscpf}">`
+                        });
+                        $('#listatrabalhador01').html(nome)
+                      } 
+                      if(data.length === 1 && dados.length >= 4){
+                        $('#idlistatrabalhador01').val(data[0].id)
+                      }              
                     }
                   });
             });

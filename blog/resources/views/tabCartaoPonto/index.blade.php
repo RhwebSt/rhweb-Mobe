@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Boletim com tabela')
 @section('conteine')
 <div class="card-body">
          @if(session('success'))
@@ -71,7 +72,7 @@
             <!--</script>-->
                
                                 
-              <h5 class="card-title text-center fs-3 ">Lançamento com Tabela <i class="fad fa-browser"></i></h5>
+              <h5 class="card-title text-center fs-3 ">Lançamento Boletim com Tabela <i class="fas fa-money-check-alt"></i></h5>
 
               
 
@@ -83,18 +84,19 @@
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
-                        <button type="submit" id="incluir" class="btn botao">Incluir <i class="fas fa-save"></i></button>
-                        <a  id="boletim"  class="btn botao disabled">Boletim <i class="fas fa-door-open"></i></a>
-                        <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fas fa-edit"></i></button>
+                        <button type="submit" id="incluir" class="btn botao">Incluir <i class="fad fa-save"></i></button>
+                        <a  id="boletim"  class="btn botao disabled">Boletim <i class="fad fa-door-open"></i></a>
+                        <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fad fa-edit"></i></button>
                         <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                          Excluir <i class="fas fa-trash"></i>
+                          Excluir <i class="fad fa-trash"></i>
                       </button>
-                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fas fa-sign-out-alt"></i></a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fad fa-sign-out-alt"></i></a>
                   </div>
               </div>
               
+              <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
               <div>
-                    <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
+                    <div class="col-md-5 mb-5 p-1 pesquisar">
                         <div class="d-flex">
                         <label for="exampleDataList" class="form-label"></label>
                         <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
@@ -164,7 +166,7 @@
 
                 <div class="col-md-3">
                   <label for="num__trabalhador" class="form-label">Quantidade de cadastros</label>
-                  <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
+                  <input type="number" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
                   @error('num__trabalhador')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -185,20 +187,20 @@
         
                     <div class="dropdown  mt-2 p-1">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fas fa-sort"></i> Filtro 
+                            <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
                 
                 
                 
-                <div class="table-responsive-lg">
+                <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
                                     <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Nº do Boletim</th>
@@ -211,7 +213,7 @@
                                 <tbody style="background-color: #081049; color: white;">
                                    @if( count($lancamentotabelas) > 0)
                                    @foreach($lancamentotabelas as $lancamentotabela)
-                                    <tr>               
+                                    <tr class="bodyTabela">               
                                         <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
                                             <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
@@ -226,15 +228,15 @@
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn" style="background-color:#204E83;">
-                                                <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                            <button class="btn">
+                                                <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                             </button>
                                         </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                            <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
                                             @csrf
                                             @method('delete')
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                                             </form> 
                                             </td>
                                         </td>

@@ -9,12 +9,12 @@
 
 <style>
     @page { 
-          margin-top: 288px; 
+          margin-top: 252.5px; 
           margin-bottom: 110px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -288px; right: 0px; height: 288px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -252.5px; right: 0px; height: 252.5px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -110px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
     
@@ -254,26 +254,6 @@
         width: 184.7px;
     }
 
-    .assinatura{
-    margin-top:20px;
-    }
-
-    .fontDeclaracao{
-    font-size: 14px;
-    }
-
-    .data__ass{
-    width:150px;
-    }
-
-    .linhaass{
-    width:759px;
-    }
-
-    .cidade{
-        width:375px;
-    }
-
     .text-white{
         color:white;
     }
@@ -292,6 +272,23 @@
 
     .margin-top__xl{
         margin-top: 10px;
+    }
+
+    .padrao{
+        width: 251.5px;
+    }
+
+    .padrao1{
+        width: 380.5px;
+    }
+
+    footer{
+      float: right;
+    }
+
+    .padding-footer{
+        padding: 2px;
+        width:770px;
     }
 </style>
 
@@ -346,20 +343,18 @@
                     </tr>
             </table>
         </div>
-        
+
         <table class="margin-top__md">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">RECIBO Avulso de pagamento</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Rol dos Recibos Avulsos</td>
             </tr>
         </table>
-        
 
         <table>
             <tr>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Data de Emissão: {{date('d/m/y')}}</td>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Periodo: 
-            
-                    <?php
+                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Data de Emissão: {{date('d/m/y')}}</td>
+                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Período: 
+                <?php
                         $data_inicial = explode('-',$avusos->asinicial);
                         echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
                     ?>
@@ -371,124 +366,42 @@
                     ?>
                 
                 </td>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Nº do Recibo:{{$avusos->aicodigo}}</td>
             </tr>
         </table>
-
+        
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->tsnome}}</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="small__font matric border-left text-center border-bottom border-top destaque"><strong>Matrícula</strong></td>
-                <td class="small__font cpf border-left text-center border-bottom border-top destaque"><strong>CPF</strong></td>
-                <td class="small__font pis border-left text-center border-bottom border-top destaque"><strong>PIS</strong></td>
-                <td class="small__font cbo border-left border-right text-center border-bottom border-top destaque"><strong>CBO</strong></td>
-            </tr>
-
-            <tr>
-                <td class="small__font matric border-left text-center border-bottom border-top">{{$avusos->tsmatricula}}</td>
-                <td class="small__font cpf border-left text-center border-bottom border-top">{{$avusos->tscpf}}</td>
-                <td class="small__font pis border-left text-center border-bottom border-top">{{$avusos->dspis}}</td>
-                <td class="small__font cbo border-left border-right text-center border-bottom border-top">
-                    <?php
-                        $cbo = explode('-',$avusos->cbo);
-                    ?>
-                    {{$cbo[0]}}
-                </td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->tsmatricula}} - {{$avusos->tsnome}}</td>
             </tr>
         </table>
 
         <table class="margin-top__md">
             <tr>
-                <td class="small__font border-left text-center descricao text-bold border-bottom border-top destaque">Descrição</td>
-                <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Créditos</td>
-                <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
+                <td class="border-right border-left border-bottom border-top small__font destaque padrao text-center text-bold">Nº do Recibo</td>
+                <td class="border-right border-left border-bottom border-top small__font destaque padrao text-center text-bold">Data de Emissão</td>
+                <td class="border-right border-left border-bottom border-top small__font destaque padrao text-center text-bold">Valor Líquido</td>
             </tr>
         </table>
     </div>
 
-    <div id="footer">
+    <div id="footer padding-footer">
         <p class="page destaque borderT padding-footer">Página:  </p>
     </div>
 
     <div id="content">
-        <?php
-            $credito = 0;
-            $desconto = 0;
-        ?>
         <table>
-            @foreach($descricoes as $descricao)
+            @foreach($listaavuso as $listaavusos)
             <tr>
-                <td class="small__font border-left descricao border-bottom uppercase">{{$descricao->asdescricao}}</td>
-                <td class="small__font border-left text-center vencimentos text-bold border-bottom">
-                    @if($descricao->asstatus === 'Crédito')
-                        {{number_format((float)$descricao->aivalor, 2, ',', '.')}}
-                        <?php
-                        $credito += $descricao->aivalor;
-                        ?>
-                    @endif
-                    
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">{{$listaavusos->aicodigo}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">
+                    <?php
+                        $data_final = explode(' ',$listaavusos->created_at);
+                        $data_final = explode('-',$data_final[0]);
+                        echo($data_final[2].'/'.$data_final[1].'/'.$data_final[0]);
+                    ?>
                 </td>
-                <td class="small__font border-left border-right text-center descontos text-bold border-bottom">
-                    @if($descricao->asstatus === 'Desconto')
-                        {{number_format((float)$descricao->aivalor, 2, ',', '.')}}
-                        <?php
-                            $desconto += $descricao->aivalor
-                        ?>
-                    @endif
-                    
-                </td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">R$ {{number_format((float)$listaavusos->ailiquido, 2, ',', '')}}</td>
             </tr>
             @endforeach
-
         </table>
-
-        <table>
-            <tr>
-                <td class="small__font border-left border-top tipoTrab text-bold">Empresa tomadora dos serviços</td>
-                <td class="small__font border-left text-bold border-top total__vencimentos1 text-center destaque border-bottom border-right">Total Créditos</td>
-                <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
-            </tr>
-
-            <tr>
-                <td class="small__font border-left tipoTrab1"> . </td>
-                <td class="small__font border-left text-bold total__vencimentos1 text-center destaque border-bottom border-right">{{number_format((float)$credito, 2, ',', '.')}}</td>
-                <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$desconto, 2, ',', '.')}}</td>
-            </tr>
-
-            <tr>
-                <td class="small__font border-left tipoTrab1 border-bottom"></td>
-                <td class="small__font border-left text-bold total__vencimentos1 text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-                <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$credito - $desconto, 2, ',', '.')}}</td>
-            </tr>
-        </table>
-
-        
-        <div class="borderT margin-top__md">
-            <table class="assinatura">
-                <tr>
-                    <td class="fontDeclaracao linhaass text-center">__________________________________________________</td>
-                </tr>
-        
-                <tr>
-                    <td class="fontDeclaracao text-center">Assinatura Trabalhador</td>
-                </tr>
-            </table>
-
-            <table class="margin-top">
-                <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">{{$avusos->esmunicipio}} - {{$avusos->esuf}}</td>
-                    <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
-                </tr>
-            </table>
-        </div>
-
-        
-
     </div>
-</body>
-</html>

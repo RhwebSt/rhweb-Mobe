@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Lançamento com Tabela de Preço')
 @section('conteine')
 
 <div class="container">
@@ -52,14 +53,14 @@
                 })
             </script>
         @enderror  
-        <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço</h1>
+        <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço <i class="fad fa-money-check-alt"></i></h1>
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.update',$lancamentorublicas->id)}}">
         @csrf
         <input type="hidden" id="method" name="_method" value="put">
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                <button type="submit" id="atualizar"  class="btn botao">Atualizar</button>
-                <a class="btn botao" href="{{route('tabcadastro.create',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($id),base64_encode($data)])}}" role="button">Sair</a>
+                <button type="submit" id="atualizar"  class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                <a class="btn botao" href="{{route('tabcadastro.create',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($id),base64_encode($data)])}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
               </div>
           </div>
               
@@ -127,7 +128,7 @@
             
             
             </form>
-        <div class="table-responsive-lg">
+        <div class="table-responsive-xxl">
             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
@@ -140,7 +141,7 @@
                 <tbody style="background-color: #081049; color: white;">
                     @if(count($lista) > 0)
                     @foreach($lista as $listas)
-                        <tr>
+                        <tr class="bodyTabela">
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase">{{$listas->tsnome}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->licodigo}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>

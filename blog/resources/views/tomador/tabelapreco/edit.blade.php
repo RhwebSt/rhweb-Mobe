@@ -73,7 +73,7 @@
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         
-                        <button type="submit" class="btn botao " id="atualizar"><i class="fas fa-sync-alt"></i> Atualizar </button>
+                        <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
                          <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatórios
                         </button>
@@ -83,7 +83,7 @@
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
+                          <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                       </div>
                   </div>
 
@@ -154,7 +154,7 @@
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($tabelaprecos) > 0)
                           @foreach($tabelaprecos as $tabelapreco)
-                            <tr>
+                            <tr class="bodyTabela">
                             <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:60px;">{{$tabelapreco->tsano}}</td>
                             <td class="col text-center  border-bottom text-nowrap text-uppercase"style="width:80px;" >{{$tabelapreco->tsrubrica}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase " style="width:900px;">

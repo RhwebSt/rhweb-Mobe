@@ -61,8 +61,8 @@
                     </div>
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn form-control" role="button" aria-label="Basic example">
-                      <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
-                      <a class="btn botao" href="{{ route('depedente.mostrar.index',$id) }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                      <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                      <a class="btn botao" href="{{ route('depedente.mostrar.index',$id) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                   </div>
               </div>
@@ -88,7 +88,7 @@
                 
                 <div class="col-md-4">
                     <label for="tipo__dependente" class="form-label">Tipo de Depedente</label>
-                    <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark" value="{{old('tipo__dependente')}}">
+                    <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark fw-bold" value="{{old('tipo__dependente')}}">
                       <option>Cônjuge</option>
                       <option>Filho(a) ou enteado(a)</option>
                       <option>Irmão(ã), neto(a) ou bisneto(a)</option>
@@ -111,7 +111,7 @@
                 
                 <div class="col-md-4">
                     <label for="data__nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror text-dark" value="{{old('data__nascimento')}}" name="data__nascimento"  id="data__nascimento">
+                    <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror text-dark fw-bold" value="{{old('data__nascimento')}}" name="data__nascimento"  id="data__nascimento">
                     @error('data__nascimento')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -119,7 +119,7 @@
 
                 <div class="col-md-4">
                     <label for="sexo" class="form-label">Sexo</label>
-                    <select id="sexo" name="sexo" class="form-select text-dark" value="">
+                    <select id="sexo" name="sexo" class="form-select text-dark fw-bold" value="">
                       <option selected>Masculino</option>
                       <option>Feminino</option>
                       <option>Outro</option>
@@ -133,7 +133,7 @@
                     @error('irrf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror -->
-                  <select id="irrfs" name="irrf" class="form-select" value="">
+                  <select id="irrfs" name="irrf" class="form-select fw-bold" value="">
                       <option >Sim</option>
                       <option selected>Não</option>
                   </select> 
@@ -145,7 +145,7 @@
                     @error('sf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror -->
-                    <select id="sfs" name="sf" class="form-select" value="">
+                    <select id="sfs" name="sf" class="form-select fw-bold" value="">
                       <option >Sim</option>
                       <option selected>Não</option>
                     </select> 

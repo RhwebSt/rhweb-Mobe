@@ -15,11 +15,10 @@ class CreateAvusosTable extends Migration
     {
         Schema::create('avusos', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('asdescricao', 60)->nullable();
-            $table->float('aivalor',8,2)->nullable();
-            $table->char('asstatus', 14)->nullable();
             $table->char('asinicial', 10)->nullable();
             $table->char('asfinal', 10)->nullable();
+            $table->float('aicodigo',8,2)->nullable();
+            $table->float('ailiquido',8,2)->nullable();
             $table->integer('trabalhador')->unsigned()->nullable();
             $table->foreign('trabalhador')->references('id')->on('trabalhadors');
             $table->integer('tomador')->unsigned()->nullable();

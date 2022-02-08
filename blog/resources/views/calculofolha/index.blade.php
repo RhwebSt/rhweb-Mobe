@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Cálculo da folha')
 @section('conteine')
 
 <div class="container responsive">
@@ -8,10 +9,10 @@
             <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</button>
           </li>
           <li class="nav-item ms-1 pillstop" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fas fa-list"></i> Lista Tomador</button>
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-th-list"></i> Lista Tomador</button>
           </li>
           <li class="nav-item ms-1 pillstop1" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" style="color: white;">Lista Geral <i class="fad fa-th-list"></i></button>
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" style="color: white;"><i class="fad fa-th-list"></i> Lista Geral</button>
           </li>
         </ul>
         
@@ -118,7 +119,7 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <form class="row g-3" action="" method="POST">
                         @csrf
-                        <div class="container text-start fs-4 fw-bold mt-4 mb-3">Pesquisar <i class="fas fa-search"></i></div>
+                        <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                     
                         <div class="d-flex justify-content-between mb-3">
                             <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
@@ -151,7 +152,7 @@
                             </div>
         
                             <div class="mt-3">
-                                <a class="btn botao filtrar" id="">Filtrar <i class="fas fa-filter"></i></a>
+                                <a class="btn botao filtrar" id="">Filtrar <i class="fad fa-filter"></i></a>
                             </div>
                             
                             
@@ -161,18 +162,18 @@
         
                             <div class="dropdown  mt-2 p-1">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                    <i class="fas fa-sort"></i> Filtro 
+                                    <i class="fad fa-sort"></i> Filtro 
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                                 </ul>
                             </div>
                         </div>
         
-                        <div class="table-responsive-lg">
+                        <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
                                     <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Código da Folha</th>
@@ -181,6 +182,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:200px">Data Final</th>
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Trabalhador</th>
+                                    <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
@@ -189,17 +191,18 @@
                                         <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;"></td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 450px;"></td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px"></td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px"></td>                           
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px"></td>  
+                                        
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                             <button class="btn" style="background-color:#28117A; border: 1px solid #8268DE;">
-                                            <a href="" class="" ><i class="fal fa-print" style="color: white;"></i></a>
+                                            <a href="" class="" ><i class="fad fa-print" style="color: white;"></i></a>
                                             </button>
                                         </td>
                                         
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                             
                                             <a class="btn botao" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
-                                              <i class="fal fa-print-search"></i>
+                                              <i class="fad fa-user"></i>
                                             </a>
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                                               <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -233,12 +236,18 @@
                                             </div>
                                             
                                         </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:50px;">
+                                                <a href="" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
+                                                    <i class="fad fa-analytics" style="color: white;"></i>
+                                                </a>
+                                            </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                            <form action=""  method="post">
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
                                             </form> 
                                             </td>
                                         </td>
+                                        
                                     </tr>
                                     
                                 <tr>
@@ -260,7 +269,7 @@
                     <form class="row g-3" action="" method="POST">
                         @csrf
                     </form>
-                    <div class="container text-start fs-4 fw-bold mt-4 mb-3">Pesquisar <i class="fas fa-search"></i></div>
+                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                 
                     <div class="d-flex justify-content-between mb-3">
                             <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
@@ -303,18 +312,18 @@
         
                             <div class="dropdown  mt-2 p-1">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                    <i class="fas fa-sort"></i> Filtro 
+                                    <i class="fad fa-sort"></i> Filtro 
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                                 </ul>
                             </div>
                         </div>
         
-                        <div class="table-responsive-lg">
+                        <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
                                     <th class="col text-center border-top border-start text-nowrap" style="width:150px;">Código da Folha</th>
@@ -346,13 +355,13 @@
                                                 {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                             </td>                           
                                             <td class="col text-center border-bottom text-nowrap" style="width:50px;">
-                                                <a class="btn" style="background-color:#28117A; border: 1px solid #8268DE;" href="{{route('calculo.folha.imprimir',$folhar->id)}}" class="" ><i class="fal fa-print" style="color: white;"></i></a>
+                                                <a class="btn" style="background-color:#28117A; border: 1px solid #8268DE;" href="{{route('calculo.folha.imprimir',$folhar->id)}}" class="" ><i class="fad fa-print" style="color: white;"></i></a>
                                             </td>
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
                                                 <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample1{{$folhar->id}}" role="button" aria-controls="offcanvasExample1" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
-                                                    <i class="fal fa-print-search" style="color: white;"></i>
+                                                    <i  class="fad fa-user" style="color: white;"></i>
                                                 </a>
 
                                                 
@@ -405,8 +414,8 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
-                                                <a class="btn" data-bs-toggle="offcanvas" href="#rublica{{$folhar->id}}" role="button" aria-controls="rublica" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
-                                                <i class="fas fa-file-signature" style="color: white;"></i>
+                                                <a class="btn" data-bs-toggle="offcanvas" href="#rublica{{$folhar->id}}" role="button" aria-controls="rublica" style="background-color:#003AB8; border: 1px solid #A4F4EC;">
+                                                <i class="fad fa-file-signature" style="color: white;"></i>
                                                 </a>
                                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="rublica{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -458,7 +467,7 @@
                                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                 
                                                 <a class="btn" data-bs-toggle="offcanvas" href="#banco{{$folhar->id}}" role="button" aria-controls="banco" style="background-color:#0D6E64; border: 1px solid #A4F4EC;">
-                                                <i class="fal fa-file-invoice-dollar" style="color: white;"></i>
+                                                <i class="fad fa-file-invoice-dollar" style="color: white;"></i>
                                                 </a>
                                                 <div class="offcanvas offcanvas-end" tabindex="-1" id="banco{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -502,12 +511,12 @@
                                             
                                             <td class="col text-center border-bottom text-nowrap" style="width:50px;">
                                                 <a href="{{route('calculo.folha.analitica',$folhar->id)}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
-                                                    <i class="fal fa-analytics" style="color: white;"></i>
+                                                    <i class="fad fa-analytics" style="color: white;"></i>
                                                 </a>
                                             </td>
                                             
                                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                                <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></a>
+                                                <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></a>
                                          
                                             </td>
                                         

@@ -349,13 +349,43 @@ main{
 .bodyTabela{
     background-color: #081049;
     color: white;
-    transition: 300ms;
+    transition: 400ms;
     transition-timing-function: ease-in-out;
 }
 
 .bodyTabela:hover{
-    background-color: #1427B8;
+    background-color: #0C186E;
     color: white;
+}
+
+.btn__padrao--editar{
+    padding-top:8.5px;
+    padding-bottom:8.5px;
+    padding-left: 11px;
+    padding-right: 11px;
+    border-radius: 6px;
+    background-color:#117E25;
+    border: 1px solid #5DE977;
+    transition: 400ms;
+}
+
+.btn__padrao--editar:hover{
+    background-color:#0C5A1A;
+}
+
+.btn__padrao--excluir{
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 6px;
+    background-color:#A30E00;
+    border: 1px solid #FF5747;
+    transition: 400ms;
+}
+
+.btn__padrao--excluir:hover{
+    background-color:#660900;
 }
 
 

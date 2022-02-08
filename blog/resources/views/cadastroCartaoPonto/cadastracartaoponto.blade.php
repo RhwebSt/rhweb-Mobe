@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Cadastro Cartão Ponto')
 @section('conteine')
 <div class="container"> 
         
@@ -23,7 +24,7 @@
                 
                 Toast.fire({
                   icon: 'success',
-                  title: 'Cadastrado.'
+                  title: '{{ session("success") }}'
                 })
             </script>
         @endif
@@ -54,7 +55,7 @@
         @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
             
-            <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto</h1>
+            <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto <i class="fas fa-user-clock"></i></h1>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
@@ -66,8 +67,8 @@
         <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
-                        <button type="submit" id="incluir" class="btn botao">Incluir</button>
-                        <button type="submit" id="atualizar" disabled class="btn botao">Editar</button>
+                        <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
+                        <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-edit"></i> Editar</button>
                         <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatório
                       </button>
@@ -77,9 +78,9 @@
                         
                         
                         <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                          Excluir
+                          <i class="fas fa-trash"></i> Excluir
                       </button>
-                    <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button">Sair</a>
+                    <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
             <input type="hidden" name="lancamento" id="lancamento" value="{{$id}}"> 
@@ -234,7 +235,7 @@
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
               
-             <div class="table-responsive-xl">
+             <div class="table-responsive-xxl">
                   <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
@@ -297,7 +298,7 @@
   
           <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             
-            <div class="table-responsive-xl">
+            <div class="table-responsive-xxl">
                   <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
@@ -318,7 +319,7 @@
                     $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                     <tr>
                     <td   class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
-                    <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:330px;">{{$listas->tsnome}}</td>
+                    <td class="col text-center border-bottom text-nowrap" style="width:330px;">{{$listas->tsnome}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradanoite}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidanoite}}</td>
                     <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamadrugada}}</td>

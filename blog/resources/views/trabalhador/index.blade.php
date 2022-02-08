@@ -59,15 +59,15 @@
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data"  method="POST">
         
             <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
-                <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
                 <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <i class="fas fa-trash"></i> Excluir
+                            <i class="fad fa-trash"></i> Excluir
                           </button>
                     <!-- <a class="btn btn btn-primary" href="{{ route('trabalhador.index') }}" role="button">Consultar</a> -->
                     
                     <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-invoice"></i> Relatórios
+                        <i class="fad fa-file-alt"></i> Relatórios
                      </button>
                       <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Ficha de Registro</a></li>
@@ -77,14 +77,14 @@
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="cracha" role="button">Crachá</a></li>
                         <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
                       </ul>
-                    <a class="btn botao disabled"  id="depedente" role="button"><i class="fas fa-users"></i> Dependentes</a>
+                    <a class="btn botao disabled"  id="depedente" role="button"><i class="fad fa-users"></i> Dependentes</a>
                     
                     <button type="button" class="btn botao disabled d-none" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
 
-                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
             </div>
             
             <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
@@ -139,7 +139,7 @@
                 
                 <div class="col-md-6">
                   <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio"/> Nome Social (Opcional) </label>
-                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror fw-bold text-dark" value="{{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social">
+                  <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{ old('nome__social')}}" maxlength="100" name="nome__social" id="nome__social">
                   @error('nome__social')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -299,7 +299,7 @@
     
                 <div class="col-md-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control input @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
+                    <input type="text" class="form-control input @error('cep') is-invalid @enderror fw-bold" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
                     @error('cep')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -307,7 +307,7 @@
                 
                 <div class="col-md-7">
                     <label for="logradouro" class="form-label">Rua</label>
-                    <input type="text" class="form-control input  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
+                    <input type="text" class="form-control input  @error('logradouro') is-invalid @enderror fw-bold" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
                     @error('logradouro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -315,7 +315,7 @@
 
                 <div class="col-md-2">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control input @error('numero') is-invalid @enderror" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
+                    <input type="text" class="form-control input @error('numero') is-invalid @enderror fw-bold" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
                     @error('numero')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -381,7 +381,7 @@
                 </div>
                 <div class="col-md-8">
                     <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control input @error('bairro') is-invalid @enderror" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
+                    <input type="text" class="form-control input @error('bairro') is-invalid @enderror fw-bold" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
                     @error('bairro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -390,7 +390,7 @@
 
                 <div class="col-md-7">
                     <label for="localidade" class="form-label">Municipio</label>
-                    <input type="text" class="form-control input @error('localidade') is-invalid @enderror" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
+                    <input type="text" class="form-control input @error('localidade') is-invalid @enderror fw-bold" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
                     @error('localidade')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -398,7 +398,7 @@
 
                 <div class="col-md-2">
                     <label for="uf" class="form-label">UF</label>
-                    <input type="text" class="form-control input @error('uf') is-invalid @enderror" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
+                    <input type="text" class="form-control input @error('uf') is-invalid @enderror fw-bold" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
                     @error('uf')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror

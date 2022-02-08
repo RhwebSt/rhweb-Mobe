@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Editar Descontos')
 @section('conteine')
 
         @if(session('success'))
@@ -79,12 +80,12 @@
 
         <section class="container">
             <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('descontos.update',$dadosdescontos->id)}}">
-                <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Descontos <i class="fas fa-percent"></i></div>
+                <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Editar Descontos <i class="fas fa-percent"></i></div>
                 @csrf
                 @method('PATCH')
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
-                      <a class="btn botao" href="{{route('descontos.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                      <a class="btn botao" href="{{route('descontos.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Voltar</a>
                 </div>
 
                 <script>

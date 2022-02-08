@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Meus Dados')
 @section('conteine')
         <div class="container" >
             
@@ -52,180 +53,193 @@
                   title: '{{$message}}'
                 })
             </script>
-        @enderror     
+        @enderror
+        
+        <div class="bg__form1 container mt-5" style="border: 1px solid white; border-radius:12px;">
+        
             <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('empresa.store') }}" method="POST" action="" >
-           
-            <div class="col-md-5 mb-3">
-                <label for="formFileSm" class="form-label d-none">Logo da Empresa</label>
-                <img class="trabfoto" id="trabfoto" src="" alt="logo do usuario">
-            </div>
-                <input type="hidden" id="empresa" value="{{$user->empresa}}">
-                <h1 class="container text-center fs-4 fw-bold">Cadastro de Empresas</h1>
+            <section>
+               <div class="container d-flex justify-content-center flex-column align-items-center mt-5 p-2" >
+                        <label for="formFileSm" class="form-label d-none">Logo da Empresa</label>
+                        <img class="rounded mx-auto d-block back__foto" id="trabfoto" src="" alt="logo do usuario" style="width: 200px; height: 200px;">
+                    <input type="hidden" id="empresa" value="{{$user->empresa}}">
+                </div>  
+            
+            </section>
+                
+                
+                
+                <h1 class="container text-center fs-4 fw-bold text-white">Cadastro de Empresas</h1>
+                
+                
+                
                 @csrf
                 <input type="hidden" name="trabalhador" >
                 <input type="hidden" name="tomador">
                 <input type="hidden" id="method" name="_method" value="">
+                
+                
                 <div class="col-md-8">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" name="nome" id="nome">
+                    <label for="nome" class="form-label text-white">Nome</label>
+                    <input type="text" class="form-control fw-bold" name="nome" id="nome">
                 </div>
 
                 <div class="col-md-4">
-                    <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
-                    <input type="text" class="form-control " name="cnpj_mf" id="cnpj_mf">
+                    <label for="cnpj_mf" class="form-label text-white ">CNPJ/MF Nº</label>
+                    <input type="text" class="form-control fw-bold" name="cnpj_mf" id="cnpj_mf">
                 </div>
 
                 <div class="col-md-4">
-                    <label for="nome" class="form-label">Data de Registro</label>
+                    <label for="nome" class="form-label text-white">Data de Registro</label>
                     <input type="date" class="form-control fw-bold" name="dataregistro" id="dataregistro">
                 </div>
 
 
                 <div class="col-md-2">
-                    <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control" name="cep" id="cep">
+                    <label for="cep" class="form-label text-white">CEP</label>
+                    <input type="text" class="form-control fw-bold" name="cep" id="cep">
                 </div>
                 
                 <div class="col-md-6">
-                    <label for="logradouro" class="form-label">Rua</label>
-                    <input type="text" class="form-control" name="logradouro" id="logradouro">
+                    <label for="logradouro" class="form-label text-white">Rua</label>
+                    <input type="text" class="form-control fw-bold" name="logradouro" id="logradouro">
                 </div>
 
                 <div class="col-md-2">
-                    <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control" name="numero" id="numero">
+                    <label for="numero" class="form-label text-white">Número</label>
+                    <input type="text" class="form-control fw-bold" name="numero" id="numero">
                 </div>
 
                 
                 <div class="col-md-4"> 
-                                <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
+                                <label for="tipoconstrucao" class="form-label text-white">Tipo da construção</label>
                                 <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
                                 <option selected >Casa</option>
                                 <option >Apartamento</option>
                             </select>
                         </div>
                 <div class="col-md-6">
-                    <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" name="bairro" id="bairro">
+                    <label for="bairro" class="form-label text-white">Bairro</label>
+                    <input type="text" class="form-control fw-bold" name="bairro" id="bairro">
                 </div>
 
 
                 <div class="col-md-6">
-                    <label for="localidade" class="form-label">Municipio</label>
-                    <input type="text" class="form-control" name="localidade" id="localidade">
+                    <label for="localidade" class="form-label text-white">Municipio</label>
+                    <input type="text" class="form-control fw-bold" name="localidade" id="localidade">
                 </div>
 
                 <div class="col-md-2">
-                    <label for="uf" class="form-label">UF</label>
-                    <input type="text" class="form-control" name="uf" id="uf">
+                    <label for="uf" class="form-label text-white">UF</label>
+                    <input type="text" class="form-control fw-bold" name="uf" id="uf">
                 </div>
  
                 <div class="col-md-4">
-                    <label for="reponsave" class="form-label">Responsavel</label>
-                    <input type="text" class="form-control" name="responsave" id="responsave">
+                    <label for="reponsave" class="form-label text-white">Responsavel</label>
+                    <input type="text" class="form-control fw-bold" name="responsave" id="responsave">
                 </div>
 
                 <div class="col-md-4">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label text-white">Email</label>
                     <input type="email" class="form-control fw-bold" name="email" id="email">
                 </div>
                 <div class="col-md-4">
-                    <label for="seguro" class="form-label">Seguro</label>
-                    <input type="text" class="form-control" name="seguro" id="seguro">
+                    <label for="seguro" class="form-label text-white">Seguro</label>
+                    <input type="text" class="form-control fw-bold" name="seguro" id="seguro">
                 </div>
                 <div class="col-md-4">
-                    <label for="cnae__codigo" class="form-label">CNAE código</label>
-                    <input type="text" class="form-control" name="cnae__codigo" id="cnae__codigo">
-                </div>
-
-                <div class="col-md-4">
-                    <label for="cod__municipio" class="form-label">Código Município</label>
-                    <input type="text" class="form-control" name="cod__municipio" id="cod__municipio">
+                    <label for="cnae__codigo" class="form-label text-white">CNAE código</label>
+                    <input type="text" class="form-control fw-bold" name="cnae__codigo" id="cnae__codigo">
                 </div>
 
                 <div class="col-md-4">
-                    <label for="sincalizado" class="form-label">Sindicalizado</label>
-                    <select id="sincalizado" name="sincalizado" class="form-select fw-bold">
+                    <label for="cod__municipio" class="form-label text-white">Código Município</label>
+                    <input type="text" class="form-control fw-bold" name="cod__municipio" id="cod__municipio">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="sincalizado" class="form-label text-white">Sindicalizado</label>
+                    <select id="sincalizado" name="sincalizado fw-bold" class="form-select fw-bold">
                         <option>1-Sim</option>
                         <option>2-Não</option>
                     </select>
                 </div>
 
                 <div class="col-md-2 d-none">
-                    <label for="retem__ferias" class="form-label">Retem Férias</label>
-                    <select id="retem__ferias" name="retem__ferias" class="form-select fw-bold">
+                    <label for="retem__ferias" class="form-label text-white">Retem Férias</label>
+                    <select id="retem__ferias" name="retem__ferias " class="form-select fw-bold">
                         <option>1-Sim</option>
                         <option>2-Não</option>
                     </select>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="contribuicao__sindicato" class="form-label">Contribuição ao Sindicato</label>
-                    <input type="text" class="form-control" name="contribuicao__sindicato" id="contribuicao__sindicato">
+                    <label for="contribuicao__sindicato" class="form-label text-white">Contribuição ao Sindicato</label>
+                    <input type="text" class="form-control fw-bold" name="contribuicao__sindicato" id="contribuicao__sindicato">
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="telefone" class="form-label">Telefone</label>
-                    <input type="text" class="form-control" name="telefone" id="telefone">
+                    <label for="telefone" class="form-label text-white">Telefone</label>
+                    <input type="text" class="form-control fw-bold" name="telefone" id="telefone">
                 </div>
 
-                <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
+                <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold text-white">Valores para VT e VA Rúbricas</h1>
 
-
-                
-
-                <div class="col-md-4">
-                    <label for="nro__fatura" class="form-label">Nro Fatura</label>
-                    <input type="text" class="form-control" name="nro__fatura" id="nro__fatura">
-                </div>
-
-                <div class="col-md-4">
-                    <label for="nro__reciboavulso" class="form-label">Nro Recibo Avulso</label>
-                    <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso">
-                </div>
 
                 
 
                 <div class="col-md-4">
-                    <label for="nro__requisicao" class="form-label">Nro Requisição</label>
-                    <input type="text" class="form-control" name="nro__requisicao" id="nro__requisicao">
+                    <label for="nro__fatura" class="form-label text-white">Nro Fatura <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__fatura" id="nro__fatura" Readonly>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="nro__boletins" class="form-label">Nro Boletins</label>
-                    <input type="text" class="form-control" name="nro__boletins" id="nro__boletins">
+                    <label for="nro__reciboavulso" class="form-label text-white">Nro Recibo Avulso <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__reciboavulso" id="nro__reciboavulso" Readonly>
+                </div>
+
+                
+
+                <div class="col-md-4">
+                    <label for="nro__requisicao" class="form-label text-white">Nro Requisição <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__requisicao" id="nro__requisicao" Readonly>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="nro__folha" class="form-label">Nro da Folha</label>
-                    <input type="text" class="form-control" name="nro__folha" id="nro__folha">
+                    <label for="nro__boletins" class="form-label text-white">Nro Boletins <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__boletins" id="nro__boletins" Readonly>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="nro__cartaoponto" class="form-label">Nro Cartão Ponto</label>
-                    <input type="text" class="form-control" name="nro__cartaoponto" id="nro__cartaoponto">
+                    <label for="nro__folha" class="form-label text-white">Nro da Folha <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__folha" id="nro__folha" Readonly>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="seq__esocial" class="form-label">Seque E-Social</label>
-                    <input type="text" class="form-control" name="seq__esocial" id="seq__esocial">
+                    <label for="nro__cartaoponto" class="form-label text-white">Nro Cartão Ponto <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="nro__cartaoponto" id="nro__cartaoponto" Readonly>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="cbo" class="form-label">CBO</label>
-                    <input type="text" class="form-control" name="cbo" id="cbo">
+                    <label for="seq__esocial" class="form-label text-white">Seque E-Social <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="seq__esocial" id="seq__esocial" Readonly>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="cbo" class="form-label text-white">CBO <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="cbo" id="cbo" Readonly>
                 </div>
                 <div class="col-md-4 ">
-                    <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
-                    <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador">
+                    <label for="matric__trabalhador" class="form-label text-white">Matrícula Trabalhador <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="matric__trabalhador" id="matric__trabalhador" Readonly>
                 </div>
                 <div class="col-md-4 ">
-                    <label for="matric__tomador" class="form-label">Matrícula Tomador</label>
-                    <input type="text" class="form-control" name="matric__tomador" id="matric__tomador">
+                    <label for="matric__tomador" class="form-label text-white">Matrícula Tomador <i class="fas fa-lock"></i></label>
+                    <input type="text" class="form-control fw-bold" name="matric__tomador" id="matric__tomador" Readonly>
                 </div>
                 <div class="col-md-4 mb-5 d-none">
-                    <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
-                    <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">
+                    <label for="ambiente__esocial" class="form-label text-white">Ambiente E-Social <i class="fas fa-lock"></i></label>
+                    <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold" Readonly>
                         <option>1-Produção </option>
                         <option>2-Restrita</option>
                     </select>
@@ -236,6 +250,7 @@
                     <input type="hidden" name="bancario" id="bancario">
             </div>
         </form>
+    </div>
 
         
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

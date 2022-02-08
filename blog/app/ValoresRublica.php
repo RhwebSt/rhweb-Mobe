@@ -51,6 +51,13 @@ class ValoresRublica extends Model
             'vimatricular'=>$dados['matricula'],
         ]);
     }
+    public function editarAvuso($dados,$empresa)
+    {
+        return ValoresRublica::where('empresa', $empresa)
+        ->update([
+            'vsreciboavulso'=>$dados['codigo'],
+        ]);
+    }
     public function editarMatricularTomador($dados,$empresa)
     {
         return ValoresRublica::where('empresa', $empresa)

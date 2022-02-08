@@ -82,10 +82,10 @@
                     <div class="row">
                         
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" class="btn botao " id="incluir"><i class="fas fa-save"></i> Incluir </button>
-                        <button type="submit" disabled class="btn botao  d-none" id="atualizar"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                        <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
+                        <button type="submit" disabled class="btn botao  d-none" id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar</button>
                          <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-invoice"></i> Relatórios
+                        <i class="fad fa-file-alt"></i> Relatórios
                         </button>
                           <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                             <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
@@ -93,7 +93,7 @@
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
-                          <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
+                          <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                       </div>
                   </div>
 
@@ -202,15 +202,15 @@
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
                             <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
-                                <button class="btn" style="background-color:#204E83;">
-                                <a href="{{route('tabela.preco.editar',[base64_encode($tabelapreco->id),base64_encode($tomador)])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                <button class="btn">
+                                <a href="{{route('tabela.preco.editar',[base64_encode($tabelapreco->id),base64_encode($tomador)])}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                 </button>
                             </td>
                             <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">
                                 <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
                                   @csrf
                                   @method('delete')
-                                  <button type="submit" class="btn" style="background-color:#FF331F"><i style="color:#FFFFFF; padding-right: 1px;" class="fal fa-trash"></i></button>
+                                  <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF; padding-right: 1px;" class="fal fa-trash"></i></button>
                                 </form>
                               </td>
                             </tr>

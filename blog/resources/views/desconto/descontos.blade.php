@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Descontos')
 @section('conteine')
 
         @if(session('success')) 
@@ -84,9 +85,9 @@
                 <input type="hidden" name="empresa" value="{{$user->empresa}}">
                 <input type="hidden" name="trabalhador" id="trabalhador">
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
+                    <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
                     <button class="btn botao dropdown-toggle" type="button" id="rolDescontos"  data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-invoice"></i> Relatórios
+                        <i class="fad fa-file-alt"></i> Relatórios
                      </button>
                       <ul class="dropdown-menu" aria-labelledby="rolDescontos">
                         <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button">Rol dos Descontos</a></li>
@@ -96,7 +97,7 @@
                               </button>
                         </li>
                       </ul>
-                    <a class="btn botao" href="" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                    <a class="btn botao" href="" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                 </div>
 
                 <script>
@@ -192,13 +193,13 @@
         
                     <div class="dropdown  mt-2 p-1">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fas fa-sort"></i> Filtro 
+                            <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
@@ -208,10 +209,10 @@
                               <thead>
                                   <th class="col text-center border-start border-top  text-nowrap" style="width:80px;">Matrícula</th>
                                   <th class="col text-center border-top  text-nowrap" style="width:400px">Nome</th>
-                                  <th class="col text-center border-top  text-nowrap capitalize" style="300px;">Descrição</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:130px;">Quinzena</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:80px;">Competência</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:110px;">Valor</th>
+                                  <th class="col text-center border-top  text-nowrap capitalize" style="400px;">Descrição</th>
+                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Quinzena</th>
+                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Competência</th>
+                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Valor</th>
                                   <th class="col text-center border-top  text-nowrap" style="width:60px;">Editar</th>
                                   <th colspan="2" class="col text-center border-end border-top  text-nowrap" style="width:60px;">Excluir</th>
                               </thead>
@@ -226,29 +227,29 @@
                                         <a>{{$desconto->tsnome}}</a>
                                     </button>    
                                 </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="300px;">
+                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="400px;">
                                     <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$desconto->dsdescricao}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
                                         <a>{{$desconto->dsdescricao}}</a>
                                     </button>
                                 </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:130px;">{{$desconto->dsquinzena}}</td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:80px;">
+                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">{{$desconto->dsquinzena}}</td>
+                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">
                                     <?php
                                         $data = explode('-',$desconto->dscompetencia);
                                     ?>
                                     {{$data[1]}}/{{$data[0]}}
                                   </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">{{number_format((float)$desconto->dfvalor, 2, ',', '')}}</td>
+                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">{{number_format((float)$desconto->dfvalor, 2, ',', '')}}</td>
                                   <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
-                                      <button class="btn" style="background-color:#204E83;">
-                                        <a href="{{route('descontos.edit',base64_encode($desconto->id))}}" class=""><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                      <button class="btn" >
+                                        <a class="btn__padrao--editar" href="{{route('descontos.edit',base64_encode($desconto->id))}}" class=""><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
                                       </button>
                                   </td>
                                   <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">
                                       <form action="{{route('descontos.destroy',$desconto->id)}}" method="post">
                                       @csrf
                                       @method('delete')
-                                        <button type="submit" class="btn" style="background-color:#FF331F"><i style="color:#FFFFFF; padding-right: 1px;" class="fal fa-trash"></i></button>
+                                        <button type="submit" class="btn btn__padrao--excluir" style=""><i style="color:#FFFFFF; padding-right: 1px;" class="fad fa-trash"></i></button>
                                       </form>
                                     </td>
                                   </tr>

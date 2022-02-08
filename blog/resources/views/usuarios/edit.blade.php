@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Editar Cadastro de Acesso')
 @section('conteine')
 
 <div class="container">
@@ -62,8 +63,8 @@
                 <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa}}">
                 <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                          <button type="submit" id="atualizar"  class="btn btn botao ">Atualizar</button>
-                          <a class="btn btn botao " href="{{route('user.create')}}" role="button" >Sair</a>
+                          <button type="submit" id="atualizar"  class="btn btn botao "><i class="fad fa-sync-alt"></i> Atualizar</button>
+                          <a class="btn btn botao " href="{{route('user.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
                       </div>
                 </div>
 
@@ -115,7 +116,7 @@
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($users) > 0)
                         @foreach($users as $user)
-                            <tr>   
+                            <tr class="bodyTabela">   
                                 
                             <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
                                     <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$user->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
@@ -131,10 +132,10 @@
                                         <i class="fas fa-user-lock"></i>
                                       </button>
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#">Usuário</a></li>
-                                        <li><a class="dropdown-item" href="#">Administrador</a></li>
-                                        <li><a class="dropdown-item" href="#">Bloquear</a></li>
-                                        <li><a class="dropdown-item" href="#">Suporte</a></li>
+                                        <li><a class="dropdown-item" href="#">Usuário <i class="fad fa-user"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Administrador <i class="fad fa-user-lock"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Bloquear <i class="fas fa-ban" style="color:#A30E00;"></i></a></li>
+                                        <li><a class="dropdown-item" href="#">Suporte <i class="fad fa-headset"></i></a></li>
                                       </ul>
                                     </div>
                                 </td>

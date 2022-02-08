@@ -61,8 +61,8 @@
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="atualizar"  class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
-                            <a class="btn botao" href="{{route('rublica.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                            <button type="submit" id="atualizar"  class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                            <a class="btn botao" href="{{route('rublica.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
 
                 <div class="col-md-2">
                     <label for="rubricas" class="form-label">Rúbricas <i class="fas fa-lock"></i></label>
-                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror"  name="rubricas" id="rubricas" value="{{$rublicas->rsrublica}}" Readonly>
+                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror fw-bold"  name="rubricas" id="rubricas" value="{{$rublicas->rsrublica}}" Readonly>
                     @error('rubricas')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -79,7 +79,7 @@
 
                 <div class="col-md-6">
                     <label for="descricao" class="form-label">Descrição <i class="fas fa-lock"></i></label>
-                    <input type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" value="{{$rublicas->rsdescricao}}" Readonly>
+                    <input type="text" class="form-control @error('descricao') is-invalid @enderror fw-bold" name="descricao" id="descricao" value="{{$rublicas->rsdescricao}}" Readonly>
                     @error('descricao')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -87,7 +87,7 @@
 
                 <div class="col-md-2">
                     <label for="incidencia" class="form-label">Incidência</label>
-                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror" name="incidencia" id="incidencia" value="{{$rublicas->rsincidencia}}">
+                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror fw-bold" name="incidencia" id="incidencia" value="{{$rublicas->rsincidencia}}">
                     @error('incidencia')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -95,7 +95,7 @@
 
                 <div class="col-md-2">
                     <label for="dc" class="form-label">D/C</label>
-                    <select id="dc" name="dc" class="form-select fw-bold text-dark" value="">
+                    <select id="dc" name="dc" class="form-select fw-bold text-dark fw-bold" value="">
                         @if($rublicas->rsdc === 'Créditos')
                             <option selected>Créditos</option>
                             <option>Descontos</option>
@@ -106,7 +106,7 @@
                     </select>
                 </div>
     </form>
-                <div class="table-responsive-lg">
+                <div class="table-responsive-xxl">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
                         <th class="col text-center border-start border-top text-nowrap" style="width:120px;">Rúbricas</th>
@@ -117,7 +117,7 @@
                     <tbody style="background-color: #081049; color: white;">
                     @if(count($lista) > 0)
                         @foreach($lista as $listas)
-                        <tr>               
+                        <tr class="bodyTabela">               
                                 <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 120px;">
                                     {{$listas->rsrublica}}
                                 </td>

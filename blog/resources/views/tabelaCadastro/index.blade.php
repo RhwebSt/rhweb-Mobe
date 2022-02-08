@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Lançamento Boletim com Tabela')
 @section('conteine')
 
 <div class="container">
@@ -52,16 +53,16 @@
                 })
             </script>
         @enderror  
-        <h1 class="container text-center mt-5 fs-4 mb-2">Lançamento com Tabela de Preço</h1>
+        <h1 class="container text-center mt-5 fs-4 mb-2">Boletim com Tabela de Preço <i class="fas fa-money-check-alt"></i></h1>
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.store')}}">
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
-                    <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao">Incluir</button>
-                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-invoice"></i> Relatório</a>
-                    <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button">Sair</a>
+                    <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-alt"></i> Relatório</a>
+                    <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
               </div>
           </div>
               
@@ -144,7 +145,7 @@
            }
         ?>
         
-        <div class="table-responsive-lg">
+        <div class="table-responsive-xxl">
             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                 <thead>
                     <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
@@ -159,23 +160,23 @@
                 <tbody style="background-color: #081049; color: white;">
                     @if(count($lista) > 0)
                     @foreach($lista as $listas)
-                        <tr>
-                            <td class="col text-center border-bottom border-start text-nowrap text-uppercase">{{$listas->tsnome}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->licodigo}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">{{$listas->lsquantidade}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase">
-                                <button class="btn" style="background-color:#204E83;">
-                                <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="" ><i style="color:#FFFFFF;" class="fa fa-edit"></i></a>
+                        <tr class="bodyTabela">
+                            <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width:400px">{{$listas->tsnome}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">{{$listas->licodigo}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:400px">{{$listas->lshistorico}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:100px">{{$listas->lsquantidade}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">
+                                <button class="btn">
+                                <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fa fa-edit"></i></a>
                                 </button> 
                             </td>
-                            <td class="col text-center border-bottom border-end text-nowrap">
+                            <td class="col text-center border-bottom border-end text-nowrap" style="width:70px">
                             <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn" style="background-color:#FF331F;"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                             </form> 
                             </td>
                         </tr>

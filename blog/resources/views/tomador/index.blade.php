@@ -81,17 +81,17 @@
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
                 <input type="hidden" name="tomador" id="tomador">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fas fa-save"></i> Incluir </button>
-                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar </button>
+                            <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir </button>
+                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar </button>
                             <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fad fa-file-invoice"></i> Relatórios
+                                <i class="fad fa-file-alt"></i> Relatórios
                              </button>
                               <ul class="dropdown-menu" aria-labelledby="relatoriotomador">
                                 <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" onclick ="botaoModal ()" role="button">Rol dos Boletins</a></li>
                               </ul>
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
                             <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <i class="fas fa-trash"></i> Excluir 
+                                <i class="fad fa-trash"></i> Excluir 
                             </button>
                             <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
                             
@@ -99,7 +99,7 @@
                               <i class="fad fa-file-invoice"></i> Boletins
                             </button>
                             
-                            <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair </a>
+                            <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                         </div> 
                         
                         <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>

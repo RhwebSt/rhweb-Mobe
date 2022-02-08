@@ -62,15 +62,15 @@
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fas fa-save"></i> Incluir</button>
+                    <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir</button>
                             <button type="submit" id="atualizar" disabled class="btn botao d-none">Atualizar</button>
                             <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fad fa-file-invoice"></i> Relatórios
+                                <i class="fad fa-file-alt"></i> Relatórios
                             </button>
                               <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                                 <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol das Rúbricas</a></li>
                               </ul>
-                            <a class="btn botao" href="#" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                            <a class="btn botao" href="#" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
@@ -95,7 +95,7 @@
 
                 <div class="col-md-2">
                     <label for="rubricas" class="form-label">Rúbricas</label>
-                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror"  name="rubricas" id="rubricas" value="{{old('rubricas')}}">
+                    <input type="text" class="form-control @error('rubricas') is-invalid @enderror fw-bold"  name="rubricas" id="rubricas" value="{{old('rubricas')}}">
                     @error('rubricas')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -103,7 +103,7 @@
             
                 <div class="col-md-6">
                     <label for="descricao" class="form-label">Descrição</label>
-                    <input type="text" class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" value="{{old('descricao')}}">
+                    <input type="text" class="form-control @error('descricao') is-invalid @enderror fw-bold" name="descricao" id="descricao" value="{{old('descricao')}}">
                     @error('descricao')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -111,7 +111,7 @@
 
                 <div class="col-md-2">
                     <label for="incidencia" class="form-label">Incidência</label>
-                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror" name="incidencia" id="incidencia" value="{{old('incidencia')}}">
+                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror fw-bold" name="incidencia" id="incidencia" value="{{old('incidencia')}}">
                     @error('incidencia')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -119,7 +119,7 @@
 
                 <div class="col-md-2">
                     <label for="dc" class="form-label">D/C</label>
-                    <select id="dc" name="dc" class="form-select fw-bold text-dark" value="">
+                    <select id="dc" name="dc" class="form-select fw-bold text-dark fw-bold" value="">
                       <option selected>Créditos</option>
                       <option>Descontos</option>
                     </select>
@@ -131,18 +131,18 @@
         
                     <div class="dropdown  mt-2 p-1">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fas fa-sort"></i> Filtro 
+                            <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
                 
-                <div class="table-responsive-lg">
+                <div class="table-responsive-xxl">
                 <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                     <thead>
                         <th class="col text-center border-start border-top text-nowrap" style="width:120px;">Rúbricas</th>
@@ -155,7 +155,7 @@
                     <tbody style="background-color: #081049; color: white;">
                     @if(count($rublicas) > 0)
                         @foreach($rublicas as $rublica)
-                            <tr>               
+                            <tr class="bodyTabela">               
                                 <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 120px;">
                                     {{$rublica->rsrublica}}
                                 </td>
@@ -174,15 +174,15 @@
                                 
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                    <button class="btn" style="background-color:#204E83;">
-                                        <a href="{{route('rublica.edit',$rublica->id)}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                    <button class="btn">
+                                        <a href="{{route('rublica.edit',$rublica->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                     
                                     
-                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$rublica->id}}" style="background-color:#FF331F">
-                                        <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
+                                    <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$rublica->id}}">
+                                        <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
                                     </button>
                                     
                                     <!-- Modal -->

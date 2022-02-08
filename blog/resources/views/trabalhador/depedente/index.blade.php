@@ -60,8 +60,8 @@
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn " role="button" aria-label="Basic example">
-                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button"><i class="fas fa-save"></i> Incluir</a>
-                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button"><i class="fad fa-save"></i> Incluir</a>
+                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div> 
             </div>
@@ -109,14 +109,14 @@
                             </td>
                             
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <button class="btn" style="background-color:#204E83;">
-                                <a href="{{ route('depedente.edit',$depedente->id) }}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                <button class="btn">
+                                <a href="{{ route('depedente.edit',$depedente->id) }}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                 
                                 
-                                <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#FF331F">
+                                <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
                                 </button>
                                 

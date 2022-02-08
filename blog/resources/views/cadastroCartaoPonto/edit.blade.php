@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Editar boletim cartão ponto')
 @section('conteine')
 <div class="card-body">
       
@@ -55,7 +56,7 @@
         
              
 
-              <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
+              <h5 class="card-title text-center fs-3">Editar Boletim Cartão Ponto <i class="far fa-clock"></i></h5>
               <div class="container">
                   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
                   @csrf
@@ -65,33 +66,17 @@
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
-                            <button type="submit" id="incluir" class="btn botao">Atualizar</button>
-                            <a type="submit" href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados),base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao">Cartão Ponto</a>
+                            <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                            <a type="submit" href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados),base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao"><i class="fad fa-user-clock"></i> Cartão Ponto</a>
                             <button type="button" class="btn botao  "  id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                              Excluir
+                              <i class="fad fa-trash"></i> Excluir
                           </button> 
                           
                    
-                        <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button">Sair</a>
+                        <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                       </div>
                   </div>
-                    
-                    <div>
-                        <div class="col-md-5 mt-5 mb-5 p-1 pesquisar">
-                            <div class="d-flex">
-                            <label for="exampleDataList" class="form-label"></label>
-                            <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
-                            <datalist id="listapesquisa" class="text-uppercase">
-                            </datalist>
-                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                            <div class="text-center d-none p-1" id="refres" >
-                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                  <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+
                     
                     
                     <?php
@@ -170,13 +155,13 @@
         
                     <div class="dropdown  mt-2 p-1">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fas fa-sort"></i> Filtro 
+                            <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
@@ -195,7 +180,7 @@
                                 <tbody style="background-color: #081049; color: white;">
                                 @if(count($lancamentotabelas) > 0)
                                    @foreach($lancamentotabelas as $lancamentotabela)
-                                    <tr>               
+                                    <tr class="bodyTabela">               
                                     <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
                                             <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
