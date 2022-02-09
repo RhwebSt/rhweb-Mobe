@@ -16,11 +16,14 @@ class calculoFolhaController extends Controller
         $basecalculo = new BaseCalculo;
         $idfolhas = [];
         $folhas = $folhar->buscaListaFolhar($user->empresa);
+        
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);
         }
         $trabalhadores = $basecalculo->listaTrabalhador($idfolhas);
-        return view('calculofolha.index',compact('user','folhas','trabalhadores'));
+        $tomadores = $basecalculo->listaTomador($idfolhas);
+        // dd($tomadores);
+        return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
     }
     public function store(Request $request)
     {

@@ -21,6 +21,9 @@ class ReceboTrabalhadorController extends Controller
         $descricao = new AvusoDescricao;
         $avusos = $avuso->buscaTrabalhador(null,$dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
         $listaavuso = $avuso->buscaTrabalhadorRecibo($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
+        if (!$avusos && count($listaavuso) < 1) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à registro cadastrado.']);
+        }
         $pdf = PDF::loadView('rolReciboAvulso',compact('avusos','listaavuso'));
         return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
     }

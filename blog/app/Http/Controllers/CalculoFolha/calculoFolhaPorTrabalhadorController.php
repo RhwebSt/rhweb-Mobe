@@ -458,7 +458,7 @@ class calculoFolhaPorTrabalhadorController extends Controller
         $folhar = new Folhar;
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
-        $folhars = $folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],$dados['empresa']);
+        $folhars = $folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],null);
         if (!$folhars) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
         }

@@ -33,6 +33,15 @@ class Rublica extends Model
     {
         return Rublica::where('id', $id)->delete();
     }
+    public function buscaTabelaPreco($tomador)
+    {
+        return DB::table('rublicas')
+        ->join('tabela_precos', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica')
+        ->select('tabela_precos.tsrubrica','rublicas.rsincidencia')
+        ->where('tabela_precos.tomador',$tomador)
+        ->get();
+
+    }
     public function buscaListaRublica($id)
     {
         return Rublica::where(function($query) use ($id){

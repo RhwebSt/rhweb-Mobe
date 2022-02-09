@@ -18,6 +18,7 @@ class CreateRublicasTable extends Migration
             $table->char('rsrublica', 15)->nullable();
             $table->char('rsdescricao', 60)->nullable();
             $table->char('rsincidencia', 10)->nullable();
+            $table->char('rsstatus', 10)->nullable();
             $table->char('rsdc', 14)->nullable();
             $table->integer('empresa')->unsigned()->nullable();
             $table->foreign('empresa')->references('id')->on('empresas');

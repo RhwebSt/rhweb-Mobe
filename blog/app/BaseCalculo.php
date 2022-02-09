@@ -112,9 +112,19 @@ class BaseCalculo extends Model
         ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
         ->select('trabalhadors.tsnome','trabalhadors.id','base_calculos.folhar')
         ->whereIn('base_calculos.folhar',$folhar)
+        ->where('base_calculos.tomador',null)
         ->distinct()
         ->orderBy('trabalhadors.tsnome', 'asc')
         ->get();
     }
-    
+    public function listaTomador($folhar)
+    {
+        return DB::table('base_calculos')
+        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
+        ->select('tomadors.tsnome','tomadors.id','base_calculos.folhar')
+        ->whereIn('base_calculos.folhar',$folhar)
+        ->distinct()
+        ->orderBy('tomadors.tsnome', 'asc')
+        ->get();
+    }
 }

@@ -358,6 +358,21 @@ main{
     color: white;
 }
 
+.btn__padrao--imprimir{
+    padding-top:7.5px;
+    padding-bottom:7.5px;
+    padding-left: 11px;
+    padding-right: 11px;
+    border-radius: 6px;
+    background-color:#1E16B6;
+    border: 1px solid #5149E9;
+    transition: 400ms;
+}
+
+.btn__padrao--imprimir:hover{
+    background-color:#0F0B5B;
+}
+
 .btn__padrao--editar{
     padding-top:8.5px;
     padding-bottom:8.5px;
@@ -387,6 +402,8 @@ main{
 .btn__padrao--excluir:hover{
     background-color:#660900;
 }
+
+
 
 
 

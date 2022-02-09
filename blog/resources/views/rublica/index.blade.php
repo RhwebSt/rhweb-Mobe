@@ -109,12 +109,20 @@
                     @enderror
                 </div>
 
+                <!--<div class="col-md-2">-->
+                <!--    <label for="incidencia" class="form-label">Incidência</label>-->
+                <!--    <input type="text" class="form-control @error('incidencia') is-invalid @enderror fw-bold" name="incidencia" id="incidencia" value="{{old('incidencia')}}">-->
+                <!--    @error('incidencia')-->
+                <!--      <span class="text-danger">{{ $message }}</span>-->
+                <!--    @enderror-->
+                <!--</div>-->
+                
                 <div class="col-md-2">
-                    <label for="incidencia" class="form-label">Incidência</label>
-                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror fw-bold" name="incidencia" id="incidencia" value="{{old('incidencia')}}">
-                    @error('incidencia')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <label for="incidencia" class="form-label">Indice</label>
+                    <select id="incidencia" name="incidencia" class="form-select fw-bold text-dark fw-bold" value="">
+                      <option selected>Sim</option>
+                      <option>Não</option>
+                    </select>
                 </div>
 
                 <div class="col-md-2">
@@ -161,7 +169,9 @@
                                 </td>
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:500px;">
-                                    {{$rublica->rsdescricao}}
+                                    <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$rublica->rsdescricao}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                        <a class="text-uppercase text-decoration-none text-white">{{$rublica->rsdescricao}}</a>
+                                    </button>
                                 </td>
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">

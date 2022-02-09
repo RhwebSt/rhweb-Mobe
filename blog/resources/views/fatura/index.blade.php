@@ -1,14 +1,24 @@
-
 @extends('layouts.index')
+@section('titulo','Rhweb - Fatura')
 @section('conteine')
+
+    <!--Erro para quando não tiver nenhum calculo da folha cadastrado nesse periodo para o tomador-->
+
+    <!--<script>-->
+    <!--    Swal.fire({-->
+    <!--      icon: 'error',-->
+    <!--      title: 'Algo deu errado!!',-->
+    <!--      text: 'Não possui nenhum valor nesse período.',-->
+    <!--    })-->
+    <!--</script>-->
 
     <div class="container">
         <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
             <li class="nav-item ms-2 " role="presentation">
-            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;">Gerar Fatura <i class="fas fa-file-invoice-dollar"></i></button>
+            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
             </li>
             <li class="nav-item ms-1 pillstop" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fas fa-list"></i> Lista de Faturas</button>
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-list"></i> Lista de Faturas</button>
             </li>
         </ul>
 
@@ -19,16 +29,16 @@
                         <input type="hidden" name="tomador" id="tomador">
                         <div class="" id="quadro1">
                         @csrf
-                            <div class="container text-start fs-4 fw-bold mt-4 mb-3">Pesquisar Tomador <i class="fas fa-search"></i></div>
+                            <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Tomador <i class="fas fa-search"></i></div>
                                 
-                                    <div class="d-flex justify-content-between mb-3">
+                                    <div class="d-flex justify-content-between mb-3 mt-0">
                                         <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
                                             <div class="d-flex">
                                             <label for="exampleDataList" class="form-label"></label>
                                             <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" name="pesquisa" id="pesquisa">
                                             <datalist id="listapesquisa">
                                             </datalist>
-                                            {{-- <i class="fas fa-search fa-md iconsear" id="icon"></i> --}}
+                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                             <div class="text-center d-none" id="refres">
                                                 <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
                                                     <span class="visually-hidden">Carregando...</span>
@@ -64,16 +74,16 @@
 
                 <form class="row g-3" action="" method="POST">
 
-                    <div class="container text-start fs-4 fw-bold mt-4 mb-3">Pesquisar <i class="fas fa-search"></i></div>
+                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                         
-                            <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex justify-content-between mb-3 mt-0">
                                 <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
                                     <div class="d-flex">
                                     <label for="exampleDataList" class="form-label"></label>
                                     <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
                                     <datalist id="datalistOptions">
                                     </datalist>
-                                    {{-- <i class="fas fa-search fa-md iconsear" id="icon"></i> --}}
+                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                     <div class="text-center d-none" id="refres">
                                         <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
                                             <span class="visually-hidden">Carregando...</span>
@@ -109,19 +119,19 @@
                         <div class="d-flex justify-content-end">
                             <div class="dropdown  mt-2 p-1">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                    <i class="fas fa-sort"></i> Filtro 
+                                    <i class="fad fa-sort"></i> Filtro 
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                                 </ul>
                             </div>
                         </div>
                         </form>
 
-                        <div class="table-responsive-lg">
+                        <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
                                     
@@ -130,7 +140,7 @@
                                     <th class="col text-center border-top text-nowrap">Data inicial</th>
                                     <th class="col text-center border-top text-nowrap" style="width:200px">Data Final</th>
                                     <th class="col text-center border-top text-nowrap" style="width:110px;">Nº Fatura</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">2º Via</th>
+                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
@@ -161,15 +171,15 @@
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                         
-                                            <button class="btn" style="background-color:#53A548;">
-                                                <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="" ><i style="color:#FFFFFF; padding-left: 3px;" class="fas fa-lg fa-print"></i></a>
+                                            <button class="btn">
+                                                <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn__padrao--imprimir" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-lg fa-print"></i></a>
                                             </button>
                                         </td>                               
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                             
                                             
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$fatura->id}}" style="background-color:#FF331F">
-                                                <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
+                                            <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$fatura->id}}">
+                                                <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
                                             </button>
                                             
                                             <!-- Modal -->

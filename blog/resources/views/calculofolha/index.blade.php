@@ -119,6 +119,7 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <form class="row g-3" action="" method="POST">
                         @csrf
+                        </form>
                         <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                     
                         <div class="d-flex justify-content-between mb-3">
@@ -159,7 +160,6 @@
         
                         <div class="d-flex justify-content-end">
         
-        
                             <div class="dropdown  mt-2 p-1">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
                                     <i class="fad fa-sort"></i> Filtro 
@@ -172,7 +172,6 @@
                                 </ul>
                             </div>
                         </div>
-        
                         <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
@@ -186,53 +185,104 @@
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
-                                   
+                                    @if(count($tomadores) > 0)
+                                    @foreach($tomadores as $t => $tomador)
                                     <tr>               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;"></td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 450px;"></td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px"></td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px"></td>  
-                                        
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn" style="background-color:#28117A; border: 1px solid #8268DE;">
-                                            <a href="" class="" ><i class="fad fa-print" style="color: white;"></i></a>
-                                            </button>
+                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">
+                                            @foreach($folhas as $folhar)
+                                                @if($folhar->id === $tomador->folhar)
+                                                    {{$folhar->fscodigo}}
+                                                @endif
+                                            @endforeach
                                         </td>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 450px;">
+                                            {{$tomador->tsnome}}
+                                        </td>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
+                                            @foreach($folhas as $folhar)
+                                                @if($folhar->id === $tomador->folhar)
+                                                <?php
+                                                    $data = explode('-',$folhar->fsinicio)
+                                                ?>
+                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">
+                                            @foreach($folhas as $folhar)
+                                                @if($folhar->id === $tomador->folhar)
+                                                <?php
+                                                    $data = explode('-',$folhar->fsfinal)
+                                                ?>
+                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                                @endif
+                                            @endforeach
+                                        </td>  
                                         
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                             
-                                            <a class="btn botao" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
+                                            @foreach($folhas as $folhar)
+                                                @if($folhar->id === $tomador->folhar)
+                                                    <a href="{{route('calculo.folha.tomador.imprimir',[base64_encode($folhar->id),base64_encode($tomador->id)])}}" class="btn" style="background-color:#28117A; border: 1px solid #8268DE;" ><i class="fad fa-print" style="color: white;"></i></a>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        
+                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
+                                        
+                                            <a class="btn botao" data-bs-toggle="offcanvas" href="#tomador_trabalhador{{$t}}" role="button" aria-controls="offcanvasExample" style="background-color: #2866EB; border: 1px solid #A1BCF7;">
                                               <i class="fad fa-user"></i>
                                             </a>
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-                                              <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Imprimir <i class="fal fa-print-search"></i></h5>
-                                                <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                              </div>
-                                              <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                                <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
-                                                
-                                                <div class="d-flex justify-content-between mb-3">
+                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="tomador_trabalhador{{$t}}" aria-labelledby="offcanvasExampleLabel">
+                                            
+                                                <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar}}">Imprimir <i class="fal fa-print-search"></i></h5>
+                                                    <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{route('calculo.folha.tomador.trabalhador.imprimir')}}" method="post">
+                                                        @csrf
+                                                        
+                                                <div class="offcanvas-body" style="background-image:linear-gradient(200deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
                                                     
-                                                    <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                        <div class="d-flex">
-                                                        <label for="exampleDataList" class="form-label"></label>
-                                                        <input class="form-control fw-bold text-dark pesquisa" list="lista" name="pesquisa" id="pesquisa">
-                                                        <datalist id="datalistOptions"> 
-                                                            <option value="logo">
-                                                        </datalist>
-                                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                        <div class="text-center d-none" id="refres" >
-                                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                <span class="visually-hidden">Carregando...</span>
+                                                    <div class="d-flex justify-content-between mb-3">
+                                                        
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                            <label for="exampleDataList" class="form-label"></label>
+                                                            @foreach($folhas as $folhar)
+                                                                @if($folhar->id === $tomador->folhar)
+                                                                <input type="hidden" name="folhar" value="{{$folhar->id}}">
+                                                                
+                                                                @endif
+                                                            @endforeach
+                                                            <input type="hidden" name="tomador" value="{{$tomador->id}}">
+                                                            
+                                                            <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                                                            <input class="form-control fw-bold text-dark pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador1" id="trabalhador1">
+                                                            <datalist id="listatomador{{$folhar->id}}"> 
+                                                            @foreach($trabalhadores as $trabalhador)
+                                                                @if($trabalhador->folhar === $folhar->id && $folhar->id === $tomador->folhar)
+                                                                    <option value="{{$trabalhador->tsnome}}">
+                                                                @endif
+                                                            @endforeach
+                                                            </datalist>
+                                                            <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
+                                                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                    </button>
+                                                            <div class="text-center d-none" id="refres" >
+                                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                    <span class="visually-hidden">Carregando...</span>
+                                                                </div>
+                                                            </div>
                                                             </div>
                                                         </div>
-                                                        </div>
+                                    
                                                     </div>
-                                
+                                                    
                                                 </div>
-                                                
-                                              </div>
+                                                </form>
+                                                </div>
                                             </div>
                                             
                                         </td>
@@ -249,20 +299,22 @@
                                         </td>
                                         
                                     </tr>
-                                    
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                                            <div class="alert" role="alert" style="background-color: #CC2836;">
+                                                Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                 
                             </table>
                         </div>
 
-                    </form>
+                    
                 </div> 
                 
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">

@@ -115,18 +115,6 @@
                   </li>
                 </ul>
 
-                  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                    <ul class="navbar-nav">
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white disabled fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Recibos da Folha 
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <li><a class="dropdown-item border-secundary  d-none" href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/por tomador/Por-Tomador.php">Por Tomador</a></li>
-                          <li><a class="dropdown-item d-none" href="./HTML/Folha de pagamento/Serviços/Recibos da Folha/Geral/Geral.php">Geral</a></li>
-                        </ul>
-                      </li>
-                    </ul>
 
 
                       <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">

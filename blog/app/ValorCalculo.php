@@ -340,6 +340,44 @@ class ValorCalculo extends Model
         ->orderBy('vicodigo', 'asc')
         ->get();
     }
+    public function buscaImprimirTomador($id,$incide,$naoincide)
+    {
+        $variavel = DB::table('base_calculos')
+                    ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+                    ->selectRaw(
+                        'SUM(valor_calculos.vivencimento) as vivencimento,
+                        SUM(valor_calculos.videscinto) as videscinto,
+                        SUM(valor_calculos.vireferencia) as vireferencia,
+                        valor_calculos.vicodigo,
+                        valor_calculos.vsdescricao,
+                        valor_calculos.basecalculo,
+                        base_calculos.id'
+                        
+                    )
+                   ->where('valor_calculos.basecalculo',$id)
+                   ->orderBy('vicodigo', 'asc')
+                   ->whereIn('valor_calculos.vicodigo',$incide)
+                   ->groupBy('valor_calculos.vicodigo','base_calculos.id','valor_calculos.vsdescricao')
+                   ->get();
+            $fixio = DB::table('base_calculos')
+                   ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+                   ->selectRaw(
+                       'SUM(valor_calculos.vivencimento) as vivencimento,
+                       SUM(valor_calculos.videscinto) as videscinto,
+                       vireferencia,
+                       valor_calculos.vicodigo,
+                       valor_calculos.vsdescricao,
+                       valor_calculos.basecalculo,
+                       base_calculos.id'
+                       
+                   )
+                  ->where('valor_calculos.basecalculo',$id)
+                  ->orderBy('vicodigo', 'asc')
+                  ->whereIn('valor_calculos.vicodigo',$naoincide)
+                  ->groupBy('valor_calculos.vicodigo','valor_calculos.vireferencia','base_calculos.id','valor_calculos.vsdescricao')
+                  ->get();
+        return[$variavel,$fixio];
+    }
     public function deletar($id)
     {
         return ValorCalculo::whereDate('created_at', $id)->delete();

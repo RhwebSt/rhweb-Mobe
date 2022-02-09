@@ -164,7 +164,7 @@
                        
                         <div class="col-md-4">
                             <label for="cnpj" class="form-label">CNPJ</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
+                            <input type="text" class="form-control  fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
                             @error('cnpj')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -1062,7 +1062,7 @@
                             $('#telefone').val(' ')
                             $('#cnae').val(' ')
                             $('#cep').val(' ')
-                            $('#cnpj').val(' ')
+                            // $('#cnpj').val(' ')
                             $('#logradouro').val(' ')
                             $('#numero').val(' ')
                             $('#bairro').val(' ')
@@ -1088,7 +1088,7 @@
                             $('#telefone').val(' ')
                             $('#cnae').val(' ')
                             $('#cep').val(' ')
-                            $('#cnpj').val(' ')
+                            // $('#cnpj').val(' ')
                             $('#logradouro').val(' ')
                             $('#numero').val(' ')
                             $('#bairro').val(' ')

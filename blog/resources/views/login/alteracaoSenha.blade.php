@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Alteração de senha')
 @section('conteine')
 @if(session('success'))
             <script>
