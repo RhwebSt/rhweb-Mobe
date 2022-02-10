@@ -1,3 +1,29 @@
+ 
+ <?php
+ $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'https://hcaptcha.com/siteverify',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => [
+            'response' => $_POST['h-captcha-response'] ?? '',
+            'secret' => '0x955E220995438CBC12CEde4BCC6fEc9c7BE28465'
+            ]
+        ] );
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        
+        $responseArray = json_decode($response, true);
+        
+        $sucesso = $responseArray['success'] ?? false;
+
+    ?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -16,10 +42,25 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,600;1,900&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
+    
+     <script>
+                function validaRobo(){
+
+                    if(hcaptcha.getResponse() != "") return true;
+
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Algo deu errado!!',
+                      text: 'Preencha a caixa de "Sou Humano"',
+                    })
+ 
+                }
+    </script>
 
     <body>
       <section class="vh-100" style="background-image: linear-gradient( 120deg, #0746f2, #2901da, #5629d1 );">
@@ -29,12 +70,12 @@
               <div class="card" style="border-radius: 1rem;">
                 <div class="row g-0">
                   <div class="col-md-6 col-lg-5 d-none d-md-block">
-                    <img src="{{url('/imagem/bglogin.png')}}" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; width:580px; height:580px;"/>
+                    <img src="{{url('/imagem/bglogin.png')}}" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; width:650px; height:650px;"/>
                   </div>
                   <div class="col-md-6 col-lg-7 d-flex align-items-center">
                     <div class="card-body p-4 p-lg-5 text-black">
                     
-                      <form class="" action="{{ route('login.store') }}" method="POST">
+                      <form class="" action="{{ route('login.store') }}" method="POST" onsubmit="return validaRobo()">
       
                         <div class="d-flex align-items-center mb-3 pb-1">
                           {{-- <img src="/images/arrowMobe.png" alt="" srcset="" style="width: 70px; height: 70px;"> --}}
@@ -52,7 +93,7 @@
     
                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Faça seu login!</h5>
                         @error('mensagem')
-                            <div style="color: #CC2836;" class="mb-2">
+                            <div class="col-12" style="color: #CC2836;" class="mb-2">
                                 {{$message}}
                             </div>
                         @enderror
@@ -70,7 +111,12 @@
                                   <span class="show" ><i class="fas fa-lg fa-eye icon" style="margin-top: 4px; background-color: rgb(0, 0, 0); color:white; padding:3px; border-radius:20px;"></i></span>
                               </div>
                           </div>
-
+                          
+                            <div class="d-flex flex-row justify-content-start">
+                                <div class="container-sm"> <!--style="width:200px;"-->
+                                    <div class="h-captcha mt-3" data-sitekey="9a42a3c7-383e-44c2-8c52-361a51bba6da" style="transform:scale(0.80);-webkit-transform:scale(0.80);transform-origin:0 0;-webkit-transform-origin:0 0; margin-right:0px;"></div>
+                                </div>
+                            </div>
                           <script>
                             let btnShow = document.querySelector('.show');
                             

@@ -1,7 +1,34 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Alteração de senha')
+@section('titulo','Rhweb - Alteração de Senha')
 @section('conteine')
 @if(session('success'))
+
+
+    
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'https://hcaptcha.com/siteverify',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => [
+            'response' => $_POST['h-captcha-response'] ?? '',
+            'secret' => '0x955E220995438CBC12CEde4BCC6fEc9c7BE28465'
+            ]
+        ] );
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        
+        $responseArray = json_decode($response, true);
+        
+        $sucesso = $responseArray['success'] ?? false;
+
+        
+
+
+
             <script>
                      
                 const Toast = Swal.mixin({
@@ -51,9 +78,27 @@
                 })
             </script>
         @enderror  
+        
+            <script>
+                function validaRobo(){
+
+                    if(hcaptcha.getResponse() != "") return true;
+
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Algo deu errado!!',
+                      text: 'Preencha a caixa de "Sou Humano"',
+                    })
+ 
+                }
+            </script>
+        
+        
+        
+        
             <section class="mt-5">
                 <div class="container d-flex justify-content-center flex-column align-items-center mt-5 p-2" >
-                    <form class="row g-3 needs-validation form-control bg__form" id="form" action="{{route('altera.store')}}" enctype="multipart/form-data"  method="Post" onsubmit="return validarRobo()" style="">
+                    <form class="row g-3 needs-validation form-control bg__form" id="form" action="{{route('altera.store')}}" enctype="multipart/form-data"  method="Post" onsubmit="return validaRobo()" style="">
                     @csrf
                     <div class="container text-center text-white mt-4 mb-3 fs-4 fw-bold">Alterar Senha</div>
 
@@ -125,9 +170,7 @@
 
                     </div>      
                             
-                                <div class="g-recaptcha" data-sitekey="6LdiO0weAAAAAOGNW_HBvCWhIlxCh7TIPm0iS2Ea" style="transform:scale(0.85);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
-
-                                <div id="msgrecap"></div>
+                                <div class="h-captcha" data-sitekey="9a42a3c7-383e-44c2-8c52-361a51bba6da" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
 
 
                             <div class="col-md-4">

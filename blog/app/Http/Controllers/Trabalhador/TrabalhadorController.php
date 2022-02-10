@@ -423,7 +423,7 @@ class TrabalhadorController extends Controller
                 return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
     }
 

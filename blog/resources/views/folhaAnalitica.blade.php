@@ -237,13 +237,43 @@
                     <tr>
                         <td class="border-top border-left border-bottom text-bold small__font text-center matric">{{$valor->tsmatricula}}</td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center nome">{{$valor->tsnome}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center producao">{{number_format((float)$dados['producao'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center dsr">{{number_format((float)$dados['dsr'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center ferias">{{number_format((float)$dados['ferias'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center vt">{{number_format((float)$dados['vt'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center va">{{number_format((float)$dados['va'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center decimo">{{number_format((float)$dados['13salario'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$dados['vencimento'][$d], 2, ',', '')}}</td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center producao">{{number_format((float)$valor->vencimento, 2, ',', '.')}}</td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center dsr">
+                          @foreach($dsr as $d => $valor_dsr)
+                            @if($valor_dsr->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_dsr->vencimento, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
+                          @foreach($ferias as $d => $valor_ferias)
+                            @if($valor_ferias->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_ferias->vencimento, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center vt">
+                          @foreach($vt as $d => $valor_vt)
+                            @if($valor_vt->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_vt->vencimento, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center va">
+                          @foreach($va as $d => $valor_vt)
+                            @if($valor_vt->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_vt->vencimento, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center decimo">
+                        @foreach($salario13 as $d => $valor_salario13)
+                            @if($valor_salario13->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_salario13->vencimento, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$valor->bivalorvencimento, 2, ',', '.')}}</td>
                     </tr>
                     
                     </table>
@@ -261,10 +291,30 @@
                     </tr>
 
                     <tr>
-                        <td class="border-left border-bottom text-bold small__font text-center matric2"></td>
-                        <td class="border-bottom text-bold small__font text-center total"> {{number_format((float)$dados['inss_sobre_13'][$d], 2, ',', '')}}</td>
-                        <td class="border-bottom text-bold border-left small__font text-center producao">{{number_format((float)$dados['irrf'][$d], 2, ',', '')}}</td>
-                        <td class="border-bottom text-bold border-left small__font text-center dsr">{{number_format((float)$dados['inss'][$d], 2, ',', '')}}</td>
+                        <td class="border-left border-bottom text-bold small__font text-center matric2">
+                        
+                        </td>
+                        <td class="border-bottom text-bold small__font text-center total">
+                        @foreach($inss_sobre13 as $d => $valor_inss_sobre13)
+                            @if($valor_inss_sobre13->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_inss_sobre13->desconto, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-bottom text-bold border-left small__font text-center producao">
+                        @foreach($irrf as $d => $valor_irrf)
+                            @if($valor_irrf->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_irrf->desconto, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-bottom text-bold border-left small__font text-center dsr">
+                        @foreach($inss as $d => $valor_inss)
+                            @if($valor_inss_sobre13->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_inss->desconto, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
                         @foreach($vale as $valhes)
                             @if($valhes->trabalhador === $valor->trabalhador)
@@ -272,8 +322,20 @@
                             @endif
                          @endforeach
                         </td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center vt">{{number_format((float)$dados['seguro'][$d], 2, ',', '')}}</td>
-                        <td class="border-top border-bottom border-left text-bold small__font text-center va">{{number_format((float)$dados['sindicato'][$d], 2, ',', '')}}</td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center vt">
+                        @foreach($seguro as $d => $valor_seguro)
+                            @if($valor_seguro->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_seguro->desconto, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
+                        <td class="border-top border-bottom border-left text-bold small__font text-center va">
+                        @foreach($sindicator as $d => $valor_sindicator)
+                            @if($valor_sindicator->trabalhador === $valor->trabalhador)
+                              {{number_format((float)$valor_sindicator->desconto, 2, ',', '.')}}
+                            @endif
+                          @endforeach
+                        </td>
                         <td class="border-top border-bottom border-left text-bold small__font text-center decimo">
                          @foreach($adiantamento as $adiantamentos)
                             @if($adiantamentos->trabalhador === $valor->trabalhador)
@@ -281,7 +343,7 @@
                             @endif
                          @endforeach
                         </td>
-                        <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$dados['liquido'][$d], 2, ',', '')}}</td>
+                        <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$valor->bivalorliquido, 2, ',', '.')}}</td>
                     </tr>
                 @endforeach
               </table>

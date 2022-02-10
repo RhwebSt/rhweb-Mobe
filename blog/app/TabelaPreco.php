@@ -170,8 +170,10 @@ class TabelaPreco extends Model
         return DB::table('base_calculos')
         ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
         ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
-        ->select('tabela_precos.tsrubrica')
+        ->join('rublicas', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica')
+        ->select('tabela_precos.tsrubrica','rublicas.rsincidencia')
         ->where('base_calculos.folhar',$id)
+        ->distinct()
         ->get();
     }
     public function editar($dados,$id)

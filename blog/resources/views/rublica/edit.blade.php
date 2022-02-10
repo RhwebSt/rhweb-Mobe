@@ -87,10 +87,17 @@
 
                 <div class="col-md-2">
                     <label for="incidencia" class="form-label">Incidência</label>
-                    <input type="text" class="form-control @error('incidencia') is-invalid @enderror fw-bold" name="incidencia" id="incidencia" value="{{$rublicas->rsincidencia}}">
-                    @error('incidencia')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    
+                    <select id="incidencia" name="incidencia" class="form-select fw-bold text-dark fw-bold">
+                        @if($rublicas->rsincidencia === 'Sim')
+                            <option selected>Sim</option>
+                            <option>Não</option>
+                        @else
+                            <option selected>Sim</option>
+                            <option selected>Não</option>
+                        @endif
+                    </select>
+                    
                 </div>
 
                 <div class="col-md-2">

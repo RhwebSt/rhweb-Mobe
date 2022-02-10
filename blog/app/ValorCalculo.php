@@ -406,6 +406,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','DSR 18,18%')
         ->get();
     }
     public function calculoFolhaAnaliticaFerias($id,$codigo)
@@ -418,6 +419,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Ferias + 1/3')
         ->get();
     }
     public function calculoFolhaAnaliticaVT($id,$codigo)
@@ -430,6 +432,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Vale transporte')
         ->get();
     }
     public function calculoFolhaAnaliticaVA($id,$codigo)
@@ -442,6 +445,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Vale alimentação')
         ->get();
     }
     public function calculoFolhaAnalitica13Salario($id,$codigo)
