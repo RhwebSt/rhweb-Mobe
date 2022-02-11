@@ -287,9 +287,14 @@
                                             
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:50px;">
-                                                <a href="" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
-                                                    <i class="fad fa-analytics" style="color: white;"></i>
-                                                </a>
+                                               
+                                                @foreach($folhas as $folhar)
+                                                    @if($folhar->id === $tomador->folhar)
+                                                    <a href=" {{route('calculo.folha.analitica',$folhar->id)}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
+                                                        <i class="fad fa-analytics" style="color: white;"></i>
+                                                    </a>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                            <form action=""  method="post">
@@ -568,7 +573,8 @@
                                             </td>
                                             
                                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                                <a href="{{route('calculo.folha.deletar',$folhar->fsfinal)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></a>
+                                            
+                                                <a href="{{route('calculo.folha.deletar',$folhar->id)}}" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></a>
                                          
                                             </td>
                                         
@@ -586,6 +592,7 @@
                                 </tbody>
                 
                             </table>
+                            
                         </div>
                         
                     

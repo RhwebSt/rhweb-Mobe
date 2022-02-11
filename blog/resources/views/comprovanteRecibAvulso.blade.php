@@ -9,12 +9,12 @@
 
 <style>
     @page { 
-          margin-top: 288px; 
+          margin-top: 253px; 
           margin-bottom: 110px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -288px; right: 0px; height: 288px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -253px; right: 0px; height: 253px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -110px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
     
@@ -349,7 +349,7 @@
         
         <table class="margin-top__md">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">RECIBO Avulso de pagamento</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">RECIBO Avulso</td>
             </tr>
         </table>
         
@@ -371,34 +371,13 @@
                     ?>
                 
                 </td>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Nº do Recibo:{{$avusos->aicodigo}}</td>
+                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Nº do Recibo: {{$avusos->aicodigo}}</td>
             </tr>
         </table>
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->tsnome}}</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="small__font matric border-left text-center border-bottom border-top destaque"><strong>Matrícula</strong></td>
-                <td class="small__font cpf border-left text-center border-bottom border-top destaque"><strong>CPF</strong></td>
-                <td class="small__font pis border-left text-center border-bottom border-top destaque"><strong>PIS</strong></td>
-                <td class="small__font cbo border-left border-right text-center border-bottom border-top destaque"><strong>CBO</strong></td>
-            </tr>
-
-            <tr>
-                <td class="small__font matric border-left text-center border-bottom border-top">{{$avusos->tsmatricula}}</td>
-                <td class="small__font cpf border-left text-center border-bottom border-top">{{$avusos->tscpf}}</td>
-                <td class="small__font pis border-left text-center border-bottom border-top">{{$avusos->dspis}}</td>
-                <td class="small__font cbo border-left border-right text-center border-bottom border-top">
-                    <?php
-                        $cbo = explode('-',$avusos->cbo);
-                    ?>
-                    {{$cbo[0]}}
-                </td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->tsnome}} - CPF</td>
             </tr>
         </table>
 
@@ -449,7 +428,7 @@
 
         <table>
             <tr>
-                <td class="small__font border-left border-top tipoTrab text-bold">Empresa tomadora dos serviços</td>
+                <td class="small__font border-left border-top tipoTrab text-bold">Declaro ter recebido o Valor Líquido dando pluma e total quitação.</td>
                 <td class="small__font border-left text-bold border-top total__vencimentos1 text-center destaque border-bottom border-right">Total Créditos</td>
                 <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
             </tr>

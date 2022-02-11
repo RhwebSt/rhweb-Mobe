@@ -656,15 +656,15 @@ class calculoFolhaPorTomadorController extends Controller
     {
         $folhar = base64_decode($folhar);
         $tomador = base64_decode($tomador);
-        $rublicas = $this->rublica->buscaTabelaPreco($tomador);
+        $rublicas = $this->rublica->listaGeral();
         $incide = [];
         $naoincide = [];
         foreach ($rublicas as $key => $rublica) {
             if ($rublica->rsincidencia === 'Sim') {
-                array_push($incide,$rublica->tsrubrica);
+                array_push($incide,$rublica->rsrublica);
             }
             if ($rublica->rsincidencia === 'Não') {
-                array_push($naoincide,$rublica->tsrubrica);
+                array_push($naoincide,$rublica->rsrublica);
             }
         }
         $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
@@ -674,6 +674,7 @@ class calculoFolhaPorTomadorController extends Controller
         }
         // dd($folhas);
         $valorcalculos = $this->valorcalculo->buscaImprimirTomador($basecalculo_id,$incide,$naoincide);
+        
         $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
         // dd($folhas,$valorcalculos,$relacaodias);
         // dd($valorcalculos);
@@ -685,15 +686,16 @@ class calculoFolhaPorTomadorController extends Controller
     {
         $dados = $request->all();
         
-        $rublicas = $this->rublica->buscaTabelaPreco($dados['tomador']);
+        $rublicas = $this->rublica->listaGeral();
+        
         $incide = [];
         $naoincide = [];
         foreach ($rublicas as $key => $rublica) {
             if ($rublica->rsincidencia === 'Sim') {
-                array_push($incide,$rublica->tsrubrica);
+                array_push($incide,$rublica->rsrublica);
             }
             if ($rublica->rsincidencia === 'Não') {
-                array_push($naoincide,$rublica->tsrubrica);
+                array_push($naoincide,$rublica->rsrublica);
             }
         }
         $folhar = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador1'],$dados['tomador']);

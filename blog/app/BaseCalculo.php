@@ -104,7 +104,7 @@ class BaseCalculo extends Model
     }
     public function deletar($id)
     {
-        return BaseCalculo::whereDate('created_at', $id)->delete();
+        return BaseCalculo::whereIn('id',$id)->delete();
     }
     public function listaTrabalhador($folhar)
     {
@@ -126,5 +126,17 @@ class BaseCalculo extends Model
         ->distinct()
         ->orderBy('tomadors.tsnome', 'asc')
         ->get();
+    }
+    public function buscaId($folhar,$tomador)
+    {
+        return BaseCalculo::select('id')->where([
+            ['folhar',$folhar],
+            ['tomador',$tomador]
+        ])
+        ->get();
+    }
+    public function verifica($folhar)
+    {
+        return BaseCalculo::where('folhar',$folhar)->count();
     }
 }

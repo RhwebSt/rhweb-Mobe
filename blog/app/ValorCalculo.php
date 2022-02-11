@@ -380,7 +380,7 @@ class ValorCalculo extends Model
     }
     public function deletar($id)
     {
-        return ValorCalculo::whereDate('created_at', $id)->delete();
+        return ValorCalculo::whereIn('basecalculo',$id)->delete();
     }
 
     public function calculoFolhaAnaliticaProducao($id,$codigo)
@@ -458,6 +458,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','13º Salário')
         ->get();
     }
     public function calculoFolhaAnaliticaSeguro($id,$codigo)
@@ -470,6 +471,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Seguro')
         ->get();
     }
     public function calculoFolhaAnaliticaSindicator($id,$codigo)
@@ -482,6 +484,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Sindicator')
         ->get();
     }
     public function calculoFolhaAnaliticaAdiantamento($id,$codigo)
@@ -494,6 +497,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','Vale alimentação')
         ->get();
     }
     public function calculoFolhaAnaliticaIrrf($id,$codigo)
@@ -506,6 +510,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','IRRF')
         ->get();
     }
     public function calculoFolhaAnaliticaInss($id,$codigo)
@@ -518,6 +523,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','INSS')
         ->get();
     }
     public function calculoFolhaAnaliticaInssSobre13($id,$codigo)
@@ -530,6 +536,7 @@ class ValorCalculo extends Model
         ->where('folhars.id',$id)
         ->where('base_calculos.tomador',null)
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->where('valor_calculos.vsdescricao','INSS Sobre 13º Salário')
         ->get();
     }
     public function calculoFolhaAnaliticaDesconto($id,$codigo)

@@ -170,7 +170,12 @@
 
                     </div>      
                             
-                                <div class="h-captcha" data-sitekey="9a42a3c7-383e-44c2-8c52-361a51bba6da" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+                                 
+                                <div class="container">
+                                    <div class="d-flex row justify-content-start" style="width:180px;">
+                                        <div class="h-captcha mt-3" data-sitekey="9a42a3c7-383e-44c2-8c52-361a51bba6da" style="transform:scale(0.80);-webkit-transform:scale(0.80);transform-origin:0 0;-webkit-transform-origin:0 0; margin-right:0px;"></div>
+                                    </div>
+                                </div>
 
 
                             <div class="col-md-4">

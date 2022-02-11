@@ -16,7 +16,6 @@ class calculoFolhaController extends Controller
         $basecalculo = new BaseCalculo;
         $idfolhas = [];
         $folhas = $folhar->buscaListaFolhar($user->empresa);
-        
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);
         }

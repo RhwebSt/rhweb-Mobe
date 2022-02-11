@@ -14,10 +14,10 @@
 
     <div class="container">
         <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
-            <li class="nav-item ms-2 " role="presentation">
+            <li class="nav-item ms-2 mt-2" role="presentation">
             <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
             </li>
-            <li class="nav-item ms-1 pillstop" role="presentation">
+            <li class="nav-item ms-1 pillstop mt-2" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-list"></i> Lista de Faturas</button>
             </li>
         </ul>
@@ -62,6 +62,26 @@
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
+                            
+                            
+                            <div class="data mt-4">
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
+                                    <label for="adiantamento" class="form-label">Adiantamentos</label>
+                                    <input type="text" class="form-control" name="adiantamento" value="" id="adiantamento">
+                                        <span class="text-danger"></span>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
+                                    <label for="creditos" class="form-label">Creditos</label>
+                                    <input type="text" class="form-control" name="creditos" value="" id="creditos">
+                                        <span class="text-danger"></span>
+                                </div>
+                            
+                            </div>
+                            
+                            
+                            
+                            
                             <div class="mt-5">
                                 <button type="submit" class="btn botao" id="campo1">Gerar <i class="fad fa-calculator-alt"></i></button>
                             </div>

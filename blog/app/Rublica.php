@@ -84,6 +84,10 @@ class Rublica extends Model
     }
     public function listaGeral()
     {
-        return Rublica::get();
+        return Rublica::orderBy('rsrublica', 'asc')->get();
+    }
+    public function buscaRublicaUnidade($descricao)
+    {
+        return Rublica::where('rsdescricao',$descricao)->first();
     }
 }

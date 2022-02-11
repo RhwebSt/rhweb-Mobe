@@ -55,6 +55,6 @@ class RelacaoDia extends Model
     }
     public function deletar($id)
     {
-        return RelacaoDia::whereDate('created_at', $id)->delete();
+        return RelacaoDia::whereIn('basecalculo',$id)->delete();
     }
 }

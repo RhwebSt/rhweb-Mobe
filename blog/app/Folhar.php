@@ -308,6 +308,6 @@ class Folhar extends Model
     }
     public function deletar($id)
     {
-        return Folhar::whereDate('fsfinal', $id)->delete();
+        return Folhar::where('id', $id)->delete();
     }
 }
