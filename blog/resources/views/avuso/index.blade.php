@@ -90,62 +90,21 @@
                     <form class="row g-3" action="{{route('avuso.store')}}" method="POST">
                         <div class="" id="quadro1">
                         @csrf
-                            <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Tomador <i class="fas fa-search"></i></div>
-                                
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
-                                            <div class="d-flex">
-                                            <label for="exampleDataList" class="form-label"></label>
-                                            <input class="form-control fw-bold text-dark pesquisa" list="listatomador" name="pesquisatomador" id="pesquisatomador">
-                                        
-                                            <datalist id="listatomador">
-                                            </datalist>
-                                            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
-                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                            <div class="text-center d-none" id="refres">
-                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                    <span class="visually-hidden">Carregando...</span>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            
-                                            
-                                                @error('tomador')
-                                                <div class="mt-1">
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                </div>
-                                                @enderror
-                                            
-                                        </div>
-                                        
-                    
-                                    </div>
 
-                                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Trabalhador <i class="fas fa-search"></i></div>
+                                <div class="col-md-6">
+                                  <label for="nome__completo" class="form-label">Nome Completo</label>
+                                  <input type="text" class="form-control input fw-bold text-dark" value="" name="nome" maxlength="100" id="nome">
+                                      <span class="text-danger"></span>
+                                </div>
                                 
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
-                                            <div class="d-flex">
-                                            <label for="exampleDataList" class="form-label"></label>
-                                            <input class="form-control fw-bold text-dark pesquisa" list="listatrabalhador" name="pesquisatrabalhador" id="pesquisatrabalhador">
-                                            <datalist id="listatrabalhador">
-                                            </datalist>
-                                            <input type="hidden" name="trabalhador" class="@error('trabalhador') is-invalid @enderror" id="trabalhador">
-                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                            <div class="text-center d-none" id="refres">
-                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                    <span class="visually-hidden">Carregando...</span>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            @error('trabalhador')
-                                                <div class="mt-1">
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                </div>
-                                            @enderror
-                                        </div>
-                    
-                                    </div>
+                                <div class="col-md-6 mt-3">
+                                  <label for="cpf" class="form-label">CPF/CNPJ</label>
+                                  <input type="text" class="form-control input fw-bold text-dark" value="" name="cpf" maxlength="100" id="cpf">
+                                      <span class="text-danger"></span>
+                                </div>
+                                    
+                                    
+                                    
                                     <?php
                                         if ($valorrublica_avuso->vsreciboavulso) {
                                             $avuso = $valorrublica_avuso->vsreciboavulso + 1;
@@ -302,7 +261,7 @@
                                     
                                     <th class="col text-center border-start border-top text-nowrap" style="width:60px;">Matrícula</th>
                                     <th class="col text-center border-top text-nowrap" style="width: 350px;">Trabalhador</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 350px;">Tomador</th>
+                                    <th class="col text-center border-top text-nowrap" style="width:150px;">CPF/CNPJ </th>
                                     <th class="col text-center border-top text-nowrap">Data inicial</th>
                                     <th class="col text-center border-top text-nowrap" style="width:200px">Data Final</th>
                                     <th class="col text-center border-top text-nowrap" style="width:110px;">Nº Recibo Avulso</th>
@@ -320,9 +279,9 @@
                                             </button>
                                         
                                         </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 350px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->tomador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>{{$listas->tomador}} </a>
+                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 150px;">
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="CPF/CNPJ" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>CPF/CNPJ </a>
                                             </button>
                                         
                                         </td>
@@ -386,6 +345,13 @@
                                 </tr>
                                 @endif
                                 </tbody>
+                                <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $lista->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                 
                             </table>
                         </div>
@@ -399,7 +365,7 @@
 
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <form class="row g-3" action="{{route('recibo.avulso.trabalhador')}}" method="POST">
-                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Trabalhador <i class="fas fa-search"></i></div>
+                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Nome <i class="fas fa-search"></i></div>
                     @csrf
                     <div class="d-flex justify-content-between mb-3 mt-0">
                         <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">

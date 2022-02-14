@@ -298,7 +298,7 @@
                 <td></td>
                 <td></td>
                 <td class="small__font width__padrao border-right margin-left"></td>
-                <td class="small__font border-top text-center border-left border-right text-bold last">Fatura N° 999999</td>
+                <td class="small__font border-top text-center border-left border-right text-bold last">Fatura N° {{$faturas->fsnumero}}</td>
             </tr>
 
             <tr class="teste">
@@ -314,7 +314,7 @@
                 <td></td>
                 <td></td>
                 <td class="small__font width__padrao  border-right"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} </td>
-                <td class="small__font border-bottom text-center border-left border-right font__destak text-bold last destaque">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom text-center border-left border-right font__destak text-bold last destaque">R$ {{number_format((float)$faturatotais[3]->fivalor, 2, ',', '.')}}</td>
                 
             </tr>
 
@@ -401,7 +401,10 @@
                 <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[0]->fiindece, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[0]->fivalor, 2, ',', '.')}}</td>
                 
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[0]->fsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">
+                    
+                    {{$faturasecundarios[0]->fsdescricao}}
+                </td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturasecundarios[0]->fivalor, 2, ',', '.')}}</td>
             </tr>
@@ -441,27 +444,29 @@
             <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[3]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[3]->fiindece, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[3]->fivalor, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Adiantamentos</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+
+               <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[3]->fsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[3]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturasecundarios[3]->fivalor, 2, ',', '.')}}</td>
             </tr>
 
             <tr>
             <td class="small__font border-bottom border-left border-top text-bold dsr destaque">{{$faturatotais[1]->fstitulo}}</td>
                 <td class="small__font border-bottom border-top indice  text-center destaque"></td>
                 <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{number_format((float)$faturatotais[1]->fivalor, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Créditos</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[4]->fsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[4]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturasecundarios[4]->fivalor, 2, ',', '.')}}</td>
             </tr>
 
             <tr>
             <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[4]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[4]->fiindece, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[4]->fivalor, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-top text-bold dsr destaque">Total Líquido</td>
+                <td class="small__font border-bottom border-left border-top text-bold dsr destaque">{{$faturatotais[3]->fstitulo}}</td>
                 <td class="small__font border-bottom border-top indice  text-center destaque"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{number_format((float)$faturatotais[3]->fivalor, 2, ',', '.')}}</td>
             </tr>
 
             <tr>
@@ -485,9 +490,10 @@
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Vale Transporte</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturavalestrans[0]->fsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturavalestrans[0]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturavalestrans[0]->fivalor, 2, ',', '.')}}</td>
+
                 <td class="small__font border-bottom border-left  border-top text-bold dsr text-center">Demonstrativo Evento S - 1270</td>
                 <td class="small__font border-bottom  border-top indice  text-center"></td>
                 <td class="small__font border-bottom border-right border-top vlr text-center text-bold"></td>
@@ -496,9 +502,9 @@
             </tr>
 
             <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">Vale Alimentação</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturavalesalim[0]->fsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturavalesalim[0]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturavalesalim[0]->fivalor, 2, ',', '.')}}</td>
 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[0]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[0]->fiindece}}</td>
@@ -512,9 +518,10 @@
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr"> Base Cálculo 13º Salário</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[1]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[1]->fiindece}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturademostrativas[1]->fivalor, 2, ',', '.')}}</td>
                 
                 
             </tr>
@@ -524,9 +531,9 @@
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
 
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[1]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[1]->fiindece}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturademostrativas[1]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[2]->dsdescricao}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[2]->fiindece}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturademostrativas[2]->fivalor, 2, ',', '.')}}</td>
                 
             </tr>
 
@@ -536,7 +543,7 @@
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
                 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[0]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center"> {{number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.')}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturasecundarios[0]->fivalor, 2, ',', '.')}}</td>
             </tr>
 
@@ -546,9 +553,9 @@
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[7]->fivalor, 2, ',', '.')}}</td>
 
                 
-                <td class="small__font border-bottom border-left border-top text-bold dsr destaque">{{$faturatotais[3]->fstitulo}}</td>
+                <td class="small__font border-bottom border-left border-top text-bold dsr destaque">{{$faturatotais[4]->fstitulo}}</td>
                 <td class="small__font border-bottom border-top indice  text-center destaque"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{number_format((float)$faturatotais[3]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{number_format((float)$faturatotais[4]->fivalor, 2, ',', '.')}}</td>
 
             </tr>
         </table>

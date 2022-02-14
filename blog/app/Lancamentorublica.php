@@ -81,6 +81,15 @@ class Lancamentorublica extends Model
         ->whereYear('lancamentorublicas.created_at',$novadata[0])
         ->count();
     }
+    public function verificaTrabalhador($dados,$novadata)
+    {
+        return Lancamentorublica::select('trabalhador')
+        ->where('lancamento', $dados['lancamento'])
+        ->distinct()
+        ->whereMonth('created_at',$novadata[1])
+        ->whereYear('created_at',$novadata[0])
+        ->get();
+    }
     public function buscaListaRelatorioLancamentoRublica($dados)
     {
         

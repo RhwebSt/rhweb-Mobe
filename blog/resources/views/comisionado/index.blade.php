@@ -130,8 +130,6 @@
                     </div>
                 </div>
                 
-                
-                
                 <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
@@ -184,7 +182,13 @@
                                 </tr>
                                 @endif
                                 </tbody>
-                
+                                <tfoot>
+                                <tr class=" border-end border-start border-bottom">
+                                    <td colspan="11">
+                                    {{ $comissionados->links() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                 

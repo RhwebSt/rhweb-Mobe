@@ -392,7 +392,11 @@ class ValorCalculo extends Model
         ->selectRaw('SUM(vivencimento) as vencimento,base_calculos.bivalorliquido,base_calculos.bivalorvencimento,base_calculos.trabalhador,trabalhadors.tsmatricula,trabalhadors.tsnome')
         ->groupBy('base_calculos.bivalorliquido','base_calculos.bivalorvencimento','base_calculos.trabalhador','trabalhadors.tsnome','trabalhadors.tsmatricula')
         ->where('folhars.id',$id)
-        ->where('base_calculos.tomador',null)
+        ->where([
+            ['base_calculos.tomador',null],
+            ['valor_calculos.vsdescricao','!=','Vale transporte'],
+            ['valor_calculos.vsdescricao','!=','Vale alimentação'],
+            ])
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->get();
     }
@@ -574,7 +578,7 @@ class ValorCalculo extends Model
         ->get();
     }
 
-    public function producaoFatura($dados)
+    public function producaoFatura($dados,$codigo) 
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
@@ -585,22 +589,23 @@ class ValorCalculo extends Model
         )
         ->groupBy('valor_calculos.vireferencia')
         ->where('base_calculos.tomador',$dados['tomador'])
-        ->whereBetween('valor_calculos.vicodigo',[1000,1007])
+        ->whereIn('valor_calculos.vicodigo',$codigo)
         ->whereDate('base_calculos.created_at', $dados['ano_final'])
         ->get();
     }
-    public function producaoFaturaIn($dados)
+    public function producaoFaturaIn($dados,$codigo)
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
         ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
         ->selectRaw(
             'SUM(valor_calculos.vireferencia) as referencia,
-            valor_calculos.vicodigo'
+            SUM(valor_calculos.vivencimento) as valor,
+            valor_calculos.vicodigo,valor_calculos.vsdescricao'
         )
-        ->groupBy('valor_calculos.vicodigo')
+        ->groupBy('valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador',$dados['tomador'])
-        ->whereBetween('valor_calculos.vicodigo',[1000,1007])
+        ->whereIn('valor_calculos.vicodigo',$codigo)
         ->whereDate('base_calculos.created_at', $dados['ano_final'])
         ->get();
     }

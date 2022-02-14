@@ -184,7 +184,25 @@
             <div id="footer">
               <p class="page destaque borderT padding-footer">Página:  </p>
             </div>
-
+            <?php
+                $resumo_geral=[
+                    'produção'=> 0,
+                    'dsr'=>0,
+                    'Férias'=>0,
+                    'VT'=>0,
+                    'VA'=>0,
+                    '13º Salário'=>0,
+                    'INSS 13º Sal'=>0,
+                    'IRRF'=>0,
+                    'INSS'=>0,
+                    'Vale'=>0,
+                    'Seguro'=>0,
+                    'C. Sindical'=>0,
+                    'Adiantamento'=>0,
+                    'Total'=>0,
+                    'Total Líquido'=>0
+                ];
+            ?>
             <div id="content">
                 @foreach($producao as $d => $valor)
                     
@@ -208,11 +226,15 @@
         
                         <tr>
         
-                            <td class="border-top border-bottom border-left text-bold small__font text-center producao">{{number_format((float)$valor->vencimento, 2, ',', '.')}}</td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center producao">
+                                {{number_format((float)$valor->vencimento, 2, ',', '.')}}
+                                <?php $resumo_geral['produção'] += $valor->vencimento;?>
+                            </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center dsr">
                                 @foreach($dsr as $d => $valor_dsr)
                                     @if($valor_dsr->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_dsr->vencimento, 2, ',', '.')}}
+                                      <?php $resumo_geral['dsr'] += $valor_dsr->vencimento;?>
                                     @endif
                                  @endforeach
                             </td>
@@ -220,6 +242,7 @@
                                 @foreach($ferias as $d => $valor_ferias)
                                     @if($valor_ferias->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_ferias->vencimento, 2, ',', '.')}}
+                                      <?php $resumo_geral['Férias'] += $valor_ferias->vencimento;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -227,13 +250,15 @@
                                 @foreach($vt as $d => $valor_vt)
                                     @if($valor_vt->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_vt->vencimento, 2, ',', '.')}}
+                                      <?php $resumo_geral['VT'] += $valor_vt->vencimento;?>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center va">
-                                @foreach($va as $d => $valor_vt)
-                                    @if($valor_vt->trabalhador === $valor->trabalhador)
-                                      {{number_format((float)$valor_vt->vencimento, 2, ',', '.')}}
+                                @foreach($va as $d => $valor_va)
+                                    @if($valor_va->trabalhador === $valor->trabalhador)
+                                      {{number_format((float)$valor_va->vencimento, 2, ',', '.')}}
+                                      <?php $resumo_geral['VA'] += $valor_va->vencimento;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -241,10 +266,14 @@
                                 @foreach($salario13 as $d => $valor_salario13)
                                     @if($valor_salario13->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_salario13->vencimento, 2, ',', '.')}}
+                                      <?php $resumo_geral['13º Salário'] += $valor_salario13->vencimento;?>
                                     @endif
                                 @endforeach
                             </td>
-                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$valor->bivalorvencimento, 2, ',', '.')}}</td>
+                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">
+                                {{number_format((float)$valor->bivalorvencimento, 2, ',', '.')}}
+                                <?php $resumo_geral['Total'] += $valor->bivalorvencimento;?>
+                            </td>
                         </tr>
                     </table>
                 
@@ -266,6 +295,7 @@
                                 @foreach($inss_sobre13 as $d => $valor_inss_sobre13)
                                     @if($valor_inss_sobre13->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_inss_sobre13->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['INSS 13º Sal'] += $valor_inss_sobre13->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -273,13 +303,15 @@
                                 @foreach($irrf as $d => $valor_irrf)
                                     @if($valor_irrf->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_irrf->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['IRRF'] += $valor_irrf->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="border-bottom text-bold border-left small__font text-center dsr">
                                 @foreach($inss as $d => $valor_inss)
-                                    @if($valor_inss_sobre13->trabalhador === $valor->trabalhador)
+                                    @if($valor_inss->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_inss->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['INSS'] += $valor_inss->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -287,6 +319,7 @@
                                 @foreach($vale as $valhes)
                                     @if($valhes->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valhes->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['Vale'] += $valhes->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -294,6 +327,7 @@
                                 @foreach($seguro as $d => $valor_seguro)
                                     @if($valor_seguro->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_seguro->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['Seguro'] += $valor_seguro->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -301,6 +335,7 @@
                                 @foreach($sindicator as $d => $valor_sindicator)
                                     @if($valor_sindicator->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$valor_sindicator->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['C. Sindical'] += $valor_sindicator->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
@@ -308,10 +343,14 @@
                                 @foreach($adiantamento as $adiantamentos)
                                     @if($adiantamentos->trabalhador === $valor->trabalhador)
                                       {{number_format((float)$adiantamentos->desconto, 2, ',', '.')}}
+                                      <?php $resumo_geral['Adiantamento'] += $adiantamentos->desconto;?>
                                     @endif
                                 @endforeach
                             </td>
-                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$valor->bivalorliquido, 2, ',', '.')}}</td>
+                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">
+                                {{number_format((float)$valor->bivalorliquido, 2, ',', '.')}}
+                                <?php $resumo_geral['Total Líquido'] += $valor->bivalorliquido;?>
+                            </td>
                         </tr>
         
                       
@@ -338,13 +377,13 @@
 
                 <tr>
 
-                    <td class="border-top border-bottom border-left text-bold small__font text-center producao">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center dsr">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center ferias">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center vt">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center va">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center decimo">999.999.999,99</td>
-                    <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">999.999.999,99</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center producao">{{number_format((float)$resumo_geral['produção'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center dsr">{{number_format((float)$resumo_geral['dsr'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center ferias">{{number_format((float)$resumo_geral['Férias'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center vt">{{number_format((float)$resumo_geral['VT'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center va">{{number_format((float)$resumo_geral['VA'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center decimo">{{number_format((float)$resumo_geral['13º Salário'], 2, ',', '.')}}</td>
+                    <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$resumo_geral['Total'], 2, ',', '.')}}</td>
                 </tr>
               </table>
 
@@ -362,14 +401,14 @@
                 </tr>
 
                 <tr>
-                    <td class="border-bottom  border-left text-bold small__font text-center inss__dec">999.999.999,99</td>
-                    <td class="border-bottom text-bold border-left small__font text-center producao1">999.999.999,99</td>
-                    <td class="border-bottom text-bold border-left small__font text-center dsr">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center ferias">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center vt">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center va">999.999.999,99</td>
-                    <td class="border-top border-bottom border-left text-bold small__font text-center decimo">999.999.999,99</td>
-                    <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">999.999.999,99</td>
+                    <td class="border-bottom  border-left text-bold small__font text-center inss__dec">{{number_format((float)$resumo_geral['INSS 13º Sal'], 2, ',', '.')}}</td>
+                    <td class="border-bottom text-bold border-left small__font text-center producao1">{{number_format((float)$resumo_geral['IRRF'], 2, ',', '.')}}</td>
+                    <td class="border-bottom text-bold border-left small__font text-center dsr">{{number_format((float)$resumo_geral['INSS'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center ferias">{{number_format((float)$resumo_geral['Vale'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center vt">{{number_format((float)$resumo_geral['Seguro'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center va">{{number_format((float)$resumo_geral['C. Sindical'], 2, ',', '.')}}</td>
+                    <td class="border-top border-bottom border-left text-bold small__font text-center decimo">{{number_format((float)$resumo_geral['Adiantamento'], 2, ',', '.')}}</td>
+                    <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">{{number_format((float)$resumo_geral['Total Líquido'], 2, ',', '.')}}</td>
                 </tr>
 
               

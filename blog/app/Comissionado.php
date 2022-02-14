@@ -59,7 +59,7 @@ class Comissionado extends Model
             $user = auth()->user();
             $query->where('trabalhadors.empresa',$user->empresa);
         })
-        ->get();
+        ->paginate(10);
     }
     public function buscaUnidadeComissionado($id)
     {

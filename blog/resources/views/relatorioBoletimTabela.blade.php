@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +10,12 @@
     <style>
 
          @page { 
-          margin-top: 90px; 
+          margin-top: 240px; 
           margin-bottom: 80px;
           margin-left: 10px;
           margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -90px; right: 0px; height: 90px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -240px; right: 0px; height: 240px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -80px; right: 0px; height: 80px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
 
@@ -77,6 +77,13 @@
 
         .name__title{
             width: 769px;
+        }
+        
+        .logo{
+            margin-top:10px;
+            margin-right: 50px;
+            width: 100px;
+            height: 120px;
         }
 
         .firtprad{
@@ -155,6 +162,10 @@
             border: 1px solid black;
             border-radius: 3px;
         }
+        
+        .width__padrao{
+            width:576px;
+        }
 
         .margin-top{
             margin-top: 10px;
@@ -163,16 +174,79 @@
         .padding-footer{
             padding: 2px;
         }
+        
+        .logo{
+            margin-top:10px;
+            margin-right: 50px;
+            width: 100px;
+            height: 120px;
+        }
 
 
     </style>
     
     <body>
         <div id="header">
+            
+            <table class="margin-top">
+            <tr>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$lancamentotabelas[0]->esnome}}</td>
+            </tr>
+        </table>
+        
+        <div class="borderT margin-top">
+            <table>
+                <tr>
+                    <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> ,  - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong>  - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong> (48) 3086-0103</td>
+                </tr>
+    
+            </table>
+        </div>
+            
             <table class="margin-top">
                 <tr>
-                    <td class="small__font  border-top border-bottom border-right firtprad text-center border-left destaque2 text-bold">Boletim Nº: {{$lancamentotabelas[0]->liboletim}}</td>
-                    <td class="small__font border-top border-bottom border-right firtprad text-center destaque2 text-bold">Data do Boletim:
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark uppercase">Relatório do Boletim com Tabela</td>
+                </tr>
+            </table>
+            
+            <table>
+                <tr>
+                    <td class="small__font  border-top border-bottom border-right firtprad text-center border-left text-bold">Boletim Nº: {{$lancamentotabelas[0]->liboletim}}</td>
+                    <td class="small__font border-top border-bottom border-right firtprad text-center text-bold">Data do Boletim:
                         @if(isset($lancamentotabelas[0]->lsdata))
                             <?php
                                 $data = explode('-',$lancamentotabelas[0]->lsdata);
@@ -181,16 +255,11 @@
                             {{$data2}}
                         @endif
                     </td>
-                    <td class="small__font border-top border-bottom border-right firtprad text-center destaque2 text-bold">Ano Referência: {{$data[0]}}</td>
+                    <td class="small__font border-top border-bottom border-right firtprad text-center2 text-bold text-center">Ano Referência: {{$data[0]}}</td>
                     
                 </tr>
             </table>
-        
-            <table>
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark uppercase">{{$lancamentotabelas[0]->esnome}}</td>
-                </tr>
-            </table>
+
         
             <table class="tomador">
                 <tr>
@@ -235,7 +304,7 @@
                  <?php
                     $valor = 0;
                 ?>
-                <table>
+                <table class="margin-top">
                     <tr>
                         <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center destaque2">{{$trabalhador->tsmatricula}}</td>
                         <td class="border-left border-right border-top border-bottom small__font text-bold  text-center nome destaque2 uppercase">{{$trabalhador->tsnome}}</td>

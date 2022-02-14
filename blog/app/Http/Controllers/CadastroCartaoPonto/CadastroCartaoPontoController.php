@@ -59,8 +59,8 @@ class CadastroCartaoPontoController extends Controller
         if (count($tabelaprecos) < 5) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rubricas necessárias do ano '.date('Y').'!']);
         }
-        if ($lancamentotabelas) {
-            return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este hoje!']);
+        if ($lancamentotabelas) { 
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este hoje!']);
         }
         $request->validate([
             'nome__completo' => 'required',
@@ -83,24 +83,25 @@ class CadastroCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $novodados = [
-            $dados['domingo'],
-            $dados['sabado'],
-            $dados['diasuteis'],
-            $dados['data'],
-            $dados['liboletim'],
-            $dados['tomador'],
-            $dados['feriado']
-        ];
-        $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
-        if($listalancamentotabela){
-            array_unshift($novodados, $listalancamentotabela->id);
-            return redirect()->route('boletimcartaoponto.create',$novodados);
-        }
+        // $novodados = [
+        //     $dados['domingo'],
+        //     $dados['sabado'],
+        //     $dados['diasuteis'],
+        //     $dados['data'],
+        //     $dados['liboletim'],
+        //     $dados['tomador'],
+        //     $dados['feriado']
+        // ];
+        // $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
+        // if($listalancamentotabela){
+        //     array_unshift($novodados, $listalancamentotabela->id);
+        //     return redirect()->route('boletimcartaoponto.create',$novodados);
+        // }
         $lancamentotabelas = $lancamentotabela->cadastro($dados);
         $valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
-        array_unshift($novodados, $lancamentotabelas['id']);
-        return redirect()->route('boletimcartaoponto.create',$novodados);
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        // array_unshift($novodados, $lancamentotabelas['id']);
+        // return redirect()->route('boletimcartaoponto.create',$novodados);
         // return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Não foi possivél realiza o cadastro!']);
     }
 

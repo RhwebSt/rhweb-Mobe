@@ -54,7 +54,6 @@
                         })
                     </script>
                 @enderror    
-
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('user.update',$editar->id)}}">
               @csrf
               @method('PATCH')

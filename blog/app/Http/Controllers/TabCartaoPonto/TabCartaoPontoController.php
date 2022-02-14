@@ -15,6 +15,11 @@ class TabCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $lancamentorublica;
+    public function __construct()
+    {
+        $this->lancamentorublica = new Lancamentorublica;
+    }
     public function index()
     {
         $user = Auth::user();
@@ -132,11 +137,14 @@ class TabCartaoPontoController extends Controller
     {
         $dados = $request->all();
         
+        $novadata = explode('-',$dados['data']);
+        $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
+        // dd($dados,$quantidadeTrabalhador);
         $request->validate([
             'nome__completo' => 'required',
             // 'matricula'=>'required|max:6',
             'num__trabalhador'=>'numeric',
-            'num__trabalhador'=>'required',
+            'num__trabalhador'=>'required', 
             'data'=>'required'
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',

@@ -36,8 +36,9 @@ class FolhaAnaliticaController extends Controller
             if ($valor->rsincidencia === 'Não') {
                 array_push($nao,$valor->rsrublica);
             }
-        }
+        } 
         $producao = $valorcalculo->calculoFolhaAnaliticaProducao($id,$sim);
+        // dd($producao,$sim);
         if (count($producao) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a PRODUÇÃO.']);
         }
@@ -74,6 +75,7 @@ class FolhaAnaliticaController extends Controller
         $irrf = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$nao);
         
         $inss = $valorcalculo->calculoFolhaAnaliticaInss($id,$nao);
+        // dd($inss);
         if (count($inss) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o INSS.']);
         }
@@ -86,6 +88,6 @@ class FolhaAnaliticaController extends Controller
         
         //dd($adiantamento,$dados,$producao,$dsr,$ferias,$vt,$va,$salario13);
         $pdf = PDF::loadView('folhaAnalitica',compact('sindicator','seguro','inss','inss_sobre13','irrf','salario13','vt','va','ferias','dsr','adiantamento','vale','producao','folhas'));
-        return $pdf->setPaper('a4','landscape')->stream('CALCULO DA FOLHA ANALITICA.pdf');
+        return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA.pdf');
     }
 }

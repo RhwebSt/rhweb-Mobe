@@ -44,6 +44,7 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
         $depedente = new Dependente;
         $depedentes_cpf = $depedente->verificaCpf($dados);
         $depedentes_quant = $depedente->quantidadeDependente($dados);
@@ -56,11 +57,10 @@ class DepedenteController extends Controller
             'dscpf'=>'required|cpf|formato_cpf',
             'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
+            // 'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
-        $id = $dados['trabalhador'];
         
         $depedentes = $depedente->cadastro($dados);
         if ($depedentes) {
@@ -70,7 +70,7 @@ class DepedenteController extends Controller
         try {
             //code...
         } catch (\Throwable $th) {
-            return redirect()->route('depedente.mostrar.create',$id)->withInput()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
         }
         
     }

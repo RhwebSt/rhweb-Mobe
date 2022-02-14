@@ -48,20 +48,14 @@ class TabCadastroController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        
         $novadata = explode('-',$dados['data']);
         $lancamentorublica = new Lancamentorublica;
-        $novodados = [
-            $dados['numtrabalhador'],
-            $dados['boletim'],
-            $dados['tomador'],
-            $dados['lancamento'], 
-            $dados['data'] 
-        ];
+        $quantidadeTrabalhador = $lancamentorublica->verificaTrabalhador($dados,$novadata);
           
             $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
-           
             if ($lancamentorublicas) {
-                return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);
+                return redirect()->back()->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);
             }
             $validator = Validator::make($request->all(), [
                 'nome__completo' => 'required',
@@ -76,12 +70,12 @@ class TabCadastroController extends Controller
                 ]
             );
             if ($validator->fails()) {
-                return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
+                return redirect()->back()->withErrors($validator);
             }
-            $lancamentorublicas = $lancamentorublica->cadastro($dados);
-            if ($lancamentorublicas == $dados['numtrabalhador']) {
-                return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Os'.$dados['numtrabalhador'].' já foram lançados.']);
+            if ( count($quantidadeTrabalhador) == $dados['numtrabalhador']) {
+                return redirect()->back()->withErrors(['false'=>'Os'.$dados['numtrabalhador'].' já foram lançados.']);
             }else{
+                $lancamentorublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
             try {

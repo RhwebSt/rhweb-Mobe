@@ -79,7 +79,7 @@
                     </thead>
                     <tbody style="background-color: #081049; color: white;">
                     @if(count($depedentes) > 0)
-                    @foreach ($depedentes as $depedente)
+                    @foreach ($depedentes as $key=>$depedente)
                         <tr class="bodyTabela">               
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width: 450px;">
                                 <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$depedente->dsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
@@ -116,12 +116,12 @@
                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                 
                                 
-                                <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$key}}">
                                     <i style="color:#FFFFFF; padding-right: 3px;" class="fal fa-trash"></i>
                                 </button>
                                 
                                 <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal fade" id="staticBackdrop{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
                                         <form action="{{ route('depedente.destroy',$depedente->id) }}" id="formdelete" method="post">

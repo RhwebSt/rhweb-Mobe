@@ -137,7 +137,7 @@
                         </thead>
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($users) > 0)
-                        @foreach($users as $valoruser)
+                        @foreach($users as $key=>$valoruser)
                             <tr class="bodyTabela">   
                                 
                                 <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
@@ -165,14 +165,35 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn">
-                                    <a href="{{route('user.edit',$valoruser->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
+                                    <a href="{{route('user.edit', base64_encode($valoruser->id))}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                    <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$key}}">
                                         <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
                                     </button>
-                                    
+                                    <div class="modal fade" id="staticBackdrop{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <form action="{{route('user.destroy',$valoruser->id)}}"  method="post">
+                                              @csrf
+                                              @method('delete')
+                                              <div class="modal-header modal__delete">
+                                              <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                              <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body modal-delbody">
+                                                  <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                                              </div>
+                                              <div class="modal-footer modal-delfooter">
+                                              <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                              <button type="submit" class="btn btn__deletar">Deletar</button>
+
+                                              </div>
+                                          </form>
+                                      </div>
+                                      </div>
+                                  </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -201,28 +222,7 @@
                
               
               
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="" id="formdelete" method="post">
-                            @csrf
-                            @method('delete')
-                            <div class="modal-header modal__delete">
-                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body modal-delbody">
-                                <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                            </div>
-                            <div class="modal-footer modal-delfooter">
-                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn__deletar">Deletar</button>
-
-                            </div>
-                        </form>
-                    </div>
-                    </div>
-                </div>
+              
             </div> 
             <script>
         $(document).ready(function(){

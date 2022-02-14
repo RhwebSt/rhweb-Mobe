@@ -107,7 +107,7 @@ class UserController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser();
+        $users = $use->listaUser(); 
         $editar = $use->edit($id); 
         return view('usuarios.edit',compact('user','users','editar'));
     }

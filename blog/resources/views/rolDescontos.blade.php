@@ -11,13 +11,13 @@
 <style>
 
     @page { 
-          margin-top: 100px; 
-          margin-bottom: 30px;
+          margin-top: 225px; 
+          margin-bottom: 60px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -100px; right: 0px; height: 100px; background-color:; text-align: center; }
-    #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
+    #header { position: fixed; left: 0px; top: -225px; right: 0px; height: 225px; background-color:; text-align: center; }
+    #footer { position: fixed; left: 0px; bottom: -60px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
 
 
@@ -85,12 +85,16 @@
     .container{
         display:block;
     }
+    
+    .logo{
+            margin-top:10px;
+            margin-right: 50px;
+            width: 100px;
+            height: 120px;
+        }
 
 
     .page {
-        position:absolute;
-        bottom:0;
-        width:100%;
         font-size: 16px;
         font-weight: bold;
      }
@@ -147,11 +151,20 @@
     .borderT{
         border: 1px solid black;
         border-radius: 3px;
-        width: 758px;
+        width: 772px;
     }
+    
+    .width__padrao{
+            width:576px;
+        }
+
     
     .margin-top{
         margin-top: 10px;
+    }
+    
+    .footer{
+      float: right;
     }
 
     .padding-footer{
@@ -217,6 +230,56 @@
     <div id="header" class="margin-top">
         <table>
             <tr>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->esnome}}</td>
+            </tr>
+        </table>
+        
+        <div class="borderT margin-top">
+            <table>
+                <tr>
+                    <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" alt="" srcset="" style="width:80px; height: 80px; padding:0px"></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº :</strong></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> ,  - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong>  - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong> (48) 3086-0103</td>
+                </tr>
+    
+            </table>
+        </div>
+        
+        
+        <table class="margin-top">
+            <tr>
                 <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Rol dos Descontos</td>
             </tr>
         </table>
@@ -247,12 +310,6 @@
             </tr>
         </table>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->esnome}}</td>
-            </tr>
-        </table>
-
         <table class="margin-top">
             <tr>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font matric">Matrícula</td>
@@ -264,9 +321,7 @@
         </table>
     </div>
 
-    <div id="footer">
-        <p class="page destaque borderT padding-footer">Página:  </p>
-    </div>
+    
 
     <div id="content">
         <?php
@@ -286,6 +341,8 @@
                 ?>
             @endforeach
         </table>
+        
+
 
         <table class="margin-top">
             <tr>
@@ -294,6 +351,10 @@
                 <td class="border-right border-top border-bottom text-center small__font destaque font text-bold valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
             </tr>
         </table>
+        
+        <div id="footer">
+          <p class="page destaque borderT padding-footer">Página:  </p>
+        </div>
     </div>
 </body>
 </html>

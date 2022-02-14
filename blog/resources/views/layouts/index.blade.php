@@ -76,13 +76,13 @@
     </script>   
         
         
-    <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(0,0,0,0.6);z-index:1;" id="carregamento" class="">
-                        <div class="text-center " >
-                          <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: #393D3F;">
-                            <span class="visually-hidden">Carregando...</span>
-                          </div>
-                        </div>
-                    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(243, 243, 253, 0.8);z-index:1;" id="carregamento" class="">
+        <div class="text-center " >
+          <img class="imagem" src="{{url('/imagem/carregamento.png')}}" alt="" srcset="">
+        </div>
+    </div>
+    
+    
     <main>
         <nav class="navbar navbar-expand-lg navbar-dark mb-5" style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">

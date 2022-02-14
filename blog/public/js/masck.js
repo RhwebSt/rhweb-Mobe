@@ -91,5 +91,5 @@ $('#fator__reducao03').mask('000.000.000,00',{reverse:true});
 $('#fator__reducao04').mask('000.000.000,00',{reverse:true});
 $('#fator__reducao05').mask('000.000.000,00',{reverse:true});
 $('#ded__dependente').mask('000.000.000,00',{reverse:true});
-
-
+$('#adiantamento').mask('000.000.000,00',{reverse:true});
+$('#creditos').mask('000.000.000,00',{reverse:true});

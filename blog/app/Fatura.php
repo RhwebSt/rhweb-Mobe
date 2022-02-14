@@ -12,7 +12,7 @@ class Fatura extends Model
     public function cadastro($dados)
     {
         return Fatura::create([
-            // 'fsnumero'=>$dados['logradouro'],
+            'fsnumero'=>$dados['numero'],
             'fsinicio'=>$dados['ano_inicial'],
             'fsfinal'=>$dados['ano_final'],
             // 'fsvencimento'=>$dados['localidade'],

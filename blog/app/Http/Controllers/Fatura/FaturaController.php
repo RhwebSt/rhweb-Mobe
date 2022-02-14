@@ -16,20 +16,27 @@ use App\Empresa;
 use App\FaturaRubrica;
 use App\TabelaPreco;
 use App\Rublica;
+use App\ValoresRublica;
 class FaturaController extends Controller
 {
+    private $rublica,$valorrublica,$fatura;
+    public function __construct()
+    {
+        $this->rublica = new Rublica;
+        $this->valorrublica = new ValoresRublica;
+        $this->fatura = new Fatura;
+    } 
     public function index()
     {
         $user = auth()->user();
-        $fatura = new Fatura;
-        $faturas = $fatura->buscaListaFatura();
-        return view('fatura.index',compact('user','faturas'));
+        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $faturas = $this->fatura->buscaListaFatura();
+        return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         
     }
     public function store(Request $request)
     {
         $dados = $request->all();
-        
         $user = auth()->user();
         $dados['empresa'] = $user->empresa;
         $tabelapreco = new TabelaPreco;
@@ -47,6 +54,8 @@ class FaturaController extends Controller
         $valordemostrativo = 0;
         $valorbasefolha = 0;
         $totalproducao = 0;
+        $incide = [];
+        $naoincide = [];
         $producao = [
             'descricao'=>'',
             'indice'=>'',
@@ -61,14 +70,23 @@ class FaturaController extends Controller
             'total'=>'',
             'fatura'=>''
         ];
-        $faturas = $fatura->cadastro($dados);
+        $rublicas = $this->rublica->listaGeral();
+        foreach ($rublicas as $key => $rublica) {
+            if ($rublica->rsincidencia === 'Sim') {
+                array_push($incide,$rublica->rsrublica);
+            }
+            if ($rublica->rsincidencia === 'Não') {
+                array_push($naoincide,$rublica->rsrublica);
+            }
+        }
         
-        $producaofatura = $valorcalculor->producaoFatura($dados);
-        $indecefatura = $valorcalculor->producaoFaturaIn($dados);
+        $producaofatura = $valorcalculor->producaoFatura($dados,$incide);
+        $indecefatura = $valorcalculor->producaoFaturaIn($dados,$incide);
         $rublicasfatura = $valorcalculor->rublicasFatura($dados);
         $tabelaprecos = $tabelapreco->listaUnidadeTomador($dados['tomador']);
-        // dd($producaofatura,$rublicasfatura,$indecefatura,$tabelaprecos);
-
+        
+        $faturas = $fatura->cadastro($dados);
+        $this->valorrublica->editarFatura($dados,$user->empresa);
         foreach ($tabelaprecos as $y => $tabelapreco) {
             foreach ($indecefatura as $e => $indecefaturas) {
                 if ($indecefaturas->vicodigo == $tabelapreco->tsrubrica) {
@@ -81,6 +99,15 @@ class FaturaController extends Controller
                     $faturarublica->cadastro($dadosrublicas);
                     $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
                 }
+            }
+        }
+        foreach($indecefatura as $e => $indecefaturas){
+            if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
+                $producao['descricao'] = $indecefaturas->vsdescricao;
+                $producao['indice'] = $indecefaturas->referencia;
+                $producao['valor'] = $indecefaturas->valor;
+                $producao['fatura'] = $faturas['id'];
+                $faturasecundario->cadastro($producao);
             }
         }
         $producao['descricao'] = 'Produção';
@@ -172,17 +199,31 @@ class FaturaController extends Controller
         $producao['fatura'] = $faturas['id'];
         $faturasecundario->cadastro($producao);
 
+        $producao['descricao'] = 'Adiantamentos';
+        $producao['indice'] = 0;
+        $producao['valor'] = $dados['adiantamento'];
+        $producao['fatura'] = $faturas['id'];
+        $faturasecundario->cadastro($producao);
+
+        $producao['descricao'] = 'Créditos';
+        $producao['indice'] = 0;
+        $producao['valor'] = $dados['creditos'];
+        $producao['fatura'] = $faturas['id'];
+        $faturasecundario->cadastro($producao);
+
         $producao['descricao'] = 'Produção + Dsr 18,18% + Férias';
         $producao['valor'] = $subtotalA + $valordemostrativo;
         $producao['fatura'] = $faturas['id'];
         $faturademostrativa->cadastro($producao);
         $valorbasefolha += $subtotalA + $valordemostrativo;
 
-        $producao['descricao'] = 'Base Calculo FGTS';
+        $producao['descricao'] = 'Base Cálculo 13º Salário';
         $producao['valor'] = $subtotalA;
         $producao['fatura'] = $faturas['id'];
         $faturademostrativa->cadastro($producao);
         $valorbasefolha += $subtotalA;
+
+       
 
         $producao['descricao'] = 'A-Sub Total';
         $producao['valor'] = $subtotalA;
@@ -194,8 +235,19 @@ class FaturaController extends Controller
         $producao['fatura'] = $faturas['id'];
         $faturatotais = $faturatotal->cadastro($producao);
 
+        $producao['descricao'] = 'Base Calculo FGTS';
+        $producao['valor'] = $subtotalB + $subtotalA;
+        $producao['fatura'] = $faturas['id'];
+        $faturademostrativa->cadastro($producao);
+        $valorbasefolha += $subtotalA + $subtotalB;
+
         $producao['descricao'] = 'Total Bruto';
         $producao['valor'] = $totalbruto;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $faturatotal->cadastro($producao);
+
+        $producao['descricao'] = 'Total Líquido';
+        $producao['valor'] = $totalbruto-$valorentencao-str_replace(",",".",$dados['creditos'])-str_replace(",",".",$dados['adiantamento']);
         $producao['fatura'] = $faturas['id'];
         $faturatotais = $faturatotal->cadastro($producao);
 
@@ -236,12 +288,14 @@ class FaturaController extends Controller
         $faturaprincipais = $faturaprincipal->buscaRelatorio($faturas->id);
         $faturarublicas = $faturarublica->buscaRelatorio($faturas->id);
         $faturasecundarios = $faturasecundario->buscaRelatorio($faturas->id);
+        $faturavalestrans = $faturasecundario->buscaRelatorioValesTrans($faturas->id);
+        $faturavalesalim = $faturasecundario->buscaRelatorioValesAlim($faturas->id);
         $faturademostrativas = $faturademostrativa->buscaRelatorio($faturas->id);
         $faturatotais = $faturatotal->buscaRelatorio($faturas->id);
         $tomadores = $tomador->tomadorFatura($id,$inicio,$final);
         $empresas = $empresa->buscaUnidadeEmpresa($tomadores->empresa);
-        // dd($faturasecundarios);
-        $pdf = PDF::loadView('fatura',compact('tomadores','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
+        // dd($faturatotais);
+        $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
         return $pdf->setPaper('a4')->stream('fatura.pdf');
     }
 }

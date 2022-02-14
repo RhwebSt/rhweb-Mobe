@@ -60,6 +60,7 @@
 
                 <div class="container">
               <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.update',$dados->id)}}">
+                <input type="hidden" name="lancamento" value="{{$dados->id}}">
               @csrf
               @method('PATCH')
               

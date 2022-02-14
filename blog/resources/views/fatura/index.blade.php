@@ -63,11 +63,18 @@
                                 </div>
                             </div>
                             
-                            
+                            <?php
+                                if ($valorrublica_fatura->vsnrofatura) {
+                                    $fatura = $valorrublica_fatura->vsnrofatura + 1;
+                                }else{
+                                    $fatura = 1;
+                                }
+                            ?>
+                            <input type="hidden" name="numero" value="{{$fatura}}">
                             <div class="data mt-4">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
                                     <label for="adiantamento" class="form-label">Adiantamentos</label>
-                                    <input type="text" class="form-control" name="adiantamento" value="" id="adiantamento">
+                                    <input type="text" class="form-control" name="adiantamento" value="" id="adiantamento"> 
                                         <span class="text-danger"></span>
                                 </div>
                                 
