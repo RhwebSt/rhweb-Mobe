@@ -22,13 +22,15 @@ use App\Folhar;
 use App\BaseCalculo;
 use App\RelacaoDia;
 use App\Descontos;
+use App\Leis;
 use PDF;
 class calculoFolhaGeralController extends Controller
 {
-    private $rublica;
+    private $rublica,$leis;
     public function __construct()
     {
         $this->rublica = new Rublica;
+        $this->leis = new Leis;
     }
     public function calculoFolhaGeral($datainicio,$datafinal)
     {
@@ -1443,6 +1445,8 @@ class calculoFolhaGeralController extends Controller
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
         $folhas = $folhar->buscaLista($id);
+        $leis = $this->leis->categorias();
+        // dd($leis);
     
         if (!$folhas) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
@@ -1453,18 +1457,18 @@ class calculoFolhaGeralController extends Controller
         }
         $valorcalculos = $valorcalculo->buscaImprimir($basecalculo_id);
         $relacaodias = $relacaodia->buscaImprimir($basecalculo_id);
-        $pdf = PDF::loadView('comprovantegeral',compact('folhas','valorcalculos','relacaodias'));
+        $pdf = PDF::loadView('comprovantegeral',compact('folhas','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
    
-    public function destroy($id,$tomador = null)
+    public function destroy($id)
     {
         
         $folhar = new Folhar;
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
         $basecalculo = new BaseCalculo;
-        $basecalculo_id = $basecalculo->buscaId($id,$tomador);
+        $basecalculo_id = $basecalculo->buscaId($id);
         $base_id = [];
         foreach($basecalculo_id as $i=>$basevalor){
             array_push($base_id,$basevalor->id);
@@ -1472,10 +1476,7 @@ class calculoFolhaGeralController extends Controller
         $valorcalculo->deletar($base_id);
         $relacaodia->deletar($base_id);
         $basecalculo->deletar($base_id);
-        $basecalculo_id = $basecalculo->verifica($id);
-        if(!$basecalculo_id){
-            $folhas = $folhar->deletar($id);
-        }
+        $folhar->deletar($id);
         return redirect()->back()->withSuccess('Deletado com sucesso.');
     }
 }

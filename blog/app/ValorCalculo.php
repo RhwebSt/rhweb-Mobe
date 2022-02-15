@@ -342,7 +342,7 @@ class ValorCalculo extends Model
     }
     public function buscaImprimirTomador($id,$incide,$naoincide)
     {
-        $variavel = DB::table('base_calculos')
+        $variavel = DB::table('base_calculos') 
                     ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
                     ->selectRaw(
                         'SUM(valor_calculos.vivencimento) as vivencimento,
@@ -354,7 +354,7 @@ class ValorCalculo extends Model
                         base_calculos.id'
                         
                     )
-                   ->where('valor_calculos.basecalculo',$id)
+                   ->whereIn('valor_calculos.basecalculo',$id)
                    ->orderBy('vicodigo', 'asc')
                    ->whereIn('valor_calculos.vicodigo',$incide)
                    ->groupBy('valor_calculos.vicodigo','base_calculos.id','valor_calculos.vsdescricao')
@@ -371,7 +371,7 @@ class ValorCalculo extends Model
                        base_calculos.id'
                        
                    )
-                  ->where('valor_calculos.basecalculo',$id)
+                  ->whereIn('valor_calculos.basecalculo',$id)
                   ->orderBy('vicodigo', 'asc')
                   ->whereIn('valor_calculos.vicodigo',$naoincide)
                   ->groupBy('valor_calculos.vicodigo','valor_calculos.vireferencia','base_calculos.id','valor_calculos.vsdescricao')

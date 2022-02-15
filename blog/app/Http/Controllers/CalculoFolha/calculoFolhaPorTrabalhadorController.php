@@ -18,9 +18,15 @@ use App\Irrf;
 use App\Folhar;
 use App\ValorCalculo;
 use App\RelacaoDia;
+use App\Leis;
 use PDF;
-class calculoFolhaPorTrabalhadorController extends Controller
+class calculoFolhaPorTrabalhadorController extends Controller 
 {
+    private $leis;
+    public function __construct()
+    {
+        $this->leis = new Leis;
+    }
     public function calculoFolhaPorTrabalhador($trabalhador = null,$tomador = null,$datainicio,$datafinal)
     {
         $dados = [
@@ -458,6 +464,7 @@ class calculoFolhaPorTrabalhadorController extends Controller
         $folhar = new Folhar;
         $valorcalculo = new ValorCalculo;
         $relacaodia = new RelacaoDia;
+        $leis = $this->leis->categorias();
         $folhars = $folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],null);
         if (!$folhars) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
@@ -467,7 +474,7 @@ class calculoFolhaPorTrabalhadorController extends Controller
         }
         $valorcalculos = $valorcalculo->buscaImprimirTrabalhador($folhars->id);
         $relacaodias = $relacaodia->buscaImprimirTrabalhador($folhars->id);
-        $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','valorcalculos','relacaodias'));
+        $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
     }
 }

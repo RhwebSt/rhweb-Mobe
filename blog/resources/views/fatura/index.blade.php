@@ -11,7 +11,57 @@
     <!--      text: 'Não possui nenhum valor nesse período.',-->
     <!--    })-->
     <!--</script>-->
-
+    @if(session('success'))
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: '{{session("success")}}'
+                })
+            </script>
+        @endif
+        @error('false')
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: '{{ $message }}'
+                })
+            </script>
+        @enderror  
+                
     <div class="container">
         <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
             <li class="nav-item ms-2 mt-2" role="presentation">
@@ -26,7 +76,7 @@
         
                 <div class="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <form class="row g-3" action="{{route('fatura.gera')}}" method="POST">
-                        <input type="hidden" name="tomador" id="tomador">
+                        <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
                         <div class="" id="quadro1">
                         @csrf
                             <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Tomador <i class="fas fa-search"></i></div>
@@ -36,6 +86,7 @@
                                             <div class="d-flex">
                                             <label for="exampleDataList" class="form-label"></label>
                                             <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                            
                                             <datalist id="listapesquisa">
                                             </datalist>
                                             <i class="fas fa-search fa-md iconsear" id="icon"></i>
@@ -45,21 +96,29 @@
                                                 </div>
                                             </div>
                                             </div>
+                                            @error('tomador')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
+                                        
                     
                                     </div>
 
                             <div class="data mt-4">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                                 <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control" name="ano_inicial" value="" id="tano">
-                                    <span class="text-danger"></span>
+                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="tano">
+                                    @error('ano_inicial')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control" name="ano_final" value="" id="tano">
-                                    <span class="text-danger"></span>
+                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tano">
+                                    @error('ano_final')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             
@@ -73,19 +132,51 @@
                             <input type="hidden" name="numero" value="{{$fatura}}">
                             <div class="data mt-4">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
-                                    <label for="adiantamento" class="form-label">Adiantamentos</label>
-                                    <input type="text" class="form-control" name="adiantamento" value="" id="adiantamento"> 
-                                        <span class="text-danger"></span>
+                                    <label for="text__adiantamento" class="form-label">Texto Adiantamento</label>
+                                    <input type="text" class="form-control @error('text__adiantamento') is-invalid @enderror" name="text__adiantamento" value="{{old('text__adiantamento')}}" id="text__adiantamento"> 
+                                    @error('text__adiantamento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
+                                 <!--limitar a 35 caracteres-->
+                                
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
-                                    <label for="creditos" class="form-label">Creditos</label>
-                                    <input type="text" class="form-control" name="creditos" value="" id="creditos">
-                                        <span class="text-danger"></span>
+                                    <label for="valor__adiantamento" class="form-label">Valor Adiantamento</label>
+                                    <input type="text" class="form-control @error('valor__adiantamento') is-invalid @enderror" name="valor__adiantamento" value="{{old('valor__adiantamento')}}" id="valor__adiantamento">
+                                    @error('valor__adiantamento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             
                             </div>
                             
+                            <div class="data mt-4">
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
+                                    <label for="texto__credito" class="form-label">Texto Crédito</label>
+                                    <input type="text" class="form-control @error('texto__credito') is-invalid @enderror" name="texto__credito" value="{{old('texto__credito')}}" id="texto__credito"> 
+                                          @error('texto__credito')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <!--limitar a 35 caracteres-->
+                                
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
+                                    <label for="valor__creditos" class="form-label">Valor Créditos</label>
+                                    <input type="text" class="form-control @error('valor__creditos') is-invalid @enderror" name="valor__creditos" value="{{old('valor__creditos')}}" id="valor__creditos">
+                                          @error('valor__creditos')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            
+                            </div>
+                            
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
+                                    <label for="vencimento" class="form-label">Data Vencimento</label>
+                                    <input type="date" class="form-control" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
+                                        <span class="text-danger"></span>
+                                </div>
                             
                             
                             
@@ -209,7 +300,7 @@
                                                 <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
                                             </button>
                                             
-                                            <!-- Modal -->
+                                            <!-- Modal --> 
                                             <div class="modal fade" id="staticBackdrop{{$fatura->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                 <div class="modal-content">

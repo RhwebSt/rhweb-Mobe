@@ -59,6 +59,8 @@
                       title: 'Algo deu errado!!',
                       text: 'Preencha a caixa de "Sou Humano"',
                     })
+                    
+                    return false;
  
                 }
     </script>

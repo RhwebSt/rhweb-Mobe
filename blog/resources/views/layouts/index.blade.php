@@ -13,6 +13,7 @@
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
         <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
+		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,18 +33,7 @@
 
     </head>
     
-    
-    
-    
-    
-    <script>
-            function validarRobo(){
-                if(grecaptcha.getResponse() != "") return true;
-                $('#msgrecap').html("<div id='msgrecap' class=' rounded text-center text-wrap col-11 col-sm-11 col-md-11 col-lg-4' style='background-color:#8F0200; color: #FFF; font-size: 13px; padding: 3px; border: 1px solid #CA023B;'  '>Preencha a caixinha do 'Não sou o robô' <i class='fas fa-md fa-exclamation-triangle'></i></div>");
 
-                return false;}
-                window.location.href = '#password';
-        </script>
     <body  class="body-content">
         
         
@@ -205,6 +195,8 @@
 
     
     </main>
+    
+        
     
         
         <!--<div class="d-flex align-items-center">-->

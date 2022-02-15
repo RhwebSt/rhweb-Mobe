@@ -37,6 +37,17 @@ class FaturaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
+        $request->validate([
+            'tomador'=>'required',
+            'ano_inicial'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'ano_final'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'vencimento'=>'max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'text__adiantamento'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'texto__credito'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'valor__creditos'=>'required',
+            'valor__adiantamento'=>'required'
+        ]);
         $user = auth()->user();
         $dados['empresa'] = $user->empresa;
         $tabelapreco = new TabelaPreco;
@@ -79,14 +90,20 @@ class FaturaController extends Controller
                 array_push($naoincide,$rublica->rsrublica);
             }
         }
-        
+        $verifica = $fatura->verificaFaturas($dados);
+        if ($verifica) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
+        }
         $producaofatura = $valorcalculor->producaoFatura($dados,$incide);
         $indecefatura = $valorcalculor->producaoFaturaIn($dados,$incide);
+        
         $rublicasfatura = $valorcalculor->rublicasFatura($dados);
         $tabelaprecos = $tabelapreco->listaUnidadeTomador($dados['tomador']);
-        
+        if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
+        }
         $faturas = $fatura->cadastro($dados);
-        $this->valorrublica->editarFatura($dados,$user->empresa);
+        $this->valorrublica->editarFatura($dados['numero'],$user->empresa);
         foreach ($tabelaprecos as $y => $tabelapreco) {
             foreach ($indecefatura as $e => $indecefaturas) {
                 if ($indecefaturas->vicodigo == $tabelapreco->tsrubrica) {
@@ -108,6 +125,7 @@ class FaturaController extends Controller
                 $producao['valor'] = $indecefaturas->valor;
                 $producao['fatura'] = $faturas['id'];
                 $faturasecundario->cadastro($producao);
+                $totalbruto += $indecefaturas->valor;
             }
         }
         $producao['descricao'] = 'Produção';
@@ -150,7 +168,7 @@ class FaturaController extends Controller
                 $producao['valor'] = $valorublica->desconto;
                 $producao['fatura'] = $faturas['id'];
                 $faturasecundario->cadastro($producao);
-                $totalbruto += $valorublica->desconto;
+                // $totalbruto += $valorublica->desconto;
                 $valorentencao += $valorublica->desconto;
                 $valorbasefolha += $valorublica->desconto;
             }
@@ -199,15 +217,15 @@ class FaturaController extends Controller
         $producao['fatura'] = $faturas['id'];
         $faturasecundario->cadastro($producao);
 
-        $producao['descricao'] = 'Adiantamentos';
+        $producao['descricao'] = $dados['text__adiantamento'];
         $producao['indice'] = 0;
-        $producao['valor'] = $dados['adiantamento'];
+        $producao['valor'] = $dados['valor__adiantamento'];
         $producao['fatura'] = $faturas['id'];
         $faturasecundario->cadastro($producao);
 
-        $producao['descricao'] = 'Créditos';
+        $producao['descricao'] = $dados['texto__credito'];
         $producao['indice'] = 0;
-        $producao['valor'] = $dados['creditos'];
+        $producao['valor'] = $dados['valor__creditos'];
         $producao['fatura'] = $faturas['id'];
         $faturasecundario->cadastro($producao);
 
@@ -234,6 +252,7 @@ class FaturaController extends Controller
         $producao['valor'] = $subtotalB + $subtotalA;
         $producao['fatura'] = $faturas['id'];
         $faturatotais = $faturatotal->cadastro($producao);
+        $totalbruto += $subtotalB + $subtotalA;
 
         $producao['descricao'] = 'Base Calculo FGTS';
         $producao['valor'] = $subtotalB + $subtotalA;
@@ -247,7 +266,7 @@ class FaturaController extends Controller
         $faturatotais = $faturatotal->cadastro($producao);
 
         $producao['descricao'] = 'Total Líquido';
-        $producao['valor'] = $totalbruto-$valorentencao-str_replace(",",".",$dados['creditos'])-str_replace(",",".",$dados['adiantamento']);
+        $producao['valor'] = str_replace(",",".",$dados['valor__creditos'])+($totalbruto-$valorentencao-str_replace(",",".",$dados['valor__adiantamento']));
         $producao['fatura'] = $faturas['id'];
         $faturatotais = $faturatotal->cadastro($producao);
 
@@ -260,6 +279,9 @@ class FaturaController extends Controller
     }
     public function destroy($id)
     {
+        $user = auth()->user();
+        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $quantidade = $valorrublica_fatura->vsnrofatura - 1;
         $faturaprincipal = new FaturaPrincipal;
         $faturasecundario = new FaturaSecundaria;
         $faturademostrativa = new FaturaDemostrativa;
@@ -272,10 +294,12 @@ class FaturaController extends Controller
         $faturarublica->deletarFatura($id);
         $faturatotal->deletarFatura($id);
         $fatura->deletar($id);
+        $this->valorrublica->editarFatura($quantidade,$user->empresa);
         return redirect()->back()->withSuccess('Deletado com sucesso.');
     }
     public function relatorio($id,$inicio,$final)
     {
+        
         $tomador = new Tomador;
         $empresa = new Empresa;
         $fatura = new Fatura;

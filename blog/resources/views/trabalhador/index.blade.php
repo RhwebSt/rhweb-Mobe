@@ -791,7 +791,7 @@
                   $('#recibopagamento').removeClass('disabled')
                   $('#relatoriotrabalhador').removeClass('disabled')
                   $('#imprimir').removeClass('disabled').attr('href',"{{url('ficha/registro/trabalhador')}}/"+btoa(data.trabalhador))
-                  $('#fichaepi').removeClass('disabled').attr('href',"{{url('ficha/epi/trabalhador')}}/"+btoa(data.trabalhador))
+                  $('#fichaepi').removeClass('disabled').attr('href',"{{url('epi')}}/"+btoa(data.trabalhador))
                   $('#cracha').removeClass('disabled').attr('href',"{{url('cracha/trabalhador')}}/"+btoa(data.trabalhador))
                   $('#declaracao__adm').removeClass('disabled').attr('href',"{{url('declaracao/admissao/trabalhador')}}/"+btoa(data.trabalhador))
                   $('#declaracao__afas').removeClass('disabled').attr('href',"{{url('declaracao/afastamento/trabalhador')}}/"+btoa(data.trabalhador))

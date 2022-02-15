@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/reset.css">
     <title>Document</title>
@@ -111,7 +112,7 @@
     }
 
     .small__block{
-        width:93.9px;
+        width:96.2px;
     }
 
     .item{
@@ -353,7 +354,12 @@
                 <td></td>
                 <td></td>
                 <td class="small__font width__padrao  border-right"><strong>CEP:</strong>  {{$empresas->escep}} - {{$empresas->esuf}}</td>
-                <td class="small__font  border-right border-left border-bottom text-center text-bold last">Vencimento 00/00/0000</td>
+                <td class="small__font  border-right border-left border-bottom text-center text-bold last">Vencimento  
+                        <?php
+                            $vencimento = explode('-',$faturas->fsvencimento);
+                            echo($vencimento[2].'/'.$vencimento[1].'/'.$vencimento[0]);
+                        ?>
+                    </td>
             </tr>
 
             <tr class="teste">
@@ -516,8 +522,8 @@
 
             <tr>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[1]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[1]->fiindece}}</td>
@@ -528,8 +534,8 @@
 
             <tr>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturademostrativas[2]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturademostrativas[2]->fiindece}}</td>
@@ -539,8 +545,8 @@
 
             <tr>
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">00,00</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ 999.999.999,99</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
                 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[0]->fsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center"> {{number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.')}}</td>
@@ -564,13 +570,13 @@
         <table class="margin-top">
             <tr>
                 <td class="text-bold small__font destaque border-top border-left border-bottom border-right text-center sefip">SEFIP</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FPAS:</strong> {{$tomadores->psfpas}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Terceiros:</strong> {{$tomadores->psfpasterceiros}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>CNAE:</strong> {{$tomadores->pscnae}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FAP:</strong> {{$tomadores->psfapaliquota}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>RAT:</strong> {{$tomadores->psconfpas}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Ajustado:</strong> {{$tomadores->psratajustados}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Trabalhadores:</strong>{{$tomadores->trabalhador}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FPAS: </strong> {{$tomadores->psfpas}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Terceiros: </strong> {{$tomadores->psfpasterceiros}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>CNAE: </strong> {{$tomadores->pscnae}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FAP: </strong> {{$tomadores->psfapaliquota}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>RAT: </strong> {{$tomadores->psconfpas}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Ajustado: </strong> {{$tomadores->psratajustados}}</td>
+                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Nº Trab: </strong>{{$tomadores->trabalhador}}</td>
             </tr>
         </table>
     
@@ -595,6 +601,7 @@
         ?>
         <table>
             @foreach($faturarublicas as $faturarublica)
+                @if($faturarublica->riunidade)
                 <tr>
                     <td class="text-center border-right border-left small__font item">{{$faturarublica->rsitem}}</td>
                     <td class="descricao2 small__font">{{$faturarublica->rsdescricao}}</td>
@@ -602,6 +609,7 @@
                     <td class="text-center preco small__font border-right border-left">{{number_format((float)$faturarublica->ripreco, 2, ',', '.')}}</td>
                     <td class="text-center total small__font border-right border-left">{{number_format((float)$faturarublica->ritotal, 2, ',', '.')}}</td>
                 </tr>
+                @endif
                 <?php
                     $total += $faturarublica->ritotal;
                 ?>

@@ -18,16 +18,18 @@ use App\Irrf;
 use App\Folhar;
 use App\ValorCalculo;
 use App\RelacaoDia;
+use App\Leis;
 use PDF;
 class calculoFolhaPorTomadorController extends Controller
 {
-    private $folhar,$valorcalculo,$relacaodia,$rublica;
+    private $folhar,$valorcalculo,$relacaodia,$rublica,$leis;
     public function __construct()
     {
         $this->folhar = new Folhar;
         $this->valorcalculo = new ValorCalculo;
         $this->relacaodia = new RelacaoDia;
         $this->rublica = new Rublica;
+        $this->leis = new Leis;
     } 
 //     public function calculoFolhaPorTomador($trabalhador = null,$tomador = null,$datainicio,$datafinal)
 //     {
@@ -657,6 +659,7 @@ class calculoFolhaPorTomadorController extends Controller
         $folhar = base64_decode($folhar);
         $tomador = base64_decode($tomador);
         $rublicas = $this->rublica->listaGeral();
+        $leis = $this->leis->categorias();
         $incide = [];
         $naoincide = [];
         foreach ($rublicas as $key => $rublica) {
@@ -668,6 +671,7 @@ class calculoFolhaPorTomadorController extends Controller
             }
         }
         $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
+        
         $basecalculo_id = [];
         foreach ($folhas as $key => $folhar) {
             array_push($basecalculo_id,$folhar->id); 
@@ -677,8 +681,8 @@ class calculoFolhaPorTomadorController extends Controller
         
         $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
         // dd($folhas,$valorcalculos,$relacaodias);
-        // dd($valorcalculos);
-        $pdf = PDF::loadView('comprovantetomador',compact('folhas','valorcalculos','relacaodias'));
+        // dd($valorcalculos,$basecalculo_id);
+        $pdf = PDF::loadView('comprovantetomador',compact('folhas','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
         
     }
@@ -687,7 +691,7 @@ class calculoFolhaPorTomadorController extends Controller
         $dados = $request->all();
         
         $rublicas = $this->rublica->listaGeral();
-        
+        $leis = $this->leis->categorias();
         $incide = [];
         $naoincide = [];
         foreach ($rublicas as $key => $rublica) {
@@ -699,11 +703,13 @@ class calculoFolhaPorTomadorController extends Controller
             }
         }
         $folhar = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador1'],$dados['tomador']);
+        
         $basecalculo_id = [];
         array_push($basecalculo_id,$folhar->id); 
         $valorcalculos = $this->valorcalculo->buscaImprimirTomador($basecalculo_id,$incide,$naoincide);
+        
         $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
-        $pdf = PDF::loadView('comprovantetrabalhador',compact('folhar','valorcalculos','relacaodias'));
+        $pdf = PDF::loadView('comprovantetrabalhador',compact('folhar','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
       
         // dd($folhas,$valorcalculos,$relacaodias);

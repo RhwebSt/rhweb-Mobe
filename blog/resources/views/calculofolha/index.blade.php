@@ -182,6 +182,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Trabalhador</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
+                                    <th class="col text-center border-top text-nowrap" style="width:50px;">Sefip</th>
                                     <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
@@ -295,6 +296,12 @@
                                                     </a>
                                                     @endif
                                                 @endforeach
+                                            </td>
+                                            
+                                        <td class="col text-center border-bottom text-nowrap" style="width:50px;">
+                                                    <a href="" class="btn" style="background-color:#145247; border: 1px solid #7DDE92;">
+                                                        <i class="fad fa-lg fa-file-alt" style="color: white"></i>
+                                                    </a>
                                             </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
                                            <form action=""  method="post">

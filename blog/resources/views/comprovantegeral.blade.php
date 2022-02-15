@@ -222,7 +222,7 @@
 </style>
 
 <body>
-    
+  
    @foreach($folhas as $f => $folhar)
     <table>
         <tr>
@@ -415,13 +415,34 @@
 
     <table>
         <tr>
-            <td class="small__font border-left border-top tipoTrab">Trabalhador Intermitente Conforme a Lei 13.467/2017</td>
+            <td class="small__font border-left border-top tipoTrab">
+                <?php
+                    $categoria = explode('-',$folhar->cscategoria);
+                    foreach ($leis[0] as $key => $valor_lei1) {
+                        if (strpos($valor_lei1, $categoria[0]) !== false) {
+                            $valor_lei1 = explode('-',$valor_lei1);
+                            echo($valor_lei1[1]);
+                        }
+                    }
+                ?>
+                
+            </td>
             <td class="small__font border-left text-bold border-top total__vencimentos text-center destaque border-bottom border-right">Total Vencimento</td>
             <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
+            <td class="small__font border-left tipoTrab">
+                <?php
+                    $categoria = explode('-',$folhar->cscategoria);
+                    foreach ($leis[1] as $key => $valor_lei1) {
+                        if (strpos($valor_lei1, $categoria[0]) !== false) {
+                            $valor_lei1 = explode('-',$valor_lei1);
+                            echo($valor_lei1[1]);
+                        }
+                    }
+                ?>
+            </td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhar->bivalorvencimento, 2, ',', '.')}}</td>
             <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhar->bivalordesconto, 2, ',', '.')}}</td>
         </tr>

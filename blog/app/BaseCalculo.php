@@ -127,12 +127,9 @@ class BaseCalculo extends Model
         ->orderBy('tomadors.tsnome', 'asc')
         ->get();
     }
-    public function buscaId($folhar,$tomador)
+    public function buscaId($folhar)
     {
-        return BaseCalculo::select('id')->where([
-            ['folhar',$folhar],
-            ['tomador',$tomador]
-        ])
+        return BaseCalculo::select('id')->where('folhar',$folhar)
         ->get();
     }
     public function verifica($folhar)

@@ -139,7 +139,10 @@ class TabCartaoPontoController extends Controller
         
         $novadata = explode('-',$dados['data']);
         $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
-        // dd($dados,$quantidadeTrabalhador);
+        if (count($quantidadeTrabalhador) > $dados['num__trabalhador']) {
+            return redirect()->back()->withInput()->withErrors(['num__trabalhador'=>'Número menor que a quantidade já cadastrada.']);
+        }
+    
         $request->validate([
             'nome__completo' => 'required',
             // 'matricula'=>'required|max:6',

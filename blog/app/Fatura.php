@@ -15,7 +15,7 @@ class Fatura extends Model
             'fsnumero'=>$dados['numero'],
             'fsinicio'=>$dados['ano_inicial'],
             'fsfinal'=>$dados['ano_final'],
-            // 'fsvencimento'=>$dados['localidade'],
+            'fsvencimento'=>$dados['vencimento'],
             'tomador'=>$dados['tomador'],
             'empresa'=>$dados['empresa'],
         ]);
@@ -58,6 +58,12 @@ class Fatura extends Model
             }
         })
         ->first();
+    }
+    public function verificaFaturas($dados)
+    {
+        return Fatura::where('tomador',$dados['tomador'])
+        ->whereBetween('fsfinal',[$dados['ano_inicial'],$dados['ano_final']])
+        ->count();
     }
     public function deletar($id)
     {

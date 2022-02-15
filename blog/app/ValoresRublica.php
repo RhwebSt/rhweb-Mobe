@@ -65,11 +65,11 @@ class ValoresRublica extends Model
             'vimatriculartomador'=>$dados['matricula'],
         ]);
     }
-    public function editarFatura($dados,$empresa)
+    public function editarFatura($quantidade,$empresa)
     {
         return ValoresRublica::where('empresa', $empresa)
         ->update([
-            'vsnrofatura'=>$dados['numero'],
+            'vsnrofatura'=>$quantidade,
         ]);
     }
     public function editarBoletimTabela($dados,$empresa)
