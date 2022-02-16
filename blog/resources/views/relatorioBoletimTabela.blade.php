@@ -190,14 +190,14 @@
             
             <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$lancamentotabelas[0]->esnome}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresa->esnome}}</td>
             </tr>
         </table>
         
         <div class="borderT margin-top">
             <table>
                 <tr>
-                    <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
                 </tr>
     
                 <tr>
@@ -205,7 +205,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresa->escnpj}}</td>
                 </tr>
     
                 <tr>
@@ -213,7 +213,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> ,  - </td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
                     
                 </tr>
     
@@ -222,7 +222,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong>  - </td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
                     
                 </tr>
     
@@ -231,7 +231,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> (48) 3086-0103</td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresa->estelefone}}</td>
                 </tr>
     
             </table>

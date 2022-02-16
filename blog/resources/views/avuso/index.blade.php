@@ -90,17 +90,22 @@
                     <form class="row g-3" action="{{route('avuso.store')}}" method="POST">
                         <div class="" id="quadro1">
                         @csrf
+                        <input type="hidden" name="empresa" value="{{$user->empresa}}">
 
                                 <div class="col-md-6">
                                   <label for="nome__completo" class="form-label">Nome Completo</label>
-                                  <input type="text" class="form-control input fw-bold text-dark" value="" name="nome" maxlength="100" id="nome">
-                                      <span class="text-danger"></span>
+                                  <input type="text" class="form-control input fw-bold text-dark @error('nome') is-invalid @enderror" value="{{old('nome')}}" name="nome" maxlength="100" id="nome">
+                                        @error('nome')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                                 
                                 <div class="col-md-6 mt-3">
                                   <label for="cpf" class="form-label">CPF/CNPJ</label>
-                                  <input type="text" class="form-control input fw-bold text-dark" value="" name="cpf" maxlength="100" id="cpf">
-                                      <span class="text-danger"></span>
+                                  <input type="text" class="form-control input fw-bold text-dark @error('cpf') is-invalid @enderror" value="{{old('cpf')}}" name="cpf" maxlength="100" id="cpf">
+                                        @error('cpf')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                 </div>
                                     
                                     
@@ -116,7 +121,7 @@
                             <div class="data mt-4 mb-5">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                                 <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="" id="tano">
+                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="tano">
                                     <div class="mt-1">
                                         @error('ano_inicial')
                                             <span class="text-danger">{{ $message }}</span>
@@ -126,7 +131,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="" id="tano">
+                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tano">
                                     <div class="mt-1">
                                         @error('ano_final')
                                             <span class="text-danger">{{ $message }}</span>
@@ -272,16 +277,16 @@
                                 @if(count($lista)>0)
                                 @foreach($lista as $listas)
                                     <tr class="bodyTabela ">  
-                                        <td class="col text-center border-bottom border-start text-nowrap mt-3" style="width:60px;">{{$listas->tsmatricula}}</td>             
+                                        <td class="col text-center border-bottom border-start text-nowrap mt-3" style="width:60px;"></td>             
                                         <td class="col text-center border-bottom text-capitalize text-nowrap mt-3" style="width: 350px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>{{$listas->trabalhador}} </a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->asnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>{{$listas->asnome}} </a>
                                             </button>
                                         
                                         </td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 150px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="CPF/CNPJ" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>CPF/CNPJ </a>
+                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->ascpf}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
+                                                <a>{{$listas->ascpf}} </a>
                                             </button>
                                         
                                         </td>
@@ -547,7 +552,7 @@
                 }
                 $('#icon').addClass('d-none').next().removeClass('d-none')
                 $.ajax({
-                    url: "{{url('trabalhador')}}/pesquisa/"+dados,
+                    url: "{{url('avuso')}}/pesquisa/"+dados,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -556,9 +561,9 @@
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          nome += `<option value="${element.ascpf}  ${element.asnome}">`
                           // nome += `<option value="${element.tsmatricula}">`
-                          nome += `<option value="${element.tscpf}">`
+                          //   nome += `<option value="${element.tscpf}">`
                         });
                         $('#listatrabalhador01').html(nome)
                       } 

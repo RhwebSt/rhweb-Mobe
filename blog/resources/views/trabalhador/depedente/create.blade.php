@@ -69,7 +69,9 @@
               @csrf
               
               <div class="col-md-8">
-                  <label for="nome__dependente" class="form-label">Nome do dependente</label>
+                  <label for="nome__dependente" class="form-label">Nome do dependente
+                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                  </label>
                   <input type="text" class="form-control  @error('nome__dependente') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__dependente')}}" name="nome__dependente"  id="nome__dependente">
                   @error('nome__dependente')
                       <span class="text-danger">{{ $message }}</span>
@@ -178,6 +180,18 @@
                     </div>
             </div>         
       </main>
+      
+      <script>
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var dataNascimento = document.querySelector("#data__nascimento").value='';
+            var cpfDepedente = document.querySelector("#cpf__dependente").value='';
+            var nomeDependente = document.querySelector("#nome__dependente").value='';
+        })
+      </script>
+      
+      
       <!-- <script>
         $(document).ready(function(){
            if ("{!$depedentes->id!}") {

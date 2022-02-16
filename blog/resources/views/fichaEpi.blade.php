@@ -224,7 +224,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> (48) 3086-0103</td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>

@@ -7,7 +7,7 @@
             </div>
             
             
-                    <div class="float-end ms-auto p-2 bd-highlight" style="; background-color:green; color: white; padding: 20px; margin: 0px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; ">
+                    <div class="float-end ms-auto p-2 bd-highlight feedback">
                         <div class="d-flex collumn">
                             <a class="text-white" style="cursor: pointer"><i class="fad fa-lg fa-comment-alt-smile"></i></a>
                             <a class="text-white fw-bold ms-1 text-decoration-none" id="feedback" style="font-size: 14px; cursor: pointer;">FeedBack</a>
@@ -26,12 +26,12 @@
                 
                 feedbackBotao.addEventListener('click', function(){
                     Swal.fire({
-                      title: '<h1 style="font-size: 18px; color: black;">O que você está achando do sistema?<h1>',
-                      html:'<div><i id="gostou" class="fas fa-2x fa-grin-hearts" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>'+ 
-                      '<i id="feliz" class="fas fa-2x fa-grin-alt" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>' + 
-                      '<i id="mediano" class="fas fa-2x fa-meh" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>' + 
-                      '<i id="naoGostou" class="fas fa-2x fa-frown"></i></div>' + 
-                      '<textarea class="mt-3" id="feedbackText" name="story rows="6" style="font-size: 14px;" cols="40" placeholder="Deixe aqui seu recado ou sugestão.">',
+                      title:'<h1 style="font-size: 19px; color: black;">O que você está achando do sistema?<h1>',
+                      html:'<h2 class="mt-3" style="font-size: 16px;">Escolha uma das opções abaixo.</h2>' + '<div><i id="gostou" class="far fa-2x fa-grin-hearts gostouMuitoHover" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>'+ 
+                      '<i id="feliz" class="far fa-2x fa-grin-alt felizHover" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>' + 
+                      '<i id="mediano" class="far fa-2x fa-meh medianoHover" style="width: 20px; margin-right: 20px; margin-top: 10px;"></i>' + 
+                      '<i id="naoGostou" class="far fa-2x fa-frown naoGostouHover"></i></div>' + 
+                      '<textarea class="mt-4" id="feedbackText" name="recado" rows="6" style="font-size: 14px;" cols="40" placeholder="Deixe aqui seu recado ou sugestão.">',
                       showCloseButton: true,
                       showCancelButton: true,
                       focusConfirm: false,

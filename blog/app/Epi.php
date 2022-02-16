@@ -21,4 +21,16 @@ class Epi extends Model
             'trabalhador'=>base64_decode($dados['trabalhador']),
         ]);
     }
+    public function buscalista($id)
+    {
+        return Epi::where('trabalhador',base64_decode($id))->get();
+    }
+    public function deletar($id)
+    {
+        return Epi::where('id',$id)->delete();
+    }
+    public function deletar_cadastra($trabalhador)
+    {
+        return Epi::where('trabalhador',base64_decode($trabalhador))->delete();
+    }
 }

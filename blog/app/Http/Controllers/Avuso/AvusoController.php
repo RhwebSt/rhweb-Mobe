@@ -52,13 +52,28 @@ class AvusoController extends Controller
     {
         $user = Auth::user();
         $dados = $request->all();
+        
         $request->validate([
-            'tomador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
-            'trabalhador' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
+            'nome' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
+            'cpf' => 'required|max:15|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'ano_inicial'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'ano_final'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'descricao0'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'descricao0'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'valor0'=>'required',
+        ],[
+            'descricao0.required'=>'Campo não pode esta vazio.',
+            'descricao0.max'=>'Campo não ter mais de 60 caracteres.',
+            'descricao0.regex'=>'O campo nome social tem um formato inválido.',
+
+            'ano_inicial.required'=>'Campo não pode esta vazio.',
+            'ano_inicial.max'=>'Campo não ter mais de 60 caracteres.',
+            'ano_inicial.regex'=>'O campo nome social tem um formato inválido.',
+
+            'ano_final.required'=>'Campo não pode esta vazio.',
+            'ano_final.max'=>'Campo não ter mais de 60 caracteres.',
+            'ano_final.regex'=>'O campo nome social tem um formato inválido.',
+
+            'valor0.required'=>'Campo não pode esta vazio.',
         ]);
         $credito = 0;
         $desconto = 0;
@@ -103,6 +118,11 @@ class AvusoController extends Controller
         //
     }
 
+    public function pesquisa($id = null)
+    {
+        $avuso = $this->avuso->buscaListaAvuso($id);
+        return response()->json($avuso);
+    }
     /**
      * Update the specified resource in storage.
      *

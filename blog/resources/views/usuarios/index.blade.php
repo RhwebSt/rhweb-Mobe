@@ -72,7 +72,9 @@
 
               
               <div class="col-md-4">
-                  <label for="nome__completo" class="form-label">Nome do tomador</label>
+                  <label for="nome__completo" class="form-label">Nome do tomador
+                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                  </label>
                   <input class="form-control fw-bold @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" >
                   @error('nome__completo')
                       <span class="">{{ $message }}</span>
@@ -86,7 +88,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
-                  <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}"   name="name" value="" id="usuario">
+                  <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror fw-bold" value="{{old('name')}}"   name="name" value="" id="usuario">
                   @error('name')
                       <span class="">{{ $message }}</span>
                   @enderror
@@ -97,12 +99,12 @@
                 <input type="hidden" name="email">
                 <div class="col-md-2">
                   <label for="cargo" class="form-label">Cargo</label>
-                  <input type="text" class="form-control " name="cargo" value="{{old('cargo')}}" id="cargo">
+                  <input type="text" class="form-control  fw-bold" name="cargo" value="{{old('cargo')}}" id="cargo">
                 </div>
 
                 <div class="col-md-3">
                   <label for="senha" class="form-label">Senha</label>
-                  <input type="password" class="form-control @error('senha') is-invalid @enderror" value="{{old('senha')}}" name="senha" value="" id="senha">
+                  <input type="password" class="form-control @error('senha') is-invalid @enderror fw-bold" value="{{old('senha')}}" name="senha" value="" id="senha">
                   @error('senha')
                       <span class="">{{ $message }}</span>
                   @enderror
@@ -225,6 +227,16 @@
               
             </div> 
             <script>
+            
+            var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var senh = document.querySelector("#senha").value='';
+            var cargo = document.querySelector("#cargo").value='';
+            var usuario = document.querySelector("#usuario").value='';
+            var nomeCompleto = document.querySelector("#nome__completo").value='';
+        });
+            
         $(document).ready(function(){
           $( "#usuario" ).on('keyup focus',function() {
                 var dados = 0;

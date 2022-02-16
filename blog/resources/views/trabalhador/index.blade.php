@@ -130,7 +130,9 @@
     
             <input type="hidden" name="foto" id="foto">
                 <div class="col-md-6">
-                  <label for="nome__completo" class="form-label">Nome Completo</label>
+                  <label for="nome__completo" class="form-label">Nome Completo 
+                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                  </label>
                   <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo" maxlength="100" id="nome__completo">
                   @error('nome__completo')
                       <span class="text-danger">{{ $message }}</span>
@@ -628,7 +630,44 @@
                     </div>
                  
         <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
+        
         <script>
+        
+         var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var cep = document.querySelector("#cep").value='';
+            var logradouro = document.querySelector("#logradouro").value='';
+            var numero = document.querySelector("#numero").value='';
+            var tipo = document.querySelector("#complemento__endereco").value='';
+            var bairro = document.querySelector("#bairro").value='';
+            var localidade = document.querySelector("#localidade").value='';
+            var uf = document.querySelector("#uf").value='';
+            var nome = document.querySelector("#nome__completo").value='';
+            var nomeSocial = document.querySelector("#nome__social").value='';
+            var cpf = document.querySelector("#cpf").value='';
+            var pis = document.querySelector("#pis").value='';
+            var dataNascimento = document.querySelector("#data_nascimento").value='';
+            var paisNascimento = document.querySelector("#pais__nascimento").value='';
+            var paisNacionalidade = document.querySelector("#pais__nacionalidade").value='';
+            var nomeMae = document.querySelector("#nome__mae").value='';
+            var telefone = document.querySelector("#telefone").value='';
+            var dataAdmissao = document.querySelector("#data__admissao").value='';
+            var categoriaContrato = document.querySelector("#categoria").value='';
+            var cbo = document.querySelector("#cbo").value='';
+            var ctps = document.querySelector("#ctps").value='';
+            var serieCtps = document.querySelector("#serie__ctps").value='';
+            var ufCtps = document.querySelector("#uf__ctps").value='';
+            var dataAfastamento = document.querySelector("#data__afastamento").value='';
+            var banco = document.querySelector("#banco").value='';
+            var agencia = document.querySelector("#agencia").value='';
+            var operacao = document.querySelector("#operacao").value='';
+            var conta = document.querySelector("#conta").value='';
+            var pix = document.querySelector("#pix").value='';
+        })
+        
+        
+        
          function encodeImageFileAsURL(element) {
             var file = element.files[0];
             var ext = ['jpg','jpeg','png','svg','tiff','webp']

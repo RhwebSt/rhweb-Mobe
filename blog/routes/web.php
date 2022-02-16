@@ -69,7 +69,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
 
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
-    Route::resource('epi','Trabalhador\\EpiController')->names('epi');
+    Route::resource('epi','Trabalhador\\EpiController')->only(['store', 'update', 'index','create','show','edit']);
+    Route::get('epi/deleta/{id}','Trabalhador\\EpiController@destroy')->name('epi.deleta');
     Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');
 
     // Route::post('trabalhador/comprovante/pagamento/dia','Trabalhador\\comprovantePagDiaController@ComprovantePagDia')->name('trabalhador.comprovante.dia');
@@ -116,6 +117,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
 
     Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
+    Route::get('avuso/pesquisa/{id}','Avuso\\AvusoController@pesquisa')->name('avuso.pesquisa');
     Route::get('relatorio/avuso/{id}/{trabalhado}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {

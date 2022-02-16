@@ -118,7 +118,9 @@
                 
                 
                 <div class="col-md-4">
-                    <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
+                    <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº
+                        <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                    </label>
                     <input type="text" class="form-control @error('escnpj') is-invalid @enderror fw-bold" value="{{old('escnpj')}}" name="escnpj" id="cnpj_mf">
                     @error('escnpj')
                       <span class="text-danger">{{ $message }}</span>
@@ -402,6 +404,33 @@
             
             
      <script>
+     
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var cnpjMf = document.querySelector("#cnpj_mf").value='';
+            var nome = document.querySelector("#nome").value='';
+            var dataRegistro = document.querySelector("#dataregistro").value='';
+            var cep = document.querySelector("#cep").value='';
+            var logradouro = document.querySelector("#logradouro").value='';
+            var numero = document.querySelector("#numero").value='';
+            var complementoEndereco = document.querySelector("#complemento__endereco").value='';
+            var bairro = document.querySelector("#bairro").value='';
+            var localidade = document.querySelector("#localidade").value='';
+            var uf = document.querySelector("#uf").value='';
+            var responsavel = document.querySelector("#responsave").value='';
+            var email = document.querySelector("#email").value='';
+            var seguro= document.querySelector("#seguro").value='';
+            var cnaeCodigo = document.querySelector("#cnae__codigo").value='';
+            var codMunicipio = document.querySelector("#cod__municipio").value='';
+            var sindicalizado = document.querySelector("#sincalizado").value='';
+            var retemFerias = document.querySelector("#retem__ferias").value='';
+            var contribuicaoSindicato = document.querySelector("#contribuicao__sindicato").value='';
+            var telefone = document.querySelector("#telefone").value='';
+        });
+     
+     
+     
          function encodeImageFileAsURL(element) {
             var file = element.files[0];
             var ext = ['jpg','jpeg','png','svg','tiff','webp']

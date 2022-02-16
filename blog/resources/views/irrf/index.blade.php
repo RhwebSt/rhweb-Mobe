@@ -77,7 +77,9 @@
                 <input type="hidden" id="method" name="_method" value="">
                 <div class="container block">
                     <div class="col-md-3">
-                        <label for="ano" class="form-label">Ano</label>
+                        <label for="ano" class="form-label">Ano
+                            <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                        </label>
                         <input type="text" class="form-control @error('irsano') is-invalid @enderror" name="irsano" value="  {{ old('ano')}}" id="ano">
                         @error('irsano')
                             <span class="text-danger">{{ $message }}</span>
@@ -208,6 +210,31 @@
                 </div>
             </div>
     <script>
+    
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var ano = document.querySelector("#ano").value='';
+            var deducao = document.querySelector("#ded__dependente").value='';
+            var valorFinal01 = document.querySelector("#valor__final01").value='';
+            var indice01 = document.querySelector("#indice01").value='';
+            var fator01 = document.querySelector("#fator__reducao01").value='';
+            var valorFinal02 = document.querySelector("#valor__final02").value='';
+            var indice02 = document.querySelector("#indice02").value='';
+            var fator02 = document.querySelector("#fator__reducao02").value='';
+            var valorFinal03 = document.querySelector("#valor__final03").value='';
+            var indice03 = document.querySelector("#indice03").value='';
+            var fator03 = document.querySelector("#fator__reducao03").value='';
+            var valorFinal04 = document.querySelector("#valor__final04").value='';
+            var indice04 = document.querySelector("#indice04").value='';
+            var fator04 = document.querySelector("#fator__reducao04").value='';
+            var valorFinal05 = document.querySelector("#valor__final05").value='';
+            var indice05 = document.querySelector("#indice05").value='';
+            var fator05 = document.querySelector("#fator__reducao05").value='';
+        });
+    
+        
+    
         $(document).ready(function(){
            
             $( "#ano" ).keyup(function() {

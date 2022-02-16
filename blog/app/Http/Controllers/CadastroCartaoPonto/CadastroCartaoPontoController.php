@@ -176,6 +176,7 @@ class CadastroCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
+        
         $bolcartaoponto = new Bolcartaoponto;
         $lancamentotabela = new Lancamentotabela;
         try {

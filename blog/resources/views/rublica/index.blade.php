@@ -94,7 +94,9 @@
                 <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>
 
                 <div class="col-md-2">
-                    <label for="rubricas" class="form-label">Rúbricas</label>
+                    <label for="rubricas" class="form-label">Rúbricas
+                        <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                    </label>
                     <input type="text" class="form-control @error('rubricas') is-invalid @enderror fw-bold"  name="rubricas" id="rubricas" value="{{old('rubricas')}}">
                     @error('rubricas')
                       <span class="text-danger">{{ $message }}</span>
@@ -243,6 +245,18 @@
             
     </div>
     <script>
+    
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+           var rubricas = document.querySelector("#rubricas").value='';
+           var descricao = document.querySelector("#descricao").value='';
+           var indice = document.querySelector("#incidencia").value='';
+           var dc = document.querySelector("#dc").value='';
+        });
+    
+    
+    
         $('#pesquisa').on('focus keyup',function() {
             let dados = 0;
             if ($(this).val()) {

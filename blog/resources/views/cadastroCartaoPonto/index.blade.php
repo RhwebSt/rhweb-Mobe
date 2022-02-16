@@ -238,7 +238,9 @@
                                             </button>
                                         </td>
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action=""  method="post">
+                                           <form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
+                                            @csrf
+                                            @method('delete')
                                                 <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
                                             </form> 
                                             </td>
@@ -347,7 +349,7 @@
               $('#num__trabalhador').val(' ')
               $('#num__boletim').val(localStorage.getItem('cartao'))
             }
-            function camposLacamentoTab(data) {
+            function camposLacamentoTab(data) { 
                   if (data.id) {
                       buscatomador(data)
                       $('#form').attr('action', "{{ url('cadastrocartaoponto')}}/"+data.id);

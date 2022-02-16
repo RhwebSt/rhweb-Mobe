@@ -66,11 +66,33 @@
                     </div>
                 </div>
                 
+                <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
+                
+                <div>
+                    <div class="col-md-5 mb-4 p-1 pesquisar">
+                        <div class="d-flex">
+                        <label for="exampleDataList" class="form-label"></label>
+                        <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                        <datalist id="datalistOptions">
+                          
+                        </datalist>
+                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                        <div class="text-center d-none p-1" id="refres" >
+                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
                 
 
 
                 <div class="col-md-8">
-                    <label for="exampleDataList" class="form-label">Nome Do Trabalhador</label>
+                    <label for="exampleDataList" class="form-label">Nome Do Trabalhador
+                        <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                    </label>
                     <input class="text-uppercase pesquisa form-control @error('nome__trabalhador') is-invalid @enderror fw-bold text-dark" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador">
                     <datalist id="listatrabalhador">
                     </datalist>
@@ -220,6 +242,19 @@
                     </div>
             </div>
             <script>
+            
+            var botaolimpaCampos = document.querySelector("#refre");
+
+            botaolimpaCampos.addEventListener('click', function(){
+                var nomeTrabalhador = document.querySelector("#nome__trabalhador").value='';
+                var matriculaTrabalhador = document.querySelector("#matricula__trab").value='';
+                var indice = document.querySelector("#indice").value='';
+                var nomeTomador = document.querySelector("#nome_tomador").value='';
+            });
+            
+            
+            
+            
         $(document).ready(function(){
            
            

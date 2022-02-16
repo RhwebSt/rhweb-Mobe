@@ -36,10 +36,17 @@ class EpiController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        dd($dados);
+        $request->validate([
+            'quantidade0'=>'required|max:11',
+            'descricao0'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/'
+        ]);
+        $this->epi->deletar_cadastra($dados['trabalhador']);
         for ($i=0; $i < $dados['quantidade']; $i++) { 
             $this->epi->cadastro($dados,$i);
         }
-        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        return redirect()->route('epi.show',[$dados['trabalhador']]);
+        // return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
     }
 
     /**
@@ -50,9 +57,10 @@ class EpiController extends Controller
      */
     public function show($id)
     {
-        // dd($id);
         $user = auth()->user();
-        return view('trabalhador.epi.index',compact('user','id'));
+        $listaepi = $this->epi->buscalista($id);
+        // dd($listaepi);
+        return view('trabalhador.epi.index',compact('user','id','listaepi'));
     }
 
     /**
@@ -86,6 +94,8 @@ class EpiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = base64_decode($id);
+        $this->epi->deletar($id);
+        return redirect()->back()->withSuccess('Deletado com sucesso.');
     }
 }

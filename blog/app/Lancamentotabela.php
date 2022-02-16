@@ -195,6 +195,7 @@ class Lancamentotabela extends Model
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
             'empresas.esnome',
+            'empresas.id',
             'tomadors.tsnome' 
             )
         ->where(function($query) use ($id){

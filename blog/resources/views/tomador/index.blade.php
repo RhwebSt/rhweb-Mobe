@@ -163,7 +163,9 @@
                         <input type="hidden" name="trabalhador">
                        
                         <div class="col-md-4">
-                            <label for="cnpj" class="form-label">CNPJ</label>
+                            <label for="cnpj" class="form-label">CNPJ 
+                                <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                            </label>
                             <input type="text" class="form-control  fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
                             @error('cnpj')
                                 <span class="text-danger">{{ $message }}</span>
@@ -827,7 +829,70 @@
                         </div>
                       </div>
                     </div>
-<script>
+            <script>
+
+                
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            console.log("clicou");
+            var cnpj = document.querySelector("#cnpj").value='';
+            var nome = document.querySelector("#nome__completo").value='';
+            var nomeFantasia = document.querySelector("#nome__fantasia").value='';
+            var telefone = document.querySelector("#telefone").value='';
+            var cep = document.querySelector("#cep").value='';
+            var logradouro = document.querySelector("#logradouro").value='';
+            var numero = document.querySelector("#numero").value='';
+            var tipo = document.querySelector("#complemento__endereco").value='';
+            var bairro = document.querySelector("#bairro").value='';
+            var localidade = document.querySelector("#localidade").value='';
+            var uf = document.querySelector("#uf").value='';
+            var taxaAdm = document.querySelector("#taxa_adm").value='';
+            var taxaFed = document.querySelector("#taxa__fed").value='';
+            var defaltor = document.querySelector("#deflator").value='';
+            var das = document.querySelector("#das").value='';
+            var codFpas = document.querySelector("#cod__fpas").value='';
+            var codFap = document.querySelector("#cod__fap").value='';
+            var codGrps = document.querySelector("#cod__grps").value='';
+            var codRecol = document.querySelector("#cod__recol").value='';
+            var cnae = document.querySelector("#cnae").value='';
+            var fapAliquota = document.querySelector("#fap__aliquota").value='';
+            var ratAjustado = document.querySelector("#rat__ajustado").value='';
+            var fpasTerceiros = document.querySelector("#fpas__terceiros").value='';
+            var aliqTerceiros = document.querySelector("#aliq__terceiros").value='';
+            var alimentacao = document.querySelector("#alimentacao").value='';
+            var transporte = document.querySelector("#transporte").value='';
+            var epi = document.querySelector("#epi").value='';
+            var seguroTrabalhador = document.querySelector("#seguro__trabalhador").value='';
+            var vt = document.querySelector("#folhartransporte").value='';
+            var tipoVt = document.querySelector("#folhartipotrans").value='';
+            var va = document.querySelector("#folharalim").value='';
+            var tipoVa = document.querySelector("#folhartipoalim").value='';
+            var diasUteis = document.querySelector("#dias_uteis").value='';
+            var sabados = document.querySelector("#sabados").value='';
+            var domingos = document.querySelector("#domingos").value='';
+            var inssEmpresa = document.querySelector("#inss__empresa").value='';
+            var retencaoInss = document.querySelector("#retencaoinss").value='';
+            var fgtsEmpresa = document.querySelector("#fgts__empresa").value='';
+            var retencaoFgts = document.querySelector("#retencaofgts").value='';
+            var baseFatura = document.querySelector("#valor_fatura").value='';
+            var banco = document.querySelector("#banco").value='';
+            var agencia = document.querySelector("#agencia").value='';
+            var operacao = document.querySelector("#operacao").value='';
+            var conta = document.querySelector("#conta").value='';
+            var pix = document.querySelector("#pix").value='';
+            
+            
+            
+        });
+
+
+
+
+
+
+
+
         $(document).ready(function(){
            
             $('#pesquisa').on('keyup focus',function(){
