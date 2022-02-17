@@ -304,7 +304,7 @@
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:110px;">{{$listas->aicodigo}}</td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                        <a href="{{route('recibo.avulso',[base64_encode($listas->id),base64_encode($listas->idtrabalhador)])}}" class=" btn__padrao--imprimir"><i style="color:#FFFFFF;" class="fad fa-lg fa-print"></i></a>
+                                        <a href="{{route('recibo.avulso',[base64_encode($listas->id),base64_encode($listas->asinicial),base64_encode($listas->asfinal)])}}" class=" btn__padrao--imprimir"><i style="color:#FFFFFF;" class="fad fa-lg fa-print"></i></a>
                                             
                                         </td>                               
                                         <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">

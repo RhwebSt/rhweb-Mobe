@@ -117,14 +117,14 @@ class BaseCalculo extends Model
         ->orderBy('trabalhadors.tsnome', 'asc')
         ->get();
     }
-    public function listaTomador($folhar)
+    public function listaTomador($folhar,$condicao)
     {
         return DB::table('base_calculos')
         ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
         ->select('tomadors.tsnome','tomadors.id','base_calculos.folhar')
         ->whereIn('base_calculos.folhar',$folhar)
         ->distinct()
-        ->orderBy('tomadors.tsnome', 'asc')
+        ->orderBy('tomadors.tsnome', $condicao)
         ->get();
     }
     public function buscaId($folhar)

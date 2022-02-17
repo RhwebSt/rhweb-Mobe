@@ -155,6 +155,13 @@ class Lancamentotabela extends Model
             }
         })->count();
     }
+    public function verificarFolhar($inicio,$final)
+    {
+        $user = auth()->user();
+        return Lancamentotabela::whereBetween('lsdata',[$inicio,$final])
+        ->where('empresa',$user->empresa)
+        ->count();
+    }
     public function verificaBoletimDias($dados)
     {
         return Lancamentotabela::where(function($query) use ($dados){

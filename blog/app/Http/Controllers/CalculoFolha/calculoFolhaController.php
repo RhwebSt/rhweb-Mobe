@@ -9,19 +9,23 @@ use App\Folhar;
 use App\BaseCalculo;
 class calculoFolhaController extends Controller
 {
+    private $folhar,$basecalculo;
+    public function __construct()
+    {
+        $this->folhar = new Folhar;
+        $this->basecalculo = new BaseCalculo;
+    }
     public function index()
     {
         $user = Auth::user();
-        $folhar = new Folhar;
-        $basecalculo = new BaseCalculo;
         $idfolhas = [];
-        $folhas = $folhar->buscaListaFolhar($user->empresa);
+        $folhas = $this->folhar->buscaListaFolhar($user->empresa);
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);
         }
-        $trabalhadores = $basecalculo->listaTrabalhador($idfolhas);
-        $tomadores = $basecalculo->listaTomador($idfolhas);
-        // dd($tomadores);
+        $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
+        $tomadores = $this->basecalculo->listaTomador($idfolhas,'asc');
+    
         return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
     }
     public function store(Request $request)
@@ -33,15 +37,64 @@ class calculoFolhaController extends Controller
         ]);
         $dados = $request->only('ano_inicial','ano_final');
         return redirect()->route('calculo.folha.geral',$dados);
-        // dd($dados);
-        // if (isset($dados['todostrabalhador']) && isset($dados['umtomador'])) {
-        //     $dados = $request->only('trabalhador','tomador','ano_inicial','ano_final');
-        //     return redirect()->route('calculo.folha.tomador',$dados);
-        // }
-        // if (isset($dados['umtrabalhador']) && isset($dados['todostomador'])) {
-        //     $dados = $request->only('trabalhador','tomador','ano_inicial','ano_final');
-        //     return redirect()->route('calculo.folha.trabalhador',$dados);
-        // }
     }
+    public function filtroPesquisaTomador(Request $request)
+    {
+        $user = Auth::user();
+        $idfolhas = [];
+        $dados = $request->all();
+        
+        $folhas = $this->folhar->filtraListaTomador($dados,$user->empresa);
     
+        foreach ($folhas as $key => $folha) {
+            array_push($idfolhas,$folha->id);
+        }
+        $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
+        $tomadores = $this->basecalculo->listaTomador($idfolhas,'asc');
+        return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
+        
+    }
+    public function filtroPesquisaGeral(Request $request)
+    {
+        $user = Auth::user();
+        $idfolhas = [];
+        $dados = $request->all();
+        
+        $folhas = $this->folhar->filtraListaGeral($dados,$user->empresa);
+        
+        foreach ($folhas as $key => $folha) {
+            array_push($idfolhas,$folha->id);
+        }
+        $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
+        $tomadores = $this->basecalculo->listaTomador($idfolhas,'asc');
+        return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
+        
+    }
+    // public function filtroPesquisaTomadorOrdem($condicao)
+    // {
+    //     $user = Auth::user();
+    //     $idfolhas = [];
+    //     $folhas = $this->folhar->buscaListaOrdem($user->empresa,$condicao);
+        
+    //     foreach ($folhas as $key => $folha) {
+    //         array_push($idfolhas,$folha->id);
+    //     }
+    //     $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
+    //     $tomadores = $this->basecalculo->listaTomador($idfolhas);
+    //     return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
+    // }
+
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = Auth::user();
+        $idfolhas = [];
+        $folhas = $this->folhar->buscaListaOrdem($user->empresa,$condicao);
+        
+        foreach ($folhas as $key => $folha) {
+            array_push($idfolhas,$folha->id);
+        }
+        $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
+        $tomadores = $this->basecalculo->listaTomador($idfolhas,$condicao);
+        return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
+    }
 }

@@ -81,7 +81,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('declaracao/admissao/trabalhador/{id}','Trabalhador\\declaracaoAdmissaoController@declarassaoadminssao')->name('declaracao.admissao.trabalhador');
     Route::get('declaracao/afastamento/trabalhador/{id}','Trabalhador\\declaracaoAfastamentoController@declarassaoafastamento')->name('declaracao.afastamento.trabalhador');
     Route::get('devolucao/ctps/trabalhador/{id}','Trabalhador\\devolucaoCtpsController@devolucaoctps')->name('devolucao.ctps.trabalhador');
-    Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador');
+    Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador'); 
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
 
 
@@ -95,6 +95,12 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     
     Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index');
     Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
+    Route::post('tomador/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaTomador')->name('calculo.folha.tomador.filtro');
+    // Route::get('tomador/filtra/folha/calculo/{codicao}/{tomador}/{inicio}/{final}','CalculoFolha\\calculoFolhaController@filtroPesquisaTomadorOrdem')->name('filtra.folha.tomador.calculo');
+
+    Route::post('geral/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaGeral')->name('calculo.folha.geral.filtro');
+    Route::get('filtra/folha/calculo/{codicao}','CalculoFolha\\calculoFolhaController@filtroPesquisaOrdem')->name('filtra.folha.calculo');
+
     Route::get('calculo/folha/tomador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTomadorController@calculoFolhaPorTomador')->name('calculo.folha.tomador');
     Route::get('calculo/folha/trabalhador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTrabalhadorController@calculoFolhaPorTrabalhador')->name('calculo.folha.trabalhador');
     Route::post('imprimir/calculo/folha/trabalhador','CalculoFolha\\calculoFolhaPorTrabalhadorController@imprimirTrabalhador')->name('calculo.folha.trabalhador.imprimir');
@@ -104,7 +110,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('calculo/folha/geral/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaGeralController@calculoFolhaGeral')->name('calculo.folha.geral');
     Route::get('calculo/folha/imprimir/{id}','CalculoFolha\\calculoFolhaGeralController@imprimirFolhar')->name('calculo.folha.imprimir');
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');
+
     Route::get('analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaController@calculoFolhaAnalitica')->name('calculo.folha.analitica');
+    Route::get('tomador/analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaTomadorController@calculoFolhaAnalitica')->name('tomador.calculo.folha.analitica');
+
     Route::post('imprimir/calculo/folha/banco','CalculoFolha\\relatorioBancoController@imprimirBanco')->name('calculo.folha.banco.imprimir');
     Route::post('imprimir/calculo/folha/rublica','CalculoFolha\\relatorioRublicaCFController@imprimir')->name('calculo.folha.rublica.imprimir');
 
@@ -118,7 +127,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
     Route::get('avuso/pesquisa/{id}','Avuso\\AvusoController@pesquisa')->name('avuso.pesquisa');
-    Route::get('relatorio/avuso/{id}/{trabalhado}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
+
+    Route::get('avuso/relatorio/{id}/{inicio}/{final}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
+
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');

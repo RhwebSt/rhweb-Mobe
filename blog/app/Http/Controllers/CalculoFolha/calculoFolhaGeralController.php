@@ -22,25 +22,30 @@ use App\Folhar;
 use App\BaseCalculo;
 use App\RelacaoDia;
 use App\Descontos;
+use App\Lancamentotabela;
 use App\Leis;
 use PDF;
 class calculoFolhaGeralController extends Controller
 {
-    private $rublica,$leis;
+    private $rublica,$leis,$lancamentotabela;
     public function __construct()
     {
         $this->rublica = new Rublica;
         $this->leis = new Leis;
+        $this->lancamentotabela = new Lancamentotabela;
     }
     public function calculoFolhaGeral($datainicio,$datafinal)
     {
         $folhar = new Folhar;
       
         $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
-        
-        // if ($folhas) {
-        //     return redirect()->route('calculo.folha.index')->withInput()->withErrors(['false'=>'Esta data e o número da folha já estão cadastrados.']);
-        // }
+        $lancamentotabela = $this->lancamentotabela->verificarFolhar($datainicio,$datafinal);
+        if(!$lancamentotabela){
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem um falor neste periodo.']);
+        }
+        if ($folhas) {
+            return redirect()->route('calculo.folha.index')->withInput()->withErrors(['false'=>'Esta data e o número da folha já estão cadastrados.']);
+        }
         $ano = explode('-',$datafinal);
         $user = auth()->user();
          
@@ -82,6 +87,9 @@ class calculoFolhaGeralController extends Controller
         $tomadores = $tomador->buscaListaTomador($user->empresa);
         $quantidadetomador = count($tomadores);
         foreach ($tomadores as $t => $tomador_id) {
+            $bolcartaopontos = $bolcartaoponto->buscaListaLancamentoBolcartao($tomador_id->id,$datainicio,$datafinal);
+            $lancamentorublicas = $lancamentorublica->buscaListaLancamentoRublica($tomador_id->id,$datainicio,$datafinal);
+        if (count($bolcartaopontos) > 0 || count($lancamentorublicas) > 0) {
             if (!in_array($tomador_id->id,$tomador_cal_folha)) {
                 array_push($tomador_cal_folha,$tomador_id->id);
             }
@@ -313,19 +321,9 @@ class calculoFolhaGeralController extends Controller
                 ]
                 
             ];
-            $dadosTrabalhador = [
-                'id'=>[],
-                'tomador_cartao_ponto_horas'=> 0,
-                'total_vencimento'=>0,
-                'tomador_cartao_ponto_quantidade'=>[],
-                'tomador_cartao_ponto_vt'=>[],
-                'tomador_cartao_ponto_va'=>[],
-                'rublicas'=>[],
-                'codigos'=>[]
-            ];
+           
             $valorfinal = [];
-            $bolcartaopontos = $bolcartaoponto->buscaListaLancamentoBolcartao($tomador_id->id,$datainicio,$datafinal);
-            $lancamentorublicas = $lancamentorublica->buscaListaLancamentoRublica($tomador_id->id,$datainicio,$datafinal);
+            
             // dd($bolcartaopontos,$lancamentorublicas);
             foreach ($bolcartaopontos as $key => $trabalhador) {
                 array_push($funcionario,$trabalhador->trabalhador);
@@ -1042,7 +1040,7 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
-             
+        }
             if (($quantidadetomador - 1) === $t) {
                 $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tomador_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal);
                 return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
@@ -1050,6 +1048,7 @@ class calculoFolhaGeralController extends Controller
                     return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
                 }
             }
+        
             // dd($boletim_tabela,$cartaoponto_diarias,$trabalhadores);
         }
        

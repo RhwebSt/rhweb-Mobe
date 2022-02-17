@@ -377,7 +377,7 @@
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->tsnome}} - CPF</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->ascpf}} - {{$avusos->asnome}}</td>
             </tr>
         </table>
 

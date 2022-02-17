@@ -10,12 +10,12 @@
     <style>
 
         @page { 
-          margin-top: 168.5px; 
+          margin-top: 312px; 
           margin-bottom: 50px;
           margin-left: 10px;
           margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -168.5px; right: 0px; height: 168.5px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -312px; right: 0px; height: 312px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -50px; right: 0px; height: 60px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
 
@@ -191,16 +191,59 @@
 
         <body>
             <div id="header">
-            
+                
+                <table class="margin-top">
+            <tr>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$lancamentotabelas[0]->esnome}}</td>
+            </tr>
+        </table>
+        
+        <div class="borderT margin-top">
+            <table>
+                <tr>
+                    <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" alt="" srcset="" style="width:80px; height: 80px; padding:4px;"></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> ,   - }</td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong>  - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong></td>
+                </tr>
+    
+            </table>
+        </div>
+
                 <table class="margin-top">
                     <tr>
-                        <td class="name__title border-right border-left border-bottom border-top destaque text-center text-bold">{{$lancamentotabelas[0]->esnome}}</td>
-                    </tr>
-                </table>
-    
-                <table>
-                    <tr>
-                        <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center">Planilha do Cartão Ponto</td>
+                        <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center destaque uppercase">Planilha do Cartão Ponto</td>
                         <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim N° {{$lancamentotabelas[0]->liboletim}}</td>
                         <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência:
                         @if(isset($lancamentotabelas[0]->lsdata))
@@ -214,7 +257,7 @@
                     </tr>
                 </table>
     
-                <table>
+                <table class="margin-top">
                     <tr>
                         <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao destaque">Valor</td>
                         <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao  destaque">Diária</td>

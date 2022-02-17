@@ -288,18 +288,32 @@
                     <td class="small__font text-bold border-top border-bottom border-left text-center data">Dta.Dev</td>
                     <td class="small__font text-bold border-top border-bottom border-left text-center border-right assina">Assinatura</td>
                 </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Camiseta</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
+                @foreach($epi as $epi_valor)
+                    <tr>
+                        <td class="small__font text-bold border-bottom border-left text-center quant">{{$epi_valor->eiquantidade}}</td>
+                        <td class="small__font text-bold border-bottom border-left descr">{{$epi_valor->esdescricao}}</td>
+                        <td class="small__font text-bold border-bottom border-left text-center tm">{{$epi_valor->estm}}</td>
+                        <td class="small__font text-bold border-bottom border-left text-center ca">{{$epi_valor->eica}}</td>
+                        <td class="small__font text-bold border-bottom border-left text-center data">
+                            @if($epi_valor->esdatares)
+                                <?php
+                                    $data = explode('-',$epi_valor->esdatares);
+                                ?>
+                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                            @endif
+                        </td>
+                        <td class="small__font text-bold border-bottom border-left text-center data">
+                            @if($epi_valor->esdatadev)
+                                <?php
+                                    $data = explode('-',$epi_valor->esdatadev);
+                                ?>
+                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                            @endif
+                        </td>
+                        <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
+                    </tr>
+                @endforeach
+                <!-- <tr>
                     <td class="small__font text-bold border-bottom border-left text-center quant"></td>
                     <td class="small__font text-bold border-bottom border-left descr">Calças</td>
                     <td class="small__font text-bold border-bottom border-left text-center tm"></td>
@@ -397,7 +411,7 @@
                     <td class="small__font text-bold border-bottom border-left text-center data"></td>
                     <td class="small__font text-bold border-bottom border-left text-center data"></td>
                     <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
+                </tr> -->
             </table>
             
             <div class="borderT margin-top">

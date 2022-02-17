@@ -36,11 +36,12 @@ class EpiController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
+        // dd($dados);
         $request->validate([
             'quantidade0'=>'required|max:11',
             'descricao0'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/'
         ]);
+        dd('ok');
         $this->epi->deletar_cadastra($dados['trabalhador']);
         for ($i=0; $i < $dados['quantidade']; $i++) { 
             $this->epi->cadastro($dados,$i);

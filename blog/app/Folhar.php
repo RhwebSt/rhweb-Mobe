@@ -23,13 +23,51 @@ class Folhar extends Model
     }
     public function verificaFolhar($datainicio,$datafinal)
     {
+        $user = auth()->user();
         return Folhar::whereDate('fsinicio', $datainicio) 
         ->whereDate('fsfinal', $datafinal)
+        ->where('empresa',$user->empresa)
         ->count();
     }
     public function buscaListaFolhar($empresa)
     {
         return Folhar::where('empresa',$empresa)->get();
+    }
+    public function buscaListaOrdem($empresa,$condicao)
+    {
+        return Folhar::where('empresa',$empresa)
+        ->orderBy('fscodigo', $condicao)
+        ->orderBy('fsfinal', $condicao)
+        ->get();
+    }
+    public function filtraListaTomador($dados,$empresa)
+    {
+        return DB::table('folhars')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa')
+        ->select('folhars.id','folhars.fscodigo','folhars.fsinicio','folhars.fsfinal')
+        ->where([
+            ['tomadors.tsnome','like','%'.$dados['pesquisa'].'%'],
+            ['empresas.id',$empresa]
+        ])
+        ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']])
+        ->distinct()
+        ->get();
+    }
+
+    public function filtraListaGeral($dados,$empresa)
+    {
+        return DB::table('folhars')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa')
+        ->select('folhars.id','folhars.fscodigo','folhars.fsinicio','folhars.fsfinal')
+        ->where([
+            ['folhars.fscodigo',$dados['pesquisa']],
+            ['empresas.id',$empresa]
+        ])
+        ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']])
+        ->distinct()
+        ->get();
     }
     public function buscaLista($id) 
     {
@@ -306,6 +344,15 @@ class Folhar extends Model
         return DB::table('empresas')
         ->join('folhars', 'empresas.id', '=', 'folhars.empresa')
         ->select('folhars.*','empresas.esnome')
+        ->where('folhars.id',$id)
+        ->first();
+    }
+    public function buscaFolhaAnaliticaTomador($id) 
+    {
+        return DB::table('tomadors')
+        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->select('folhars.*','tomadors.tsnome')
         ->where('folhars.id',$id)
         ->first();
     }

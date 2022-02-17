@@ -10,12 +10,12 @@
     <style>
 
          @page { 
-          margin-top: 240px; 
+          margin-top: 260px; 
           margin-bottom: 80px;
           margin-left: 10px;
           margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -240px; right: 0px; height: 240px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -260px; right: 0px; height: 260px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -80px; right: 0px; height: 80px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
 
@@ -188,7 +188,7 @@
     <body>
         <div id="header">
             
-            <table class="margin-top">
+        <table class="margin-top">
             <tr>
                 <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresa->esnome}}</td>
             </tr>
@@ -263,7 +263,7 @@
         
             <table class="tomador">
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque uppercase">{{$lancamentotabelas[0]->tsnome}}</td>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque uppercase">Tomador: {{$lancamentotabelas[0]->tsnome}}</td>
                 </tr>
             </table>
         

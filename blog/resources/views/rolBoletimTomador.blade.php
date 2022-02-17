@@ -7,12 +7,12 @@
 
         <style>
             @page { 
-                margin-top: 125px; 
+                margin-top: 289px; 
                 margin-bottom: 30px;
                 margin-left: 10px;
                 margin-right: 10px;
             }
-            #header { position: fixed; left: 0px; top: -125px; right: 0px; height: 125px; text-align: center; }
+            #header { position: fixed; left: 0px; top: -289px; right: 0px; height: 289px; text-align: center; }
             #footer { position: fixed; left: 0px; bottom: -60px; right: 0px; height: 60px; text-align: end; }
             #footer .page:after { content: counter(page, upper); }
 
@@ -99,7 +99,7 @@
             }
 
             .margin-top{
-                margin-top: 5px;
+                margin-top: 10px;
             }
 
             .margin-top2{
@@ -115,7 +115,7 @@
             }
 
             .date{
-                width: 187.3px;
+                width: 186.8px;
             }
 
             .padding-tomador{
@@ -155,43 +155,90 @@
             .fontbig{
                 font-size: 13px;
             }
+            
+            .margin-big{
+                margin-top: 25px;
+            }
 
         </style>
     </head>
 
     <body>
         <div id="header">
+            
+            <table class="margin-top">
+            <tr>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$tomadors->esnome}}</td>
+            </tr>
+        </table>
+        
+        <div class="borderT margin-top">
+            <table>
+                <tr>
+                    <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong>,   - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> - </td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong></td>
+                </tr>
+    
+            </table>
+        </div>
+
 
             <table class="margin-top">
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaqueDark padding">{{$tomadors->esnome}}</td>
-                </tr>
-            </table>
-            
-
-            <table>
-                <tr>
-                    <td class="border-left border-top border-bottom small__font text-center date text-bold">Rol dos Boletins</td>
-                    <td class="border-top border-bottom small__font text-center date text-bold">Data Inicial: 
+                    <td class="border-left border-top border-bottom small__font text-center date text-bold destaque">Rol dos Boletins</td>
+                    <td class="border-top border-bottom small__font border-left text-center date text-bold">Data Inicial: 
                         <?php
                             $data = explode('-',$inicio)
                         ?>
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                     </td>
-                    <td class="border-top border-bottom small__font text-center date text-bold">Data Final: 
+                    <td class="border-top border-bottom small__font border-left text-center date text-bold">Data Final: 
                         <?php
                             $data = explode('-',$final)
                         ?>
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                     </td>
-                    <td class="border-top border-bottom border-right small__font text-center date text-bold">Data de Emissão: {{date("d/m/y")}}</td>
+                    <td class="border-top border-bottom border-right small__font border-left text-center date text-bold">Data de Emissão: {{date("d/m/y")}}</td>
                 </tr>
             </table>
 
 
-            <table>
+            <table class="margin-big">
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaqueDark padding">{{$tomadors->tsnome}}</td>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque padding">Tomador: {{$tomadors->tsnome}}</td>
                 </tr>
             </table>
 
@@ -401,10 +448,10 @@
 
             <table class="margin-top2 margin-bottom2">
                 <tr>
-                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaqueDark text-bold fontbig">Total Quantidade:  {{$quantcartaoponto + $quantboletim}} </td>
-                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaqueDark text-bold fontbig">Total Geral Lançamentos =></td>
-                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaqueDark text-bold fontbig">{{number_format((float)$totalfolhar + $totaltrabalhado, 2, ',', '.')}}</td>
-                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaqueDark text-bold fontbig">{{number_format((float)$totaltomador + $totaltomadors, 2, ',', '.')}}</td>
+                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaque text-bold fontbig">Total Quantidade:  {{$quantcartaoponto + $quantboletim}} </td>
+                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaque text-bold fontbig">Total Geral Lançamentos =></td>
+                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaque text-bold fontbig">{{number_format((float)$totalfolhar + $totaltrabalhado, 2, ',', '.')}}</td>
+                    <td class="border-left border-top border-bottom border-right small__font text-center padrao destaque text-bold fontbig">{{number_format((float)$totaltomador + $totaltomadors, 2, ',', '.')}}</td>
                 </tr>
             </table>
 
@@ -437,7 +484,7 @@
                        if ($item) {
                             echo'<tr>
                                     <td class="border-left border-top border-bottom border-right small__font text-center cod">'.$item.'</td>
-                                    <td class="border-left border-top border-bottom border-right small__font text-center desc">'.$historico.'</td>
+                                    <td class="border-left border-top border-bottom border-right small__font text-center uppercase desc">'.$historico.'</td>
                                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.$quant.'</td>
                                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.number_format((float)$valor, 2, ',', '.').'</td>
                                     <td class="border-left border-top border-bottom border-right small__font text-center pad2">'.number_format((float)$quant * $valor, 2, ',', '.').'</td>

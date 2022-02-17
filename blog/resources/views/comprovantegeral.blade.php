@@ -8,10 +8,19 @@
 </head>
 
 <style>
-    *{
-        margin: 5px;
-        padding: 0px;
+    @page { 
+          margin-bottom: 50px;
+          margin-right: 10px;
+          margin-left: 10px;
+          margin-top: 10px;
     }
+    
+    #footer { position: fixed; left: 0px; bottom: -50px; right: 0px; height: 50px; text-align: end; }
+
+    /**{*/
+    /*    margin: 5px;*/
+    /*    padding: 0px;*/
+    /*}*/
     
     td{
         padding-left:5px;
@@ -93,7 +102,7 @@
     }
 
     .cbo{
-        width:200px;
+        width:201.2px;
     }
 
     .destaque{
@@ -121,19 +130,19 @@
     }
 
     .descontos{
-        width: 100px;
+        width: 100.3px;
     }
 
     .tipoTrab{
-        width: 533px;
+        width: 534.3px;
     }
 
     .total__vencimentos{
-        width: 119px;
+        width: 119.7px;
     }
 
     .total__descontos{
-        width: 100px;
+        width: 100.3px;
     }
 
     .servicosbase{
@@ -161,7 +170,7 @@
     }
 
     .fairrf{
-        width: 94px;
+        width: 91.5px;
     }
 
     .num__filho{
@@ -173,11 +182,11 @@
     }
 
     .declaracao{
-        width: 763.5px;
+        width: 768px;
     }
 
     .data{
-        width:150px;
+        width:153.8px;
     }
 
     .assinatura{
@@ -197,7 +206,7 @@
     }
 
     .valor{
-        width: 134.7px;
+        width: 134.1px;
     }
 
     .dia{
@@ -205,7 +214,7 @@
     }
     
     .name__title{
-        width: 763.5px;
+        width: 768px;
     }
     
      .comp{
@@ -213,11 +222,33 @@
     }
     
     .cnpj{
-        width: 203px;
+        width: 206px;
     }
     
     .font__trab{
         font-size:14px;
+    }
+    
+    .container__rodape{
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+    }
+    
+    .margin-top{
+        margin-top: 10px;
+    }
+    
+    .borderT
+    {
+        border: 1px solid black;
+        border-radius: 3px;
+        width:773.5px;
+    }
+    
+    .padding-footer{
+        padding: 2px;
+        width:770px;
     }
 </style>
 
@@ -815,7 +846,15 @@
             <td class="fontDeclaracao text-center border-right border-bottom">Assinatura Trabalhador</td>
         </tr>
     </table>
-    <h1 style="page-break-after: always;">{{$f+1}}</h1>
+    
+    
+    <div id="footer">
+              <p class="page destaque borderT padding-footer">Página:  {{$f+1}}</p>
+            </div>
+    
+    <div class="footer">
+        <h1 style="page-break-after: always;"></h1>
+    </div>
     @endforeach
 </body>
 </html>
