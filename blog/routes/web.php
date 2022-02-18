@@ -28,12 +28,16 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
 
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
+    Route::get('ordem/cadastro/cartao/ponto/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdem')->name('ordem.cadastro.cartao.ponto');
+    Route::get('edit/ordem/cadastro/cartao/ponto/{id}/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.cadastro.cartao.ponto');
 
     Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
 
     Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
     Route::get('tabela/cartao/ponto/unidade/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
     Route::get('tabela/cartao/ponto/pesquisa/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
+    Route::get('ordem/tabela/cartao/ponto/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdem')->name('ordem.tabela.cartao.ponto');
+    Route::get('edit/ordem/tabela/cartao/ponto/{id}/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.tabela.cartao.ponto');
     
 
     Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
@@ -50,6 +54,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('fatura/gera','Fatura\\FaturaController@store')->name('fatura.gera');
     Route::delete('fatura/deleta/{id}','Fatura\\FaturaController@destroy')->name('fatura.deleta');
     Route::get('relatorio/fatura/{tomador}/{inicio}/{final}','Fatura\\FaturaController@relatorio')->name('fatura.relatorio');
+    Route::post('filtro/pesquisa/fatura','Fatura\\FaturaController@filtroPesquisa')->name('filtro.pesquisa.fatura');
+    Route::get('ordem/filtro/fatura/{condicao}','Fatura\\FaturaController@filtroPesquisaOrdem')->name('filtro.ordem.fatura');
 
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
@@ -127,12 +133,15 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
     Route::get('avuso/pesquisa/{id}','Avuso\\AvusoController@pesquisa')->name('avuso.pesquisa');
+    Route::post('filtra/pesquisa/avuso','Avuso\\AvusoController@filtroPesquisa')->name('filtra.pesquisa.avuso');
+    Route::get('filtra/ordem/avuso/{condicao}','Avuso\\AvusoController@filtroPesquisaOrdem')->name('filtra.ordem.avuso');
 
     Route::get('avuso/relatorio/{id}/{inicio}/{final}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
 
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
+        Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');

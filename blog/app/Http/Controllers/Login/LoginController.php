@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Login;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 class LoginController extends Controller
 {
     /**
@@ -12,6 +13,11 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $user;
+    public function __construct()
+    {
+        $this->user = new User;
+    }
     public function index()
     {
         if (auth()->check()){
@@ -48,7 +54,22 @@ class LoginController extends Controller
             
         ]);
         $dados = $request->all();
+        $user = $this->user->buscaListaUserLogin($dados);
+        if (!$user->uscontado) {
+            $user->uscontado += 1;
+        }else{
+            $user->uscontado += 1;
+        }
+        $this->user->editeLoginContador($dados,$user->uscontado);
+        if ($user->uscontado === 1) {
+            return redirect()->back()->withInput()->withErrors(['mensagem'=>'Você tem mais 2 tentativa.']);
+        }
+        if ($user->uscontado === 3) {
+            return redirect()->back()->withInput()->withErrors(['mensagem'=>'Você atigil as 3 tentetivas tente novamento mais tarde.']);
+        }
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
+            $this->user->editeLoginContador($dados,null);
+            $user->givePermissionTo('user');
             return redirect()->route('home.index');
         }
         return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuario. Tente novamente.']);

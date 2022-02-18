@@ -119,10 +119,10 @@
                             <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                        <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
+                        <li><a class="dropdown-item text-white" href="{{route('ordem.pesquisa.user','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="{{route('ordem.pesquisa.user','desc')}}"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
@@ -275,7 +275,7 @@
               if (data.id) {
                   $('#form').attr('action', "{{ url('user')}}/"+data.id);
                   $('#formdelete').attr('action',"{{ url('user')}}/"+data.id)
-                  $('#incluir').attr('disabled','disabled')
+                  // $('#incluir').attr('disabled','disabled')
                   $('#atualizar').removeAttr( "disabled" )
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
@@ -287,7 +287,7 @@
                   $('#idempresa').val(data.empresa)
               }else{
                   $('#form').attr('action', "{{ route('user.store') }}");
-                  $('#incluir').removeAttr( "disabled" )
+                  // $('#incluir').removeAttr( "disabled" )
                   $('#depedente').removeAttr( "disabled" )
                   $('#atualizar').attr('disabled','disabled')
                   $('#deletar').attr('disabled','disabled')

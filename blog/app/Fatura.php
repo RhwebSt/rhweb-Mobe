@@ -43,6 +43,62 @@ class Fatura extends Model
         })
         ->paginate(10);
     }
+
+    public function buscaListaFaturaOrdem($condicao)
+    {
+        return DB::table('tomadors')
+        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador')
+        ->select(
+            'tomadors.tsmatricula',
+            'tomadors.tsnome',
+            'faturas.tomador',
+            'faturas.fsnumero',
+            'faturas.fsinicio',
+            'faturas.fsfinal',
+            'faturas.id'
+        )
+        ->where(function($query){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('faturas.id','>',0);
+            }else{
+                $query->where('faturas.empresa', $user->empresa);
+            }
+        })
+        ->orderBy('tomadors.tsnome', $condicao)
+        ->paginate(10);
+    }
+    public function filtroPesquisa($dados)
+    {
+        return DB::table('tomadors')
+        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador')
+        ->select(
+            'tomadors.tsmatricula',
+            'tomadors.tsnome',
+            'faturas.tomador',
+            'faturas.fsnumero',
+            'faturas.fsinicio',
+            'faturas.fsfinal',
+            'faturas.id'
+        )
+        ->where(function($query) use($dados){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['faturas.id','>',0],
+                    ['tomadors.tsnome',$dados['pesquisa']]
+                ])
+                ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            }else{
+                $query->where([
+                    ['faturas.empresa', $user->empresa],
+                    ['tomadors.tsnome',$dados['pesquisa']]
+                ])
+                ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            }
+        })
+        ->paginate(10);
+    }
     public function buscaRelatorio($tomador,$inicio,$final)
     {
         return Fatura::where(function($query) use ($tomador,$inicio,$final){

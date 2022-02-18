@@ -34,6 +34,33 @@ class FaturaController extends Controller
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         
     }
+    public function filtroPesquisa(Request $request)
+    {
+        $dados = $request->all();
+        $request->validate([
+            'pesquisa' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'ano_inicial1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        ],
+        [
+            'ano_inicial1.required'=>'Campo não pode esta vazio.',
+            'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
+            'ano_final1.required'=>'Campo não pode esta vazio.',
+            'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
+        ]
+        );
+        $user = auth()->user();
+        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $faturas = $this->fatura->filtroPesquisa($dados);
+        return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
+    }
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = auth()->user();
+        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $faturas = $this->fatura->buscaListaFaturaOrdem($condicao);
+        return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
+    }
     public function store(Request $request)
     {
         $dados = $request->all();

@@ -288,7 +288,12 @@
             <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong>{{$folhar->tsmatricula}}</td>
             <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong>{{$folhar->tscpf}}</td>
             <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong>{{$folhar->dspis}}</td>
-            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>{{$folhar->cbo}}</td>
+            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>
+                <?php
+                    $cbo = explode('-',$folhar->cbo);
+                ?>
+                {{$cbo[0]}}
+            </td>
         </tr>
     </table>
 

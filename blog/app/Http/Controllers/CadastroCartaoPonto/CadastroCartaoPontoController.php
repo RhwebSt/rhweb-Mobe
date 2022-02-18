@@ -18,13 +18,24 @@ class CadastroCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $valorrublica,$lancamentotabela;
+    public function __construct()
+    {
+        $this->valorrublica = new ValoresRublica;
+        $this->lancamentotabela = new Lancamentotabela;
+    }
     public function index()
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $lancamentotabela = new Lancamentotabela;
-        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('D');
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
+        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+    }
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = Auth::user();
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('D',$condicao);
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
@@ -128,12 +139,20 @@ class CadastroCartaoPontoController extends Controller
         $valorrublica = new ValoresRublica;
         $lancamentotabela = new Lancamentotabela;
         $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('D');
+        $lancamentotabelas = $lancamentotabela->buscaListas('D','asc');
         $dados = $lancamentotabela->buscaUnidade($id);
-        // dd($numboletimtabela,$lancamentotabelas,$dados);
         return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
-
+    public function filtroPesquisaOrdemEdit($id,$condicao)
+    {
+        $user = Auth::user();
+        $valorrublica = new ValoresRublica;
+        $lancamentotabela = new Lancamentotabela;
+        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $lancamentotabela->buscaListas('D',$condicao);
+        $dados = $lancamentotabela->buscaUnidade($id);
+        return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+    }
     /**
      * Update the specified resource in storage.
      *

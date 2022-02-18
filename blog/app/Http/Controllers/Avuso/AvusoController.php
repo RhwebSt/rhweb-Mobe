@@ -31,7 +31,33 @@ class AvusoController extends Controller
         
         return view('avuso.index',compact('user','valorrublica_avuso','lista'));
     }
-
+    public function filtroPesquisa(Request $request)
+    {
+        $dados = $request->all();
+        $request->validate([
+            'pesquisa' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'ano_inicial1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        ],
+        [
+            'ano_inicial1.required'=>'Campo não pode esta vazio.',
+            'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
+            'ano_final1.required'=>'Campo não pode esta vazio.',
+            'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
+        ]
+        );
+        $user = auth()->user();
+        $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lista = $this->avuso->filtraPesquisa($dados);
+        return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+    }
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = auth()->user();
+        $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lista = $this->avuso->buscaListaRecibosOrdem($condicao);
+        return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+    }
     /**
      * Show the form for creating a new resource.
      *

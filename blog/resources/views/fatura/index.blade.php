@@ -190,15 +190,15 @@
                 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                <form class="row g-3" action="" method="POST">
-
+                <form class="row g-3" action="{{route('filtro.pesquisa.fatura')}}" method="POST">
+                @csrf
                     <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                         
                             <div class="d-flex justify-content-between mb-3 mt-0">
                                 <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
                                     <div class="d-flex">
                                     <label for="exampleDataList" class="form-label"></label>
-                                    <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
+                                    <input class="form-control fw-bold text-dark pesquisa @error('pesquisa') is-invalid @enderror" list="datalistOptions" name="pesquisa" id="pesquisa">
                                     <datalist id="datalistOptions">
                                     </datalist>
                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
@@ -208,24 +208,33 @@
                                         </div>
                                     </div>
                                     </div>
+                                    @error('pesquisa')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-            
+                                   
                             </div>
             
                             <div class="data mt-4">
                                     <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                                     <label for="ano" class="form-label">Data Inicial</label>
-                                    <input type="date" class="form-control " name="ano_inicial1" value="" id="tano1">
+                                    <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
+                                    @error('ano_inicial1')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                     
                                     <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                     <label for="ano" class="form-label">Data Final</label>
-                                    <input type="date" class="form-control " name="ano_final1" value="" id="tano1">
+                                    <input type="date" class="form-control @error('ano_final1') is-invalid @enderror" name="ano_final1" value="" id="tano1">
+                                    @error('ano_inicial1')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                 </div>
             
                                 <div class="mt-3">
-                                    <a class="btn botao filtrar" id="">Filtrar <i class="fas fa-filter"></i></a>
+                                    <button type="submit" class="btn botao filtrar" id="">Filtrar <i class="fas fa-filter"></i></button>
                                 </div>
 
                                 
@@ -233,21 +242,21 @@
                     </form>
                     
                     <form class="row g-3" action="" method="POST">
-
+                    </form>
                         <div class="d-flex justify-content-end">
                             <div class="dropdown  mt-2 p-1">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
                                     <i class="fad fa-sort"></i> Filtro 
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                                <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
+                                <li><a class="dropdown-item text-white" href="{{route('filtro.ordem.fatura','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                <li><a class="dropdown-item text-white" href="{{route('filtro.ordem.fatura','desc')}}"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                                 </ul>
                             </div>
                         </div>
-                        </form>
+                        
 
                         <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">

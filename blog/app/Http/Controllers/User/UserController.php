@@ -28,10 +28,16 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser();
+        $users = $use->listaUser('asc');
         return view('usuarios.index',compact('user','users'));
     }
-
+    public function filtroPesquisa($condicao)
+    {
+        $user = Auth::user();
+        $use = new User;
+        $users = $use->listaUser($condicao);
+        return view('usuarios.index',compact('user','users'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -107,10 +113,11 @@ class UserController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser(); 
-        $editar = $use->edit($id); 
+        $users = $use->listaUser('asc');
+        $editar = $use->edit($id);
         return view('usuarios.edit',compact('user','users','editar'));
     }
+    
 
     /**
      * Update the specified resource in storage.

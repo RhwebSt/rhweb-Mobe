@@ -60,7 +60,7 @@ class Lancamentotabela extends Model
         ->limit(100)
         ->get();
     }
-    public function buscaListas($status)
+    public function buscaListas($status,$condicao = null)
     {
         return DB::table('lancamentotabelas')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
@@ -79,6 +79,7 @@ class Lancamentotabela extends Model
                 ]);
             }
         })
+        ->orderBy('lancamentotabelas.liboletim', $condicao)
         ->paginate(10);
     }
     public function buscaUnidade($id)

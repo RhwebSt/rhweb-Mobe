@@ -28,7 +28,53 @@ class Avuso extends Model
             if ($user->hasPermissionTo('admin')) {
                 $query->where('avusos.id','>',0);
             }else{
-                $query->where('trabalhadors.empresa', $user->empresa);
+                $query->where('avusos.empresa', $user->empresa);
+            }
+        })
+        ->paginate(10);
+    }
+    public function buscaListaRecibosOrdem($condicao)
+    {
+        return Avuso::where(function($query){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('avusos.id','>',0);
+            }else{
+                $query->where('avusos.empresa', $user->empresa);
+            }
+        })
+        ->orderBy('avusos.aicodigo', $condicao)
+        ->paginate(10);
+    }
+    public function filtraPesquisa($dados)
+    {
+        return Avuso::where(function($query) use($dados){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['avusos.aicodigo',$dados['pesquisa']],
+                ])
+                ->orWhere([
+                    ['avusos.asnome',$dados['pesquisa']],
+                ])
+                ->orWhere([
+                    ['avusos.ascpf',$dados['pesquisa']],
+                ])
+                ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            }else{
+                $query->where([
+                    ['avusos.aicodigo',$dados['pesquisa']],
+                    ['avusos.empresa',$user->empresa]
+                ])
+                ->orWhere([
+                    ['avusos.asnome',$dados['pesquisa']],
+                    ['avusos.empresa',$user->empresa]
+                ])
+                ->orWhere([
+                    ['avusos.ascpf',$dados['pesquisa']],
+                    ['avusos.empresa',$user->empresa]
+                ])
+                ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
             }
         })
         ->paginate(10);
@@ -113,7 +159,7 @@ class Avuso extends Model
             }
             
         })
-        ->first();
+        ->first(); 
     }
     public function buscaUnidadeTrabalhador($id = null,$trabalhador,$inicio = null,$final = null)
     {

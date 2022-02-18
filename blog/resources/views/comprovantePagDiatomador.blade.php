@@ -249,7 +249,12 @@
             <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong>{{$trabalhado->tsmatricula}}</td>
             <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong>{{$trabalhado->tscpf}}</td>
             <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong>{{$trabalhado->dspis}}</td>
-            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>{{$trabalhado->cbo}}</td>
+            <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>
+                <?php
+                    $cbo = explode('-',$trabalhado->cbo);
+                ?>
+                {{$cbo[0]}}
+            </td>
         </tr>
     </table>
 

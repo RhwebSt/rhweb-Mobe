@@ -114,16 +114,16 @@
                         </thead>
                         <tbody style="background-color: #081049; color: white;">
                         @if(count($users) > 0)
-                        @foreach($users as $user)
-                            <tr class="bodyTabela">   
+                        @foreach($users as $valoruser)
+                            <tr class="bodyTabela">    
                                 
                             <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$user->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                      <a>{{$user->esnome}} </a>
+                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                      <a>{{$valoruser->esnome}} </a>
                                     </button>
                                 </td>
    
-                                <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$user->name}}</td>
+                                <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$valoruser->name}}</td>
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
                                     <div class="dropdown">

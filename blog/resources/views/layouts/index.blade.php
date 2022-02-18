@@ -161,7 +161,7 @@
                       @if($user->name)
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
-                      </a>
+                      </a> 
                       @else
                       <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user fa-md"></i> MOBE

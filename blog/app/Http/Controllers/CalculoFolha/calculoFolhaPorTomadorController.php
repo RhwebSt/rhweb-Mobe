@@ -681,7 +681,7 @@ class calculoFolhaPorTomadorController extends Controller
         
         $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
         // dd($folhas,$valorcalculos,$relacaodias);
-        // dd($valorcalculos,$basecalculo_id);
+        // dd($valorcalculos,$basecalculo_id); 
         $pdf = PDF::loadView('comprovantetomador',compact('folhas','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
         

@@ -67,7 +67,7 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
                             <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                            <a type="submit" href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados),base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao"><i class="fad fa-user-clock"></i> Cartão Ponto</a>
+                            <a href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados),base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao"><i class="fad fa-user-clock"></i> Cartão Ponto</a>
                             <button type="button" class="btn botao  "  id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                               <i class="fad fa-trash"></i> Excluir
                           </button> 
@@ -158,10 +158,10 @@
                             <i class="fad fa-sort"></i> Filtro 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
+                        <li><a class="dropdown-item text-white" href="{{route('ordem.cadastro.cartao.ponto',[$dados->id,'asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white" href="{{route('edit.ordem.cadastro.cartao.ponto',[$dados->id,'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>

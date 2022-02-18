@@ -202,8 +202,8 @@
                 
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                <form class="row g-3" action="" method="POST">
-
+                <form class="row g-3" action="{{route('filtra.pesquisa.avuso')}}" method="POST">
+                @csrf
                     <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                         
                             <div class="d-flex justify-content-between mb-3 mt-0">
@@ -237,7 +237,7 @@
                                 </div>
             
                                 <div class="mt-3">
-                                    <a class="btn botao filtrar" id="">Filtrar <i class="fad fa-filter"></i></a>
+                                    <button class="btn botao filtrar" id="">Filtrar <i class="fad fa-filter"></i></button>
                                 </div>
     
 
@@ -251,10 +251,10 @@
                                     <i class="fad fa-sort"></i> Filtro 
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
+                                <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
+                                <li><a class="dropdown-item text-white" href="{{route('filtra.ordem.avuso','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                <li><a class="dropdown-item text-white" href="{{route('filtra.ordem.avuso','desc')}}"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
                                 </ul>
                             </div>
                         </div>

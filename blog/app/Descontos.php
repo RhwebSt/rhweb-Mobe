@@ -57,7 +57,7 @@ class Descontos extends Model
     }
     public function buscaRelatorio($empresa,$dataincio,$datafinal)
     {
-        return DB::table('trabalhadors')
+        return DB::table('trabalhadors') 
         ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
         ->join('empresas', 'empresas.id', '=', 'descontos.empresa')
         ->select(

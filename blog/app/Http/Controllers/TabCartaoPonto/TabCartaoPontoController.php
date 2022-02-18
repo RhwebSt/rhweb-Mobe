@@ -15,19 +15,28 @@ class TabCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $lancamentorublica;
+    private $lancamentorublica,$valorrublica,$lancamentotabela;
     public function __construct()
     {
         $this->lancamentorublica = new Lancamentorublica;
+        $this->valorrublica = new ValoresRublica;
+        $this->lancamentotabela = new Lancamentotabela;
     }
     public function index()
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $lancamentotabela = new Lancamentotabela;
-        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('M');
+        
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
+        return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+    }
 
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = Auth::user();
+        
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
         return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
@@ -117,12 +126,19 @@ class TabCartaoPontoController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $lancamentotabela = new Lancamentotabela;
-        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('M');
-        $dados = $lancamentotabela->buscaUnidade($id);
-        // dd($dados);
+        
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
+        $dados = $this->lancamentotabela->buscaUnidade($id);
+        return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+    }
+    public function filtroPesquisaOrdemEdit($id,$condicao)
+    {
+        $user = Auth::user();
+        
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
+        $dados = $this->lancamentotabela->buscaUnidade($id);
         return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
 
