@@ -16,8 +16,8 @@ class TabelaPreco extends Model
             'tsano'=>$dados['ano'],
             'tsrubrica'=>$dados['rubricas'],
             'tsdescricao'=>$dados['descricao'],
-            'tsvalor'=>str_replace(",",".",$dados['valor']),
-            'tstomvalor'=>str_replace(",",".",$dados['valor__tomador']),
+            'tsvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
+            'tstomvalor'=>str_replace(",",".",str_replace(".","",$dados['valor__tomador'])),
             'empresa'=>$dados['empresa'],
             'tomador'=>$dados['tomador']
         ]);
@@ -80,7 +80,7 @@ class TabelaPreco extends Model
             }else{
                  $query->where([
                     ['tomador',$tomador],
-                    ['empresa', $user->empresa]
+                    ['empresa', $user->empresa] 
                 ]);
             }
            
@@ -183,8 +183,8 @@ class TabelaPreco extends Model
             'tsano'=>$dados['ano'],
             'tsrubrica'=>$dados['rubricas'],
             'tsdescricao'=>$dados['descricao'],
-            'tsvalor'=>str_replace(",",".",$dados['valor']),
-            'tstomvalor'=>str_replace(",",".",$dados['valor__tomador']),
+            'tsvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
+            'tstomvalor'=>str_replace(",",".",str_replace(".","",$dados['valor__tomador'])),
         ]);
     }
     public function deletar($id)

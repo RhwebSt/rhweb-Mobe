@@ -23,34 +23,40 @@ class Lancamentotabela extends Model
     }
     public function buscaListaLancamentoTab($id,$status)
     {
-        return Lancamentotabela::where(function($query) use ($id,$status){
+        return DB::table('lancamentotabelas')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'tomadors.tsnome', 
+            'lancamentotabelas.*', 
+            )
+        ->where(function($query) use ($id,$status){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
                 if ($id) {
                     $query->where([
-                        ['liboletim',$id],
-                        ['lsstatus',$status]
+                        ['lancamentotabelas.liboletim',$id],
+                        ['lancamentotabelas.lsstatus',$status]
                     ])
-                    ->orWhere('id',$id);
+                    ->orWhere('lancamentotabelas.id',$id);
                 }else{
                     $query->where([
-                        ['id','>',$id],
-                        ['lsstatus',$status]
+                        ['lancamentotabelas.id','>',$id],
+                        ['lancamentotabelas.lsstatus',$status]
                     ]);
                 }
               
             }else{
                 if ($id) {
                     $query->where([
-                        ['liboletim',$id],
-                        ['lsstatus',$status],
-                        ['empresa', $user->empresa]
+                        ['lancamentotabelas.liboletim',$id],
+                        ['lancamentotabelas.lsstatus',$status],
+                        ['lancamentotabelas.empresa', $user->empresa]
                     ]);
                 }else{
                     $query->where([
-                        ['id','>',$id],
-                        ['lsstatus',$status],
-                        ['empresa', $user->empresa]
+                        ['lancamentotabelas.id','>',$id],
+                        ['lancamentotabelas.lsstatus',$status],
+                        ['lancamentotabelas.empresa', $user->empresa]
                     ]);
                 }
             }
@@ -75,7 +81,7 @@ class Lancamentotabela extends Model
             }else{
                 $query->where([
                     ['lancamentotabelas.lsstatus',$status],
-                    ['empresa', $user->empresa]
+                    ['tomadors.empresa', $user->empresa]
                 ]);
             }
         })
@@ -102,7 +108,7 @@ class Lancamentotabela extends Model
             }else{
                 $query->where([
                     ['lancamentotabelas.id',$id],
-                    ['empresa', $user->empresa]
+                    ['tomadors.empresa', $user->empresa]
                 ]);
             }
         })
@@ -184,7 +190,7 @@ class Lancamentotabela extends Model
         })->count();
     }
     public function relatorioBoletimTabela($id)
-    {
+    { 
         return DB::table('lancamentotabelas')
         // ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')

@@ -256,9 +256,9 @@
                             });
                             $('#listusuario').html(nome)    
                         }
-                        if(data.length === 1 && dados.length >= 2){
-                          usuario(dados)
-                        }
+                        // if(data.length === 1 && dados.length >= 2){
+                        //   usuario(dados)
+                        // }
                       }
                 });
             });

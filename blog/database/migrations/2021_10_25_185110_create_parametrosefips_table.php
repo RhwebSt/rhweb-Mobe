@@ -21,7 +21,7 @@ class CreateParametrosefipsTable extends Migration
             $table->integer('psresol')->nullable();
             $table->integer('pscnae')->nullable();
             $table->float('psfapaliquota',8,2)->nullable();
-            $table->float('psrataaliquota',8,2)->nullable();
+            // $table->float('psrataaliquota',8,2)->nullable();
             $table->float('psratajustados',8,2)->nullable();
             $table->float('psfpasterceiros',8,2)->nullable();
             $table->float('psaliquotaterceiros',8,2)->nullable();

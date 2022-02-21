@@ -124,18 +124,16 @@ class TabelaPrecoController extends Controller
             'valor'=>'required',
             'valor__tomador'=>'required'
         ]);
-        $novodados = [
-            $id,
-            $dados['tomador']
-        ];
+
         $tabelapreco = new TabelaPreco;
-        try {
+        
             $tabelaprecos = $tabelapreco->editar($dados,$id);
             if($tabelaprecos) {
                 return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
+            try {
         } catch (\Throwable $th) {
-            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }
     }
 

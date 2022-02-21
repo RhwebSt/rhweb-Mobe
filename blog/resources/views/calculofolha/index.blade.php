@@ -107,6 +107,12 @@
                               @enderror
                             </div>
                         </div>
+                        
+                            <div class="col-12 mt-3 col-sm-6 col-md-3 col-lg-3">
+                              <label for="competencia" class="form-label">Competência</label>
+                              <input type="month" class="form-control" name="competencia" value="" id="competencia">
+                                <span class="text-danger"></span>
+                            </div>
                         <div class="mt-5">
                             <button type="submit" class="btn botao" id="campo1">Calcular <i class="fad fa-calculator-alt"></i></button>
                         </div>
@@ -182,8 +188,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Trabalhador</th>
                                     <th class="col text-center border-top text-nowrap" style="width:50px;">Analítica</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:50px;">Sefip</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
+                                    <th class="col text-center border-top text-nowrap border-end" style="width:50px;">Sefip</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
                                     @if(count($tomadores) > 0)
@@ -298,16 +303,12 @@
                                                 @endforeach
                                             </td>
                                             
-                                        <td class="col text-center border-bottom text-nowrap" style="width:50px;">
+                                        <td class="col text-center border-bottom text-nowrap border-end" style="width:50px;">
                                                     <a href="" class="btn" style="background-color:#145247; border: 1px solid #7DDE92;">
                                                         <i class="fad fa-lg fa-file-alt" style="color: white"></i>
                                                     </a>
                                             </td>
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action=""  method="post">
-                                                <button type="submit" class="btn" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
-                                            </form> 
-                                            </td>
+
                                         </td>
                                         
                                     </tr>

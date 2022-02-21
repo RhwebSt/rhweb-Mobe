@@ -12,11 +12,11 @@ class Taxa extends Model
     public function cadastro($dados)
     {
         return Taxa::create([
-            'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
-            // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
-            'tfdas'=>str_replace(",",".",$dados['das']),
-            'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
+            'tftaxaadm'=>str_replace(",",".",str_replace(",",".",$dados['taxa_adm'])),
+            // 'tfbenef'=>str_replace(",",".",str_replace(",",".",$dados['caixa_benef']),
+            'tfdefaltor'=>str_replace(",",".",str_replace(",",".",$dados['deflator'])),
+            'tfdas'=>str_replace(",",".",str_replace(",",".",$dados['das'])),
+            'tftaxafed'=>str_replace(",",".",str_replace(",",".",$dados['taxa__fed'])),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -24,11 +24,11 @@ class Taxa extends Model
     {
       return Taxa::where('tomador', $id)
       ->update([
-        'tftaxaadm'=>str_replace(",",".",$dados['taxa_adm']),
+        'tftaxaadm'=>str_replace(",",".",str_replace(",",".",$dados['taxa_adm'])),
             // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
-            'tfdefaltor'=>str_replace(",",".",$dados['deflator']),
-            'tfdas'=>str_replace(",",".",$dados['das']),
-            'tftaxafed'=>str_replace(",",".",$dados['taxa__fed']),
+        'tfdefaltor'=>str_replace(",",".",str_replace(",",".",$dados['deflator'])),
+        'tfdas'=>str_replace(",",".",str_replace(",",".",$dados['das'])),
+        'tftaxafed'=>str_replace(",",".",str_replace(",",".",$dados['taxa__fed'])),
     ]);
     }
     public function deletar($id)

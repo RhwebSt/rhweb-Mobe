@@ -102,7 +102,7 @@ class Avuso extends Model
                         ['empresa', $user->empresa]
                     ])
                     ->orWhere([
-                        ['tscpf','like','%'.$id.'%'],
+                        ['ascpf','like','%'.$id.'%'],
                         ['empresa', $user->empresa],
                     ]);
                 }else{
@@ -153,7 +153,7 @@ class Avuso extends Model
             }else{
                 $query->where([
                     ['avusos.id',$trabalhador],
-                    ['empresa', $user->empresa],
+                    ['empresas.id', $user->empresa],
                 ])
                 ->whereBetween('avusos.asfinal',[$inicio,$final]);
             }

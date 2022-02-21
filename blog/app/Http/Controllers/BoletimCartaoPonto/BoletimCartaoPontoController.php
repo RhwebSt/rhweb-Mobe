@@ -52,22 +52,11 @@ class BoletimCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all(); 
-    
-        $novodados = [
-            $dados['lancamento'],
-            $dados['domingo'],
-            $dados['sabado'],
-            $dados['diasuteis'],
-            $dados['data'],
-            $dados['boletim'],
-            $dados['tomador'],
-            $dados['feriado']
-        ];
         $bolcartaoponto = new Bolcartaoponto;
         try {
         $bolcartaopontos = $bolcartaoponto->verifica($dados);
         if ($bolcartaopontos) {
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
+            return redirect()->back()->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
         }
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
@@ -100,17 +89,16 @@ class BoletimCartaoPontoController extends Controller
             // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
         if ($validator->fails()) { 
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         }
         $bolcartaopontos = $bolcartaoponto->cadastro($dados);
         if ($bolcartaopontos) {
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }else{
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors(['false'=>'Cadastro realizado com sucesso!']);
+            return redirect()->back()->withErrors(['false'=>'Cadastro realizado com sucesso!']);
         }
         } catch (\Throwable $th) {
-            $id = 'cartao ponto';
-            return view('error',compact('id','novodados'));
+            return redirect()->back()->withErrors(['false'=>'Cadastro realizado com sucesso!']);
         }
     }
 
@@ -147,16 +135,7 @@ class BoletimCartaoPontoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $novodados = [
-            $dados['lancamento'],
-            $dados['domingo'],
-            $dados['sabado'],
-            $dados['diasuteis'],
-            $dados['data'],
-            $dados['boletim'],
-            $dados['tomador'],
-            $dados['feriado']
-        ];
+        
         $bolcartaoponto = new Bolcartaoponto;  
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
@@ -189,7 +168,7 @@ class BoletimCartaoPontoController extends Controller
             // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
         ]);
         if ($validator->fails()) {
-            return redirect()->route('boletimcartaoponto.create',$novodados)->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         }
         try {
             $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
@@ -197,8 +176,7 @@ class BoletimCartaoPontoController extends Controller
                 return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            $id = 'cartao ponto';
-            return view('error',compact('id','novodados'));
+            return redirect()->back()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
     }
 
@@ -211,27 +189,13 @@ class BoletimCartaoPontoController extends Controller
     public function destroy($id)
     {
         $bolcartaoponto = new Bolcartaoponto; 
-        $cartaoponto = new CartaoPonto;
-        $bolcartaopontos = $bolcartaoponto->buscaUnidadeLancamento($id);
-        $cartaopontos = $cartaoponto->buscaTomador($bolcartaopontos->tomador);
-        $novodados = [
-            $bolcartaopontos->id,
-            $cartaopontos->csdomingos?$cartaopontos->csdomingos:0,
-            $cartaopontos->cssabados? $cartaopontos->cssabados:0,
-            $cartaopontos->csdiasuteis,
-            $bolcartaopontos->lsdata,
-            $bolcartaopontos->liboletim,
-            $bolcartaopontos->tomador,
-            $bolcartaopontos->lsferiado
-        ];
         try {
             $bolcartaopontos = $bolcartaoponto->deletar($id);
             if ($bolcartaopontos) {
                 return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            $id = 'cartao ponto';
-            return view('error',compact('id','novodados'));
+            return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
         }
     }
 }

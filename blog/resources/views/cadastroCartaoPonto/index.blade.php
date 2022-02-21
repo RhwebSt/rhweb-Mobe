@@ -299,6 +299,9 @@
                 var dados = '0';
                 if ($(this).val()) {
                   dados = $(this).val();
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados_pesquisa(dados);
+                  }
                 }
                 var status = $('#status').val();
                 $.ajax({
@@ -310,7 +313,7 @@
                     let nome = ''
                     if (data.length >= 1) {
                       data.forEach(element => {
-                        nome += `<option value="${element.liboletim}">`
+                        nome += `<option value="${element.liboletim}  ${element.tsnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
                         // nome += `<option value="${element.tscpf}">`
                       });
@@ -419,6 +422,11 @@
             function monta_dados(dados) {
               let novodados = dados.split('  ')
               return novodados[1];
+            }
+
+            function monta_dados_pesquisa(dados) {
+              let novodados = dados.split('  ')
+              return novodados[0];
             }
             function Alerta(tomador) {
                 Swal.fire({

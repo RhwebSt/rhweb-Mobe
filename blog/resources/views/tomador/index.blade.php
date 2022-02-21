@@ -1027,6 +1027,7 @@
                 $('#banco').val(data.bsbanco)
                 $('#agencia').val(data.bsagencia)
                 $('#operacao').val(data.bsoperacao)
+                $('#cod__fap').val(data.psconfpas)
                 $('#conta').val(data.bsconta)
                 $('#pix').val(data.bspix)
                 $('#folhartransporte').val(data.instransporte.toFixed(2).toString().replace(".", ","))

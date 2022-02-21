@@ -12,10 +12,10 @@ class IncideFolhar extends Model
     public function cadastro($dados)
     {
         return IncideFolhar::create([
-            'insalimentacao'=>str_replace(",",".",$dados['folharalim']),
-            'instransporte'=>str_replace(",",".",$dados['folhartransporte']),
-            'instipotrans'=>str_replace(",",".",$dados['folhartipotrans']),
-            'instipoali'=>str_replace(",",".",$dados['folhartipoalim']),
+            'insalimentacao'=>str_replace(",",".",str_replace(".","",$dados['folharalim'])),
+            'instransporte'=>str_replace(",",".",str_replace(".","",$dados['folhartransporte'])),
+            'instipotrans'=>str_replace(",",".",str_replace(".","",$dados['folhartipotrans'])),
+            'instipoali'=>str_replace(",",".",str_replace(".","",$dados['folhartipoalim'])),
             'tomador'=>$dados['tomador']
         ]);
     }
@@ -23,10 +23,10 @@ class IncideFolhar extends Model
    {
         return IncideFolhar::where('tomador', $id)
         ->update([
-            'insalimentacao'=>str_replace(",",".",$dados['folharalim']),
-            'instransporte'=>str_replace(",",".",$dados['folhartransporte']),
-            'instipotrans'=>str_replace(",",".",$dados['folhartipotrans']),
-            'instipoali'=>str_replace(",",".",$dados['folhartipoalim']),
+            'insalimentacao'=>str_replace(",",".",str_replace(".","",$dados['folharalim'])),
+            'instransporte'=>str_replace(",",".",str_replace(".","",$dados['folhartransporte'])),
+            'instipotrans'=>str_replace(",",".",str_replace(".","",$dados['folhartipotrans'])),
+            'instipoali'=>str_replace(",",".",str_replace(".","",$dados['folhartipoalim'])),
         ]);
    }
    public function deletar($id)

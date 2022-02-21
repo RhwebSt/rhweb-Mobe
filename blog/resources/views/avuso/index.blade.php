@@ -546,7 +546,7 @@
                 let dados = '0'
                 if ($(this).val()) {
                   dados = $(this).val()
-                  if (dados.indexOf('  ') !== -1) {
+                  if (dados.indexOf('  ') !== -1) { 
                     dados = monta_dados(dados);
                   }
                 }

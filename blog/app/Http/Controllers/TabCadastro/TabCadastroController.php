@@ -173,26 +173,19 @@ class TabCadastroController extends Controller
      */
     public function destroy($id)
     {
-        $lancamentotabela = new Lancamentotabela;
+        // $lancamentotabela = new Lancamentotabela;
         $lancamentorublica = new Lancamentorublica;
-        $lancamentorublicas = $lancamentorublica->UnidadeRublica($id);
-        $novadata = explode(' ',$lancamentorublicas->created_at);
-        $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($lancamentorublicas->lancamento);
-        $novodados = [
-            $lancamentotabelas->lsnumero,
-            $lancamentotabelas->liboletim,
-            $lancamentotabelas->tomador,
-            $lancamentotabelas->id,
-            $novadata[0]
-        ];
-        if (!$lancamentotabelas) {
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
-        }
+    //     $lancamentorublicas = $lancamentorublica->UnidadeRublica($id);
+    //     $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($lancamentorublicas->lancamento);
+    //    dd($lancamentotabelas);
+    //     if (!$lancamentotabelas) {
+    //         return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
+    //     }
         try {
             $lancamentorublicas = $lancamentorublica->deletar($id);
-            return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Registro deletado com sucesso.']);
+            return redirect()->back()->withSuccess('Registro deletado com sucesso.');
         } catch (\Throwable $th) {
-            echo('Não foi porssivél deleta o registro.');
+            return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
         }
       
     }

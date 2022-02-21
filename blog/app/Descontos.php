@@ -15,7 +15,7 @@ class Descontos extends Model
            'dsdescricao'=>$dados['descricao'],
            'dsquinzena'=>$dados['quinzena'],
            'dscompetencia'=>$dados['competencia'],
-           'dfvalor'=>str_replace(",",".",$dados['valor']),
+           'dfvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
            'trabalhador'=>$dados['trabalhador'],
            'empresa'=>$dados['empresa'],
         ]);
@@ -27,7 +27,7 @@ class Descontos extends Model
             'dsdescricao'=>$dados['descricao'],
             'dsquinzena'=>$dados['quinzena'],
             'dscompetencia'=>$dados['competencia'],
-            'dfvalor'=>str_replace(",",".",$dados['valor'])
+            'dfvalor'=>str_replace(",",".",str_replace(".","",$dados['valor']))
         ]);
     }
     public function lista($empresa)
@@ -88,9 +88,9 @@ class Descontos extends Model
         ->whereBetween('descontos.dscompetencia',[substr($dados['ano_inicial'], 0, 7),substr($dados['ano_final'], 0, 7)])
         ->get();
     }
-    public function buscaRelatorioTrabalhador($trabalhador,$dataincio,$datafinal)
+    public function buscaRelatorioTrabalhador($empresa,$trabalhador,$dataincio,$datafinal)
     {
-        return DB::table('trabalhadors')
+        return DB::table('trabalhadors') 
         ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
         ->selectRaw(
             'trabalhadors.id,
@@ -100,6 +100,7 @@ class Descontos extends Model
             SUM(descontos.dfvalor) as valor'
         )
         ->whereIn('trabalhadors.id',$trabalhador)
+        ->where('descontos.empresa',$empresa)
         ->groupBy('trabalhadors.id','descontos.dsquinzena','descontos.dsdescricao')
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
         ->get();

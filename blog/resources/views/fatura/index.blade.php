@@ -172,11 +172,21 @@
                             
                             </div>
                             
+                            <div class="data mt-4">
+                            
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="vencimento" class="form-label">Data Vencimento</label>
                                     <input type="date" class="form-control" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
                                         <span class="text-danger"></span>
                                 </div>
+                                
+                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
+                                    <label for="competencia" class="form-label">Competência</label>
+                                    <input type="month" class="form-control" name="competencia" value="" id="competencia">
+                                        <span class="text-danger"></span>
+                                </div>
+                                
+                            </div>
                             
                             
                             
@@ -268,7 +278,7 @@
                                     <th class="col text-center border-top text-nowrap" style="width:200px">Data Final</th>
                                     <th class="col text-center border-top text-nowrap" style="width:110px;">Nº Fatura</th>
                                     <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
+                                    <th class="col text-center border-top text-nowrap border-end" style="width:60px;">Excluir</th>
                                 </thead>
                                 <tbody style="background-color: #081049; color: white;">
                                 @if(count($faturas) > 0)
