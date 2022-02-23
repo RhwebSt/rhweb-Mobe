@@ -131,7 +131,9 @@
 
               
                 <div class="col-md-6 input">
-                  <label for="tomador" class="form-label">Tomador</label>
+                  <label for="tomador" class="form-label">Tomador
+                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                  </label>
                   <input type="text" list="datalistOptions" class=" fw-bold form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="" id="nome__completo">
                   <datalist id="datalistOptions">
                   </datalist>
@@ -166,7 +168,7 @@
 
                 <div class="col-md-3">
                   <label for="num__trabalhador" class="form-label">Quantidade de cadastros</label>
-                  <input type="number" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
+                  <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
                   @error('num__trabalhador')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -289,6 +291,20 @@
                         </div>
                     </div>
             </div>
+            
+             <script>
+                var botaolimpaCampos = document.querySelector("#refre");
+        
+                botaolimpaCampos.addEventListener('click', function(){
+                    var quantidade = document.querySelector("#num__trabalhador").value='';
+                    var tomador = document.querySelector("#nome__completo").value='';
+                    var data = document.querySelector("#data").value='';
+                })
+                
+                $('#num__trabalhador').mask('#.##0', {reverse: true});
+            </script>
+            
+            
             <script>
             localStorage.setItem('boletim','{{$boletim}}')
             $( "#pesquisa" ).on('keyup focus',function() { 

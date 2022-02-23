@@ -106,12 +106,14 @@ class AvusoController extends Controller
         $total = 0;
         for ($i = 0; $i < $dados['quantidade']; $i++) { 
             if ($dados['cd'.$i] === 'Crédito') {
-                $credito += str_replace(",",".",$dados['valor'.$i]);
+                $credito += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
             }else{
-                $desconto += str_replace(",",".",$dados['valor'.$i]);
+                $desconto += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
             }
         }
+        
         $total = $credito - $desconto;
+        // dd($credito,$total);
         $dados['liquido'] = $total;
         $avuso = $this->avuso->cadastro($dados);
         $dados['avuso'] = $avuso['id'];

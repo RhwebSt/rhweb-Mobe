@@ -13,11 +13,10 @@ class PdfController extends Controller
     {
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
-        $empresas = '';
-        $trabalhadors = $trabalhador->roltrabalhado(); 
-        if (isset($trabalhadors[0]->empresa)) {
-            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors[0]->empresa);
-        }
+        $user = auth()->user();
+        $trabalhadors = $trabalhador->roltrabalhado();  
+        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
+       
         $pdf = PDF::loadView('pdf',compact('trabalhadors','empresas'));
         return $pdf->setPaper('a4')->stream('relatoria.pdf');
     }

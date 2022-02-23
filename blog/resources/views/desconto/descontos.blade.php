@@ -136,7 +136,9 @@
 
                 <div>
                     <div class="col-md-3">
-                        <label for="competencia" class="form-label">Competência</label>
+                        <label for="competencia" class="form-label">Competência
+                            <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                        </label>
                         <input type="month" class="form-control @error('competencia') is-invalid @enderror" name="competencia" value="{{old('competencia')}}" id="competencia">
                             @error('competencia')
                                 <span class="text-danger">{{ $message }}</span>
@@ -350,6 +352,20 @@
       </form>
     </div>
   </div>
+  
+  
+        <script>
+                var botaolimpaCampos = document.querySelector("#refre");
+        
+                botaolimpaCampos.addEventListener('click', function(){
+                    var nomeTrab = document.querySelector("#nome__trab").value='';
+                    var descricao = document.querySelector("#descricao").value='';
+                    var valor = document.querySelector("#valor").value='';
+                    var competencia = document.querySelector("#competencia").value='';
+                })
+                
+                $('#num__trabalhador').mask('#.##0', {reverse: true});
+        </script>
         
         
         <script>

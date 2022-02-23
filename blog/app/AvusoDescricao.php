@@ -14,7 +14,7 @@ class AvusoDescricao extends Model
            
            return AvusoDescricao::create([
                'asdescricao'=>$dados['descricao'.$i],
-               'aivalor'=>str_replace(",",".",$dados['valor'.$i]),
+               'aivalor'=>str_replace(",",".",str_replace(".","",$dados['valor'.$i])),
                'asstatus'=>$dados['cd'.$i],
                'avuso'=>$dados['avuso']
            ]);

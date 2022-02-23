@@ -304,9 +304,10 @@
                                             </td>
                                             
                                         <td class="col text-center border-bottom text-nowrap border-end" style="width:50px;">
-                                                    <a href="" class="btn" style="background-color:#145247; border: 1px solid #7DDE92;">
+                                                    <a href="{{route('gera.txt.sefip')}}" class="btn" style="background-color:#145247; border: 1px solid #7DDE92;">
                                                         <i class="fad fa-lg fa-file-alt" style="color: white"></i>
                                                     </a>
+                                                
                                             </td>
 
                                         </td>

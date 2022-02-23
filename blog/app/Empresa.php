@@ -71,6 +71,25 @@ class Empresa extends Model
             })
             ->first();
     }
+    public function EmpresaSefip($id)
+    {
+        return DB::table('empresas')
+        ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
+        ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
+        ->select(
+            'empresas.*', 
+            'enderecos.*',
+        )
+        ->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('empresas.id',$id);
+            }else{
+                $query->where('empresas.id', $user->empresa);
+            }
+        })
+        ->first();
+    }
     public function buscaListaEmpresaInt($id)
     {
         return Empresa::whereIn('id',$id)->select('esnome')->get();

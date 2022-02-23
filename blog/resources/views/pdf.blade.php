@@ -231,10 +231,11 @@
         <p class="title-data">
          Data: {{date("d/m/y")}}
     </p>
+    
     <div class="borderT widthHeader margin-top">
         <table>
             <tr>
-                <td rowspan="3"><img  class="image" style="width: 90px; height:90px" src="{{$empresas->esfoto}}" alt="" srcset=""></td>
+                <td rowspan="3"><img  class="image" style="width: 90px; height:90px" src="{{$empresas->esfoto}}" alt="" srcset=""></td> 
             </tr>
             
             <tr>
