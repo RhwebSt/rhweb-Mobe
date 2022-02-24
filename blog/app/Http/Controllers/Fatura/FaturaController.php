@@ -73,7 +73,8 @@ class FaturaController extends Controller
             'text__adiantamento'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'texto__credito'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'valor__creditos'=>'required',
-            'valor__adiantamento'=>'required'
+            'valor__adiantamento'=>'required',
+            'competencia'=>'required|max:10'
         ]);
         $user = auth()->user();
         $dados['empresa'] = $user->empresa;

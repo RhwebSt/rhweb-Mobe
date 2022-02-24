@@ -182,8 +182,10 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="competencia" class="form-label">Competência</label>
-                                    <input type="month" class="form-control" name="competencia" value="" id="competencia">
-                                        <span class="text-danger"></span>
+                                    <input type="month" class="form-control @error('competencia') is-invalid @enderror" name="competencia" value="" id="competencia">
+                                    @error('competencia')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
                             </div>

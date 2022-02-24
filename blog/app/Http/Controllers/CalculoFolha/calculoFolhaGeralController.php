@@ -34,14 +34,14 @@ class calculoFolhaGeralController extends Controller
         $this->leis = new Leis;
         $this->lancamentotabela = new Lancamentotabela;
     }
-    public function calculoFolhaGeral($datainicio,$datafinal)
+    public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
         $folhar = new Folhar;
       
         $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
         $lancamentotabela = $this->lancamentotabela->verificarFolhar($datainicio,$datafinal);
         if(!$lancamentotabela){
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem um falor neste periodo.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem um valor neste periodo.']);
         }
         if ($folhas) {
             return redirect()->route('calculo.folha.index')->withInput()->withErrors(['false'=>'Esta data e o número da folha já estão cadastrados.']);
@@ -1044,7 +1044,7 @@ class calculoFolhaGeralController extends Controller
             }
         }
             if (($quantidadetomador - 1) === $t) {
-                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tomador_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal);
+                $calculofolhar = self::calculoFolhar($trabalhado_cal_folha,$tomador_cal_folha,$tabelapreco_codigo,$datainicio,$datafinal,$competencia);
                 return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
                 if ($calculofolhar) {
                     return redirect()->route('calculo.folha.index')->withSuccess('Cadastro realizado com sucesso.');
@@ -1056,7 +1056,7 @@ class calculoFolhaGeralController extends Controller
        
         
     }
-    public function calculoFolhar($trabalhador,$tomador,$tabelapreco_codigo,$datainicio,$datafinal)
+    public function calculoFolhar($trabalhador,$tomador,$tabelapreco_codigo,$datainicio,$datafinal,$competencia)
     {
         
         $basecalculo = new BaseCalculo;
@@ -1076,7 +1076,8 @@ class calculoFolhaGeralController extends Controller
         $dados_folhar = [
             'codigo'=>'',
             'inicio'=>$datainicio,
-            'final'=>$datafinal
+            'final'=>$datafinal,
+            'competencia'=>$competencia,
         ];
         
         $descontos = $desconto->buscaRelatorioTrabalhador($user->empresa,$trabalhador,$datainicio,$datafinal);
@@ -1463,7 +1464,16 @@ class calculoFolhaGeralController extends Controller
         $pdf = PDF::loadView('comprovantegeral',compact('folhas','leis','valorcalculos','relacaodias'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
-   
+    public function diasDatasQuat($data_inicial,$data_final) {
+        $diferenca = strtotime($data_final) - strtotime($data_inicial);
+        $dias = floor($diferenca / (60 * 60 * 24)); 
+        if ($dias <= 15) {
+            $dias = false;
+        }else{
+            $dias = true;
+        }
+        return $dias;
+    }
     public function destroy($id)
     {
         

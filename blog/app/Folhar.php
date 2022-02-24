@@ -7,15 +7,20 @@ use Illuminate\Support\Facades\DB;
 class Folhar extends Model
 {
     protected $fillable = [
-        'fscodigo','fsinicio','fsfinal','empresa','created_at'
+        'fscodigo','fsinicio','fsfinal','fscompetencia','empresa','created_at'
     ];
     public function cadastro($dados,$empresa){
         return Folhar::create([
             'fscodigo'=>$dados['codigo'],
             'fsinicio'=>$dados['inicio'],
             'fsfinal'=>$dados['final'],
+            'fscompetencia'=>$dados['competencia'],
             'empresa'=>$empresa
         ]);
+    }
+    public function buscaUnidadeFolhar($id)
+    {
+        return Folhar::where('id',$id)->first();
     }
     public function buscaUltimaoRegistroFolhar($empresa)
     {
@@ -195,6 +200,7 @@ class Folhar extends Model
         ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
         ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
         ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
         ->select(
             'folhars.fsinicio', 
             'folhars.fsfinal',
@@ -205,7 +211,12 @@ class Folhar extends Model
             'trabalhadors.tscpf',
             'categorias.cscategoria',
             'documentos.dspis',
+            'documentos.dsctps',
+            'documentos.dsserie',
+            'nascimentos.nsnascimento',
             'categorias.cbo',
+            'categorias.csadmissao',
+            'categorias.csafastamento',
             'bancarios.bsbanco',
             'bancarios.bsagencia',
             'bancarios.bsoperacao',

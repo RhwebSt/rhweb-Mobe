@@ -33,9 +33,10 @@ class calculoFolhaController extends Controller
         $dados = $request->all();
         $request->validate([
             'ano_inicial'=>'required|max:10',
-            'ano_final'=>'required|max:10'
+            'ano_final'=>'required|max:10',
+            'competencia'=>'required|max:10'
         ]);
-        $dados = $request->only('ano_inicial','ano_final');
+        $dados = $request->only('ano_inicial','ano_final','competencia');
         return redirect()->route('calculo.folha.geral',$dados);
     }
     public function filtroPesquisaTomador(Request $request)

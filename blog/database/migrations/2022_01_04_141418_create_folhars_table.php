@@ -16,6 +16,7 @@ class CreateFolharsTable extends Migration
         Schema::create('folhars', function (Blueprint $table) {
             $table->increments('id');
             $table->char('fscodigo', 10)->nullable();
+            $table->char('fscompetencia', 10)->nullable();
             $table->char('fsinicio', 10)->nullable();
             $table->char('fsfinal', 10)->nullable();
             $table->integer('empresa')->unsigned()->nullable();

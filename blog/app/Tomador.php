@@ -68,7 +68,7 @@ class Tomador extends Model
                     $query->where('tsnome',$id)
                     ->orWhere('tscnpj',$id)
                     // ->orWhere('tsmatricula',$id)
-                    ->orWhere('tomadors.id',$id);
+                    ->orWhere('tomadors.id',$id); 
                 }else{
                      $query->where([
                             ['tsnome',$id],

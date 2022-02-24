@@ -378,6 +378,14 @@ class ValorCalculo extends Model
                   ->get();
         return[$variavel,$fixio];
     }
+    public function sefipInss($basecalculo,$codigo)
+    {
+        return ValorCalculo::where([
+            ['basecalculo',$basecalculo],
+            ['vicodigo',$codigo],
+        ])
+        ->first();
+    }
     public function deletar($id)
     {
         return ValorCalculo::whereIn('basecalculo',$id)->delete();

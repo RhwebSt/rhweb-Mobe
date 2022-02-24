@@ -113,7 +113,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
  
     Route::get('imprimir/calculo/folha/tomador/{folhar}/{tomador}','CalculoFolha\\calculoFolhaPorTomadorController@imprimirTomador')->name('calculo.folha.tomador.imprimir');
     Route::post('imprimir/calculo/folha/tomador/trabalhador','CalculoFolha\\calculoFolhaPorTomadorController@imprimirTrabalhador')->name('calculo.folha.tomador.trabalhador.imprimir');
-    Route::get('calculo/folha/geral/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaGeralController@calculoFolhaGeral')->name('calculo.folha.geral');
+    Route::get('calculo/folha/geral/{ano_inicial}/{ano_final}/{competencia}','CalculoFolha\\calculoFolhaGeralController@calculoFolhaGeral')->name('calculo.folha.geral');
     Route::get('calculo/folha/imprimir/{id}','CalculoFolha\\calculoFolhaGeralController@imprimirFolhar')->name('calculo.folha.imprimir');
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');
 
@@ -138,7 +138,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('avuso/relatorio/{id}/{inicio}/{final}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
 
-    Route::get('gera/txt/sefip','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
+    Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');

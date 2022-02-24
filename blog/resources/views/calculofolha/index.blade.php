@@ -110,8 +110,10 @@
                         
                             <div class="col-12 mt-3 col-sm-6 col-md-3 col-lg-3">
                               <label for="competencia" class="form-label">Competência</label>
-                              <input type="month" class="form-control" name="competencia" value="" id="competencia">
-                                <span class="text-danger"></span>
+                              <input type="month" class="form-control @error('competencia') is-invalid @enderror" name="competencia" value="" id="competencia">
+                              @error('competencia')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
                             </div>
                         <div class="mt-5">
                             <button type="submit" class="btn botao" id="campo1">Calcular <i class="fad fa-calculator-alt"></i></button>
@@ -302,14 +304,25 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            
+                                           
                                         <td class="col text-center border-bottom text-nowrap border-end" style="width:50px;">
-                                                    <a href="{{route('gera.txt.sefip')}}" class="btn" style="background-color:#145247; border: 1px solid #7DDE92;">
+                                            <?php
+                                                $diferenca = strtotime($folhar->fsinicio) - strtotime($folhar->fsfinal);
+                                                $dias = floor($diferenca / (60 * 60 * 24)); 
+                                                if ($dias <= 15) {
+                                                    $dias = 'disabled';
+                                                }else{
+                                                    $dias = '';
+                                                }
+                                            ?>
+                                            @foreach($folhas as $folhar)
+                                                @if($folhar->id === $tomador->folhar)
+                                                    <a href="{{route('gera.txt.sefip',[base64_encode($tomador->id),base64_encode($folhar->id)])}}" class="btn $dias" style="background-color:#145247; border: 1px solid #7DDE92;">
                                                         <i class="fad fa-lg fa-file-alt" style="color: white"></i>
                                                     </a>
+                                                @endif
+                                            @endforeach
                                                 
-                                            </td>
-
                                         </td>
                                         
                                     </tr>

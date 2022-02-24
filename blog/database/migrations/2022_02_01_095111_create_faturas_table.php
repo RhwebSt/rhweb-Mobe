@@ -19,6 +19,7 @@ class CreateFaturasTable extends Migration
             $table->char('fsinicio', 15)->nullable();
             $table->char('fsfinal', 15)->nullable();
             $table->char('fsvencimento', 15)->nullable();
+            $table->char('fscompetencia', 15)->nullable();
             $table->integer('tomador')->unsigned()->nullable();
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->integer('empresa')->unsigned()->nullable();

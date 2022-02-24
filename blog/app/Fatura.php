@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Fatura extends Model
 {
     protected $fillable = [
-        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento', 'tomador', 'empresa'
+        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia', 'tomador', 'empresa'
     ];
     public function cadastro($dados)
     {
@@ -16,6 +16,7 @@ class Fatura extends Model
             'fsinicio'=>$dados['ano_inicial'],
             'fsfinal'=>$dados['ano_final'],
             'fsvencimento'=>$dados['vencimento'],
+            'fscompetencia'=>$dados['competencia'],
             'tomador'=>$dados['tomador'],
             'empresa'=>$dados['empresa'],
         ]);
