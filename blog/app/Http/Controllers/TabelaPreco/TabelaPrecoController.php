@@ -54,18 +54,12 @@ class TabelaPrecoController extends Controller
             return redirect()->back()->withInput()->withErrors(['descricao'=>'Essa rúbrica já esta cadastrada.']);; 
         }
         try {
-        $tabelaprecos = $tabelapreco->cadastro($dados);
-        $novodados = [
-            $tabelaprecos['id'],
-            $dados['tomador']
-        ];
-        if($tabelaprecos) {
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-        }
-        
-            //code...
+            $tabelaprecos = $tabelapreco->cadastro($dados);
+            if($tabelaprecos) {
+                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            }
         } catch (\Throwable $th) {
-            return redirect()->route('tabelapreco.index',$novodados)->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
 
@@ -126,12 +120,11 @@ class TabelaPrecoController extends Controller
         ]);
 
         $tabelapreco = new TabelaPreco;
-        
+        try {
             $tabelaprecos = $tabelapreco->editar($dados,$id);
             if($tabelaprecos) {
                 return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
-            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
         }

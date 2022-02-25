@@ -21,11 +21,15 @@ class fichaEpiTrabController extends Controller
         $id = base64_decode($id); 
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
-        if ($trabalhadors) {
-            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $pdf = PDF::loadView('fichaEpi',compact('trabalhadors','epi','empresas'));
-            return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
+        try {
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+            if ($trabalhadors) {
+                $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
+                $pdf = PDF::loadView('fichaEpi',compact('trabalhadors','epi','empresas'));
+                return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de api.']);
         }
     }
 }

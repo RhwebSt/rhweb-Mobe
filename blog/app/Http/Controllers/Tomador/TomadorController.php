@@ -24,18 +24,34 @@ use App\ValoresRublica;
 use App\Rublica;
 class TomadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $rublica,$tomador,$valorrublica,$taxa,$endereco,$bancario,
+    $tabelapreco,$cartaoponto,$parametrosefip,$incidefolhar,$indicefatura,
+    $comissionado,$retencaofatura,$bolcartaoponto,$lancamentorublica,$lancamentotabela;
+    public function __construct()
+    {
+        $this->rublica = new Rublica;
+        $this->tomador = new Tomador;
+        $this->valorrublica = new ValoresRublica;
+        $this->taxa = new Taxa;
+        $this->endereco = new Endereco;
+        $this->bancario = new Bancario;
+        $this->tabelapreco = new TabelaPreco;
+        $this->cartaoponto = new CartaoPonto;
+        $this->parametrosefip = new Parametrosefip;
+        $this->incidefolhar = new IncideFolhar;
+        $this->indicefatura = new IndiceFatura; 
+        $this->comissionado = new Comissionado;
+        $this->retencaofatura = new RetencaoFatura;
+        $this->bolcartaoponto = new Bolcartaoponto;
+        $this->lancamentorublica = new Lancamentorublica;
+        $this->lancamentotabela = new Lancamentotabela;
+    }
     public function index()
     {
         // $tomador = new Tomador;
         // $tomadors = $tomador->lista();
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         return view('tomador.index',compact('user','valorrublica_matricular'));
     }
 
@@ -59,11 +75,7 @@ class TomadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all(); 
-        
-        $rublica = new Rublica;
-        $user = auth()->user();
-        $tomador = new Tomador;
-        $valorrublica = new ValoresRublica;
+        $user = Auth::user();
         $request->validate([
             'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
@@ -181,23 +193,14 @@ class TomadorController extends Controller
             'pix.max'=>'O campo não pode ter mais de 225 caracteres.'
         ]
         );
-        $tomadores = $tomador->verificaCadastroCnpj($dados);
+        $tomadores = $this->tomador->verificaCadastroCnpj($dados);
         if ($tomadores) {
             return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já esta cadastrador.']);
         }
-        $taxa = new Taxa;
-        $endereco = new Endereco;
-        $bancario = new Bancario;
-        $tabelapreco = new TabelaPreco;
-        // $retencaofatura = new RetencaoFatura;
-        $cartaoponto = new CartaoPonto;
-        $parametrosefip = new Parametrosefip;
-        $incidefolhar = new IncideFolhar;
-        // $taxatrabalhador = new TaxaTrabalhador;
-        $indicefatura = new IndiceFatura; 
-        $rublicas = $rublica->listaRublicaTabelaPreco(); 
+       
+        $rublicas = $this->rublica->listaRublicaTabelaPreco(); 
         try {
-            $tomadors = $tomador->cadastro($dados);
+            $tomadors = $this->tomador->cadastro($dados);
             if ($tomadors) {
                 $dados['tomador'] = $tomadors['id'];
                 foreach ($rublicas as $key => $rublica) {
@@ -210,31 +213,32 @@ class TomadorController extends Controller
                         'empresa'=>$user->empresa,
                         'tomador'=>$tomadors['id']
                     ];
-                    $tabelapreco->cadastro($dadostabelapreco);
+                    $this->tabelapreco->cadastro($dadostabelapreco);
                 }
-                $incidefolhars = $incidefolhar->cadastro($dados);
-                $enderecos = $endereco->cadastro($dados); 
-                $taxas = $taxa->cadastro($dados);
-                $bancarios = $bancario->cadastro($dados);
+                $incidefolhars = $this->incidefolhar->cadastro($dados);
+                $enderecos = $this->endereco->cadastro($dados); 
+                $taxas = $this->taxa->cadastro($dados);
+                $bancarios = $this->bancario->cadastro($dados);
                 // $retencaofaturas = $retencaofatura->cadastro($dados);
-                $cartaoponto = $cartaoponto->cadastro($dados);
-                $parametrosefips = $parametrosefip->cadastro($dados);
+                $cartaoponto = $this->cartaoponto->cadastro($dados);
+                $parametrosefips = $this->parametrosefip->cadastro($dados);
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
-                $indicefaturas = $indicefatura->cadastro($dados);
-                $valorrublica->editarMatricularTomador($dados,$user->empresa);
+                $indicefaturas = $this->indicefatura->cadastro($dados);
+                $this->valorrublica->editarMatricularTomador($dados,$user->empresa);
 
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         
         } catch (\Throwable $th) {
-            $cartaoponto = $cartaoponto->deletar($dados['tomador']);
-            $parametrosefips = $parametrosefip->deletar($dados['tomador']);
-            $indicefaturas = $indicefatura->deletar($dados['tomador']);
-            $taxas = $taxa->deletar($dados['tomador']);
-            $incidefolhars = $incidefolhar->deletar($dados['tomador']);
-            $endereco->deletarTomador($dados['tomador']);
-            $bancario->deletarTomador($dados['tomador']);
-            $tomador->deletar($dados['tomador']); 
+            $cartaoponto = $this->cartaoponto->deletar($dados['tomador']);
+            $parametrosefips = $this->parametrosefip->deletar($dados['tomador']);
+            $indicefaturas = $this->indicefatura->deletar($dados['tomador']);
+            $taxas = $this->taxa->deletar($dados['tomador']);
+            $incidefolhars = $this->incidefolhar->deletar($dados['tomador']);
+            $this->endereco->deletarTomador($dados['tomador']);
+            $this->bancario->deletarTomador($dados['tomador']);
+            $this->tabelapreco->deletatomador($dados['tomador']);
+            $this->tomador->deletar($dados['tomador']); 
             return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
@@ -248,14 +252,13 @@ class TomadorController extends Controller
     public function show($id)
     {
         
-        $tomador = new Tomador;
-        $tomadors = $tomador->first($id);
+       
+        $tomadors = $this->tomador->first($id);
         return response()->json($tomadors);
     }
     public function pesquisa($id)
     {
-        $tomador = new Tomador;
-        $tomadors = $tomador->pesquisa($id);
+        $tomadors = $this->tomador->pesquisa($id);
         return response()->json($tomadors);
     }
     /**
@@ -397,28 +400,19 @@ class TomadorController extends Controller
             
         ]
         );
-        $tomador = new Tomador;
-        $endereco = new Endereco;
-        $taxa = new Taxa;
-        $bancario = new Bancario;
-        // $retencaofatura = new RetencaoFatura;
-        $cartaoponto = new CartaoPonto;
-        $parametrosefip = new Parametrosefip;
-        $incidefolhar = new IncideFolhar;
-        // $taxatrabalhador = new TaxaTrabalhador;
-        $indicefatura = new IndiceFatura; 
+     
       
         try {
-            $tomadors = $tomador->editar($dados,$id);
-            $enderecos = $endereco->editar($dados,$dados['endereco']); 
-            $bancarios = $bancario->editar($dados,$dados['bancario']);
+            $tomadors = $this->tomador->editar($dados,$id);
+            $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
+            $bancarios = $this->bancario->editar($dados,$dados['bancario']);
             // $retencaofaturas = $retencaofatura->editar($dados,$id);
-            $cartaoponto = $cartaoponto->editar($dados,$id);
-            $parametrosefips = $parametrosefip->editar($dados,$id);
+            $cartaoponto = $this->cartaoponto->editar($dados,$id);
+            $parametrosefips = $this->parametrosefip->editar($dados,$id);
             // $taxatrabalhador = $taxatrabalhador->editar($dados,$id);
-            $indicefaturas = $indicefatura->editar($dados,$id);
-            $incidefolhars = $incidefolhar->editar($dados,$id);
-            $taxas = $taxa->editar($dados,$id);
+            $indicefaturas = $this->indicefatura->editar($dados,$id);
+            $incidefolhars = $this->incidefolhar->editar($dados,$id);
+            $taxas = $this->taxa->editar($dados,$id);
             // dd($tomadors , $enderecos , $taxas
             // , $bancarios , $retencaofaturas , 
             // $cartaoponto , $parametrosefips , $indicefaturas);
@@ -442,52 +436,37 @@ class TomadorController extends Controller
     public function destroy($id)
     {
         
-        $tomador = new Tomador;
-        $endereco = new Endereco;
-        $taxa = new Taxa;
-        $comissionado = new Comissionado;
-        $bancario = new Bancario;
-        $retencaofatura = new RetencaoFatura;
-        $cartaoponto = new CartaoPonto;
-        $parametrosefip = new Parametrosefip;
-        $incidefolhar = new IncideFolhar;
-        // $taxatrabalhador = new TaxaTrabalhador;
-        $indicefatura = new IndiceFatura; 
-        $tabelapreco = new TabelaPreco;
-        $valorrublica = new ValoresRublica;
-        $bolcartaoponto = new Bolcartaoponto;
-        $lancamentorublica = new Lancamentorublica;
-        $lancamentotabela = new Lancamentotabela;
+      
         $user = auth()->user();
         $dados = ['matricula'=>''];
-        $lancamentotabelas = $lancamentotabela->buscaTomador($id);
+        $lancamentotabelas = $this->lancamentotabela->buscaTomador($id);
         
             foreach ($lancamentotabelas as $key => $value) {
-                $bolcartaopontos = $bolcartaoponto->deletar($value->id);
-                $lancamentorublicas = $lancamentorublica->deletar($value->id);
+                $bolcartaopontos = $this->bolcartaoponto->deletar($value->id);
+                $lancamentorublicas = $this->lancamentorublica->deletar($value->id);
             }
             
             $campoendereco = 'tomador';
             $campobacario = 'tomador';
-            $lancamentotabelas = $lancamentotabela->deletarTomador($id);
-            $comissionados = $comissionado->deletaTomador($id);
-            $bancarios = $bancario->first($id,$campobacario);
-            $exbancarios = $bancario->deletar($bancarios->biid);
-            $tabelaprecos = $tabelapreco->deletatomador($id);
-            $enderecos = $endereco->first($id,$campoendereco); 
-            $exenderecos = $endereco->deletar($enderecos->eiid); 
+            $lancamentotabelas = $this->lancamentotabela->deletarTomador($id);
+            $comissionados = $this->comissionado->deletaTomador($id);
+            $bancarios = $this->bancario->first($id,$campobacario);
+            $exbancarios = $this->bancario->deletar($bancarios->biid);
+            $tabelaprecos = $this->tabelapreco->deletatomador($id);
+            $enderecos = $this->endereco->first($id,$campoendereco); 
+            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
             // $retencaofaturas = $retencaofatura->deletar($id);
-            $cartaoponto = $cartaoponto->deletar($id);
-            $parametrosefips = $parametrosefip->deletar($id);
+            $cartaoponto = $this->cartaoponto->deletar($id);
+            $parametrosefips = $this->parametrosefip->deletar($id);
             // $taxatrabalhador = $taxatrabalhador->deletar($id);
-            $indicefaturas = $indicefatura->deletar($id);
-            $taxas = $taxa->deletar($id);
-            $incidefolhars = $incidefolhar->deletar($id);
-            $tomadors = $tomador->deletar($id); 
-            $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $indicefaturas = $this->indicefatura->deletar($id);
+            $taxas = $this->taxa->deletar($id);
+            $incidefolhars = $this->incidefolhar->deletar($id);
+            $tomadors = $this->tomador->deletar($id); 
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
             if (isset($valorrublica_matricular->vimatriculartomador)) {
                 $dados['matricula'] =  $valorrublica_matricular->vimatriculartomador - 1;
-                $valorrublica->editarMatricularTomador($dados,$user->empresa);
+                $this->valorrublica->editarMatricularTomador($dados,$user->empresa);
             }
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         try {

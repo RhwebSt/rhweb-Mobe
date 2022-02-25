@@ -59,11 +59,10 @@ class TabCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $lancamentotabela = new Lancamentotabela;
-        $valorrublica = new ValoresRublica;
+    
         $user = auth()->user();
         $novadata = explode('-',$dados['data']);
-        $lancamentotabelas = $lancamentotabela->verificaBoletimMes($dados,$novadata); 
+        $lancamentotabelas = $this->lancamentotabela->verificaBoletimMes($dados,$novadata); 
         
         if ($lancamentotabelas) {
             return redirect()->route('tabcartaoponto.index')->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este mês!']);
@@ -90,8 +89,8 @@ class TabCartaoPontoController extends Controller
             
         ]);
         try {
-            $lancamentotabelas = $lancamentotabela->cadastro($dados);
-            $valorrublica->editarBoletimTabela($dados,$user->empresa);
+            $lancamentotabelas = $this->lancamentotabela->cadastro($dados);
+            $this->valorrublica->editarBoletimTabela($dados,$user->empresa);
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
@@ -106,14 +105,12 @@ class TabCartaoPontoController extends Controller
      */
     public function show($id,$status)
     {
-        $lancamentotabela = new Lancamentotabela;
-        $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($id,$status);
+        $lancamentotabelas = $this->lancamentotabela->buscaUnidadeLancamentoTab($id,$status);
         return response()->json($lancamentotabelas);
     }
     public function pesquisa($id,$status) 
     {
-        $lancamentotabela = new Lancamentotabela; 
-        $lancamentotabelas = $lancamentotabela->buscaListaLancamentoTab($id,$status);
+        $lancamentotabelas = $this->lancamentotabela->buscaListaLancamentoTab($id,$status);
         return response()->json($lancamentotabelas);
     }
 
@@ -176,10 +173,9 @@ class TabCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $lancamentotabela = new Lancamentotabela;
-        $lancamentorublica = new Lancamentorublica;
+      
         try {
-            $lancamentotabelas = $lancamentotabela->editar($dados,$id);
+            $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
@@ -195,12 +191,9 @@ class TabCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        
-        $lancamentorublica = new Lancamentorublica;
-        $lancamentotabela = new Lancamentotabela;
         try {
-            $lancamentorublica->deletar($id);
-            $lancamentotabela->deletar($id);
+            $this->lancamentorublica->deletar($id);
+            $this->lancamentotabela->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);

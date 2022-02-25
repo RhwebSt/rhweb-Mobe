@@ -2,16 +2,55 @@
 @section('titulo','Rhweb - INSS')
 @section('conteine')
     <div class="container">
-        @if(session('success'))
-              
-              <div class="alert mt-2 text-center text-white" style="background-color: #4EAA4B">
-                    <strong>{{session('success')}}<i class="fad fa-check-circle fa-lg"></i></strong>
-                </div>
+    @if(session('success'))
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#5AA300',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'success',
+                  title: '{{session("success")}}'
+                })
+            </script>
         @endif
         @error('false')
-            <div class="alert mt-2 text-center text-white" style="background-color: #CC2836;">
-                    <strong>{{$message}}<i class="fad fa-exclamation-triangle fa-lg"></i></strong>
-                </div>
+            <script>
+                     
+                const Toast = Swal.mixin({
+                  toast: true,
+                  width: 500,
+                  color: '#ffffff',
+                  background: '#C53230',
+                  position: 'top-end',
+                  showCloseButton: true,
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                
+                Toast.fire({
+                  icon: 'error',
+                  title: '{{ $message }}'
+                })
+            </script>
         @enderror  
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('inss.store')}}" >
         

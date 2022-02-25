@@ -9,11 +9,12 @@ use App\Empresa;
 use App\Endereco;
 class PerfilController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $endereco,$empresa;
+    public function __construct()
+    {
+        $this->endereco = new Endereco;
+        $this->empresa = new Empresa;
+    }
     public function index()
     {
         $user = Auth::user();
@@ -94,11 +95,10 @@ class PerfilController extends Controller
             'uf'=>'required|max:2|uf',
         ]);
         
-        $empresa = new Empresa;
-        $endereco = new Endereco;
+       
         try {
-            $empresas = $empresa->editar($dados,$id);
-            $endereco = $endereco->editarEmpresa($dados,$id);
+            $empresas = $this->empresa->editar($dados,$id);
+            $endereco = $this->endereco->editarEmpresa($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
@@ -119,16 +119,13 @@ class PerfilController extends Controller
     public function indexFoto()
     {
         $user = Auth::user();
-        $empresa = new Empresa;
-        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
-        // dd($empresas);
+        $empresas = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         return view('usuarios.empresa.alteracaoFoto',compact('user','empresas'));
     }
     public function editFoto(Request $request)
     {
         $dados = $request->all();
-        $empresa = new Empresa;
-        $empresas = $empresa->editarFoto($dados);
+        $empresas = $this->empresa->editarFoto($dados);
         return response()->json($empresas);
     }
 }

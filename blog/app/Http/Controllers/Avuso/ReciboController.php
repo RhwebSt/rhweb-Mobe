@@ -9,19 +9,25 @@ use App\Avuso;
 use App\AvusoDescricao;
 class ReciboController extends Controller
 {
+    private $avuso,$descricao;
+    public function __construct()
+    {
+        $this->avuso = new Avuso;
+        $this->descricao = new AvusoDescricao; 
+    }
     public function relatorio($id,$inicio,$final)
     {
         $id = base64_decode($id);
         $inicio = base64_decode($inicio);
         $final = base64_decode($final);
-        // dd($id,$inicio);
-        // $trabalhador = base64_decode($trabalhador);
-        $avuso = new Avuso;
-        $descricao = new AvusoDescricao;
-        $avusos = $avuso->buscaTrabalhador($id,$inicio,$final);
-        $descricoes = $descricao->listaRecibo($id);
-        // dd($avusos);
+       try {
+        $avusos = $this->avuso->buscaTrabalhador($id,$inicio,$final);
+        $descricoes = $this->descricao->listaRecibo($id);
         $pdf = PDF::loadView('comprovanteRecibAvulso',compact('avusos','descricoes'));
         return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
+       } catch (\Throwable $th) {
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera o relatório.']);
+       }
+       
     }
 }

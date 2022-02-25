@@ -131,7 +131,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorio/descontos/{inicio}/{final}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
 
-    Route::resource('avuso','Avuso\\AvusoController')->names('avuso');
+    Route::resource('avuso','Avuso\\AvusoController')->names('avuso'); 
     Route::get('avuso/pesquisa/{id}','Avuso\\AvusoController@pesquisa')->name('avuso.pesquisa');
     Route::post('filtra/pesquisa/avuso','Avuso\\AvusoController@filtroPesquisa')->name('filtra.pesquisa.avuso');
     Route::get('filtra/ordem/avuso/{condicao}','Avuso\\AvusoController@filtroPesquisaOrdem')->name('filtra.ordem.avuso');

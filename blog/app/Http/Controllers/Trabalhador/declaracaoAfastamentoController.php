@@ -14,11 +14,15 @@ class declaracaoAfastamentoController extends Controller
         $id = base64_decode($id);
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
-        if ($trabalhadors) {
-            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $pdf = PDF::loadView('declaracaoAfastamento',compact('trabalhadors','empresas'));
-            return $pdf->setPaper('a4')->stream('Cracha '.$trabalhadors->tsnome.'.pdf');
+        try {
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+            if ($trabalhadors) {
+                $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
+                $pdf = PDF::loadView('declaracaoAfastamento',compact('trabalhadors','empresas'));
+                return $pdf->setPaper('a4')->stream('Declaração de afastamento '.$trabalhadors->tsnome.'.pdf');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
         }
     }
 }

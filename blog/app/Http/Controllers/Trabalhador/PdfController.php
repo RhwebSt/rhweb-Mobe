@@ -14,10 +14,13 @@ class PdfController extends Controller
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $user = auth()->user();
-        $trabalhadors = $trabalhador->roltrabalhado();  
-        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
-       
-        $pdf = PDF::loadView('pdf',compact('trabalhadors','empresas'));
-        return $pdf->setPaper('a4')->stream('relatoria.pdf');
+        try {
+            $trabalhadors = $trabalhador->roltrabalhado();  
+            $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
+            $pdf = PDF::loadView('pdf',compact('trabalhadors','empresas'));
+            return $pdf->setPaper('a4')->stream('relatoria.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de relatório do trabalhador.']);
+        }
     }
 }

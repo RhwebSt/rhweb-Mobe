@@ -9,13 +9,18 @@ use App\Empresa;
 use App\Endereco;
 use App\ValoresRublica;
 use App\User;
+use App\ValorCalculo;
+
 class EmpresaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $empresa,$endereco,$valoresrublica,$user;
+    public function __construct()
+    {
+        $this->empresa = new Empresa;
+        $this->endereco = new Endereco;
+        $this->valoresrublica = new ValoresRublica;
+        $this->user = new User;
+    }
     public function index()
     {
     
@@ -74,20 +79,21 @@ class EmpresaController extends Controller
             'esnome.unique'=>'Esta empresa já ta cadastrada!',
             'escnpj.unique'=>'Este CNPJ já ta cadastro!'
         ]);
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
         try {
-            $empresas = $empresa->cadastro($dados);
+        
+            $empresas = $this->empresa->cadastro($dados);
             if ($empresas) {
-                // $dados['tomador'] = $empresas['id'];
                 $dados['empresa'] = $empresas['id'];
-                $enderecos = $endereco->cadastro($dados);
-                $valoresrublicas = $valoresrublica->cadastro($dados);
+                $enderecos = $this->endereco->cadastro($dados);
+                $valoresrublicas = $this->valoresrublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
+            
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél efetua o cadastro.']);
+            $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
+            $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
+            $this->empresa->deletar($empresas['id']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél efetua o cadastro.']);
         }
        
     }
@@ -100,14 +106,12 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        $empresa = new Empresa;
-        $empresas = $empresa->buscaUnidadeEmpresa($id);
+        $empresas = $this->empresa->buscaUnidadeEmpresa($id);
         return response()->json($empresas);
     }
     public function pesquisa($id)
     {
-        $empresa = new Empresa;
-        $empresas = $empresa->buscaListaEmpresa($id);
+        $empresas = $this->empresa->buscaListaEmpresa($id);
         return response()->json($empresas);
     }
     /**
@@ -159,13 +163,11 @@ class EmpresaController extends Controller
             'seq__esocial'=>'max:15',
             'cbo'=>'max:15'
         ]);
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
+        
         try {
-        $empresas = $empresa->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$dados['endereco']); 
-        $valoresrublicas = $valoresrublica->editar($dados,$id);
+        $empresas = $this->empresa->editar($dados,$id);
+        $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
+        $valoresrublicas = $this->valoresrublica->editar($dados,$id);
             if ($empresas && $enderecos && $valoresrublicas) {
                 return redirect()->back()->withSuccess('Atualizado com sucesso.');
             }
@@ -182,17 +184,14 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
-        $user = new User;
+       
         $campo = 'empresa';
         try {
-        $users = $user->deleteempresa($id);
-        $enderecos = $endereco->first($id,$campo);
-        $exenderecos = $endereco->deletar($enderecos->eiid);
-        $valoresrublicas = $valoresrublica->deletar($enderecos->empresa); 
-        $empresas = $empresa->deletar($enderecos->empresa);
+        $users = $this->user->deleteempresa($id);
+        $enderecos = $this->endereco->first($id,$campo);
+        $exenderecos = $this->endereco->deletar($enderecos->eiid);
+        $valoresrublicas = $this->valoresrublica->deletar($enderecos->empresa); 
+        $empresas = $this->empresa->deletar($enderecos->empresa);
         return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);

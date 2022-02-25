@@ -9,6 +9,12 @@ use App\Avuso;
 use App\AvusoDescricao;
 class ReceboTrabalhadorController extends Controller
 {
+    private $avuso,$descricao;
+    public function __construct()
+    {
+        $this->avuso = new Avuso;
+        $this->descricao = new AvusoDescricao; 
+    }
     public function relatorio(Request $request)
     {
         $dados = $request->all();
@@ -17,16 +23,30 @@ class ReceboTrabalhadorController extends Controller
             'trabalhador01' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'ano_inicial1'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'ano_final1'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        ],[
+            'trabalhador01.required'=>'Campo não pode esta vazio.',
+            'trabalhador01.max'=>'Campo não ter mais de 100 caracteres.',
+            'trabalhador01.regex'=>'O campo nome social tem um formato inválido.',
+
+            'ano_inicial1.required'=>'Campo não pode esta vazio.',
+            'ano_inicial1.max'=>'Campo não ter mais de 10 caracteres.',
+            'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
+
+            'ano_final1.required'=>'Campo não pode esta vazio.',
+            'ano_final1.max'=>'Campo não ter mais de 10 caracteres.',
+            'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
         ]);
-        $avuso = new Avuso;
-        $descricao = new AvusoDescricao; 
-        $avusos = $avuso->buscaTrabalhador($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
-        // dd($avusos);
-        $listaavuso = $avuso->buscaTrabalhadorRecibo($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
-        if (!$avusos && count($listaavuso) < 1) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não à registro cadastrado.']);
+        try {
+            $avusos = $this->avuso->buscaTrabalhador($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
+            $listaavuso = $this->avuso->buscaTrabalhadorRecibo($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
+            if (!$avusos && count($listaavuso) < 1) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não à registro cadastrado.']);
+            }
+            $pdf = PDF::loadView('rolReciboAvulso',compact('avusos','listaavuso'));
+            return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera o relatório.']);
         }
-        $pdf = PDF::loadView('rolReciboAvulso',compact('avusos','listaavuso'));
-        return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
+        
     }
 }

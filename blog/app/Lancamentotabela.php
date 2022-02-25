@@ -244,6 +244,7 @@ class Lancamentotabela extends Model
             'bolcartaopontos.*',
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
+            'lancamentotabelas.empresa',
             'empresas.esnome',
             'tomadors.tsnome' 
             )

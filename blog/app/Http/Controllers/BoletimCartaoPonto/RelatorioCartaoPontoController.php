@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 use App\Lancamentotabela;
 use App\Trabalhador;
 use App\TabelaPreco;
+use App\Empresa;
 use PDF;
 class RelatorioCartaoPontoController extends Controller
 {
+    private $lancamentotabela,$trabalhador,$tabelapreco,$empresa;
+    public function __construct()
+    {
+        $this->lancamentotabela = new Lancamentotabela;
+        $this->trabalhador = new Trabalhador;
+        $this->tabelapreco = new TabelaPreco;
+        $this->empresa = new Empresa; 
+    }
     public function relatorioCartaoPonto($id,$domingo = null ,$sabado = null,$diasuteis,$data,$boletim,$tomador) 
     {
         $id =  base64_decode($id);
@@ -19,26 +28,26 @@ class RelatorioCartaoPontoController extends Controller
         $data = base64_decode($data);
         $boletim = base64_decode($boletim);
         $tomador = base64_decode($tomador);
-        $lancamentotabela = new Lancamentotabela;
-        $trabalhador = new Trabalhador;
-        $tabelapreco = new TabelaPreco; 
+        
         $ano = explode('-',$data);
       
-        try {
+        
          
-            $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador,$ano[0]); 
+            $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0]); 
             if (count($tabelaprecos) < 1) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada a tabela de preso deste tomador.']);
             }
-            $lancamentotabelas = $lancamentotabela->relatoriocartaoponto($boletim); 
+            $lancamentotabelas = $this->lancamentotabela->relatoriocartaoponto($boletim);
+            $empresa = $this->empresa->buscaUnidadeEmpresa($lancamentotabelas[0]->empresa); 
+            
             $dados = [];
-            foreach ($lancamentotabelas as $key => $value) {
+            foreach ($lancamentotabelas as $key => $value) { 
                 array_push($dados,$value->trabalhador);
             }
-            $trabalhadors = $trabalhador->relatorioBoletimTabela($dados);
-            $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','trabalhadors','tabelaprecos'));
+            $trabalhadors = $this->trabalhador->relatorioBoletimTabela($dados);
+            $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','empresa','trabalhadors','tabelaprecos'));
             return $pdf->setPaper('a4','landscape')->stream('Relatório.pdf');
-            
+            try { 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
         }

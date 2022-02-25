@@ -21,7 +21,6 @@ class comprovantePagDiaController extends Controller
     public function ComprovantePagDia(Request $request)
     {
         $dados = $request->all();
-        dd($dados);
         $ano = explode('-',$dados['ano_final']);
         $tomador = [];
         $salario = 0;

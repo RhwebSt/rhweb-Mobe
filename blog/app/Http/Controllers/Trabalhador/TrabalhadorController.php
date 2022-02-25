@@ -18,16 +18,27 @@ use App\Comissionado;
 use App\ValoresRublica;
 class TrabalhadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
+    $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado;
+    public function __construct()
+    {
+        $this->trabalhador = new Trabalhador;
+        $this->endereco = new Endereco;
+        $this->bancario = new Bancario;
+        $this->nascimento = new Nascimento;
+        $this->categoria = new Categoria;
+        $this->valorrublica = new ValoresRublica;
+        $this->documento = new Documento;
+        $this->dependente = new Dependente;
+        $this->bolcartaoponto = new Bolcartaoponto;
+        $this->lancamentorublica = new Lancamentorublica; 
+        $this->comissionado = new Comissionado;  
+    }
     public function index()
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+       
+        $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         return view('trabalhador.index',compact('user','valorrublica_matricular'));
     }
 
@@ -53,13 +64,11 @@ class TrabalhadorController extends Controller
         $dados = $request->all();
         // dd($dados);
         $user = auth()->user();
-        $trabalhador = new Trabalhador;
-        $documento = new Documento;
-        $valorrublica = new ValoresRublica;
+       
         
-        $trabalhadorscpf = $trabalhador->VerificarCadastroCpf($dados);
-        $documentospis = $documento->VerificarCadastroPis($dados);
-        $documentosctps = $documento->VerificarCadastroCtps($dados);
+        $trabalhadorscpf = $this->trabalhador->VerificarCadastroCpf($dados);
+        $documentospis = $this->documento->VerificarCadastroPis($dados);
+        $documentosctps = $this->documento->VerificarCadastroCtps($dados);
         
         
         $request->validate([
@@ -205,35 +214,31 @@ class TrabalhadorController extends Controller
         // $file = base_path().
         // "/storage/app/imagem/3dbc802c397ae2f987773df44e7cc3a6.zip";
         // return response()->download($file, "3dbc802c397ae2f987773df44e7cc3a6.zip");
-        $trabalhador = new Trabalhador;
-        $endereco = new Endereco;
-        $bancario = new Bancario;
-        $nascimento = new Nascimento;
-        $categoria = new Categoria;
+     
         
         try {
-        $trabalhadors = $trabalhador->cadastro($dados);
+        $trabalhadors = $this->trabalhador->cadastro($dados);
         if ($trabalhadors) {
             $dados['trabalhador'] = $trabalhadors['id'];
-            $enderecos = $endereco->cadastro($dados); 
-            $bancarios = $bancario->cadastro($dados);
-            $nascimentos = $nascimento->cadastro($dados);
-            $categorias = $categoria->cadastro($dados);
-            $documentos = $documento->cadastro($dados);
-            $valorrublica->editarMatricular($dados,$user->empresa);
+            $enderecos = $this->endereco->cadastro($dados); 
+            $bancarios = $this->bancario->cadastro($dados);
+            $nascimentos = $this->nascimento->cadastro($dados);
+            $categorias = $this->categoria->cadastro($dados);
+            $documentos = $this->documento->cadastro($dados);
+            $this->valorrublica->editarMatricular($dados,$user->empresa);
             if ($enderecos &&  $bancarios && 
                 $nascimentos && $categorias && $documentos) {   
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         }
         } catch (\Throwable $th) {
-            $nascimento->deletar($dados['trabalhador']);
-            $categoria->deletar($dados['trabalhador']);
-            $documento->deletar($dados['trabalhador']);
-            $endereco->deletarTrabalhador($dados['trabalhador']);
-            $bancario->deletarTrabalhador($dados['trabalhador']);
-            $trabalhador->deletar($dados['trabalhador']);
-            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            $this->nascimento->deletar($dados['trabalhador']);
+            $this->categoria->deletar($dados['trabalhador']);
+            $this->documento->deletar($dados['trabalhador']);
+            $this->endereco->deletarTrabalhador($dados['trabalhador']);
+            $this->bancario->deletarTrabalhador($dados['trabalhador']);
+            $this->trabalhador->deletar($dados['trabalhador']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
 
@@ -245,14 +250,12 @@ class TrabalhadorController extends Controller
      */
     public function show($id)
     {
-        $trabalhador = new Trabalhador;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+        $trabalhadors = $this->trabalhador->buscaUnidadeTrabalhador($id);
         return response()->json($trabalhadors);
     }
     public function pesquisa($id = null)
     {
-        $trabalhador = new Trabalhador;
-        $trabalhadors = $trabalhador->buscaListaTrabalhador($id);
+        $trabalhadors = $this->trabalhador->buscaListaTrabalhador($id);
         return response()->json($trabalhadors);
     }
     
@@ -405,25 +408,20 @@ class TrabalhadorController extends Controller
             
         ]
         );
-        $trabalhador = new Trabalhador;
-        $endereco = new Endereco;
-        $bancario = new Bancario;
-        $nascimento = new Nascimento;
-        $categoria = new Categoria;
-        $documento = new Documento;
+       
         try {
-            $trabalhadors = $trabalhador->editar($dados,$id);
-            $enderecos = $endereco->editar($dados,$dados['endereco']); 
-            $bancarios = $bancario->editar($dados,$dados['bancario']);
-            $nascimentos = $nascimento->editar($dados,$id);
-            $categorias = $categoria->editar($dados,$id);
-            $documentos = $documento->editar($dados,$id);
+            $trabalhadors = $this->trabalhador->editar($dados,$id);
+            $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
+            $bancarios = $this->bancario->editar($dados,$dados['bancario']);
+            $nascimentos = $this->nascimento->editar($dados,$id);
+            $categorias = $this->categoria->editar($dados,$id);
+            $documentos = $this->documento->editar($dados,$id);
             if ($trabalhadors && $enderecos &&  $bancarios && 
             $nascimentos && $categorias && $documentos) {
                 return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
     }
 
@@ -435,46 +433,36 @@ class TrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        $trabalhador = new Trabalhador;
-        $endereco = new Endereco;
-        $bancario = new Bancario;
-        $nascimento = new Nascimento;
-        $categoria = new Categoria;
-        $documento = new Documento;
-        $dependente = new Dependente;
-        $bolcartaoponto = new Bolcartaoponto;
-        $lancamentorublica = new Lancamentorublica; 
-        $comissionado = new Comissionado;
-        $valorrublica = new ValoresRublica;
+        
         $campoendereco = 'trabalhador';
         $campobacario = 'trabalhador';
         $user = auth()->user();
         $dados = ['matricula'=>''];
         try {
-            $comissionados = $comissionado->deletaTrabalhador($id);
-            $bolcartaopontos = $bolcartaoponto->deletarTrabalador($id);
-            $lancamentorublicas = $lancamentorublica->deletarTrabalhador($id);
-            $dependentes = $dependente->deletarTrabalhador($id); 
-            $enderecos = $endereco->first($id,$campoendereco); 
+            $comissionados = $this->comissionado->deletaTrabalhador($id);
+            $bolcartaopontos = $this->bolcartaoponto->deletarTrabalador($id);
+            $lancamentorublicas = $this->lancamentorublica->deletarTrabalhador($id);
+            $dependentes = $this->dependente->deletarTrabalhador($id); 
+            $enderecos = $this->endereco->first($id,$campoendereco); 
     
-            $exenderecos = $endereco->deletar($enderecos->eiid); 
+            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
     
-            $bancarios = $bancario->first($id,$campobacario);
+            $bancarios = $this->bancario->first($id,$campobacario);
             
-            $exbancarios = $bancario->deletar($bancarios->biid);
+            $exbancarios = $this->bancario->deletar($bancarios->biid);
     
-            $nascimentos = $nascimento->deletar($id);
-            $categorias = $categoria->deletar($id);
-            $documentos = $documento->deletar($id);
-            $trabalhadors = $trabalhador->deletar($id);
-            $valorrublica_matricular = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $nascimentos = $this->nascimento->deletar($id);
+            $categorias = $this->categoria->deletar($id);
+            $documentos = $this->documento->deletar($id);
+            $trabalhadors = $this->trabalhador->deletar($id);
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
             if (isset($valorrublica_matricular->vimatricular)) {
                 $dados['matricula'] =  $valorrublica_matricular->vimatricular - 1;
-                $valorrublica->editarMatricular($dados,$user->empresa);
+                $this->valorrublica->editarMatricular($dados,$user->empresa);
             }
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->route('trabalhador.index')->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }
     }
 }

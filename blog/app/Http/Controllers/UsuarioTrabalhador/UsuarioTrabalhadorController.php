@@ -10,16 +10,18 @@ use App\Endereco;
 use App\ValoresRublica;
 class UsuarioTrabalhadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+    private $empresa,$endereco,$valoresrublica;
+    public function __construct()
+    {
+        $empresa = new Empresa;
+        $endereco = new Endereco;
+        $valoresrublica = new ValoresRublica;
+    }
     public function index()
     {
         $user = Auth::user();
-        $empresa = new Empresa;
-        $empresas = $empresa->first($user->empresa);
+        $empresas = $this->empresa->first($user->empresa);
         return view('usuarios.trabalhador.index',compact('user'));
     }
 
@@ -42,21 +44,18 @@ class UsuarioTrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
-        $empresas = $empresa->cadastro($dados);
+        try {
+        $empresas = $this->empresa->cadastro($dados);
         if ($empresas) {
             // $dados['tomador'] = $empresas['id'];
             $dados['empresa'] = $empresas['id'];
-            $enderecos = $endereco->cadastro($dados);
-            $valoresrublicas = $valoresrublica->cadastro($dados);
-            if ($enderecos && $valoresrublicas) {
-                $condicao = 'cadastratrue';
-            }else{
-                $condicao = 'cadastrafalse';
-            }
-            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
+            $enderecos = $this->endereco->cadastro($dados);
+            $valoresrublicas = $this->valoresrublica->cadastro($dados);
+        
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
     }
 
@@ -68,8 +67,7 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function show($id)
     {
-        $empresa = new Empresa;
-        $empresas = $empresa->first($id);
+        $empresas = $this->empresa->first($id);
         return response()->json($empresas);
     }
 
@@ -94,18 +92,14 @@ class UsuarioTrabalhadorController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
-        $empresas = $empresa->editar($dados,$id);
-        $enderecos = $endereco->editar($dados,$dados['endereco']); 
-        $valoresrublicas = $valoresrublica->editar($dados,$id);
-        if ($empresas && $enderecos && $valoresrublicas) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+        try {
+            $empresas = $this->empresa->editar($dados,$id);
+            $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
+            $valoresrublicas = $this->valoresrublica->editar($dados,$id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
-        return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -116,20 +110,17 @@ class UsuarioTrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        
-        $empresa = new Empresa;
-        $endereco = new Endereco;
-        $valoresrublica = new ValoresRublica;
         $campo = 'empresa';
-        $enderecos = $endereco->first($id,$campo); 
-        $exenderecos = $endereco->deletar($enderecos->eiid); 
-        $valoresrublicas = $valoresrublica->deletar($enderecos->empresa); 
-        if ($exenderecos &&  $valoresrublicas) {
-            $empresas = $empresa->deletar($enderecos->empresa);
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
-        }
-            return redirect()->route('usuariotrabalhador.index')->withInput()->withErrors([$condicao]); 
+        try {
+            $enderecos = $this->endereco->first($id,$campo); 
+            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
+            $valoresrublicas = $this->valoresrublica->deletar($enderecos->empresa); 
+            if ($exenderecos &&  $valoresrublicas) {
+                $empresas = $this->empresa->deletar($enderecos->empresa);
+            }
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+        } 
     }
 }

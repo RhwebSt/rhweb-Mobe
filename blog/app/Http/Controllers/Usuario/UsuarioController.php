@@ -39,13 +39,13 @@ class UsuarioController extends Controller
     {
         $dados = $request->all();
         $user = new User;
-        $users = $user->cadastro($dados);
-        if ($users) {
-            $condicao = 'cadastratrue';
-        }else{
-            $condicao = 'cadastrafalse';
+       
+        try {
+            $users = $user->cadastro($dados);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
     }
 
     /**
@@ -83,13 +83,13 @@ class UsuarioController extends Controller
     {
         $dados = $request->all();
         $user = new User;
-        $users = $user->editar($dados,$id);
-        if ($users) {
-            $condicao = 'edittrue';
-        }else{
-            $condicao = 'editfalse';
+       
+        try {
+            $users = $user->editar($dados,$id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
     }
 
     /**

@@ -16,12 +16,16 @@ class fichaRegistroTrabController extends Controller
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $depedente = new Dependente;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
-        if ($trabalhadors) {
-            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa); 
-            $depedentes = $depedente->buscaListaDepedente($id); 
-            $pdf = PDF::loadView('fichaRegistroTrab',compact('trabalhadors','empresas','depedentes'));
-            return $pdf->setPaper('a4')->stream('ficha_'.$trabalhadors->tsnome.'.pdf');
+        try {
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+            if ($trabalhadors) {
+                $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa); 
+                $depedentes = $depedente->buscaListaDepedente($id); 
+                $pdf = PDF::loadView('fichaRegistroTrab',compact('trabalhadors','empresas','depedentes'));
+                return $pdf->setPaper('a4')->stream('ficha_'.$trabalhadors->tsnome.'.pdf');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de registro do trabalhador.']);
         }
     }
 }

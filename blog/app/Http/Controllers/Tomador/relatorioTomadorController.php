@@ -14,9 +14,13 @@ class relatorioTomadorController extends Controller
         $tomador = new Tomador;
         $empresa = new Empresa;
         $user = auth()->user();
-        $tomadores = $tomador->relatorioGeral($user->empresa);
-        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
-        $pdf = PDF::loadView('rolTomador',compact('empresas','tomadores'));
-        return $pdf->setPaper('a4')->stream('RELATÓRIO DA TABELA PRECO.pdf');
+        try {
+            $tomadores = $tomador->relatorioGeral($user->empresa);
+            $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
+            $pdf = PDF::loadView('rolTomador',compact('empresas','tomadores'));
+            return $pdf->setPaper('a4')->stream('RELATÓRIO DA TABELA PRECO.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+        }
     }
 }

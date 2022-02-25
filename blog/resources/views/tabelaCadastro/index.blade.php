@@ -164,7 +164,14 @@
                             <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width:400px">{{$listas->tsnome}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">{{$listas->licodigo}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:400px">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:100px">{{$listas->lsquantidade}}</td>
+                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:100px">
+                                
+                                @if(str_contains($listas->lsquantidade,':'))
+                                        {{$listas->lsquantidade}}
+                                @else
+                                        {{number_format((float)$listas->lsquantidade, 2, ',', '.')}}
+                                @endif
+                            </td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">

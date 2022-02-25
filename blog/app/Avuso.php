@@ -210,8 +210,23 @@ class Avuso extends Model
         ->whereBetween('asfinal',[$inicio,$final])
         ->get();
     }
+    public function verifica($condigo)
+    {
+        return Avuso::where('aicodigo',$condigo)
+        ->count();
+    }
+    public function deletar_store($dados)
+    {
+        return Avuso::where([
+            ['ascpf',$dados['cpf']],
+            ['aicodigo',$dados['codigo']],
+            ['asnome',$dados['nome']]
+        ])
+        ->delete();
+    }
     public function deletar($id)
     {
-        return Avuso::where('id',$id)->delete();
+        return Avuso::where('id',$id)
+        ->delete();
     }
 }

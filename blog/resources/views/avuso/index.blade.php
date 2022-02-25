@@ -243,7 +243,7 @@
 
                     </form>
                     
-                    <form class="row g-3" action="" method="POST">
+                    
 
                         <div class="d-flex justify-content-end">
                             <div class="dropdown  mt-2 p-1">
@@ -258,7 +258,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </form>
+                
 
                         <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">

@@ -47,9 +47,13 @@ class AvusoController extends Controller
         ]
         );
         $user = auth()->user();
-        $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lista = $this->avuso->filtraPesquisa($dados);
-        return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+        try {
+            $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $lista = $this->avuso->filtraPesquisa($dados);
+            return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a pesquisa.']);
+        }
     }
     public function filtroPesquisaOrdem($condicao)
     {
@@ -78,7 +82,10 @@ class AvusoController extends Controller
     {
         $user = Auth::user();
         $dados = $request->all();
-        
+        $verifica = $this->avuso->verifica($dados['codigo']);
+        if ($verifica) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já existe um recibo com este codigo.']);
+        }
         $request->validate([
             'nome' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
             'cpf' => 'required|max:15|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
@@ -113,15 +120,21 @@ class AvusoController extends Controller
         }
         
         $total = $credito - $desconto;
-        // dd($credito,$total);
         $dados['liquido'] = $total;
-        $avuso = $this->avuso->cadastro($dados);
-        $dados['avuso'] = $avuso['id'];
-        for ($i=0; $i < $dados['quantidade']; $i++) { 
-            $this->descricao->cadastro($dados,$i);
+        try {
+            $avuso = $this->avuso->cadastro($dados);
+            if ($avuso['id']) {
+                $dados['avuso'] = $avuso['id'];
+                for ($i=0; $i < $dados['quantidade']; $i++) { 
+                    $this->descricao->cadastro($dados,$i);
+                }
+                $this->valorrublica->editarAvuso($dados,$user->empresa);
+            }
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        } catch (\Throwable $th) {
+            $this->avuso->deletar_store($dados);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível cadastra o registro.']);
         }
-        $this->valorrublica->editarAvuso($dados,$user->empresa);
-        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
     }
 
     /**

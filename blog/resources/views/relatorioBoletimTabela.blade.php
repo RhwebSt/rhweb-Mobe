@@ -323,7 +323,13 @@
                             <tr>
                                 <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font text-center desc uppercase">{{$lancamentotabela->lshistorico}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font text-center quant">{{$lancamentotabela->lsquantidade}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font text-center quant">
+                                    @if(str_contains($lancamentotabela->lsquantidade,':'))
+                                        {{$lancamentotabela->lsquantidade}}
+                                    @else
+                                        {{number_format((float)$lancamentotabela->lsquantidade, 2, ',', '.')}}
+                                    @endif
+                                </td>
                                 <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor), 2, ',', '.')}}</td>
                             </tr>
                             <?php

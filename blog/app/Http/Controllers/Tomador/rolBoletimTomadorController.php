@@ -18,18 +18,21 @@ class rolBoletimTomadorController extends Controller
         $lancamentorublica = new Lancamentorublica;
         $bolcartaoponto = new Bolcartaoponto;
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);
-        if (count($tabelaprecos) < 1) {
-            return redirect()->back()->withInput()->withErrors(['tabelavazia'=>'Não há nenhum cadastro na tabela de preço.']);
+        try {
+            $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);
+            if (count($tabelaprecos) < 1) {
+                return redirect()->back()->withInput()->withErrors(['tabelavazia'=>'Não há nenhum cadastro na tabela de preço.']);
+            }
+            $lancamentorublicas = $lancamentorublica->boletimTabela($id,$inicio,$final);
+            $bolcartaopontos = $bolcartaoponto->boletimCartaoPonto($id,$inicio,$final);
+            if (count($lancamentorublicas) === 0 && count($bolcartaopontos) === 0) {
+                return redirect()->back()->withInput()->withErrors(['dadosvazia'=>'Não há nenhum dado cadastrado.']);
+            }
+            
+            $pdf = PDF::loadView('rolBoletimTomador',compact('inicio','final','tomadors','lancamentorublicas','bolcartaopontos','tabelaprecos'));
+            return $pdf->setPaper('a4')->stream('BOLETIM TOMADOR.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
         }
-        $lancamentorublicas = $lancamentorublica->boletimTabela($id,$inicio,$final);
-        $bolcartaopontos = $bolcartaoponto->boletimCartaoPonto($id,$inicio,$final);
-        // dd($lancamentorublicas,$bolcartaopontos,$tabelaprecos);
-        if (count($lancamentorublicas) === 0 && count($bolcartaopontos) === 0) {
-            return redirect()->back()->withInput()->withErrors(['dadosvazia'=>'Não há nenhum dado cadastrado.']);
-        }
-        
-        $pdf = PDF::loadView('rolBoletimTomador',compact('inicio','final','tomadors','lancamentorublicas','bolcartaopontos','tabelaprecos'));
-        return $pdf->setPaper('a4')->stream('BOLETIM TOMADOR.pdf');
     }
 }

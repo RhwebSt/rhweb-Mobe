@@ -53,7 +53,7 @@ class IrrfController extends Controller
             'user'=>''
         ];
         $irrf = new Irrf;
-       
+        try {
         foreach ($dados as $key => $value) {
             if ($key === 'user') {
                 $novodados['user'] = $value;
@@ -110,7 +110,7 @@ class IrrfController extends Controller
             $contador++;
         }
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-        try {
+        
         } catch (\Throwable $th) {
             return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }

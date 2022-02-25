@@ -23,7 +23,7 @@ class SefipController extends Controller
        $user = auth()->user();
        $tomador = base64_decode($tomador);
        $folhar = base64_decode($folhar);
-       
+       try {
        $empresa = $this->empresa->EmpresaSefip($user->empresa);
        $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
        $tomador = $this->tomador->first($tomador);
@@ -284,7 +284,10 @@ class SefipController extends Controller
        echo $cd;
        exit;
        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-    // return response()->download(public_path().'/public/'.$file_name);
+    } catch (\Throwable $th) {
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+    }
+    
     }
     public function monta_string($nome,$quantidade)
     {

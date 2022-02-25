@@ -18,9 +18,9 @@ class FolhaAnaliticaTomadorController extends Controller
         $folhar = new Folhar;
         $tabelhapreco = new TabelaPreco;
         $rublica = new Rublica;
+        try {
         $folhas = $folhar->buscaFolhaAnaliticaTomador($id);
-        // $tabelhaprecos = $tabelhapreco->tomadorFolhar($id);
-        // dd($tabelhaprecos);
+      
         $rublicas = $rublica->listaGeral();
         $sim = [];
         $nao = [];
@@ -35,7 +35,6 @@ class FolhaAnaliticaTomadorController extends Controller
             }
         } 
         $producao = $valorcalculo->calculoFolhaAnaliticaProducao($id,$sim);
-        // dd($producao,$sim);
         if (count($producao) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a PRODUÇÃO.']);
         }
@@ -43,7 +42,7 @@ class FolhaAnaliticaTomadorController extends Controller
         if (count($dsr) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o DSR 18,18%.']);
         }
-        // dd($dsr);
+       
         $ferias = $valorcalculo->calculoFolhaAnaliticaFerias($id,$nao);
         
         if (count($ferias) < 1) {
@@ -72,7 +71,7 @@ class FolhaAnaliticaTomadorController extends Controller
         $irrf = $valorcalculo->calculoFolhaAnaliticaIrrf($id,$nao);
         
         $inss = $valorcalculo->calculoFolhaAnaliticaInss($id,$nao);
-        // dd($inss);
+    
         if (count($inss) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o INSS.']);
         }
@@ -83,8 +82,10 @@ class FolhaAnaliticaTomadorController extends Controller
         }
         $vale = $valorcalculo->calculoFolhaAnaliticaDesconto($id,$sim);
         
-        //dd($adiantamento,$dados,$producao,$dsr,$ferias,$vt,$va,$salario13);
         $pdf = PDF::loadView('folhaAnaliticaTomador',compact('sindicator','seguro','inss','inss_sobre13','irrf','salario13','vt','va','ferias','dsr','adiantamento','vale','producao','folhas'));
         return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA.pdf');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera a folha.']);
+        }
     }
 }

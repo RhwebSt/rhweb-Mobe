@@ -18,11 +18,13 @@ class CadastroCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $valorrublica,$lancamentotabela;
+    private $valorrublica,$lancamentotabela,$tabelapreco,$bolcartaoponto;
     public function __construct()
     {
         $this->valorrublica = new ValoresRublica;
         $this->lancamentotabela = new Lancamentotabela;
+        $this->tabelapreco = new TabelaPreco;
+        $this->bolcartaoponto = new Bolcartaoponto;
     }
     public function index()
     {
@@ -60,12 +62,9 @@ class CadastroCartaoPontoController extends Controller
         $dados = $request->all();
         
         $user = Auth::user();
-        $lancamentotabela = new Lancamentotabela;
-        $tabelapreco = new TabelaPreco;
-        $bolcartaoponto = new Bolcartaoponto;
-        $valorrublica = new ValoresRublica;
-        $lancamentotabelas = $lancamentotabela->verificaBoletimDias($dados);
-        $tabelaprecos = $tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
+        
+        $lancamentotabelas = $this->lancamentotabela->verificaBoletimDias($dados);
+        $tabelaprecos = $this->tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
         
         if (count($tabelaprecos) < 5) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rubricas necessárias do ano '.date('Y').'!']);
@@ -94,26 +93,18 @@ class CadastroCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        // $novodados = [
-        //     $dados['domingo'],
-        //     $dados['sabado'],
-        //     $dados['diasuteis'],
-        //     $dados['data'],
-        //     $dados['liboletim'],
-        //     $dados['tomador'],
-        //     $dados['feriado']
-        // ];
-        // $listalancamentotabela = $lancamentotabela->buscaUnidadeLancamentoTab($dados['liboletim'],$dados['status']);
-        // if($listalancamentotabela){
-        //     array_unshift($novodados, $listalancamentotabela->id);
-        //     return redirect()->route('boletimcartaoponto.create',$novodados);
-        // }
-        $lancamentotabelas = $lancamentotabela->cadastro($dados);
-        $valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
-        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
-        // array_unshift($novodados, $lancamentotabelas['id']);
-        // return redirect()->route('boletimcartaoponto.create',$novodados);
-        // return redirect()->route('cadastrocartaoponto.index')->withInput()->withErrors(['false'=>'Não foi possivél realiza o cadastro!']);
+        try {
+            $lancamentotabelas = $this->lancamentotabela->cadastro($dados);
+            if ($lancamentotabelas) {
+                $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
+            }
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél realiza o cadastro!']);
+        }
+      
+        
+        
     }
 
     /**
@@ -146,11 +137,9 @@ class CadastroCartaoPontoController extends Controller
     public function filtroPesquisaOrdemEdit($id,$condicao)
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $lancamentotabela = new Lancamentotabela;
-        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('D',$condicao);
-        $dados = $lancamentotabela->buscaUnidade($id);
+        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $lancamentotabelas = $this->lancamentotabela->buscaListas('D',$condicao);
+        $dados = $this->lancamentotabela->buscaUnidade($id);
         return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
     /**
@@ -176,11 +165,9 @@ class CadastroCartaoPontoController extends Controller
             'data.required'=>'O campo não pode esta vazio!'
             
         ]);
-        $lancamentotabela = new Lancamentotabela;
-        $bolcartaoponto = new Bolcartaoponto;
         try {
-            $lancamentotabelas = $lancamentotabela->editar($dados,$id);
-            $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
+            $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
+            $lista = $this->bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
             return redirect()->back()->withSuccess('Atualizador com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
@@ -195,13 +182,10 @@ class CadastroCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        
-        $bolcartaoponto = new Bolcartaoponto;
-        $lancamentotabela = new Lancamentotabela;
         try {
-            $bolcartaopontos = $bolcartaoponto->deletarLancamentoTabela($id);
+            $bolcartaopontos = $this->bolcartaoponto->deletarLancamentoTabela($id);
             if ($bolcartaopontos) {
-                $lancamentotabela->deletar($id);
+                $this->lancamentotabela->deletar($id);
                 return redirect()->back()->withSuccess('Deletado com sucesso.'); 
             }
         } catch (\Throwable $th) {

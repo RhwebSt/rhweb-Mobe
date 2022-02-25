@@ -71,19 +71,7 @@ class calculoFolhaController extends Controller
         return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
         
     }
-    // public function filtroPesquisaTomadorOrdem($condicao)
-    // {
-    //     $user = Auth::user();
-    //     $idfolhas = [];
-    //     $folhas = $this->folhar->buscaListaOrdem($user->empresa,$condicao);
-        
-    //     foreach ($folhas as $key => $folha) {
-    //         array_push($idfolhas,$folha->id);
-    //     }
-    //     $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
-    //     $tomadores = $this->basecalculo->listaTomador($idfolhas);
-    //     return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
-    // }
+    
 
     public function filtroPesquisaOrdem($condicao)
     {

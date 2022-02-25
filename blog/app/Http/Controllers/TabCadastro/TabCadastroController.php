@@ -10,11 +10,11 @@ use App\Lancamentorublica;
 use App\Lancamentotabela;
 class TabCadastroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   private $lancamentorublica;
+   public function __construct()
+   {
+    $this->lancamentorublica = new Lancamentorublica;
+   }
     public function index()
     {
         $user = Auth::user();
@@ -34,8 +34,7 @@ class TabCadastroController extends Controller
         $id = base64_decode($id);
         $data = base64_decode($data); 
         $user = Auth::user(); 
-        $lancamentorublica = new Lancamentorublica;
-        $lista = $lancamentorublica->listacadastro($id);
+        $lista = $this->lancamentorublica->listacadastro($id);
         return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
     }
 
@@ -50,10 +49,11 @@ class TabCadastroController extends Controller
         $dados = $request->all();
         
         $novadata = explode('-',$dados['data']);
-        $lancamentorublica = new Lancamentorublica;
-        $quantidadeTrabalhador = $lancamentorublica->verificaTrabalhador($dados,$novadata);
+
+        try {
+        $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
           
-            $lancamentorublicas = $lancamentorublica->verifica($dados,$novadata);
+            $lancamentorublicas = $this->lancamentorublica->verifica($dados,$novadata);
             if ($lancamentorublicas) {
                 return redirect()->back()->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);
             }
@@ -75,10 +75,9 @@ class TabCadastroController extends Controller
             if ( count($quantidadeTrabalhador) == $dados['numtrabalhador']) {
                 return redirect()->back()->withErrors(['false'=>'Os'.$dados['numtrabalhador'].' já foram lançados.']);
             }else{
-                $lancamentorublica->cadastro($dados);
+                $this->lancamentorublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
-            try {
        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['false'=>'Não foi possivél realizar o cadastro.']);
        }
@@ -112,12 +111,9 @@ class TabCadastroController extends Controller
        $id = base64_decode($id);
        $trabalhador = base64_decode($trabalhador);
        $data = base64_decode($data);
-       $lancamentorublica = new Lancamentorublica;
        $user = Auth::user();
-       $lista = $lancamentorublica->listacadastro($id);
-    
-       $lancamentorublicas = $lancamentorublica->buscaUnidadeRublica($trabalhador);
-    //    dd($lancamentorublicas);
+       $lista = $this->lancamentorublica->listacadastro($id);
+       $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
        return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data'));
     }
 
@@ -131,32 +127,17 @@ class TabCadastroController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $lancamentorublica = new Lancamentorublica;
-        // $novodados = [
-        //     $dados['numtrabalhador'],
-        //     $dados['boletim'],
-        //     $dados['tomador'],
-        //     $dados['lancamento'],
-        //     $dados['data']
-        // ];
-        // $validator = Validator::make($request->all(), [
-        //     'nome__completo' => 'required',
-        //     'matricula'=>'required|max:4',
-        //     'rubrica'=>'required|max:60',
-        //     'quantidade'=>'required'
-        // ]);
+        
         $request->validate([
             'nome__completo' => 'required',
             'matricula'=>'required|max:4',
             'rubrica'=>'required|max:60',
             'quantidade'=>'required'
         ]);
-        // if ($validator->fails()) { 
-        //     return redirect()->route('tabcadastro.create',$novodados)->withErrors($validator);
-        // }
+       
         
-            $lancamentorublica->editar($dados,$id);
-            // return redirect()->route('tabcadastro.create',$novodados)->withErrors(['true'=>'Atualizado com sucesso.']);
+            $this->lancamentorublica->editar($dados,$id);
+        
             return redirect()->back()->withSuccess('Atualizador com sucesso.');
             try {
         } catch (\Throwable $th) {
@@ -173,16 +154,8 @@ class TabCadastroController extends Controller
      */
     public function destroy($id)
     {
-        // $lancamentotabela = new Lancamentotabela;
-        $lancamentorublica = new Lancamentorublica;
-    //     $lancamentorublicas = $lancamentorublica->UnidadeRublica($id);
-    //     $lancamentotabelas = $lancamentotabela->buscaUnidadeLancamentoTab($lancamentorublicas->lancamento);
-    //    dd($lancamentotabelas);
-    //     if (!$lancamentotabelas) {
-    //         return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
-    //     }
         try {
-            $lancamentorublicas = $lancamentorublica->deletar($id);
+            $lancamentorublicas = $this->lancamentorublica->deletar($id);
             return redirect()->back()->withSuccess('Registro deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);

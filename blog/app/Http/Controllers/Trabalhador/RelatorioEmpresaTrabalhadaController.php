@@ -14,11 +14,15 @@ class RelatorioEmpresaTrabalhadaController extends Controller
         $dados = $request->all();
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
-        if ($trabalhadors) {
-            $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
-            $pdf = PDF::loadView('relatorioEmpresasTrab',compact('trabalhadors','empresas'));
-            return $pdf->setPaper('a4')->stream('Relatório de empresas trabalhada do trabalhador '.$trabalhadors->tsnome.'.pdf');
+        try {
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($dados['trabalhador']);
+            if ($trabalhadors) {
+                $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
+                $pdf = PDF::loadView('relatorioEmpresasTrab',compact('trabalhadors','empresas'));
+                return $pdf->setPaper('a4')->stream('Relatório de empresas trabalhada do trabalhador '.$trabalhadors->tsnome.'.pdf');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de relatório do tomador.']);
         }
     }
 }

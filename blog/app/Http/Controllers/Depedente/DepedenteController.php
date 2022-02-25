@@ -19,7 +19,6 @@ class DepedenteController extends Controller
         $id = $depedente;
         $depedente = new Dependente;
         $depedentes = $depedente->buscaListaDepedente($id); 
-        // dd($depedentes);
         $user = Auth::user();
         return view('trabalhador.depedente.index',compact('depedentes','id','user'));
     }
@@ -44,7 +43,6 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $depedente = new Dependente;
         $depedentes_cpf = $depedente->verificaCpf($dados);
         $depedentes_quant = $depedente->quantidadeDependente($dados);
@@ -61,14 +59,9 @@ class DepedenteController extends Controller
             // 'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             // 'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
-        
-        $depedentes = $depedente->cadastro($dados);
-        if ($depedentes) {
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
-        }
-         
         try {
-            //code...
+            $depedente->cadastro($dados);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
         }

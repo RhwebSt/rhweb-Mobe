@@ -24,11 +24,11 @@ class Inss extends Model
     {
         return Inss::where('id', $id)
         ->update([
-            'isano'=>$dados['isano'],
+            'isano'=>$dados['ano'],
             // 'isvalorinicial'=>$dados['valor__inicial'],
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>$dados['indice'],
-            'isreducao'=>$dados['fator']
+            'isreducao'=>str_replace(",",".",$dados['fator'])
         ]);
     }
     public function buscaUnidadeInss($id)

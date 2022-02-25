@@ -13,11 +13,15 @@ class fichaEpiTrabController extends Controller
     {
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
-        $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
-        if ($trabalhadors) {
-            $empresas = $empresa->first($trabalhadors->empresa);
-            $pdf = PDF::loadView('fichaEpi',compact('trabalhadors','empresas'));
-            return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
+        try {
+            $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
+            if ($trabalhadors) {
+                $empresas = $empresa->first($trabalhadors->empresa);
+                $pdf = PDF::loadView('fichaEpi',compact('trabalhadors','empresas'));
+                return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o ficha.']);
         }
     }
 }
