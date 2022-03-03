@@ -30,6 +30,8 @@ class CreateEnderecosTable extends Migration
             $table->foreign('tomador')->references('id')->on('tomadors');
             $table->integer('empresa')->unsigned()->nullable();
             $table->foreign('empresa')->references('id')->on('empresas');
+            $table->integer('pessoais')->unsigned()->nullable();
+            $table->foreign('pessoais')->references('id')->on('pessoais');
             $table->timestamps();
         });
     }

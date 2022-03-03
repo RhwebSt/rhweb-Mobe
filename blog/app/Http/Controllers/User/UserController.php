@@ -52,12 +52,14 @@ class UserController extends Controller
             'senha'=>'required|max:20',
             'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
             'nome__completo'=>'required',
+            'email'=>'required|email|unique:users',
             'empresa'=>'required|min:1',
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',
             'name.required'=>'Campo não pode esta vazio!',
             'name.regex'=>'Campo não pode ter caracteres especiais!',
             'name.unique'=>'Este usuario já esta cadastrado.',
+            'name.unique'=>'Este email já esta cadastrado.',
             'name.max'=>'Campo não pode ter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
             'senha.required'=>'Campo não pode esta vazio!',
@@ -134,6 +136,7 @@ class UserController extends Controller
             'senha'=>'max:20',
             'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
             'nome__completo'=>'required',
+            'email'=>'required|email',
             'empresa'=>'required|min:1',
         ],[
             'nome__completo.required'=>'Campo não pode esta vazio!',

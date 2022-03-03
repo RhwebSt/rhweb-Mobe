@@ -146,7 +146,7 @@
                           <button class="btn btn-dark btn-lg botao" type="submit" type="button">Entrar</button>
                         </div>
       
-                        <a class="small text-muted" href="#!">Esqueceu sua senha?</a>
+                        <a class="small text-muted" href="{{route('esqueci.senha.index')}}">Esqueceu sua senha?</a>
                       </form>
       
                     </div>

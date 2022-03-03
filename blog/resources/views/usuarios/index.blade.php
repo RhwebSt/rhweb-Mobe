@@ -101,8 +101,16 @@
                   <label for="cargo" class="form-label">Cargo</label>
                   <input type="text" class="form-control  fw-bold" name="cargo" value="{{old('cargo')}}" id="cargo">
                 </div>
-
+                
                 <div class="col-md-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control @error('email') is-invalid @enderror fw-bold" name="email" value="{{old('email')}}" id="email">
+                  @error('email')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                </div>
+
+                <div class="col-md-4">
                   <label for="senha" class="form-label">Senha</label>
                   <input type="password" class="form-control @error('senha') is-invalid @enderror fw-bold" value="{{old('senha')}}" name="senha" value="" id="senha">
                   @error('senha')

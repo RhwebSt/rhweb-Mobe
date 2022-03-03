@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 class UsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $user;
+    public function __construct()
+    {
+        $this->user = new User;
+    }
     public function index()
     {
         $user = Auth::user();
@@ -69,7 +69,9 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $dados = $this->user->edit($id);
+        return view('usuarios.dadosPessoais.index',compact('user'));
     }
 
     /**

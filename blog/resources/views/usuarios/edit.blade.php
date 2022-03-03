@@ -96,6 +96,14 @@
                   <label for="cargo" class="form-label">Cargo</label>
                   <input type="text" class="form-control " name="cargo" value="{{$editar->cargo}}" id="cargo">
                 </div>
+                
+                <div class="col-md-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control @error('email') is-invalid @enderror fw-bold" name="email" value="{{$editar->email}}" id="email">
+                  @error('email')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                </div>
 
                 <div class="col-md-3">
                   <label for="senha" class="form-label">Senha</label>

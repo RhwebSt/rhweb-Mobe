@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store','create'])->names('login');
-
-
+Route::get('email',function()
+{
+    $user = new stdClass();
+    $user->name = 'José Luis';
+    $user->email = 'ljrri66@gmail.com';
+    // return new App\Mail\Email($user);
+    
+});
+Route::post('verifica/senha','Senha\\SenhaController@store')->name('verifica.senha');
+Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.index');
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
@@ -140,6 +149,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
+
+    Route::get('usuario/edita/{id}','Pessoais\\PessoaisController@edit')->name('usuario.edita');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');

@@ -130,7 +130,7 @@ class User extends Authenticatable
     {
         return DB::table('users')
         ->join('empresas', 'empresas.id', '=', 'users.empresa')
-        ->select('users.id','users.name','users.cargo','users.empresa','empresas.esnome')
+        ->select('users.id','users.name','users.email','users.cargo','users.empresa','empresas.esnome')
         ->where('users.id', $id)
         ->first();
     }
@@ -142,5 +142,10 @@ class User extends Authenticatable
     public function buscaListaUserLogin($dados)
     {
         return User::where('name', $dados['user'])->first();
+    }
+    public function editarSenharLogin($dados)
+    {
+        return User::where('email', $dados['email'])
+        ->update(['password'=>Hash::make($dados['password'])]);
     }
 }
