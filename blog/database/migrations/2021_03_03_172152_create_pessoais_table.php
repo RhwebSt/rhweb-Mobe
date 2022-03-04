@@ -15,9 +15,11 @@ class CreatePessoaisTable extends Migration
     {
         Schema::create('pessoais', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tscpf',15)->nullable();
-            $table->char('nsnascimento', 10)->nullable();
-            $table->string('tstelefone',18)->nullable();
+            $table->string('pscpf',15)->nullable();
+            $table->char('psnascimento', 10)->nullable();
+            $table->string('pstelefone',18)->nullable();
+            $table->integer('user')->unsigned()->nullable();
+            $table->foreign('user')->references('id')->on('users');
             $table->timestamps();
         });
     }

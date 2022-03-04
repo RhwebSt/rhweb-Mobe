@@ -55,9 +55,10 @@
         @enderror  
 
 
-    <form class="row g-3 mt-1 mb-3" id="form" action="" method="POST" action="" >
+    <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('usuario.update',$user->id) }}" method="POST">
            
-          
+    @csrf
+        @method('put')
                 <div class="row">
                     <div class="btn mt-3 form-control" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao"  >
@@ -69,33 +70,44 @@
                 
                 <h1 class="container text-center fs-4 fw-bold">Dados Pessoais</h1>
 
-                
-                
+                <input type="hidden" name="user" value="{{$user->id}}">
+                <input type="hidden" name="trabalhador">
+                <input type="hidden" name="empresa">
+                <input type="hidden" name="tomador">
                 <div class="col-md-8">
                     <label for="nome" class="form-label ">Nome
                         <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
                     </label>
-                    <input type="text" class="form-control fw-bold" value="" name="nome" id="nome">
+                    <input type="text" class="form-control fw-bold @error('nome') is-invalid @enderror" value="{{$pessoais->name}}" name="nome" id="nome">
+                    @error('nome')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
 
                 </div>
                 
                 
                 <div class="col-md-4">
                     <label for="cpf" class="form-label">CPF</label>
-                    <input type="text" class="form-control fw-bold" value="" name="cpf" id="cpf">
+                    <input type="text" class="form-control fw-bold @error('cpf') is-invalid @enderror" value="{{isset($pessoais->pscpf) ? $pessoais->pscpf : 'Default'}}" name="cpf" id="cpf">
+                    @error('cpf')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 
 
                 <div class="col-md-3">
                     <label for="data__nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="date" class="form-control fw-bold" value="" name="data__nascimento"  id="data__nascimento">
+                    <input type="date" class="form-control fw-bold @error('data__nascimento') is-invalid @enderror" value="{{isset($pessoais->psnascimento) ? $pessoais->psnascimento : 'Default'}}" name="data__nascimento"  id="data__nascimento">
+                    @error('data__nascimento')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
 
                 <div class="col-md-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control @error('cep') is-invalid @enderror fw-bold" maxlength="16" value="{{old('cep')}}" name="cep" id="cep">
+                    <input type="text" class="form-control @error('cep') is-invalid @enderror fw-bold" maxlength="16" value="{{isset($pessoais->escep) ? $pessoais->escep : ''}}" name="cep" id="cep">
                     @error('cep')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -103,7 +115,7 @@
                 
                 <div class="col-md-6">
                     <label for="logradouro" class="form-label">Rua</label>
-                    <input type="text" class="form-control  @error('logradouro') is-invalid @enderror fw-bold" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
+                    <input type="text" class="form-control  @error('logradouro') is-invalid @enderror fw-bold" maxlength="50" value="{{isset($pessoais->eslogradouro) ? $pessoais->eslogradouro : ''}}" name="logradouro" id="logradouro">
                     @error('logradouro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -111,7 +123,7 @@
 
                 <div class="col-md-4">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control @error('numero') is-invalid @enderror fw-bold" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
+                    <input type="text" class="form-control @error('numero') is-invalid @enderror fw-bold" maxlength="10" value="{{isset($pessoais->esnum) ? $pessoais->esnum : ''}}" name="numero" id="numero">
                     @error('numero')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -128,7 +140,7 @@
                         </div>
                 <div class="col-md-5">
                     <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control @error('bairro') is-invalid @enderror fw-bold" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
+                    <input type="text" class="form-control @error('bairro') is-invalid @enderror fw-bold" maxlength="40"  value="{{isset($pessoais->esbairro) ? $pessoais->esbairro : ''}}" name="bairro" id="bairro">
                     @error('bairro')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -137,7 +149,7 @@
 
                 <div class="col-md-5">
                     <label for="localidade" class="form-label">Municipio</label>
-                    <input type="text" class="form-control @error('localidade') is-invalid @enderror fw-bold" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
+                    <input type="text" class="form-control @error('localidade') is-invalid @enderror fw-bold" maxlength="30" value="{{isset($pessoais->esmunicipio) ? $pessoais->esmunicipio : ''}}" name="localidade" id="localidade">
                     @error('localidade')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -145,7 +157,7 @@
 
                 <div class="col-md-3">
                     <label for="uf" class="form-label">UF</label>
-                    <input type="text" class="form-control @error('uf') is-invalid @enderror fw-bold" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
+                    <input type="text" class="form-control @error('uf') is-invalid @enderror fw-bold" maxlength="2" value="{{isset($pessoais->esuf) ? $pessoais->esuf : ''}}" name="uf" id="uf">
                     @error('uf')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -154,7 +166,7 @@
 
                 <div class="col-md-4">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror fw-bold"  value="{{old('email')}}" name="email" id="email">
+                    <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror fw-bold"  value="{{$pessoais->email}}" name="email" id="email">
                     @error('email')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -163,7 +175,7 @@
                 
                 <div class="col-md-4">
                     <label for="telefone" class="form-label">Telefone</label>
-                    <input type="text" class="form-control @error('telefone') is-invalid @enderror fw-bold" value="{{old('telefone')}}" name="telefone" id="telefone">
+                    <input type="text" class="form-control @error('telefone') is-invalid @enderror fw-bold" value="{{isset($pessoais->pstelefone) ? $pessoais->pstelefone : ''}}" name="telefone" id="telefone">
                     @error('telefone')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror

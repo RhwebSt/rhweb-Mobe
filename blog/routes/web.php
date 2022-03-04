@@ -150,7 +150,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
 
-    Route::get('usuario/edita/{id}','Pessoais\\PessoaisController@edit')->name('usuario.edita');
+    Route::resource('usuario','Pessoais\\PessoaisController')->names('usuario');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');

@@ -148,4 +148,12 @@ class User extends Authenticatable
         return User::where('email', $dados['email'])
         ->update(['password'=>Hash::make($dados['password'])]);
     }
+    public function AtualizarUsuario($dados,$id)
+    {
+        return User::where('id', $id)
+        ->update([
+            'name'=>$dados['nome'],
+            'email'=>$dados['email'],
+        ]);
+    }
 }

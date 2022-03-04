@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     protected $fillable = [
-        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador'
+        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador','pessoal'
     ];
     public function cadastro($dados)
     {
@@ -21,7 +21,8 @@ class Endereco extends Model
             'esnum'=>$dados['numero'],
             'tomador'=>$dados['tomador'],
             'trabalhador'=>$dados['trabalhador'],
-            'empresa'=>$dados['empresa']
+            'empresa'=>$dados['empresa'],
+            'pessoal'=>$dados['pessoal']
         ]);
     }
     // public function editar($dados,$id)
@@ -77,6 +78,20 @@ class Endereco extends Model
     public function editarEmpresa($dados,$id)
     {
         return Endereco::where('empresa', $id)
+        ->update([
+            'eslogradouro'=>$dados['logradouro'],
+            'esbairro'=>$dados['bairro'],
+            'escep'=>$dados['cep'],
+            'esmunicipio'=>$dados['localidade'],
+            'esuf'=>$dados['uf'],
+            'escomplemento'=>$dados['complemento__endereco'],
+            'esnum'=>$dados['numero'],
+        ]);
+    }
+
+    public function editarUsuario($dados,$id)
+    {
+        return Endereco::where('pessoal', $dados['pessoal'])
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],

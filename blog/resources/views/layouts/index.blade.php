@@ -172,7 +172,7 @@
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.edita',$user->id)}}">Dados Pessoais</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.edit',$user->id)}}">Dados Pessoais</a></li>
                         <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
                       </ul>
                     </div>
