@@ -22,6 +22,8 @@ class Email implements ShouldQueue
     public function __construct($user)
     {
         $this->user = $user;
+        self::handle($this->user);
+        
     }
 
     /**
@@ -29,9 +31,9 @@ class Email implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle($user)
     {
+        Mail::send(new \App\Mail\Email($user));
         
-        Mail::send(new \App\Mail\Email($this->user));
     }
 }

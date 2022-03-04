@@ -74,7 +74,7 @@ class UserController extends Controller
             $users = $user->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 

@@ -28,6 +28,7 @@ class Email extends Mailable
      */
     public function build()
     {
+        
         $this->subject('Novo teste sistema mobe');
         $this->to($this->user['email']);
         return $this->markdown('email.index',[

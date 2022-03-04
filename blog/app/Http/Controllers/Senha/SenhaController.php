@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Senha;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\User;
 class SenhaController extends Controller
 {
@@ -24,7 +25,7 @@ class SenhaController extends Controller
         if (!$user) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este email não esta cadastrador.']);
         }
-        
+        // Mail::send(new \App\Mail\Email($dados));
         \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
         return redirect()->back();
     }
