@@ -94,10 +94,31 @@
                     <label for="tipo__dependente" class="form-label">Tipo do dependente</label>
                     <input type="text" class="form-control @error('tipo__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dstipo}}" name="tipo__dependente"  id="tipo__dependente">
                     @error('tipo__dependente')
-                      <span class="text-danger">{{ $message }}</span>
+                      <span class="text-danger">{{ $message }}</span> 
                   @enderror
                 </div>
-                
+                <div class="col-md-4">
+                    <label for="tipo__dependente" class="form-label">Tipo de Depedente</label>
+                    <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark fw-bold" value="{{old('tipo__dependente')}}">
+                      <?php
+                        $tipo = ['Cônjuge','Filho(a) ou enteado(a)','Irmão(ã), neto(a) ou bisneto(a)',
+                        'Pais, avós e bisavós','Tutor ou Cuidador','Ex-cônjuge','Menor com guarda judicial','Agregado/Outros'];
+                        foreach ($tipo as $key => $tipos) {
+                          if ($tipos === $depedentes->dstipo) {
+                            echo'<option selected>'.$depedentes->dstipo.'</option>';
+                          }
+                        }
+                      ?>
+                      <option>Cônjuge</option>
+                      <option>Filho(a) ou enteado(a)</option>
+                      <option>Irmão(ã), neto(a) ou bisneto(a)</option>
+                      <option>Pais, avós e bisavós</option>
+                      <option>Tutor ou Cuidador</option>
+                      <option>Ex-cônjuge</option>
+                      <option>Menor com guarda judicial</option>
+                      <option selected>Agregado/Outros</option>
+                    </select>
+                </div>
                 <input type="hidden" name="trabalhador" value="{{$id}}">
                 <div class="col-md-4">
                     <label for="data__nascimento" class="form-label">Data de Nascimento</label>

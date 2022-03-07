@@ -190,7 +190,7 @@
 
 
                 <div class="col-md-5">
-                    <label for="localidade" class="form-label">Municipio</label>
+                    <label for="localidade" class="form-label">Município</label>
                     <input type="text" class="form-control @error('localidade') is-invalid @enderror fw-bold" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
                     @error('localidade')
                       <span class="text-danger">{{ $message }}</span>
@@ -206,9 +206,17 @@
                 </div>
  
                 <div class="col-md-4">
-                    <label for="reponsave" class="form-label">Responsavel</label>
+                    <label for="reponsave" class="form-label">Responsável</label>
                     <input type="text" class="form-control @error('responsave') is-invalid @enderror fw-bold" value="{{old('responsave')}}" name="responsave" id="responsave">
                     @error('responsave')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                    <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
+                    @error('')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

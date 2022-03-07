@@ -238,10 +238,18 @@
                                 </div>
                  
                                 <div class="col-md-4">
-                                    <label for="reponsave" class="form-label text-white">Responsavel</label>
+                                    <label for="reponsave" class="form-label text-white">Responsável</label>
                                     <input type="text" class="form-control @error('responsave') is-invalid @enderror" value="{{$empresas->esresponsavel}}" name="responsave" id="responsave">
                                     @error('responsave')
                                         <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                                    <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
+                                    @error('')
+                                      <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                 

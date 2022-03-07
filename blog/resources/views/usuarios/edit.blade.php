@@ -99,10 +99,7 @@
                 
                 <div class="col-md-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control @error('email') is-invalid @enderror fw-bold" name="email" value="{{$editar->email}}" id="email">
-                  @error('email')
-                      <span class="">{{ $message }}</span>
-                  @enderror
+                  <input type="text" class="form-control  fw-bold" name="email" value="" id="email">
                 </div>
 
                 <div class="col-md-3">

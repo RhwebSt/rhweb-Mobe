@@ -138,6 +138,11 @@
                     <label for="reponsave" class="form-label text-white">Responsavel</label>
                     <input type="text" class="form-control fw-bold" name="responsave" id="responsave">
                 </div>
+                
+                <div class="col-md-4">
+                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                    <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
+                </div>
 
                 <div class="col-md-4">
                     <label for="email" class="form-label text-white">Email</label>
