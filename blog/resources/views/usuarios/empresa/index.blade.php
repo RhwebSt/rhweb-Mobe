@@ -114,6 +114,7 @@
                 @csrf
                 <input type="hidden" name="trabalhador" >
                 <input type="hidden" name="tomador">
+                <input type="hidden" name="pessoal">
                 <input type="hidden" id="method" name="_method" value="">
                 
                 

@@ -22,7 +22,7 @@ class Pessoai extends Model
     {
         return DB::table('users')
         ->join('pessoais', 'users.id', '=', 'pessoais.user')
-        ->join('enderecos', 'pessoais.id', '=', 'enderecos.pessoal')
+        ->join('enderecos', 'pessoais.id', '=', 'enderecos.pessoais')
         ->select(
             'users.name',
             'users.email',

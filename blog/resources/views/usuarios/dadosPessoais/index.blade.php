@@ -212,4 +212,5 @@
                     var cpf = document.querySelector("#cpf").value='';
                     var telefone = document.querySelector("#telefone").value='';
                 }
-            </script>
+            
+                </script>

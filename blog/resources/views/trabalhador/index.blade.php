@@ -111,6 +111,7 @@
             <input type="hidden" id="method" name="_method" value="">
             <input type="hidden"  name="deflator" >
             <input type="hidden"  name="tomador" >
+            <input type="hidden" name="pessoal">
             <!-- <input type="hidden" name="empresa">  -->
             <input type="hidden" name="empresa" value="{{$user->empresa}}">
             

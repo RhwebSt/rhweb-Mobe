@@ -79,7 +79,7 @@ class EmpresaController extends Controller
             'esnome.unique'=>'Esta empresa já ta cadastrada!',
             'escnpj.unique'=>'Este CNPJ já ta cadastro!'
         ]);
-        try {
+        
         
             $empresas = $this->empresa->cadastro($dados);
             if ($empresas) {
@@ -88,7 +88,7 @@ class EmpresaController extends Controller
                 $valoresrublicas = $this->valoresrublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
-            
+            try {
         } catch (\Throwable $th) {
             $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
             $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 

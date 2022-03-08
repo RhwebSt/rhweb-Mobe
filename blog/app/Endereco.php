@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     protected $fillable = [
-        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador','pessoal'
+        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador','pessoais'
     ];
     public function cadastro($dados)
     {
@@ -22,7 +22,7 @@ class Endereco extends Model
             'tomador'=>$dados['tomador'],
             'trabalhador'=>$dados['trabalhador'],
             'empresa'=>$dados['empresa'],
-            'pessoal'=>$dados['pessoal']
+            'pessoais'=>$dados['pessoal']
         ]);
     }
     // public function editar($dados,$id)

@@ -80,6 +80,7 @@
         
             <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
                 <input type="hidden" name="tomador" id="tomador">
+                <input type="hidden" name="pessoal">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir </button>
                             <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar </button>

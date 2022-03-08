@@ -199,7 +199,7 @@ class TomadorController extends Controller
         }
        
         $rublicas = $this->rublica->listaRublicaTabelaPreco(); 
-        try {
+        
             $tomadors = $this->tomador->cadastro($dados);
             if ($tomadors) {
                 $dados['tomador'] = $tomadors['id'];
@@ -228,7 +228,7 @@ class TomadorController extends Controller
 
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
-        
+            try {
         } catch (\Throwable $th) {
             $cartaoponto = $this->cartaoponto->deletar($dados['tomador']);
             $parametrosefips = $this->parametrosefip->deletar($dados['tomador']);
@@ -239,7 +239,7 @@ class TomadorController extends Controller
             $this->bancario->deletarTomador($dados['tomador']);
             $this->tabelapreco->deletatomador($dados['tomador']);
             $this->tomador->deletar($dados['tomador']); 
-            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 

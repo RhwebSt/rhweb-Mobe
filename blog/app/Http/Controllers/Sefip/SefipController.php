@@ -58,6 +58,7 @@ class SefipController extends Controller
            'email'=>'',
            'cnae'=>'',
            'rat'=>'',
+           'recolimento'=>'',
            'simples'=>'',
            'fpas'=>'',
            'codterceiro'=>'',
@@ -80,6 +81,16 @@ class SefipController extends Controller
         'base13'=>'',
         'inss_13sal'=>''
        ];
+       $caracteres_sem_acento = array(
+        'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj',''=>'Z', ''=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
+        'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
+        'Ï'=>'I', 'Ñ'=>'N', 'Ń'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
+        'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
+        'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
+        'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ń'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
+        'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
+        'ă'=>'a', 'î'=>'i', 'â'=>'a', 'ș'=>'s', 'ț'=>'t', 'Ă'=>'A', 'Î'=>'I', 'Â'=>'A', 'Ș'=>'S', 'Ț'=>'T',
+        );
        if ($empresa->escnpj) {
            $cnpjempresa = trim($empresa->escnpj);
            $empresas['cnpj'] =  str_replace(array(".", ",", "-", "/"), "", self::monta_string($cnpjempresa,14));
@@ -98,7 +109,7 @@ class SefipController extends Controller
        }
        if ($competencia->fscompetencia) {
             $competencia =  explode('-',$competencia->fscompetencia);
-            $folhar['competencia'] = $competencia[1].$competencia[0];
+            $folhar['competencia'] = $competencia[0].$competencia[1];
             $folhar['competencia'] = self::monta_string($folhar['competencia'],6);
         }
        if ($empresa->eslogradouro) {
@@ -106,7 +117,7 @@ class SefipController extends Controller
             $empresas['rua'] = self::monta_string($empresas['rua'],50);
         }
         if ($empresa->esmunicipio) {
-            $empresas['cidade'] = strtoupper($empresa->esmunicipio);
+            $empresas['cidade'] = strtoupper(preg_replace("/[^a-zA-Z0-9]/", "",strtr($empresa->esmunicipio, $caracteres_sem_acento)));
             $empresas['cidade'] = self::monta_string($empresas['cidade'],20);
         }
         if ($empresa->esbairro) {
@@ -153,7 +164,7 @@ class SefipController extends Controller
             $tomadores['uf'] = self::monta_string($tomadores['uf'],2);
         }
         if ($tomador->esmunicipio) {
-            $tomadores['cidade'] = strtoupper($tomador->esmunicipio);
+            $tomadores['cidade'] = strtoupper(preg_replace("/[^a-zA-Z0-9]/", "",strtr($tomador->esmunicipio, $caracteres_sem_acento)));
             $tomadores['cidade'] = self::monta_string($tomadores['cidade'],20);
         }
         if ($tomador->tstelefone) {
@@ -166,12 +177,19 @@ class SefipController extends Controller
         }else{
             $tomadores['cnae'] = self::monta_string(' ',7);
         }
+        if ($tomador->psresol) {
+            $tomadores['recolimento'] = strtoupper(str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psresol));
+            $tomadores['recolimento'] = self::monta_string($tomadores['recolimento'],3);
+        }else{
+            $tomadores['recolimento'] = self::monta_string(' ',3);
+        }
         if ($tomador->psconfpas) {
             $tomadores['rat'] = strtoupper(str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psconfpas));
             $tomadores['rat'] = self::monta_string($tomadores['rat'],7);
         }else{
             $tomadores['rat'] = self::monta_string(' ',7);
         }
+        
         if ($tomador->tssimples === 'Sim') {
             $tomadores['simples'] = "1";
         }else{
@@ -183,12 +201,15 @@ class SefipController extends Controller
         }else{
             $tomadores['fpas'] = self::monta_string(' ',3);
         }
+
+        
         if ($tomador->psfpasterceiros) {
             $tomadores['codterceiro'] = strtoupper(str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psfpasterceiros));
             $tomadores['codterceiro'] = self::monta_string($tomadores['codterceiro'],4);
         }else{
             $tomadores['codterceiro'] = self::monta_string(' ',4);
         }
+        
         if ($tomador->psgrps) {
             $tomadores['codgrps'] = strtoupper(str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psgrps));
             $tomadores['codgrps'] = self::monta_string($tomadores['codgrps'],4);
@@ -196,17 +217,17 @@ class SefipController extends Controller
             $tomadores['codgrps'] = self::monta_string(' ',4);
         }
 
-        
+    
        $file_name = 'SEFIP.RE';
        $cd = '00'.self::monta_string(' ',51).'11'.$empresas['cnpj'].$empresas['nome'].$empresas['contator'];
        $cd.=$empresas['rua'].$empresas['bairro'].$empresas['cep'].$empresas['cidade'].$empresas['uf'];
-       $cd .= $empresas['telefone'].$empresas['email'].$folhar['competencia'].self::monta_string(' ',29).'1'.$empresas['cnpj'].self::monta_string(' ',18)."1*";
+       $cd .= $empresas['telefone'].$empresas['email'].$folhar['competencia'].$tomadores['recolimento'].'1'.self::monta_string(' ',25).'1'.$empresas['cnpj'].self::monta_string(' ',18)."*"."\r\n";
 
 
-       $cd .= "10".self::monta_string(' ',2)."1".$empresas['cnpj'].self::monta_zeros(36);
+       $cd .= "101".$empresas['cnpj'].self::monta_zeros(35);
        $cd.=$tomadores['nome'].$tomadores['rua'].$tomadores['bairro'].$tomadores['cep'].$tomadores['cidade'].$tomadores['uf'];
-       $cd.=$tomadores['telefone']."N".$tomadores['cnae'].$tomadores['rat']."1".$tomadores['simples'].$tomadores['fpas'].$tomadores['codterceiro'];
-       $cd.= $tomadores['codgrps'].self::monta_string(' ',124)."*";
+       $cd.=$tomadores['telefone']."N".$tomadores['cnae']."P".$tomadores['rat']."1".$tomadores['simples'].$tomadores['fpas'].$tomadores['codterceiro'];
+       $cd.= $tomadores['codgrps'].self::monta_string(' ',124)."*"."\r\n";
 
     //    $cd.="201".$empresas['cnpj']."1".$tomadores['cnpj']."000000000000000000000";
     //    $cd .= $tomadores['nome'].$tomadores['rua'].$tomadores['bairro'].$tomadores['cep'].$tomadores['cidade'].$tomadores['uf'];
@@ -306,11 +327,12 @@ class SefipController extends Controller
             }
         }
         $cd .= self::monta_string(' ',25);
-        $cd .= self::monta_zeros(97).'*';
+        $cd .= self::monta_zeros(97).'*'."\r\n";
         $cd .= '90999999999999999999999999999999999999999999999999999';
         $cd .= self::monta_string(' ',306)."*"; 
+        
        $file = fopen( $file_name, "w" );
-       fputs($file, $cd);
+       fwrite($file, $cd);
        fclose($file);
        header("Content-Type: application/save");
        header("Content-Length:".filesize($file_name));
