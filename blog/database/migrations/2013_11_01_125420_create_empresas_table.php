@@ -19,6 +19,7 @@ class CreateEmpresasTable extends Migration
             $table->char('estelefone', 20)->nullable();
             $table->longText('esfoto')->nullable();
             $table->char('escnpj', 30)->nullable();
+            $table->string('tscpf',15)->nullable();
             $table->char('esdataregitro', 30)->nullable();
             $table->char('esresponsavel', 30)->nullable();
             $table->char('esemail', 100)->nullable();

@@ -18,10 +18,10 @@ class Parametrosefip extends Model
             'psresol'=>$dados['cod__recol'],
             'psconfpas'=>$dados['cod__fap'],
             'pscnae'=>$dados['cnae'],
-            'psfapaliquota'=>str_replace(",",".",$dados['fap__aliquota']),
-            'psratajustados'=>str_replace(",",".",$dados['rat__ajustado']),
+            'psfapaliquota'=>$dados['fap__aliquota']?str_replace(",",".",$dados['fap__aliquota']):0,
+            'psratajustados'=>$dados['rat__ajustado']?str_replace(",",".",$dados['rat__ajustado']):0,
             'psfpasterceiros'=>$dados['fpas__terceiros'],
-            'psaliquotaterceiros'=>str_replace(",",".",$dados['aliq__terceiros']),
+            'psaliquotaterceiros'=>$dados['aliq__terceiros']?str_replace(",",".",$dados['aliq__terceiros']):0,
             'tomador'=>$dados['tomador']
         ]);
     }

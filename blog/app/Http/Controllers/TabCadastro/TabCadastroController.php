@@ -50,7 +50,7 @@ class TabCadastroController extends Controller
         
         $novadata = explode('-',$dados['data']);
 
-        try {
+        
         $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
           
             $lancamentorublicas = $this->lancamentorublica->verifica($dados,$novadata);
@@ -78,6 +78,7 @@ class TabCadastroController extends Controller
                 $this->lancamentorublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
+            try {
        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['false'=>'Não foi possivél realizar o cadastro.']);
        }

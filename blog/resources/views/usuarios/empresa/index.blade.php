@@ -215,9 +215,9 @@
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
-                    <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
-                    @error('')
+                    <label for="cpf" class="form-label">CPF Responsável</label>
+                    <input type="text" class="form-control  fw-bold" value="{{old('cpf')}}" name="cpf" id="cpf">
+                    @error('cpf')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -444,8 +444,6 @@
             var file = element.files[0];
             var ext = ['jpg','jpeg','png','svg','tiff','webp']
             var type = file.type.split('/')
-            console.log(file.type);
-            console.log();
             if (file.size < 3145728) {
                 if (ext.indexOf(type[1]) >= 1) {
                     foto(file)
@@ -501,14 +499,22 @@
               let novodados = dados.split('  ')
               return novodados[1];
             }
+            $('#cnpj_mf').on('change',function(){
+                let dados = $(this).val();
+                dados = dados.replace(/\D/g, '');
+                pesquisa(dados)
+            })
             function empresas(dados) {
+                $('#carregamento').removeClass('d-none')
                 if (dados) {
                     $.ajax({
                         url: "{{url('listaempresa')}}/"+dados,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
+                            
                             if (data.empresa) {
+                                $('#carregamento').addClass('d-none')
                                 modulo(data)
                             }
                         }
@@ -542,17 +548,28 @@
                 campos(data)
             }
             function pesquisa(dados) {
+                $('#carregamento').removeClass('d-none')
                $.ajax({
                        url: "https://brasilapi.com.br/api/cnpj/v1/"+dados,
                        type: 'get',
                        contentType: 'application/json',
                        success: function(data) {
+                        $('#carregamento').addClass('d-none')
                         //    $("#pesquisa").removeClass('is-invalid')
                            $('#nome').val(data.razao_social)
                            $('#cnpj_mf').val(data.cnpj)
                            $('#dataregistro').val(data.data_situacao_cadastral)
                            $('#cnae__codigo').val(data.cnae_fiscal)
                            $('#cod__municipio').val(data.codigo_municipio)
+                           $('#cep').val(data.cep)
+                           $('#cnpj').val(data.cnpj.replace(/(\d{2})?(\d{3})?(\d{3})?(\d{4})(\d{2})/, "$1.$2.$3/$4-$5"));
+                           $('#logradouro').val(data.logradouro)
+                           $('#numero').val(data.numero)
+                           $('#bairro').val(data.bairro)
+                           $('#localidade').val(data.municipio)
+                           $('#uf').val(data.uf)
+                           $('#telefone').val(data.ddd_telefone_1)
+                           $('#complemento').val(data.descricao_tipo_logradouro)
                         //    $('#mensagem-pesquisa').text(' ').addClass('valid-feedback').removeClass('invalid-feedback')
                        },
                        error: function(data){
@@ -572,6 +589,7 @@
                 $('#trabfoto').attr('src',data.esfoto)
                 $('#telefone').val(data.estelefone)
                 $('#cnpj_mf').val(data.escnpj)
+                $('#cpf').val(data.escpf)
                 $('#dataregistro').val(data.esdataregitro)
                 $('#cep').val(data.escep)
                 $('#logradouro').val(data.eslogradouro)

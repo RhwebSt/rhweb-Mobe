@@ -19,9 +19,8 @@ class Lancamentorublica extends Model
             'trabalhador'=>$dados['trabalhador'],
             'lancamento'=>$dados['lancamento'],
             'created_at'=>$dados['data'],
-            'lfvalor'=>str_replace(",",".",$dados['valor']),
-            'lftomador'=>str_replace(",",".",$dados['lftomador'])
-        ]);
+            'lfvalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0,
+            'lftomador'=>$dados['lftomador']?str_replace(",",".",$dados['lftomador']):0        ]);
     }
     public function listacadastro($id)
     {

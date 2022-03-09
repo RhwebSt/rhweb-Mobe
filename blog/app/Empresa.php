@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Empresa extends Model
 {
     protected $fillable = [
-        'esnome','escnpj','esfoto','estelefone','esdataregitro','esresponsavel','esemail','esseguro','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
+        'esnome','escnpj','escpf','esfoto','estelefone','esdataregitro','esresponsavel','esemail','esseguro','escnae','escondicaosindicato','esretemferias','essindicalizado','escodigomunicipio','user'
     ];
     public function cadastro($dados)
     {
@@ -16,6 +16,7 @@ class Empresa extends Model
             'esfoto'=>$dados['foto'],
             'estelefone'=>$dados['telefone'],
             'escnpj'=>$dados['escnpj'],
+            'escpf'=>$dados['cpf'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],
             'esemail'=>$dados['email'],

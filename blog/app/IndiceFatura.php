@@ -12,10 +12,10 @@ class IndiceFatura extends Model
     public function cadastro($dados)
     {
         return IndiceFatura::create([
-            'isalimentacao'=>str_replace(",",".",str_replace(".","",$dados['alimentacao'])),
-            'istransporte'=>str_replace(",",".",str_replace(".","",$dados['transporte'])),
-            'isepi'=>str_replace(",",".",str_replace(".","",$dados['epi'])),
-            'isseguroportrabalhador'=>str_replace(",",".",str_replace(".","",$dados['seguro__trabalhador'])),
+            'isalimentacao'=>$dados['alimentacao']?str_replace(",",".",str_replace(".","",$dados['alimentacao'])):0,
+            'istransporte'=>$dados['transporte']?str_replace(",",".",str_replace(".","",$dados['transporte'])):0,
+            'isepi'=>$dados['epi']?str_replace(",",".",str_replace(".","",$dados['epi'])):0,
+            'isseguroportrabalhador'=>$dados['seguro__trabalhador']?str_replace(",",".",str_replace(".","",$dados['seguro__trabalhador'])):0,
             // 'isindecesobrefolha'=>$dados['indice__folha'],
             // 'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
             // 'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),

@@ -12,11 +12,11 @@ class Taxa extends Model
     public function cadastro($dados)
     {
         return Taxa::create([
-            'tftaxaadm'=>str_replace(",",".",str_replace(",",".",$dados['taxa_adm'])),
+            'tftaxaadm'=>$dados['taxa_adm']?str_replace(",",".",str_replace(",",".",$dados['taxa_adm'])):0,
             // 'tfbenef'=>str_replace(",",".",str_replace(",",".",$dados['caixa_benef']),
-            'tfdefaltor'=>str_replace(",",".",str_replace(",",".",$dados['deflator'])),
-            'tfdas'=>str_replace(",",".",str_replace(",",".",$dados['das'])),
-            'tftaxafed'=>str_replace(",",".",str_replace(",",".",$dados['taxa__fed'])),
+            'tfdefaltor'=>$dados['deflator']?str_replace(",",".",str_replace(",",".",$dados['deflator'])):0,
+            'tfdas'=>$dados['das']?str_replace(",",".",str_replace(",",".",$dados['das'])):0,
+            'tftaxafed'=>$dados['taxa__fed']?str_replace(",",".",str_replace(",",".",$dados['taxa__fed'])):0,
             'tomador'=>$dados['tomador']
         ]);
     }
