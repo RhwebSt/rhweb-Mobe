@@ -1,4 +1,5 @@
 @extends('layouts.index')
+@section('titulo','Rhweb - Atualizar dados da Empresa')
 @section('conteine')
 @if(session('success'))
             <script>
@@ -92,7 +93,7 @@
                                 <input type="hidden" id="method" name="_method" value="PUT">
                                 <div class="col-md-8">
                                     <label for="nome" class="form-label text-white">Nome</label>
-                                    <input type="text" class="form-control @error('esnome') is-invalid @enderror" name="esnome" value="{{$empresas->esnome}}" id="nome">
+                                    <input type="text" class="form-control @error('esnome') is-invalid @enderror fw-bold" name="esnome" value="{{$empresas->esnome}}" id="nome">
                                     @error('esnome')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -102,7 +103,7 @@
                 
                                 <div class="col-md-4">
                                     <label for="cnpj_mf" class="form-label text-white ">CNPJ/MF Nº</label>
-                                    <input type="text" class="form-control @error('escnpj') is-invalid @enderror" name="escnpj" value="{{$empresas->escnpj}}" id="cnpj_mf">
+                                    <input type="text" class="form-control @error('escnpj') is-invalid @enderror fw-bold" name="escnpj" value="{{$empresas->escnpj}}" id="cnpj_mf">
                                     @error('escnpj')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -119,7 +120,7 @@
                 
                                 <div class="col-md-2">
                                     <label for="cep" class="form-label text-white">CEP</label>
-                                    <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{$empresas->escep}}" id="cep">
+                                    <input type="text" class="form-control @error('cep') is-invalid @enderror fw-bold" name="cep" value="{{$empresas->escep}}" id="cep">
                                     @error('cep')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -127,7 +128,7 @@
                                 
                                 <div class="col-md-6">
                                     <label for="logradouro" class="form-label text-white">Rua</label>
-                                    <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{$empresas->eslogradouro}}" id="logradouro">
+                                    <input type="text" class="form-control @error('logradouro') is-invalid @enderror fw-bold" name="logradouro" value="{{$empresas->eslogradouro}}" id="logradouro">
                                     @error('logradouro')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -135,7 +136,7 @@
                 
                                 <div class="col-md-2">
                                     <label for="numero" class="form-label text-white">Número</label>
-                                    <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$empresas->esnum}}">
+                                    <input type="text" class="form-control @error('numero') is-invalid @enderror fw-bold" name="numero" id="numero" value="{{$empresas->esnum}}">
                                     @error('numero')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -214,7 +215,7 @@
                                         </div>
                                 <div class="col-md-6">
                                     <label for="bairro" class="form-label text-white">Bairro</label>
-                                    <input type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{$empresas->esbairro}}" name="bairro" id="bairro">
+                                    <input type="text" class="form-control @error('bairro') is-invalid @enderror fw-bold" value="{{$empresas->esbairro}}" name="bairro" id="bairro">
                                     @error('bairro')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -223,7 +224,7 @@
                 
                                 <div class="col-md-6">
                                     <label for="localidade" class="form-label text-white">Municipio</label>
-                                    <input type="text" class="form-control @error('localidade') is-invalid @enderror" value="{{$empresas->esmunicipio}}" name="localidade" id="localidade">
+                                    <input type="text" class="form-control @error('localidade') is-invalid @enderror fw-bold" value="{{$empresas->esmunicipio}}" name="localidade" id="localidade">
                                     @error('localidade')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -231,7 +232,7 @@
                 
                                 <div class="col-md-2">
                                     <label for="uf" class="form-label text-white">UF</label>
-                                    <input type="text" class="form-control @error('uf') is-invalid @enderror" value="{{$empresas->esuf}}" name="uf" id="uf">
+                                    <input type="text" class="form-control @error('uf') is-invalid @enderror fw-bold" value="{{$empresas->esuf}}" name="uf" id="uf">
                                     @error('uf')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -239,14 +240,14 @@
                  
                                 <div class="col-md-4">
                                     <label for="reponsave" class="form-label text-white">Responsável</label>
-                                    <input type="text" class="form-control @error('responsave') is-invalid @enderror" value="{{$empresas->esresponsavel}}" name="responsave" id="responsave">
+                                    <input type="text" class="form-control @error('responsave') is-invalid @enderror fw-bold" value="{{$empresas->esresponsavel}}" name="responsave" id="responsave">
                                     @error('responsave')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 
                                 <div class="col-md-4">
-                                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                                    <label for="cnpj__reponsavel" class="form-label text-white">CPF Responsável</label>
                                     <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
                                     @error('')
                                       <span class="text-danger">{{ $message }}</span>
@@ -255,21 +256,21 @@
                 
                                 <div class="col-md-4">
                                     <label for="email" class="form-label text-white">Email</label>
-                                    <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror" value="{{$empresas->esemail}}" name="email" id="email">
+                                    <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror fw-bold" value="{{$empresas->esemail}}" name="email" id="email">
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <label for="seguro" class="form-label text-white">Seguro</label>
-                                    <input type="text" class="form-control @error('seguro') is-invalid @enderror" value="{{$empresas->esseguro}}" name="seguro" id="seguro">
+                                    <input type="text" class="form-control @error('seguro') is-invalid @enderror fw-bold" value="{{$empresas->esseguro}}" name="seguro" id="seguro">
                                     @error('seguro')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <label for="cnae__codigo" class="form-label text-white">CNAE código</label>
-                                    <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror" value="{{$empresas->escnae}}" name="cnae__codigo" id="cnae__codigo">
+                                    <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror fw-bold" value="{{$empresas->escnae}}" name="cnae__codigo" id="cnae__codigo">
                                     @error('cnae__codigo')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -277,7 +278,7 @@
                 
                                 <div class="col-md-4">
                                     <label for="cod__municipio" class="form-label text-white">Código Município</label>
-                                    <input type="text" class="form-control @error('cod__municipio') is-invalid @enderror" value="{{$empresas->escodigomunicipio}}" name="cod__municipio" id="cod__municipio">
+                                    <input type="text" class="form-control @error('cod__municipio') is-invalid @enderror fw-bold" value="{{$empresas->escodigomunicipio}}" name="cod__municipio" id="cod__municipio">
                                     @error('cod__municipio')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -311,7 +312,7 @@
                 
                                 <div class="col-md-4">
                                     <label for="contribuicao__sindicato" class="form-label text-white">Contribuição ao Sindicato</label>
-                                    <input type="text" class="form-control @error('contribuicao__sindicato') is-invalid @enderror" name="contribuicao__sindicato" value="{{$empresas->escondicaosindicato}}" id="contribuicao__sindicato">
+                                    <input type="text" class="form-control @error('contribuicao__sindicato') is-invalid @enderror fw-bold" name="contribuicao__sindicato" value="{{$empresas->escondicaosindicato}}" id="contribuicao__sindicato">
                                     @error('contribuicao__sindicato')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -319,7 +320,7 @@
                                 
                                 <div class="col-md-4">
                                     <label for="telefone" class="form-label text-white">Telefone</label>
-                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" value="{{$empresas->estelefone}}" id="telefone">
+                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror fw-bold" name="telefone" value="{{$empresas->estelefone}}" id="telefone">
                                     @error('telefone')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

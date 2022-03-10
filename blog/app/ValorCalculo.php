@@ -609,9 +609,10 @@ class ValorCalculo extends Model
         ->selectRaw(
             'valor_calculos.vireferencia as referencia,
             SUM(valor_calculos.vivencimento) as valor,
-            valor_calculos.vicodigo,valor_calculos.vsdescricao'
+            valor_calculos.vicodigo,valor_calculos.vsdescricao,
+            valor_calculos.id'
         )
-        ->groupBy('valor_calculos.vicodigo','referencia','valor_calculos.vsdescricao')
+        ->groupBy('valor_calculos.id','valor_calculos.vicodigo','referencia','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador',$dados['tomador'])
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->whereDate('base_calculos.created_at', $dados['ano_final'])

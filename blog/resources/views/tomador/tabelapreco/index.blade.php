@@ -127,7 +127,7 @@
                       @enderror
                        <span class="text-danger" id="descricoesmensagem"></span>
                     </div>
-                    
+                    <input type="hidden" name="status" value="produção">
                     <div class="col-md-3">
                         <label for="rubricas" class="form-label">Código</label>
                         <input type="text"  class="form-control  pesquisa @error('rubricas') is-invalid @enderror fw-bold"  value="{{old('rubricas')}}" id="rubricas">

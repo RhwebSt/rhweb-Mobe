@@ -208,6 +208,7 @@ class TomadorController extends Controller
                         'ano'=>date('Y'),
                         'rubricas'=>$rublica->rsrublica,
                         'descricao'=>$rublica->rsdescricao,
+                        'status'=>'',
                         'valor'=>0,
                         'valor__tomador'=>0,
                         'empresa'=>$user->empresa,

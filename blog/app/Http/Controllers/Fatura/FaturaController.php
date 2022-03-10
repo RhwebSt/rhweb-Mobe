@@ -104,14 +104,7 @@ class FaturaController extends Controller
             'valor'=>'',
             'fatura'=>''
         ];
-        $dadosrublicas =[
-            'item'=>'',
-            'descricao'=>'',
-            'unidade'=>0,
-            'preco'=>0,
-            'total'=>0,
-            'fatura'=>''
-        ];
+       
         $rublicas = $this->rublica->listaGeral();
         foreach ($rublicas as $key => $rublica) {
             if ($rublica->rsincidencia === 'Sim') {
@@ -127,16 +120,24 @@ class FaturaController extends Controller
         }
         $producaofatura = $this->valorcalculor->producaoFatura($dados,$incide);
         $indecefatura = $this->valorcalculor->producaoFaturaIn($dados,$incide);
-        // dd($indecefatura);
+        
         $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
         $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
-        
+    
         if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
         try {
             $faturas = $this->fatura->cadastro($dados);
             if ($faturas) {
+                $dadosrublicas =[
+                    'item'=>'',
+                    'descricao'=>'',
+                    'unidade'=>0,
+                    'preco'=>0,
+                    'total'=>0,
+                    'fatura'=>''
+                ];
                 $this->valorrublica->editarFatura($dados['numero'],$user->empresa);
                 foreach ($tabelaprecos as $y => $tabelapreco) {
                     foreach ($indecefatura as $e => $indecefaturas) {
@@ -149,20 +150,34 @@ class FaturaController extends Controller
                             $dadosrublicas['fatura'] = $faturas['id'];
                             $this->faturarublica->cadastro($dadosrublicas);
                             $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                        }else if($indecefaturas->vsdescricao === 'produção' && $tabelapreco->tstomvalor){
+                        } 
+                    }
+                }
+                $dadosrublicas =[
+                    'item'=>'',
+                    'descricao'=>'',
+                    'unidade'=>0,
+                    'preco'=>0,
+                    'total'=>0,
+                    'fatura'=>''
+                ];
+                foreach ($indecefatura as $e => $indecefaturas) {
+                    foreach ($tabelaprecos as $y => $tabelapreco) {
+                        if($indecefaturas->vsdescricao === $tabelapreco->tsstatus){
                             $dadosrublicas['item'] = $indecefaturas->vicodigo;
                             $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
                             $dadosrublicas['unidade'] += $indecefaturas->referencia;
-                            $dadosrublicas['preco'] += $tabelapreco->tstomvalor;
-                            $dadosrublicas['total'] = $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                            $dadosrublicas['total'] += $indecefaturas->referencia * $tabelapreco->tstomvalor;
                             $dadosrublicas['fatura'] = $faturas['id'];
                             $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
                             break;
                         }
                     }
+                    
                 }
-                dd($tabelaprecos,$indecefatura,$dadosrublicas);
                 $this->faturarublica->cadastro($dadosrublicas);
+                // dd($tabelaprecos,$indecefatura,$dadosrublicas);
+                
                 foreach($indecefatura as $e => $indecefaturas){
                     if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
                         $producao['descricao'] = $indecefaturas->vsdescricao;

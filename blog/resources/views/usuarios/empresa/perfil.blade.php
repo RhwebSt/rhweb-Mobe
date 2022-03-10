@@ -140,7 +140,7 @@
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                    <label for="cnpj__reponsavel" class="form-label text-white">CPF Responsável</label>
                     <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
                 </div>
 

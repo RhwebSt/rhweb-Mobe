@@ -89,7 +89,7 @@
                 <input type="hidden" name="trabalhador" value="{{$id}}">
                 
                 <div class="col-md-4">
-                    <label for="tipo__dependente" class="form-label">Tipo de Depedente</label>
+                    <label for="tipo__dependente" class="form-label">Tipo de Dependente</label>
                     <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark fw-bold" value="{{old('tipo__dependente')}}">
                       <option>Cônjuge</option>
                       <option>Filho(a) ou enteado(a)</option>

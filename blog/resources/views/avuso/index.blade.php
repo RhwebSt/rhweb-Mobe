@@ -435,7 +435,6 @@
 
         <script>
         let index = 0;
-        console.log(index);
         function conteiner(index) {
                 let conteiner = '';
                 conteiner += `<div class="row d-flex mt-3" style="background-color: #141414; padding-bottom: 20px; padding-top:10px; border-radius: 10px; margin:1px;">

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class TabelaPreco extends Model
 {
     protected $fillable = [
-        'tsano','tsrubrica','tsdescricao','tsvalor','tstomvalor','empresa','tomador'
+        'tsano','tsrubrica','tsdescricao','tsvalor','tstomvalor','tsstatus','empresa','tomador'
     ];
 
     public function cadastro($dados)
@@ -16,6 +16,7 @@ class TabelaPreco extends Model
             'tsano'=>$dados['ano'],
             'tsrubrica'=>$dados['rubricas'],
             'tsdescricao'=>$dados['descricao'],
+            'tsstatus'=>$dados['status'],
             'tsvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
             'tstomvalor'=>str_replace(",",".",str_replace(".","",$dados['valor__tomador'])),
             'empresa'=>$dados['empresa'],

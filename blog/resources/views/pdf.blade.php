@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +11,12 @@
 <style>
 
     @page { 
-          margin-top: 170px; 
+          margin-top: 140px; 
           margin-bottom: 30px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -170px; right: 0px; height: 170px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -140px; right: 0px; height: 140px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
 

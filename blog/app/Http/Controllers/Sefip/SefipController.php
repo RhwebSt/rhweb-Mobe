@@ -185,9 +185,9 @@ class SefipController extends Controller
         }
         if ($tomador->psconfpas) {
             $tomadores['rat'] = strtoupper(str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psconfpas));
-            $tomadores['rat'] = self::monta_string($tomadores['rat'],7);
+            $tomadores['rat'] = self::monta_string($tomadores['rat'],8);
         }else{
-            $tomadores['rat'] = self::monta_string(' ',7);
+            $tomadores['rat'] = self::monta_string(' ',8);
         }
         
         if ($tomador->tssimples === 'Sim') {
@@ -229,9 +229,9 @@ class SefipController extends Controller
        $cd.=$tomadores['telefone']."N".$tomadores['cnae']."P".$tomadores['rat']."1".$tomadores['simples'].$tomadores['fpas'].$tomadores['codterceiro'];
        $cd.= $tomadores['codgrps'].self::monta_string(' ',124)."*"."\r\n";
 
-    //    $cd.="201".$empresas['cnpj']."1".$tomadores['cnpj']."000000000000000000000";
-    //    $cd .= $tomadores['nome'].$tomadores['rua'].$tomadores['bairro'].$tomadores['cep'].$tomadores['cidade'].$tomadores['uf'];
-    //    $cd.= $tomadores['codgrps'].'0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*';
+       $cd.="201".$empresas['cnpj']."1".$tomadores['cnpj'].self::monta_zeros(20);
+       $cd .= $tomadores['nome'].$tomadores['rua'].$tomadores['bairro'].$tomadores['cep'].$tomadores['cidade'].$tomadores['uf'];
+       $cd.= $tomadores['codgrps'].self::monta_zeros(145).self::monta_string(' ',16).'*'."\r\n";
 
 
        $cd .= "301".$empresas['cnpj']."1".$tomadores['cnpj'];
