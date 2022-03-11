@@ -51,7 +51,7 @@ $('#indice').mask('000,00')
 $('#folhartransporte').mask('000,00', {reverse: true});
 $('#folharalim').mask('000,00', {reverse: true});
 
-$('#cod__fap').mask('000',{reverse:true});
+$('#cod__fap').mask('000.000.000.000.000,0',{reverse:true});
 $('#irrf').mask('00000000000000',{reverse:true});
 $('#sf').mask('00000000000000',{reverse:true});
 $('#ctps').mask('00000000000000',{reverse:true});

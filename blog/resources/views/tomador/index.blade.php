@@ -167,7 +167,7 @@
                             <label for="cnpj" class="form-label">CNPJ 
                                 <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
                             </label>
-                            <input type="text" class="form-control  fw-bold text-dark @error('cnpj') is-invalid @enderror" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
+                            <input type="text" class="form-control  fw-bold text-dark @error('cnpj') is-invalid @enderror valid" name="cnpj" value="{{old('cnpj')}}" id="cnpj">
                             @error('cnpj')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -201,7 +201,7 @@
                        
                         <div class="col-md-6">
                             <label for="nome__completo" class="form-label ">Nome Completo</label>
-                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
+                            <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark valid" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo">
                             @error('nome__completo')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -209,7 +209,7 @@
 
                         <div class="col-md-6">
                             <label for="nome__fantasia" class="form-label"><input type="checkbox" id="radio" name="radio_fantasia"/> Nome Fantasia</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
+                            <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror valid" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
                             @error('nome__fantasia')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -269,7 +269,7 @@
 
                         <div class="col-md-4">
                             <label for="telefone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('telefone') is-invalid @enderror" name="telefone" value="{{old('telefone')}}" id="telefone">
+                            <input type="text" class="form-control input fw-bold text-dark @error('telefone') is-invalid @enderror valid" name="telefone" value="{{old('telefone')}}" id="telefone">
                             @error('telefone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -280,7 +280,7 @@
 
                         <div class="col-md-3">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror" name="cep" value="{{old('cep')}}"   id="cep">
+                            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror valid" name="cep" value="{{old('cep')}}"   id="cep">
                             @error('cep')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -288,7 +288,7 @@
                         
                         <div class="col-md-7">
                             <label for="logradouro" class="form-label">Rua</label>
-                            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror" name="logradouro" value="{{old('logradouro')}}" id="logradouro">
+                            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{old('logradouro')}}" id="logradouro">
                             @error('logradouro')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -296,7 +296,7 @@
 
                         <div class="col-md-2">
                             <label for="numero" class="form-label">Número</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror" name="numero" value="{{old('numero')}}" id="numero">
+                            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror valid" name="numero" value="{{old('numero')}}" id="numero">
                             @error('numero')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -360,7 +360,7 @@
 
                         <div class="col-md-8">
                             <label for="bairro" class="form-label">Bairro</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror" name="bairro" value="{{old('bairro')}}" id="bairro">
+                            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror valid" name="bairro" value="{{old('bairro')}}" id="bairro">
                             @error('bairro')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -368,7 +368,7 @@
 
                         <div class="col-md-8">
                             <label for="localidade" class="form-label">Municipio</label>
-                            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror" name="localidade" value="{{old('localidade')}}" id="localidade">
+                            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror valid" name="localidade" value="{{old('localidade')}}" id="localidade">
                             @error('localidade')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -377,7 +377,7 @@
 
                         <div class="col-md-4">
                             <label for="uf" class="form-label">UF</label>
-                            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror" name="uf" value="{{old('uf')}}" id="uf">
+                            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror valid" name="uf" value="{{old('uf')}}" id="uf">
                             @error('uf')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -831,12 +831,209 @@
                       </div>
                     </div>
             <script>
+            
+            
+            var nomeFantasia = document.querySelector('#nome__fantasia');
+
+            nomeFantasia.addEventListener('input', function(){
+                var nomeFantasia = document.querySelector('#nome__fantasia');
+                var result = nomeFantasia.value;
+                if(result > " "){
+                  nomeFantasia.classList.add('is-valid');  
+                }else{
+                    nomeFantasia.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            
+            var nomeCompleto = document.querySelector('#nome__completo');
+
+            nomeCompleto.addEventListener('input', function(){
+                var nomeCompleto = document.querySelector('#nome__completo');
+                var result = nomeCompleto.value;
+                if(result > " "){
+                  nomeCompleto.classList.add('is-valid');  
+                }else{
+                    nomeCompleto.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var telefone = document.querySelector('#telefone');
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector('#telefone');
+                var result = telefone.value;
+                if(result > " " && result.length >= 15){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var cep = document.querySelector('#cep');
+
+            cep.addEventListener('input', function(){
+                var cep = document.querySelector('#cep');
+                var result = cep.value;
+                if(result > " " && result.length >= 9){
+                  cep.classList.add('is-valid');  
+                }else{
+                    cep.classList.remove('is-valid');
+                }
+                 
+            });
+            
+
+            cep.addEventListener('focusout', function(){
+                var logradouro = document.querySelector('#logradouro');
+                var resultlog = logradouro.value;
+                var bairro = document.querySelector('#bairro');
+                var resultbairro = bairro.value;
+                var localidade = document.querySelector('#localidade');
+                var resultlocal = localidade.value;
+                var uf = document.querySelector('#uf');
+                var resultuf = uf.value;
+                
+                
+                if(resultlog > " "){
+                  logradouro.classList.add('is-valid');  
+                }else{
+                    logradouro.classList.remove('is-valid');
+                }
+                
+                if(resultbairro > " "){
+                  bairro.classList.add('is-valid');  
+                }else{
+                    bairro.classList.remove('is-valid');
+                }
+                
+                if(resultlocal > " "){
+                  localidade.classList.add('is-valid');  
+                }else{
+                    localidade.classList.remove('is-valid');
+                }
+                
+                if(resultuf > " " && resultuf.length > 2){
+                  uf.classList.add('is-valid');  
+                }else{
+                    uf.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var logradouro = document.querySelector('#logradouro');
+
+            logradouro.addEventListener('input', function(){
+                var logradouro = document.querySelector('#logradouro');
+                var result = logradouro.value;
+                if(result > " "){
+                  logradouro.classList.add('is-valid');  
+                }else{
+                    logradouro.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var numero = document.querySelector('#numero');
+
+            numero.addEventListener('input', function(){
+                var numero = document.querySelector('#numero');
+                var result = numero.value;
+                if(result > " "){
+                  numero.classList.add('is-valid');  
+                }else{
+                    numero.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var bairro = document.querySelector('#bairro');
+
+            bairro.addEventListener('input', function(){
+                var bairro = document.querySelector('#bairro');
+                var result = bairro.value;
+                if(result > " "){
+                  bairro.classList.add('is-valid');  
+                }else{
+                    bairro.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var localidade = document.querySelector('#localidade');
+
+            localidade.addEventListener('input', function(){
+                var localidade = document.querySelector('#localidade');
+                var result = localidade.value;
+                if(result > " "){
+                  localidade.classList.add('is-valid');  
+                }else{
+                    localidade.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var uf = document.querySelector('#uf');
+
+            uf.addEventListener('input', function(){
+                var uf = document.querySelector('#uf');
+                var result = uf.value;
+                if(result > " " && result.length >= 2){
+                  uf.classList.add('is-valid');  
+                }else{
+                    uf.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var diasUteis = document.querySelector('#dias_uteis');
+
+            diasUteis.addEventListener('input', function(){
+                var diasUteis = document.querySelector('#dias_uteis');
+                var result = diasUteis.value;
+                if(result > " "){
+                  diasUteis.classList.add('is-valid');  
+                }else{
+                   diasUteis.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var sabados = document.querySelector('#sabados');
+
+            sabados.addEventListener('input', function(){
+                var sabados = document.querySelector('#sabados');
+                var result = sabados.value;
+                if(result > " "){
+                  sabados.classList.add('is-valid');  
+                }else{
+                   sabados.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var domingos = document.querySelector('#domingos');
+
+            domingos.addEventListener('input', function(){
+                var domingos = document.querySelector('#domingos');
+                var result = domingos.value;
+                if(result > " "){
+                  domingos.classList.add('is-valid');  
+                }else{
+                   domingos.classList.remove('is-valid');
+                }
+                 
+            });
+
+            
 
                 
         var botaolimpaCampos = document.querySelector("#refre");
 
         botaolimpaCampos.addEventListener('click', function(){
-            console.log("clicou");
             var cnpj = document.querySelector("#cnpj").value='';
             var nome = document.querySelector("#nome__completo").value='';
             var nomeFantasia = document.querySelector("#nome__fantasia").value='';
@@ -1140,7 +1337,7 @@
                         }
                         $("#pesquisa").removeClass('is-invalid')
                         
-                        $('#mensagem-pesquisa').text(' ').addClass('valid-feedback').removeClass('invalid-feedback')
+                        $('#mensagem-pesquisa').text(' ').addClass('valid-feedback',).removeClass('invalid-feedback')
                     },
                     error: function(data){
                         // $("#pesquisa").addClass('is-invalid')

@@ -16,7 +16,7 @@ class Parametrosefip extends Model
             'psfpas'=>$dados['cod__fpas'],
             'psgrps'=>$dados['cod__grps'],
             'psresol'=>$dados['cod__recol'],
-            'psconfpas'=>$dados['cod__fap'],
+            'psconfpas'=>$dados['cod__fap']?str_replace(",",".",$dados['cod__fap']):0,
             'pscnae'=>$dados['cnae'],
             'psfapaliquota'=>$dados['fap__aliquota']?str_replace(",",".",$dados['fap__aliquota']):0,
             'psratajustados'=>$dados['rat__ajustado']?str_replace(",",".",$dados['rat__ajustado']):0,
@@ -30,7 +30,7 @@ class Parametrosefip extends Model
        return Parametrosefip::where('tomador', $id)
       ->update([
         'psfpas'=>$dados['cod__fpas'],
-        'psconfpas'=>$dados['cod__fap'],
+        'psconfpas'=>str_replace(",",".",$dados['cod__fap']),
         'psgrps'=>$dados['cod__grps'],
         'psresol'=>$dados['cod__recol'],
         'pscnae'=>$dados['cnae'],
