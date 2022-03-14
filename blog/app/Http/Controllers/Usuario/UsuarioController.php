@@ -90,7 +90,7 @@ class UsuarioController extends Controller
             $users = $user->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél realizar a atualização.']);
         }
     }
 

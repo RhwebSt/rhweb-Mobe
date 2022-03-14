@@ -467,17 +467,17 @@ class calculoFolhaPorTrabalhadorController extends Controller
             $leis = $this->leis->categorias();
             $folhars = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],null);
             if (!$folhars) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+                return redirect()->back()->withInput()->withErrors(['false'=>'Nenhuma folha foi lançada para esse trabalhador.']);
             }
             if ($folhars->bivalorliquido <= 0) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não possui valor suficiente.']);
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não possui um valor suficiente para gerar.']);
             }
             $valorcalculos = $this->valorcalculo->buscaImprimirTrabalhador($folhars->id);
             $relacaodias = $this->relacaodia->buscaImprimirTrabalhador($folhars->id);
             $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','leis','valorcalculos','relacaodias'));
             return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

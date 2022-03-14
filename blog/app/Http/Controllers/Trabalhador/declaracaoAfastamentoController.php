@@ -22,7 +22,7 @@ class declaracaoAfastamentoController extends Controller
                 return $pdf->setPaper('a4')->stream('Declaração de afastamento '.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

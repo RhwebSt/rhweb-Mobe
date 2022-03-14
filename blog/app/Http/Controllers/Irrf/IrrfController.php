@@ -41,7 +41,7 @@ class IrrfController extends Controller
         $request->validate([
             'irsano'=>'required|max:4|unique:irrves',
         ],[
-            'irsano.unique'=>'Esta ano já esta cadastrado.'
+            'irsano.unique'=>'Este ano já está cadastrado.'
         ]);
         $contador = 1;
         $novodados = [
@@ -112,7 +112,7 @@ class IrrfController extends Controller
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         
         } catch (\Throwable $th) {
-            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -216,9 +216,9 @@ class IrrfController extends Controller
             }
             $contador++;
         }
-        return redirect()->back()->withSuccess('Atualizador com sucesso.');
+        return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
         
     }

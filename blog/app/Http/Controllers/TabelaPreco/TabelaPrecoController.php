@@ -51,7 +51,7 @@ class TabelaPrecoController extends Controller
         ]);
         $tabelaprecos = $tabelapreco->verificaRublica($dados);
         if ($tabelaprecos) {
-            return redirect()->back()->withInput()->withErrors(['descricao'=>'Essa rúbrica já esta cadastrada.']);; 
+            return redirect()->back()->withInput()->withErrors(['descricao'=>'Esta rúbrica já está cadastrada.']); 
         }
         try {
             $tabelaprecos = $tabelapreco->cadastro($dados);
@@ -59,7 +59,7 @@ class TabelaPrecoController extends Controller
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 

@@ -613,400 +613,400 @@ $("#form").validate({
             maxlength:'O campo não pode ter mais de 30 caracteres'
         },
         codigo:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 4 caracteres'
         },
         cpf__dependente:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 16 caracteres'
         },
         tipo__dependente:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         nome__dependente:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 30 caracteres'
         },
         data__nascimento:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         valor__tomador:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         name:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 20 caracteres'
         },
         escnpj:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 30 caracteres'
         },
         esnome:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 100 caracteres'
         },
         valor:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         descricao:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 60 caracteres'
         },
         rubricas:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 11 caracteres'
         },
         ano:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 4 caracteres'
         },
         quantidade:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         rubrica:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         licodigo:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 4 caracteres'
         },
         num__trabalhador:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             range:'O campo tem que conter uma quantidade entre 1 a 10!'
         },
         liboletim:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 4 caracteres'
         },
         data:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         pix:{
-            maxlength:'O campo não pode ter mas de 50 caracteres'
+            maxlength:'O campo não pode ter mais de 50 caracteres'
         },
         data__admissao:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         nome__mae:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         pais__nacionalidade:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 60 caracteres',
         },
         pais__nascimento:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:'O campo não pode ter mais de 60 caracteres',
         },
         data_nascimento:{
-            required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 10 caracteres'
+            required:"O campo nome não pode estar vazio!",
+            maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         data__afastamento:{
             
-            maxlength:'O campo não pode ter mas de 10 caracteres'
+            maxlength:'O campo não pode ter mais de 10 caracteres'
         },
         situacao__contrato:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         uf__ctps:{
-            required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 2 caracteris'
+            required:"O campo nome não pode estar vazio!",
+            maxlength:'O campo não pode ter mais de 2 caracteris'
         },
         serie__ctps:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         ctps:{
-            required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 20 caracteris'
+            required:"O campo nome não pode estar vazio!",
+            maxlength:'O campo não pode ter mais de 20 caracteris'
         },
         sf:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         irrf:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         categoria__contrato:{
-            required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 20 caracteres'
+            required:"O campo nome não pode estar vazio!",
+            maxlength:'O campo não pode ter mais de 20 caracteres'
         },
         pis:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         cpf:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         senha:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:"Maximo de 50 caracteres!",
             minlength:'Minimo de 6 caracteres!'
         },
         cargo:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
             maxlength:"apenas 100 caracteres"
         },
         usuario:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         contribuicao__sindicato:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         cbo:{
-            required:"O campo nome não pode esta vazio!",
-            maxlength:'O campo não pode ter mas de 20 caracteres'
+            required:"O campo nome não pode estar vazio!",
+            maxlength:'O campo não pode ter mais de 20 caracteres'
         },
         seq__esocial:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__cartaoponto:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__folha:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__boletins:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__requisicao:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         matric__trabalhador:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__reciboavulso:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         nro__fatura:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         va__trabalhador:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         vt__trabalhador:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         retem__ferias:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         sincalizado:{
-            required:"O campo nome não pode esta vazio!",
+            required:"O campo nome não pode estar vazio!",
         },
         cod__municipio:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
             maxlength:'O campo não pode conter mais de 10 caracteres!'
         },
         cnae__codigo:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
             maxlength:'O campo não pode conter mais de 10 caracteres!'
         },
         email:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
         },
         responsave:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
         },
         dataregistro:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
         },
         cnpj_mf:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
         },
         nome:{
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
             maxlength: "  O campo nome não pode tem mais de 40 caracteres!",
         },
         nome__completo: {
-            required: "O campo nome não pode esta vazio!",
+            required: "O campo nome não pode estar vazio!",
             maxlength: "  O campo nome não pode tem mais de 100 caracteres!",
         },
         nome__fantasia: {
-            required: "O campo nome fantasia não pode esta vazio!",
+            required: "O campo nome fantasia não pode estar vazio!",
             maxlength: "  O campo nome fantasia não pode tem mais de 20 caracteres!",
         },
         cnpj:{
-            required: 'O campo CNPJ não pode esta vazio!',
+            required: 'O campo CNPJ não pode estar vazio!',
         },
         matricula:{
-            required: 'O campo MATRICULAR não pode esta vazio!',
+            required: 'O campo MATRICULA não pode estar vazio!',
         },
         simples:{
-            required: 'O campo SIMPLES não pode esta vazio!',
+            required: 'O campo SIMPLES não pode estar vazio!',
             range: 'O campo SIMPLES não pode ter um valor maior que 9!',
         },
         telefone:{
-            required: 'O campo TELEFONE não pode esta vazio!',
+            required: 'O campo TELEFONE não pode estar vazio!',
         },
         cep:{
-            required:'O campo CEP não pode esta vazio!',
+            required:'O campo CEP não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 16 caracteres!'
         },
         logradouro:{
-            required:'O campo RUA não pode esta vazio!',
+            required:'O campo RUA não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 50 caracteres!'
         },
         numero:{
-            required:'O campo NUMERO não pode esta vazio!',
+            required:'O campo NUMERO não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 10 caracteres!'
         },
         tipo:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         bairro:{
-            required:'O campo BAIRRO não pode esta vazio!',
+            required:'O campo BAIRRO não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 40 caracteres!'
         },
         localidade:{
-            required:'O campo MUNICIPIO não pode esta vazio!',
+            required:'O campo MUNICIPIO não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 30 caracteres!'
         },
         uf:{
-            required:'O campo UF não pode esta vazio!',
+            required:'O campo UF não pode estar vazio!',
             maxlength:'O campo não pode ter mais de 2 caracteres!'
         },
         taxa_adm:{
-            required:'O campo Taxa Adm % não pode esta vazio!'
+            required:'O campo Taxa Adm % não pode estar vazio!'
         },
         caixa_benef:{
-            required:'O campo Caixa benef. % não pode esta vazio!'
+            required:'O campo Caixa benef. % não pode estar vazio!'
         },
         ferias:{
-            required:'O campo Férias 1,00 % não pode esta vazio!'
+            required:'O campo Férias 1,00 % não pode estar vazio!'
         },
         taxa__fed:{
-            required:'O campo Taxa Fed. % não pode esta vazio!'
+            required:'O campo Taxa Fed. % não pode estar vazio!'
         }, 
         deflator:{
-            required:'O campo Taxa % DEFLATOR não pode esta vazio!'
+            required:'O campo Taxa % DEFLATOR não pode estar vazio!'
         },
         ferias_trab:{
-            required:'O campo Taxa Férias % não pode esta vazio!'
+            required:'O campo Taxa Férias % não pode estar vazio!'
         },
         rsr:{
-            required:'O campo Taxa RSR % não pode esta vazio!'
+            required:'O campo Taxa RSR % não pode estar vazio!'
         },
         das:{
-            required:'O campo Taxa DAS % não pode esta vazio!'
+            required:'O campo Taxa DAS % não pode estar vazio!'
         },
         cod__fpas:{
-            required:'O campo Cod FPAS não pode esta vazio!'
+            required:'O campo Cod FPAS não pode estar vazio!'
         },
         cod__grps:{
-            required:'O campo Cod GRPS não pode esta vazio!'
+            required:'O campo Cod GRPS não pode estar vazio!'
         },
         cod__grps:{
-            required:'O campo Cod Recol não pode esta vazio!'
+            required:'O campo Cod Recol não pode estar vazio!'
         },
         cnae:{
-            required:'O campo CNAE não pode esta vazio!'
+            required:'O campo CNAE não pode estar vazio!'
         },
         fap__aliquota:{
-            required:'O campo FAP Aliquota % não pode esta vazio!'
+            required:'O campo FAP Aliquota % não pode estar vazio!'
         },
         rat__ajustado:{
-            required:'O campo RAT Ajustado % não pode esta vazio!'
+            required:'O campo RAT Ajustado % não pode estar vazio!'
         },
         fpas__terceiros:{
-            required:'O campo FPAS Terceiros não pode esta vazio!'
+            required:'O campo FPAS Terceiros não pode estar vazio!'
         },
         // aliq__terceiros:{
-        //     required:'O campo Aliq. Terceiros não pode esta vazio!'
+        //     required:'O campo Aliq. Terceiros não pode estar vazio!'
         // },
         esocial:{
-            required:'O campo E-SOCIAL Nº não pode esta vazio!'
+            required:'O campo E-SOCIAL Nº não pode estar vazio!'
         },
         dias_uteis:{
-            required:'O campo Dias Úteis não pode esta vazio!',
-            range: 'O campo não aceita valor maiores que 31!'
+            required:'O campo Dias Úteis não pode estar vazio!',
+            range: 'O campo não aceita valor maior que 31!'
         },
         sabados:{
-            required:'O campo não pode esta vazio!',
-            range: 'O campo não aceita valor maiores que 31!'
+            required:'O campo não pode estar vazio!',
+            range: 'O campo não aceita valor maior que 31!'
         },
         domingos:{
-            required:'O campo não pode esta vazio!',
-            range: 'O campo não aceita valor maiores que 31!'
+            required:'O campo não pode estar vazio!',
+            range: 'O campo não aceita valor maior que 31!'
         },
         inss__empresa:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         fgts__empresa:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         valor_fatura:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         ano:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         descricao:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         valor:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         nome_tomador:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         nome__trabalhador:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         matricula__trab:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         indice:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         alimentacao:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         transporte:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         epi:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         seguro__trabalhador:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         indice__folha:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         valor__transporte:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         valor__alimentacao:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         folhartransporte:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         folhartipotrans:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         folharalim:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         folhartipoalim:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         nome__conta:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         banco:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         agencia:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         operacao:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         },
         conta:{
-            required:'O campo não pode esta vazio!',
+            required:'O campo não pode estar vazio!',
         }
     }
 });

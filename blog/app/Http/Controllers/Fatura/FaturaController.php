@@ -53,10 +53,10 @@ class FaturaController extends Controller
             'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
         ],
         [
-            'ano_inicial1.required'=>'Campo não pode esta vazio.',
-            'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
-            'ano_final1.required'=>'Campo não pode esta vazio.',
-            'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
+            'ano_inicial1.required'=>'O campo não pode estar vazio.',
+            'ano_inicial1.regex'=>'O campo nome social possui um formato inválido.',
+            'ano_final1.required'=>'O campo não pode estar vazio.',
+            'ano_final1.regex'=>'O campo nome social possui um formato inválido.',
         ]
         );
         $user = auth()->user();
@@ -346,7 +346,7 @@ class FaturaController extends Controller
             $quantidade = $valorrublica_fatura->vsnrofatura - 1;
             $this->fatura->deletar($faturas['id']);
             $this->valorrublica->editarFatura($quantidade,$user->empresa);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
     public function destroy($id)
@@ -365,7 +365,7 @@ class FaturaController extends Controller
             $this->valorrublica->editarFatura($quantidade,$user->empresa);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
     public function relatorio($id,$inicio,$final)
@@ -384,7 +384,7 @@ class FaturaController extends Controller
             $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
             return $pdf->setPaper('a4')->stream('fatura.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

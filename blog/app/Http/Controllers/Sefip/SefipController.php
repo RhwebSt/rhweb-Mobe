@@ -266,8 +266,8 @@ class SefipController extends Controller
             }
             if ($folha_valor->dsserie) {
                 $serietrabalhador = trim($folha_valor->dsserie);
-                $trabalhador['serie'] =  str_replace(array(".", ",", "-", "/"), "", self::monta_string($serietrabalhador,5));
-                $cd .= $trabalhador['serie'];
+                $trabalhador['serie'] =  str_replace(array(".", ",", "-", "/"), "",self::monta_inteiro($serietrabalhador,5,'esquerda'));
+                $cd .=  $trabalhador['serie'];
             }
             if ($folha_valor->csafastamento) {
                 $afastamentotrabalhador = explode('-',$folha_valor->csafastamento);
@@ -286,7 +286,7 @@ class SefipController extends Controller
             if ($folha_valor->cbo) {
                 $cbotrabalhador = explode('-',$folha_valor->cbo);
                 $cbotrabalhador = trim($cbotrabalhador[0]);
-                $trabalhador['cbo'] =  str_replace(array(".", ",", "-", "/"), "", self::monta_inteiro($cbotrabalhador,5,'direita'));
+                $trabalhador['cbo'] =  str_replace(array(".", ",", "-", "/"), "", self::monta_inteiro($cbotrabalhador,5,'esquerda'));
                 $cd .= $trabalhador['cbo'];
             }
             
@@ -295,43 +295,51 @@ class SefipController extends Controller
                 $vlrsem13trabalhador = trim($folha_valor->biservicodsr + $vlrsem13->vivencimento);
                 
                 $trabalhador['13sem'] =  str_replace(array(".", ",", "-", "/"), "", $vlrsem13trabalhador);
-                $trabalhador['13sem'] = self::monta_inteiro($trabalhador['13sem'],13,'esquerda');
+                $trabalhador['13sem'] = self::monta_inteiro($trabalhador['13sem'],15,'esquerda');
                 $cd .= $trabalhador['13sem'];
             }
             $vlr13 = $this->valorcalculo->sefipInss($folha_valor->id,1010);
             if ($vlr13->vivencimento) {
                 $vlr13trabalhador = trim($vlr13->vivencimento);
                 $trabalhador['13sal'] =  str_replace(array(".", ",", "-", "/"), "", $vlr13trabalhador);
-                $trabalhador['13sal'] = self::monta_inteiro($trabalhador['13sal'],13,'esquerda');
+                $trabalhador['13sal'] = self::monta_inteiro($trabalhador['13sal'],15,'esquerda');
                 $cd .= $trabalhador['13sal'];
                 $cd .= self::monta_string(' ',4);
             }
             
             $inss = $this->valorcalculo->sefipInss($folha_valor->id,2001);
-        
-            if ($inss->videscinto) {
-                $insstrabalhador = trim($inss->videscinto);
-                $trabalhador['inss'] =  str_replace(array(".", ",", "-", "/"), "", $insstrabalhador);
-                $trabalhador['inss'] = self::monta_inteiro($trabalhador['inss'],13,'esquerda');
-                $cd .= $trabalhador['inss'];
-            }
-            
-            if ($folha_valor->biservicodsr) {
-                $baseinsstrabalhador = trim($folha_valor->biservicodsr);
-                $trabalhador['base13'] =  str_replace(array(".", ",", "-", "/"), "", $baseinsstrabalhador);
-                $cd .= self::monta_inteiro($trabalhador['base13'],13,'esquerda');
-            }
-            
             $inss_sal13 = $this->valorcalculo->sefipInss($folha_valor->id,2002);
-            
-            if ($inss_sal13->videscinto) {
-                $inss_sal13trabalhador = trim($inss_sal13->videscinto);
-                $trabalhador['inss_13sal'] =  str_replace(array(".", ",", "-", "/"), "", $inss_sal13trabalhador);
-                $trabalhador['inss_13sal'] = self::monta_inteiro($trabalhador['inss_13sal'],13,'esquerda');
-                $cd .= $trabalhador['inss_13sal'];
+            if ($inss->videscinto) {
+                $insstrabalhador = trim($inss->videscinto + $inss_sal13->videscinto);
+                $trabalhador['inss'] =  str_replace(array(".", ",", "-", "/"), "", $insstrabalhador);
+                $trabalhador['inss'] = self::monta_inteiro($trabalhador['inss'],15,'esquerda');
+                $cd .= $trabalhador['inss'];
+                $cd .= self::monta_zeros(14);
             }
+            
+            if ($vlr13->vivencimento) {
+                $vlr13trabalhador = trim($vlr13->vivencimento);
+                $trabalhador['13sal'] =  str_replace(array(".", ",", "-", "/"), "", $vlr13trabalhador);
+                $trabalhador['13sal'] = self::monta_inteiro($trabalhador['13sal'],15,'esquerda');
+                $cd .= $trabalhador['13sal'];
+                $cd .= self::monta_zeros(14);
+            }
+            // if ($folha_valor->biservicodsr) {
+            //     $baseinsstrabalhador = trim($folha_valor->biservicodsr);
+            //     $trabalhador['base13'] =  str_replace(array(".", ",", "-", "/"), "", $baseinsstrabalhador);
+            //     $cd .= self::monta_inteiro($trabalhador['base13'],13,'esquerda');
+            // }
+            
+            // $inss_sal13 = $this->valorcalculo->sefipInss($folha_valor->id,2002);
+            
+            // if ($inss_sal13->videscinto) {
+            //     $inss_sal13trabalhador = trim($inss_sal13->videscinto);
+            //     $trabalhador['inss_13sal'] =  str_replace(array(".", ",", "-", "/"), "", $inss_sal13trabalhador);
+            //     $trabalhador['inss_13sal'] = self::monta_inteiro($trabalhador['inss_13sal'],13,'esquerda');
+            //     $cd .= $trabalhador['inss_13sal'];
+            // }
         }
-        $cd .= self::monta_string(' ',25);
+        // $cd .= self::monta_string(' ',25);
         $cd .= self::monta_string(' ',98).'*'."\r\n";
         $cd .= '90999999999999999999999999999999999999999999999999999';
         $cd .= self::monta_string(' ',306)."*"; 

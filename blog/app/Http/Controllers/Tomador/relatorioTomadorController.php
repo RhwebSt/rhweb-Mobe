@@ -20,7 +20,7 @@ class relatorioTomadorController extends Controller
             $pdf = PDF::loadView('rolTomador',compact('empresas','tomadores'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO DA TABELA PRECO.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

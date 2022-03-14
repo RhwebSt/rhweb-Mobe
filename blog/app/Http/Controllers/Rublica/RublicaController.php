@@ -47,19 +47,19 @@ class RublicaController extends Controller
             'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
             'incidencia'=>'required'
         ],[
-            'rubricas.required'=>'Campo não pode esta vazio.',
-            'rubricas.max'=>'Campo não ter mais de 15 caracteres.',
-            'descricao.required'=>'Campo não pode esta vazio.',
-            'descricao.max'=>'Campo não ter mais de 15 caracteres.',
-            'descricao.regex'=>'O campo tem um formato inválido.',
-            'incidencia.required'=>'Campo não pode esta vazio.',
+            'rubricas.required'=>'O campo não pode estar vazio.',
+            'rubricas.max'=>'O campo não pode conter mais de 15 caracteres.',
+            'descricao.required'=>'O campo não pode estar vazio.',
+            'descricao.max'=>'O campo não pode conter mais de 15 caracteres.',
+            'descricao.regex'=>'O campo possui um formato inválido.',
+            'incidencia.required'=>'O campo não pode estar vazio.',
         ]);
         try {
           
             $rublicas = $rublica->cadastro($dados); 
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -113,18 +113,18 @@ class RublicaController extends Controller
             'descricao'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
             'incidencia'=>'required'
         ],[
-            'rubricas.required'=>'Campo não pode esta vazio.',
-            'rubricas.max'=>'Campo não ter mais de 15 caracteres.',
-            'descricao.required'=>'Campo não pode esta vazio.',
-            'descricao.max'=>'Campo não ter mais de 15 caracteres.',
-            'descricao.regex'=>'O campo tem um formato inválido.',
-            'incidencia.required'=>'Campo não pode esta vazio.',
+            'rubricas.required'=>'O campo não pode estar vazio.',
+            'rubricas.max'=>'O campo não pode conter mais de 15 caracteres.',
+            'descricao.required'=>'O campo não pode estar vazio.',
+            'descricao.max'=>'O campo não pode conter mais de 15 caracteres.',
+            'descricao.regex'=>'O campo possui um formato inválido.',
+            'incidencia.required'=>'O campo não pode estar vazio.',
         ]);
         try {
             $rublicas = $rublica->editar($dados,$id);
-            return redirect()->route('rublica.index')->withSuccess('Atualizador com sucesso.'); 
+            return redirect()->route('rublica.index')->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi porssível atualizar os dados.']);
+            return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
         }
     }
 
@@ -141,7 +141,7 @@ class RublicaController extends Controller
             $rublicas = $rublica->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

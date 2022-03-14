@@ -22,7 +22,7 @@ class CrachaTrabalhadorController extends Controller
                 return $pdf->setPaper('a4')->stream('Cracha '.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o cracha.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o crachá.']);
         }
     }
 }

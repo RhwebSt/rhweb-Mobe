@@ -53,7 +53,7 @@ class calculoFolhaPorTomadorController extends Controller
             $pdf = PDF::loadView('comprovantetomador',compact('folhas','leis','valorcalculos','relacaodias'));
             return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
         
     }
@@ -83,7 +83,7 @@ class calculoFolhaPorTomadorController extends Controller
             $pdf = PDF::loadView('comprovantetrabalhador',compact('folhar','leis','valorcalculos','relacaodias'));
             return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

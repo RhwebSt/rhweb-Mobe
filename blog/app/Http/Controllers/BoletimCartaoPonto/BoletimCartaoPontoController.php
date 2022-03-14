@@ -56,7 +56,7 @@ class BoletimCartaoPontoController extends Controller
         try {
         $bolcartaopontos = $bolcartaoponto->verifica($dados);
         if ($bolcartaopontos) {
-            return redirect()->back()->withErrors(['false'=>'Este trabalhador já ta cadastrador!']);
+            return redirect()->back()->withErrors(['false'=>'Este trabalhador já está cadastrado!']);
         }
         $validator = Validator::make($request->all(), [
             'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
@@ -95,10 +95,10 @@ class BoletimCartaoPontoController extends Controller
         if ($bolcartaopontos) {
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }else{
-            return redirect()->back()->withErrors(['false'=>'Cadastro realizado com sucesso!']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Cadastro realizado com sucesso!']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
     }
 

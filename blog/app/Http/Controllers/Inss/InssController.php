@@ -41,7 +41,7 @@ class InssController extends Controller
         $request->validate([
             'isano'=>'required|max:5|unique:insses',
         ],[
-            'isano.unique'=>'Esta ano já esta cadastrado.'
+            'isano.unique'=>'Este ano já está cadastrado.'
         ]);
         $contador = 1;
         $novodados = [
@@ -109,7 +109,7 @@ class InssController extends Controller
         
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -230,7 +230,7 @@ class InssController extends Controller
             $inss->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

@@ -85,31 +85,21 @@
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
                         <button type="submit" id="incluir" class="btn botao">Incluir <i class="fad fa-save"></i></button>
-                        <a  id="boletim"  class="btn botao disabled">Boletim <i class="fad fa-door-open"></i></a>
-                        <button type="submit" id="atualizar" disabled class="btn botao">Editar <i class="fad fa-edit"></i></button>
-                        <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <a  id="boletim"  class="btn botao disabled d-none">Boletim <i class="fad fa-door-open"></i></a>
+                        <button type="submit" id="atualizar" disabled class="btn botao d-none">Editar <i class="fad fa-edit"></i></button>
+                        <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#teste">
                           Excluir <i class="fad fa-trash"></i>
                       </button>
+                      <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <i class="fas fa-search"></i> Pesquisar
+                    </button>
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fad fa-sign-out-alt"></i></a>
                   </div>
               </div>
               
-              <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
+              
               <div>
-                    <div class="col-md-5 mb-5 p-1 pesquisar">
-                        <div class="d-flex">
-                        <label for="exampleDataList" class="form-label"></label>
-                        <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
-                        <datalist id="listapesquisa">
-                        </datalist>
-                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                        <div class="text-center d-none p-1" id="refres" >
-                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                              <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
+                    
               </div>
               
                 <?php
@@ -184,89 +174,126 @@
                     
                     
                     </form>
-                    <div class="d-flex justify-content-end">
-        
-        
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fad fa-sort"></i> Filtro 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                        <li><a class="dropdown-item text-white" href="{{route('ordem.tabela.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="{{route('ordem.tabela.cartao.ponto','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
-                </div>
+                   
                 
-                
-                
-                <div class="table-responsive-xxl">
-                            <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                <thead>
-                                    <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Nº do Boletim</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 400px;">Nome Tomador</th>
-                                    <th class="col text-center border-top text-nowrap " style="width:200px">Data</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:200px">Quantidade de Cadastro</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
-                                </thead>
-                                <tbody style="background-color: #081049; color: white;">
-                                   @if( count($lancamentotabelas) > 0)
-                                   @foreach($lancamentotabelas as $lancamentotabela)
-                                    <tr class="bodyTabela">               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$lancamentotabela->tsnome}}</a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
-                                          <?php
-                                            $data = explode('-',$lancamentotabela->lsdata)
-                                          ?>
-                                          {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn">
-                                                <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
-                                            @csrf
-                                            @method('delete')
-                                                <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                            </form> 
-                                            </td>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @else
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                <div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-black" id="staticBackdropLabel1">Boletins cadastrados</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          
+                            
+                          
+                           <div class="d-flex justify-content-between">
+                                
+                                <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
+                                    <div class="d-flex">
+                                        <label for="exampleDataList" class="form-label"></label>
+                                        <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                        <datalist id="listapesquisa">
+                                        </datalist>
+                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                        <div class="text-center d-none p-1" id="refres" >
+                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                                              <span class="visually-hidden">Loading...</span>
                                         </div>
-                                    </td>
-                                </tr>
-                                @endif
-                                </tbody>
-                            <tfoot>
-                                <tr class=" border-end border-start border-bottom">
-                                    <td colspan="11">
-                                    {{ $lancamentotabelas->links() }}
-                                    </td>
-                                </tr>
-                            </tfoot>
-                            </table>
+                                    </div>
+                                </div>
+                            </div>
+        
+                                <div class="dropdown  mt-2 p-1">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
+                                        <i class="fad fa-sort"></i> Filtro 
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
+                                    <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
+                                    <li><a class="dropdown-item text-white" id="ordemCres" href="{{route('ordem.tabela.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                    <li><a class="dropdown-item text-white" href="{{route('ordem.tabela.cartao.ponto','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                
+                            <div class="table-responsive-xxl">
+                                        <table class="table text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                            <thead>
+                                                <th class="col text-center text-nowrap" style="width:115px;">Boletim</th>
+                                                <th class="col text-center text-nowrap" style="width: 400px;">Tomador</th>
+                                                <th class="col text-center text-nowrap " style="width:200px">Data</th>
+                                                <th class="col text-center text-nowrap" style="width:200px">Quantidade</th>
+                                                <th class="col text-center text-nowrap" style="width:60px;">Vizualizar</th>
+                                                <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
+                                                <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
+                                            </thead>
+                                            <tbody style="background-color: #081049; color: white;">
+                                               @if( count($lancamentotabelas) > 0)
+                                               @foreach($lancamentotabelas as $lancamentotabela)
+                                                <tr class="bodyTabela">               
+                                                    <td class="col text-center border-bottom text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
+                                                    <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
+                                                        <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                                            <a>{{$lancamentotabela->tsnome}}</a>
+                                                        </button>
+                                                    </td>
+                                                    <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
+                                                      <?php
+                                                        $data = explode('-',$lancamentotabela->lsdata)
+                                                      ?>
+                                                      {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                                    </td>
+                                                    <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
+                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
+                                                          <button class="btn">
+                                                              <a href="" class="btn__padrao--vizualizar"><i class="fas fa-eye" style="color: white;"></i></a>
+                                                          </button>
+                                                    </td>
+                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
+                                                        <button class="btn">
+                                                            <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                                        </button>
+                                                    </td>
+                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
+                                                       <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                            <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                        </form> 
+                                                        </td>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                            <tr>
+                                                <td class="text-center text-nowrap" colspan="11" style="background-color: #081049; color: white;">
+                                                    <div class="alert" role="alert" style="background-color: #CC2836;">
+                                                        Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            </tbody>
+                                        <tfoot>
+                                            <tr class="">
+                                                <td colspan="11">
+                                                {{ $lancamentotabelas->links() }}
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                              <div class="modal-footer">
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                
-                
-                 
-              </div>
+                            
+                            
+                             
+                          </div>
               
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -293,6 +320,50 @@
             </div>
             
              <script>
+             
+                var voltarModal = document.querySelector('#ordemCres');
+                console.log(voltarModal);
+                voltarModal.addEventListener('click', function(){
+                    voltarModal.click();
+                    console.log("clicou");
+                });
+             
+                var tomador = document.querySelector('#nome__completo');
+                
+                tomador.addEventListener('input', function(){
+                    var result = tomador.value;
+                    if(result === {tsmatricula}){
+                        
+                    }
+                })
+             
+                var data = document.querySelector('#data');
+
+                data.addEventListener('input', function(){
+                    var result = data.value;
+                    if(result > " " && result.length == 10){
+                      data.classList.add('is-valid');  
+                    }else{
+                        data.classList.remove('is-valid');
+                    }
+                     
+                });
+                
+                var num__trabalhador = document.querySelector('#num__trabalhador');
+
+                num__trabalhador.addEventListener('input', function(){
+                    var num__trabalhador = document.querySelector('#num__trabalhador');
+                    var result = num__trabalhador.value;
+                    if(result > " " && result.length >= 1){
+                      num__trabalhador.classList.add('is-valid');  
+                    }else{
+                        num__trabalhador.classList.remove('is-valid');
+                    }
+                     
+                });
+             
+             
+             
                 var botaolimpaCampos = document.querySelector("#refre");
         
                 botaolimpaCampos.addEventListener('click', function(){

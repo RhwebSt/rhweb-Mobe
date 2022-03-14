@@ -21,7 +21,7 @@ class fichaEpiTrabController extends Controller
                 return $pdf->setPaper('a4')->stream('Ficha '.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o ficha.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha de EPI.']);
         }
     }
 }

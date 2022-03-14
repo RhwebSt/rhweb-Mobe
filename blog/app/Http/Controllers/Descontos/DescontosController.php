@@ -50,21 +50,21 @@ class DescontosController extends Controller
             'valor'=>'required',
         ],
         [
-            'competencia.required'=>'Campo não pode esta vazio.',
-            'competencia.max'=>'Campo não ter mais de 100 caracteres.',
-            'matricula.required'=>'Campo não pode esta vazio.',
+            'competencia.required'=>'O campo não pode estar vazio.',
+            'competencia.max'=>'O campo não pode conter mais de 100 caracteres.',
+            'matricula.required'=>'O campo não pode estar vazio.',
 
-            'nome__trab.required'=>'Campo não pode esta vazio.',
+            'nome__trab.required'=>'O campo não pode estar vazio.',
             'nome__trab.regex'=>'O campo nome social tem um formato inválido.',
         
-            'descricao.required'=>'Campo não pode esta vazio.',
-            'descricao.max'=>'Campo não ter mais de 100 caracteres.',
-            'descricao.regex'=>'O campo  tem um formato inválido.',
+            'descricao.required'=>'O campo não pode estar vazio.',
+            'descricao.max'=>'O campo não pode conter mais de 100 caracteres.',
+            'descricao.regex'=>'O campo possui um formato inválido.',
 
-            'quinzena.required'=>'Campo não pode esta vazio.',
-            'quinzena.max'=>'Campo não ter mais de 100 caracteres.',
-            'quinzena.regex'=>'O campo  tem um formato inválido.',
-            'valor.required'=>'Campo não pode esta vazio.',
+            'quinzena.required'=>'O campo não pode estar vazio.',
+            'quinzena.max'=>'O campo não pode conter mais de 100 caracteres.',
+            'quinzena.regex'=>'O campo possui um formato inválido.',
+            'valor.required'=>'O campo não pode estar vazio.',
         ]
         );
         $desconto = new Descontos;
@@ -72,7 +72,7 @@ class DescontosController extends Controller
             $descontos = $desconto->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -121,25 +121,25 @@ class DescontosController extends Controller
             'valor'=>'required',
         ],
         [
-            'competencia.required'=>'Campo não pode esta vazio.',
-            'competencia.max'=>'Campo não ter mais de 100 caracteres.',
+            'competencia.required'=>'O campo não pode estar vazio.',
+            'competencia.max'=>'O campo não ter mais de 100 caracteres.',
         
-            'descricao.required'=>'Campo não pode esta vazio.',
-            'descricao.max'=>'Campo não ter mais de 100 caracteres.',
-            'descricao.regex'=>'O campo  tem um formato inválido.',
+            'descricao.required'=>'O campo não pode estar vazio.',
+            'descricao.max'=>'O campo não ter mais de 100 caracteres.',
+            'descricao.regex'=>'O campo possui um formato inválido.',
 
-            'quinzena.required'=>'Campo não pode esta vazio.',
-            'quinzena.max'=>'Campo não ter mais de 100 caracteres.',
-            'quinzena.regex'=>'O campo  tem um formato inválido.',
-            'valor.required'=>'Campo não pode esta vazio.',
+            'quinzena.required'=>'O campo não pode estar vazio.',
+            'quinzena.max'=>'O campo não ter mais de 100 caracteres.',
+            'quinzena.regex'=>'O campo possui um formato inválido.',
+            'valor.required'=>'O campo não pode estar vazio.',
         ]
         );
         $desconto = new Descontos;
         try {
             $descontos = $desconto->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
     }
 
@@ -156,7 +156,7 @@ class DescontosController extends Controller
             $descontos = $desconto->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

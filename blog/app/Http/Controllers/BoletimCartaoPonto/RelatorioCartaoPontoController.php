@@ -35,7 +35,7 @@ class RelatorioCartaoPontoController extends Controller
          
             $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0]); 
             if (count($tabelaprecos) < 1) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada a tabela de preso deste tomador.']);
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada a tabela de preço deste tomador.']);
             }
             $lancamentotabelas = $this->lancamentotabela->relatoriocartaoponto($boletim);
             $empresa = $this->empresa->buscaUnidadeEmpresa($lancamentotabelas[0]->empresa); 
@@ -49,7 +49,7 @@ class RelatorioCartaoPontoController extends Controller
             return $pdf->setPaper('a4','landscape')->stream('Relatório.pdf');
             try { 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

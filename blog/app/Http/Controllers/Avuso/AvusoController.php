@@ -133,7 +133,7 @@ class AvusoController extends Controller
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
             $this->avuso->deletar_store($dados);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível cadastra o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
     }
 
@@ -190,7 +190,7 @@ class AvusoController extends Controller
             $this->avuso->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

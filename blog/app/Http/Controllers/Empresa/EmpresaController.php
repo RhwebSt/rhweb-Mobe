@@ -77,8 +77,8 @@ class EmpresaController extends Controller
             'seq__esocial'=>'max:15',
             'cbo'=>'max:15'
         ],[
-            'esnome.unique'=>'Esta empresa já ta cadastrada!',
-            'escnpj.unique'=>'Este CNPJ já ta cadastro!'
+            'esnome.unique'=>'Esta empresa já está cadastrada!',
+            'escnpj.unique'=>'Este CNPJ já está cadastrado!'
         ]);
         
         
@@ -94,7 +94,7 @@ class EmpresaController extends Controller
             $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
             $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
             $this->empresa->deletar($empresas['id']);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél efetua o cadastro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
         }
        
     }
@@ -173,7 +173,7 @@ class EmpresaController extends Controller
                 return redirect()->back()->withSuccess('Atualizado com sucesso.');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
     }
 
@@ -195,7 +195,7 @@ class EmpresaController extends Controller
         $empresas = $this->empresa->deletar($enderecos->empresa);
         return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

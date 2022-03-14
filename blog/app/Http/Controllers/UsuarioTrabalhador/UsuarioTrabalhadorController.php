@@ -55,7 +55,7 @@ class UsuarioTrabalhadorController extends Controller
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -98,7 +98,7 @@ class UsuarioTrabalhadorController extends Controller
             $valoresrublicas = $this->valoresrublica->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
     }
 
@@ -120,7 +120,7 @@ class UsuarioTrabalhadorController extends Controller
             }
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         } 
     }
 }

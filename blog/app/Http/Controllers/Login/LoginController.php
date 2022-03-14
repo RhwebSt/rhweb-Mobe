@@ -48,9 +48,9 @@ class LoginController extends Controller
             'user' => 'required',
             'password'=>'required' 
         ],[
-            'user.required'=>'Campo usuario não pode esta vazio!',
+            'user.required'=>'Campo usuário não pode estar vazio!',
             'password.required'=>'Informe sua senha!',
-            'password.min'=>'A senha não pode ter menos de 6 caracteris!',
+            'password.min'=>'A senha não pode conter menos de 6 caracteres!',
             
         ]);
         $dados = $request->all();
@@ -72,7 +72,7 @@ class LoginController extends Controller
             // $user->givePermissionTo('user');
             return redirect()->route('home.index');
         }
-        return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuario. Tente novamente.']);
+        return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuário. Tente novamente.']);
     }
  
     /**

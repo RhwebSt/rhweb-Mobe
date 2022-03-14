@@ -76,16 +76,16 @@ class TabCartaoPontoController extends Controller
             'data'=>'required',
             'tomador'=>'required',
         ],[
-            'nome__completo.required'=>'Campo não pode esta vazio!',
-            'tomador.required'=>'Campo não pode esta vazio!',
-            'matricula.required'=>'Campo não pode esta vazio!',
-            'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
-            'num__trabalhador.required'=>'Campo não pode esta vazio!',
+            'nome__completo.required'=>'O campo não pode estar vazio!',
+            'tomador.required'=>'O campo não pode estar vazio!',
+            'matricula.required'=>'O campo não pode estar vazio!',
+            'matricula.max'=>'A matricula não pode conter mais de 4 caracteres!',
+            'num__trabalhador.required'=>'O campo não pode estar vazio!',
             'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
-            'liboletim.required'=>'Campo não pode esta vazio!',
-            'liboletim.numeric'=>'O campo naõ pode conter letras',
-            'liboletim.exists'=>'O boletim ja ta cadastrado',
-            'data.required'=>'O campo não pode esta vazio!'
+            'liboletim.required'=>'O campo não pode estar vazio!',
+            'liboletim.numeric'=>'O campo não pode conter letras',
+            'liboletim.exists'=>'O boletim já está cadastrado',
+            'data.required'=>'O campo não pode estar vazio!'
             
         ]);
         try {
@@ -93,7 +93,7 @@ class TabCartaoPontoController extends Controller
             $this->valorrublica->editarBoletimTabela($dados,$user->empresa);
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -153,7 +153,7 @@ class TabCartaoPontoController extends Controller
         $novadata = explode('-',$dados['data']);
         $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
         if (count($quantidadeTrabalhador) > $dados['num__trabalhador']) {
-            return redirect()->back()->withInput()->withErrors(['num__trabalhador'=>'Número menor que a quantidade já cadastrada.']);
+            return redirect()->back()->withInput()->withErrors(['num__trabalhador'=>'Possui o número menor que a quantidade já cadastrada.']);
         }
     
         $request->validate([
@@ -163,22 +163,22 @@ class TabCartaoPontoController extends Controller
             'num__trabalhador'=>'required', 
             'data'=>'required'
         ],[
-            'nome__completo.required'=>'Campo não pode esta vazio!',
-            // 'matricula.required'=>'Campo não pode esta vazio!',
+            'nome__completo.required'=>'O campo não pode estar vazio!',
+            // 'matricula.required'=>'O campo não pode estar vazio!',
             // 'matricula.max'=>'A matricula não pode ter mais de 4 caracteris!',
-            'num__trabalhador.required'=>'Campo não pode esta vazio!',
-            'num__trabalhador.numeric'=>'O campo naõ pode conter letras',
-            'liboletim.required'=>'Campo não pode esta vazio!',
-            'liboletim.numeric'=>'O campo naõ pode conter letras',
-            'data.required'=>'O campo não pode esta vazio!'
+            'num__trabalhador.required'=>'O campo não pode estar vazio!',
+            'num__trabalhador.numeric'=>'O campo não pode conter letras',
+            'liboletim.required'=>'O campo não pode estar vazio!',
+            'liboletim.numeric'=>'O campo não pode conter letras',
+            'data.required'=>'O campo não pode estar vazio!'
             
         ]);
       
         try {
             $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
         
     }
@@ -196,7 +196,7 @@ class TabCartaoPontoController extends Controller
             $this->lancamentotabela->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

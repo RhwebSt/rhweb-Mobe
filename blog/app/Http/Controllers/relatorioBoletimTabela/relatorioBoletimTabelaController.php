@@ -35,7 +35,7 @@ class relatorioBoletimTabelaController extends Controller
             $pdf = PDF::loadView('relatorioBoletimTabela',compact('lancamentotabelas','empresa','trabalhadors'));
             return $pdf->setPaper('a4')->stream('boletim_n°'.$id.'.pdf');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
     }
 }

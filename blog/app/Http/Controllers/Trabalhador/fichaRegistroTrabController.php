@@ -25,7 +25,7 @@ class fichaRegistroTrabController extends Controller
                 return $pdf->setPaper('a4')->stream('ficha_'.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de registro do trabalhador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha de registro do trabalhador.']);
         }
     }
 }

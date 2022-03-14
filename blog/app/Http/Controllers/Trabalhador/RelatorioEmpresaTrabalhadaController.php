@@ -19,10 +19,10 @@ class RelatorioEmpresaTrabalhadaController extends Controller
             if ($trabalhadors) {
                 $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa);
                 $pdf = PDF::loadView('relatorioEmpresasTrab',compact('trabalhadors','empresas'));
-                return $pdf->setPaper('a4')->stream('Relatório de empresas trabalhada do trabalhador '.$trabalhadors->tsnome.'.pdf');
+                return $pdf->setPaper('a4')->stream('Relatório de empresas trabalhadas do trabalhador '.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de relatório do tomador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha do relatório do tomador.']);
         }
     }
 }

@@ -60,7 +60,7 @@ class calculoFolhaGeralController extends Controller
         $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
         $lancamentotabela = $this->lancamentotabela->verificarFolhar($datainicio,$datafinal);
         if(!$lancamentotabela){
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem um valor neste periodo.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nenhum valor neste período.']);
         }
         if ($folhas) {
             return redirect()->route('calculo.folha.index')->withInput()->withErrors(['false'=>'Esta data e o número da folha já estão cadastrados.']);
@@ -78,9 +78,9 @@ class calculoFolhaGeralController extends Controller
         $irrflista = $this->irrf->buscaListaIrrf($ano[0]);
         
         if (count($insslista) < 1) {
-            return redirect()->back()->withErrors(['false'=>'O inss '.$ano[0].' não esta cadastrado. Entre em contator com suporte.']);
+            return redirect()->back()->withErrors(['false'=>'O inss '.$ano[0].' não está cadastrado. Entre em contato com suporte.']);
         }elseif (count($irrflista) < 1) {
-            return redirect()->back()->withErrors(['false'=>'O irrf '.$ano[0].' não esta cadastrado. Entre em contator com suporte.']);
+            return redirect()->back()->withErrors(['false'=>'O irrf '.$ano[0].' não está cadastrado. Entre em contato com suporte.']);
         }
 
         $rublicas = $this->rublica->buscaListaRublica(0);

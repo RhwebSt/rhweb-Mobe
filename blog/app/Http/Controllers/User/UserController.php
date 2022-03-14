@@ -55,18 +55,18 @@ class UserController extends Controller
             'email'=>'required|email|unique:users',
             'empresa'=>'required|min:1',
         ],[
-            'nome__completo.required'=>'Campo não pode esta vazio!',
-            'name.required'=>'Campo não pode esta vazio!',
-            'name.regex'=>'Campo não pode ter caracteres especiais!',
-            'name.unique'=>'Este usuario já esta cadastrado.',
-            'name.unique'=>'Este email já esta cadastrado.',
-            'name.max'=>'Campo não pode ter mas de 20 caracteres!',
-            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
-            'senha.required'=>'Campo não pode esta vazio!',
-            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'cargo.max'=>'Campo não pode ter mais de 100 caracteres!',
-            'cargo.regex'=>'Campo não pode ter caracteres especiais!',
+            'nome__completo.required'=>'Campo não pode estar vazio!',
+            'name.required'=>'Campo não pode estar vazio!',
+            'name.regex'=>'Campo não pode conter caracteres especiais!',
+            'name.unique'=>'Este usuario já está cadastrado.',
+            'name.unique'=>'Este email já está cadastrado.',
+            'name.max'=>'Campo não pode conter mais de 20 caracteres!',
+            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
+            'senha.required'=>'Campo não pode estar vazio!',
+            'empresa.required'=>'Tomador não está cadastrado ou não foi encontrado!',
+            'empresa.min'=>'Tomador não está cadastrado ou não foi encontrado!',
+            'cargo.max'=>'Campo não pode conter mais de 100 caracteres!',
+            'cargo.regex'=>'Campo não pode conter nenhum caracteres especiais!',
             
         ]);
         $user = new User;
@@ -139,22 +139,22 @@ class UserController extends Controller
             'email'=>'required|email',
             'empresa'=>'required|min:1',
         ],[
-            'nome__completo.required'=>'Campo não pode esta vazio!',
-            'name.required'=>'Campo não pode esta vazio!',
-            // 'name.regex'=>'Campo não pode ter caracteres especiais!',
-            'name.max'=>'Campo não pode ter mas de 20 caracteres!',
-            'senha.min'=>'A senha não pode ter menos de 6 caracteris!',
-            'empresa.required'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'empresa.min'=>'Tomador não ta cadastro ou não foi encontrado!',
-            'cargo.max'=>'Campo não pode ter mais de 100 caracteres!',
-            // 'cargo.regex'=>'Campo não pode ter caracteres especiais!',
+            'nome__completo.required'=>'O campo não pode estar vazio!',
+            'name.required'=>'O campo não pode estar vazio!',
+            // 'name.regex'=>'O campo não pode ter caracteres especiais!',
+            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
+            'empresa.required'=>'O tomador não está cadastrado ou não foi encontrado!',
+            'empresa.min'=>'O tomador não está cadastrado ou não foi encontrado!',
+            'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
+            // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
         ]);
         $user = new User;
         try {
             $users = $user->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
     }
 
@@ -171,7 +171,7 @@ class UserController extends Controller
             $users = $user->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
        
     }

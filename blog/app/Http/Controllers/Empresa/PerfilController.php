@@ -99,9 +99,9 @@ class PerfilController extends Controller
         try {
             $empresas = $this->empresa->editar($dados,$id);
             $endereco = $this->endereco->editarEmpresa($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
         
     }

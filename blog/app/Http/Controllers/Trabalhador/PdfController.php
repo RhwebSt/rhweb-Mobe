@@ -20,7 +20,7 @@ class PdfController extends Controller
             $pdf = PDF::loadView('pdf',compact('trabalhadors','empresas'));
             return $pdf->setPaper('a4')->stream('relatoria.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera a ficha de relatório do trabalhador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha de registro do trabalhador.']);
         }
     }
 }

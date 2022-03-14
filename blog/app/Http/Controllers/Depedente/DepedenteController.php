@@ -49,7 +49,7 @@ class DepedenteController extends Controller
         if ($depedentes_cpf) {
             return redirect()->back()->withInput()->withErrors(['dscpf'=>'Este dependente já está cadastrado neste CPF.']);
         }elseif ($depedentes_quant > 10) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Já exedeu o limite de dependentes.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já exedeu o limite de dependentes que podem ser cadastrados.']);
         }
         $request->validate([
             'dscpf'=>'required|cpf|formato_cpf',
@@ -63,7 +63,7 @@ class DepedenteController extends Controller
             $depedente->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar o cadastro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
         
     }

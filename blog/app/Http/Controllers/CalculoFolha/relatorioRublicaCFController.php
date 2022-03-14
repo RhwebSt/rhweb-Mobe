@@ -17,7 +17,7 @@ class relatorioRublicaCFController extends Controller
             $pdf = PDF::loadView('relatorioRubricaCF',compact('folhas'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO RUBLICA CF.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
        
     }

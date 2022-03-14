@@ -55,7 +55,7 @@ class TabCadastroController extends Controller
           
             $lancamentorublicas = $this->lancamentorublica->verifica($dados,$novadata);
             if ($lancamentorublicas) {
-                return redirect()->back()->withErrors(['false'=>'Este trabalhador já foi lançado com este código.']);
+                return redirect()->back()->withErrors(['false'=>'Este trabalhador já foi lançado com esse código.']);
             }
             $validator = Validator::make($request->all(), [
                 'nome__completo' => 'required',
@@ -66,7 +66,7 @@ class TabCadastroController extends Controller
             ],
                 [
                     'codigo.required'=>'O campo codigo é obrigatório.',
-                    'codigo.max'=>'O campo codigo não pode ser superior a 4 caracteres.'
+                    'codigo.max'=>'O campo código não pode ser superior a 4 caracteres.'
                 ]
             );
             if ($validator->fails()) {
@@ -80,7 +80,7 @@ class TabCadastroController extends Controller
             }
             try {
        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['false'=>'Não foi possivél realizar o cadastro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
        }
     }
 
@@ -139,10 +139,10 @@ class TabCadastroController extends Controller
         
             $this->lancamentorublica->editar($dados,$id);
         
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
             try {
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
       
     }
@@ -159,7 +159,7 @@ class TabCadastroController extends Controller
             $lancamentorublicas = $this->lancamentorublica->deletar($id);
             return redirect()->back()->withSuccess('Registro deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possivél deletar o registro.']);
         }
       
     }

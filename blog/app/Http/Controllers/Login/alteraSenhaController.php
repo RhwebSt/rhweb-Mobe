@@ -26,7 +26,7 @@ class alteraSenhaController extends Controller
             'password2' => 'required|same:password1'
         ],
         [
-            'password2.same'=>'Os campos Confirme sua senha e Nova Senha devem corresponder'
+            'password2.same'=>'Os campos "Confirme sua senha" e "Nova senha" devem serem iguais.'
         ]);
         $user->editarSenhar($dados);
         return redirect()->back()->withSuccess('Senha alterada com sucesso.');
