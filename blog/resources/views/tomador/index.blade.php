@@ -99,6 +99,7 @@
                             <button type="button" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                               <i class="fad fa-file-invoice"></i> Boletins
                             </button>
+                             <a class="btn botao disabled" href="" id='esocial' role="button">Evento s-1020</a>
                             
                             <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                         </div> 
@@ -1171,6 +1172,7 @@
                     $('#deletar').removeAttr( "disabled" )
                     $('#excluir').removeAttr( "disabled" )
                     $('#tabelapreco').removeClass('disabled').attr('href',"{{ url('tabelapreco')}}/ /"+btoa(data.tomador))
+                    $('#esocial').removeClass('disabled').attr('href',"{{ url('esocial/tomador')}}/"+btoa(data.tomador))
                     $('#method').val('PUT')
                     $('#tomador').val(data.tomador);
                     $('#relatoriotomador').removeClass('disabled')

@@ -24,17 +24,28 @@ class TabCartaoPontoController extends Controller
     }
     public function index()
     {
+        $search = request('search');
+        $condicao = request('codicao');
+        if ($search) {
+            $lancamentotabelas = $this->lancamentotabela->pesquisaLista('M','asc',$search);
+        }else{
+            $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
+        }
         $user = Auth::user();
+        if ($condicao) {
+            $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $dados = $this->lancamentotabela->buscaUnidade($condicao);
+            return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        }else{
+            $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+        }
         
-        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
-        return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
     public function filtroPesquisaOrdem($condicao)
     {
         $user = Auth::user();
-        
         $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
         return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
@@ -132,11 +143,15 @@ class TabCartaoPontoController extends Controller
     public function filtroPesquisaOrdemEdit($id,$condicao)
     {
         $user = Auth::user();
-        
-        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
-        $dados = $this->lancamentotabela->buscaUnidade($id);
-        return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        if ($id !== ' ') {
+            $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
+            $dados = $this->lancamentotabela->buscaUnidade($id);
+            return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        }else{
+            return redirect()->route('ordem.tabela.cartao.ponto', [$condicao]);
+        }
+       
     }
 
     /**

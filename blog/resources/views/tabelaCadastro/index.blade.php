@@ -61,7 +61,10 @@
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao"><i class="fad fa-save"></i> Incluir</button>
-                    <a class="btn botao" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-alt"></i> Relatório</a>
+                    <a class="btn botao d-none" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-alt"></i> Relatório</a>
+                    <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                          <i class="fas fa-search"></i> Pesquisar
+                        </button>
                     <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
               </div>
           </div>
@@ -145,92 +148,23 @@
            }
         ?>
         
-        <div class="table-responsive-xxl">
-            <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                <thead>
-                    <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
-                    <th class="col text-center border-top text-nowrap" style="width:70px">Cod</th>
-                    <th class="col text-center border-top text-nowrap" style="width:400px">Descrição</th>
-                    <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade</th>
-                    <th class="col text-center border-top text-nowrap" style="width:170px">Valor Unitário</th>
-                    <th class="col text-center border-top text-nowrap" style="width:170px">Total R$</th>
-                    <th class="col text-center border-top text-nowrap" style="width:70px">Editar</th>
-                    <th class="col text-center border-end border-top text-nowrap" style="width:70px">Excluir</th>
-                </thead>
-                <tbody style="background-color: #081049; color: white;">
-                    @if(count($lista) > 0)
-                    @foreach($lista as $listas)
-                        <tr class="bodyTabela">
-                            <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width:400px">{{$listas->tsnome}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">{{$listas->licodigo}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:400px">{{$listas->lshistorico}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:100px">
-                                
-                                @if(str_contains($listas->lsquantidade,':'))
-                                        {{$listas->lsquantidade}}
-                                @else
-                                        {{number_format((float)$listas->lsquantidade, 2, ',', '.')}}
-                                @endif
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
-                            <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">
-                                <button class="btn">
-                                <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fa fa-edit"></i></a>
-                                </button> 
-                            </td>
-                            <td class="col text-center border-bottom border-end text-nowrap" style="width:70px">
-                            <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                            </form> 
-                            </td>
-                        </tr>
-                    @endforeach
-                    @else
-                        <tr>
-                            <td class="text-center border-bottom border-end border-start text-nowrap" colspan="8" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="8" class="text-end">
-                            {{$lista->links()}}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+        
 
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="" id="formdelete" method="post">
-                            @csrf
-                            @method('delete')
-                            <div class="modal-header modal__delete">
-                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body modal-delbody">
-                                <p class="mb-1">Deseja realmente excluir?</p>
-                            </div>
-                            <div class="modal-footer modal-delfooter">
-                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn__deletar">Deletar</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
-         </div>
-
+     @include('tabelaCadastro.lista')
           <script>
+            $('.modal-botao').click(function() {
+                localStorage.setItem("modal", "enabled");
+            })
+            function verficarModal(){
+              var valueModal = localStorage.getItem('modal');
+              if(valueModal === "enabled"){
+                  $(document).ready(function(){
+                      $("#teste").modal("show");
+                  });
+                  localStorage.setItem("modal","disabled");
+              }
+            }
+            verficarModal()
             let rublicas = ['1002','1003','1004','1005']
             $( "#rubrica" ).on('keyup focus',function() {
                 var dados = '0';
@@ -276,7 +210,31 @@
                     }
                 });
             });
-           
+            $( "#pesquisa" ).on('keyup focus',function() { 
+                let  dados = '0'
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
+                $.ajax({
+                    url: "{{url('trabalhador/pesquisa')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                      let nome = ''
+                      if (data.length >= 1) {
+                        data.forEach(element => {
+                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tscpf}">`
+                        });
+                        $('#listapesquisa').html(nome)
+                      }            
+                    }
+                });
+            });
             $( "#nome__completo" ).on('keyup focus',function() { 
                 let  dados = '0'
                 if ($(this).val()) {

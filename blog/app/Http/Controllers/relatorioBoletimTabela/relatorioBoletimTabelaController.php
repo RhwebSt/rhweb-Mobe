@@ -19,7 +19,7 @@ class relatorioBoletimTabelaController extends Controller
     }
     public function fichaLancamentoTab($id)
     {
-       
+       $id = base64_decode($id);
         try {
             $lancamentotabelas = $this->lancamentotabela->relatorioBoletimTabela($id);
        

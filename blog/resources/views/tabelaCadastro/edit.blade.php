@@ -193,6 +193,19 @@
          </div>
 
           <script>
+            $('.modal-botao').click(function() {
+                localStorage.setItem("modal", "enabled");
+            })
+            function verficarModal(){
+              var valueModal = localStorage.getItem('modal');
+              if(valueModal === "enabled"){
+                  $(document).ready(function(){
+                      $("#teste").modal("show");
+                  });
+                  localStorage.setItem("modal","disabled");
+              }
+            }
+            verficarModal()
             $( "#rubrica" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {

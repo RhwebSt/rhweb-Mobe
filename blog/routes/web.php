@@ -28,7 +28,7 @@ Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
  
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
-    Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab');
+    Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
     
@@ -38,7 +38,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
     Route::get('ordem/cadastro/cartao/ponto/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdem')->name('ordem.cadastro.cartao.ponto');
-    Route::get('edit/ordem/cadastro/cartao/ponto/{id}/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.cadastro.cartao.ponto');
+    Route::get('edit/ordem/cadastro/cartao/ponto/{id?}/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.cadastro.cartao.ponto');
 
     Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
 
@@ -46,7 +46,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabela/cartao/ponto/unidade/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
     Route::get('tabela/cartao/ponto/pesquisa/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
     Route::get('ordem/tabela/cartao/ponto/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdem')->name('ordem.tabela.cartao.ponto');
-    Route::get('edit/ordem/tabela/cartao/ponto/{id}/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.tabela.cartao.ponto');
+    Route::get('edit/ordem/tabela/cartao/ponto/{id?}/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.tabela.cartao.ponto');
     
 
     Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
@@ -149,7 +149,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
-
+    Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::resource('usuario','Pessoais\\PessoaisController')->names('usuario');
     Route::group(['middleware' => ['permission:admin']], function () {
         Route::resource('user','User\\UserController')->names('user');

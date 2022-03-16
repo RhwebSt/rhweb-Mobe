@@ -1,6 +1,6 @@
   
 :root{
-    --body-bg:#EAEAEC;
+    --body-bg:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(237,237,241,1) 14%, rgba(228,228,232,1) 29%, rgba(222,225,226,1) 51%, rgba(236,236,236,1) 83%);
     --body-color: black;
     --input-hover:1px 0.5px rgb(5, 133, 252), 0 0 1px rgba(0, 89, 255, 0.986);
     --input-focus-color: #6606e4;
@@ -22,7 +22,7 @@
 }
 
 .darkmode{
-    --body-bg:#363636;
+    --body-bg: linear-gradient(90deg, rgba(38,37,37,1) 0%, rgba(73,71,71,1) 45%, rgba(34,33,33,1) 100%);
     --body-color: rgb(247, 243, 243);
     --input-hover: 1px 1px rgb(5, 252, 252), 0 0px 1px rgba(0, 140, 255, 0.986);
     --input-focus-color: #060aff;
@@ -68,7 +68,7 @@ html, body {
 
 body{
     font-family: 'Poppins', sans-serif;
-    background-color: var(--body-bg);
+    background-image: var(--body-bg);
     color: var(--body-color);
     display: flex;
     flex-direction: column;
@@ -334,7 +334,7 @@ main{
 }
 
 .botaoPesquisa{
-    border-radius: 10px;
+    border-radius: 8px;
     margin-left: 5px;
     background-color:#394041;
     color: white;
@@ -395,10 +395,10 @@ main{
 }
 
 .btn__padrao--editar{
-    padding-top:8.5px;
-    padding-bottom:8.5px;
-    padding-left: 11px;
-    padding-right: 11px;
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left: 13px;
+    padding-right: 13px;
     border-radius: 6px;
     background-color:#117E25;
     border: 1px solid #5DE977;
@@ -425,6 +425,17 @@ main{
     background-color:#660900;
 }
 
+.btn__padrao--relatorio{
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 6px;
+    background-color:#0B87C1;
+    border: 1px solid #8CD6F8;
+    transition: 400ms;
+}
+
 .iconPesquisar:hover{
     color: red;
 }
@@ -445,7 +456,33 @@ main{
 }
 
 .logo__principal{
-    width: 450px;
+    width: 100px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.titleHome{
+    font-family: 'Bakbak One', cursive;
+    font-size: 65px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.titleHomeLittle{
+    margin-top: 0px;
+    font-family: 'Bakbak One', cursive;
+    font-size: 30px;
+    text-align: center;
+}
+
+.quebraLinha{
+    max-width: 30ch; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 
 

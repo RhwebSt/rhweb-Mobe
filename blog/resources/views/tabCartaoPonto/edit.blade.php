@@ -67,7 +67,10 @@
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                        <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao">Boletim <i class="fad fa-door-open"></i></a>
+                        <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                          <i class="fas fa-search"></i> Pesquisar
+                        </button>
+                        <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao d-none">Boletim <i class="fad fa-door-open"></i></a>
                         <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
@@ -143,25 +146,8 @@
                     
                     
                     </form>
-                    <div class="d-flex justify-content-end">
-        
-        
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fad fa-sort"></i> Filtro 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                        <li><a class="dropdown-item text-white" href="{{route('edit.ordem.tabela.cartao.ponto',[$dados->id,'asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="{{route('edit.ordem.tabela.cartao.ponto',[$dados->id,'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                
-                
-                <div class="table-responsive-xxl">
+                    @include('tabCartaoPonto.lista')
+                <!-- <div class="table-responsive-xxl">
                             <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                 <thead>
                                     <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Nº do Boletim</th>
@@ -182,9 +168,9 @@
                                         </td>
                                         <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
                                           <?php
-                                            $data = explode('-',$lancamentotabela->lsdata)
+                                            //$data = explode('-',$lancamentotabela->lsdata)
                                           ?>
-                                          {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                          
                                         </td>
                                         <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
                                         
@@ -212,10 +198,23 @@
                 
                 
                  
-              </div>
+              </div> -->
 
             </div>
             <script>
+            $('.modal-botao').click(function() {
+                localStorage.setItem("modal", "enabled");
+            })
+            function verficarModal(){
+              var valueModal = localStorage.getItem('modal');
+              if(valueModal === "enabled"){
+                  $(document).ready(function(){
+                      $("#teste").modal("show");
+                  });
+                  localStorage.setItem("modal","disabled");
+              }
+            }
+            verficarModal()
             localStorage.setItem('boletim','{{$boletim}}')
             $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = '0';
@@ -231,14 +230,14 @@
                     let nome = ''
                     if (data.length >= 1) {
                       data.forEach(element => {
-                        nome += `<option value="${element.liboletim}">`
+                        nome += `<option value="${element.tsnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
-                        // nome += `<option value="${element.tscpf}">`
+                        nome += `<option value="${element.tscnpj}">`
                       });
                       $('#listapesquisa').html(nome)
                     }
                     if(data.length === 1 && dados.length >= 1){
-                      lancamentoTab(dados,status,data[0].lsdata)
+                      // lancamentoTab(dados,status,data[0].lsdata)
                     }else{
                       limpaCamposTab()
                     }

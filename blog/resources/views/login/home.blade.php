@@ -4,8 +4,10 @@
 
             
 
-            <div class="box__principal ">
-              <img class="img-fluid logo__principal" id="image" src="{{url('/imagem/rhwebLogoPreta.png')}}" alt="" srcset="" style="">
+            <div class="box__principal">
+                <!--<img class="img-fluid logo__principal" src="{{url('/imagem/arrowMobe.png')}}">-->
+                <h1 class="titleHome">RHWEB</h1>
+                <h1 class="titleHomeLittle">Sistemas Inteligentes</h1>
             </div>
             
             

@@ -26,7 +26,8 @@ class Lancamentotabela extends Model
         return DB::table('lancamentotabelas')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
         ->select(
-            'tomadors.tsnome', 
+            'tomadors.tsnome',
+            'tomadors.tscnpj', 
             'lancamentotabelas.*', 
             )
         ->where(function($query) use ($id,$status){
@@ -82,6 +83,50 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['lancamentotabelas.lsstatus',$status],
                     ['tomadors.empresa', $user->empresa]
+                ]);
+            }
+        })
+        ->orderBy('lancamentotabelas.liboletim', $condicao)
+        ->paginate(5);
+    }
+    public function pesquisaLista($status,$condicao = null,$dados)
+    {
+        return DB::table('lancamentotabelas')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'tomadors.tsnome', 
+            'lancamentotabelas.*', 
+            )
+        ->where(function($query) use ($status,$dados){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where([
+                    ['lsstatus',$status],
+                    ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+                ])
+                ->orWhere([
+                    ['lsstatus',$status],
+                    ['tomadors.tsnome','like','%'.$dados.'%']
+                ])
+                ->orWhere([
+                    ['lsstatus',$status],
+                    ['tomadors.tscnpj','like','%'.$dados.'%']
+                ]);
+            }else{
+                $query->where([
+                    ['lancamentotabelas.lsstatus',$status],
+                    ['tomadors.empresa', $user->empresa],
+                    ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+                ])
+                ->orWhere([
+                    ['lsstatus',$status],
+                    ['tomadors.empresa', $user->empresa],
+                    ['tomadors.tsnome','like','%'.$dados.'%']
+                ])
+                ->orWhere([
+                    ['lsstatus',$status],
+                    ['tomadors.empresa', $user->empresa],
+                    ['tomadors.tscnpj','like','%'.$dados.'%']
                 ]);
             }
         })

@@ -90,9 +90,9 @@
                         <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#teste">
                           Excluir <i class="fad fa-trash"></i>
                       </button>
-                      <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
                       <i class="fas fa-search"></i> Pesquisar
-                    </button>
+            </a>
                     <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fad fa-sign-out-alt"></i></a>
                   </div>
               </div>
@@ -176,158 +176,22 @@
                     </form>
                    
                 
-                <div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-                  <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title text-black" id="staticBackdropLabel1">Boletins cadastrados</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                          
-                            
-                          
-                           <div class="d-flex justify-content-between">
-                                
-                                <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                                    <div class="d-flex">
-                                        <label for="exampleDataList" class="form-label"></label>
-                                        <input class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="pesquisa" id="pesquisa">
-                                        <datalist id="listapesquisa">
-                                        </datalist>
-                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                        <div class="text-center d-none p-1" id="refres" >
-                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                              <span class="visually-hidden">Loading...</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                                <div class="dropdown  mt-2 p-1">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                        <i class="fad fa-sort"></i> Filtro 
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                                    <li><a class="dropdown-item text-white" id="ordemCres" href="{{route('ordem.tabela.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                    <li><a class="dropdown-item text-white" href="{{route('ordem.tabela.cartao.ponto','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                
-                            <div class="table-responsive-xxl">
-                                        <table class="table text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                            <thead>
-                                                <th class="col text-center text-nowrap" style="width:115px;">Boletim</th>
-                                                <th class="col text-center text-nowrap" style="width: 400px;">Tomador</th>
-                                                <th class="col text-center text-nowrap " style="width:200px">Data</th>
-                                                <th class="col text-center text-nowrap" style="width:200px">Quantidade</th>
-                                                <th class="col text-center text-nowrap" style="width:60px;">Vizualizar</th>
-                                                <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
-                                                <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
-                                            </thead>
-                                            <tbody style="background-color: #081049; color: white;">
-                                               @if( count($lancamentotabelas) > 0)
-                                               @foreach($lancamentotabelas as $lancamentotabela)
-                                                <tr class="bodyTabela">               
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
-                                                    <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                                        <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                            <a>{{$lancamentotabela->tsnome}}</a>
-                                                        </button>
-                                                    </td>
-                                                    <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
-                                                      <?php
-                                                        $data = explode('-',$lancamentotabela->lsdata)
-                                                      ?>
-                                                      {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                                    </td>
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                                          <button class="btn">
-                                                              <a href="" class="btn__padrao--vizualizar"><i class="fas fa-eye" style="color: white;"></i></a>
-                                                          </button>
-                                                    </td>
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                                        <button class="btn">
-                                                            <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
-                                                        </button>
-                                                    </td>
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                                       <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                            <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                                        </form> 
-                                                        </td>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            @else
-                                            <tr>
-                                                <td class="text-center text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                                    <div class="alert" role="alert" style="background-color: #CC2836;">
-                                                        Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            </tbody>
-                                        <tfoot>
-                                            <tr class="">
-                                                <td colspan="11">
-                                                {{ $lancamentotabelas->links() }}
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                              <div class="modal-footer">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                            
-                            
-                             
-                          </div>
-              
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form action="" id="formdelete" method="post">
-                                @csrf
-                                @method('delete')
-                                <div class="modal-header modal__delete">
-                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body modal-delbody">
-                                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                                </div>
-                                <div class="modal-footer modal-delfooter">
-                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn__deletar">Deletar</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-            </div>
+                    @include('tabCartaoPonto.lista')
             
              <script>
-             
-                var voltarModal = document.querySelector('#ordemCres');
-                console.log(voltarModal);
-                voltarModal.addEventListener('click', function(){
-                    voltarModal.click();
-                    console.log("clicou");
-                });
-             
+                $('.modal-botao').click(function() {
+                    localStorage.setItem("modal", "enabled");
+                })
+               function verficarModal(){
+                  var valueModal = localStorage.getItem('modal');
+                  if(valueModal === "enabled"){
+                      $(document).ready(function(){
+                          $("#teste").modal("show");
+                      });
+                      localStorage.setItem("modal","disabled");
+                  }
+                }
+                verficarModal()
                 var tomador = document.querySelector('#nome__completo');
                 
                 tomador.addEventListener('input', function(){
@@ -395,14 +259,14 @@
                     let nome = ''
                     if (data.length >= 1) {
                       data.forEach(element => {
-                        nome += `<option value="${element.liboletim}  ${element.tsnome}">`
+                        nome += `<option value="${element.tsnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
-                        // nome += `<option value="${element.tscpf}">`
+                        nome += `<option value="${element.tscnpj}">`
                       });
                       $('#listapesquisa').html(nome)
                     }
                     if(data.length === 1 && dados.length >= 1){
-                      lancamentoTab(dados,status,data[0].lsdata)
+                      // lancamentoTab(dados,status,data[0].lsdata)
                     }else{
                       limpaCamposTab()
                     }
@@ -550,5 +414,6 @@
               $('#sabado').val(data.cssabados)
               $('#diasuteis').val(data.csdiasuteis)
             }
+            
       </script>     
 @stop
