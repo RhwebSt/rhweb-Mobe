@@ -96,12 +96,13 @@ class Descontos extends Model
             'trabalhadors.id,
             descontos.dsquinzena,
             descontos.dsdescricao,
+            descontos.dscompetencia,	
             COUNT(descontos.dsdescricao) as quantidade,
             SUM(descontos.dfvalor) as valor'
         )
         ->whereIn('trabalhadors.id',$trabalhador)
         ->where('descontos.empresa',$empresa)
-        ->groupBy('trabalhadors.id','descontos.dsquinzena','descontos.dsdescricao')
+        ->groupBy('trabalhadors.id','descontos.dscompetencia','descontos.dsquinzena','descontos.dsdescricao')
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
         ->get();
     }

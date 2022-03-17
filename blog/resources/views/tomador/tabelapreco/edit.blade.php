@@ -74,12 +74,9 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         
                         <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
-                         <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-invoice"></i> Relatórios
-                        </button>
-                          <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                            <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
-                          </ul>
+                            <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                                    <i class="fa-solid fa-list"></i> Lista
+                            </a> 
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
                             
                           
@@ -222,6 +219,7 @@
                     </div>
                     </div>
                 </div>
+                 @include('tomador.tabelapreco.lista')
 </div>
             
             

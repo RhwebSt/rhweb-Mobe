@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Tomadores cadastrados</h5>
+                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Trabalhadores cadastrados</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -33,8 +33,6 @@
                             <i class="fas fa-sort"></i> Filtro
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <!-- <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
                             <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
                             <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
@@ -44,11 +42,11 @@
                     <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
                             <th class="col text-center text-nowrap" style="width:80px;">Matrícula</th>
-                            <th class="col text-center text-nowrap" style="width:400px;">Tomador</th>
-                            <th class="col text-center text-nowrap" style="width:200px">CNPJ</th>
-                            <th class="col text-center text-nowrap" style="width:120px">Tabela Preço</th>
+                            <th class="col text-center text-nowrap" style="width:400px;">Trabalhador</th>
+                            <th class="col text-center text-nowrap" style="width:200px">CPF</th>
+                            <th class="col text-center text-nowrap" style="width:120px">Depedentes</th>
                             <th class="col text-center text-nowrap" style="width:60px">Relatórios</th>
-                            <th class="col text-center text-nowrap" style="width:60px">S-1020</th>
+                            <th class="col text-center text-nowrap" style="width:60px">S-2300</th>
                             <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
                             <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
                         </thead>
@@ -65,7 +63,7 @@
                                 </td>
 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:120px">
-                                    <a class="btn__padrao--preco modal-botao" href="" class=""><i style="color:white;" class="fas fa-dollar-sign"></i></a>
+                                    <a class="btn__padrao--preco modal-botao" href="" class=""><i style="color:white" class="fad fa-users"></i></a>
                                 </td>
 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
@@ -74,8 +72,12 @@
                                         <i style="color:white;" class="fas fa-file-alt"></i>
                                       </button>
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
-                                        <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Ficha de Registro</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="fichaepi" role="button">Ficha de EPI</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="declaracao__adm" role="button">Declaração de Admissão</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="cracha" role="button">Crachá</a></li>
+                                        <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
                                       </ul>
                                     </div>
                                 </td>

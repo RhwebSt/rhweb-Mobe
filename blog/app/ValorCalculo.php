@@ -181,6 +181,23 @@ class ValorCalculo extends Model
         ->whereDate('created_at', $data)
         ->first();
     }
+    public function buscaUnidaderInss($trabalhador,$codigo,$descricao,$data)
+    {
+        return ValorCalculo::selectRaw(
+            'SUM(vivencimento) as vencimento,
+            SUM(videscinto) as desconto,
+            trabalhador,
+            vicodigo,
+            vsdescricao,
+            created_at'
+        )
+        ->groupBy('trabalhador','vicodigo','vsdescricao','created_at')
+        ->where('vicodigo',$codigo)
+        ->where('vsdescricao','like','%'.$descricao."%")
+        ->where('trabalhador',$trabalhador)
+        ->whereDate('created_at', $data)
+        ->first();
+    }
     public function cadastraDecimoTer($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([

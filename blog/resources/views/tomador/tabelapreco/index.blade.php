@@ -67,6 +67,7 @@
             </script>
         @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
+                 
                   
                   <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-usd-square fa-lg"></i></h5>
                   
@@ -84,14 +85,16 @@
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
                         <button type="submit" disabled class="btn botao  d-none" id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                         <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
+                         <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-alt"></i> Relatórios
                         </button>
                           <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                             <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol Tabela de Preços</a></li>
                           </ul>
                         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
-                            
+                           <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                                <i class="fa-solid fa-list"></i> Lista
+                             </a> 
                           
                           <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                       </div>
@@ -170,7 +173,6 @@
                     </div>
                     
                     
-                 
               </form> 
               <div class="table-responsive-xxl">
               <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
@@ -255,15 +257,37 @@
                             <button type="submit" class="btn btn__deletar">Deletar</button>
 
                             </div>
-                        </form>
+                         </form>
                     </div>
                     </div>
                 </div>
+                 @include('tomador.tabelapreco.lista')
 </div>
-            
-            
-     
+
+        
       <script>
+      
+        
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+             var telefone = document.querySelector(idCampo);
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var descricao = validaInputQuantidade("#descricao",1);
+        var ano = validaInputQuantidade("#ano",4);
+        var valorTrabalhador = validaInputQuantidade("#valor",1);
+        var valorTomador = validaInputQuantidade("#valor__tomador",1);
+        var codigo =validaInputQuantidade("#rubricas",1)
       
         $(document).ready(function(){
           $('#refre').click(function () {

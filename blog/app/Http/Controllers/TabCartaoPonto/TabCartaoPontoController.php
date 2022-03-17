@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Lancamentotabela;
 use App\Lancamentorublica;
 use App\ValoresRublica;
+use App\Bolcartaoponto;
 class TabCartaoPontoController extends Controller
 {
     /**
@@ -15,12 +16,13 @@ class TabCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $lancamentorublica,$valorrublica,$lancamentotabela;
+    private $lancamentorublica,$valorrublica,$lancamentotabela,$bolcartaoponto;
     public function __construct()
     {
         $this->lancamentorublica = new Lancamentorublica;
         $this->valorrublica = new ValoresRublica;
         $this->lancamentotabela = new Lancamentotabela;
+        $this->bolcartaoponto = new Bolcartaoponto;
     }
     public function index()
     {
@@ -165,7 +167,7 @@ class TabCartaoPontoController extends Controller
     {
         $dados = $request->all();
         
-        $novadata = explode('-',$dados['data']);
+        $novadata = explode('-',$dados['data']); 
         $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
         if (count($quantidadeTrabalhador) > $dados['num__trabalhador']) {
             return redirect()->back()->withInput()->withErrors(['num__trabalhador'=>'Possui o número menor que a quantidade já cadastrada.']);
@@ -191,6 +193,8 @@ class TabCartaoPontoController extends Controller
       
         try {
             $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
+            $this->lancamentorublica->editarBoletim($dados,$id);
+            $this->bolcartaoponto->editarBoletim($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);

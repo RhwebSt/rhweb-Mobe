@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Tomador')
+@section('titulo','Rhweb - Editar Tomador')
 @section('conteine')
     <div class="container ">    
         @if(session('success'))
@@ -76,56 +76,21 @@
                 })
             </script>
         @enderror
-       
         
-            <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
+        
+        
+        
+        <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
                 <input type="hidden" name="tomador" id="tomador">
                 <input type="hidden" name="pessoal">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir </button>
-                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar </button>
-                            <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fad fa-file-alt"></i> Relatórios
-                             </button>
-                              <ul class="dropdown-menu" aria-labelledby="relatoriotomador">
-                                <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" onclick ="botaoModal ()" role="button">Rol dos Boletins</a></li>
-                              </ul>
-                            <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
-                            <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <i class="fad fa-trash"></i> Excluir 
-                            </button>
-                            <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
-                            
-                            <button type="button" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                              <i class="fad fa-file-invoice"></i> Boletins
-                            </button>
-                             <a class="btn botao disabled" href="" id='esocial' role="button">Evento s-1020</a>
-                             <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                            <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                                 <i class="fa-solid fa-list"></i> Lista
                              </a>
-                            
-                            <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
+                            <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                         </div> 
-                        
-                        <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
-                        
-                        <div>
-                            <div class="col-md-5 mb-5 p-1 pesquisar">
-                                <div class="d-flex">
-                                <label for="exampleDataList" class="form-label"></label>
-                                <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                <datalist id="datalistOptions">
-                                  
-                                </datalist>
-                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                <div class="text-center d-none p-1" id="refres" >
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                      <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+
                         
                          <script>
                             function botaoModal (){
@@ -958,61 +923,61 @@
             <script>
             
             
-             function validaInputQuantidade(idCampo,QuantidadeCarcteres){
-                var telefone = document.querySelector(idCampo);
+            var nomeFantasia = document.querySelector('#nome__fantasia');
 
-                telefone.addEventListener('input', function(){
-                    var telefone = document.querySelector(idCampo);
-                    var result = telefone.value;
-                    if(result > " " && result.length >= QuantidadeCarcteres){
-                      telefone.classList.add('is-valid');  
-                    }else{
-                        telefone.classList.remove('is-valid');
-                    }
-                     
-                });
-            }
+            nomeFantasia.addEventListener('input', function(){
+                var nomeFantasia = document.querySelector('#nome__fantasia');
+                var result = nomeFantasia.value;
+                if(result > " "){
+                  nomeFantasia.classList.add('is-valid');  
+                }else{
+                    nomeFantasia.classList.remove('is-valid');
+                }
+                 
+            });
             
-            var nomeFantasia = validaInputQuantidade("#nome__fantasia",1);
-            var nomeCompleto = validaInputQuantidade("#nome__completo",1);
-            var telefone = validaInputQuantidade("#telefone",15);
-            var cep = validaInputQuantidade("#cep",9);
-            var logradouro = validaInputQuantidade("#logradouro",1);
-            var bairro = validaInputQuantidade("#bairro",1);
-            var localidade = validaInputQuantidade("#localidade",1);
-            var numero = validaInputQuantidade("#numero",1);
-            var uf = validaInputQuantidade("#uf",2);
-            var diasUteis = validaInputQuantidade("#dias_uteis",1);
-            var sabados = validaInputQuantidade("#sabados",1);
-            var domingos = validaInputQuantidade("#domingos",1);
-            var taxaAdm = validaInputQuantidade("#taxa_adm",1);
-            var taxaFed = validaInputQuantidade("#taxa__fed",1);
-            var deflator = validaInputQuantidade("#deflator",1);
-            var das = validaInputQuantidade("#das",1);
-            var cod__fpas = validaInputQuantidade("#cod__fpas",1);
-            var cod__rat = validaInputQuantidade("#cod__fap",1);
-            var cod__grps = validaInputQuantidade("#cod__grps",1);
-            var cnae = validaInputQuantidade("#cnae",1);
-            var fap__aliquota = validaInputQuantidade("#fap__aliquota",1);
-            var rat__ajustado = validaInputQuantidade("#rat__ajustado",1);
-            var fpas__terceiros = validaInputQuantidade("#fpas__terceiros",1);
-            var aliq__terceiros = validaInputQuantidade("#aliq__terceiros",1);
-            var alimentacao = validaInputQuantidade("#alimentacao",1);
-            var transporte = validaInputQuantidade("#transporte",1);
-            var epi__13sal = validaInputQuantidade("#epi",1);
-            var seguro__trabalhador = validaInputQuantidade("#seguro__trabalhador",1);
-            var folhartransporte = validaInputQuantidade("#folhartransporte",1);
-            var folharalim = validaInputQuantidade("#folharalim",1);
-            var banco = validaInputQuantidade("#banco",1);
-            var agencia = validaInputQuantidade("#agencia",4);
-            var operacao = validaInputQuantidade("#operacao",3);
-            var conta = validaInputQuantidade("#conta",9);
-            var pix = validaInputQuantidade("#pix",1);
+            
+            var nomeCompleto = document.querySelector('#nome__completo');
 
-           
+            nomeCompleto.addEventListener('input', function(){
+                var nomeCompleto = document.querySelector('#nome__completo');
+                var result = nomeCompleto.value;
+                if(result > " "){
+                  nomeCompleto.classList.add('is-valid');  
+                }else{
+                    nomeCompleto.classList.remove('is-valid');
+                }
+                 
+            });
             
-            var cepFocusOut = document.querySelector('#cep');
-            cepFocusOut.addEventListener('focusout', function(){
+            var telefone = document.querySelector('#telefone');
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector('#telefone');
+                var result = telefone.value;
+                if(result > " " && result.length >= 15){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var cep = document.querySelector('#cep');
+
+            cep.addEventListener('input', function(){
+                var cep = document.querySelector('#cep');
+                var result = cep.value;
+                if(result > " " && result.length >= 9){
+                  cep.classList.add('is-valid');  
+                }else{
+                    cep.classList.remove('is-valid');
+                }
+                 
+            });
+            
+
+            cep.addEventListener('focusout', function(){
                 var logradouro = document.querySelector('#logradouro');
                 var resultlog = logradouro.value;
                 var bairro = document.querySelector('#bairro');
@@ -1049,64 +1014,168 @@
                  
             });
             
+            var logradouro = document.querySelector('#logradouro');
 
-        function limpaCampos(){
-            var botaolimpaCampos = document.querySelector("#refre");
-
-            botaolimpaCampos.addEventListener('click', function(){
-                var cnpj = document.querySelector("#cnpj").value='';
-                var nome = document.querySelector("#nome__completo").value='';
-                var nomeFantasia = document.querySelector("#nome__fantasia").value='';
-                var telefone = document.querySelector("#telefone").value='';
-                var cep = document.querySelector("#cep").value='';
-                var logradouro = document.querySelector("#logradouro").value='';
-                var numero = document.querySelector("#numero").value='';
-                var tipo = document.querySelector("#complemento__endereco").value='';
-                var bairro = document.querySelector("#bairro").value='';
-                var localidade = document.querySelector("#localidade").value='';
-                var uf = document.querySelector("#uf").value='';
-                var taxaAdm = document.querySelector("#taxa_adm").value='';
-                var taxaFed = document.querySelector("#taxa__fed").value='';
-                var defaltor = document.querySelector("#deflator").value='';
-                var das = document.querySelector("#das").value='';
-                var codFpas = document.querySelector("#cod__fpas").value='';
-                var codFap = document.querySelector("#cod__fap").value='';
-                var codGrps = document.querySelector("#cod__grps").value='';
-                var codRecol = document.querySelector("#cod__recol").value='';
-                var cnae = document.querySelector("#cnae").value='';
-                var fapAliquota = document.querySelector("#fap__aliquota").value='';
-                var ratAjustado = document.querySelector("#rat__ajustado").value='';
-                var fpasTerceiros = document.querySelector("#fpas__terceiros").value='';
-                var aliqTerceiros = document.querySelector("#aliq__terceiros").value='';
-                var alimentacao = document.querySelector("#alimentacao").value='';
-                var transporte = document.querySelector("#transporte").value='';
-                var epi = document.querySelector("#epi").value='';
-                var seguroTrabalhador = document.querySelector("#seguro__trabalhador").value='';
-                var vt = document.querySelector("#folhartransporte").value='';
-                var tipoVt = document.querySelector("#folhartipotrans").value='';
-                var va = document.querySelector("#folharalim").value='';
-                var tipoVa = document.querySelector("#folhartipoalim").value='';
-                var diasUteis = document.querySelector("#dias_uteis").value='';
-                var sabados = document.querySelector("#sabados").value='';
-                var domingos = document.querySelector("#domingos").value='';
-                var inssEmpresa = document.querySelector("#inss__empresa").value='';
-                var retencaoInss = document.querySelector("#retencaoinss").value='';
-                var fgtsEmpresa = document.querySelector("#fgts__empresa").value='';
-                var retencaoFgts = document.querySelector("#retencaofgts").value='';
-                var baseFatura = document.querySelector("#valor_fatura").value='';
-                var banco = document.querySelector("#banco").value='';
-                var agencia = document.querySelector("#agencia").value='';
-                var operacao = document.querySelector("#operacao").value='';
-                var conta = document.querySelector("#conta").value='';
-                var pix = document.querySelector("#pix").value='';
-            
-            
-            
+            logradouro.addEventListener('input', function(){
+                var logradouro = document.querySelector('#logradouro');
+                var result = logradouro.value;
+                if(result > " "){
+                  logradouro.classList.add('is-valid');  
+                }else{
+                    logradouro.classList.remove('is-valid');
+                }
+                 
             });
-    
-        }       
-        
-        limpaCampos();
+            
+            var numero = document.querySelector('#numero');
+
+            numero.addEventListener('input', function(){
+                var numero = document.querySelector('#numero');
+                var result = numero.value;
+                if(result > " "){
+                  numero.classList.add('is-valid');  
+                }else{
+                    numero.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var bairro = document.querySelector('#bairro');
+
+            bairro.addEventListener('input', function(){
+                var bairro = document.querySelector('#bairro');
+                var result = bairro.value;
+                if(result > " "){
+                  bairro.classList.add('is-valid');  
+                }else{
+                    bairro.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var localidade = document.querySelector('#localidade');
+
+            localidade.addEventListener('input', function(){
+                var localidade = document.querySelector('#localidade');
+                var result = localidade.value;
+                if(result > " "){
+                  localidade.classList.add('is-valid');  
+                }else{
+                    localidade.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var uf = document.querySelector('#uf');
+
+            uf.addEventListener('input', function(){
+                var uf = document.querySelector('#uf');
+                var result = uf.value;
+                if(result > " " && result.length >= 2){
+                  uf.classList.add('is-valid');  
+                }else{
+                    uf.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var diasUteis = document.querySelector('#dias_uteis');
+
+            diasUteis.addEventListener('input', function(){
+                var diasUteis = document.querySelector('#dias_uteis');
+                var result = diasUteis.value;
+                if(result > " "){
+                  diasUteis.classList.add('is-valid');  
+                }else{
+                   diasUteis.classList.remove('is-valid');
+                   
+                }
+                 
+            });
+            
+            var sabados = document.querySelector('#sabados');
+
+            sabados.addEventListener('input', function(){
+                var sabados = document.querySelector('#sabados');
+                var result = sabados.value;
+                if(result > " "){
+                  sabados.classList.add('is-valid');  
+                }else{
+                   sabados.classList.remove('is-valid');
+                }
+                 
+            });
+            
+            var domingos = document.querySelector('#domingos');
+
+            domingos.addEventListener('input', function(){
+                var domingos = document.querySelector('#domingos');
+                var result = domingos.value;
+                if(result > " "){
+                  domingos.classList.add('is-valid');  
+                }else{
+                   domingos.classList.remove('is-valid');
+                }
+                 
+            });
+
+            
+
+                
+        var botaolimpaCampos = document.querySelector("#refre");
+
+        botaolimpaCampos.addEventListener('click', function(){
+            var cnpj = document.querySelector("#cnpj").value='';
+            var nome = document.querySelector("#nome__completo").value='';
+            var nomeFantasia = document.querySelector("#nome__fantasia").value='';
+            var telefone = document.querySelector("#telefone").value='';
+            var cep = document.querySelector("#cep").value='';
+            var logradouro = document.querySelector("#logradouro").value='';
+            var numero = document.querySelector("#numero").value='';
+            var tipo = document.querySelector("#complemento__endereco").value='';
+            var bairro = document.querySelector("#bairro").value='';
+            var localidade = document.querySelector("#localidade").value='';
+            var uf = document.querySelector("#uf").value='';
+            var taxaAdm = document.querySelector("#taxa_adm").value='';
+            var taxaFed = document.querySelector("#taxa__fed").value='';
+            var defaltor = document.querySelector("#deflator").value='';
+            var das = document.querySelector("#das").value='';
+            var codFpas = document.querySelector("#cod__fpas").value='';
+            var codFap = document.querySelector("#cod__fap").value='';
+            var codGrps = document.querySelector("#cod__grps").value='';
+            var codRecol = document.querySelector("#cod__recol").value='';
+            var cnae = document.querySelector("#cnae").value='';
+            var fapAliquota = document.querySelector("#fap__aliquota").value='';
+            var ratAjustado = document.querySelector("#rat__ajustado").value='';
+            var fpasTerceiros = document.querySelector("#fpas__terceiros").value='';
+            var aliqTerceiros = document.querySelector("#aliq__terceiros").value='';
+            var alimentacao = document.querySelector("#alimentacao").value='';
+            var transporte = document.querySelector("#transporte").value='';
+            var epi = document.querySelector("#epi").value='';
+            var seguroTrabalhador = document.querySelector("#seguro__trabalhador").value='';
+            var vt = document.querySelector("#folhartransporte").value='';
+            var tipoVt = document.querySelector("#folhartipotrans").value='';
+            var va = document.querySelector("#folharalim").value='';
+            var tipoVa = document.querySelector("#folhartipoalim").value='';
+            var diasUteis = document.querySelector("#dias_uteis").value='';
+            var sabados = document.querySelector("#sabados").value='';
+            var domingos = document.querySelector("#domingos").value='';
+            var inssEmpresa = document.querySelector("#inss__empresa").value='';
+            var retencaoInss = document.querySelector("#retencaoinss").value='';
+            var fgtsEmpresa = document.querySelector("#fgts__empresa").value='';
+            var retencaoFgts = document.querySelector("#retencaofgts").value='';
+            var baseFatura = document.querySelector("#valor_fatura").value='';
+            var banco = document.querySelector("#banco").value='';
+            var agencia = document.querySelector("#agencia").value='';
+            var operacao = document.querySelector("#operacao").value='';
+            var conta = document.querySelector("#conta").value='';
+            var pix = document.querySelector("#pix").value='';
+            
+            
+            
+        });
+
+
 
 
 
@@ -1390,3 +1459,4 @@
     </script>
     
 @stop
+       

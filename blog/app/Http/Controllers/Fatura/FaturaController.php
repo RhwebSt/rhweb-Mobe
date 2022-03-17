@@ -123,11 +123,11 @@ class FaturaController extends Controller
         
         $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
         $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
-    
+        // dd($indecefatura,$tabelaprecos);
         if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
-        try {
+        
             $faturas = $this->fatura->cadastro($dados);
             if ($faturas) {
                 $dadosrublicas =[
@@ -163,7 +163,7 @@ class FaturaController extends Controller
                 ];
                 foreach ($indecefatura as $e => $indecefaturas) {
                     foreach ($tabelaprecos as $y => $tabelapreco) {
-                        if($indecefaturas->vsdescricao === $tabelapreco->tsstatus){
+                        if($indecefaturas->vsdescricao == $tabelapreco->tsstatus){
                             $dadosrublicas['item'] = $indecefaturas->vicodigo;
                             $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
                             $dadosrublicas['unidade'] += $indecefaturas->referencia;
@@ -175,7 +175,7 @@ class FaturaController extends Controller
                     }
                     
                 }
-                $this->faturarublica->cadastro($dadosrublicas);
+                // $this->faturarublica->cadastro($dadosrublicas);
                 // dd($tabelaprecos,$indecefatura,$dadosrublicas);
                 
                 foreach($indecefatura as $e => $indecefaturas){
@@ -336,6 +336,7 @@ class FaturaController extends Controller
                 $faturatotais = $this->faturatotal->cadastro($producao);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
+            try {
         } catch (\Throwable $th) {
             $this->faturaprincipal->deletarFatura($faturas['id']);
             $this->faturasecundario->deletarFatura($faturas['id']);

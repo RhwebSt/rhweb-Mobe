@@ -34,6 +34,15 @@ class Folhar extends Model
         ->where('empresa',$user->empresa)
         ->count();
     }
+
+    public function Folhar($datainicio,$datafinal)
+    {
+        $user = auth()->user();
+        return Folhar::whereDate('fsinicio', $datainicio) 
+        ->whereDate('fsfinal', $datafinal)
+        ->where('empresa',$user->empresa)
+        ->first();
+    }
     public function buscaListaFolhar($empresa)
     {
         return Folhar::where('empresa',$empresa)->get();

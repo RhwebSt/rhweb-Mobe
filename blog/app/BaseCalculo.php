@@ -91,6 +91,7 @@ class BaseCalculo extends Model
             'base_calculos.trabalhador'
         )
         ->whereIn('trabalhador',$trabalhador)
+        ->where('tomador',null)
         ->whereBetween('base_calculos.created_at',[$datainicio, $datafinal])
         ->get();
     }

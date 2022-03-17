@@ -11,6 +11,7 @@ class FaturaRubrica extends Model
     ];
     public function cadastro($dados)
     {
+        // dd($dados);
         return FaturaRubrica::create([
             'rsitem'=>$dados['item'],
             'rsdescricao'=>$dados['descricao'],

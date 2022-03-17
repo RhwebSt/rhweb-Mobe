@@ -217,6 +217,13 @@ class Bolcartaoponto extends Model
             'bsadinortuno'=>str_replace(",",".",$dados['adc__noturno']),
         ]);
     }
+    public function editarBoletim($dados,$id)
+    {
+        return Bolcartaoponto::where('lancamento', $id)
+        ->update([
+            'created_at'=>$dados['data'],
+        ]);
+    }
     public function deletar($id) 
     {
       return Bolcartaoponto::where('id', $id)->delete();

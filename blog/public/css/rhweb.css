@@ -361,6 +361,7 @@ main{
 .table{
     border-radius: 10px !important;
     border: none !important;
+    box-shadow: 0px 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .btn__padrao--vizualizar{
@@ -422,7 +423,7 @@ main{
 }
 
 .btn__padrao--excluir:hover{
-    background-color:#660900;
+    background-color:#8A1005;
 }
 
 .btn__padrao--relatorio{
@@ -434,6 +435,40 @@ main{
     background-color:#0B87C1;
     border: 1px solid #8CD6F8;
     transition: 400ms;
+}
+
+.btn__padrao--relatorio:hover{
+    background-color:#075174;
+}
+
+.btn__padrao--preco{
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 6px;
+    background-color:#E09900;
+    border: 1px solid #FFDF99;
+    transition: 400ms;
+}
+
+.btn__padrao--preco:hover{
+    background-color:#A37000;
+}
+
+.btn__padrao--evento{
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 6px;
+    background-color:#119DA4;
+    border: 1px solid #7EECF1;
+    transition: 400ms;
+}
+
+.btn__padrao--evento:hover{
+    background-color:#0C696E;
 }
 
 .iconPesquisar:hover{
@@ -508,6 +543,7 @@ main{
     background-color:#111317;
     color: white;
 }
+
 
 
 

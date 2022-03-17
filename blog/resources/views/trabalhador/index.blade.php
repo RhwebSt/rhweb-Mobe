@@ -83,6 +83,9 @@
                       <i class="fad fa-file-invoice"></i> Recibos
                     </button>
                     
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                        <i class="fa-solid fa-list"></i> Lista
+                    </a>
 
                     <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
             </div>
@@ -690,73 +693,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header modal__delete">
-                            <h5 class="modal-title text-white" id="exampleModalLabel">Competência</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <form id="formrelatorioempresa" method="post">
-                          @csrf
-                          <input type="hidden" name="trabalhador" id="trabalhador">
-                         
-                          <div class="modal-body modal-delbody">
-                            <div class="mb-3 bg-dark p-2 rounded">
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="tipo" value="option1">
-                                  <label class="form-check-label mt-1" for="inlineCheckbox1">Recibo de Pagamento</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input class="form-check-input" type="radio" id="inlineCheckbox2" name="tipo" value="option2">
-                                  <label class="form-check-label mt-1" for="inlineCheckbox2">Empresas Trabalhadas</label>
-                                </div>
-                                <!-- <div class="form-check d-none form-check-inline">
-                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-                                  <label class="form-check-label mt-1" for="inlineCheckbox3">3 (disabled)</label>
-                                </div> -->
-                                
-                                
-                            </div>
-                            
-                            <div>
-                                <div class="col-md-12 mt-2 mb-2 p-1 pesquisar">
-                                    <div class="d-flex">
-                                    <label for="exampleDataList" class="form-label"></label>
-                                    <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                    <datalist id="datalistOptions">
-                                    </datalist>
-                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                    <div class="text-center d-none" id="refres" >
-                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                            <span class="visually-hidden">Carregando...</span>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                              
-                             <div class="d-flex ">
-                                <div class="col-md-5 ms-1 input">
-                                  <label for="ano" class="form-label">Data Inicial</label>
-                                  <input type="date" class="form-control " name="ano_inicial" value="" id="tano">
-                                </div>
-                                
-                                <div class="col-md-5 input ms-3">
-                                  <label for="ano" class="form-label">Data Final</label>
-                                  <input type="date" class="form-control " name="ano_final" value="" id="tano">
-                                </div>
-                            </div>
-
-                          </div>
-                          <div class="modal-footer modal-delfooter">
-                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn__deletar"><i class="fas fa-print"></i> Imprimir</button>
-                          </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
+                    
+                    @include('trabalhador.lista')
                  
         <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
         

@@ -196,6 +196,13 @@ class Lancamentorublica extends Model
             'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);
     }
+    public function editarBoletim($dados,$id)
+    {
+        return Lancamentorublica::where('lancamento', $id)
+        ->update([
+            'created_at'=>$dados['data'],
+        ]);
+    }
     public function deletar($id)
     {
       return Lancamentorublica::where('id', $id)->orWhere('lancamento', $id)->delete();
