@@ -28,9 +28,15 @@ class CadastroCartaoPontoController extends Controller
     }
     public function index()
     {
+        $search = request('search');
+        $condicao = request('codicao');
+        if ($search) {
+            $lancamentotabelas = $this->lancamentotabela->pesquisaLista('D','asc',$search);
+        }else{
+            $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
+        }
         $user = Auth::user(); 
         $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
     public function filtroPesquisaOrdem($condicao)

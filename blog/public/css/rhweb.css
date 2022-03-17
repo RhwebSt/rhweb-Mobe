@@ -485,6 +485,30 @@ main{
     text-overflow: ellipsis;
 }
 
+.modalHeader{
+    background-color: #FFFFFC;
+    color:black;
+    font-size: 16px;
+   
+}
+
+.modalBody{
+  background-color:#FFFFFC;
+}
+
+.modalClose{
+    filter: none;
+    border-radius: 50%;
+    border: 3px solid black;
+    z-index: 1;
+
+}
+
+.buttonFilter{
+    background-color:#111317;
+    color: white;
+}
+
 
 
 

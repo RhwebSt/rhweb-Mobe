@@ -84,7 +84,7 @@
                                                 <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn__padrao--excluir modal-botao"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                                                 </form> 
                                                 </td>
                                             </tr>
@@ -107,7 +107,7 @@
                                                        
                                                         @for ($i = 1; $i <= $lista->lastPage(); $i++)
                                                             <li class="page-item {{ ($lista->currentPage() == $i) ? ' active' : ''     }}">
-                                                                <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>
+                                                                <a class="page-link modal-botao" href="{{ $lista->url($i) }}">{{ $i }}</a>
                                                             </li>
                                                         @endfor
                                                         

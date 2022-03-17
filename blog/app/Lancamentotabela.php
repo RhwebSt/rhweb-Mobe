@@ -71,8 +71,12 @@ class Lancamentotabela extends Model
     {
         return DB::table('lancamentotabelas')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
         ->select(
-            'tomadors.tsnome', 
+            'tomadors.tsnome',
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos', 
             'lancamentotabelas.*', 
             )
         ->where(function($query) use ($status){
@@ -93,8 +97,12 @@ class Lancamentotabela extends Model
     {
         return DB::table('lancamentotabelas')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
         ->select(
             'tomadors.tsnome', 
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos', 
             'lancamentotabelas.*', 
             )
         ->where(function($query) use ($status,$dados){

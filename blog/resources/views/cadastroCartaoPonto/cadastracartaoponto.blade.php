@@ -69,7 +69,7 @@
        
                         <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
                         <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn botao dropdown-toggle d-none" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-invoice"></i> Relatório
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

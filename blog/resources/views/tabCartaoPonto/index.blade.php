@@ -72,7 +72,7 @@
             <!--</script>-->
                
                                 
-              <h5 class="card-title text-center fs-3 ">Lançamento Boletim com Tabela <i class="fas fa-money-check-alt"></i></h5>
+              <h5 class="card-title text-center fs-3 ">Boletim com Tabela <i class="fad fa-table"></i></h5>
 
               
 
@@ -84,16 +84,16 @@
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
        
-                        <button type="submit" id="incluir" class="btn botao">Incluir <i class="fad fa-save"></i></button>
+                        <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
                         <a  id="boletim"  class="btn botao disabled d-none">Boletim <i class="fad fa-door-open"></i></a>
                         <button type="submit" id="atualizar" disabled class="btn botao d-none">Editar <i class="fad fa-edit"></i></button>
                         <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#teste">
                           Excluir <i class="fad fa-trash"></i>
                       </button>
                       <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                      <i class="fas fa-search"></i> Pesquisar
+                      <i class="fad fa-list"></i> Lista
             </a>
-                    <a class="btn botao" href="{{route('home.index')}}" role="button">Sair <i class="fad fa-sign-out-alt"></i></a>
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
               

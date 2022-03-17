@@ -1,11 +1,11 @@
 <div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                   <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Boletins cadastrados</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <div class="modal-header modalHeader">
+                        <h5 class="modal-title fw-bold" id="staticBackdropLabel1">Boletins cadastrados</h5>
+                        <button type="button " class="btn-close modalClose" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body modalBody">
                           
                             
                           
@@ -34,7 +34,7 @@
                             </div>
         
                                 <div class="dropdown  mt-2 p-1">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
+                                    <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fad fa-sort"></i> Filtro 
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -76,7 +76,7 @@
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px">
-                                                        <a href="{{route('relatorio.boletim.tabela',base64_encode($lancamentotabela->liboletim))}}" class="btn btn__padrao--relatorio modal-botao"><i class="fad fa-file-alt" style="color:white"></i></a>
+                                                        <a href="{{route('relatorio.boletim.tabela',base64_encode($lancamentotabela->liboletim))}}" class="btn btn__padrao--relatorio"><i class="fad fa-file-alt" style="color:white"></i></a>
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                         
@@ -127,8 +127,8 @@
                                         </table>
                                     </div>
                                 </div>
-                              <div class="modal-footer">
-                              </div>
+                              <!--<div class="modal-footer">-->
+                              <!--</div>-->
                             </div>
                           </div>
                         </div>

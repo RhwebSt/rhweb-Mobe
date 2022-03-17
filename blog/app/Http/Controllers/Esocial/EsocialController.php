@@ -4,20 +4,29 @@ namespace App\Http\Controllers\Esocial;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Tomador;
+use App\Empresa;
 class EsocialController extends Controller
 {
-    private $tomador;
+    private $tomador,$empresa;
     public function __construct()
     {
         $this->tomador = new Tomador;
+        $this->empresa = new Empresa;
     }
     public function eventS1020($id)
     {
-        
+        $user = Auth::user();
         $id = base64_decode($id);
         $tomador = $this->tomador->first($id);
+        $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         $cd = 
+        'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+        'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+        'idgrupoeventos=1'."\r\n".
+        'versaomanual=2.5.00'."\r\n".
+        'ambiente=2'."\r\n".
         'INCLUIRS1020'."\r\n".                                                                   
         'tpAmb_4=1'."\r\n".                                                                  
         'procEmi_5=1'."\r\n".                                                                   

@@ -225,8 +225,7 @@
     <script type="text/javascript" src="{{url('/js/categoriatrabalhador.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/criptografa.js')}}"></script>
     <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
-    <script src="">
-     
+    <script src="{{url('/js/esocial/index.js')}}">
     </script>
    
   </body>
