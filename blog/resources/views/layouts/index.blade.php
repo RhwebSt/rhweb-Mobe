@@ -227,6 +227,8 @@
     <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
     <script src="{{url('/js/esocial/index.js')}}">
     </script>
+    <script src="{{url('/js/tabelapreco/atualizar.js')}}">
+    </script>
    
   </body>
 </html>

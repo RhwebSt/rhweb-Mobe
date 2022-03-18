@@ -175,9 +175,10 @@ class FaturaController extends Controller
                     }
                     
                 }
-                // $this->faturarublica->cadastro($dadosrublicas);
-                // dd($tabelaprecos,$indecefatura,$dadosrublicas);
-                
+                if ($dadosrublicas['fatura']) {
+                    $this->faturarublica->cadastro($dadosrublicas);
+                }
+               
                 foreach($indecefatura as $e => $indecefaturas){
                     if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
                         $producao['descricao'] = $indecefaturas->vsdescricao;

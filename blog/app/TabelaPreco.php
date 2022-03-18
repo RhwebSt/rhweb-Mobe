@@ -33,15 +33,18 @@ class TabelaPreco extends Model
                         ['tsrubrica','like',$id],
                         ['tomador',$tomador]
                     ])
+                    ->where('tsano', date("Y"))
                     ->orWhere([
                         ['tsdescricao', 'like', '%'.$id.'%'],
                         ['tomador',$tomador]
-                    ]);
+                    ])
+                    ->where('tsano', date("Y"));
                 }else{
                     $query->where([
                         ['id','>',$id],
                         ['tomador',$tomador]
-                    ]);
+                    ]) 
+                    ->where('tsano', date("Y"));
                 }
                
             }else{
@@ -51,17 +54,20 @@ class TabelaPreco extends Model
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
                     ])
+                    ->where('tsano', date("Y"))
                     ->orWhere([
                         ['tsdescricao','like','%'.$id.'%'],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa],
-                    ]);
+                    ])
+                    ->where('tsano', date("Y"));
                 }else{
                     $query->where([
                         ['id','>',$id],
                         ['tomador',$tomador],
                         ['empresa', $user->empresa]
-                    ]);
+                    ])
+                    ->where('tsano', date("Y"));
                 }    
             }
            
@@ -187,6 +193,27 @@ class TabelaPreco extends Model
             'tsvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
             'tstomvalor'=>str_replace(",",".",str_replace(".","",$dados['valor__tomador'])),
         ]);
+    }
+    public function Atualizar($tomador,$ano_h,$ano_o)
+    {
+        DB::table('tabela_precos')->where([
+            ['tomador', $tomador],
+            ['tsano', $ano_o],
+        ])
+        ->chunkById(100, function ($tabelaprecos) use($ano_h) {
+            foreach ($tabelaprecos as $tabelapreco) {
+                TabelaPreco::create([
+                    'tsano'=>$ano_h,
+                    'tsrubrica'=>$tabelapreco->tsrubrica,
+                    'tsdescricao'=>$tabelapreco->tsdescricao,
+                    'tsstatus'=>$tabelapreco->tsstatus,
+                    'tsvalor'=>$tabelapreco->tsvalor,
+                    'tstomvalor'=>$tabelapreco->tstomvalor,
+                    'empresa'=>$tabelapreco->empresa,
+                    'tomador'=>$tabelapreco->tomador
+                ]);
+            }
+        });
     }
     public function deletar($id)
     {

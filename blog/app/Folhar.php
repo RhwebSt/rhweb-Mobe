@@ -367,13 +367,17 @@ class Folhar extends Model
         ->where('folhars.id',$id)
         ->first();
     }
-    public function buscaFolhaAnaliticaTomador($id) 
+    public function buscaFolhaAnaliticaTomador($id,$tomador) 
     {
         return DB::table('tomadors')
         ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador')
         ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
         ->select('folhars.*','tomadors.tsnome')
-        ->where('folhars.id',$id)
+        ->where([
+            ['folhars.id',$id],
+            ['base_calculos.tomador',$tomador]
+        ])
+
         ->first();
     }
     public function deletar($id)

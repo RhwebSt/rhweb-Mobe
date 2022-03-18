@@ -48,11 +48,11 @@ class TomadorController extends Controller
     }
     public function index()
     {
-        // $tomador = new Tomador;
-        // $tomadors = $tomador->lista();
+        $tomadors = $this->tomador->buscaListaTomadorPaginate(); 
+        // dd($tomadors);
         $user = Auth::user();
         $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        return view('tomador.index',compact('user','valorrublica_matricular'));
+        return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
     }
 
     /**
@@ -452,14 +452,12 @@ class TomadorController extends Controller
             $lancamentotabelas = $this->lancamentotabela->deletarTomador($id);
             $comissionados = $this->comissionado->deletaTomador($id);
             $bancarios = $this->bancario->first($id,$campobacario);
-            $exbancarios = $this->bancario->deletar($bancarios->biid);
+            $exbancarios = $this->bancario->deletarTomador($id);
             $tabelaprecos = $this->tabelapreco->deletatomador($id);
             $enderecos = $this->endereco->first($id,$campoendereco); 
-            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
-            // $retencaofaturas = $retencaofatura->deletar($id);
+            $exenderecos = $this->endereco->deletarTomador($id); 
             $cartaoponto = $this->cartaoponto->deletar($id);
             $parametrosefips = $this->parametrosefip->deletar($id);
-            // $taxatrabalhador = $taxatrabalhador->deletar($id);
             $indicefaturas = $this->indicefatura->deletar($id);
             $taxas = $this->taxa->deletar($id);
             $incidefolhars = $this->incidefolhar->deletar($id);

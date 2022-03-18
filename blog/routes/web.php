@@ -79,6 +79,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabela/preco/editar/{id}/{tomador}','TabelaPreco\\TabelaPrecoController@edit')->name('tabela.preco.editar');
     Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy']);
     Route::get('verifica/tabela/preco/{tomador}','TabelaPreco\\TabelaPrecoController@verificaTabelaPreco');
+    Route::get('tabela/preco/atualizar','TabelaPreco\\TabelaPrecoController@AtualizarTabelaPreco');
 
     Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio');
 
@@ -127,7 +128,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');
 
     Route::get('analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaController@calculoFolhaAnalitica')->name('calculo.folha.analitica');
-    Route::get('tomador/analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaTomadorController@calculoFolhaAnalitica')->name('tomador.calculo.folha.analitica');
+    Route::get('tomador/analitica/calculo/folha/{id}/{tomador}','FolhaAnalitica\\FolhaAnaliticaTomadorController@calculoFolhaAnalitica')->name('tomador.calculo.folha.analitica');
 
     Route::post('imprimir/calculo/folha/banco','CalculoFolha\\relatorioBancoController@imprimirBanco')->name('calculo.folha.banco.imprimir');
     Route::post('imprimir/calculo/folha/rublica','CalculoFolha\\relatorioRublicaCFController@imprimir')->name('calculo.folha.rublica.imprimir');

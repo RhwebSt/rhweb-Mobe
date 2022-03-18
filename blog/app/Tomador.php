@@ -40,6 +40,27 @@ class Tomador extends Model
     {
         return Tomador::where('empresa',$tomador)->select('id')->get();
     }
+    public function buscaListaTomadorPaginate()
+    {
+        return Tomador::select(
+            'id',
+            'tsnome',
+            'tscnpj',
+            'tsmatricula'
+        )
+        ->where(function($query){
+            $user = auth()->user();
+            if ($user->hasPermissionTo('admin')) {
+                $query->where('tomadors.id','>',0);
+            }else{
+                $query->where('tomadors.empresa', $user->empresa);
+            }
+           
+        })
+        ->orderBy('tsnome')
+        ->distinct()
+        ->paginate(10);
+    }
     public function first($id)
     {
        return DB::table('tomadors')
@@ -273,7 +294,7 @@ class Tomador extends Model
     public function relatorioGeral($empresa)
     {
         return Tomador::where('empresa', $empresa)
-        ->select('tsnome','tscnpj','tstelefone','tsmatricula')
+        ->select('tsnome','tscnpj','tstelefone','tsmatricula','id')
         ->orderBy('tsnome', 'asc')
         ->get();
     }

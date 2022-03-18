@@ -83,23 +83,23 @@
                 <input type="hidden" name="pessoal">
                         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                             <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir </button>
-                            <button type="submit" id="atualizar" disabled class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar </button>
-                            <button class="btn botao dropdown-toggle disabled" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fad fa-sync-alt"></i> Atualizar </button>
+                            <button class="btn botao dropdown-toggle disabled d-none" type="button" id="relatoriotomador"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fad fa-file-alt"></i> Relatórios
                              </button>
                               <ul class="dropdown-menu" aria-labelledby="relatoriotomador">
                                 <li class=""><a class="dropdown-item text-decoration-none ps-2"  id="rolBol" onclick ="botaoModal ()" role="button">Rol dos Boletins</a></li>
                               </ul>
                             <!-- <a class="btn btn btn-outline-dark" href="{{ route('tomador.index') }}" role="button">Consultar</a> -->
-                            <button type="button" class="btn botao" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <i class="fad fa-trash"></i> Excluir 
                             </button>
-                            <a class="btn botao disabled" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
+                            <a class="btn botao disabled d-none" href="" id="tabelapreco" role="button"><i class="fas fa-dollar-sign"></i> Tabela de Preço</a>
                             
                             <button type="button" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                               <i class="fad fa-file-invoice"></i> Boletins
                             </button>
-                             <a class="btn botao disabled" href="" id='esocial' role="button">Evento s-1020</a>
+                             <a class="btn botao disabled d-none" href="" id='esocial' role="button">Evento s-1020</a>
                              <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                                 <i class="fa-solid fa-list"></i> Lista
                              </a>
@@ -107,9 +107,9 @@
                             <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
                         </div> 
                         
-                        <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
+                        <!-- <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div> -->
                         
-                        <div>
+                        <!-- <div>
                             <div class="col-md-5 mb-5 p-1 pesquisar">
                                 <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
@@ -125,11 +125,10 @@
                                 </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                          <script>
-                            function botaoModal (){
-                                 
+                            function botaoModal (tomador){
                             Swal.fire({
                                 title: 'Periodo',
                                 html:
@@ -147,7 +146,7 @@
                                     }else{
                                         let inicio =  document.getElementById('swal-input1').value
                                         let final = document.getElementById('swal-input2').value
-                                        let tomador = document.getElementById('tomador').value
+                                        // let tomador = document.getElementById('tomador').value
                                         location.href=`{{url('boletim/tomador')}}/${tomador}/${inicio}/${final}`;
                                     } 
                                     
@@ -956,7 +955,19 @@
                       </div>
                     </div>
             <script>
-            
+             $('.modal-botao').click(function() {
+                    localStorage.setItem("modal", "enabled");
+                })
+               function verficarModal(){
+                  var valueModal = localStorage.getItem('modal');
+                  if(valueModal === "enabled"){
+                      $(document).ready(function(){
+                          $("#teste").modal("show");
+                      });
+                      localStorage.setItem("modal","disabled");
+                  }
+                }
+                verficarModal()
             
              function validaInputQuantidade(idCampo,QuantidadeCarcteres){
                 var telefone = document.querySelector(idCampo);
@@ -1187,7 +1198,7 @@
             function carregado(data) {
                 if (data.id) {
                     $('#form').attr('action', "{{ url('tomador')}}/"+data.tomador);
-                    $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador)
+                    $('#formdelete').attr('action',"{{ url('tomador')}}/"+data.tomador) 
                     $('#incluir').attr('disabled','disabled')
                     $('#atualizar').removeAttr( "disabled" )
                     $('#deletar').removeAttr( "disabled" )
