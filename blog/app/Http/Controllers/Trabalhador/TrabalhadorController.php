@@ -16,10 +16,11 @@ use App\Bolcartaoponto;
 use App\Lancamentorublica;
 use App\Comissionado;
 use App\ValoresRublica;
+use App\BaseCalculo;
 class TrabalhadorController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
-    $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado;
+    $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo;
     public function __construct()
     {
         $this->trabalhador = new Trabalhador;
@@ -32,14 +33,15 @@ class TrabalhadorController extends Controller
         $this->dependente = new Dependente;
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->lancamentorublica = new Lancamentorublica; 
-        $this->comissionado = new Comissionado;  
+        $this->comissionado = new Comissionado;
+        $this->basecalculo = new BaseCalculo;  
     }
     public function index()
     {
         $user = Auth::user();
-       
+        $trabalhadors = $this->trabalhador->lista();
         $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        return view('trabalhador.index',compact('user','valorrublica_matricular'));
+        return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
     }
 
     /**
@@ -267,7 +269,11 @@ class TrabalhadorController extends Controller
      */
     public function edit($id)
     {
-        
+        $user = Auth::user();
+        $trabalhadors = $this->trabalhador->lista();
+        $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
+        // dd($trabalhador);
+        return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
     }
 
     /**
@@ -409,7 +415,7 @@ class TrabalhadorController extends Controller
         ]
         );
        
-        try {
+        
             $trabalhadors = $this->trabalhador->editar($dados,$id);
             $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
             $bancarios = $this->bancario->editar($dados,$dados['bancario']);
@@ -420,6 +426,7 @@ class TrabalhadorController extends Controller
             $nascimentos && $categorias && $documentos) {
                 return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
             }
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
@@ -434,6 +441,10 @@ class TrabalhadorController extends Controller
     public function destroy($id)
     {
         
+        $trabalhador = $this->basecalculo->verificaTrabalhador($id);
+        if ($trabalhador) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletador.']);
+        }
         $campoendereco = 'trabalhador';
         $campobacario = 'trabalhador';
         $user = auth()->user();
@@ -443,9 +454,7 @@ class TrabalhadorController extends Controller
             $bolcartaopontos = $this->bolcartaoponto->deletarTrabalador($id);
             $lancamentorublicas = $this->lancamentorublica->deletarTrabalhador($id);
             $dependentes = $this->dependente->deletarTrabalhador($id); 
-            $enderecos = $this->endereco->first($id,$campoendereco); 
-    
-            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
+            $exenderecos = $this->endereco->deletarTrabalhador($id); 
     
             $bancarios = $this->bancario->first($id,$campobacario);
             

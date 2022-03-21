@@ -66,6 +66,9 @@
                         <button type="button" id="excluir" disabled class="btn botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
                             <i class="fad fa-trash"></i> Excluir
                         </button>
+                        <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list"></i> Lista
+                        </a>
                         <a class="btn botao" href="#" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
@@ -284,102 +287,102 @@
                     @enderror
                 </div>
 
-            <h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>
+            <!--<h1 class="container text-center mt-5 mb-3 fs-4 fw-bold">Valores para VT e VA Rúbricas</h1>-->
 
 
               
-            <div class="col-md-3">
-                <label for="nro__fatura" class="form-label">Nro Fatura</label>
-                <input type="text" class="form-control  @error('nro__fatura') is-invalid @enderror"  value="{{old('nro__fatura')}}"  name="nro__fatura" id="nro__fatura">
-                @error('nro__fatura')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__fatura" class="form-label">Nro Fatura</label>-->
+            <!--    <input type="text" class="form-control  @error('nro__fatura') is-invalid @enderror"  value="{{old('nro__fatura')}}"  name="nro__fatura" id="nro__fatura">-->
+            <!--    @error('nro__fatura')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="nro__reciboavulso" class="form-label">Nro Recibo Avulso</label>
-                <input type="text" class="form-control @error('nro__reciboavulso') is-invalid @enderror"  value="{{old('nro__reciboavulso')}}" name="nro__reciboavulso" id="nro__reciboavulso">
-                @error('nro__reciboavulso')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__reciboavulso" class="form-label">Nro Recibo Avulso</label>-->
+            <!--    <input type="text" class="form-control @error('nro__reciboavulso') is-invalid @enderror"  value="{{old('nro__reciboavulso')}}" name="nro__reciboavulso" id="nro__reciboavulso">-->
+            <!--    @error('nro__reciboavulso')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3 d-none">
-                <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>
-                <input type="text" class="form-control @error('matric__trabalhador') is-invalid @enderror"  value="{{old('matric__trabalhador')}}" name="matric__trabalhador" id="matric__trabalhador">
-                @error('matric__trabalhador')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3 d-none">-->
+            <!--    <label for="matric__trabalhador" class="form-label">Matrícula Trabalhador</label>-->
+            <!--    <input type="text" class="form-control @error('matric__trabalhador') is-invalid @enderror"  value="{{old('matric__trabalhador')}}" name="matric__trabalhador" id="matric__trabalhador">-->
+            <!--    @error('matric__trabalhador')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="nro__requisicao" class="form-label">Nro Requisição</label>
-                <input type="text" class="form-control @error('nro__requisicao') is-invalid @enderror"  value="{{old('nro__requisicao')}}" name="nro__requisicao" id="nro__requisicao">
-                @error('nro__requisicao')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__requisicao" class="form-label">Nro Requisição</label>-->
+            <!--    <input type="text" class="form-control @error('nro__requisicao') is-invalid @enderror"  value="{{old('nro__requisicao')}}" name="nro__requisicao" id="nro__requisicao">-->
+            <!--    @error('nro__requisicao')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="nro__boletins" class="form-label">Nro Boletins</label>
-                <input type="text" class="form-control @error('nro__boletins') is-invalid @enderror"  value="{{old('nro__boletins')}}" name="nro__boletins" id="nro__boletins">
-                @error('nro__boletins')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__boletins" class="form-label">Nro Boletins</label>-->
+            <!--    <input type="text" class="form-control @error('nro__boletins') is-invalid @enderror"  value="{{old('nro__boletins')}}" name="nro__boletins" id="nro__boletins">-->
+            <!--    @error('nro__boletins')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="nro__folha" class="form-label">Nro da Folha</label>
-                <input type="text" class="form-control @error('nro__folha') is-invalid @enderror"  value="{{old('nro__folha')}}" name="nro__folha" id="nro__folha">
-                @error('nro__folha')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__folha" class="form-label">Nro da Folha</label>-->
+            <!--    <input type="text" class="form-control @error('nro__folha') is-invalid @enderror"  value="{{old('nro__folha')}}" name="nro__folha" id="nro__folha">-->
+            <!--    @error('nro__folha')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="nro__cartaoponto" class="form-label">Nro Cartão Ponto</label>
-                <input type="text" class="form-control @error('nro__cartaoponto') is-invalid @enderror"  value="{{old('nro__cartaoponto')}}" name="nro__cartaoponto" id="nro__cartaoponto">
-                @error('nro__cartaoponto')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="nro__cartaoponto" class="form-label">Nro Cartão Ponto</label>-->
+            <!--    <input type="text" class="form-control @error('nro__cartaoponto') is-invalid @enderror"  value="{{old('nro__cartaoponto')}}" name="nro__cartaoponto" id="nro__cartaoponto">-->
+            <!--    @error('nro__cartaoponto')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="seq__esocial" class="form-label">Seque E-Social</label>
-                <input type="text" class="form-control @error('seq__esocial') is-invalid @enderror"  value="{{old('seq__esocial')}}" name="seq__esocial" id="seq__esocial">
-                @error('seq__esocial')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="seq__esocial" class="form-label">Seque E-Social</label>-->
+            <!--    <input type="text" class="form-control @error('seq__esocial') is-invalid @enderror"  value="{{old('seq__esocial')}}" name="seq__esocial" id="seq__esocial">-->
+            <!--    @error('seq__esocial')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
 
-            <div class="col-md-3">
-                <label for="cbo" class="form-label">CBO</label>
-                <input type="text" class="form-control @error('cbo') is-invalid @enderror"  value="{{old('cbo')}}" name="cbo" id="cbo">
-                @error('cbo')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-3">
-                <label for="matricular" class="form-label">N°Trabalhador</label>
-                <input type="text" class="form-control @error('matricular') is-invalid @enderror"  value="{{old('matricular')}}" name="matricular" id="matricular">
-                @error('matricular')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-3">
-                <label for="matriculartomador" class="form-label">N°Tomador</label>
-                <input type="text" class="form-control @error('matriculartomador') is-invalid @enderror"  value="{{old('matriculartomador')}}" name="matriculartomador" id="matriculartomador">
-                @error('matriculartomador')
-                  <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-2 mb-5 d-none">
-                <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>
-                <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">
-                    <option>1-Produção </option>
-                    <option>2-Restrita</option>
-                </select>
-            </div>
+            <!--<div class="col-md-3">-->
+            <!--    <label for="cbo" class="form-label">CBO</label>-->
+            <!--    <input type="text" class="form-control @error('cbo') is-invalid @enderror"  value="{{old('cbo')}}" name="cbo" id="cbo">-->
+            <!--    @error('cbo')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+            <!--    <label for="matricular" class="form-label">N°Trabalhador</label>-->
+            <!--    <input type="text" class="form-control @error('matricular') is-invalid @enderror"  value="{{old('matricular')}}" name="matricular" id="matricular">-->
+            <!--    @error('matricular')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+            <!--    <label for="matriculartomador" class="form-label">N°Tomador</label>-->
+            <!--    <input type="text" class="form-control @error('matriculartomador') is-invalid @enderror"  value="{{old('matriculartomador')}}" name="matriculartomador" id="matriculartomador">-->
+            <!--    @error('matriculartomador')-->
+            <!--      <span class="text-danger">{{ $message }}</span>-->
+            <!--    @enderror-->
+            <!--</div>-->
+            <!--<div class="col-md-2 mb-5 d-none">-->
+            <!--    <label for="ambiente__esocial" class="form-label">Ambiente E-Social</label>-->
+            <!--    <select id="ambiente__esocial" name="ambiente__esocial" class="form-select fw-bold">-->
+            <!--        <option>1-Produção </option>-->
+            <!--        <option>2-Restrita</option>-->
+            <!--    </select>-->
+            <!--</div>-->
                 
                 <input type="hidden" name="endereco" id="endereco">
 
@@ -411,8 +414,81 @@
                 </div>
             </div>
             
-            
+            @include('usuarios.empresa.lista');
      <script>
+     
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+            var telefone = document.querySelector(idCampo);
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var nome = validaInputQuantidade("#nome",1);
+        var dataregistro = validaInputQuantidade("#dataregistro",10);
+        var cep = validaInputQuantidade("#cep",9);
+        var logradouro = validaInputQuantidade("#logradouro",1);
+        var bairro = validaInputQuantidade("#bairro",1);
+        var localidade = validaInputQuantidade("#localidade",1);
+        var numero = validaInputQuantidade("#numero",1);
+        var uf = validaInputQuantidade("#uf",2);
+        var responsave = validaInputQuantidade("#responsave",1);
+        var cpf = validaInputQuantidade("#cpf",14);
+        var email = validaInputQuantidade("#email",1);
+        var seguro = validaInputQuantidade("#seguro",1);
+        var cnae__codigo = validaInputQuantidade("#cnae__codigo",1);
+        var cod__municipio = validaInputQuantidade("#cod__municipio",1);
+        var contribuicao__sindicato = validaInputQuantidade("#contribuicao__sindicato",1);
+        var telefone = validaInputQuantidade("#telefone",14);
+        var nomeFantasia = validaInputQuantidade("#nome",1);
+        var nomeFantasia = validaInputQuantidade("#nome",1);
+        var nomeFantasia = validaInputQuantidade("#nome",1);
+        
+        var cepFocusOut = document.querySelector('#cep');
+            cepFocusOut.addEventListener('focusout', function(){
+                var logradouro = document.querySelector('#logradouro');
+                var resultlog = logradouro.value;
+                var bairro = document.querySelector('#bairro');
+                var resultbairro = bairro.value;
+                var localidade = document.querySelector('#localidade');
+                var resultlocal = localidade.value;
+                var uf = document.querySelector('#uf');
+                var resultuf = uf.value;
+                
+                
+                if(resultlog > " "){
+                  logradouro.classList.add('is-valid');  
+                }else{
+                    logradouro.classList.remove('is-valid');
+                }
+                
+                if(resultbairro > " "){
+                  bairro.classList.add('is-valid');  
+                }else{
+                    bairro.classList.remove('is-valid');
+                }
+                
+                if(resultlocal > " "){
+                  localidade.classList.add('is-valid');  
+                }else{
+                    localidade.classList.remove('is-valid');
+                }
+                
+                if(resultuf > " " && resultuf.length > 2){
+                  uf.classList.add('is-valid');  
+                }else{
+                    uf.classList.remove('is-valid');
+                }
+                 
+            });
      
         var botaolimpaCampos = document.querySelector("#refre");
 

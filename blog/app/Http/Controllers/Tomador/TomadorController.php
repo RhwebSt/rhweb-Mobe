@@ -270,7 +270,11 @@ class TomadorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $tomador = $this->tomador->first($id);
+        // dd($tomador);
+        $tomadors = $this->tomador->buscaListaTomadorPaginate();
+        return view('tomador.edit',compact('user','tomador','tomadors'));
     }
    
     /**
@@ -283,6 +287,7 @@ class TomadorController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        // dd($dados);
         $request->validate([
             'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
@@ -402,8 +407,8 @@ class TomadorController extends Controller
         ]
         );
      
-      
         try {
+        
             $tomadors = $this->tomador->editar($dados,$id);
             $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
             $bancarios = $this->bancario->editar($dados,$dados['bancario']);
@@ -415,7 +420,7 @@ class TomadorController extends Controller
             $incidefolhars = $this->incidefolhar->editar($dados,$id);
             $taxas = $this->taxa->editar($dados,$id);
             // dd($tomadors , $enderecos , $taxas
-            // , $bancarios , $retencaofaturas , 
+            // , $bancarios , 
             // $cartaoponto , $parametrosefips , $indicefaturas);
             if ($tomadors && $enderecos && $taxas
             && $bancarios  && $incidefolhars &&
@@ -423,8 +428,9 @@ class TomadorController extends Controller
                 return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
                 
             }
+            
         } catch (\Throwable $th) {
-            return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
         }
     }
 
@@ -451,10 +457,8 @@ class TomadorController extends Controller
             $campobacario = 'tomador';
             $lancamentotabelas = $this->lancamentotabela->deletarTomador($id);
             $comissionados = $this->comissionado->deletaTomador($id);
-            $bancarios = $this->bancario->first($id,$campobacario);
             $exbancarios = $this->bancario->deletarTomador($id);
             $tabelaprecos = $this->tabelapreco->deletatomador($id);
-            $enderecos = $this->endereco->first($id,$campoendereco); 
             $exenderecos = $this->endereco->deletarTomador($id); 
             $cartaoponto = $this->cartaoponto->deletar($id);
             $parametrosefips = $this->parametrosefip->deletar($id);

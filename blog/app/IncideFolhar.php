@@ -14,8 +14,8 @@ class IncideFolhar extends Model
         return IncideFolhar::create([
             'insalimentacao'=> $dados['folharalim']?str_replace(",",".",str_replace(".","",$dados['folharalim'])):0,
             'instransporte'=>$dados['folhartransporte']?str_replace(",",".",str_replace(".","",$dados['folhartransporte'])):0,
-            'instipotrans'=>str_replace(",",".",str_replace(".","",$dados['folhartipotrans'])),
-            'instipoali'=>str_replace(",",".",str_replace(".","",$dados['folhartipoalim'])),
+            // 'instipotrans'=>str_replace(",",".",str_replace(".","",$dados['folhartipotrans'])),
+            // 'instipoali'=>str_replace(",",".",str_replace(".","",$dados['folhartipoalim'])),
             'tomador'=>$dados['tomador']
         ]);
     }

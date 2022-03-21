@@ -63,10 +63,13 @@
                 <input type="hidden" name="empresa" id="idempresa">
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                  <button type="submit" id="incluir" class="btn botao "  >
-                        <i class="fad fa-save"></i> Incluir
-                      </button>
-                      <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
+                        <button type="submit" id="incluir" class="btn botao "  >
+                            <i class="fad fa-save"></i> Incluir
+                        </button>
+                        <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list"></i> Lista
+                        </a>
+                        <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
 
@@ -231,6 +234,7 @@
               
               
             </div> 
+            @include('usuarios.lista');
             <script>
             
             var botaolimpaCampos = document.querySelector("#refre");

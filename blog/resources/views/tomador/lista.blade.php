@@ -85,7 +85,7 @@
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                 <button class="btn">
-                                    <a class="btn__padrao--editar modal-botao" href="" class=""><i style="color: white;" class="fas fa-pen"></i></a>
+                                    <a class="btn__padrao--editar modal-botao" href="{{route('tomador.edit',$tomador->id)}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">

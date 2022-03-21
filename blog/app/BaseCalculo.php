@@ -137,4 +137,13 @@ class BaseCalculo extends Model
     {
         return BaseCalculo::where('folhar',$folhar)->count();
     }
+    public function verificaTrabalhador($id)
+    {
+        return BaseCalculo::where('trabalhador',$id)->count();
+    }
+
+    public function verificaTomador($id)
+    {
+        return BaseCalculo::where('tomador',$id)->count();
+    }
 }

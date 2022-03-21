@@ -7,11 +7,7 @@
                       </div>
                       <div class="modal-body modalBody">
                           
-                            
-                          
-                           <div class="d-flex justify-content-between">
-                                
-                                <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
+                            <div class="col-md-5 mb-4 p-1 mt-2 pesquisar">
                                 <form action="{{  route('tabcartaoponto.index')}}" method="GET">
                                     <div class="d-flex">
                                         <label for="exampleDataList" class="form-label"></label>
@@ -32,8 +28,25 @@
                                 </div>
                                 
                             </div>
-        
-                                <div class="dropdown  mt-2 p-1">
+                          
+                           <div class="d-flex justify-content-end">
+                                
+
+                               <!--<div class="align-self-end mb-1 col-6 filtrar">-->
+                               <!--     <label for="campoFiltro">Filtrar</label>-->
+                               <!--     <input type="text" class="form-control" id="campoFiltro" placeholder="digite o nome do tomador"></input>-->
+                               <!-- </div>-->
+                               <div class="align-self-end mb-1 col-1 filtrar">
+                                    <select class="form-select form-select-sm" id="quantidade" aria-label=".form-select-sm example" data-bs-toggle="tooltip" title="Quantidade de registro">
+                                        <option selected>5</option>
+                                        <option value="1">15</option>
+                                        <option value="2">25</option>
+                                        <option value="3">50</option>
+                                        <option value="3">100</option>
+                                    </select>
+                                </div>
+
+                                <div class="dropdown align-self-end mt-2 p-1">
                                     <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fad fa-sort"></i> Filtro 
                                     </button>
@@ -44,9 +57,14 @@
                                     <li><a class="dropdown-item text-white modal-botao" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                     </ul>
                                 </div>
+                                
+                                
                             </div>
-                
+                            
+                             
+                        
                             <div class="table-responsive-xxl">
+                               
                                         <table class="table text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                                             <thead>
                                                 <th class="col text-center text-nowrap" style="width:115px;">Boletim</th>
@@ -58,14 +76,15 @@
                                                 <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
                                                 <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
                                             </thead>
+                                            
                                             <tbody style="background-color: #081049; color: white;">
                                                @if( count($lancamentotabelas) > 0)
                                                @foreach($lancamentotabelas as $lancamentotabela)
-                                                <tr class="bodyTabela">               
+                                                <tr class="bodyTabela filtro">               
                                                     <td class="col text-center border-bottom text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                                     <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
                                                         <button type="button" class="btn text-white quebraLinha" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}">
-                                                            <a>{{$lancamentotabela->tsnome}}</a>
+                                                            <a class="text-uppercase text-decoration-none text-white texto">{{$lancamentotabela->tsnome}}</a>
                                                         </button>
                                                     </td>
                                                     <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
@@ -74,7 +93,7 @@
                                                       ?>
                                                       {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                                     </td>
-                                                    <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
+                                                    <td class="col text-center border-bottom text-nowrap " style="width:200px">{{$lancamentotabela->lsnumero}}</td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px">
                                                         <a href="{{route('relatorio.boletim.tabela',base64_encode($lancamentotabela->liboletim))}}" class="btn btn__padrao--relatorio"><i class="fad fa-file-alt" style="color:white"></i></a>
                                                     </td>
@@ -91,7 +110,7 @@
                                                        <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}"  method="post">
                                                         @csrf
                                                         @method('delete')
-                                                            <button type="submit" class="btn btn__padrao--excluir modal-botao"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
+                                                            <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
                                                         </form> 
                                                         </td>
                                                     </td>
@@ -118,6 +137,7 @@
                                                                 <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>
                                                             </li>
                                                         @endfor
+            
                                                         
                                                     </ul>
                                                     @endif
@@ -160,7 +180,39 @@
                         </div>
                     </div>
                 </div>
-                <script src="">
-        
+                <script>
+                    
+                
+                
+                    function filtro(){
+                var campoFiltro = document.querySelector("#campoFiltro");
+          
+              campoFiltro.addEventListener('input', function(){
+                  var descricoes = document.querySelectorAll(".filtro");
+                    
+                    if (this.value.length > 0) {
+                        for(i = 0; i < descricoes.length; i++){
+                            var descricao = descricoes[i];
+                            var tdnome = descricao.querySelector(".texto");
+                            var nome = tdnome.textContent
+                            var expressao = new RegExp(this.value, "i");
+                            if (!expressao.test(nome)) {
+                                descricao.classList.add("invisivel");
+                            } else {
+                                descricao.classList.remove("invisivel");
+                            }
+                            console.log(nome);
+                        }
+                    }else{
+                        for(i = 0; i < descricoes.length; i++){
+                            var descricao = descricoes[i];
+                            descricao.classList.remove("invisivel");
+                        }
+                    }
+                    
+              });
+            }
+
+            filtro();
                 </script>
                 

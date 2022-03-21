@@ -68,7 +68,7 @@
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
                         <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                          <i class="fas fa-search"></i> Pesquisar
+                          <i class="fa-solid fa-list"></i> Lista
                         </button>
                         <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao d-none">Boletim <i class="fad fa-door-open"></i></a>
                         <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>

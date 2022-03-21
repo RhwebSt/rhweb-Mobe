@@ -73,7 +73,7 @@ class Tomador extends Model
             ->join('indice_faturas', 'tomadors.id', '=', 'indice_faturas.tomador')
             ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
             ->select(
-                'tomadors.*', 
+                
                 'enderecos.*',
                 'taxas.*',
                 // 'retencao_faturas.*',
@@ -81,7 +81,8 @@ class Tomador extends Model
                 'parametrosefips.*',
                 'incide_folhars.*',
                 'indice_faturas.*',
-                'bancarios.*'
+                'bancarios.*',
+                'tomadors.*', 
             )
             ->where(function($query) use ($id){
                 $user = auth()->user();

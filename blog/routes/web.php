@@ -55,7 +55,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('logout','Login\\LoginController@logout')->name('logout');
     Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
     Route::post('altera/editer','Login\\alteraSenhaController@store')->name('altera.store');
-    Route::resource('home','Home\\HomeController')->names('home');
+    Route::resource('home','Home\\HomeController')->names('home'); 
     
     Route::get('comprovantepagamento','ComprovantePag\\ComprovantePagController@index');
     Route::get('comprovantepagamentodiaria','ComprovantePagDia\\ComprovantePagDiaController@index');
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
 
 
-    Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado');
+    Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado'); 
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
     Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);

@@ -202,14 +202,23 @@ class Trabalhador extends Model
             ->join('enderecos', 'trabalhadors.id', '=', 'enderecos.trabalhador')
             // ->join('dependentes', 'trabalhadors.id', '=', 'dependentes.trabalhador')
             ->select(
-                'trabalhadors.*', 
                 'documentos.*', 
                 'bancarios.*',
                 'categorias.*',
                 'nascimentos.*',
-                'enderecos.*'
+                'enderecos.*',
+                'trabalhadors.*',
                 )
-                ->paginate(20);
+                ->where(function($query){
+                    $user = auth()->user();
+                    if ($user->hasPermissionTo('admin')) {
+                        $query->where('trabalhadors.id','>',0);
+                    }else{
+                        $query->where('trabalhadors.empresa', $user->empresa);
+                    }
+                   
+                })
+            ->paginate(20);
     }
     public function listaTrabalhadorInt($trabalhador)
     {
