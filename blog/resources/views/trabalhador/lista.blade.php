@@ -8,14 +8,14 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-between">
                     <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                        <form action="" method="GET">
+                        <form action="{{route('trabalhador.index')}}" method="GET">
                             <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
                                 <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
                                 <datalist id="listapesquisa">
                                 </datalist>
-                                <input type="hidden" name="codicao" value="">
-                                <button type="submit" class="modal-botao btn botaoPesquisa modal-botao">
+                                <input type="hidden" name="codicao" value="{{isset($trabalhador->id)?$trabalhador->id:''}}">
+                                <button type="submit" class="modal-botao">
                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                 </button>
 
@@ -32,8 +32,8 @@
                         <i class="fas fa-sort"></i> Filtro
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.trabalhador',['asc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.trabalhador',['desc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                     </ul>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                 <button class="btn">
-                                    <a class="btn__padrao--editar modal-botao" href="{{route('trabalhador.edit',$trabalhador->id)}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
+                                    <a class="btn__padrao--editar " href="{{route('trabalhador.edit',$trabalhador->id)}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">

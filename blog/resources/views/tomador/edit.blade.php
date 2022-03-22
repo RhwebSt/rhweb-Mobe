@@ -145,7 +145,7 @@
     <select id="tipo" name="tipo" class="form-select fw-bold text-dark">
         @if($tomador->tstipo === '1-CNPJ')
         <option selected>1-CNPJ</option>
-        <option >2-CPF</option>
+        <option>2-CPF</option>
         @else
         <option>1-CNPJ</option>
         <option selected>2-CPF</option>
@@ -157,11 +157,11 @@
     <label for="simple" class="form-label">Simples</label>
     <select name="simples" id="simple" class="form-select fw-bold text-dark">
         @if($tomador->tssimples === 'Não')
-            <option selected>Não</option>
-            <option>Sim</option>
+        <option selected>Não</option>
+        <option>Sim</option>
         @else
-            <option>Não</option>
-            <option selected>Sim</option>
+        <option>Não</option>
+        <option selected>Sim</option>
         @endif
     </select>
     @error('simples')
@@ -271,7 +271,7 @@
     <label for="complemento__endereco" class="form-label">Tipo</label>
     <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
         <?php
-            $complemento = [
+        $complemento = [
             'A-Área',
             'AC-Acesso',
             'ACA-Acampamento',
@@ -447,16 +447,17 @@
             'VLT-Via Litorânea',
             'VPE-Via de Pedestre',
             'VRT-Variante',
-            'ZIG- Zigue-Zague'];
+            'ZIG- Zigue-Zague'
+        ];
         ?>
         @foreach($complemento as $complementos)
-            @if($complementos === $tomador->escomplemento)
-                <option selected>{{$tomador->escomplemento}}</option>
-            @else
-                <option>{{$complementos}}</option>
-            @endif
+        @if($complementos === $tomador->escomplemento)
+        <option selected>{{$tomador->escomplemento}}</option>
+        @else
+        <option>{{$complementos}}</option>
+        @endif
         @endforeach
-        
+
     </select>
 </div>
 
@@ -762,10 +763,10 @@
 <div class="col-md-3 d-none">
     <label for="retencaoinss" class="form-label">Retenção INSS</label>
     <select class="form-select fw-bold text-dark" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
-    
-            <option selected>SIM</option>
-            <option>NÃO</option>
-      
+
+        <option selected>SIM</option>
+        <option>NÃO</option>
+
     </select>
 </div>
 <div class="col-md-3 d-none">
@@ -785,9 +786,9 @@
 <div class="col-md-3 d-none">
     <label for="valorfatura" class="form-label">Base da Fatura</label>
     <select class="form-select fw-bold text-dark" id="valorfatura" name="valor_fatura" aria-label="Default select example">
-            <option selected>Produção</option>
-            <option>Fatura</option>
-       
+        <option selected>Produção</option>
+        <option>Fatura</option>
+
     </select>
 </div>
 <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Dados Bancários <i class="fad fa-university"></i></h1>
@@ -844,8 +845,9 @@
 
 <input type="hidden" name="bancario" value="{{$tomador->biid}}" id="bancario">
 </div>
-@include('tomador.lista')
+
 </form>
+@include('tomador.lista')
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -937,6 +939,20 @@
     </div>
 </div>
 <script>
+    $('.modal-botao').click(function() {
+        localStorage.setItem("modal", "enabled");
+    })
+
+    function verficarModal() {
+        var valueModal = localStorage.getItem('modal');
+        if (valueModal === "enabled") {
+            $(document).ready(function() {
+                $("#teste").modal("show");
+            });
+            localStorage.setItem("modal", "disabled");
+        }
+    }
+    verficarModal()
     var nomeFantasia = document.querySelector('#nome__fantasia');
 
     nomeFantasia.addEventListener('input', function() {
@@ -1216,19 +1232,19 @@
                     $('#refres').addClass('d-none').prev().removeClass('d-none')
                     if (data.length >= 1) {
                         data.forEach(element => {
-                            nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                            nome += `<option value="${element.tsnome}">`
                             // nome += `<option value="${element.tsmatricula}">`
                             // nome += `<option value="${element.tscnpj}">`
                         });
-                        $('#datalistOptions').html(nome)
+                        $('#listapesquisa').html(nome)
                     }
-                    if (data.length === 1 && dados.length >= 2) {
-                        tomador(dados)
-                    } else if (dados.length === 14) {
-                        pesquisa(dados)
-                    } else {
-                        campo()
-                    }
+                    // if (data.length === 1 && dados.length >= 2) {
+                    //     tomador(dados)
+                    // } else if (dados.length === 14) {
+                    //     pesquisa(dados)
+                    // } else {
+                    //     campo()
+                    // }
                 }
             });
         })

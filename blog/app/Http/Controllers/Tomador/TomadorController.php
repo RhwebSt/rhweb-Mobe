@@ -22,11 +22,13 @@ use App\Lancamentotabela;
 use App\Comissionado;
 use App\ValoresRublica;
 use App\Rublica;
+use App\BaseCalculo;
 class TomadorController extends Controller
 {
     private $rublica,$tomador,$valorrublica,$taxa,$endereco,$bancario,
     $tabelapreco,$cartaoponto,$parametrosefip,$incidefolhar,$indicefatura,
-    $comissionado,$retencaofatura,$bolcartaoponto,$lancamentorublica,$lancamentotabela;
+    $comissionado,$retencaofatura,$bolcartaoponto,$lancamentorublica,$lancamentotabela
+    ,$basecalculo;
     public function __construct()
     {
         $this->rublica = new Rublica;
@@ -45,14 +47,33 @@ class TomadorController extends Controller
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->lancamentorublica = new Lancamentorublica;
         $this->lancamentotabela = new Lancamentotabela;
+        $this->basecalculo = new BaseCalculo;
     }
     public function index()
     {
-        $tomadors = $this->tomador->buscaListaTomadorPaginate(); 
-        // dd($tomadors);
         $user = Auth::user();
-        $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
+        $search = request('search');
+        $condicao = request('codicao');
+        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,'asc'); 
+        if ($condicao) {
+            $tomador = $this->tomador->first($condicao);
+            return view('tomador.edit',compact('user','tomador','tomadors'));
+        }else{
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
+        }
+    }
+    public function ordem($ordem,$id = null,$search = null)
+    {
+        $user = Auth::user();
+        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,$ordem);
+        if ($id) {
+            $tomador = $this->tomador->first($id);
+            return view('tomador.edit',compact('user','tomador','tomadors'));
+        }else{
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
+        }
     }
 
     /**
@@ -271,9 +292,9 @@ class TomadorController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
+        $search = request('search');
         $tomador = $this->tomador->first($id);
-        // dd($tomador);
-        $tomadors = $this->tomador->buscaListaTomadorPaginate();
+        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,'asc');
         return view('tomador.edit',compact('user','tomador','tomadors'));
     }
    
@@ -443,7 +464,10 @@ class TomadorController extends Controller
     public function destroy($id)
     {
         
-      
+        $tomador = $this->basecalculo->verificaTomador($id);
+        if ($tomador) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletador.']);
+        }
         $user = auth()->user();
         $dados = ['matricula'=>''];
         $lancamentotabelas = $this->lancamentotabela->buscaTomador($id);

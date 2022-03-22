@@ -70,12 +70,16 @@
                               <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                                 <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2"  id="imprimir" role="button">Rol das Rúbricas</a></li>
                               </ul>
+                            <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                                <i class="fa-solid fa-list"></i> Lista
+                            </a>
                             <a class="btn botao" href="#" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
                 
                 <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
+                
                 <div class="col-md-5 mb-5 p-1 pesquisar">
                     <div class="d-flex">
                         <label for="exampleDataList" class="form-label"></label>
@@ -244,7 +248,26 @@
 
             
     </div>
+    @include('rublica.lista')
     <script>
+    
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+            var telefone = document.querySelector(idCampo);
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var rubricas = validaInputQuantidade("#rubricas",1);
+        var descricao = validaInputQuantidade("#descricao",1);
     
         var botaolimpaCampos = document.querySelector("#refre");
 

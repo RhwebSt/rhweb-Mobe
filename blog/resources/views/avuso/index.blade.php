@@ -131,7 +131,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tano">
+                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tanoFinal">
                                     <div class="mt-1">
                                         @error('ano_final')
                                             <span class="text-danger">{{ $message }}</span>
@@ -434,6 +434,30 @@
 
 
         <script>
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+            var telefone = document.querySelector(idCampo);
+    
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var nome = validaInputQuantidade("#nome",1);
+        var cpf = validaInputQuantidade("#cpf",14);
+        var tano = validaInputQuantidade("#tano",8);
+        var tanoFinal = validaInputQuantidade("#tanoFinal",8);
+        
+        
+        
+        
+        
         let index = 0;
         function conteiner(index) {
                 let conteiner = '';

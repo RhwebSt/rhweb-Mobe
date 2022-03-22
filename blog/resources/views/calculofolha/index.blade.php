@@ -5,13 +5,13 @@
 <div class="container responsive">
         
         <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
-          <li class="nav-item ms-2 " role="presentation">
+          <li class="nav-item ms-1 mt-1 " role="presentation">
             <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</button>
           </li>
-          <li class="nav-item ms-1 pillstop" role="presentation">
+          <li class="nav-item ms-1 mt-1 pillstop" role="presentation">
             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-th-list"></i> Lista Tomador</button>
           </li>
-          <li class="nav-item ms-1 pillstop1" role="presentation">
+          <li class="nav-item ms-1 mt-1 pillstop1" role="presentation">
             <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" style="color: white;"><i class="fad fa-th-list"></i> Lista Geral</button>
           </li>
         </ul>
@@ -101,7 +101,7 @@
                             
                             <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                               <label for="ano" class="form-label">Data Final</label>
-                              <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tano">
+                              <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tanoFinal">
                               @error('ano_final')
                                 <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -154,7 +154,7 @@
                                         
                                         <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                         <label for="ano" class="form-label">Data Final</label>
-                                        <input type="date" class="form-control " name="final" value="" id="tano1">
+                                        <input type="date" class="form-control " name="final" value="" id="tano1Final">
                                         </div>
                                     </div>
                 
@@ -298,7 +298,7 @@
                                                
                                                 @foreach($folhas as $folhar)
                                                     @if($folhar->id === $tomador->folhar)
-                                                    <a href="{{route('tomador.calculo.folha.analitica',[$folhar->id,$tomador->id])}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
+                                                    <a href="{{route('tomador.calculo.folha.analitica',$folhar->id)}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
                                                         <i class="fad fa-analytics" style="color: white;"></i>
                                                     </a>
                                                     @endif
@@ -376,7 +376,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                   <label for="ano" class="form-label">Data Final</label>
-                                  <input type="date" class="form-control " name="final" value="" id="tano2">
+                                  <input type="date" class="form-control " name="final" value="" id="tano2Final">
                                 </div>
                             </div>
         
@@ -626,6 +626,33 @@
         
         
         <script>
+        
+            function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+                var telefone = document.querySelector(idCampo);
+        
+                telefone.addEventListener('input', function(){
+                    var telefone = document.querySelector(idCampo);
+                    var result = telefone.value;
+                    if(result > " " && result.length >= QuantidadeCarcteres){
+                      telefone.classList.add('is-valid');  
+                    }else{
+                        telefone.classList.remove('is-valid');
+                    }
+                     
+                });
+            }
+            
+            var tano = validaInputQuantidade("#tano",8);
+            var tanoFinal = validaInputQuantidade("#tanoFinal",8);
+            var competencia = validaInputQuantidade("#competencia",1);
+            var tano1 = validaInputQuantidade("#tano1",8);
+            var tano1Final = validaInputQuantidade("#tano1Final",8);
+            var tano2 = validaInputQuantidade("#tano2",8);
+            var tano2Final = validaInputQuantidade("#tano2Final",8);
+            var tano = validaInputQuantidade("#tano",8);
+            var tano = validaInputQuantidade("#tano",8);
+            var tano = validaInputQuantidade("#tano",8);
+            var tano = validaInputQuantidade("#tano",8);
         
             
         

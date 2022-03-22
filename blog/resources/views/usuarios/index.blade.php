@@ -139,7 +139,7 @@
                 <div class="table-responsive-xxl">
                     <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
-                            <th class="col text-center border-start border-top text-nowrap" style="width:500px;" maxlength="10ch">Empresa</th>
+                            <th class="col text-center border-start border-top text-nowrap" style="width:380px;" maxlength="10ch">Empresa</th>
                             <th class="col text-center border-top text-nowrap" style="width:120px;">Usuário</th>
                             <th class="col text-center border-top text-nowrap" style="width:100px;">Permissão</th>
                             <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
@@ -150,8 +150,8 @@
                         @foreach($users as $key=>$valoruser)
                             <tr class="bodyTabela">   
                                 
-                                <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
+                                <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 380px;" >
+                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">
                                       <a>{{$valoruser->esnome}} </a>
                                     </button>
                                 </td>
@@ -237,6 +237,41 @@
             @include('usuarios.lista');
             <script>
             
+            function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+                var telefone = document.querySelector(idCampo);
+    
+                telefone.addEventListener('input', function(){
+                    var telefone = document.querySelector(idCampo);
+                    var result = telefone.value;
+                    if(result > " " && result.length >= QuantidadeCarcteres){
+                      telefone.classList.add('is-valid');  
+                    }else{
+                        telefone.classList.remove('is-valid');
+                    }
+                     
+                });
+            }
+             var cargo = validaInputQuantidade("#cargo",1);
+             var cargo = validaInputQuantidade("#usuario",2);
+            
+            function validaInputEmail(idCampo,QuantidadeCarcteres){
+                var telefone = document.querySelector(idCampo);
+    
+                telefone.addEventListener('input', function(){
+                    var telefone = document.querySelector(idCampo);
+                    var result = telefone.value;
+                    if(result > " " && result.length >= QuantidadeCarcteres && result.search("@") != -1 && result.indexOf(".") != -1){
+                      telefone.classList.add('is-valid');  
+                    }else{
+                        telefone.classList.remove('is-valid');
+                    }
+                     console.log(result.indexOf("."));
+                });
+            }
+
+            var email = validaInputEmail("#email", 1);
+            
+            
             var botaolimpaCampos = document.querySelector("#refre");
 
         botaolimpaCampos.addEventListener('click', function(){
@@ -244,8 +279,10 @@
             var cargo = document.querySelector("#cargo").value='';
             var usuario = document.querySelector("#usuario").value='';
             var nomeCompleto = document.querySelector("#nome__completo").value='';
+            var email = document.querySelector("#email").value= '';
         });
-            
+        
+
         $(document).ready(function(){
           $( "#usuario" ).on('keyup focus',function() {
                 var dados = 0;

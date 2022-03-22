@@ -211,6 +211,39 @@
             </div>
     <script>
     
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+            var telefone = document.querySelector(idCampo);
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var ano = validaInputQuantidade("#ano",4);
+        var deducaoDepedente = validaInputQuantidade("#ded__dependente",1);
+        var valorFinal01 = validaInputQuantidade("#valor__final01",1);
+        var indice01 = validaInputQuantidade("#indice01",1);
+        var fator__reducao01 = validaInputQuantidade("#fator__reducao01",1);
+        var valorFinal02 = validaInputQuantidade("#valor__final02",1);
+        var indice02 = validaInputQuantidade("#indice02",1);
+        var fator__reducao02 = validaInputQuantidade("#fator__reducao02",1);
+        var valorFinal03 = validaInputQuantidade("#valor__final03",1);
+        var indice03 = validaInputQuantidade("#indice03",1);
+        var fator__reducao03 = validaInputQuantidade("#fator__reducao03",1);
+        var valorFinal04 = validaInputQuantidade("#valor__final04",1);
+        var indice04 = validaInputQuantidade("#indice04",1);
+        var fator__reducao04 = validaInputQuantidade("#fator__reducao04",1);
+        var valorFinal05 = validaInputQuantidade("#valor__final05",1);
+        var indice05 = validaInputQuantidade("#indice05",1);
+        var fator__reducao05 = validaInputQuantidade("#fator__reducao05",1);
+
         var botaolimpaCampos = document.querySelector("#refre");
 
         botaolimpaCampos.addEventListener('click', function(){

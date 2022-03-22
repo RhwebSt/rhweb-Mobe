@@ -34,9 +34,10 @@ class EmpresaController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $empresa = new Empresa;
-        $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
-        return view('usuarios.empresa.index',compact('user'));
+        $search = request('search');
+        $empresas = $this->empresa->buscaListaEmpresaPaginate($search);
+        // dd($empresas);
+        return view('usuarios.empresa.index',compact('user','empresas'));
     }
 
     /**
@@ -123,7 +124,11 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $search = request('search');
+        $empresas = $this->empresa->buscaListaEmpresaPaginate($search);
+        $empresa = $this->empresa->buscaUnidadeEmpresa($id);
+        return view('usuarios.empresa.index',compact('user','empresas','empresa'));
     }
 
     /**

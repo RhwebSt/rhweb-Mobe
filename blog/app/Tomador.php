@@ -40,7 +40,7 @@ class Tomador extends Model
     {
         return Tomador::where('empresa',$tomador)->select('id')->get();
     }
-    public function buscaListaTomadorPaginate()
+    public function buscaListaTomadorPaginate($id,$condicao)
     {
         return Tomador::select(
             'id',
@@ -48,16 +48,39 @@ class Tomador extends Model
             'tscnpj',
             'tsmatricula'
         )
-        ->where(function($query){
+        ->where(function($query) use ($id,$condicao){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where('tomadors.id','>',0);
+                if ($id) {
+                    $query->orWhere('tsnome','like','%'.$id.'%')
+                    ->orWhere('tscnpj','like','%'.$id.'%')
+                    ->orWhere('tsmatricula','like','%'.$id.'%');
+                }else{
+                    $query->where('tomadors.id','>',0);
+                }
+               
             }else{
-                $query->where('tomadors.empresa', $user->empresa);
+                if ($id) {
+                    $query->orWhere([
+                        ['tomadors.tsnome','like','%'.$id.'%'],
+                        ['tomadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['tomadors.tscnpj','like','%'.$id.'%'],
+                        ['tomadors.empresa', $user->empresa]
+                        ])
+                    ->orWhere([
+                        ['tomadors.tsmatricula','like','%'.$id.'%'],
+                        ['tomadors.empresa', $user->empresa]
+                    ]);
+                }else{
+                    $query->where('tomadors.empresa', $user->empresa);
+                }
+               
             }
            
         })
-        ->orderBy('tsnome')
+        ->orderBy('tsnome',$condicao)
         ->distinct()
         ->paginate(10);
     }
@@ -176,6 +199,7 @@ class Tomador extends Model
         [
             'tsnome'=>$dados['nome__completo'],
             'tsfantasia'=>$dados['nome__fantasia'],
+            'tsstatusfantasia'=>isset($dados['radio_fantasia'])?$dados['radio_fantasia']:null,
             'tscnpj'=>$dados['cnpj'],
             'tsmatricula'=>$dados['matricula'],
             'tssimples'=>$dados['simples'],

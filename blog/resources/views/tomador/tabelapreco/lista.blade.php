@@ -9,14 +9,14 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-between">
                     <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                        <form action="" method="GET">
+                        <form action="{{route('tabelapreco.index',[$id, base64_encode($tomador)])}}" method="GET"> 
                             <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
                                 <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
                                 <datalist id="listapesquisa">
                                 </datalist>
-                                <input type="hidden" name="codicao" value="">
-                                <button type="submit" class="modal-botao btn botaoPesquisa modal-botao">
+                                <input type="hidden" name="codicao" value="{{$id?$id:''}}">
+                                <button type="submit" class="btn botaoPesquisa modal-botao">
                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                 </button>
 
@@ -35,8 +35,8 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <!-- <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
                                     <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                            <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                            <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'asc'])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'desc'])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>

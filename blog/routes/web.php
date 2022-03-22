@@ -68,6 +68,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
     Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
+    Route::get('ordem/tomador/{ordem}/{id?}/{search?}','Tomador\\TomadorController@ordem')->name('ordem.tomador');
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
     Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
     Route::get('relatorio/geral/tomador','Tomador\\relatorioTomadorController@relatorioGeral')->name('relatorio.geral.tomador');
@@ -82,9 +83,11 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('tabela/preco/atualizar','TabelaPreco\\TabelaPrecoController@AtualizarTabelaPreco');
 
     Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio');
+    Route::get('ordem/tabela/preco/{id?}/{tomador}/{condicao}','TabelaPreco\\TabelaPrecoController@ordem')->name('ordem.tabela.preco');
 
 
     Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
+    Route::get('ordem/trabalhador/{ordem}/{id?}/{search?}','Trabalhador\\TrabalhadorController@ordem')->name('ordem.trabalhador');
     Route::resource('epi','Trabalhador\\EpiController')->only(['store', 'update', 'index','create','show','edit']);
     Route::get('epi/deleta/{id}','Trabalhador\\EpiController@destroy')->name('epi.deleta');
     Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');

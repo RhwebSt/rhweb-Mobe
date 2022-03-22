@@ -98,8 +98,8 @@
                 </div>
 
                 <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator01" id="fator01">
+                    <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
+                    <input type="text" class="form-control" name="fator01" id="fator01" readonly>
                 </div>
 
 
@@ -114,8 +114,8 @@
                 </div>
 
                 <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator02" id="fator02">
+                    <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
+                    <input type="text" class="form-control" name="fator02" id="fator02" readonly>
                 </div>
 
 
@@ -130,8 +130,8 @@
                 </div>
 
                 <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator03" id="fator03">
+                    <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
+                    <input type="text" class="form-control" name="fator03" id="fator03" readonly>
                 </div>
 
 
@@ -146,8 +146,8 @@
                 </div>
 
                 <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control " name="fator04" id="fator04">
+                    <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
+                    <input type="text" class="form-control " name="fator04" id="fator04" readonly>
                 </div>
 
 
@@ -162,8 +162,8 @@
                 </div>
 
                 <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator05" id="fator05">
+                    <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
+                    <input type="text" class="form-control" name="fator05" id="fator05" readonly>
                 </div>
                 <input type="hidden" name="id01" id="id01">
                 <input type="hidden" name="id02" id="id02">
@@ -195,6 +195,32 @@
     </div>
     <script>
     
+        function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+            var telefone = document.querySelector(idCampo);
+
+            telefone.addEventListener('input', function(){
+                var telefone = document.querySelector(idCampo);
+                var result = telefone.value;
+                if(result > " " && result.length >= QuantidadeCarcteres){
+                  telefone.classList.add('is-valid');  
+                }else{
+                    telefone.classList.remove('is-valid');
+                }
+                 
+            });
+        }
+        
+        var ano = validaInputQuantidade("#ano",4);
+        var valorFinal01 = validaInputQuantidade("#valor__final01",1);
+        var indice01 = validaInputQuantidade("#indice01",1);
+        var valorFinal02 = validaInputQuantidade("#valor__final02",1);
+        var indice01 = validaInputQuantidade("#indice02",1);
+        var valorFinal03 = validaInputQuantidade("#valor__final03",1);
+        var indice03 = validaInputQuantidade("#indice03",1);
+        var valorFinal04 = validaInputQuantidade("#valor__final04",1);
+        var indice04 = validaInputQuantidade("#indice04",1);
+        var valorFinal05 = validaInputQuantidade("#valor__final05",1);
+        var indice05 = validaInputQuantidade("#indice05",1);
         var botaolimpaCampos = document.querySelector("#refre");
 
         botaolimpaCampos.addEventListener('click', function(){

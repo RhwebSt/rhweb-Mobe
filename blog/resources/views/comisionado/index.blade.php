@@ -243,6 +243,25 @@
             </div>
             <script>
             
+            function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+                var telefone = document.querySelector(idCampo);
+    
+                telefone.addEventListener('input', function(){
+                    var telefone = document.querySelector(idCampo);
+                    var result = telefone.value;
+                    if(result > " " && result.length >= QuantidadeCarcteres){
+                      telefone.classList.add('is-valid');  
+                    }else{
+                        telefone.classList.remove('is-valid');
+                    }
+                     
+                });
+            }
+            
+            var nomeTrablhador = validaInputQuantidade("#nome__trabalhador",1);
+            var indice = validaInputQuantidade("#indice",1);
+            var nome_tomador = validaInputQuantidade("#nome_tomador",1);
+            
             var botaolimpaCampos = document.querySelector("#refre");
 
             botaolimpaCampos.addEventListener('click', function(){

@@ -38,12 +38,31 @@ class TrabalhadorController extends Controller
     }
     public function index()
     {
-        $user = Auth::user();
-        $trabalhadors = $this->trabalhador->lista();
-        $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
+        $user = Auth::user(); 
+        $search = request('search');
+        $condicao = request('codicao');
+        $trabalhadors = $this->trabalhador->lista($search,'asc');
+        if ($condicao) {
+            $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($condicao);
+            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
+        }else{
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
+        }
     }
 
+    public function ordem($ordem,$id = null,$search = null)
+    {
+        $user = Auth::user();
+        $trabalhadors = $this->trabalhador->lista($search,$ordem);
+        if ($id) {
+            $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
+            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
+        }else{
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -64,7 +83,6 @@ class TrabalhadorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $user = auth()->user();
        
         
@@ -270,9 +288,9 @@ class TrabalhadorController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $trabalhadors = $this->trabalhador->lista();
+        $search = request('search');
+        $trabalhadors = $this->trabalhador->lista($search,'asc');
         $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
-        // dd($trabalhador);
         return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
     }
 

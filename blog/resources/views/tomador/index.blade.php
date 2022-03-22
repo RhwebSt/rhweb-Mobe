@@ -862,8 +862,9 @@
 
                     <input type="hidden" name="bancario" id="bancario">
                 </div>
-                @include('tomador.lista')
+                
             </form>
+            @include('tomador.lista')
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -1144,19 +1145,19 @@
                         $('#refres').addClass('d-none').prev().removeClass('d-none')
                         if (data.length >= 1) {
                             data.forEach(element => {
-                            nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                            nome += `<option value="${element.tsnome}">`
                             // nome += `<option value="${element.tsmatricula}">`
                             // nome += `<option value="${element.tscnpj}">`
                             });
-                            $('#datalistOptions').html(nome)
+                            $('#listapesquisa').html(nome)
                         } 
-                        if(data.length === 1 && dados.length >= 2){
-                            tomador(dados)
-                        }else if (dados.length === 14) {
-                            pesquisa(dados)
-                        }else{
-                            campo()
-                        }         
+                        // if(data.length === 1 && dados.length >= 2){
+                        //     tomador(dados)
+                        // }else if (dados.length === 14) {
+                        //     pesquisa(dados)
+                        // }else{
+                        //     campo()
+                        // }         
                      }
                 });
             })

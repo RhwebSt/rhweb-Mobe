@@ -148,7 +148,6 @@ class Trabalhador extends Model
             ->join('enderecos', 'trabalhadors.id', '=', 'enderecos.trabalhador')
             // ->join('dependentes', 'trabalhadors.id', '=', 'dependentes.trabalhador')
             ->select(
-                'trabalhadors.*', 
                 'documentos.*', 
                 'bancarios.*',
                 'categorias.*',
@@ -161,7 +160,8 @@ class Trabalhador extends Model
                 'enderecos.escomplemento',
                 'enderecos.esnum',
                 'enderecos.escep',
-                'enderecos.eiid'
+                'enderecos.eiid',
+                'trabalhadors.*'
                 )
             ->where(function($query) use ($id){
                 $user = auth()->user();
@@ -192,7 +192,7 @@ class Trabalhador extends Model
             })
         ->first();
         }
-    public function lista()
+    public function lista($id,$condicao)
     {
         return DB::table('trabalhadors')
             ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
@@ -209,15 +209,34 @@ class Trabalhador extends Model
                 'enderecos.*',
                 'trabalhadors.*',
                 )
-                ->where(function($query){
+                ->where(function($query) use ($id){
                     $user = auth()->user();
                     if ($user->hasPermissionTo('admin')) {
-                        $query->where('trabalhadors.id','>',0);
+                        if ($id) {
+                            $query->orWhere('tsmatricula','like','%'.$id.'%')
+                            ->orWhere('tsnome','like','%'.$id.'%')
+                            ->orWhere('tscpf','like','%'.$id.'%');
+                        }else{
+                            $query->where('trabalhadors.id','>',0);
+                        }
                     }else{
-                        $query->where('trabalhadors.empresa', $user->empresa);
+                        $query->where([
+                            ['trabalhadors.tsnome','like','%'.$id.'%'],
+                            ['trabalhadors.empresa', $user->empresa]
+                        ])
+                        ->orWhere([
+                            ['trabalhadors.tscpf','like','%'.$id.'%'],
+                            ['trabalhadors.empresa', $user->empresa],
+                        ])
+                        ->orWhere([
+                            ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                            ['trabalhadors.empresa', $user->empresa],
+                        ])
+                        ->where('trabalhadors.empresa', $user->empresa);
                     }
                    
                 })
+            ->orderBy('trabalhadors.tsnome', $condicao)
             ->paginate(20);
     }
     public function listaTrabalhadorInt($trabalhador)
@@ -266,6 +285,7 @@ class Trabalhador extends Model
         ->update([
             'tsnome'=>$dados['nome__completo'],
             'tsnomesocial'=>$dados['nome__social'],
+            'tssocial'=>isset($dados['radio_social'])?$dados['radio_social']:null,
             'tsfoto'=>$dados['foto'],
             'tscpf'=>$dados['cpf'],
             'tsmatricula'=>$dados['matricula'],

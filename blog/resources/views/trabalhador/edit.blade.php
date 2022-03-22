@@ -96,7 +96,9 @@
     <script>
       var radio = document.getElementById("radio");
       var radioResult = radio.value;
-
+      if ('{{$trabalhador->tssocial}}' === 'on') {
+        radio.checked = true;
+      }
 
       radio.addEventListener('click', function() {
 
@@ -707,5 +709,39 @@
     }
     reader.readAsDataURL(file);
   }
+  $("#pesquisa").on('keyup focus', function() {
+      let dados = '0'
+      if ($(this).val()) {
+        dados = $(this).val()
+        if (dados.indexOf('  ') !== -1) {
+          dados = monta_dados(dados);
+        }
+      }
+      $('#icon').addClass('d-none').next().removeClass('d-none')
+      $.ajax({
+        url: "{{url('trabalhador')}}/pesquisa/" + dados,
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+          $('#trabfoto').removeAttr('src')
+          $('#refres').addClass('d-none').prev().removeClass('d-none')
+          let nome = ''
+          if (data.length >= 1) {
+            data.forEach(element => {
+              nome += `<option value="${element.tsnome}">`
+              // nome += `<option value="${element.tsmatricula}">`
+              nome += `<option value="${element.tscpf}">`
+            });
+            $('#listapesquisa').html(nome)
+          }
+          // if(data.length === 1 && dados.length >= 4){
+          //   buscaItem(dados)
+          // }else{
+          //   campo()
+          // }              
+        }
+      });
+    });
+
 </script>
 @stop

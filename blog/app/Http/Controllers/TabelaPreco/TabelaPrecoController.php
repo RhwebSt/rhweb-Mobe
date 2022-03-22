@@ -11,21 +11,41 @@ use Carbon\Carbon;
 
 class TabelaPrecoController extends Controller
 {
-    private $tomador, $tabelapreco;
+    private $tomador, $tabelapreco,$dt;
     public function __construct()
     {
         $this->tomador = new Tomador;
         $this->tabelapreco = new TabelaPreco;
+        $today = Carbon::today();
+        $this->dt = Carbon::create($today);
     }
     public function index($id = null, $tomador)
     {
+        $search = request('search');
+        $condicao = request('codicao');
         $tomador = base64_decode($tomador);
+        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$this->dt->year,$search,'asc');
         $user = Auth::user();
-        $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, date('Y'));
-        return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
+        if ($condicao) {
+            $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($condicao);
+            return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
+        }else{
+            return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
+        }
     }
-
+    public function ordem($id = null, $tomador,$ordem)
+    {
+        $tomador = base64_decode($tomador);
+        $id = base64_decode($id);
+        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$this->dt->year,null,$ordem);
+        $user = Auth::user();
+        if ($id && $id != ' ') {
+            $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($id);
+            return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
+        }else{
+            return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -100,7 +120,7 @@ class TabelaPrecoController extends Controller
         $tomador = base64_decode($tomador);
         $user = Auth::user();
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, date('Y'));
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, $this->dt->year,null,'asc');
         $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
         return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
     }

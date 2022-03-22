@@ -75,24 +75,37 @@ class TabelaPreco extends Model
         ->orderBy('tsrubrica', 'asc')
         ->get();
     }
-    public function buscaTabelaTomador($tomador,$ano)
+    public function buscaTabelaTomador($tomador,$ano,$condicao,$ordem)
     {
-        return TabelaPreco::where(function($query) use ($tomador,$ano){
+        return TabelaPreco::where(function($query) use ($tomador,$ano,$condicao){
             $user = auth()->user();
             if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['tomador',$tomador],
-                    ['tsano',$ano]
-                ]);
+                if ($condicao) {
+                    $query->orWhere([
+                        ['tomador',$tomador],
+                        ['tsano',$ano],
+                        ['tsrubrica',$condicao]
+                    ])
+                    ->orWhere([
+                        ['tomador',$tomador],
+                        ['tsano',$ano],
+                        ['tsdescricao','like','%'.$condicao.'%']
+                    ]);
+                }else{
+                    $query->where([
+                        ['tomador',$tomador],
+                        ['tsano',$ano]
+                    ]);
+                }
             }else{
                  $query->where([
                     ['tomador',$tomador],
-                    ['empresa', $user->empresa] 
+                    ['tsano',$ano]
                 ]);
             }
            
         })
-        ->orderBy('tsrubrica', 'asc')
+        ->orderBy('tsrubrica', $ordem)
         ->paginate(5);
     }
     public function listaUnidadeTomador($tomador)

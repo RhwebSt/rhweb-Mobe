@@ -61,8 +61,11 @@
         @csrf
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                            <button type="submit" id="atualizar"  class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                            <a class="btn botao" href="{{route('rublica.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                        <button type="submit" id="atualizar"  class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fa-solid fa-list"></i> Lista
+                        </a>
+                        <a class="btn botao" href="{{route('rublica.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
 
@@ -165,6 +168,7 @@
 
             
     </div>
+   
     <script>
         $('#pesquisa').on('focus keyup',function() {
             let dados = 0;
