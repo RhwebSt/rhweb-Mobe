@@ -350,12 +350,13 @@
                         $('#datalistOptions').html(nome)
                       }
                       if(data.length === 1 && dados.length >= 4){
-                        let tabela = tabelaPreco(data[0].tomador);
-                        if (tabela) {
-                          tomador(data[0])
-                        }else{
-                          Alerta(data[0].tomador)
-                        }
+                        tomador(data[0])
+                        // let tabela = tabelaPreco(data[0].tomador);
+                        // if (tabela) {
+                        
+                        // }else{
+                        //   // Alerta(data[0].tomador)
+                        // }
                       }           
                   }
               });

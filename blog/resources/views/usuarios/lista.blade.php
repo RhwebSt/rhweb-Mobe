@@ -8,13 +8,13 @@
                       <div class="modal-body modalBody">
                           
                             <div class="col-md-5 mb-4 p-1 mt-2 pesquisar">
-                                <form action="" method="GET">
+                                <form action="{{route('user.create')}}" method="GET">
                                     <div class="d-flex">
                                         <label for="exampleDataList" class="form-label"></label>
                                         <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
                                         <datalist id="listapesquisa">
                                         </datalist>
-                                        <input type="hidden" name="codicao" value="">
+                                        <input type="hidden" name="codicao" value="{{isset($editar->id)?$editar->id:''}}">
                                         <button type="submit" class="modal-botao btn botaoPesquisa">
                                             <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                         </button>
@@ -51,8 +51,8 @@
                                         <i class="fad fa-sort"></i> Filtro 
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href=""><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                        <li><a class="dropdown-item text-white modal-botao" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                        <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href="{{route('ordem.pesquisa.user',['asc',isset($editar->id)?$editar->id:''])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.pesquisa.user',['desc',isset($editar->id)?$editar->id:''])}}""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                     </ul>
                                 </div>
                                 
@@ -145,7 +145,18 @@
                         <tfoot>
                                 <tr class=" border-bottom">
                                     <td colspan="11">
-                                    {{ $users->links() }}
+                                    @if ($users->lastPage() > 1)
+                                        <ul class="pagination">
+
+                                            @for ($i = 1; $i <= $users->lastPage(); $i++)
+                                                <li class="page-item {{ ($users->currentPage() == $i) ? ' active' : ''     }}">
+                                                    <a class="page-link modal-botao" href="{{ $users->url($i) }}">{{ $i }}</a>
+                                                </li>
+                                                @endfor
+
+
+                                        </ul>
+                                        @endif
                                     </td>
                                 </tr>
                             </tfoot>

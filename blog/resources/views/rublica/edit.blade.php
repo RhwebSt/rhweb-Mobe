@@ -170,6 +170,19 @@
     </div>
    
     <script>
+         $('.modal-botao').click(function() {
+                    localStorage.setItem("modal", "enabled");
+                })
+               function verficarModal(){
+                  var valueModal = localStorage.getItem('modal');
+                  if(valueModal === "enabled"){
+                      $(document).ready(function(){
+                          $("#teste").modal("show");
+                      });
+                      localStorage.setItem("modal","disabled");
+                  }
+                }
+                verficarModal()
         $('#pesquisa').on('focus keyup',function() {
             let dados = 0;
             if ($(this).val()) {

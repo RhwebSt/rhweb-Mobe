@@ -161,10 +161,12 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+        Route::get('ordem/rublica/{ordem}/{id?}','Rublica\\RublicaController@ordem')->name('ordem.rublica');
         Route::get('relatorio/rublica','Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
         Route::get('rublica/pesquisa/{id}','Rublica\\RublicaController@pesquisa');
         Route::resource('inss','Inss\\InssController')->names('inss');
         Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');
+        Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        
     });
 });

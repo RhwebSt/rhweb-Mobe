@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-between">
                     <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                        <form action="{{  route('cadastrocartaoponto.index')}}" method="GET">
+                        <form action="{{  route('rublica.index')}}" method="GET"> 
                             
                             <div class="d-flex">
                                 <label for="exampleDataList" class="form-label"></label>
@@ -34,8 +34,8 @@
                             <i class="fas fa-sort"></i> Filtro
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                            <li><a class="dropdown-item text-white modal-botao" href=""><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.rublica',['asc',isset($dados->id)?$dados->id:null])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.rublica',['desc',isset($dados->id)?$dados->id:null])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                         </ul>
                     </div>
                 </div>
@@ -51,8 +51,8 @@
                         <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
                     </thead>
                     <tbody style="background-color: #081049; color: white;">
-                    @if(count($rublicas) > 0)
-                        @foreach($rublicas as $rublica)
+                    @if(count($lista) > 0)
+                        @foreach($lista as $rublica)
                             <tr class="bodyTabela">               
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 120px;">
                                     {{$rublica->rsrublica}}
@@ -129,7 +129,15 @@
                     <tfoot>
                     <tr>
                         <td colspan="8" class="text-end">
-                            {{$rublicas->links()}}
+                                @if ($lista->lastPage() > 1)
+                                <ul class="pagination">
+                                    @for ($i = 1; $i <= $lista->lastPage(); $i++)
+                                        <li class="page-item {{ ($lista->currentPage() == $i) ? ' active' : ''     }}">
+                                            <a class="page-link modal-botao" href="{{ $lista->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                        @endfor
+                                </ul>
+                                @endif
                         </td>
                     </tr>
                     </tfoot>

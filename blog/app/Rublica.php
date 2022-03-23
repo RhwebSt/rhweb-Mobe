@@ -73,9 +73,18 @@ class Rublica extends Model
             }
         })->first();
     }
-    public function lista()
+    public function lista($dados,$condicao)
     {
-        return Rublica::paginate(5);
+        return Rublica::where(function($query) use ($dados){
+            if ($dados) {
+                $query->where('rsrublica','like','%'.$dados.'%')
+                ->orWhere('rsdescricao','like','%'.$dados.'%');
+            }else{
+                $query->where('id','>',0);
+            }
+        })
+        ->orderBy('rsrublica', $condicao)
+        ->paginate(5);
     }
     public function listaRublicas()
     {

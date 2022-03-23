@@ -130,7 +130,7 @@ class Empresa extends Model
         ->limit(100)
         ->get();
     }
-    public function buscaListaEmpresaPaginate($id)
+    public function buscaListaEmpresaPaginate($id,$condicao)
     {
         return Empresa::select('id','esnome','escnpj','esresponsavel','estelefone')->where(function($query) use ($id){
             $user = auth()->user();
@@ -138,6 +138,7 @@ class Empresa extends Model
                 if ($id) {
                     $query->where('empresas.esnome','like','%'.$id.'%')
                     ->orWhere('empresas.escnpj','like','%'.$id.'%')
+                    ->orWhere('empresas.esresponsavel','like','%'.$id.'%')
                     ->orWhere('empresas.escnae','like','%'.$id.'%')
                     ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%');
                 }else{
@@ -163,7 +164,7 @@ class Empresa extends Model
                 ]);
             }
         })
-        ->orderBy('empresas.esnome','asc')
+        ->orderBy('empresas.esnome',$condicao)
         ->distinct()
         ->limit(100)
         ->paginate(10);
@@ -205,6 +206,7 @@ class Empresa extends Model
             'esfoto'=>$dados['foto'],
             'estelefone'=>$dados['telefone'],
             'escnpj'=>$dados['escnpj'],
+            'escpf'=>$dados['cpf'],
             'esdataregitro'=>$dados['dataregistro'],
             'esresponsavel'=>$dados['responsave'],
             'esemail'=>$dados['email'],

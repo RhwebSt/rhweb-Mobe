@@ -63,6 +63,9 @@
                 <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                           <button type="submit" id="atualizar"  class="btn btn botao "><i class="fad fa-sync-alt"></i> Atualizar</button>
+                          <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list"></i> Lista
+                        </a>
                           <a class="btn btn botao " href="{{route('user.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
                       </div>
                 </div>
@@ -99,7 +102,7 @@
                 
                 <div class="col-md-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control  fw-bold" name="email" value="" id="email">
+                  <input type="text" class="form-control  fw-bold" name="email" value="{{$editar->email}}" id="email">
                 </div>
 
                 <div class="col-md-3">
@@ -110,70 +113,28 @@
                   @enderror
                 </div>
                 
-                <div class="table-responsive-xxl">
-                    <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                        <thead>
-                            <th class="col text-center border-start border-top text-nowrap" style="width:500px;" maxlength="10ch">Empresa</th>
-                            <th class="col text-center border-top text-nowrap" style="width:120px;">Usuário</th>
-                            <th class="col text-center border-top text-nowrap" style="width:100px;">Permissão</th>
-                        </thead>
-                        <tbody style="background-color: #081049; color: white;">
-                        @if(count($users) > 0)
-                        @foreach($users as $valoruser)
-                            <tr class="bodyTabela">    
-                                
-                            <td class="col text-center border-bottom border-start text-capitalize text-nowrap" style="width: 500px;" >
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                      <a>{{$valoruser->esnome}} </a>
-                                    </button>
-                                </td>
-   
-                                <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$valoruser->name}}</td>
-                                
-                                <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
-                                    <div class="dropdown">
-                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #7EB356;" Readonly>
-                                        <i class="fas fa-user-lock"></i>
-                                      </button>
-                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#">Usuário <i class="fad fa-user"></i></a></li>
-                                        <li><a class="dropdown-item" href="#">Administrador <i class="fad fa-user-lock"></i></a></li>
-                                        <li><a class="dropdown-item" href="#">Bloquear <i class="fas fa-ban" style="color:#A30E00;"></i></a></li>
-                                        <li><a class="dropdown-item" href="#">Suporte <i class="fad fa-headset"></i></a></li>
-                                      </ul>
-                                    </div>
-                                </td>
-                            </tr>
-    
-                            @endforeach
-                        @else
-                        <tr>
-                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                        </tbody>
-                        <tfoot>
-                                <tr class=" border-end border-start border-bottom">
-                                    <td colspan="11">
-                                    {{ $users->links() }}
-                                    </td>
-                                </tr>
-                            </tfoot>
-
-
-            
-                </div>
+              
               
               </form> 
-
+              @include('usuarios.lista');
             </div> 
             <script>
         $(document).ready(function(){
-          $( "#usuario" ).on('keyup focus',function() {
+          $('.modal-botao').click(function() {
+              localStorage.setItem("modal", "enabled");
+          })
+
+          function verficarModal() {
+              var valueModal = localStorage.getItem('modal');
+              if (valueModal === "enabled") {
+                  $(document).ready(function() {
+                      $("#teste").modal("show");
+                  });
+                  localStorage.setItem("modal", "disabled");
+              }
+          }
+          verficarModal()
+          $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = 0;
                 if ($(this).val()) {
                   dados = $(this).val();
@@ -189,11 +150,11 @@
                             data.forEach(element => {
                               nome += `<option value="${element.name}">`
                             });
-                            $('#listusuario').html(nome)    
+                            $('#listapesquisa').html(nome)    
                         }
-                        if(data.length === 1 && dados.length >= 2){
-                          usuario(dados)
-                        }
+                        // if(data.length === 1 && dados.length >= 2){
+                        //   usuario(dados)
+                        // }
                       }
                 });
             });

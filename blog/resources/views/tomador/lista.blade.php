@@ -15,8 +15,8 @@
                                 <datalist id="listapesquisa">
                                 </datalist>
                                 <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
-                                <button type="submit" class="btn botaoPesquisa modal-botao">
-                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                <button type="submit" class="modal-botao btn botaoPesquisa">
+                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                 </button>
 
                                 <div class="text-center d-none p-1" id="refres">

@@ -8,19 +8,36 @@ use Illuminate\Support\Facades\Auth;
 use App\Rublica;
 class RublicaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $rublica;
+    public function __construct()
+    {
+        $this->rublica = new Rublica;
+    }
     public function index()
     {
         $user = Auth::user();
-        $rublica = new Rublica;
-        $rublicas = $rublica->lista();
-        return view('rublica.index',compact('user','rublicas'));
+        $search = request('search');
+        $condicao = request('codicao');
+        $lista = $this->rublica->lista($search,'asc');
+        if ($condicao) {
+            $rublicas = $this->rublica->editarRublicas($condicao);
+            return view('rublica.edit', compact('user','rublicas','lista'));
+        }else{
+            return view('rublica.index',compact('user','lista'));
+        }
     }
 
+    public function ordem($ordem,$id = null)
+    {
+        $user = Auth::user();
+        $lista = $this->rublica->lista(null,$ordem);
+        if ($id) {
+            $rublicas = $this->rublica->editarRublicas($id);
+            return view('rublica.edit', compact('user','rublicas','lista'));
+        }else{
+            return view('rublica.index',compact('user','lista'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +58,6 @@ class RublicaController extends Controller
     {
 
         $dados = $request->all();
-        $rublica = new Rublica;
         $request->validate([
             'rubricas'=>'required|max:15',
             'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
@@ -56,7 +72,7 @@ class RublicaController extends Controller
         ]);
         try {
           
-            $rublicas = $rublica->cadastro($dados); 
+            $rublicas = $this->rublica->cadastro($dados); 
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
@@ -71,14 +87,12 @@ class RublicaController extends Controller
      */
     public function show($id)
     {
-        $rublica = new Rublica;
-        $rublicas = $rublica->buscaUnidadeRublica($id);
+        $rublicas = $this->rublica->buscaUnidadeRublica($id);
         return response()->json($rublicas);
     }
     public function pesquisa($id = null)
     {
-        $rublica = new Rublica;
-        $rublicas = $rublica->buscaListaRublica($id);
+        $rublicas = $this->rublica->buscaListaRublica($id);
         return response()->json($rublicas);
     }
 
@@ -90,10 +104,9 @@ class RublicaController extends Controller
      */
     public function edit($id)
     {
-        $rublica = new Rublica;
         $user = Auth::user();
-        $rublicas = $rublica->editarRublicas($id);
-        $lista = $rublica->lista();
+        $rublicas = $this->rublica->editarRublicas($id);
+        $lista = $this->rublica->lista(null,'asc');
         return view('rublica.edit', compact('user','rublicas','lista'));
     }
 
@@ -107,7 +120,6 @@ class RublicaController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $rublica = new Rublica;
         $request->validate([
             'rubricas'=>'required|max:15',
             'descricao'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
@@ -121,7 +133,7 @@ class RublicaController extends Controller
             'incidencia.required'=>'O campo não pode estar vazio.',
         ]);
         try {
-            $rublicas = $rublica->editar($dados,$id);
+            $rublicas = $this->rublica->editar($dados,$id);
             return redirect()->route('rublica.index')->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
@@ -136,9 +148,8 @@ class RublicaController extends Controller
      */
     public function destroy($id)
     {
-        $rublica = new Rublica;
         try {
-            $rublicas = $rublica->deletar($id);
+            $rublicas = $this->rublica->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);

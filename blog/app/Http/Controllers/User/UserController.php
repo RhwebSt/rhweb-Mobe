@@ -28,15 +28,27 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser('asc');
-        return view('usuarios.index',compact('user','users'));
+        $search = request('search');
+        $codicao = request('codicao');
+        $users = $use->listaUser('asc',$search);
+        if ($codicao) {
+            $editar = $use->edit($codicao);
+            return view('usuarios.edit',compact('user','users','editar'));
+        }else{
+            return view('usuarios.index',compact('user','users'));
+        }
     }
-    public function filtroPesquisa($condicao)
+    public function filtroPesquisa($condicao,$id = null)
     {
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser($condicao);
-        return view('usuarios.index',compact('user','users'));
+        $users = $use->listaUser($condicao,null);
+        if ($id) {
+            $editar = $use->edit($id);
+            return view('usuarios.edit',compact('user','users','editar'));
+        }else{
+            return view('usuarios.index',compact('user','users'));
+        }
     }
     /**
      * Store a newly created resource in storage.
@@ -115,7 +127,8 @@ class UserController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $use = new User;
-        $users = $use->listaUser('asc');
+        $search = request('search');
+        $users = $use->listaUser('asc',$search);
         $editar = $use->edit($id);
         return view('usuarios.edit',compact('user','users','editar'));
     }

@@ -8,13 +8,13 @@
             <div class="modal-body modalBody">
 
                 <div class="col-md-5 mb-4 p-1 mt-2 pesquisar">
-                    <form action="" method="GET">
+                    <form action="{{route('listaempresa.create')}}" method="GET">
                         <div class="d-flex">
                             <label for="exampleDataList" class="form-label"></label>
                             <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
                             <datalist id="listapesquisa">
                             </datalist>
-                            <input type="hidden" name="codicao" value="">
+                            <input type="hidden" name="codicao" value="{{isset($empresa->id)?$empresa->id:''}}">
                             <button type="submit" class="modal-botao btn botaoPesquisa">
                                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
                             </button>
@@ -51,8 +51,8 @@
                         <i class="fad fa-sort"></i> Filtro
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href=""><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white modal-botao" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href="{{route('ordem.empresa',['asc',isset($empresa->id)?$empresa->id:''])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.empresa',['desc',isset($empresa->id)?$empresa->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                     </ul>
                 </div>
 

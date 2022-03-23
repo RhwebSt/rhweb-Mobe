@@ -118,11 +118,20 @@ class User extends Authenticatable
         return User::where('id', $dados['id'])
         ->update(['password'=>Hash::make($dados['password1'])]);
     }
-    public function listaUser($condicao)
+    public function listaUser($condicao,$dados)
     {
         return DB::table('users')
         ->join('empresas', 'empresas.id', '=', 'users.empresa')
         ->select('users.id','users.name','users.empresa','empresas.esnome')
+        ->where(function($query) use ($dados){
+            if ($dados) {
+                $query->where('users.name','like','%'.$dados.'%')
+                ->orWhere('empresas.esnome','like','%'.$dados.'%')
+                ->orWhere('empresas.escnpj','like','%'.$dados.'%');
+            }else{
+                $query->where('users.id','>',0);
+            }
+        })
         ->orderBy('users.name', $condicao)
         ->paginate(10);
     }

@@ -35,11 +35,26 @@ class EmpresaController extends Controller
     {
         $user = Auth::user();
         $search = request('search');
-        $empresas = $this->empresa->buscaListaEmpresaPaginate($search);
-        // dd($empresas);
-        return view('usuarios.empresa.index',compact('user','empresas'));
+        $codicao = request('codicao');
+        $empresas = $this->empresa->buscaListaEmpresaPaginate($search,'asc');
+        if($codicao){
+            $empresa = $this->empresa->buscaUnidadeEmpresa($codicao);
+            return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
+        }else{
+            return view('usuarios.empresa.index',compact('user','empresas'));
+        }
     }
-
+    public function ordem($ordem,$id = null,$search = null)
+    {
+        $user = Auth::user();
+        $empresas = $this->empresa->buscaListaEmpresaPaginate($search,$ordem);
+        if($id){
+            $empresa = $this->empresa->buscaUnidadeEmpresa($id);
+            return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
+        }else{
+            return view('usuarios.empresa.index',compact('user','empresas'));
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -87,13 +102,13 @@ class EmpresaController extends Controller
             if ($empresas) {
                 $dados['empresa'] = $empresas['id'];
                 $enderecos = $this->endereco->cadastro($dados);
-                $valoresrublicas = $this->valoresrublica->cadastro($dados);
+                // $valoresrublicas = $this->valoresrublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
             try {
         } catch (\Throwable $th) {
             $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
-            $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
+            // $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
             $this->empresa->deletar($empresas['id']);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
         }
@@ -126,9 +141,10 @@ class EmpresaController extends Controller
     {
         $user = Auth::user();
         $search = request('search');
-        $empresas = $this->empresa->buscaListaEmpresaPaginate($search);
+        $empresas = $this->empresa->buscaListaEmpresaPaginate($search,'asc');
         $empresa = $this->empresa->buscaUnidadeEmpresa($id);
-        return view('usuarios.empresa.index',compact('user','empresas','empresa'));
+        // dd($empresa);
+        return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
     }
 
     /**
@@ -145,6 +161,7 @@ class EmpresaController extends Controller
             'esnome'=>'required|max:100',
             'escnpj'=>'required|max:100',
             'dataregistro'=>'required|max:30',
+            'cpf' => 'required|max:15|cpf|formato_cpf',
             'responsave'=>'required|max:30',
             'email'=>'required|max:100|email',
             'cnae__codigo'=>'required|max:10',
@@ -170,13 +187,12 @@ class EmpresaController extends Controller
             'cbo'=>'max:15'
         ]);
         
-        try {
+        
         $empresas = $this->empresa->editar($dados,$id);
         $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
-        $valoresrublicas = $this->valoresrublica->editar($dados,$id);
-            if ($empresas && $enderecos && $valoresrublicas) {
-                return redirect()->back()->withSuccess('Atualizado com sucesso.');
-            }
+        return redirect()->back()->withSuccess('Atualizado com sucesso.');
+        // $valoresrublicas = $this->valoresrublica->editar($dados,$id);
+        try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
