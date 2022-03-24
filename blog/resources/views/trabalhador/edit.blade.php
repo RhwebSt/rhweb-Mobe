@@ -50,9 +50,9 @@
   </script>
   @enderror
   <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
-    <div class="container mt-5 ">
-      <div class="btn  " role="group" aria-label="Basic example">
-        <button type="submit" class="btn botao">Atualizar</button>
+    <div class="">
+      <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+        <button type="submit" class="btn botao btn-primary">Atualizar</button>
         <a class="btn btn btn-outline-dark d-none" href="" role="button">Consultar</a>
         <a class="btn btn btn-outline-dark d-none" href="#" role="button">Dependentes</a>
         <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
@@ -84,7 +84,7 @@
     <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->biid}}">
     <div class="col-md-6">
       <label for="nome__completo" class="form-label">Nome Completo</label>
-      <input type="text" class="form-control" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+      <input type="text" class="form-control fw-bold" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
     </div>
     <div class="col-md-6">
       <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" /> Nome Social (Opcional) </label>
@@ -129,17 +129,17 @@
     </script>
     <div class="col-md-2">
       <label for="cpf" class="form-label">CPF</label>
-      <input type="text" class="form-control cpf-mask" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+      <input type="text" class="form-control fw-bold cpf-mask" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
     </div>
 
     <div class="col-md-2">
       <label for="matricula" class="form-label">Matrícula</label>
-      <input type="text" class="form-control" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}">
+      <input type="text" class="form-control fw-bold" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}">
     </div>
 
     <div class="col-md-2">
       <label for="pis" class="form-label">PIS</label>
-      <input type="text" class="form-control" name="pis" id="pis" value="{{$trabalhador->dspis}}">
+      <input type="text" class="form-control fw-bold" name="pis" id="pis" value="{{$trabalhador->dspis}}">
     </div>
 
 
@@ -164,7 +164,7 @@
 
     <div class="col-md-2">
       <label for="estado__civil" class="form-label">Estado Civil</label>
-      <select id="estado__civil" name="estado__civil" class="form-select" value="">
+      <select id="estado__civil" name="estado__civil" class="form-select fw-bold" value="">
 
         @if($trabalhador->nscivil ==='Solteiro')
         <option selected>Solteiro</option>
@@ -202,7 +202,7 @@
 
     <div class="col-md-2">
       <label for="raca" class="form-label">Raça</label>
-      <select id="raca" name="raca" class="form-select">
+      <select id="raca" name="raca" class="form-select fw-bold">
 
         @if($trabalhador->nsraca === 'Preto')
         <option selected>Preto</option>
@@ -252,7 +252,7 @@
 
     <div class="col-md-3">
       <label for="grau__instrucao" class="form-label">Grau de Instrução</label>
-      <select id="grau__instrucao" name="grau__instrucao" class="form-select" value="">
+      <select id="grau__instrucao" name="grau__instrucao" class="form-select fw-bold" value="">
         @if($trabalhador->tsescolaridade === 'Superior Completo')
         <option selected>Superior Completo</option>
         <option>Superior incompleto</option>
@@ -332,70 +332,52 @@
 
     <div class="col-md-3">
       <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-      <input type="date" class="form-control" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nsnascimento}}">
+      <input type="date" class="form-control fw-bold" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nsnascimento}}">
     </div>
 
 
     <div class="col-md-3">
       <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-      <input type="text" class="form-control" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nsnaturalidade}}">
+      <input type="text" class="form-control fw-bold" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nsnaturalidade}}">
     </div>
 
     <div class="col-md-3">
       <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-      <input type="text" class="form-control" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nsnacionalidade}}">
+      <input type="text" class="form-control fw-bold" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nsnacionalidade}}">
     </div>
 
     <div class="col-md-6">
       <label for="nome__mae" class="form-label">Nome da Mãe</label>
-      <input type="text" class="form-control" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
+      <input type="text" class="form-control fw-bold" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
     </div>
 
     <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Local de Residência</div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label for="cep" class="form-label">Cep</label>
-      <input type="text" class="form-control" name="cep" id="cep" value="{{$trabalhador->escep}}">
+      <input type="text" class="form-control fw-bold" name="cep" id="cep" value="{{$trabalhador->escep}}">
     </div>
 
 
 
-    <div class="col-md-6">
+    <div class="col-md-7">
       <label for="logradouro" class="form-label">Rua</label>
-      <input type="text" class="form-control" name="logradouro" id="logradouro" value="{{$trabalhador->eslogradouro}}">
+      <input type="text" class="form-control fw-bold" name="logradouro" id="logradouro" value="{{$trabalhador->eslogradouro}}">
     </div>
 
-    <div class="col-md-1">
+    <div class="col-md-2">
       <label for="numero" class="form-label">Número</label>
-      <input type="text" class="form-control" name="numero" id="numero" value="{{$trabalhador->esnum}}">
+      <input type="text" class="form-control fw-bold" name="numero" id="numero" value="{{$trabalhador->esnum}}">
 
     </div>
 
     <div class="col-md-2 d-none">
       <label for="tipo" class="form-label">Tipo</label>
-      <input type="text" class="form-control" name="tipo__endereco" id="tipo" value="">
+      <input type="text" class="form-control fw-bold" name="tipo__endereco" id="tipo" value="">
     </div>
-
-
-    <div class="col-md-5">
-      <label for="bairro" class="form-label">Bairro</label>
-      <input type="text" class="form-control" name="bairro" id="bairro" value="{{$trabalhador->esbairro}}">
-    </div>
-
-
-    <div class="col-md-5">
-      <label for="localidade" class="form-label">Municipio</label>
-      <input type="text" class="form-control" name="localidade" id="localidade" value="{{$trabalhador->esmunicipio}}">
-    </div>
-
-    <div class="col-md-1">
-      <label for="uf" class="form-label">UF</label>
-      <input type="text" class="form-control" name="uf" id="uf" value="{{$trabalhador->esuf}}">
-    </div>
-
     <div class="col-md-4">
       <label for="tipoconstrucao" class="form-label">Tipo</label>
-      <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
+      <select name="complemento__endereco" id="complemento__endereco" class="fw-bold form-select fw-bold">
         <?php
         $complemento = [
           'A-Área',
@@ -586,86 +568,117 @@
       </select>
     </div>
 
+    <div class="col-md-8">
+      <label for="bairro" class="form-label">Bairro</label>
+      <input type="text" class="form-control fw-bold" name="bairro" id="bairro" value="{{$trabalhador->esbairro}}">
+    </div>
+
+
+    <div class="col-md-7">
+      <label for="localidade" class="form-label">Municipio</label>
+      <input type="text" class="form-control fw-bold" name="localidade" id="localidade" value="{{$trabalhador->esmunicipio}}">
+    </div>
+
     <div class="col-md-2">
+      <label for="uf" class="form-label">UF</label>
+      <input type="text" class="form-control fw-bold" name="uf" id="uf" value="{{$trabalhador->esuf}}">
+    </div>
+
+   
+
+    <div class="col-md-3">
       <label for="telefone" class="form-label">Telefone</label>
-      <input type="text" class="form-control" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
+      <input type="text" class="form-control fw-bold" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
     </div>
 
     <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Contrato de Trabalho</div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
       <label for="data__admissao" class="form-label">Data de Admissão</label>
-      <input type="date" class="form-control" name="data__admissao" id="data__admissao" value="{{$trabalhador->csadmissao}}">
-    </div>
-
-    <div class="col-md-1">
-      <label for="categoria" class="form-label">Categoria</label>
-      <input type="text" class="form-control" name="categoria__contrato" id="categoria" value="{{$trabalhador->cscategoria}}">
-    </div>
-
-    <div class="col-md-1">
-      <label for="cbo" class="form-label">CBO</label>
-      <input type="text" class="form-control" name="cbo" id="cbo" value="{{$trabalhador->cbo}}">
-    </div>
-
-
-
-    <div class="col-md-2">
-      <label for="ctps" class="form-label">CTPS</label>
-      <input type="text" class="form-control" name="ctps" id="ctps" value="{{$trabalhador->dsctps}}">
-    </div>
-
-    <div class="col-md-1">
-      <label for="serie__ctps" class="form-label">Série</label>
-      <input type="text" class="form-control" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->dsserie}}">
-    </div>
-
-    <div class="col-md-1">
-      <label for="uf__ctps" class="form-label">UF</label>
-      <input type="text" class="form-control" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->dsuf}}">
+      <input type="date" class="form-control fw-bold" name="data__admissao" id="data__admissao" value="{{$trabalhador->csadmissao}}">
     </div>
 
     <div class="col-md-4">
+      <label for="categoria" class="form-label">Categoria</label>
+      <input type="text" class="form-control fw-bold" name="categoria__contrato" id="categoria" value="{{$trabalhador->cscategoria}}">
+    </div>
+
+    <div class="col-md-4">
+      <label for="cbo" class="form-label">CBO</label>
+      <input type="text" class="form-control fw-bold" name="cbo" id="cbo" value="{{$trabalhador->cbo}}">
+    </div>
+
+
+
+    <div class="col-md-4">
+      <label for="ctps" class="form-label">CTPS</label>
+      <input type="text" class="form-control fw-bold" name="ctps" id="ctps" value="{{$trabalhador->dsctps}}">
+    </div>
+
+    <div class="col-md-4">
+      <label for="serie__ctps" class="form-label">Série</label>
+      <input type="text" class="form-control fw-bold" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->dsserie}}">
+    </div>
+
+    <div class="col-md-4">
+      <label for="uf__ctps" class="form-label">UF</label>
+      <input type="text" class="form-control fw-bold" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->dsuf}}">
+    </div>
+
+    <div class="col-md-5">
       <label for="situacao__contrato" class="form-label">Situação</label>
-      <input type="text" class="form-control" name="situacao__contrato" id="situacao__contrato" value="{{$trabalhador->cssituacao}}">
+     
+      <select name="situacao__contrato" id="situacao__contrato" class="form-select fw-bold text-dark">
+     
+        <?php
+          $situacao=['Ativo','Inativo','Afastado','Em processo'];
+        ?>
+        @foreach($situacao as $situacaos)
+          @if($situacaos === $trabalhador->cssituacao)
+            <option selected>{{$situacaos}}</option>
+          @else
+          <option >{{$situacaos}}</option>
+          @endif
+        @endforeach
+      </select>
     </div>
 
     <div class="col-md-4">
       <label for="data__afastamento" class="form-label">Data de Afastamento</label>
-      <input type="date" class="form-control" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->csafastamento}}">
+      <input type="date" class="form-control fw-bold" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->csafastamento}}">
     </div>
 
 
     <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Dados Bancários do Trabalhador</div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 d-none">
       <label for="nome__conta" class="form-label">Nome do Titular</label>
-      <input type="text" class="form-control" name="nome__conta" id="nome__conta" value="{{$trabalhador->bsconta}}">
+      <input type="text" class="form-control fw-bold" name="nome__conta" id="nome__conta" value="{{$trabalhador->bsconta}}">
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label for="banco" class="form-label">Banco</label>
-      <input type="text" class="form-control" name="banco" id="banco" value="{{$trabalhador->bsbanco}}">
+      <input type="text" class="form-control fw-bold" name="banco" id="banco" value="{{$trabalhador->bsbanco}}">
     </div>
 
     <div class="col-md-2">
       <label for="agencia" class="form-label">Agência</label>
-      <input type="text" class="form-control" name="agencia" id="agencia" value="{{$trabalhador->bsagencia}}">
+      <input type="text" class="form-control fw-bold" name="agencia" id="agencia" value="{{$trabalhador->bsagencia}}">
     </div>
 
     <div class="col-md-2">
       <label for="operacao" class="form-label">Operação</label>
-      <input type="text" class="form-control" name="operacao" id="operacao" value="{{$trabalhador->bsoperacao}}">
+      <input type="text" class="form-control fw-bold" name="operacao" id="operacao" value="{{$trabalhador->bsoperacao}}">
     </div>
 
     <div class="col-md-2">
       <label for="conta" class="form-label">Conta</label>
-      <input type="text" class="form-control" name="conta" id="conta" value="{{$trabalhador->bsconta}}">
+      <input type="text" class="form-control fw-bold" name="conta" id="conta" value="{{$trabalhador->bsconta}}">
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label for="pix" class="form-label">PIX</label>
-      <input type="text" class="form-control" name="pix" id="pix" value="{{$trabalhador->bspix}}">
+      <input type="text" class="form-control fw-bold" name="pix" id="pix" value="{{$trabalhador->bspix}}">
     </div>
   </form>
   @include('trabalhador.lista')

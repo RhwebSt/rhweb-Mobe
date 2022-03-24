@@ -118,10 +118,12 @@ class FaturaController extends Controller
         if ($verifica) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
         }
+        $tomador = $this->tomador->first($dados['tomador']);
         $producaofatura = $this->valorcalculor->producaoFatura($dados,$incide);
         $indecefatura = $this->valorcalculor->producaoFaturaIn($dados,$incide);
         
         $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
+        $rublicasfaturainss = $this->valorcalculor->rublicasFaturaInss($dados);
         $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
         // dd($indecefatura,$tabelaprecos);
         if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
@@ -201,10 +203,10 @@ class FaturaController extends Controller
                     if ($valorublica->vicodigo === 1008) {
                         $producao['descricao'] = 'DSR';
                         $producao['indice'] = $valorublica->vireferencia;
-                        $producao['valor'] = $valorublica->vencimento;
+                        $producao['valor'] = ($valorublica->vireferencia / 100) * $totalproducao;
                         $producao['fatura'] = $faturas['id'];
                         $this->faturaprincipal->cadastro($producao);
-                        $subtotalA += $valorublica->vencimento;
+                        $subtotalA += $producao['valor'];
                     }
                     if ($valorublica->vicodigo === 1009) {
                         $producao['descricao'] = 'Férias';
@@ -223,18 +225,23 @@ class FaturaController extends Controller
                         $this->faturaprincipal->cadastro($producao);
                         $subtotalB += $valorublica->vencimento;
                     }
+                   
+                }
+                foreach ($rublicasfaturainss as $r => $valorublica) {
                     if ($valorublica->vicodigo === 2001) {
-                        $producao['descricao'] = 'INSS Trabalhador';
-                        $producao['indice'] = $valorublica->vireferencia;
                         $producao['valor'] = $valorublica->desconto;
+                        $valorentencao += $valorublica->desconto;
+                        $valorbasefolha += $valorublica->desconto;   
+                    }else if ($valorublica->vicodigo == 2002){
+                        $producao['descricao'] = 'INSS Trabalhador';
+                        $producao['indice'] = 0;
+                        $producao['valor'] += $valorublica->desconto;
                         $producao['fatura'] = $faturas['id'];
                         $this->faturasecundario->cadastro($producao);
-                        // $totalbruto += $valorublica->desconto;
                         $valorentencao += $valorublica->desconto;
                         $valorbasefolha += $valorublica->desconto;
                     }
                 }
-
             
                 $producao['descricao'] = 'Férias Sindicato';
                 $producao['indice'] = 1.00;
@@ -251,11 +258,11 @@ class FaturaController extends Controller
                 $totalbruto += $subtotalA * (0.66/100);
 
                 $producao['descricao'] = 'Taxa ADM/Trab.Avulso';
-                $producao['indice'] = 1.99;
-                $producao['valor'] = $subtotalA * (1.99/100);
+                $producao['indice'] = $tomador->tftaxaadm;
+                $producao['valor'] = $subtotalA * ($tomador->tftaxaadm/100);
                 $producao['fatura'] = $faturas['id'];
                 $this->faturaprincipal->cadastro($producao);
-                $totalbruto += $subtotalA * (1.99/100);
+                $totalbruto += $subtotalA * ($tomador->tftaxaadm/100);
 
                 $producao['descricao'] = 'Federação';
                 $producao['indice'] = 1.99;

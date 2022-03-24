@@ -1430,9 +1430,9 @@
                 type: 'get',
                 contentType: 'application/json',
                 success: function(data) {
-                    for (let index = 0; index < $('.input').length; index++) {
-                        $('.input').eq(index).val(' ')
-                    }
+                    // for (let index = 0; index < $('.input').length; index++) {
+                    //     $('.input').eq(index).val(' ')
+                    // }
                     if (data) {
                         $('#nome__completo').val(data.razao_social)
                         $('#nome__fantasia').val(data.nome_fantasia)

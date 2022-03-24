@@ -218,7 +218,7 @@
                       if(data.length === 1 && dados.length > 4){
                         $('#idempresa').val(data[0].id)
                       }else{
-                        // $('#mensagemtomador').text('Não foi porssível encontra o tomador!')
+                        // $('#mensagemtomador').text('Não foi possível encontra o tomador!')
                         // $( "#nome__completo" ).addClass('is-invalid')
                       }
                     }

@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-       
+       return view('usuarios.geradorAcesso');
     }
 
     /**
@@ -59,10 +59,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+    
         $request->validate([
-            'name' => 'required|unique:users|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'name' => 'required|unique:users|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'senha'=>'required|max:20',
-            'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
+            'cargo'=>'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'nome__completo'=>'required',
             'email'=>'required|email|unique:users',
             'empresa'=>'required|min:1',
@@ -90,12 +91,11 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   public function PreStore(Request $request)
+   {
+        $dados = $request->all();
+        dd($dados);
+   }
     public function show($id)
     {
         $user = new User;

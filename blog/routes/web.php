@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->only(['store','create'])->names('login');
+Route::get('usuario/cadastro','User\\UserController@index');
+Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
 Route::get('email',function()
 {
     $user = new stdClass();
@@ -169,4 +171,5 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        
     });
+    
 });

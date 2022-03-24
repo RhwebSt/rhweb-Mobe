@@ -298,7 +298,7 @@
                                                
                                                 @foreach($folhas as $folhar)
                                                     @if($folhar->id === $tomador->folhar)
-                                                    <a href="{{route('tomador.calculo.folha.analitica',$folhar->id)}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
+                                                    <a href="{{route('tomador.calculo.folha.analitica',[$folhar->id,$tomador->id])}}" class="btn" style="background-color:#BF8915; border: 1px solid #F5DBA3;">
                                                         <i class="fad fa-analytics" style="color: white;"></i>
                                                     </a>
                                                     @endif

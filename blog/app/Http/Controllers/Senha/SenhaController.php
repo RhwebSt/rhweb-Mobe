@@ -21,12 +21,14 @@ class SenhaController extends Controller
     {
         $dados = $request->all();
         $dados['password'] = rand(100000, 999999);
-        $user = $this->user->editarSenharLogin($dados);
-        if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Este email não esta cadastrador.']);
-        }
-        // Mail::send(new \App\Mail\Email($dados));
         \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
+        // $dados['password'] = rand(100000, 999999);
+        // $user = $this->user->editarSenharLogin($dados);
+        // if (!$user) {
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Este email não esta cadastrador.']);
+        // }
+        // Mail::send(new \App\Mail\Email($dados));
+        
         return redirect()->back();
     }
 }

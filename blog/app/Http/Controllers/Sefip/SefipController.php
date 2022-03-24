@@ -236,8 +236,9 @@ class SefipController extends Controller
        $cd.='000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                          *'."\r\n";
 
 
-       $cd .= "301".$empresas['cnpj']."1".$tomadores['cnpj'];
+      
         foreach ($folhas as $key => $folha_valor) {
+            $cd .= "301".$empresas['cnpj']."1".$tomadores['cnpj'];
             if ($folha_valor->dspis) {
                 $pistrabalhador = trim($folha_valor->dspis);
                 $trabalhador['pis'] =  str_replace(array(".", ",", "-", "/"), "",self::monta_string($pistrabalhador,11));
@@ -338,9 +339,10 @@ class SefipController extends Controller
             //     $trabalhador['inss_13sal'] = self::monta_inteiro($trabalhador['inss_13sal'],13,'esquerda');
             //     $cd .= $trabalhador['inss_13sal'];
             // }
+            $cd .= self::monta_string(' ',98).'*'."\r\n";
         }
         // $cd .= self::monta_string(' ',25);
-        $cd .= self::monta_string(' ',98).'*'."\r\n";
+        
         $cd .= '90999999999999999999999999999999999999999999999999999';
         $cd .= self::monta_string(' ',306)."*"; 
         

@@ -59,8 +59,8 @@
               @csrf
               
               <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Usuários <i class="fas fa-user"></i></h5>
-                <input type="hidden" id="method" name="_method" value="">
-                <input type="hidden" name="empresa" id="idempresa">
+                <!-- <input type="hidden" id="method" name="_method" value=""> -->
+                <input type="hidden" name="empresa" id="idempresa" value="{{old('empresa')}}">
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao "  >
@@ -102,12 +102,18 @@
                 <input type="hidden" name="email">
                 <div class="col-md-2">
                   <label for="cargo" class="form-label">Cargo</label>
-                  <input type="text" class="form-control  fw-bold" name="cargo" value="{{old('cargo')}}" id="cargo">
+                  <input type="text" class="form-control @error('cargo') is-invalid @enderror fw-bold" name="cargo" value="{{old('cargo')}}" id="cargo">
+                  @error('cargo')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
                 
                 <div class="col-md-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control  fw-bold" name="email" value="" id="email">
+                  <input type="text" class="form-control @error('email') is-invalid @enderror fw-bold" name="email" value="{{old('email')}}" id="email">
+                  @error('email')
+                      <span class="">{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <div class="col-md-4">
@@ -199,9 +205,9 @@
                             });
                             $('#listapesquisa').html(nome)    
                         }
-                        // if(data.length === 1 && dados.length >= 2){
-                        //   usuario(dados)
-                        // }
+                        if(data.length === 1 && dados.length >= 2){
+                          usuario(dados)
+                        }
                       }
                 });
             });
@@ -223,7 +229,7 @@
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
                   $('#permicao').removeAttr( "disabled" )
-                  $('#method').val('PUT')
+                  // $('#method').val('PUT')
                   $('#nome__completo').val(data.esnome)
                   $('#cargo').val(data.cargo)
                   $('#senha').val('')

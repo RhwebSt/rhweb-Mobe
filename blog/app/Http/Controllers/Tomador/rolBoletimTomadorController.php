@@ -8,16 +8,21 @@ use App\Tomador;
 use App\Lancamentorublica;
 use App\Bolcartaoponto;
 use App\TabelaPreco;
+use App\Empresa;
 use PDF;
 class rolBoletimTomadorController extends Controller
 {
+
     public function rolBoletim($id,$inicio,$final)
     {
+        $empresa = new Empresa;
         $tomador = new Tomador;
         $tomadors = $tomador->tomadorBoletim($id);
-        $lancamentorublica = new Lancamentorublica;
+        $lancamentorublica = new Lancamentorublica; 
         $bolcartaoponto = new Bolcartaoponto;
         $tabelapreco = new TabelaPreco;
+        $user = auth()->user();
+        $empresa = $empresa->buscaUnidadeEmpresa($user->empresa);
         try {
             $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);
             if (count($tabelaprecos) < 1) {
@@ -29,7 +34,7 @@ class rolBoletimTomadorController extends Controller
                 return redirect()->back()->withInput()->withErrors(['dadosvazia'=>'Não possui nenhum dado cadastrado.']);
             }
             
-            $pdf = PDF::loadView('rolBoletimTomador',compact('inicio','final','tomadors','lancamentorublicas','bolcartaopontos','tabelaprecos'));
+            $pdf = PDF::loadView('rolBoletimTomador',compact('empresa','inicio','final','tomadors','lancamentorublicas','bolcartaopontos','tabelaprecos'));
             return $pdf->setPaper('a4')->stream('BOLETIM TOMADOR.pdf');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);

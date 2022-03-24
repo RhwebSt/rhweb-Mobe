@@ -60,6 +60,14 @@ class User extends Authenticatable
             // 'remember_token'=>$dados['_token'],
         ])->givePermissionTo('user');
     }
+    public function precadastro($dados)
+    {
+        return User::create([
+            'name'=>$dados['name'],
+            'email'=>$dados['email'],
+            'password'=> Hash::make($dados['senha'])
+        ])->givePermissionTo('user admin');
+    }
     public function buscaUnidadeUser($id)
     {
         return User::where('name', $id)->first();

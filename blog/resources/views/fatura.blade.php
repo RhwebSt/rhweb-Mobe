@@ -559,9 +559,9 @@
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[7]->fivalor, 2, ',', '.')}}</td>
 
                 
-                <td class="small__font border-bottom border-left border-top text-bold dsr destaque">{{$faturatotais[4]->fstitulo}}</td>
+                <td class="small__font border-bottom border-left border-top text-bold dsr destaque"></td>
                 <td class="small__font border-bottom border-top indice  text-center destaque"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{number_format((float)$faturatotais[4]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque"></td>
 
             </tr>
         </table>

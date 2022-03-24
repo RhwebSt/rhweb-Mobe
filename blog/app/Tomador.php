@@ -80,7 +80,7 @@ class Tomador extends Model
             }
            
         })
-        ->orderBy('tsnome',$condicao)
+        ->orderBy('tsnome',$condicao) 
         ->distinct()
         ->paginate(10);
     }

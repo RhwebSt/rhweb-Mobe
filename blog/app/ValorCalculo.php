@@ -653,4 +653,22 @@ class ValorCalculo extends Model
         ->orderBy('vicodigo','asc')
         ->get();
     }
+    public function rublicasFaturaInss($dados)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->selectRaw(
+            'SUM(valor_calculos.vivencimento) as vencimento,
+            SUM(valor_calculos.videscinto) as desconto,
+            valor_calculos.vicodigo,
+            valor_calculos.vsdescricao'
+        )
+        ->groupBy('valor_calculos.vicodigo','valor_calculos.vsdescricao')
+        ->where('base_calculos.tomador',$dados['tomador'])
+        ->whereBetween('valor_calculos.vicodigo',[1008,2003])
+        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->orderBy('vicodigo','asc')
+        ->get();
+    }
 }
