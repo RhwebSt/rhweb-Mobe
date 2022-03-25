@@ -144,42 +144,51 @@ class FaturaController extends Controller
                 foreach ($tabelaprecos as $y => $tabelapreco) {
                     foreach ($indecefatura as $e => $indecefaturas) {
                         if ($indecefaturas->vicodigo == $tabelapreco->tsrubrica) {
+                            // $dadosrublicas['item'] = $tabelapreco->tsrubrica;
+                            // $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
+                            // $dadosrublicas['unidade'] = $indecefaturas->referencia;
+                            // $dadosrublicas['preco'] = $tabelapreco->tstomvalor;
+                            // $dadosrublicas['total'] = $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                            // $dadosrublicas['fatura'] = $faturas['id'];
+                            // $this->faturarublica->cadastro($dadosrublicas);
+                            // $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
                             $dadosrublicas['item'] = $tabelapreco->tsrubrica;
                             $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
                             $dadosrublicas['unidade'] = $indecefaturas->referencia;
-                            $dadosrublicas['preco'] = $tabelapreco->tstomvalor;
-                            $dadosrublicas['total'] = $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                            $dadosrublicas['preco'] = $indecefaturas->valor;
+                            $dadosrublicas['total'] = $indecefaturas->valor;
                             $dadosrublicas['fatura'] = $faturas['id'];
                             $this->faturarublica->cadastro($dadosrublicas);
-                            $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                            $totalproducao += $indecefaturas->valor;
                         } 
                     }
                 }
-                $dadosrublicas =[
-                    'item'=>'',
-                    'descricao'=>'',
-                    'unidade'=>0,
-                    'preco'=>0,
-                    'total'=>0,
-                    'fatura'=>''
-                ];
-                foreach ($indecefatura as $e => $indecefaturas) {
-                    foreach ($tabelaprecos as $y => $tabelapreco) {
-                        if($indecefaturas->vsdescricao == $tabelapreco->tsstatus){
-                            $dadosrublicas['item'] = $indecefaturas->vicodigo;
-                            $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
-                            $dadosrublicas['unidade'] += $indecefaturas->referencia;
-                            $dadosrublicas['total'] += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                            $dadosrublicas['fatura'] = $faturas['id'];
-                            $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                            break;
-                        }
-                    }
+                // $dadosrublicas =[
+                //     'item'=>'',
+                //     'descricao'=>'',
+                //     'unidade'=>0,
+                //     'preco'=>0,
+                //     'total'=>0,
+                //     'fatura'=>''
+                // ];
+                // foreach ($indecefatura as $e => $indecefaturas) {
+                //     foreach ($tabelaprecos as $y => $tabelapreco) {
+                //         if($indecefaturas->vsdescricao == $tabelapreco->tsstatus){
+                //             $dadosrublicas['item'] = $indecefaturas->vicodigo;
+                //             $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
+                //             $dadosrublicas['unidade'] += $indecefaturas->referencia;
+                //             $dadosrublicas['total'] += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                //             $dadosrublicas['fatura'] = $faturas['id'];
+                //             $this->faturarublica->cadastro($dadosrublicas);
+                //             $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+                //             break;
+                //         }
+                //     }
                     
-                }
-                if ($dadosrublicas['fatura']) {
-                    $this->faturarublica->cadastro($dadosrublicas);
-                }
+                // }
+                // if ($dadosrublicas['fatura']) {
+                //     $this->faturarublica->cadastro($dadosrublicas);
+                // }
                
                 foreach($indecefatura as $e => $indecefaturas){
                     if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {

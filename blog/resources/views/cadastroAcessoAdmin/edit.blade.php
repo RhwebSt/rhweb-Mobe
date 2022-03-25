@@ -69,6 +69,21 @@
                           <a class="btn btn botao " href="{{route('user.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
                       </div>
                 </div>
+
+              
+              <div class="col-md-4">
+                  <label for="nome__completo" class="form-label">Nome do tomador</label>
+                  <input class="form-control fw-bold @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" value="{{$editar->esnome}}" name="nome__completo" id="nome__completo" >
+                  @error('nome__completo')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                  @error('empresa')
+                      <span class="">{{ $message }}</span>
+                  @enderror
+                  <span class="invalid-feedback" id="mensagemtomador"></span>
+                  <datalist id="datalistOptions">    
+                  </datalist>
+                </div>
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
                   <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror" value="{{$editar->name}}"   name="name"  id="usuario">

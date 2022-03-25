@@ -120,6 +120,7 @@ class PerfilController extends Controller
     {
         $user = Auth::user();
         $empresas = $this->empresa->buscaUnidadeEmpresa($user->empresa);
+        // dd($empresas);
         return view('usuarios.empresa.alteracaoFoto',compact('user','empresas'));
     }
     public function editFoto(Request $request)

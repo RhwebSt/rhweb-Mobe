@@ -1,24 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Pessoais;
+namespace App\Http\Controllers\UsuarioSindicato;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Pessoai;
+use Illuminate\Support\Facades\Auth;
+use App\Empresa;
 use App\Endereco;
-class PessoaisController extends Controller
+use App\ValoresRublica;
+use App\Pessoai;
+use App\User;
+class UsuarioSindicatoController extends Controller
 {
-    private $user,$pessoais,$endereco;
+   
+    private $empresa,$endereco,$valoresrublica,$user,$pessoais;
     public function __construct()
     {
-        $this->user = new User;
+        $empresa = new Empresa;
+        $endereco = new Endereco;
         $this->pessoais = new Pessoai;
-        $this->endereco = new Endereco;
+        $valoresrublica = new ValoresRublica;
+        $this->user = new User;
     }
     public function index()
     {
-        //
+        $user = Auth::user();
+        $empresas = $this->empresa->first($user->empresa);
+        return view('usuarios.trabalhador.index',compact('user'));
     }
 
     /**
@@ -28,7 +36,7 @@ class PessoaisController extends Controller
      */
     public function create()
     {
-        //
+        return view('usuarios.cadastroUsuario');
     }
 
     /**
@@ -39,7 +47,20 @@ class PessoaisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dados = $request->all();
+        try {
+        $empresas = $this->empresa->cadastro($dados);
+        if ($empresas) {
+            // $dados['tomador'] = $empresas['id'];
+            $dados['empresa'] = $empresas['id'];
+            $enderecos = $this->endereco->cadastro($dados);
+            $valoresrublicas = $this->valoresrublica->cadastro($dados);
+        
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+        }
     }
 
     /**
@@ -50,7 +71,13 @@ class PessoaisController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->user->verificausuario($id);
+        if($user){
+            return redirect()->route('login.create');
+        }
+        return view('usuarios.cadastroUsuario',compact('id'));
+        // $empresas = $this->empresa->first($id);
+        // return response()->json($empresas);
     }
 
     /**
@@ -65,7 +92,6 @@ class PessoaisController extends Controller
         $pessoais = $this->pessoais->editar($id);
         if (!$pessoais) {
             $pessoais = $this->user->edit($id);
-            
         }
         return view('usuarios.pessoais.index',compact('user','pessoais'));
     }
@@ -191,7 +217,6 @@ class PessoaisController extends Controller
         ]
         );
         try {
-            //code...
         
         $this->user->AtualizarUsuario($dados,$id);
         $pessoais = $this->pessoais->editar($id);
@@ -218,6 +243,17 @@ class PessoaisController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $campo = 'empresa';
+        try {
+            $enderecos = $this->endereco->first($id,$campo); 
+            $exenderecos = $this->endereco->deletar($enderecos->eiid); 
+            $valoresrublicas = $this->valoresrublica->deletar($enderecos->empresa); 
+            if ($exenderecos &&  $valoresrublicas) {
+                $empresas = $this->empresa->deletar($enderecos->empresa);
+            }
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
+        } 
     }
 }

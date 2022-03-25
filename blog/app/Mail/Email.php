@@ -28,10 +28,14 @@ class Email extends Mailable
      */
     public function build()
     {
-        
         $this->subject('Novo teste sistema mobe');
         $this->to($this->user['email']);
-        return $this->markdown('email.index',[
+        if ($this->user['condicao'] === 'precadastro') {
+          $pagina = 'precadastro';
+        }else{
+          $pagina = 'senha';
+        }
+        return $this->markdown('email.'.$pagina,[
             'user'=>$this->user,
         ]);
     }

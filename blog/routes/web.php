@@ -28,7 +28,7 @@ Route::get('email',function()
 Route::post('verifica/senha','Senha\\SenhaController@store')->name('verifica.senha');
 Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.index');
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
- 
+Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['show'])->names('usuario');
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('boletim/tabela/edita/{quantidade}/{boletim}/{tomador}/{lancamento}/{id}/{data}','TabCadastro\\TabCadastroController@edit')->name('boletim.tabela.edit');
     Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
     Route::get('logout','Login\\LoginController@logout')->name('logout');
-    Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
+    
     Route::post('altera/editer','Login\\alteraSenhaController@store')->name('altera.store');
     Route::resource('home','Home\\HomeController')->names('home'); 
     
@@ -109,10 +109,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado'); 
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
-    Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);
+    
 
-    Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
-    Route::get('empresa/pesquisa/{id}','Empresa\\EmpresaController@pesquisa');
+    
+    
     
     Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index');
     Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
@@ -138,8 +138,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('imprimir/calculo/folha/banco','CalculoFolha\\relatorioBancoController@imprimirBanco')->name('calculo.folha.banco.imprimir');
     Route::post('imprimir/calculo/folha/rublica','CalculoFolha\\relatorioRublicaCFController@imprimir')->name('calculo.folha.rublica.imprimir');
 
-    Route::get('foto/index','Empresa\\PerfilController@indexFoto')->name('foto.index');
-    Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer');
+    
+    
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
 
     Route::resource('descontos','Descontos\\DescontosController')->names('descontos');
@@ -156,8 +156,18 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
-    Route::resource('usuario','Pessoais\\PessoaisController')->names('usuario');
-    Route::group(['middleware' => ['permission:admin']], function () {
+    Route::group(['middleware' => ['permission:admin']], function () {  
+        Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['store', 'update', 'destroy','edit','index'])->names('usuario'); 
+        Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');  
+        Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);
+        Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
+        Route::get('empresa/pesquisa/{id}','Empresa\\EmpresaController@pesquisa');
+
+        Route::get('foto/index','Empresa\\PerfilController@indexFoto')->name('foto.index');
+        Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer');
+
+        Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
+
         Route::resource('user','User\\UserController')->names('user');
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
@@ -167,7 +177,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('relatorio/rublica','Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
         Route::get('rublica/pesquisa/{id}','Rublica\\RublicaController@pesquisa');
         Route::resource('inss','Inss\\InssController')->names('inss');
-        Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');
+        
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        
     });

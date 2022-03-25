@@ -58,7 +58,7 @@ class User extends Authenticatable
             'cargo'=>$dados['cargo'],
             'empresa'=>$dados['empresa'],
             // 'remember_token'=>$dados['_token'],
-        ])->givePermissionTo('user');
+        ])->givePermissionTo('user','cadastro','editar','deleta','rotinamensal','fatura','recibo','relatorio');
     }
     public function precadastro($dados)
     {
@@ -66,7 +66,7 @@ class User extends Authenticatable
             'name'=>$dados['name'],
             'email'=>$dados['email'],
             'password'=> Hash::make($dados['senha'])
-        ])->givePermissionTo('user admin');
+        ])->givePermissionTo('user', 'admin');
     }
     public function buscaUnidadeUser($id)
     {
@@ -128,16 +128,29 @@ class User extends Authenticatable
     }
     public function listaUser($condicao,$dados)
     {
-        return DB::table('users')
+        return DB::table('users') 
         ->join('empresas', 'empresas.id', '=', 'users.empresa')
-        ->select('users.id','users.name','users.empresa','empresas.esnome')
+        ->select('users.id','users.name','users.email','users.cargo')
         ->where(function($query) use ($dados){
+            $user = auth()->user();
             if ($dados) {
-                $query->where('users.name','like','%'.$dados.'%')
-                ->orWhere('empresas.esnome','like','%'.$dados.'%')
-                ->orWhere('empresas.escnpj','like','%'.$dados.'%');
+                $query->where([
+                    ['users.name','like','%'.$dados.'%'],
+                    ['users.empresa',$user->empresa]
+                ])
+                ->orWhere([
+                    ['empresas.esnome','like','%'.$dados.'%'],
+                    ['users.empresa',$user->empresa]
+                ])
+                ->orWhere([
+                    ['empresas.escnpj','like','%'.$dados.'%'],
+                    ['users.empresa',$user->empresa]
+                ]);
             }else{
-                $query->where('users.id','>',0);
+                $query->where([
+                    ['users.id','>',0],
+                    ['users.empresa',$user->empresa]
+                ]);
             }
         })
         ->orderBy('users.name', $condicao)
@@ -172,5 +185,20 @@ class User extends Authenticatable
             'name'=>$dados['nome'],
             'email'=>$dados['email'],
         ]);
+    }
+    public function verificaemail($dados)
+    {
+        return User::where('email', $dados['email'])->count();
+    }
+    public function verificausuario($id)
+    {
+        return DB::table('users')
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->where('users.id', $id)->count();
+    }
+    public function editusuarioprecadastro($id,$empresa)
+    {
+        return User::where('id', $id)
+        ->update(['empresa'=>$empresa]);
     }
 }

@@ -60,7 +60,7 @@
               
               <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Usuários <i class="fas fa-user"></i></h5>
                 <!-- <input type="hidden" id="method" name="_method" value=""> -->
-                <input type="hidden" name="empresa" id="idempresa" value="{{old('empresa')}}">
+                <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa}}">
                 <div class="row">
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao "  >
@@ -72,23 +72,6 @@
                         <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
-
-              
-              <div class="col-md-4">
-                  <label for="nome__completo" class="form-label">Nome do tomador
-                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
-                  </label>
-                  <input class="form-control fw-bold @error('nome__completo') is-invalid @enderror  @error('empresa') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" >
-                  @error('nome__completo')
-                      <span class="">{{ $message }}</span>
-                  @enderror
-                  @error('empresa')
-                      <span class="">{{ $message }}</span>
-                  @enderror
-                  <span class="invalid-feedback" id="mensagemtomador"></span>
-                  <datalist id="datalistOptions">    
-                  </datalist>
-                </div>
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
                   <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror fw-bold" value="{{old('name')}}"   name="name" value="" id="usuario">

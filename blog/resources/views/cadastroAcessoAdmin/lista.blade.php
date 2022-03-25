@@ -64,9 +64,8 @@
                             <div class="table-responsive-xxl">
                     <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
                         <thead>
+                            <th class="col text-center text-nowrap" style="width:500px;" maxlength="10ch">Empresa</th>
                             <th class="col text-center text-nowrap" style="width:120px;">Usuário</th>
-                            <th class="col text-center text-nowrap" style="width:120px;">Email</th>
-                            <th class="col text-center text-nowrap" style="width:120px;">Cargo</th>
                             <th class="col text-center text-nowrap" style="width:100px;">Permissão</th>
                             <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
                             <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
@@ -76,11 +75,13 @@
                         @foreach($users as $key=>$valoruser)
                             <tr class="bodyTabela">   
                                 
-                              
+                                <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 500px;" >
+                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$valoruser->esnome}}" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
+                                      <a>{{$valoruser->esnome}} </a>
+                                    </button>
+                                </td>
    
                                 <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$valoruser->name}}</td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$valoruser->email}}</td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:120px;">{{$valoruser->cargo}}</td>
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
                                     <div class="dropdown">

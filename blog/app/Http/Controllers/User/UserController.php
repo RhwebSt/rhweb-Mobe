@@ -5,15 +5,16 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Empresa;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   private $user;
+   public function __construct()
+   {
+       $this->user = new User;
+   }
     public function index()
     {
        return view('usuarios.geradorAcesso');
@@ -30,7 +31,7 @@ class UserController extends Controller
         $use = new User;
         $search = request('search');
         $codicao = request('codicao');
-        $users = $use->listaUser('asc',$search);
+        $users = $use->listaUser('asc',$search); 
         if ($codicao) {
             $editar = $use->edit($codicao);
             return view('usuarios.edit',compact('user','users','editar'));
@@ -59,16 +60,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-    
         $request->validate([
             'name' => 'required|unique:users|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'senha'=>'required|max:20',
             'cargo'=>'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__completo'=>'required',
             'email'=>'required|email|unique:users',
             'empresa'=>'required|min:1',
         ],[
-            'nome__completo.required'=>'Campo não pode estar vazio!',
             'name.required'=>'Campo não pode estar vazio!',
             'name.regex'=>'Campo não pode conter caracteres especiais!',
             'name.unique'=>'Este usuario já está cadastrado.',
@@ -93,8 +91,35 @@ class UserController extends Controller
 
    public function PreStore(Request $request)
    {
-        $dados = $request->all();
-        dd($dados);
+        $dados = $request->all(); 
+        $request->validate([
+            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'max:20',
+            'email'=>'required|email',
+        ],[
+            
+            'name.required'=>'O campo não pode estar vazio!',
+            'name.regex'=>'O campo não pode ter caracteres especiais!',
+            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
+            // 'email.unique'=>'Este email já esta cadastrado!',
+            'email.required'=>'O campo não pode estar vazio!',
+            'email.email'=>'O campo não é um email valido!',
+            
+        ]);
+        $user = $this->user->verificaemail($dados);
+        if ($user) {
+            return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
+        }
+        try {
+            $use = $this->user->precadastro($dados);
+            $dados['id'] = $use['id']; 
+            \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
+            // Mail::send(new \App\Mail\Email($dados));
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
+        }
    }
     public function show($id)
     {

@@ -33,11 +33,11 @@ class Empresa extends Model
     {
        return DB::table('empresas')
             ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
-            ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
+            // ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
             ->select(
                 'empresas.*', 
                 'enderecos.*',
-                'valores_rublicas.*',
+                // 'valores_rublicas.*',
             )
             ->where(function($query) use ($id){
                 $user = auth()->user();
