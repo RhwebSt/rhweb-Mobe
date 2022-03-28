@@ -194,7 +194,8 @@ class User extends Authenticatable
     {
         return DB::table('users')
         ->join('empresas', 'empresas.id', '=', 'users.empresa')
-        ->where('users.id', $id)->count();
+        ->where('users.id', $id)
+        ->orWhere('users.name', $id)->count();
     }
     public function editusuarioprecadastro($id,$empresa)
     {

@@ -8,16 +8,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Empresa;
+use App\Pessoai;
+use App\Endereco;
 class UserController extends Controller
 {
-   private $user;
+   private $user,$pessoais,$endereco;
    public function __construct()
    {
-       $this->user = new User;
+       $this->user = new User; 
+       $this->pessoais = new Pessoai;
+       $this->endereco = new Endereco;
    }
     public function index()
     {
-       return view('usuarios.geradorAcesso');
+       
+        // $user = Auth::user();
+        // $search = request('search');
+        // $codicao = request('codicao');
+        // $users = $this->use->listaUser('asc',$search); 
+        // if ($codicao) {
+        //     $editar = $this->use->edit($codicao);
+        //     return view('usuarios.edit',compact('user','users','editar'));
+        // }else{
+        //     return view('usuarios.index',compact('user','users'));
+        // }
     }
 
     /**
@@ -27,17 +41,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $use = new User;
-        $search = request('search');
-        $codicao = request('codicao');
-        $users = $use->listaUser('asc',$search); 
-        if ($codicao) {
-            $editar = $use->edit($codicao);
-            return view('usuarios.edit',compact('user','users','editar'));
-        }else{
-            return view('usuarios.index',compact('user','users'));
-        }
+        return view('usuarios.index');
     }
     public function filtroPesquisa($condicao,$id = null)
     {
@@ -59,33 +63,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
+        $dados = $request->all(); 
         $request->validate([
-            'name' => 'required|unique:users|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'senha'=>'required|max:20',
-            'cargo'=>'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'email'=>'required|email|unique:users',
-            'empresa'=>'required|min:1',
+            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'max:20',
+            'email'=>'required|email',
         ],[
-            'name.required'=>'Campo não pode estar vazio!',
-            'name.regex'=>'Campo não pode conter caracteres especiais!',
-            'name.unique'=>'Este usuario já está cadastrado.',
-            'name.unique'=>'Este email já está cadastrado.',
-            'name.max'=>'Campo não pode conter mais de 20 caracteres!',
+            
+            'name.required'=>'O campo não pode estar vazio!',
+            'name.regex'=>'O campo não pode ter caracteres especiais!',
+            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
-            'senha.required'=>'Campo não pode estar vazio!',
-            'empresa.required'=>'Tomador não está cadastrado ou não foi encontrado!',
-            'empresa.min'=>'Tomador não está cadastrado ou não foi encontrado!',
-            'cargo.max'=>'Campo não pode conter mais de 100 caracteres!',
-            'cargo.regex'=>'Campo não pode conter nenhum caracteres especiais!',
+            // 'email.unique'=>'Este email já esta cadastrado!',
+            'email.required'=>'O campo não pode estar vazio!',
+            'email.email'=>'O campo não é um email valido!',
             
         ]);
-        $user = new User;
+        // $user = $this->user->verificaemail($dados);
+        // if ($user) {
+        //     return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
+        // }
         try {
-            $users = $user->cadastro($dados);
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+            $use = $this->user->precadastro($dados);
+            $dados['id'] = $use['id']; 
+            $dados['user'] = $use['id'];
+            $pessoais = $this->pessoais->cadastra($dados);
+            $dados['pessoal'] = $pessoais['id'];
+            $this->endereco->cadastro($dados);
+            \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
+            // Mail::send(new \App\Mail\Email($dados));
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
     }
 
@@ -149,13 +158,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $id = base64_decode($id);
-        $user = Auth::user();
-        $use = new User;
-        $search = request('search');
-        $users = $use->listaUser('asc',$search);
-        $editar = $use->edit($id);
-        return view('usuarios.edit',compact('user','users','editar'));
+        return view('usuarios.edit',compact('id'));
     }
     
 

@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Pessoai;
 class UsuarioController extends Controller
 {
     private $user;
     public function __construct()
     {
         $this->user = new User;
+        $this->pessoais = new Pessoai;
     }
     public function index()
     {
@@ -26,7 +28,22 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $search = request('search');
+        $codicao = request('codicao');
+        $users = $this->user->listaUser('asc',$search); 
+       
+        foreach ($users as $key => $user) {
+            if ($user->hasPermissionTo('cadastro')) {
+                dd($user->name);
+            }
+        }
+        if ($codicao) {
+            $editar = $this->user->edit($codicao);
+            return view('usuarios.edit',compact('user','users','editar'));
+        }else{
+            return view('usuarios.trabalhador.index',compact('user','users'));
+        }
     }
 
     /**
@@ -39,7 +56,6 @@ class UsuarioController extends Controller
     {
         $dados = $request->all();
         $user = new User;
-       
         try {
             $users = $user->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
@@ -69,9 +85,15 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
+        // $user = Auth::user();
+        // $dados = $this->user->edit($id);
+        // return view('usuarios.dadosPessoais.index',compact('user'));
+        $id = base64_decode($id);
         $user = Auth::user();
-        $dados = $this->user->edit($id);
-        return view('usuarios.dadosPessoais.index',compact('user'));
+        $search = request('search');
+        $users = $this->user->listaUser('asc',$search);
+        $editar = $this->user->edit($id);
+        return view('usuarios.trabalhador.edit',compact('user','users','editar'));
     }
 
     /**
@@ -85,7 +107,6 @@ class UsuarioController extends Controller
     {
         $dados = $request->all();
         $user = new User;
-       
         try {
             $users = $user->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
@@ -102,14 +123,12 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $user = new User;
-        $users = $user->deletar($id); 
-        if ($users) {
-            $condicao = 'deletatrue';
-        }else{
-            $condicao = 'deletafalse';
+        try {
+            $users = $this->user->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
-        return redirect()->route('usuario.index')->withInput()->withErrors([$condicao]);
     }
   
 }

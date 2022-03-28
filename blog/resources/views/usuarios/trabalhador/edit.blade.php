@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Cadastro de Acesso')
+@section('titulo','Rhweb - Editar Cadastro de Acesso')
 @section('conteine')
 
 <div class="container">
@@ -25,7 +25,7 @@
                         
                         Toast.fire({
                           icon: 'success',
-                          title: '{{session("success")}}'
+                          title: "{{session('success')}}"
                         })
                     </script>
                 @endif
@@ -54,27 +54,24 @@
                         })
                     </script>
                 @enderror    
-
-              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('usuario.store')}}">
+              <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('usuario.update',$editar->id)}}">
               @csrf
-              
-              <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Usuários <i class="fas fa-user"></i></h5>
-                <!-- <input type="hidden" id="method" name="_method" value=""> -->
+              @method('PATCH')
+              <h5 class="card-title text-center mt-5 fs-3 ">Cadastro de Usuários</h5>
+                
                 <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa}}">
                 <div class="row">
-                  <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" id="incluir" class="btn botao "  >
-                            <i class="fad fa-save"></i> Incluir
-                        </button>
-                        <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+                          <button type="submit" id="atualizar"  class="btn btn botao "><i class="fad fa-sync-alt"></i> Atualizar</button>
+                          <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
                             <i class="fad fa-list"></i> Lista
                         </a>
-                        <a class="btn btn botao " href="{{route('home.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
-                  </div>
-              </div>
+                          <a class="btn btn botao " href="{{route('user.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
+                      </div>
+                </div>
                 <div class="col-md-3">
                   <label for="usuario" class="form-label">Usuario</label>
-                  <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror fw-bold" value="{{old('name')}}"   name="name" value="" id="usuario">
+                  <input type="text" list="listusuario" class="form-control @error('name') is-invalid @enderror" value="{{$editar->name}}"   name="name"  id="usuario">
                   @error('name')
                       <span class="">{{ $message }}</span>
                   @enderror
@@ -85,32 +82,30 @@
                 <input type="hidden" name="email">
                 <div class="col-md-2">
                   <label for="cargo" class="form-label">Cargo</label>
-                  <input type="text" class="form-control @error('cargo') is-invalid @enderror fw-bold" name="cargo" value="{{old('cargo')}}" id="cargo">
-                  @error('cargo')
-                      <span class="">{{ $message }}</span>
-                  @enderror
+                  <input type="text" class="form-control " name="cargo" value="{{$editar->cargo}}" id="cargo">
                 </div>
                 
                 <div class="col-md-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control @error('email') is-invalid @enderror fw-bold" name="email" value="{{old('email')}}" id="email">
-                  @error('email')
-                      <span class="">{{ $message }}</span>
-                  @enderror
+                  <input type="text" class="form-control  fw-bold" name="email" value="{{$editar->email}}" id="email">
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label for="senha" class="form-label">Senha</label>
-                  <input type="password" class="form-control @error('senha') is-invalid @enderror fw-bold" value="{{old('senha')}}" name="senha" value="" id="senha">
+                  <input type="password" class="form-control @error('senha') is-invalid @enderror"  name="senha" value="" id="senha">
                   @error('senha')
                       <span class="">{{ $message }}</span>
                   @enderror
                 </div>
-                </form>
+                
+              
+              
+              </form> 
+              @include('usuarios.lista');
             </div> 
-            @include('usuarios.lista');
             <script>
-               $('.modal-botao').click(function() {
+        $(document).ready(function(){
+          $('.modal-botao').click(function() {
               localStorage.setItem("modal", "enabled");
           })
 
@@ -124,52 +119,6 @@
               }
           }
           verficarModal()
-            function validaInputQuantidade(idCampo,QuantidadeCarcteres){
-                var telefone = document.querySelector(idCampo);
-    
-                telefone.addEventListener('input', function(){
-                    var telefone = document.querySelector(idCampo);
-                    var result = telefone.value;
-                    if(result > " " && result.length >= QuantidadeCarcteres){
-                      telefone.classList.add('is-valid');  
-                    }else{
-                        telefone.classList.remove('is-valid');
-                    }
-                     
-                });
-            }
-             var cargo = validaInputQuantidade("#cargo",1);
-             var cargo = validaInputQuantidade("#usuario",2);
-            
-            function validaInputEmail(idCampo,QuantidadeCarcteres){
-                var telefone = document.querySelector(idCampo);
-    
-                telefone.addEventListener('input', function(){
-                    var telefone = document.querySelector(idCampo);
-                    var result = telefone.value;
-                    if(result > " " && result.length >= QuantidadeCarcteres && result.search("@") != -1 && result.indexOf(".") != -1){
-                      telefone.classList.add('is-valid');  
-                    }else{
-                        telefone.classList.remove('is-valid');
-                    }
-                });
-            }
-
-            var email = validaInputEmail("#email", 1);
-            
-            
-            var botaolimpaCampos = document.querySelector("#refre");
-
-        botaolimpaCampos.addEventListener('click', function(){
-            var senh = document.querySelector("#senha").value='';
-            var cargo = document.querySelector("#cargo").value='';
-            var usuario = document.querySelector("#usuario").value='';
-            var nomeCompleto = document.querySelector("#nome__completo").value='';
-            var email = document.querySelector("#email").value= '';
-        });
-        
-
-        $(document).ready(function(){
           $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = 0;
                 if ($(this).val()) {
@@ -188,9 +137,9 @@
                             });
                             $('#listapesquisa').html(nome)    
                         }
-                        if(data.length === 1 && dados.length >= 2){
-                          usuario(dados)
-                        }
+                        // if(data.length === 1 && dados.length >= 2){
+                        //   usuario(dados)
+                        // }
                       }
                 });
             });
@@ -207,19 +156,19 @@
               if (data.id) {
                   $('#form').attr('action', "{{ url('user')}}/"+data.id);
                   $('#formdelete').attr('action',"{{ url('user')}}/"+data.id)
-                  // $('#incluir').attr('disabled','disabled')
+                  $('#incluir').attr('disabled','disabled')
                   $('#atualizar').removeAttr( "disabled" )
                   $('#deletar').removeAttr( "disabled" )
                   $('#excluir').removeAttr( "disabled" )
                   $('#permicao').removeAttr( "disabled" )
-                  // $('#method').val('PUT')
+                  $('#method').val('PUT')
                   $('#nome__completo').val(data.esnome)
                   $('#cargo').val(data.cargo)
                   $('#senha').val('')
                   $('#idempresa').val(data.empresa)
               }else{
                   $('#form').attr('action', "{{ route('user.store') }}");
-                  // $('#incluir').removeAttr( "disabled" )
+                  $('#incluir').removeAttr( "disabled" )
                   $('#depedente').removeAttr( "disabled" )
                   $('#atualizar').attr('disabled','disabled')
                   $('#deletar').attr('disabled','disabled')

@@ -33,6 +33,7 @@ class LoginController extends Controller
      */
     public function create()
     {
+       
         return view('login.index'); 
     }
 
@@ -44,6 +45,11 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
+        $dados = $request->all();
+        $user = $this->user->verificausuario($dados['user']);
+        if (!$user) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Você precissa informa e sua empresa.']);
+        }
         $request->validate([
             'user' => 'required',
             'password'=>'required' 
@@ -53,7 +59,7 @@ class LoginController extends Controller
             'password.min'=>'A senha não pode conter menos de 6 caracteres!',
             
         ]);
-        $dados = $request->all();
+       
         // $user = $this->user->buscaListaUserLogin($dados);
         // if (!$user->uscontado) {
         //     $user->uscontado += 1;
@@ -71,7 +77,7 @@ class LoginController extends Controller
             // $this->user->editeLoginContador($dados,null);
             // $user->givePermissionTo('user');
             return redirect()->route('home.index');
-        }
+        } 
         return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuário. Tente novamente.']);
     }
  

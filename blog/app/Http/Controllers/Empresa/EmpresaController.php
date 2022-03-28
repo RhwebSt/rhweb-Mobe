@@ -64,7 +64,6 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $request->validate([
             'esnome'=>'required|max:100|unique:empresas',
             'escnpj'=>'required|max:100|unique:empresas|cnpj',
@@ -97,6 +96,7 @@ class EmpresaController extends Controller
             'esnome.unique'=>'Esta empresa já está cadastrada!',
             'escnpj.unique'=>'Este CNPJ já está cadastrado!'
         ]);
+        try {
             $empresas = $this->empresa->cadastro($dados);
             if ($empresas) {
                 $dados['empresa'] = $empresas['id'];
@@ -105,7 +105,7 @@ class EmpresaController extends Controller
                 // $valoresrublicas = $this->valoresrublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
-            try {
+            
         } catch (\Throwable $th) {
             $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
             // $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 

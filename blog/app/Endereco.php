@@ -12,17 +12,17 @@ class Endereco extends Model
     public function cadastro($dados)
     {
         return Endereco::create([
-            'eslogradouro'=>$dados['logradouro'],
-            'esbairro'=>$dados['bairro'],
-            'escep'=>$dados['cep'],
-            'esmunicipio'=>$dados['localidade'],
-            'esuf'=>$dados['uf'],
-            'escomplemento'=>$dados['complemento__endereco'],
-            'esnum'=>$dados['numero'],
-            'tomador'=>$dados['tomador'],
-            'trabalhador'=>$dados['trabalhador'],
-            'empresa'=>$dados['empresa'],
-            'pessoais'=>$dados['pessoal']
+            'eslogradouro'=>isset($dados['logradouro'])?$dados['logradouro']:null,
+            'esbairro'=>isset($dados['bairro'])?$dados['bairro']:null,
+            'escep'=>isset($dados['cep'])?$dados['cep']:null,
+            'esmunicipio'=>isset($dados['localidade'])?$dados['localidade']:null,
+            'esuf'=>isset($dados['uf'])?$dados['uf']:null,
+            'escomplemento'=>isset($dados['complemento__endereco'])?$dados['complemento__endereco']:null,
+            'esnum'=>isset($dados['numero'])?$dados['numero']:null,
+            'tomador'=>isset($dados['tomador'])?$dados['tomador']:null,
+            'trabalhador'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
+            'empresa'=>isset($dados['empresa'])?$dados['empresa']:null,
+            'pessoais'=>isset($dados['pessoal'])?$dados['pessoal']:null
         ]);
     }
     // public function editar($dados,$id)

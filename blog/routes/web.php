@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('/','Login\\LoginController')->only(['index'])->names('/');
-Route::resource('login','Login\\LoginController')->only(['store','create'])->names('login');
+Route::resource('/','Home\\HomeController')->only(['index'])->names('/');
+Route::resource('login','Login\\LoginController')->names('login');
 Route::get('usuario/cadastro','User\\UserController@index');
 Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
 Route::get('email',function()
@@ -28,7 +28,7 @@ Route::get('email',function()
 Route::post('verifica/senha','Senha\\SenhaController@store')->name('verifica.senha');
 Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.index');
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
-Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['show'])->names('usuario');
+Route::resource('user','User\\UserController')->names('user');
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
@@ -157,7 +157,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::group(['middleware' => ['permission:admin']], function () {  
-        Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['store', 'update', 'destroy','edit','index'])->names('usuario'); 
+        Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
+        // Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['store', 'update', 'destroy','edit','index'])->names('usuario'); 
         Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');  
         Route::resource('listaempresa','Empresa\\EmpresaController')->only(['show','create']);
         Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
@@ -168,7 +169,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
         Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
 
-        Route::resource('user','User\\UserController')->names('user');
+        Route::resource('usuario','Usuario\\UsuarioController')->names('usuario');
+        Route::resource('perfil','Perfil\\PerfilController')->names('perfil');
+
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::resource('irrf','Irrf\\IrrfController')->names('irrf');

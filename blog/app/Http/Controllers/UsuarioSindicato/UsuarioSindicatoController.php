@@ -93,7 +93,7 @@ class UsuarioSindicatoController extends Controller
         if (!$pessoais) {
             $pessoais = $this->user->edit($id);
         }
-        return view('usuarios.pessoais.index',compact('user','pessoais'));
+       return view('usuarios.pessoais.index',compact('user','pessois'));
     }
 
     /**

@@ -12,9 +12,9 @@ class Pessoai extends Model
     public function cadastra($dados)
     {
         return Pessoai::create([
-            'pscpf'=>$dados['cpf'],
-            'psnascimento'=>$dados['data__nascimento'],
-            'pstelefone'=>$dados['telefone'],
+            'pscpf'=>isset($dados['cpf'])?$dados['cpf']:null,
+            'psnascimento'=>isset($dados['data__nascimento'])?$dados['data__nascimento']:null,
+            'pstelefone'=>isset($dados['telefone'])?$dados['telefone']:null,
             'user'=>$dados['user']
         ]);
     }

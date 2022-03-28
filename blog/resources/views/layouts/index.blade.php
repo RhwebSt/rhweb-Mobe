@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <!-- <title>Cadastro Trabalhador</title> -->
         <title>@yield('titulo')</title>
@@ -100,7 +101,7 @@
                           <li><a class="dropdown-item border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
-                          <li><a class="dropdown-item border-secundary" href="{{route('user.create')}}">Cadastro de Acesso</a></li>
+                          <li><a class="dropdown-item border-secundary" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
                           <li><a class="dropdown-item border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
                       @endcan
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
@@ -176,7 +177,7 @@
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
                         <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('usuario.edit',$user->id)}}">Dados Pessoais</a></li>
+                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('perfil.edit',$user->id)}}">Dados Pessoais</a></li>
                       @endcan
                         <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
                       </ul>

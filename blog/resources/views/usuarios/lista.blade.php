@@ -88,10 +88,14 @@
                                         <i class="fad fa-user-lock"></i>
                                       </button>
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item botao-modal" href="#">Usuário <i class="fad fa-user"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Administrador <i class="fad fa-user-lock"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Bloquear <i class="fas fa-ban" style="color:#A30E00;"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Suporte <i class="fad fa-headset"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Cadastro <i class="fas fa-check text-success"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Rotina Mensal <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Fatura <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Recibo Avulso <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Cadastro de Acesso <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Excluir <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Editar <i class="fad fa-check"></i></a></li>
+                                        <li><a class="dropdown-item botao-modal" href="#">Relatórios <i class="fad fa-check"></i></a></li>
                                       </ul>
                                     </div>
                                 </td>
@@ -99,7 +103,7 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn">
-                                    <a href="{{route('user.edit', base64_encode($valoruser->id))}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
+                                    <a href="{{route('usuario.edit', base64_encode($valoruser->id))}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
@@ -109,7 +113,7 @@
                                     <div class="modal fade" id="staticBackdrop{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                       <div class="modal-dialog">
                                       <div class="modal-content">
-                                          <form action="{{route('user.destroy',$valoruser->id)}}"  method="post">
+                                          <form action="{{route('usuario.destroy',$valoruser->id)}}"  method="post">
                                               @csrf
                                               @method('delete')
                                               <div class="modal-header modal__delete">
@@ -198,8 +202,49 @@
                     </div>
                 </div>
                 <script>
-                    
                 
+                function togglePermissao(idIcone, idBotao){
+              
+                    var verificaClasse = document.querySelector(idIcone);
+                    const botaoTeste = document.querySelector(idBotao);
+                    
+                    botaoTeste.addEventListener('click', function(){
+                        const classe = verificaClasse.classList;
+                        var result = classe.toggle("fa-times");
+                        
+                        if(result == true){
+                            verificaClasse.classList.remove('text-success');
+                            verificaClasse.classList.add('text-danger');
+                        }else{
+                            verificaClasse.classList.remove('text-danger');
+                            verificaClasse.classList.add('text-success');
+                        }
+                        console.log(classe.value);
+                    });
+                
+                }
+                
+                var permissaoCadastro = togglePermissao("#iconeCadastro","#botaoCadastro");
+                
+                
+                
+                            
+                //             var valueClass = campos.classList.value
+
+                //             if(valueClass == "fad fa-check"){
+                //                 console.log("clicou");
+                //                 campos.classList.remove("fad", "fa-check");
+                //                 campos.classList.add("fad", "fa-times");
+                                
+                //             }
+                            
+                //             if(valueClass == "fad fa-times");{
+                //                 campos.classList.add("fad", "fa-check");
+                //                 campos.classList.remove("fad", "fa-times");
+                //             }
+
+                    
+
                 
             //         function filtro(){
             //     var campoFiltro = document.querySelector("#campoFiltro");

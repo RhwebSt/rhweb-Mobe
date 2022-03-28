@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\Perfil;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-class HomeController extends Controller
+use App\User;
+use App\Pessoai;
+use App\Endereco;
+class PerfilController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $user,$pessoais,$endereco;
+    public function __construct()
+    {
+        $this->user = new User;
+        $this->pessoais = new Pessoai;
+        $this->endereco = new Endereco;
+    }
     public function index()
     {
-        if (auth()->check()){
-            $user = Auth::user();
-            return view('login.home',compact('user')); 
-        }
-        return view('index'); 
+        //
     }
 
     /**
@@ -61,7 +61,13 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = auth()->user();
+        try {
+            $pessoais = $this->pessoais->editar($id);
+            return view('usuarios.pessoais.index',compact('user','pessoais'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Erro.']);
+        }
     }
 
     /**
