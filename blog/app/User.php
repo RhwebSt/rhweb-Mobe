@@ -153,6 +153,7 @@ class User extends Authenticatable
                 ]);
             }
         })
+        
         ->orderBy('users.name', $condicao)
         ->paginate(10);
     }
@@ -201,5 +202,44 @@ class User extends Authenticatable
     {
         return User::where('id', $id)
         ->update(['empresa'=>$empresa]);
+    }
+    public function permissao($id)
+    {
+        return DB::table('model_has_permissions')
+        // ->join('model_has_permissions', 'users.id', '=', 'model_has_permissions.model_id') 
+        ->join('permissions', 'permissions.id', '=', 'model_has_permissions.permission_id')
+        ->select('permissions.name','model_has_permissions.permission_id','model_has_permissions.model_id')
+        ->whereIn('model_has_permissions.model_id',$id)
+        ->where([
+            ['permissions.name','!=','user'],
+            ['permissions.name','!=','admin'],
+        ])
+        ->orderBy('model_has_permissions.model_id', 'asc')
+        ->get();
+    }
+    public function permission()
+    {
+        return DB::table('permissions') 
+        ->select('permissions.name','permissions.id')
+        ->distinct()
+        ->get();
+    }
+    public function revokePermissionTo($id,$permisao)
+    {
+        return DB::table('model_has_permissions') 
+        ->where([
+            ['model_has_permissions.model_id',$id],
+            ['model_has_permissions.permission_id',$permisao],
+        ])
+        ->delete();
+    }
+    public function givePermissionTos($id,$permisao)
+    {
+        return DB::table('model_has_permissions') 
+        ->insert([
+            'permission_id' => $permisao,
+            'model_type'=>'App\User',
+            'model_id' => $id
+        ]);
     }
 }

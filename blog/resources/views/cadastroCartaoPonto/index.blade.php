@@ -95,7 +95,7 @@
         </div>
       </div>
       <?php
-      if ($numboletimtabela->vsnrocartaoponto) {
+      if (isset($numboletimtabela->vsnrocartaoponto)) {
         $boletim = $numboletimtabela->vsnrocartaoponto + 1;
       } else {
         $boletim = 1;
@@ -103,7 +103,7 @@
       ?>
       <div class="col-md-3">
         <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
-        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim" Readonly>
+        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim">
         @error('liboletim')
         <span class="text-danger">{{ $message }}</span>
         @enderror

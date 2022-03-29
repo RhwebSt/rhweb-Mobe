@@ -29,20 +29,22 @@ class UsuarioController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $id = [];
         $search = request('search');
         $codicao = request('codicao');
         $users = $this->user->listaUser('asc',$search); 
-       
-        foreach ($users as $key => $user) {
-            if ($user->hasPermissionTo('cadastro')) {
-                dd($user->name);
-            }
+        $permissio = $this->user->permission();
+
+        foreach ($users as $key => $use) {
+            array_push($id,$use->id);
         }
+        $permissao = $this->user->permissao($id);
+        // dd($permissao);
         if ($codicao) {
             $editar = $this->user->edit($codicao);
-            return view('usuarios.edit',compact('user','users','editar'));
+            return view('usuarios.edit',compact('user','users','editar','permissao','permissio'));
         }else{
-            return view('usuarios.trabalhador.index',compact('user','users'));
+            return view('usuarios.trabalhador.index',compact('user','users','permissao','permissio'));
         }
     }
 

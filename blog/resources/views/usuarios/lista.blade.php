@@ -84,18 +84,29 @@
                                 
                                 <td class="col text-center border-bottom text-capitalize text-nowrap" style="width:100px;">
                                     <div class="dropdown">
-                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #51039E;">
+                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{$key}}" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #51039E;">
                                         <i class="fad fa-user-lock"></i>
                                       </button>
-                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item botao-modal" href="#">Cadastro <i class="fas fa-check text-success"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Rotina Mensal <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Fatura <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Recibo Avulso <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Cadastro de Acesso <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Excluir <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Editar <i class="fad fa-check"></i></a></li>
-                                        <li><a class="dropdown-item botao-modal" href="#">Relatórios <i class="fad fa-check"></i></a></li>
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$key}}">
+                                      
+                                          @foreach($permissao as $permisso)
+                                            @if($valoruser->id === $permisso->model_id)
+                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[$valoruser->id,$permisso->permission_id,'D'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
+                                            @endif
+                                            
+                                          @endforeach
+
+                                        
+                                          
+
+                                            <!-- <li><a class="dropdown-item botao-modal" href="#">Cadastro <i class="fas fa-check text-success"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Rotina Mensal <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Fatura <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Recibo Avulso <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Cadastro de Acesso <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Excluir <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Editar <i class="fad fa-check"></i></a></li>
+                                            <li><a class="dropdown-item botao-modal" href="#">Relatórios <i class="fad fa-check"></i></a></li> -->
                                       </ul>
                                     </div>
                                 </td>
@@ -103,7 +114,7 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn">
-                                    <a href="{{route('usuario.edit', base64_encode($valoruser->id))}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
+                                    <a href="{{route('usuario.edit', $valoruser->id)}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
