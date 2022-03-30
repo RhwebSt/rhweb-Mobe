@@ -136,7 +136,7 @@ class TabCartaoPontoController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        
+        $id = base64_decode($id);
         $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
         $dados = $this->lancamentotabela->buscaUnidade($id);

@@ -27,49 +27,71 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($id,$tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where([
-                        ['tsrubrica','like',$id],
-                        ['tomador',$tomador]
-                    ])
-                    ->where('tsano', date("Y"))
-                    ->orWhere([
-                        ['tsdescricao', 'like', '%'.$id.'%'],
-                        ['tomador',$tomador]
-                    ])
-                    ->where('tsano', date("Y"));
-                }else{
-                    $query->where([
-                        ['id','>',$id],
-                        ['tomador',$tomador]
-                    ]) 
-                    ->where('tsano', date("Y"));
-                }
-               
+            if ($id) {
+                $query->where([
+                    ['tsrubrica','like','%'.$id.'%'],
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa]
+                ])
+                ->where('tsano', date("Y"))
+                ->orWhere([
+                    ['tsdescricao','like','%'.$id.'%'],
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa],
+                ])
+                ->where('tsano', date("Y"));
             }else{
-                if ($id) {
-                    $query->where([
-                        ['tsrubrica','like','%'.$id.'%'],
-                        ['tomador',$tomador],
-                        ['empresa', $user->empresa]
-                    ])
-                    ->where('tsano', date("Y"))
-                    ->orWhere([
-                        ['tsdescricao','like','%'.$id.'%'],
-                        ['tomador',$tomador],
-                        ['empresa', $user->empresa],
-                    ])
-                    ->where('tsano', date("Y"));
-                }else{
-                    $query->where([
-                        ['id','>',$id],
-                        ['tomador',$tomador],
-                        ['empresa', $user->empresa]
-                    ])
-                    ->where('tsano', date("Y"));
-                }    
-            }
+                $query->where([
+                    ['id','>',$id],
+                    ['tomador',$tomador],
+                    ['empresa', $user->empresa]
+                ])
+                ->where('tsano', date("Y"));
+            } 
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where([
+            //             ['tsrubrica','like',$id],
+            //             ['tomador',$tomador]
+            //         ])
+            //         ->where('tsano', date("Y"))
+            //         ->orWhere([
+            //             ['tsdescricao', 'like', '%'.$id.'%'],
+            //             ['tomador',$tomador]
+            //         ])
+            //         ->where('tsano', date("Y"));
+            //     }else{
+            //         $query->where([
+            //             ['id','>',$id],
+            //             ['tomador',$tomador]
+            //         ]) 
+            //         ->where('tsano', date("Y"));
+            //     }
+               
+            // }else{
+            //     if ($id) {
+            //         $query->where([
+            //             ['tsrubrica','like','%'.$id.'%'],
+            //             ['tomador',$tomador],
+            //             ['empresa', $user->empresa]
+            //         ])
+            //         ->where('tsano', date("Y"))
+            //         ->orWhere([
+            //             ['tsdescricao','like','%'.$id.'%'],
+            //             ['tomador',$tomador],
+            //             ['empresa', $user->empresa],
+            //         ])
+            //         ->where('tsano', date("Y"));
+            //     }else{
+            //         $query->where([
+            //             ['id','>',$id],
+            //             ['tomador',$tomador],
+            //             ['empresa', $user->empresa]
+            //         ])
+            //         ->where('tsano', date("Y"));
+            //     }    
+            // }
            
         })
         ->orderBy('tsrubrica', 'asc')
@@ -79,30 +101,48 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($tomador,$ano,$condicao){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($condicao) {
-                    $query->orWhere([
-                        ['tomador',$tomador],
-                        ['tsano',$ano],
-                        ['tsrubrica',$condicao]
-                    ])
-                    ->orWhere([
-                        ['tomador',$tomador],
-                        ['tsano',$ano],
-                        ['tsdescricao','like','%'.$condicao.'%']
-                    ]);
-                }else{
-                    $query->where([
-                        ['tomador',$tomador],
-                        ['tsano',$ano]
-                    ]);
-                }
+            if ($condicao) {
+                $query->orWhere([
+                    ['tomador',$tomador],
+                    ['tsano',$ano],
+                    ['tsrubrica',$condicao]
+                ])
+                ->orWhere([
+                    ['tomador',$tomador],
+                    ['tsano',$ano],
+                    ['tsdescricao','like','%'.$condicao.'%']
+                ]);
             }else{
-                 $query->where([
+                $query->where([
                     ['tomador',$tomador],
                     ['tsano',$ano]
                 ]);
             }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($condicao) {
+            //         $query->orWhere([
+            //             ['tomador',$tomador],
+            //             ['tsano',$ano],
+            //             ['tsrubrica',$condicao]
+            //         ])
+            //         ->orWhere([
+            //             ['tomador',$tomador],
+            //             ['tsano',$ano],
+            //             ['tsdescricao','like','%'.$condicao.'%']
+            //         ]);
+            //     }else{
+            //         $query->where([
+            //             ['tomador',$tomador],
+            //             ['tsano',$ano]
+            //         ]);
+            //     }
+            // }else{
+            //      $query->where([
+            //         ['tomador',$tomador],
+            //         ['tsano',$ano]
+            //     ]);
+            // }
            
         })
         ->orderBy('tsrubrica', $ordem)
@@ -112,14 +152,18 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('tomador',$tomador);
-            }else{
-                 $query->where([
-                    ['tomador',$tomador],
-                    ['empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['tomador',$tomador],
+                ['empresa', $user->empresa]
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('tomador',$tomador);
+            // }else{
+            //      $query->where([
+            //         ['tomador',$tomador],
+            //         ['empresa', $user->empresa]
+            //     ]);
+            // }
            
         })
         ->orderBy('tsrubrica', 'asc')
@@ -129,12 +173,15 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->whereIn('tomador', $tomador);
-            }else{
-                 $query->where('empresa', $user->empresa)
-                 ->whereIn('tomador', $tomador);
-            }
+            $query->where('empresa', $user->empresa)
+            ->whereIn('tomador', $tomador);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->whereIn('tomador', $tomador);
+            // }else{
+            //      $query->where('empresa', $user->empresa)
+            //      ->whereIn('tomador', $tomador);
+            // }
            
         })
         ->get();
@@ -143,32 +190,47 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($id,$tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['tsrubrica',$id],
-                    ['tomador',$tomador]
-                ])
-                ->orWhere([
-                    ['tsdescricao',$id],
-                    ['tomador',$tomador]
-                ])
-                ->orWhere('id',$id);
-            }else{
-                $query->where([
-                    ['tsrubrica',$id],
-                    ['tomador',$tomador],
-                    ['empresa', $user->empresa]
-                ])
-                ->orWhere([
-                    ['tsdescricao',$id],
-                    ['tomador',$tomador],
-                    ['empresa', $user->empresa],
-                ])
-                ->orWhere([
-                    ['id',$id],
-                    ['empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['tsrubrica',$id],
+                ['tomador',$tomador],
+                ['empresa', $user->empresa]
+            ])
+            ->orWhere([
+                ['tsdescricao',$id],
+                ['tomador',$tomador],
+                ['empresa', $user->empresa],
+            ])
+            ->orWhere([
+                ['id',$id],
+                ['empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['tsrubrica',$id],
+            //         ['tomador',$tomador]
+            //     ])
+            //     ->orWhere([
+            //         ['tsdescricao',$id],
+            //         ['tomador',$tomador]
+            //     ])
+            //     ->orWhere('id',$id);
+            // }else{
+            //     $query->where([
+            //         ['tsrubrica',$id],
+            //         ['tomador',$tomador],
+            //         ['empresa', $user->empresa]
+            //     ])
+            //     ->orWhere([
+            //         ['tsdescricao',$id],
+            //         ['tomador',$tomador],
+            //         ['empresa', $user->empresa],
+            //     ])
+            //     ->orWhere([
+            //         ['id',$id],
+            //         ['empresa', $user->empresa]
+            //     ]);
+            // }
            
         })
         ->first();

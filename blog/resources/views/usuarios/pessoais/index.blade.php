@@ -55,7 +55,7 @@
         @enderror  
 
 
-    <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('usuario.update',$user->id) }}" method="POST">
+    <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('perfil.update',$user->id) }}" method="POST">
            
     @csrf
         @method('put')

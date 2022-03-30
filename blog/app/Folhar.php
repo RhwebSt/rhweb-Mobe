@@ -123,20 +123,27 @@ class Folhar extends Model
         )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['folhars.id',$id],
-                    ['base_calculos.tomador',null],
-                    ['base_calculos.bivalorliquido','>',0]
-                ]);
-            }else{
-                $query->where([
-                    ['folhars.id',$id],
-                    ['base_calculos.tomador',null],
-                    ['base_calculos.bivalorliquido','>',0],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['folhars.id',$id],
+                ['base_calculos.tomador',null],
+                ['base_calculos.bivalorliquido','>',0],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['base_calculos.tomador',null],
+            //         ['base_calculos.bivalorliquido','>',0]
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['base_calculos.tomador',null],
+            //         ['base_calculos.bivalorliquido','>',0],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->get();
     }
@@ -181,21 +188,28 @@ class Folhar extends Model
         )
         ->where(function($query) use ($id,$trabalhador,$tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['folhars.id',$id],
-                    ['trabalhadors.tsnome',$trabalhador],
-                    // ['trabalhadors.empresa', $empresas],
-                    ['base_calculos.tomador',$tomador]
-                ]);
-            }else{
-                $query->where([
-                    ['folhars.id',$id],
-                    ['trabalhadors.tsnome',$trabalhador],
-                    ['base_calculos.tomador',$tomador],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['folhars.id',$id],
+                ['trabalhadors.tsnome',$trabalhador],
+                ['base_calculos.tomador',$tomador],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['trabalhadors.tsnome',$trabalhador],
+            //         // ['trabalhadors.empresa', $empresas],
+            //         ['base_calculos.tomador',$tomador]
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['trabalhadors.tsnome',$trabalhador],
+            //         ['base_calculos.tomador',$tomador],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->first();
     }
@@ -246,21 +260,28 @@ class Folhar extends Model
         )
         ->where(function($query) use ($id,$tomador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['folhars.id',$id],
-                    // ['trabalhadors.tsnome',$trabalhador],
-                    // ['trabalhadors.empresa', $empresas],
-                    ['base_calculos.tomador',$tomador]
-                ]);
-            }else{
-                $query->where([
-                    ['folhars.id',$id],
-                    // ['trabalhadors.tsnome',$tomador],
-                    ['base_calculos.tomador',$tomador],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['folhars.id',$id],
+                // ['trabalhadors.tsnome',$tomador],
+                ['base_calculos.tomador',$tomador],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         // ['trabalhadors.tsnome',$trabalhador],
+            //         // ['trabalhadors.empresa', $empresas],
+            //         ['base_calculos.tomador',$tomador]
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         // ['trabalhadors.tsnome',$tomador],
+            //         ['base_calculos.tomador',$tomador],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->get();
     }
@@ -300,19 +321,25 @@ class Folhar extends Model
         )
         ->where(function($query) use ($id,$banco,$empresas){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['folhars.id',$id],
-                    ['bancarios.bsbanco',$banco],
-                    ['trabalhadors.empresa', $empresas]
-                ]);
-            }else{
-                $query->where([
-                    ['folhars.id',$id],
-                    ['bancarios.bsbanco',$banco],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['folhars.id',$id],
+                ['bancarios.bsbanco',$banco],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['bancarios.bsbanco',$banco],
+            //         ['trabalhadors.empresa', $empresas]
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['folhars.id',$id],
+            //         ['bancarios.bsbanco',$banco],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->get();
     }
@@ -339,23 +366,31 @@ class Folhar extends Model
         )
         ->where(function($query) use ($dados){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['folhars.id',$dados['folharublica']],
-                    ['valor_calculos.vsdescricao',$dados['rublica']],
-                    ['base_calculos.tomador',null]
-                    // ['trabalhadors.empresa', $dados['empresarublica']]
-                ])
-                ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
-            }else{
-                $query->where([
-                    ['folhars.id',$dados['folharublica']],
-                    ['valor_calculos.vsdescricao',$dados['rublica']],
-                    ['trabalhadors.empresa', $dados['empresarublica']],
-                    ['base_calculos.tomador',null]
-                ])
-                ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
-            }
+            $query->where([
+                ['folhars.id',$dados['folharublica']],
+                ['valor_calculos.vsdescricao',$dados['rublica']],
+                ['trabalhadors.empresa', $dados['empresarublica']],
+                ['base_calculos.tomador',null]
+            ])
+            ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['folhars.id',$dados['folharublica']],
+            //         ['valor_calculos.vsdescricao',$dados['rublica']],
+            //         ['base_calculos.tomador',null]
+            //         // ['trabalhadors.empresa', $dados['empresarublica']]
+            //     ])
+            //     ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
+            // }else{
+            //     $query->where([
+            //         ['folhars.id',$dados['folharublica']],
+            //         ['valor_calculos.vsdescricao',$dados['rublica']],
+            //         ['trabalhadors.empresa', $dados['empresarublica']],
+            //         ['base_calculos.tomador',null]
+            //     ])
+            //     ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
+            // }
         })
         ->get();
     }

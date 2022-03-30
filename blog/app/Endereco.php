@@ -89,9 +89,9 @@ class Endereco extends Model
         ]);
     }
 
-    public function editarUsuario($dados,$id)
+    public function editarUsuario($dados)
     {
-        return Endereco::where('pessoal', $dados['pessoal'])
+        return Endereco::where('pessoais', $dados['pessoal'])
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],

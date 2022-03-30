@@ -25,11 +25,12 @@ class Avuso extends Model
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('avusos.id','>',0);
-            }else{
-                $query->where('avusos.empresa', $user->empresa);
-            }
+            $query->where('avusos.empresa', $user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('avusos.id','>',0);
+            // }else{
+            //     $query->where('avusos.empresa', $user->empresa);
+            // }
         })
         ->paginate(10);
     }
@@ -37,11 +38,12 @@ class Avuso extends Model
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('avusos.id','>',0);
-            }else{
-                $query->where('avusos.empresa', $user->empresa);
-            }
+            $query->where('avusos.empresa', $user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('avusos.id','>',0);
+            // }else{
+            //     $query->where('avusos.empresa', $user->empresa);
+            // }
         })
         ->orderBy('avusos.aicodigo', $condicao)
         ->paginate(10);
@@ -50,18 +52,6 @@ class Avuso extends Model
     {
         return Avuso::where(function($query) use($dados){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['avusos.aicodigo',$dados['pesquisa']],
-                ])
-                ->orWhere([
-                    ['avusos.asnome',$dados['pesquisa']],
-                ])
-                ->orWhere([
-                    ['avusos.ascpf',$dados['pesquisa']],
-                ])
-                ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
-            }else{
                 $query->where([
                     ['avusos.aicodigo',$dados['pesquisa']],
                     ['avusos.empresa',$user->empresa]
@@ -75,7 +65,33 @@ class Avuso extends Model
                     ['avusos.empresa',$user->empresa]
                 ])
                 ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
-            }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['avusos.aicodigo',$dados['pesquisa']],
+            //     ])
+            //     ->orWhere([
+            //         ['avusos.asnome',$dados['pesquisa']],
+            //     ])
+            //     ->orWhere([
+            //         ['avusos.ascpf',$dados['pesquisa']],
+            //     ])
+            //     ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            // }else{
+            //     $query->where([
+            //         ['avusos.aicodigo',$dados['pesquisa']],
+            //         ['avusos.empresa',$user->empresa]
+            //     ])
+            //     ->orWhere([
+            //         ['avusos.asnome',$dados['pesquisa']],
+            //         ['avusos.empresa',$user->empresa]
+            //     ])
+            //     ->orWhere([
+            //         ['avusos.ascpf',$dados['pesquisa']],
+            //         ['avusos.empresa',$user->empresa]
+            //     ])
+            //     ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            // }
         })
         ->paginate(10);
     }
@@ -88,30 +104,46 @@ class Avuso extends Model
         ) 
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where('asnome','like','%'.$id.'%') 
-                    ->orWhere('ascpf','like','%'.$id.'%');
-                }else{
-                    $query->where('id','>',$id);
-                }
+            if ($id) {
+                $query->where([
+                    ['asnome','like','%'.$id.'%'],
+                    ['empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['ascpf','like','%'.$id.'%'],
+                    ['empresa', $user->empresa],
+                ]);
             }else{
-                if ($id) {
-                    $query->where([
-                        ['asnome','like','%'.$id.'%'],
-                        ['empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['ascpf','like','%'.$id.'%'],
-                        ['empresa', $user->empresa],
-                    ]);
-                }else{
-                    $query->where([
-                        ['id','>',$id],
-                        ['empresa', $user->empresa]
-                    ]);
-                }
+                $query->where([
+                    ['id','>',$id],
+                    ['empresa', $user->empresa]
+                ]);
             }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where('asnome','like','%'.$id.'%') 
+            //         ->orWhere('ascpf','like','%'.$id.'%');
+            //     }else{
+            //         $query->where('id','>',$id);
+            //     }
+            // }else{
+            //     if ($id) {
+            //         $query->where([
+            //             ['asnome','like','%'.$id.'%'],
+            //             ['empresa', $user->empresa]
+            //         ])
+            //         ->orWhere([
+            //             ['ascpf','like','%'.$id.'%'],
+            //             ['empresa', $user->empresa],
+            //         ]);
+            //     }else{
+            //         $query->where([
+            //             ['id','>',$id],
+            //             ['empresa', $user->empresa]
+            //         ]);
+            //     }
+            // }
             
         })
         ->orderBy('asnome','asc')
@@ -147,16 +179,21 @@ class Avuso extends Model
         ) 
         ->where(function($query) use ($trabalhador,$inicio,$final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('avusos.id',$trabalhador)
-                ->whereBetween('avusos.asfinal',[$inicio,$final]);
-            }else{
-                $query->where([
-                    ['avusos.id',$trabalhador],
-                    ['empresas.id', $user->empresa],
-                ])
-                ->whereBetween('avusos.asfinal',[$inicio,$final]);
-            }
+            $query->where([
+                ['avusos.id',$trabalhador],
+                ['empresas.id', $user->empresa],
+            ])
+            ->whereBetween('avusos.asfinal',[$inicio,$final]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('avusos.id',$trabalhador)
+            //     ->whereBetween('avusos.asfinal',[$inicio,$final]);
+            // }else{
+            //     $query->where([
+            //         ['avusos.id',$trabalhador],
+            //         ['empresas.id', $user->empresa],
+            //     ])
+            //     ->whereBetween('avusos.asfinal',[$inicio,$final]);
+            // }
             
         })
         ->first(); 

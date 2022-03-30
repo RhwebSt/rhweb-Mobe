@@ -42,16 +42,21 @@ class Bolcartaoponto extends Model
         // ->where('lancamentotabelas.id', $id)
         ->where(function($query) use ($id,$data){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.id',$id)
-                ->whereDate('bolcartaopontos.created_at', $data);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.id',$id],
-                    ['trabalhadors.empresa', $user->empresa]
-                ])
-                ->whereDate('bolcartaopontos.created_at', $data);
-            }
+            $query->where([
+                ['lancamentotabelas.id',$id],
+                ['trabalhadors.empresa', $user->empresa]
+            ])
+            ->whereDate('bolcartaopontos.created_at', $data);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.id',$id)
+            //     ->whereDate('bolcartaopontos.created_at', $data);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.id',$id],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ])
+            //     ->whereDate('bolcartaopontos.created_at', $data);
+            // }
         })
         ->paginate(15);
     } 
@@ -67,20 +72,26 @@ class Bolcartaoponto extends Model
             )
         ->where(function($query) use ($id,$boletim,$data){ 
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['trabalhadors.tsnome', 'like', '%'.$id.'%'],
-                    ['bolcartaopontos.lancamento',$boletim]
-                ])
-                ->whereDate('bolcartaopontos.created_at', $data);
-            }else{
-                $query->where([
-                    ['trabalhadors.tsnome',$id],
-                    ['bolcartaopontos.lancamento',$boletim],
-                    ['trabalhadors.empresa', $user->empresa]
-                ])
-                ->whereDate('bolcartaopontos.created_at', $data);
-            }
+            $query->where([
+                ['trabalhadors.tsnome',$id],
+                ['bolcartaopontos.lancamento',$boletim],
+                ['trabalhadors.empresa', $user->empresa]
+            ])
+            ->whereDate('bolcartaopontos.created_at', $data);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['trabalhadors.tsnome', 'like', '%'.$id.'%'],
+            //         ['bolcartaopontos.lancamento',$boletim]
+            //     ])
+            //     ->whereDate('bolcartaopontos.created_at', $data);
+            // }else{
+            //     $query->where([
+            //         ['trabalhadors.tsnome',$id],
+            //         ['bolcartaopontos.lancamento',$boletim],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ])
+            //     ->whereDate('bolcartaopontos.created_at', $data);
+            // }
         })
         ->first();
     }
@@ -109,39 +120,57 @@ class Bolcartaoponto extends Model
         )
         ->where(function($query) use ($dados){ 
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ( isset($dados['idtomador'])) {
-                    $query->where([
-                        ['bolcartaopontos.trabalhador',$dados['trabalhador']],
-                        ['tomadors.id',$dados['idtomador']]
-                    ])
-                    ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
-                }else{
-                    $query->where('bolcartaopontos.trabalhador',$dados['trabalhador'])
-                    ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
-                }
-               
+            if (!$dados['idtomador']) {
+                $query->where([
+                    ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+                    ['lancamentotabelas.empresa', $user->empresa],
+                    ['tomadors.id',$dados['idtomador']]
+                ]) 
+                ->whereBetween('bolcartaopontos.created_at',
+                [$dados['ano_inicial'], 
+                $dados['ano_final']]);
             }else{
-                if (!$dados['idtomador']) {
-                    $query->where([
-                        ['bolcartaopontos.trabalhador',$dados['trabalhador']],
-                        ['lancamentotabelas.empresa', $user->empresa],
-                        ['tomadors.id',$dados['idtomador']]
-                    ]) 
-                    ->whereBetween('bolcartaopontos.created_at',
-                    [$dados['ano_inicial'], 
-                    $dados['ano_final']]);
-                }else{
-                    $query->where([
-                        ['bolcartaopontos.trabalhador',$dados['trabalhador']],
-                        ['lancamentotabelas.empresa', $user->empresa]
-                    ]) 
-                    ->whereBetween('bolcartaopontos.created_at',
-                    [$dados['ano_inicial'], 
-                    $dados['ano_final']]);
-                }
-
+                $query->where([
+                    ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+                    ['lancamentotabelas.empresa', $user->empresa]
+                ]) 
+                ->whereBetween('bolcartaopontos.created_at',
+                [$dados['ano_inicial'], 
+                $dados['ano_final']]);
             }
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ( isset($dados['idtomador'])) {
+            //         $query->where([
+            //             ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+            //             ['tomadors.id',$dados['idtomador']]
+            //         ])
+            //         ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+            //     }else{
+            //         $query->where('bolcartaopontos.trabalhador',$dados['trabalhador'])
+            //         ->whereBetween('bolcartaopontos.created_at',[$dados['ano_inicial'], $dados['ano_final']]);
+            //     }
+               
+            // }else{
+            //     if (!$dados['idtomador']) {
+            //         $query->where([
+            //             ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+            //             ['lancamentotabelas.empresa', $user->empresa],
+            //             ['tomadors.id',$dados['idtomador']]
+            //         ]) 
+            //         ->whereBetween('bolcartaopontos.created_at',
+            //         [$dados['ano_inicial'], 
+            //         $dados['ano_final']]);
+            //     }else{
+            //         $query->where([
+            //             ['bolcartaopontos.trabalhador',$dados['trabalhador']],
+            //             ['lancamentotabelas.empresa', $user->empresa]
+            //         ]) 
+            //         ->whereBetween('bolcartaopontos.created_at',
+            //         [$dados['ano_inicial'], 
+            //         $dados['ano_final']]);
+            //     }
+
+            // }
         })
         ->get();
    }
@@ -157,16 +186,22 @@ class Bolcartaoponto extends Model
         )
         ->where(function($query) use ($tomador,$ano_inicio,$ano_final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.tomador',$tomador)
-                ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.tomador',$tomador],
-                    ['lancamentotabelas.empresa',$user->empresa]
-                ])
-                ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
-            }
+            $query->where([
+                ['lancamentotabelas.tomador',$tomador],
+                ['lancamentotabelas.empresa',$user->empresa]
+            ])
+            ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.tomador',$tomador)
+            //     ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.tomador',$tomador],
+            //         ['lancamentotabelas.empresa',$user->empresa]
+            //     ])
+            //     ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
+            // }
         })
         ->get();
    }
@@ -181,10 +216,12 @@ class Bolcartaoponto extends Model
     )
     ->where(function($query) use ($empresa,$ano_inicio,$ano_final){
         $user = auth()->user();
-        if ($user->hasPermissionTo('admin')) {
-            $query->where('lancamentotabelas.empresa',$empresa)
-            ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
-        }
+        $query->where('lancamentotabelas.empresa',$empresa)
+        ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+        // if ($user->hasPermissionTo('admin')) {
+        //     $query->where('lancamentotabelas.empresa',$empresa)
+        //     ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+        // }
     })
     ->get();
    }
@@ -248,10 +285,12 @@ class Bolcartaoponto extends Model
         )
         ->where(function($query) use ($id,$ano_inicio,$ano_final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('tomadors.id',$id)
-                ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
-            }
+            $query->where('tomadors.id',$id)
+            ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('tomadors.id',$id)
+            //     ->whereBetween('bolcartaopontos.created_at',[$ano_inicio, $ano_final]);
+            // }
         })
         ->get();
     }

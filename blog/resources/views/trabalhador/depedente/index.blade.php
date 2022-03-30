@@ -98,7 +98,7 @@
                                         $data = explode('-',$depedente->dsdata);
                                         $data = $data[2]."/".$data[1]."/".$data[0];
                                     ?>
-                                    {{$data}}
+                                    {{$data}} 
                                 @endif
                             </td>
                             <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:110px;">
@@ -110,7 +110,7 @@
                             
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                 <button class="btn">
-                                <a href="{{ route('depedente.edit',$depedente->id) }}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
+                                <a href="{{ route('depedente.edit',base64_encode($depedente->id)) }}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fal fa-edit"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">

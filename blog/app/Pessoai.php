@@ -42,13 +42,18 @@ class Pessoai extends Model
         ->where('users.id', $id)
         ->first();
     }
-    public function Atualizar($dados,$id)
+    public function atualizar($dados,$id)
     {
-        return User::where('user', $id)
+        return Pessoai::where('user', $id)
         ->update([
             'pscpf'=>$dados['cpf'],
             'psnascimento'=>$dados['data__nascimento'],
             'pstelefone'=>$dados['telefone'],
         ]);
+    } 
+    public function buscaUnidadePessoais($id)
+    {
+        return Pessoai::where('user', $id)->first();
     }
+    
 }

@@ -62,7 +62,7 @@
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn form-control" role="button" aria-label="Basic example">
                       <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
-                      <a class="btn botao" href="{{ route('depedente.mostrar.index',$id) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                      <a class="btn botao" href="{{ route('depedente.mostrar.index',base64_encode($id)) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                   </div>
               </div>

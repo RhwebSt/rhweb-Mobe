@@ -64,7 +64,7 @@
                   <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">
                     <div class="btn form-control" role="button" aria-label="Basic example">
                       <button type="submit" id="incluir" class="btn botao"><i class="fas fa-sync-alt"></i> Atualizar</button>
-                      <a class="btn botao " href="{{ route('depedente.mostrar.index',$depedentes->trabalhador) }}"  role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                      <a class="btn botao " href="{{ route('depedente.mostrar.index',base64_encode($depedentes->trabalhador)) }}"  role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                   </div>
               </div>
@@ -90,13 +90,7 @@
                   @enderror
                 </div>
                 
-                <div class="col-md-4">
-                    <label for="tipo__dependente" class="form-label">Tipo do dependente</label>
-                    <input type="text" class="form-control @error('tipo__dependente') is-invalid @enderror  fw-bold text-dark" value="{{$depedentes->dstipo}}" name="tipo__dependente"  id="tipo__dependente">
-                    @error('tipo__dependente')
-                      <span class="text-danger">{{ $message }}</span> 
-                  @enderror
-                </div>
+               
                 <div class="col-md-4">
                     <label for="tipo__dependente" class="form-label">Tipo de Depedente</label>
                     <select id="tipo__dependente" name="tipo__dependente" class="form-select text-dark fw-bold" value="{{old('tipo__dependente')}}">
@@ -106,17 +100,19 @@
                         foreach ($tipo as $key => $tipos) {
                           if ($tipos === $depedentes->dstipo) {
                             echo'<option selected>'.$depedentes->dstipo.'</option>';
+                          }else{
+                            echo'<option>'.$tipos.'</option>';
                           }
                         }
                       ?>
-                      <option>Cônjuge</option>
+                      <!-- <option>Cônjuge</option>
                       <option>Filho(a) ou enteado(a)</option>
                       <option>Irmão(ã), neto(a) ou bisneto(a)</option>
                       <option>Pais, avós e bisavós</option>
                       <option>Tutor ou Cuidador</option>
                       <option>Ex-cônjuge</option>
                       <option>Menor com guarda judicial</option>
-                      <option selected>Agregado/Outros</option>
+                      <option selected>Agregado/Outros</option> -->
                     </select>
                 </div>
                 <input type="hidden" name="trabalhador" value="{{$id}}">
@@ -156,7 +152,7 @@
                     @error('irrf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror -->
-                    <select id="irrfs" name="irrf" class="form-select" value="">
+                    <select id="irrfs" name="irrf" class="form-select fw-bold" value="">
                       @if($depedentes->dsirrf === 'Sim')
                       <option selected>Sim</option>
                       <option>Não</option>
@@ -173,7 +169,7 @@
                     @error('sf')
                       <span class="text-danger">{{ $message }}</span>
                   @enderror -->
-                    <select id="sfs" name="sf" class="form-select" value="">
+                    <select id="sfs" name="sf" class="form-select fw-bold" value="">
                       @if($depedentes->dsirrf === 'Sim')
                       <option  selected>Sim</option>
                       <option>Não</option>

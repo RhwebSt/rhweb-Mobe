@@ -32,35 +32,49 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($id,$status){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where([
-                        ['lancamentotabelas.liboletim',$id],
-                        ['lancamentotabelas.lsstatus',$status]
-                    ])
-                    ->orWhere('lancamentotabelas.id',$id);
-                }else{
-                    $query->where([
-                        ['lancamentotabelas.id','>',$id],
-                        ['lancamentotabelas.lsstatus',$status]
-                    ]);
-                }
-              
+            if ($id) {
+                $query->where([
+                    ['lancamentotabelas.liboletim',$id],
+                    ['lancamentotabelas.lsstatus',$status],
+                    ['lancamentotabelas.empresa', $user->empresa]
+                ]);
             }else{
-                if ($id) {
-                    $query->where([
-                        ['lancamentotabelas.liboletim',$id],
-                        ['lancamentotabelas.lsstatus',$status],
-                        ['lancamentotabelas.empresa', $user->empresa]
-                    ]);
-                }else{
-                    $query->where([
-                        ['lancamentotabelas.id','>',$id],
-                        ['lancamentotabelas.lsstatus',$status],
-                        ['lancamentotabelas.empresa', $user->empresa]
-                    ]);
-                }
+                $query->where([
+                    ['lancamentotabelas.id','>',$id],
+                    ['lancamentotabelas.lsstatus',$status],
+                    ['lancamentotabelas.empresa', $user->empresa]
+                ]);
             }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where([
+            //             ['lancamentotabelas.liboletim',$id],
+            //             ['lancamentotabelas.lsstatus',$status]
+            //         ])
+            //         ->orWhere('lancamentotabelas.id',$id);
+            //     }else{
+            //         $query->where([
+            //             ['lancamentotabelas.id','>',$id],
+            //             ['lancamentotabelas.lsstatus',$status]
+            //         ]);
+            //     }
+              
+            // }else{
+            //     if ($id) {
+            //         $query->where([
+            //             ['lancamentotabelas.liboletim',$id],
+            //             ['lancamentotabelas.lsstatus',$status],
+            //             ['lancamentotabelas.empresa', $user->empresa]
+            //         ]);
+            //     }else{
+            //         $query->where([
+            //             ['lancamentotabelas.id','>',$id],
+            //             ['lancamentotabelas.lsstatus',$status],
+            //             ['lancamentotabelas.empresa', $user->empresa]
+            //         ]);
+            //     }
+            // }
         })
         ->orderBy('created_at','desc')
         ->distinct()
@@ -81,14 +95,19 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($status){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lsstatus',$status);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.lsstatus',$status],
-                    ['tomadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['lancamentotabelas.lsstatus',$status],
+                ['tomadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lsstatus',$status);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.lsstatus',$status],
+            //         ['tomadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->orderBy('lancamentotabelas.liboletim', $condicao)
         ->paginate(5);
@@ -107,36 +126,52 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($status,$dados){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['lsstatus',$status],
-                    ['lancamentotabelas.liboletim','like','%'.$dados.'%']
-                ])
-                ->orWhere([
-                    ['lsstatus',$status],
-                    ['tomadors.tsnome','like','%'.$dados.'%']
-                ])
-                ->orWhere([
-                    ['lsstatus',$status],
-                    ['tomadors.tscnpj','like','%'.$dados.'%']
-                ]);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.lsstatus',$status],
-                    ['tomadors.empresa', $user->empresa],
-                    ['lancamentotabelas.liboletim','like','%'.$dados.'%']
-                ])
-                ->orWhere([
-                    ['lsstatus',$status],
-                    ['tomadors.empresa', $user->empresa],
-                    ['tomadors.tsnome','like','%'.$dados.'%']
-                ])
-                ->orWhere([
-                    ['lsstatus',$status],
-                    ['tomadors.empresa', $user->empresa],
-                    ['tomadors.tscnpj','like','%'.$dados.'%']
-                ]);
-            }
+            $query->where([
+                ['lancamentotabelas.lsstatus',$status],
+                ['tomadors.empresa', $user->empresa],
+                ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+            ])
+            ->orWhere([
+                ['lsstatus',$status],
+                ['tomadors.empresa', $user->empresa],
+                ['tomadors.tsnome','like','%'.$dados.'%']
+            ])
+            ->orWhere([
+                ['lsstatus',$status],
+                ['tomadors.empresa', $user->empresa],
+                ['tomadors.tscnpj','like','%'.$dados.'%']
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['lsstatus',$status],
+            //         ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+            //     ])
+            //     ->orWhere([
+            //         ['lsstatus',$status],
+            //         ['tomadors.tsnome','like','%'.$dados.'%']
+            //     ])
+            //     ->orWhere([
+            //         ['lsstatus',$status],
+            //         ['tomadors.tscnpj','like','%'.$dados.'%']
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.lsstatus',$status],
+            //         ['tomadors.empresa', $user->empresa],
+            //         ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+            //     ])
+            //     ->orWhere([
+            //         ['lsstatus',$status],
+            //         ['tomadors.empresa', $user->empresa],
+            //         ['tomadors.tsnome','like','%'.$dados.'%']
+            //     ])
+            //     ->orWhere([
+            //         ['lsstatus',$status],
+            //         ['tomadors.empresa', $user->empresa],
+            //         ['tomadors.tscnpj','like','%'.$dados.'%']
+            //     ]);
+            // }
         })
         ->orderBy('lancamentotabelas.liboletim', $condicao)
         ->paginate(10);
@@ -156,14 +191,18 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.id',$id);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.id',$id],
-                    ['tomadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['lancamentotabelas.id',$id],
+                ['tomadors.empresa', $user->empresa]
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.id',$id);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.id',$id],
+            //         ['tomadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->first();
     }
@@ -171,22 +210,27 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where(function($query) use ($id,$status){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['liboletim',$id],
-                    ['lsstatus',$status]
-                ])->orWhere('id',$id);
-            }else{
-                $query->where([
-                    ['liboletim',$id],
-                    ['lsstatus',$status],
-                    ['empresa', $user->empresa]
-                ]);
-                // ->orWhere([
-                //     ['id',$id],
-                //     //['trabalhadors.empresa', $user->empresa]
-                // ]);
-            }
+            $query->where([
+                ['liboletim',$id],
+                ['lsstatus',$status],
+                ['empresa', $user->empresa]
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['liboletim',$id],
+            //         ['lsstatus',$status]
+            //     ])->orWhere('id',$id);
+            // }else{
+            //     $query->where([
+            //         ['liboletim',$id],
+            //         ['lsstatus',$status],
+            //         ['empresa', $user->empresa]
+            //     ]);
+            //     // ->orWhere([
+            //     //     ['id',$id],
+            //     //     //['trabalhadors.empresa', $user->empresa]
+            //     // ]);
+            // }
         })->first();
     }
     public function buscaTomador($id)
@@ -197,22 +241,30 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where(function($query) use ($dados,$novadata){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['liboletim',$dados['liboletim']],
-                    ['lsstatus',$dados['status']]
-                ])
-                ->whereMonth('created_at',$novadata[1])
-                ->whereYear('created_at',$novadata[0]);
-            }else{
-                $query->where([
-                    ['liboletim',$dados['liboletim']],
-                    ['lsstatus',$dados['status']],
-                    ['empresa', $user->empresa]
-                ])
-                ->whereMonth('created_at',$novadata[1])
-                ->whereYear('created_at',$novadata[0]);
-            }
+            $query->where([
+                ['liboletim',$dados['liboletim']],
+                ['lsstatus',$dados['status']],
+                ['empresa', $user->empresa]
+            ])
+            ->whereMonth('created_at',$novadata[1])
+            ->whereYear('created_at',$novadata[0]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['liboletim',$dados['liboletim']],
+            //         ['lsstatus',$dados['status']]
+            //     ])
+            //     ->whereMonth('created_at',$novadata[1])
+            //     ->whereYear('created_at',$novadata[0]);
+            // }else{
+            //     $query->where([
+            //         ['liboletim',$dados['liboletim']],
+            //         ['lsstatus',$dados['status']],
+            //         ['empresa', $user->empresa]
+            //     ])
+            //     ->whereMonth('created_at',$novadata[1])
+            //     ->whereYear('created_at',$novadata[0]);
+            // }
         })->count();
     }
     public function verificarFolhar($inicio,$final)
@@ -226,20 +278,26 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where(function($query) use ($dados){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['liboletim',$dados['liboletim']],
-                    ['lsstatus',$dados['status']]
-                ])
-                ->whereDate('created_at',$dados['data']);
-            }else{
-                $query->where([
-                    ['liboletim',$dados['liboletim']],
-                    ['lsstatus',$dados['status']],
-                    ['empresa', $user->empresa]
-                ])
-                ->whereDate('created_at',$dados['data']);
-            }
+            $query->where([
+                ['liboletim',$dados['liboletim']],
+                ['lsstatus',$dados['status']],
+                ['empresa', $user->empresa]
+            ])
+            ->whereDate('created_at',$dados['data']);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['liboletim',$dados['liboletim']],
+            //         ['lsstatus',$dados['status']]
+            //     ])
+            //     ->whereDate('created_at',$dados['data']);
+            // }else{
+            //     $query->where([
+            //         ['liboletim',$dados['liboletim']],
+            //         ['lsstatus',$dados['status']],
+            //         ['empresa', $user->empresa]
+            //     ])
+            //     ->whereDate('created_at',$dados['data']);
+            // }
         })->count();
     }
     public function relatorioBoletimTabela($id)
@@ -267,14 +325,18 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.liboletim',$id);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.liboletim',$id],
-                    ['lancamentotabelas.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['lancamentotabelas.liboletim',$id],
+                ['lancamentotabelas.empresa', $user->empresa]
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.liboletim',$id);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.liboletim',$id],
+            //         ['lancamentotabelas.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->get();
     }
@@ -303,14 +365,19 @@ class Lancamentotabela extends Model
             )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.liboletim',$id);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.liboletim',$id],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['lancamentotabelas.liboletim',$id],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.liboletim',$id);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.liboletim',$id],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->get();
     }

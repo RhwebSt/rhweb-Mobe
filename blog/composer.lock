@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f5c5c4d248f39949a5280503a3f89a0",
+    "content-hash": "ac23efaf447f19a1c56bc6ad5d28cf52",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -954,6 +954,134 @@
                 }
             ],
             "time": "2022-03-20T21:51:18+00:00"
+        },
+        {
+            "name": "hashids/hashids",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vinkla/hashids.git",
+                "reference": "8cab111f78e0bd9c76953b082919fc9e251761be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vinkla/hashids/zipball/8cab111f78e0bd9c76953b082919fc9e251761be",
+                "reference": "8cab111f78e0bd9c76953b082919fc9e251761be",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0 || ^9.4",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "suggest": {
+                "ext-bcmath": "Required to use BC Math arbitrary precision mathematics (*).",
+                "ext-gmp": "Required to use GNU multiple precision mathematics (*)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hashids\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Akimov",
+                    "email": "ivan@barreleye.com"
+                },
+                {
+                    "name": "Vincent Klaiber",
+                    "email": "hello@doubledip.se"
+                }
+            ],
+            "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers",
+            "homepage": "https://hashids.org/php",
+            "keywords": [
+                "bitly",
+                "decode",
+                "encode",
+                "hash",
+                "hashid",
+                "hashids",
+                "ids",
+                "obfuscate",
+                "youtube"
+            ],
+            "support": {
+                "issues": "https://github.com/vinkla/hashids/issues",
+                "source": "https://github.com/vinkla/hashids/tree/4.1.0"
+            },
+            "time": "2020-11-26T19:24:33+00:00"
+        },
+        {
+            "name": "jvizcaya/encodid",
+            "version": "v0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jvizcaya/encodid.git",
+                "reference": "0f8e31e08aa38430839395661eb12650b475bbc2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jvizcaya/encodid/zipball/0f8e31e08aa38430839395661eb12650b475bbc2",
+                "reference": "0f8e31e08aa38430839395661eb12650b475bbc2",
+                "shasum": ""
+            },
+            "require": {
+                "hashids/hashids": "^4.1",
+                "php": "^7.2|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jvizcaya\\Encodid\\EncodidServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "Jvizcaya\\Encodid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jorge Vizcaya",
+                    "email": "jorgevizcayaa@gmail.com"
+                }
+            ],
+            "description": "Laravel helpers for encode id",
+            "keywords": [
+                "encode",
+                "hashids",
+                "helper",
+                "laravel",
+                "model"
+            ],
+            "support": {
+                "issues": "https://github.com/jvizcaya/encodid/issues",
+                "source": "https://github.com/jvizcaya/encodid/tree/v0.0.4"
+            },
+            "time": "2022-01-10T16:46:44+00:00"
         },
         {
             "name": "laravel/framework",

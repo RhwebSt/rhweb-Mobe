@@ -12,17 +12,17 @@ class ValoresRublica extends Model
     public function cadastro($dados)
     {
         return ValoresRublica::create([
-            'vsnrofatura'=>$dados['nro__fatura'],
-            'vsreciboavulso'=>$dados['nro__reciboavulso'],
-            'vsmatricula'=>$dados['matric__trabalhador'],
-            'vsnrorequisicao'=>$dados['nro__requisicao'],
-            'vsnroboletins'=>$dados['nro__boletins'],
-            'vscbo'=>$dados['cbo'],
-            'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
-            'vsnroequesocial'=>$dados['seq__esocial'],
-            'vsnroflha'=>$dados['nro__folha'],
-            'vimatricular'=>$dados['matricular'],
-            'vimatriculartomador'=>$dados['matriculartomador'],
+            'vsnrofatura'=>isset($dados['nro__fatura'])?$dados['nro__fatura']:null,
+            'vsreciboavulso'=>isset($dados['nro__reciboavulso'])?$dados['nro__reciboavulso']:null,
+            'vsmatricula'=>isset($dados['matric__trabalhador'])?$dados['matric__trabalhador']:null,
+            'vsnrorequisicao'=>isset($dados['nro__requisicao'])?$dados['nro__requisicao']:null,
+            'vsnroboletins'=>isset($dados['nro__boletins'])?$dados['nro__boletins']:null,
+            'vscbo'=>isset($dados['cbo'])?$dados['cbo']:null,
+            'vsnrocartaoponto'=>isset($dados['nro__cartaoponto'])?$dados['nro__cartaoponto']:null,
+            'vsnroequesocial'=>isset($dados['seq__esocial'])?$dados['seq__esocial']:null,
+            'vsnroflha'=>isset($dados['nro__folha'])?$dados['nro__folha']:null,
+            'vimatricular'=>isset($dados['matricular'])?$dados['matricular']:null,
+            'vimatriculartomador'=>isset($dados['matriculartomador'])?$dados['matriculartomador']:null,
             'empresa'=>$dados['empresa'],
         ]);
     }

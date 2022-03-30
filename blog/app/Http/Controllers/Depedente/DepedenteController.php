@@ -16,7 +16,7 @@ class DepedenteController extends Controller
     public function index($depedente)
     {
         
-        $id = $depedente;
+        $id =  base64_decode($depedente);
         $depedente = new Dependente;
         $depedentes = $depedente->buscaListaDepedente($id); 
         $user = Auth::user();
@@ -87,7 +87,7 @@ class DepedenteController extends Controller
      */
     public function edit($id)
     {
-        
+        $id =  base64_decode($id);
         $depedente = new Dependente;
         $depedentes = $depedente->buscaUnidadeDepedente($id);
         $user = Auth::user();
@@ -108,9 +108,9 @@ class DepedenteController extends Controller
             'dscpf'=>'required|cpf|formato_cpf',
             'data__nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             'nome__dependente'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'tipo__dependente'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
+            // 'tipo__dependente'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
         $depedente = new Dependente;
         try {

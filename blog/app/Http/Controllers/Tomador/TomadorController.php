@@ -291,6 +291,7 @@ class TomadorController extends Controller
      */
     public function edit($id)
     {
+        $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
         $tomador = $this->tomador->first($id);

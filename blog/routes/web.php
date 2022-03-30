@@ -156,6 +156,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
+    Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
@@ -171,7 +172,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
 
         Route::resource('usuario','Usuario\\UsuarioController')->names('usuario');
-        Route::resource('perfil','Perfil\\PerfilController')->names('perfil');
+        
+        Route::resource('perfil','Perfil\\PerfilController')->names('perfil'); 
 
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');

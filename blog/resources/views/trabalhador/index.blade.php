@@ -176,7 +176,7 @@
     </div>
 
     <?php
-    if ($valorrublica_matricular->vimatricular) {
+    if (isset($valorrublica_matricular->vimatricular)) {
       $matricular = $valorrublica_matricular->vimatricular + 1;
     } else {
       $matricular = 1;

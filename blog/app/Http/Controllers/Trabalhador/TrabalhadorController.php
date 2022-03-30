@@ -287,6 +287,7 @@ class TrabalhadorController extends Controller
      */
     public function edit($id)
     {
+        $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
         $trabalhadors = $this->trabalhador->lista($search,'asc');

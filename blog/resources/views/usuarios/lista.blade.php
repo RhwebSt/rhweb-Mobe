@@ -90,8 +90,18 @@
                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$key}}">
                                       
                                           @foreach($permissao as $permisso)
-                                            @if($valoruser->id === $permisso->model_id)
-                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[$valoruser->id,$permisso->permission_id,'D'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
+                                            @if($valoruser->id === $permisso->model_id && $permisso->name === 'user')
+                                                @if($permisso->model_type)
+                                                    <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($valoruser->id),base64_encode($permisso->permission_id),'R'])}}">Bloquear</a></li>
+                                                @else
+                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($valoruser->id),base64_encode($permisso->permission_id),'D'])}}">Bloqueador <i class="fa-solid fa-ban"></i></a></li>
+                                                @endif
+                                            @elseif($valoruser->id === $permisso->model_id && $permisso->name !== 'user')
+                                                @if($permisso->model_type)
+                                                    <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($valoruser->id),base64_encode($permisso->permission_id),'R'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
+                                                @else
+                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($valoruser->id),base64_encode($permisso->permission_id),'D'])}}">{{$permisso->name}} <i class="fa-solid fa-xmark"></i></a></li>
+                                                @endif
                                             @endif
                                             
                                           @endforeach
@@ -114,7 +124,7 @@
                                 
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                     <button class="btn">
-                                    <a href="{{route('usuario.edit', $valoruser->id)}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
+                                    <a href="{{route('usuario.edit', base64_encode($valoruser->id))}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
                                     </button>
                                 </td>
                                 <td class="col text-center border-bottom text-nowrap" style="width:60px;">

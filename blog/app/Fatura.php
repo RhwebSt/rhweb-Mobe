@@ -36,11 +36,12 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('faturas.id','>',0);
-            }else{
-                $query->where('faturas.empresa', $user->empresa);
-            }
+            $query->where('faturas.empresa', $user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('faturas.id','>',0);
+            // }else{
+            //     $query->where('faturas.empresa', $user->empresa);
+            // }
         })
         ->paginate(10);
     }
@@ -60,11 +61,12 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('faturas.id','>',0);
-            }else{
-                $query->where('faturas.empresa', $user->empresa);
-            }
+            $query->where('faturas.empresa', $user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('faturas.id','>',0);
+            // }else{
+            //     $query->where('faturas.empresa', $user->empresa);
+            // }
         })
         ->orderBy('tomadors.tsnome', $condicao)
         ->paginate(10);
@@ -84,19 +86,25 @@ class Fatura extends Model
         )
         ->where(function($query) use($dados){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where([
-                    ['faturas.id','>',0],
-                    ['tomadors.tsnome',$dados['pesquisa']]
-                ])
-                ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
-            }else{
-                $query->where([
-                    ['faturas.empresa', $user->empresa],
-                    ['tomadors.tsnome',$dados['pesquisa']]
-                ])
-                ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
-            }
+            $query->where([
+                ['faturas.empresa', $user->empresa],
+                ['tomadors.tsnome',$dados['pesquisa']]
+            ])
+            ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where([
+            //         ['faturas.id','>',0],
+            //         ['tomadors.tsnome',$dados['pesquisa']]
+            //     ])
+            //     ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            // }else{
+            //     $query->where([
+            //         ['faturas.empresa', $user->empresa],
+            //         ['tomadors.tsnome',$dados['pesquisa']]
+            //     ])
+            //     ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+            // }
         })
         ->paginate(10);
     }
@@ -104,15 +112,20 @@ class Fatura extends Model
     {
         return Fatura::where(function($query) use ($tomador,$inicio,$final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('faturas.tomador',$tomador) 
-                ->whereDate('faturas.fsfinal', $final);
-            }else{
-                $query->where([
-                    ['faturas.tomador',$tomador],
-                    ['faturas.empresa', $user->empresa]
-                ])->whereDate('faturas.fsfinal', $final);
-            }
+            $query->where([
+                ['faturas.tomador',$tomador],
+                ['faturas.empresa', $user->empresa]
+            ])->whereDate('faturas.fsfinal', $final);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('faturas.tomador',$tomador) 
+            //     ->whereDate('faturas.fsfinal', $final);
+            // }else{
+            //     $query->where([
+            //         ['faturas.tomador',$tomador],
+            //         ['faturas.empresa', $user->empresa]
+            //     ])->whereDate('faturas.fsfinal', $final);
+            // }
         })
         ->first();
     }

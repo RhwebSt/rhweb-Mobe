@@ -57,6 +57,21 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        // dd($dados);
+        $request->validate([
+            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'max:20',
+            'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
+            'email'=>'required|email',
+           
+        ],[
+            'name.required'=>'O campo não pode estar vazio!',
+            // 'name.regex'=>'O campo não pode ter caracteres especiais!',
+            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
+            'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
+            // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
+        ]);
         $user = new User;
         try {
             $users = $user->cadastro($dados);
@@ -91,11 +106,17 @@ class UsuarioController extends Controller
         // $dados = $this->user->edit($id);
         // return view('usuarios.dadosPessoais.index',compact('user'));
         $id = base64_decode($id);
+
         $user = Auth::user();
         $search = request('search');
-        $users = $this->user->listaUser('asc',$search);
         $editar = $this->user->edit($id);
-        return view('usuarios.trabalhador.edit',compact('user','users','editar'));
+        $id = [];
+        $users = $this->user->listaUser('asc',$search);
+        foreach ($users as $key => $use) {
+            array_push($id,$use->id);
+        }
+        $permissao = $this->user->permissao($id);
+        return view('usuarios.trabalhador.edit',compact('user','users','editar','permissao'));
     }
 
     /**
@@ -108,6 +129,20 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $request->validate([
+            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'senha'=>'max:20',
+            'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
+            'email'=>'required|email',
+           
+        ],[
+            'name.required'=>'O campo não pode estar vazio!',
+            // 'name.regex'=>'O campo não pode ter caracteres especiais!',
+            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
+            'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
+            // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
+        ]);
         $user = new User;
         try {
             $users = $user->editar($dados,$id);

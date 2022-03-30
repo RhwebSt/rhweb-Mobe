@@ -64,7 +64,7 @@
                             </td>
 
                             <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:120px">
-                                <a class="btn__padrao--preco modal-botao" href="{{route('depedente.mostrar.index',$trabalhador->id)}}" class=""><i style="color:white" class="fad fa-users"></i></a>
+                                <a class="btn__padrao--preco modal-botao" href="{{route('depedente.mostrar.index',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fad fa-users"></i></a>
                             </td>
 
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
@@ -83,11 +83,11 @@
                                 </div>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--evento modal-botao" href="" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
+                                <a class="btn__padrao--evento modal-botao" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                 <button class="btn">
-                                    <a class="btn__padrao--editar " href="{{route('trabalhador.edit',$trabalhador->id)}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
+                                    <a class="btn__padrao--editar " href="{{route('trabalhador.edit',base64_encode($trabalhador->id))}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
                                 </button>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">

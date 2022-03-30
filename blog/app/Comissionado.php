@@ -37,9 +37,10 @@ class Comissionado extends Model
         )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('trabalhador', $id);
-            }
+            $query->where('trabalhador', $id);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('trabalhador', $id);
+            // }
         })
         ->first();
     }

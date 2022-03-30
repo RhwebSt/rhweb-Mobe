@@ -41,34 +41,55 @@ class Empresa extends Model
             )
             ->where(function($query) use ($id){
                 $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->where('empresas.esnome',$id)
-                    ->orWhere('empresas.escnpj',$id)
-                    // ->orWhere('empresas.escnae',$id)
-                    // ->orWhere('empresas.escodigomunicipio',$id)
-                    ->orWhere('empresas.id',$id);
-                }else{
-                    $query->where([
-                        ['empresas.esnome',$id],
-                        ['empresas.id', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['empresas.escnpj',$id],
-                        ['empresas.id', $user->empresa]
-                    ])
-                    // ->orWhere([
-                    //     ['empresas.escnae','like','%'.$id.'%'],
-                    //     ['empresas.id', $user->empresa]
-                    // ])
-                    // ->orWhere([
-                    //     ['empresas.escodigomunicipio','like','%'.$id.'%'],
-                    //     ['empresas.id', $user->empresa]
-                    // ])
-                    ->orWhere([
-                        ['empresas.id',$id],
-                        ['empresas.id', $user->empresa] 
-                    ]);
-                }
+                $query->where([
+                    ['empresas.esnome',$id],
+                    ['empresas.id', $user->empresa]
+                ])
+                ->orWhere([
+                    ['empresas.escnpj',$id],
+                    ['empresas.id', $user->empresa]
+                ])
+                // ->orWhere([
+                //     ['empresas.escnae','like','%'.$id.'%'],
+                //     ['empresas.id', $user->empresa]
+                // ])
+                // ->orWhere([
+                //     ['empresas.escodigomunicipio','like','%'.$id.'%'],
+                //     ['empresas.id', $user->empresa]
+                // ])
+                ->orWhere([
+                    ['empresas.id',$id],
+                    ['empresas.id', $user->empresa] 
+                ]);
+
+                // if ($user->hasPermissionTo('admin')) {
+                //     $query->where('empresas.esnome',$id)
+                //     ->orWhere('empresas.escnpj',$id)
+                //     // ->orWhere('empresas.escnae',$id)
+                //     // ->orWhere('empresas.escodigomunicipio',$id)
+                //     ->orWhere('empresas.id',$id);
+                // }else{
+                //     $query->where([
+                //         ['empresas.esnome',$id],
+                //         ['empresas.id', $user->empresa]
+                //     ])
+                //     ->orWhere([
+                //         ['empresas.escnpj',$id],
+                //         ['empresas.id', $user->empresa]
+                //     ])
+                //     // ->orWhere([
+                //     //     ['empresas.escnae','like','%'.$id.'%'],
+                //     //     ['empresas.id', $user->empresa]
+                //     // ])
+                //     // ->orWhere([
+                //     //     ['empresas.escodigomunicipio','like','%'.$id.'%'],
+                //     //     ['empresas.id', $user->empresa]
+                //     // ])
+                //     ->orWhere([
+                //         ['empresas.id',$id],
+                //         ['empresas.id', $user->empresa] 
+                //     ]);
+                // }
             })
             ->first();
     }
@@ -83,11 +104,12 @@ class Empresa extends Model
         )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('empresas.id',$id);
-            }else{
-                $query->where('empresas.id', $user->empresa);
-            }
+            $query->where('empresas.id', $user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('empresas.id',$id);
+            // }else{
+            //     $query->where('empresas.id', $user->empresa);
+            // }
         })
         ->first();
     }
@@ -99,31 +121,48 @@ class Empresa extends Model
     {
         return Empresa::select('id','esnome','escnpj','esresponsavel','estelefone')->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('empresas.esnome','like','%'.$id.'%')
-                ->orWhere('empresas.escnpj','like','%'.$id.'%')
-                ->orWhere('empresas.escnae','like','%'.$id.'%')
-                ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%')
-                ->orWhere('empresas.id',$id);
-            }else{
-                $query->where([
-                    ['empresas.esnome','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escnpj','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escnae','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escodigomunicipio','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])
-                ->orWhere([
-                    ['empresas.id',$id],
-                    ['empresas.id', $user->empresa] 
-                ]);
-            }
+            $query->where([
+                ['empresas.esnome','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escnpj','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escnae','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escodigomunicipio','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])
+            ->orWhere([
+                ['empresas.id',$id],
+                ['empresas.id', $user->empresa] 
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('empresas.esnome','like','%'.$id.'%')
+            //     ->orWhere('empresas.escnpj','like','%'.$id.'%')
+            //     ->orWhere('empresas.escnae','like','%'.$id.'%')
+            //     ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%')
+            //     ->orWhere('empresas.id',$id);
+            // }else{
+            //     $query->where([
+            //         ['empresas.esnome','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escnpj','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escnae','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escodigomunicipio','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])
+            //     ->orWhere([
+            //         ['empresas.id',$id],
+            //         ['empresas.id', $user->empresa] 
+            //     ]);
+            // }
         })
         ->orderBy('empresas.esnome','asc')
         ->distinct()
@@ -134,35 +173,53 @@ class Empresa extends Model
     {
         return Empresa::select('id','esnome','escnpj','esresponsavel','estelefone')->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where('empresas.esnome','like','%'.$id.'%')
-                    ->orWhere('empresas.escnpj','like','%'.$id.'%')
-                    ->orWhere('empresas.esresponsavel','like','%'.$id.'%')
-                    ->orWhere('empresas.escnae','like','%'.$id.'%')
-                    ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%');
-                }else{
-                    $query->orWhere('empresas.id','>',0);
-                }
-            }else{
-                $query->where([
-                    ['empresas.esnome','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escnpj','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escnae','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])->orWhere([
-                    ['empresas.escodigomunicipio','like','%'.$id.'%'],
-                    ['empresas.id', $user->empresa]
-                ])
-                ->orWhere([
-                    ['empresas.id',$id],
-                    ['empresas.id', $user->empresa] 
-                ]);
-            }
+            $query->where([
+                ['empresas.esnome','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escnpj','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escnae','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])->orWhere([
+                ['empresas.escodigomunicipio','like','%'.$id.'%'],
+                ['empresas.id', $user->empresa]
+            ])
+            ->orWhere([
+                ['empresas.id',$id],
+                ['empresas.id', $user->empresa] 
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where('empresas.esnome','like','%'.$id.'%')
+            //         ->orWhere('empresas.escnpj','like','%'.$id.'%')
+            //         ->orWhere('empresas.esresponsavel','like','%'.$id.'%')
+            //         ->orWhere('empresas.escnae','like','%'.$id.'%')
+            //         ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%');
+            //     }else{
+            //         $query->orWhere('empresas.id','>',0);
+            //     }
+            // }else{
+            //     $query->where([
+            //         ['empresas.esnome','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escnpj','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escnae','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])->orWhere([
+            //         ['empresas.escodigomunicipio','like','%'.$id.'%'],
+            //         ['empresas.id', $user->empresa]
+            //     ])
+            //     ->orWhere([
+            //         ['empresas.id',$id],
+            //         ['empresas.id', $user->empresa] 
+            //     ]);
+            // }
         })
         ->orderBy('empresas.esnome',$condicao)
         ->distinct()

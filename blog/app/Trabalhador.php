@@ -52,35 +52,54 @@ class Trabalhador extends Model
         ) 
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where('tsnome','like','%'.$id.'%') 
-                    ->orWhere('tscpf','like','%'.$id.'%')
-                    ->orWhere('tsmatricula','like','%'.$id.'%');
-                }else{
-                    $query->where('id','>',$id);
-                }
+            if ($id) {
+                $query->where([
+                    ['trabalhadors.tsnome','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['trabalhadors.tscpf','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ])
+                ->orWhere([
+                    ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ]);
             }else{
-                if ($id) {
-                    $query->where([
-                        ['trabalhadors.tsnome','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['trabalhadors.tscpf','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ]);
-                }else{
-                    $query->where([
-                        ['trabalhadors.id','>',$id],
-                        ['trabalhadors.empresa', $user->empresa]
-                    ]);
-                }
+                $query->where([
+                    ['trabalhadors.id','>',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ]);
             }
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where('tsnome','like','%'.$id.'%') 
+            //         ->orWhere('tscpf','like','%'.$id.'%')
+            //         ->orWhere('tsmatricula','like','%'.$id.'%');
+            //     }else{
+            //         $query->where('id','>',$id);
+            //     }
+            // }else{
+            //     if ($id) {
+            //         $query->where([
+            //             ['trabalhadors.tsnome','like','%'.$id.'%'],
+            //             ['trabalhadors.empresa', $user->empresa]
+            //         ])
+            //         ->orWhere([
+            //             ['trabalhadors.tscpf','like','%'.$id.'%'],
+            //             ['trabalhadors.empresa', $user->empresa],
+            //         ])
+            //         ->orWhere([
+            //             ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+            //             ['trabalhadors.empresa', $user->empresa],
+            //         ]);
+            //     }else{
+            //         $query->where([
+            //             ['trabalhadors.id','>',$id],
+            //             ['trabalhadors.empresa', $user->empresa]
+            //         ]);
+            //     }
+            // }
             
         })
         ->orderBy('created_at','desc')
@@ -116,24 +135,37 @@ class Trabalhador extends Model
                 )
             ->where(function($query) use ($id){
                 $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->orWhere('tsnome','like','%'.$id.'%') 
-                        ->orWhere('tscpf','like','%'.$id.'%')
-                        ->orWhere('tsmatricula','like','%'.$id.'%');
-                }else{
-                    $query->where([
-                        ['trabalhadors.tsnome','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['trabalhadors.tscpf','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ]);
-                }
+                $query->where([
+                    ['trabalhadors.tsnome','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['trabalhadors.tscpf','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ])
+                ->orWhere([
+                    ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                    ['trabalhadors.empresa', $user->empresa],
+                ]);
+
+                // if ($user->hasPermissionTo('admin')) {
+                //     $query->orWhere('tsnome','like','%'.$id.'%') 
+                //         ->orWhere('tscpf','like','%'.$id.'%')
+                //         ->orWhere('tsmatricula','like','%'.$id.'%');
+                // }else{
+                //     $query->where([
+                //         ['trabalhadors.tsnome','like','%'.$id.'%'],
+                //         ['trabalhadors.empresa', $user->empresa]
+                //     ])
+                //     ->orWhere([
+                //         ['trabalhadors.tscpf','like','%'.$id.'%'],
+                //         ['trabalhadors.empresa', $user->empresa],
+                //     ])
+                //     ->orWhere([
+                //         ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                //         ['trabalhadors.empresa', $user->empresa],
+                //     ]);
+                // }
                
             })
             ->get();
@@ -165,29 +197,46 @@ class Trabalhador extends Model
                 )
             ->where(function($query) use ($id){
                 $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->where('tsnome',$id) 
-                    ->orWhere('tscpf',$id)
-                    // ->orWhere('tsmatricula',$id)
-                    ->orWhere('trabalhadors.id',$id);
-                }else{
-                    $query->where([
-                        ['trabalhadors.tsnome',$id],
-                        ['trabalhadors.empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['trabalhadors.tscpf',$id],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ])
-                    // ->orWhere([
-                    //     ['trabalhadors.tsmatricula',$id],
-                    //     ['trabalhadors.empresa', $user->empresa],
-                    // ])
-                    ->orWhere([
-                        ['trabalhadors.id',$id],
-                        ['trabalhadors.empresa', $user->empresa],
-                    ]);
-                }
+                $query->where([
+                    ['trabalhadors.tsnome',$id],
+                    ['trabalhadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['trabalhadors.tscpf',$id],
+                    ['trabalhadors.empresa', $user->empresa],
+                ])
+                // ->orWhere([
+                //     ['trabalhadors.tsmatricula',$id],
+                //     ['trabalhadors.empresa', $user->empresa],
+                // ])
+                ->orWhere([
+                    ['trabalhadors.id',$id],
+                    ['trabalhadors.empresa', $user->empresa],
+                ]);
+
+                // if ($user->hasPermissionTo('admin')) {
+                //     $query->where('tsnome',$id) 
+                //     ->orWhere('tscpf',$id)
+                //     // ->orWhere('tsmatricula',$id)
+                //     ->orWhere('trabalhadors.id',$id);
+                // }else{
+                //     $query->where([
+                //         ['trabalhadors.tsnome',$id],
+                //         ['trabalhadors.empresa', $user->empresa]
+                //     ])
+                //     ->orWhere([
+                //         ['trabalhadors.tscpf',$id],
+                //         ['trabalhadors.empresa', $user->empresa],
+                //     ])
+                //     // ->orWhere([
+                //     //     ['trabalhadors.tsmatricula',$id],
+                //     //     ['trabalhadors.empresa', $user->empresa],
+                //     // ])
+                //     ->orWhere([
+                //         ['trabalhadors.id',$id],
+                //         ['trabalhadors.empresa', $user->empresa],
+                //     ]);
+                // }
                
             })
         ->first();
@@ -211,29 +260,43 @@ class Trabalhador extends Model
                 )
                 ->where(function($query) use ($id){
                     $user = auth()->user();
-                    if ($user->hasPermissionTo('admin')) {
-                        if ($id) {
-                            $query->orWhere('tsmatricula','like','%'.$id.'%')
-                            ->orWhere('tsnome','like','%'.$id.'%')
-                            ->orWhere('tscpf','like','%'.$id.'%');
-                        }else{
-                            $query->where('trabalhadors.id','>',0);
-                        }
-                    }else{
-                        $query->where([
-                            ['trabalhadors.tsnome','like','%'.$id.'%'],
-                            ['trabalhadors.empresa', $user->empresa]
-                        ])
-                        ->orWhere([
-                            ['trabalhadors.tscpf','like','%'.$id.'%'],
-                            ['trabalhadors.empresa', $user->empresa],
-                        ])
-                        ->orWhere([
-                            ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-                            ['trabalhadors.empresa', $user->empresa],
-                        ])
-                        ->where('trabalhadors.empresa', $user->empresa);
-                    }
+                    $query->where([
+                        ['trabalhadors.tsnome','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tscpf','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    ->where('trabalhadors.empresa', $user->empresa);
+
+                    // if ($user->hasPermissionTo('admin')) {
+                    //     if ($id) {
+                    //         $query->orWhere('tsmatricula','like','%'.$id.'%')
+                    //         ->orWhere('tsnome','like','%'.$id.'%')
+                    //         ->orWhere('tscpf','like','%'.$id.'%');
+                    //     }else{
+                    //         $query->where('trabalhadors.id','>',0);
+                    //     }
+                    // }else{
+                    //     $query->where([
+                    //         ['trabalhadors.tsnome','like','%'.$id.'%'],
+                    //         ['trabalhadors.empresa', $user->empresa]
+                    //     ])
+                    //     ->orWhere([
+                    //         ['trabalhadors.tscpf','like','%'.$id.'%'],
+                    //         ['trabalhadors.empresa', $user->empresa],
+                    //     ])
+                    //     ->orWhere([
+                    //         ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+                    //         ['trabalhadors.empresa', $user->empresa],
+                    //     ])
+                    //     ->where('trabalhadors.empresa', $user->empresa);
+                    // }
                    
                 })
             ->orderBy('trabalhadors.tsnome', $condicao)
@@ -270,12 +333,14 @@ class Trabalhador extends Model
             )
         ->where(function($query) use ($trabalhador){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->whereIn('trabalhadors.id',$trabalhador);
-            }else{
-                $query->whereIn('trabalhadors.id',$trabalhador)
-                ->where('trabalhadors.empresa',$user->empresa);
-            }
+            $query->whereIn('trabalhadors.id',$trabalhador)
+            ->where('trabalhadors.empresa',$user->empresa);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->whereIn('trabalhadors.id',$trabalhador);
+            // }else{
+            //     $query->whereIn('trabalhadors.id',$trabalhador)
+            //     ->where('trabalhadors.empresa',$user->empresa);
+            // }
         })
         ->get();
     }
@@ -315,11 +380,12 @@ class Trabalhador extends Model
             )
             ->where(function($query){
                 $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->where('trabalhadors.id', '>', 0);
-                }else{
-                    $query->where('trabalhadors.empresa', $user->empresa);
-                }
+                $query->where('trabalhadors.empresa', $user->empresa);
+                // if ($user->hasPermissionTo('admin')) {
+                //     $query->where('trabalhadors.id', '>', 0);
+                // }else{
+                //     $query->where('trabalhadors.empresa', $user->empresa);
+                // }
             })
         ->orderBy('tsnome', 'asc')
         ->get();

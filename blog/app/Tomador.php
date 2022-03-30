@@ -50,34 +50,51 @@ class Tomador extends Model
         )
         ->where(function($query) use ($id,$condicao){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->orWhere('tsnome','like','%'.$id.'%')
-                    ->orWhere('tscnpj','like','%'.$id.'%')
-                    ->orWhere('tsmatricula','like','%'.$id.'%');
-                }else{
-                    $query->where('tomadors.id','>',0);
-                }
-               
-            }else{
-                if ($id) {
-                    $query->orWhere([
-                        ['tomadors.tsnome','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa]
+            if ($id) {
+                $query->orWhere([
+                    ['tomadors.tsnome','like','%'.$id.'%'],
+                    ['tomadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['tomadors.tscnpj','like','%'.$id.'%'],
+                    ['tomadors.empresa', $user->empresa]
                     ])
-                    ->orWhere([
-                        ['tomadors.tscnpj','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa]
-                        ])
-                    ->orWhere([
-                        ['tomadors.tsmatricula','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa]
-                    ]);
-                }else{
-                    $query->where('tomadors.empresa', $user->empresa);
-                }
-               
+                ->orWhere([
+                    ['tomadors.tsmatricula','like','%'.$id.'%'],
+                    ['tomadors.empresa', $user->empresa]
+                ]);
+            }else{
+                $query->where('tomadors.empresa', $user->empresa);
             }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->orWhere('tsnome','like','%'.$id.'%')
+            //         ->orWhere('tscnpj','like','%'.$id.'%')
+            //         ->orWhere('tsmatricula','like','%'.$id.'%');
+            //     }else{
+            //         $query->where('tomadors.id','>',0);
+            //     }
+               
+            // }else{
+            //     if ($id) {
+            //         $query->orWhere([
+            //             ['tomadors.tsnome','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa]
+            //         ])
+            //         ->orWhere([
+            //             ['tomadors.tscnpj','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa]
+            //             ])
+            //         ->orWhere([
+            //             ['tomadors.tsmatricula','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa]
+            //         ]);
+            //     }else{
+            //         $query->where('tomadors.empresa', $user->empresa);
+            //     }
+               
+            // }
            
         })
         ->orderBy('tsnome',$condicao) 
@@ -109,29 +126,46 @@ class Tomador extends Model
             )
             ->where(function($query) use ($id){
                 $user = auth()->user();
-                if ($user->hasPermissionTo('admin')) {
-                    $query->where('tsnome',$id)
-                    ->orWhere('tscnpj',$id)
-                    // ->orWhere('tsmatricula',$id)
-                    ->orWhere('tomadors.id',$id); 
-                }else{
-                     $query->where([
-                            ['tsnome',$id],
-                            ['tomadors.empresa', $user->empresa]
-                        ])
-                        ->orWhere([
-                            ['tscnpj',$id],
-                            ['tomadors.empresa', $user->empresa],
-                        ])
-                        ->orWhere([
-                            ['tomadors.id',$id],
-                            ['tomadors.empresa', $user->empresa],
-                        ]);
-                        // ->orWhere([
-                        //     ['tsmatricula',$id],
-                        //     ['tomadors.empresa', $user->empresa],
-                        // ]);
-                }
+                $query->where([
+                    ['tsnome',$id],
+                    ['tomadors.empresa', $user->empresa]
+                ])
+                ->orWhere([
+                    ['tscnpj',$id],
+                    ['tomadors.empresa', $user->empresa],
+                ])
+                ->orWhere([
+                    ['tomadors.id',$id],
+                    ['tomadors.empresa', $user->empresa],
+                ]);
+                // ->orWhere([
+                //     ['tsmatricula',$id],
+                //     ['tomadors.empresa', $user->empresa],
+                // ]);
+
+                // if ($user->hasPermissionTo('admin')) {
+                //     $query->where('tsnome',$id)
+                //     ->orWhere('tscnpj',$id)
+                //     // ->orWhere('tsmatricula',$id)
+                //     ->orWhere('tomadors.id',$id); 
+                // }else{
+                //      $query->where([
+                //             ['tsnome',$id],
+                //             ['tomadors.empresa', $user->empresa]
+                //         ])
+                //         ->orWhere([
+                //             ['tscnpj',$id],
+                //             ['tomadors.empresa', $user->empresa],
+                //         ])
+                //         ->orWhere([
+                //             ['tomadors.id',$id],
+                //             ['tomadors.empresa', $user->empresa],
+                //         ]);
+                //         // ->orWhere([
+                //         //     ['tsmatricula',$id],
+                //         //     ['tomadors.empresa', $user->empresa],
+                //         // ]);
+                // }
                
             })
             ->first();
@@ -151,40 +185,64 @@ class Tomador extends Model
         ) 
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($id) {
-                    $query->where('tsnome','like','%'.$id.'%')
-                    ->orWhere('tscnpj', 'like', '%'.$id.'%')
-                    ->orWhere('tsmatricula', 'like', '%'.$id.'%')
-                    ->orWhere('tomadors.id',$id);
-                }else{
-                    $query->where('tomadors.id','>',$id);
-                }
-            }else{
-                if ($id) {
-                 $query->where([
-                        ['tsnome','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa]
-                    ])
-                    ->orWhere([
-                        ['tscnpj','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['tomadors.id','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa],
-                    ])
-                    ->orWhere([
-                        ['tsmatricula','like','%'.$id.'%'],
-                        ['tomadors.empresa', $user->empresa],
-                    ]);
-                }else{
-                    $query->where([
-                        ['tomadors.id','>',$id],
-                        ['tomadors.empresa', $user->empresa]
-                    ]);
-                }
-            }
+            if ($id) {
+                $query->where([
+                       ['tsnome','like','%'.$id.'%'],
+                       ['tomadors.empresa', $user->empresa]
+                   ])
+                   ->orWhere([
+                       ['tscnpj','like','%'.$id.'%'],
+                       ['tomadors.empresa', $user->empresa],
+                   ])
+                   ->orWhere([
+                       ['tomadors.id','like','%'.$id.'%'],
+                       ['tomadors.empresa', $user->empresa],
+                   ])
+                   ->orWhere([
+                       ['tsmatricula','like','%'.$id.'%'],
+                       ['tomadors.empresa', $user->empresa],
+                   ]);
+               }else{
+                   $query->where([
+                       ['tomadors.id','>',$id],
+                       ['tomadors.empresa', $user->empresa]
+                   ]);
+               }
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($id) {
+            //         $query->where('tsnome','like','%'.$id.'%')
+            //         ->orWhere('tscnpj', 'like', '%'.$id.'%')
+            //         ->orWhere('tsmatricula', 'like', '%'.$id.'%')
+            //         ->orWhere('tomadors.id',$id);
+            //     }else{
+            //         $query->where('tomadors.id','>',$id);
+            //     }
+            // }else{
+            //     if ($id) {
+            //      $query->where([
+            //             ['tsnome','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa]
+            //         ])
+            //         ->orWhere([
+            //             ['tscnpj','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa],
+            //         ])
+            //         ->orWhere([
+            //             ['tomadors.id','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa],
+            //         ])
+            //         ->orWhere([
+            //             ['tsmatricula','like','%'.$id.'%'],
+            //             ['tomadors.empresa', $user->empresa],
+            //         ]);
+            //     }else{
+            //         $query->where([
+            //             ['tomadors.id','>',$id],
+            //             ['tomadors.empresa', $user->empresa]
+            //         ]);
+            //     }
+            // }
            
         })
         ->orderBy('tomadors.tsnome')
@@ -225,14 +283,18 @@ class Tomador extends Model
         ->select('empresas.esnome','tomadors.tsnome')
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('tomadors.id',$id);
-            }else{
-                $query->where([
-                    ['tomadors.id',$id],
-                    ['tomadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['tomadors.id',$id],
+                ['tomadors.empresa', $user->empresa]
+            ]);
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('tomadors.id',$id);
+            // }else{
+            //     $query->where([
+            //         ['tomadors.id',$id],
+            //         ['tomadors.empresa', $user->empresa]
+            //     ]);
+            // }
            
         })
         ->first();
@@ -303,15 +365,20 @@ class Tomador extends Model
         )
         ->where(function($query) use ($tomador,$inicio,$final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('tomadors.id',$tomador) 
-                ->whereDate('folhars.fsfinal', $final);
-            }else{
-                $query->where([
-                    ['tomadors.id',$tomador],
-                    ['tomadors.empresa', $user->empresa]
-                ])->whereDate('folhars.fsfinal', $final);
-            }
+            $query->where([
+                ['tomadors.id',$tomador],
+                ['tomadors.empresa', $user->empresa]
+            ])->whereDate('folhars.fsfinal', $final);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('tomadors.id',$tomador) 
+            //     ->whereDate('folhars.fsfinal', $final);
+            // }else{
+            //     $query->where([
+            //         ['tomadors.id',$tomador],
+            //         ['tomadors.empresa', $user->empresa]
+            //     ])->whereDate('folhars.fsfinal', $final);
+            // }
            
         })
         ->first();

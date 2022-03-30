@@ -136,20 +136,24 @@ class User extends Authenticatable
             if ($dados) {
                 $query->where([
                     ['users.name','like','%'.$dados.'%'],
-                    ['users.empresa',$user->empresa]
+                    ['users.empresa',$user->empresa],
+                    ['users.cargo','!=','admin']
                 ])
                 ->orWhere([
                     ['empresas.esnome','like','%'.$dados.'%'],
-                    ['users.empresa',$user->empresa]
+                    ['users.empresa',$user->empresa],
+                    ['users.cargo','!=','admin']
                 ])
                 ->orWhere([
                     ['empresas.escnpj','like','%'.$dados.'%'],
-                    ['users.empresa',$user->empresa]
+                    ['users.empresa',$user->empresa],
+                    ['users.cargo','!=','admin']
                 ]);
             }else{
                 $query->where([
                     ['users.id','>',0],
-                    ['users.empresa',$user->empresa]
+                    ['users.empresa',$user->empresa],
+                    ['users.cargo','!=','admin']
                 ]);
             }
         })
@@ -208,10 +212,10 @@ class User extends Authenticatable
         return DB::table('model_has_permissions')
         // ->join('model_has_permissions', 'users.id', '=', 'model_has_permissions.model_id') 
         ->join('permissions', 'permissions.id', '=', 'model_has_permissions.permission_id')
-        ->select('permissions.name','model_has_permissions.permission_id','model_has_permissions.model_id')
+        ->select('permissions.name','model_has_permissions.model_type','model_has_permissions.permission_id','model_has_permissions.model_id')
         ->whereIn('model_has_permissions.model_id',$id)
         ->where([
-            ['permissions.name','!=','user'],
+            // ['permissions.name','!=','user'],
             ['permissions.name','!=','admin'],
         ])
         ->orderBy('model_has_permissions.model_id', 'asc')
@@ -231,15 +235,15 @@ class User extends Authenticatable
             ['model_has_permissions.model_id',$id],
             ['model_has_permissions.permission_id',$permisao],
         ])
-        ->delete();
+        ->update(['model_type' => '']);
     }
     public function givePermissionTos($id,$permisao)
     {
         return DB::table('model_has_permissions') 
-        ->insert([
-            'permission_id' => $permisao,
-            'model_type'=>'App\User',
-            'model_id' => $id
-        ]);
+        ->where([
+            ['model_has_permissions.model_id',$id],
+            ['model_has_permissions.permission_id',$permisao],
+        ])
+        ->update(['model_type' => 'App\User']);
     }
 }

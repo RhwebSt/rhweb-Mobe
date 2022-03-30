@@ -46,19 +46,27 @@ class Lancamentorublica extends Model
             )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) { 
-                // $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%');
-                $query->where('lancamentorublicas.licodigo',$id)
-                ->orWhere('lancamentorublicas.id',$id);
-            }else{
-                $query->where([
-                    ['lancamentorublicas.licodigo',$id],
-                    ['trabalhadors.empresa', $user->empresa]
-                ])->orWhere([
-                    ['lancamentorublicas.id',$id],
-                    ['trabalhadors.empresa', $user->empresa]
-                ]);
-            }
+            $query->where([
+                ['lancamentorublicas.licodigo',$id],
+                ['trabalhadors.empresa', $user->empresa]
+            ])->orWhere([
+                ['lancamentorublicas.id',$id],
+                ['trabalhadors.empresa', $user->empresa]
+            ]);
+
+            // if ($user->hasPermissionTo('admin')) { 
+            //     // $query->where('trabalhadors.tsnome', 'like', '%'.$id.'%');
+            //     $query->where('lancamentorublicas.licodigo',$id)
+            //     ->orWhere('lancamentorublicas.id',$id);
+            // }else{
+            //     $query->where([
+            //         ['lancamentorublicas.licodigo',$id],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ])->orWhere([
+            //         ['lancamentorublicas.id',$id],
+            //         ['trabalhadors.empresa', $user->empresa]
+            //     ]);
+            // }
         })
         ->first();
     }
@@ -101,40 +109,59 @@ class Lancamentorublica extends Model
         )
        ->where(function($query) use ($dados){ 
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                if ($dados['tomador']) {
-                    $query->where([
-                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                        ['tomadors.id',$dados['tomador']]
-                    ])
-                    ->whereBetween('lancamentotabelas.lsdata',[$dados['ano_inicial'], $dados['ano_final']]);
-                }else{
-                    $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
-                    ->whereBetween('lancamentotabelas.lsdata',
-                    [$dados['ano_inicial'], 
-                    $dados['ano_final']]);
-                }
-               
+            if ($dados['tomador']) {
+                $query->where([
+                    ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                    ['lancamentorublicas.empresa', $user->empresa]
+                ]) 
+                ->whereBetween('lancamentotabelas.lsdata',
+                [$dados['ano_inicial'], 
+                $dados['ano_final']]);
             }else{
-                if ($dados['tomador']) {
-                    $query->where([
-                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                        ['lancamentorublicas.empresa', $user->empresa]
-                    ]) 
-                    ->whereBetween('lancamentotabelas.lsdata',
-                    [$dados['ano_inicial'], 
-                    $dados['ano_final']]);
-                }else{
-                    $query->where([
-                        ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                        ['lancamentorublicas.empresa', $user->empresa],
-                        ['tomadors.id',$dados['tomador']]
-                    ]) 
-                    ->whereBetween('lancamentotabelas.lsdata',
-                    [$dados['ano_inicial'], 
-                    $dados['ano_final']]);
-                }
+                $query->where([
+                    ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+                    ['lancamentorublicas.empresa', $user->empresa],
+                    ['tomadors.id',$dados['tomador']]
+                ]) 
+                ->whereBetween('lancamentotabelas.lsdata',
+                [$dados['ano_inicial'], 
+                $dados['ano_final']]);
             }
+            
+            // if ($user->hasPermissionTo('admin')) {
+            //     if ($dados['tomador']) {
+            //         $query->where([
+            //             ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+            //             ['tomadors.id',$dados['tomador']]
+            //         ])
+            //         ->whereBetween('lancamentotabelas.lsdata',[$dados['ano_inicial'], $dados['ano_final']]);
+            //     }else{
+            //         $query->where('lancamentorublicas.trabalhador',$dados['trabalhador'])
+            //         ->whereBetween('lancamentotabelas.lsdata',
+            //         [$dados['ano_inicial'], 
+            //         $dados['ano_final']]);
+            //     }
+               
+            // }else{
+            //     if ($dados['tomador']) {
+            //         $query->where([
+            //             ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+            //             ['lancamentorublicas.empresa', $user->empresa]
+            //         ]) 
+            //         ->whereBetween('lancamentotabelas.lsdata',
+            //         [$dados['ano_inicial'], 
+            //         $dados['ano_final']]);
+            //     }else{
+            //         $query->where([
+            //             ['lancamentorublicas.trabalhador',$dados['trabalhador']],
+            //             ['lancamentorublicas.empresa', $user->empresa],
+            //             ['tomadors.id',$dados['tomador']]
+            //         ]) 
+            //         ->whereBetween('lancamentotabelas.lsdata',
+            //         [$dados['ano_inicial'], 
+            //         $dados['ano_final']]);
+            //     }
+            // }
         })
         ->get();
     }
@@ -150,16 +177,22 @@ class Lancamentorublica extends Model
         )
         ->where(function($query) use ($tomador,$ano_inicio,$ano_final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.tomador',$tomador)
-                ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
-            }else{
-                $query->where([
-                    ['lancamentotabelas.tomador',$tomador],
-                    ['lancamentotabelas.empresa',$user->empresa]
-                ])
-                ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
-            }
+            $query->where([
+                ['lancamentotabelas.tomador',$tomador],
+                ['lancamentotabelas.empresa',$user->empresa]
+            ])
+            ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.tomador',$tomador)
+            //     ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
+            // }else{
+            //     $query->where([
+            //         ['lancamentotabelas.tomador',$tomador],
+            //         ['lancamentotabelas.empresa',$user->empresa]
+            //     ])
+            //     ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
+            // }
         })
         ->get();
     }
@@ -174,10 +207,13 @@ class Lancamentorublica extends Model
         )
         ->where(function($query) use ($empresa,$ano_inicio,$ano_final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.empresa',$empresa)
-                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
-            }
+            $query->where('lancamentotabelas.empresa',$empresa)
+            ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.empresa',$empresa)
+            //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+            // }
         })
         ->get();
     }
@@ -228,10 +264,13 @@ class Lancamentorublica extends Model
         )
         ->where(function($query) use ($id,$ano_inicio,$ano_final){
             $user = auth()->user();
-            if ($user->hasPermissionTo('admin')) {
-                $query->where('lancamentotabelas.tomador',$id)
-                ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
-            }
+            $query->where('lancamentotabelas.tomador',$id)
+            ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+
+            // if ($user->hasPermissionTo('admin')) {
+            //     $query->where('lancamentotabelas.tomador',$id)
+            //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+            // }
         })
         ->groupBy('lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
         ->get();

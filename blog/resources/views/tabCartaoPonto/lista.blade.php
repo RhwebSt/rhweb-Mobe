@@ -8,7 +8,7 @@
                       <div class="modal-body modalBody">
                           
                             <div class="col-md-5 mb-4 p-1 mt-2 pesquisar">
-                                <form action="{{  route('tabcartaoponto.index')}}" method="GET">
+                                <form action="{{route('tabcartaoponto.index')}}" method="GET">
                                     <div class="d-flex">
                                         <label for="exampleDataList" class="form-label"></label>
                                         <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
@@ -103,7 +103,7 @@
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                         <button class="btn">
-                                                            <a href="{{route('tabcartaoponto.edit',$lancamentotabela->id)}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
+                                                            <a href="{{route('tabcartaoponto.edit',base64_encode($lancamentotabela->id))}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
                                                         </button>
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px;">

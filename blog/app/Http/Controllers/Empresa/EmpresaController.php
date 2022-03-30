@@ -102,13 +102,13 @@ class EmpresaController extends Controller
                 $dados['empresa'] = $empresas['id'];
                 $enderecos = $this->endereco->cadastro($dados);
                 $this->user->editusuarioprecadastro($dados['usuario'],$empresas['id']);
-                // $valoresrublicas = $this->valoresrublica->cadastro($dados);
+                $valoresrublicas = $this->valoresrublica->cadastro($dados);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
             
         } catch (\Throwable $th) {
             $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
-            // $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
+            $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
             $this->empresa->deletar($empresas['id']);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
         }
@@ -190,8 +190,8 @@ class EmpresaController extends Controller
         
         $empresas = $this->empresa->editar($dados,$id);
         $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
+        $valoresrublicas = $this->valoresrublica->editar($dados,$id);
         return redirect()->back()->withSuccess('Atualizado com sucesso.');
-        // $valoresrublicas = $this->valoresrublica->editar($dados,$id);
         try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);

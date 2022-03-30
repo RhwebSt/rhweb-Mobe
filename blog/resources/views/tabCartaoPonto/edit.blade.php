@@ -77,7 +77,7 @@
 
               
                 <?php
-                  if ($numboletimtabela->vsnroboletins) {
+                  if (isset($numboletimtabela->vsnroboletins)) {
                     $boletim = $numboletimtabela->vsnroboletins + 1;
                   }else{
                     $boletim = 1;
