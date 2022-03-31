@@ -246,4 +246,21 @@ class User extends Authenticatable
         ])
         ->update(['model_type' => 'App\User']);
     }
+    public function quantidadeUsuarios()
+    {
+        return DB::table('users')
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->count();
+    }
+    public function quantidadeBloqueadoUsuarios()
+    {
+        return DB::table('users')
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->join('model_has_permissions', 'users.id', '=', 'model_has_permissions.model_id')
+        ->where([
+            ['model_has_permissions.model_type',' '],
+            ['model_has_permissions.permission_id',2],
+        ])
+        ->count();
+    }
 }

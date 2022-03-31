@@ -84,7 +84,7 @@
                                 <button class="btn botao"  type="submit"><i class="fas fa-sync-alt"></i> Atualizar</button>
                                 <button class="btn botao__alterar" type="button" onClick="BotaoAlterafoto()">Alterar foto <i class="fas fa-camera"></i></button>
                                 </div>
-                                <input type="hidden" id="empresa" value="{{$user->empresa}}">
+                                <input type="hidden" id="empresa" value="{{$user->empresa}}"> 
                                 <h1 class="container text-center text-white fs-4 fw-bold">Atualizar os dados</h1>
                                 @csrf
                                 <input type="hidden" name="foto" id="inputfoto" value="{{$empresas->esfoto}}">
@@ -248,7 +248,7 @@
                                 
                                 <div class="col-md-4">
                                     <label for="cnpj__reponsavel" class="form-label text-white">CPF Responsável</label>
-                                    <input type="text" class="form-control  fw-bold" value="" name="cnpj__reponsavel" id="cnpj__reponsavel">
+                                    <input type="text" class="form-control  fw-bold" value="" name="cpf" id="cnpj__reponsavel">
                                     @error('')
                                       <span class="text-danger">{{ $message }}</span>
                                     @enderror

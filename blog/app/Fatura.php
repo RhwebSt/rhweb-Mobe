@@ -139,4 +139,10 @@ class Fatura extends Model
     {
         return Fatura::where('id',$id)->delete();
     }
+    public function quantidadeFatura()
+    {
+        return DB::table('faturas')
+        ->join('empresas', 'empresas.id', '=', 'faturas.empresa')
+        ->count();
+    }
 }

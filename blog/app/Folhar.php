@@ -418,5 +418,11 @@ class Folhar extends Model
     public function deletar($id)
     {
         return Folhar::where('id', $id)->delete();
+    } 
+    public function quantidadeFolhar()
+    {
+        return DB::table('folhars')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
+        ->count();
     }
 }

@@ -85,7 +85,7 @@ class PerfilController extends Controller
             'email'=>'required|max:100|email',
             'cnae__codigo'=>'required|max:10',
             'contribuicao__sindicato'=>'required|max:30',
-            'telefone'=>'required|max:20|celular_com_ddd',
+            'telefone'=>'required|max:20',
             'cod__municipio'=>'required|max:10',
             'cep'=>'required|max:16',
             'logradouro'=>'required|max:50',
@@ -100,6 +100,7 @@ class PerfilController extends Controller
             $empresas = $this->empresa->editar($dados,$id);
             $endereco = $this->endereco->editarEmpresa($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }

@@ -64,6 +64,7 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        
         $request->validate([
             'esnome'=>'required|max:100|unique:empresas',
             'escnpj'=>'required|max:100|unique:empresas|cnpj',

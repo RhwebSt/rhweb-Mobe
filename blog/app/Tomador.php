@@ -390,4 +390,10 @@ class Tomador extends Model
         ->orderBy('tsnome', 'asc')
         ->get();
     }
+    public function quantidadeTomador()
+    {
+        return DB::table('tomadors')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->count();
+    }
 }

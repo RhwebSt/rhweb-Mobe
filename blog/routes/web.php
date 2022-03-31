@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::resource('/','Home\\HomeController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->names('login');
+Route::resource('administrador/login','Administrador\\Login\\LoginController')->names('login.administrador');
 Route::get('usuario/cadastro','User\\UserController@index');
-Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
+Route::resource('cadastro/empresa','Empresa\\EmpresaController')->only(['store'])->names('cadastro.empresa');
+// Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
 Route::get('email',function()
 {
     $user = new stdClass();
@@ -28,7 +30,8 @@ Route::get('email',function()
 Route::post('verifica/senha','Senha\\SenhaController@store')->name('verifica.senha');
 Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.index');
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
-Route::resource('user','User\\UserController')->names('user');
+
+
 Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
@@ -177,15 +180,20 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
-        Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
-        Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+        
         Route::get('ordem/rublica/{ordem}/{id?}','Rublica\\RublicaController@ordem')->name('ordem.rublica');
         Route::get('relatorio/rublica','Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
         Route::get('rublica/pesquisa/{id}','Rublica\\RublicaController@pesquisa');
-        Route::resource('inss','Inss\\InssController')->names('inss');
-        
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        
+    });
+    Route::group(['middleware' => ['permission:Super Admin']], function () {
+        Route::resource('user','User\\UserController')->names('user'); 
+        Route::resource('inss','Inss\\InssController')->names('inss');
+        Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
+        Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+        Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
+        Route::get('administrador','Administrador\\AdministradorController@index')->name('administrador');
     });
     
 });

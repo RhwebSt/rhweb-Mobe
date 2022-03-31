@@ -52,7 +52,12 @@
   </script>
   @enderror
 
-
+  <!-- <form id="formulario" method="post" enctype="multipart/form-data">
+    <input type="text" name="campo1" value="hello" />
+    <input type="text" name="campo2" value="world" />
+    <input name="arquivo" type="file" />
+    <button>Enviar</button>
+</form> -->
 
   <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data" method="POST">
 
@@ -682,6 +687,8 @@
 <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
 
 <script>
+	
+
   $('.modal-botao').click(function() {
     localStorage.setItem("modal", "enabled");
   })

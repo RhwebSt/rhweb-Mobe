@@ -18,7 +18,7 @@ Obs: Essa senha é temporária por motivos de segurança, recomendamos que troqu
 Agradecemos pela preferência, para mais informações entrar em contato com o suporte.
 </p>
 <p>
-   <a href="{{route('user.edit',$user['id'])}}"> Clique aqui para ir para o site</a>.
+   <a href="{{route('user.edit', base64_encode($user['id']))}}"> Clique aqui para ir para o site</a>.
 </p>
 
 @endcomponent

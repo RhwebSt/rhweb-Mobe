@@ -22,26 +22,12 @@ class UserController extends Controller
     public function index()
     {
        
-        // $user = Auth::user();
-        // $search = request('search');
-        // $codicao = request('codicao');
-        // $users = $this->use->listaUser('asc',$search); 
-        // if ($codicao) {
-        //     $editar = $this->use->edit($codicao);
-        //     return view('usuarios.edit',compact('user','users','editar'));
-        // }else{
-        //     return view('usuarios.index',compact('user','users'));
-        // }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create()
     {
-        return view('usuarios.index');
+        return view('administrador.usuarios.index');
     }
     public function filtroPesquisa($condicao,$id = null)
     {
@@ -55,12 +41,7 @@ class UserController extends Controller
             return view('usuarios.index',compact('user','users'));
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
         $dados = $request->all(); 
@@ -97,39 +78,6 @@ class UserController extends Controller
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
     }
-
-   public function PreStore(Request $request)
-   {
-        $dados = $request->all(); 
-        $request->validate([
-            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
-            'senha'=>'max:20',
-            'email'=>'required|email',
-        ],[
-            
-            'name.required'=>'O campo não pode estar vazio!',
-            'name.regex'=>'O campo não pode ter caracteres especiais!',
-            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
-            'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
-            // 'email.unique'=>'Este email já esta cadastrado!',
-            'email.required'=>'O campo não pode estar vazio!',
-            'email.email'=>'O campo não é um email valido!',
-            
-        ]);
-        $user = $this->user->verificaemail($dados);
-        if ($user) {
-            return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
-        }
-        try {
-            $use = $this->user->precadastro($dados);
-            $dados['id'] = $use['id']; 
-            \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
-            // Mail::send(new \App\Mail\Email($dados));
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-        } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
-        }
-   }
     public function show($id)
     {
         $user = new User;
@@ -150,25 +98,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
         return view('usuarios.edit',compact('id'));
     }
     
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $dados = $request->all();
@@ -199,12 +134,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = new User;

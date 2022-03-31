@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\Administrador\Login;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-class HomeController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (auth()->check()){
-            $user = Auth::user();   
-            if ($user->hasPermissionTo('Super Admin')) {
-                return redirect()->route('administrador');
-            }else{
-                return view('login.home',compact('user')); 
-            }
-        }
-        return view('index'); 
+        
+        return view('administrador.login.index');
     }
 
     /**
@@ -32,7 +25,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -43,7 +36,20 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dados = $request->all();
+        $request->validate([
+            'user' => 'required',
+            'password'=>'required' 
+        ],[
+            'user.required'=>'Campo usuário não pode estar vazio!',
+            'password.required'=>'Informe sua senha!',
+            'password.min'=>'A senha não pode conter menos de 6 caracteres!',
+            
+        ]);
+        if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
+            return redirect()->route('administrador');
+        } 
+        return redirect()->back()->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuário. Tente novamente.']);
     }
 
     /**
@@ -89,5 +95,10 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login.administrador.index');
     }
 }

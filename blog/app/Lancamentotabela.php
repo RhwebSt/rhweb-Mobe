@@ -400,4 +400,18 @@ class Lancamentotabela extends Model
     {
         return Lancamentotabela::where('tomador', $id)->delete();
     }
+    public function quantidadeCartaoPonto()
+    {
+        return DB::table('lancamentotabelas')
+        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa')
+        ->where('lancamentotabelas.lsstatus', 'D')
+        ->count();
+    }
+    public function quantidadeBoletimTabela()
+    {
+        return DB::table('lancamentotabelas')
+        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa')
+        ->where('lancamentotabelas.lsstatus', 'M')
+        ->count();
+    }
 }

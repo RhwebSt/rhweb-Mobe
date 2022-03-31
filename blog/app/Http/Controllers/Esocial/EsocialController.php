@@ -64,8 +64,13 @@ class EsocialController extends Controller
         $id = base64_decode($id);
         $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
-        dd($trabalhador->nsraca[1],$trabalhador);
+        // dd($trabalhador->nsraca[1],$empresa,$trabalhador);
         $cd = 
+        'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+        'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+        'idgrupoeventos=1'."\r\n".
+        'versaomanual=2.5.00'."\r\n".
+        'ambiente=2'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
         'indRetif_4=1'."\r\n".                                                                    
         'nrRecibo_5='."\r\n".                                                                   
@@ -82,39 +87,43 @@ class EsocialController extends Controller
         'grauInstr_19='.$trabalhador->nsraca[0].$trabalhador->nsraca[1]."\r\n".                                                                  
         'dtNascto_22='.$trabalhador->nsnascimento."\r\n".                                                         
         'paisNascto_25='.$trabalhador->nsnacionalidade[0].$trabalhador->nsnacionalidade[1].$trabalhador->nsnacionalidade[2]."\r\n".                                                              
-        // paisNac_26=105    (pais de nacionalidade apenas o codigo)                                                              
-        // tpLograd_60=R   (Letra do valor do campo selecionado)                                                                
-        // dscLograd_61=RUA NOSSA SRA APARECIDA  (rua do usuario)                                          
-        // nrLograd_62=000493    (numero do endereco do usuario)                                                          
-        // complemento_63=  (complemento)                                                               
-        // bairro_64=JARDIM ELDORADO (bairro do usuario)                                                      
-        // cep_65=88133400  ( cep do usuario)                                                               
-        // codMunic_66=4211900  (codmunic do usuario)                                                           
-        // UF_67=SC (uf do usuario)                                                                       
-        // cadIni_164=N  (fixo)                                                                  
-        // matricula_173=009147 (matricula do trabalhador)                                                           
-        // codCateg_104=202 (codigo da categoria do trablhador)                                                               
-        // dtInicio_105=2019-11-18   (data de admissao trabalhador)                                                      
-        // natAtividade_106=1 (fixo)                                                             
-        // nmCargo_175=783210 - Movimentador de mercadorias   (CBO + Descricao)                             
-        // CBOCargo_176=783210       (CBO)                                                      
-        // nmFuncao_177=783210 - Movimentador de mercadorias  (CBO + Descricao)                                   
-        // CBOFuncao_178=783210     (CBO)                                                          
-        // SALVARS2300                                                                     
-        // ';
-        // $file_name = 'S2300_'.date("Ymd").'11475900170.txt';
-        // $file = fopen( $file_name, "w" );
-        // fwrite($file, $cd);
-        // fclose($file);
-        // header("Content-Type: application/save");
-        // header("Content-Length:".filesize($file_name));
-        // header('Content-Disposition: attachment; filename="' . $file_name . '"');
-        // header("Content-Transfer-Encoding: binary");
-        // header('Expires: 0');
-        // header('Pragma: no-cache');
-        // echo $cd;
-        // exit;
-        // return redirect()->back();
+        'paisNac_26='.$trabalhador->nsnaturalidade[0].$trabalhador->nsnaturalidade[1].$trabalhador->nsnaturalidade[2]."\r\n".                                                              
+        'tpLograd_60='.$empresa->escomplemento[0]."\r\n".                                                                
+        'dscLograd_61='.$empresa->eslogradouro."\r\n".                                          
+        'nrLograd_62='.$empresa->esnum."\r\n".                                                          
+        'complemento_63='."\r\n".                                                               
+        'bairro_64='.$empresa->esbairro."\r\n".                                                      
+        'cep_65='.str_replace(array(".", ",", "-", "/"), "",$empresa->escep)."\r\n".                                                               
+        'codMunic_66='.$empresa->escodigomunicipio."\r\n".                                                           
+        'UF_67='.$empresa->esuf."\r\n".                                                                       
+        'cadIni_164=N'."\r\n".                                                                  
+        'matricula_173='.$trabalhador->tsmatricula."\r\n".                                                           
+        'codCateg_104='.$trabalhador->cscategoria[0].$trabalhador->cscategoria[1].$trabalhador->cscategoria[2]."\r\n".                                                               
+        'dtInicio_105='.$trabalhador->csadmissao."\r\n".                                                      
+        'natAtividade_106=1'."\r\n".                                                             
+        'nmCargo_175='.self::montastring($trabalhador->cbo)[0].self::montastring($trabalhador->cbo)[1]."\r\n".                             
+        'CBOCargo_176='.self::montastring($trabalhador->cbo)[0]."\r\n".                                                      
+        'nmFuncao_177='.self::montastring($trabalhador->cbo)[0].self::montastring($trabalhador->cbo)[1]."\r\n".                                   
+        'CBOFuncao_178='.self::montastring($trabalhador->cbo)[0]."\r\n".                                                          
+        'SALVARS2300';
+        $file_name = 'S2300_'.date("Ymd").'11475900170.txt';
+        $file = fopen( $file_name, "w" );
+        fwrite($file, $cd);
+        fclose($file);
+        header("Content-Type: application/save");
+        header("Content-Length:".filesize($file_name));
+        header('Content-Disposition: attachment; filename="' . $file_name . '"');
+        header("Content-Transfer-Encoding: binary");
+        header('Expires: 0');
+        header('Pragma: no-cache');
+        echo $cd;
+        exit;
+        return redirect()->back();
+    }
+    public function montastring($valor)
+    {
+        $valor = explode('-',$valor);
+        return $valor;
     }
     public function monta_inteiro($nome,$quantidade,$status)
     {

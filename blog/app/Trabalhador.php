@@ -391,4 +391,10 @@ class Trabalhador extends Model
         ->get();
            
     }
+    public function quantidadeTrabalhador()
+    {
+        return DB::table('trabalhadors')
+        ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa')
+        ->count();
+    }
 }

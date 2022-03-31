@@ -95,10 +95,10 @@
                       <li><a class="dropdown-item border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
                     
                       @can('admin')
-                          <li><a class="dropdown-item border-secundary" href="{{route('rublica.index')}}">Rúbricas</a></li>
+                          <!-- <li><a class="dropdown-item border-secundary" href="">Rúbricas</a></li> -->
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Serviços</a></li> -->
-                          <li><a class="dropdown-item border-secundary" href="{{route('inss.index')}}">INSS</a></li>
-                          <li><a class="dropdown-item border-secundary" href="{{route('irrf.index')}}">IRRF</a></li>
+                          <!-- <li><a class="dropdown-item border-secundary" href="">INSS</a></li> -->
+                          <!-- <li><a class="dropdown-item border-secundary" href="">IRRF</a></li> -->
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
                           <li><a class="dropdown-item border-secundary" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
