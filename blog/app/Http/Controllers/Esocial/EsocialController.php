@@ -70,7 +70,7 @@ class EsocialController extends Controller
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=2.5.00'."\r\n".
-        'ambiente=2'."\r\n".
+        'ambiente=8'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
         'indRetif_4=1'."\r\n".                                                                    
         'nrRecibo_5='."\r\n".                                                                   

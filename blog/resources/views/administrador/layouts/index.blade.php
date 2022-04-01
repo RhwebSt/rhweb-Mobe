@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <title>@yield('titulo')</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="{{url('/css/dashboard.css')}}">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,19 +123,75 @@
                                 <li class="nav-item">
                                     <a class="nav-link active color-Link " aria-current="page" href="#"><i class="fad fa-cogs"></i> Configurações</a>
                                 </li>
-                                <li class="nav-item"><a class="dropdown-item nav-link color-Link" href="{{route('logout.administrador')}}">Sair</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link active color-Link" href="{{route('logout.administrador')}}"><i class="fad fa-sign-out"></i> Sair</a>
+                                </li>
                             </ul>
 
                         </div>
                   </div>
                   {{-- fim da sidebar --}}
                 </div>
+                
+            
               </nav>
+              <!-- inicio do sidebar da notificação-->
+              <section>
+                <div class="offcanvas off__canvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificações <i id="bell__notification--ofcanvas" class="fad fa-bell bell__notification--ofcanvas"></i></h5>
+                        <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
+                    </div>
+                    <div class="offcanvas-body off__canvas--body">
+        
+                        <div class="body__notification" id="notification">
+                            <div class="d-flex flex-row justify-content-between header__notification">
+                                {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
+                                <div class="">
+                                    <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+                                </div>
+                                {{-- inicio da contagem do tempo que a mensagem foi postada --}}
+                                <div class="">
+                                    <p class="content__header-notification">1s</p>
+                                </div>
+                                {{-- fim da contagem do tempo que a mensagem foi postada --}}
+                            </div>
+                            {{-- fim do cabecalho --}}
+        
+                            {{-- inicio corpo da mensagem --}}
+                            <div class="teste">
+                                <p class="text__body--notification">O sistema será atualizado no dia 30/03/22 as </p>
+                            </div>
+                            {{-- fim do corpo da mensagem --}}
+        
+        
+                            {{-- inicio da  exclusao da notificacao --}}
+                            <div class="d-flex justify-content-end footer-notification">
+                                <form action=""></form>
+                                <div class="content__footer-notification">
+                                    <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+                                </div>
+                            </div>
+                            {{-- fim da exclusão da notificação --}}
+                        </div>
+        
+        
+                        {{-- inicio da contagem de mensagem nao lida --}}
+                        <div class="no__read--message">
+                            <p class="no__read--message--content">20 notificações não lidas</p>
+                        </div>
+                        {{-- fim da contagem da mensagem não lida --}}
+        
+        
+                    </div>
+                </div>
+            </section>
+            <!--fim da side bar da notificação-->
         </head>
         @yield('conteine')
 </main>
 
-            <script src="{{url('/js/dashboard.js')}}"></script>
+            <script src="{{url('/js/navbarAdmin.js')}}"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         </body>
     </html>

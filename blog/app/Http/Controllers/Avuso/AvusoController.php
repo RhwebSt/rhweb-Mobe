@@ -130,6 +130,7 @@ class AvusoController extends Controller
                 }
                 $this->valorrublica->editarAvuso($dados,$user->empresa);
             }
+            
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
             $this->avuso->deletar_store($dados);

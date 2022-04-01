@@ -170,55 +170,7 @@
         </div>
     </section>
 
-    <section>
-        <div class="offcanvas off__canvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificações <i id="bell__notification--ofcanvas" class="fad fa-bell bell__notification--ofcanvas"></i></h5>
-                <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
-            </div>
-            <div class="offcanvas-body off__canvas--body">
-
-                <div class="body__notification" id="notification">
-                    <div class="d-flex flex-row justify-content-between header__notification">
-                        {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
-                        <div class="">
-                            <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
-                        </div>
-                        {{-- inicio da contagem do tempo que a mensagem foi postada --}}
-                        <div class="">
-                            <p class="content__header-notification">1s</p>
-                        </div>
-                        {{-- fim da contagem do tempo que a mensagem foi postada --}}
-                    </div>
-                    {{-- fim do cabecalho --}}
-
-                    {{-- inicio corpo da mensagem --}}
-                    <div class="teste">
-                        <p class="text__body--notification">O sistema será atualizado no dia 30/03/22 as </p>
-                    </div>
-                    {{-- fim do corpo da mensagem --}}
-
-
-                    {{-- inicio da  exclusao da notificacao --}}
-                    <div class="d-flex justify-content-end footer-notification">
-                        <form action=""></form>
-                        <div class="content__footer-notification">
-                            <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
-                        </div>
-                    </div>
-                    {{-- fim da exclusão da notificação --}}
-                </div>
-
-
-                {{-- inicio da contagem de mensagem nao lida --}}
-                <div class="no__read--message">
-                    <p class="no__read--message--content">20 notificações não lidas</p>
-                </div>
-                {{-- fim da contagem da mensagem não lida --}}
-
-
-            </div>
-        </div>
-    </section>
+    
 </div>
+<script src="{{url('/js/dashboard.js')}}"></script>
 @stop
