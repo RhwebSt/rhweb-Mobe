@@ -263,4 +263,61 @@ class User extends Authenticatable
         ])
         ->count();
     }
+    public function listaUserAdministrador($condicao,$dados)
+    {
+        return DB::table('users') 
+        ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        ->select('users.id','users.name','users.email','users.cargo','empresas.esnome')
+        ->where(function($query) use ($dados){
+            $user = auth()->user();
+            if ($dados) {
+                # code...
+            }else{
+                $query->where([
+                    ['users.id','>',0],
+                    // ['users.cargo','!=','Super Admin']
+                ]);
+            }
+            // if ($dados) {
+            //     $query->where([
+            //         ['users.name','like','%'.$dados.'%'],
+            //         ['users.empresa',$user->empresa],
+            //         ['users.cargo','!=','admin']
+            //     ])
+            //     ->orWhere([
+            //         ['empresas.esnome','like','%'.$dados.'%'],
+            //         ['users.empresa',$user->empresa],
+            //         ['users.cargo','!=','admin']
+            //     ])
+            //     ->orWhere([
+            //         ['empresas.escnpj','like','%'.$dados.'%'],
+            //         ['users.empresa',$user->empresa],
+            //         ['users.cargo','!=','admin']
+            //     ]);
+            // }else{
+            //     $query->where([
+            //         ['users.id','>',0],
+            //         ['users.empresa',$user->empresa],
+            //         ['users.cargo','!=','admin']
+            //     ]);
+            // }
+        })
+        
+        ->orderBy('users.name', $condicao)
+        ->paginate(10);
+    }
+    public function permissaoSupAdmin($id)
+    {
+        return DB::table('model_has_permissions')
+        // ->join('model_has_permissions', 'users.id', '=', 'model_has_permissions.model_id') 
+        ->join('permissions', 'permissions.id', '=', 'model_has_permissions.permission_id')
+        ->select('permissions.name','model_has_permissions.model_type','model_has_permissions.permission_id','model_has_permissions.model_id')
+        ->whereIn('model_has_permissions.model_id',$id)
+        ->where([
+            // ['permissions.name','!=','user'],
+            ['permissions.name','!=','Super Admin'],
+        ])
+        ->orderBy('model_has_permissions.model_id', 'asc')
+        ->get();
+    }
 }

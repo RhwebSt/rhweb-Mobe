@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="{{url('/css/dashboard.css')}}">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="{{url('/css/cadastroLoginUsuario.css')}}">
+        <link rel="stylesheet" href="{{url('/css/tableAdmin.css')}}">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -71,7 +73,7 @@
                                     </a>
                                     <ul class="dropdown-menu dropDown__menu--list" aria-labelledby="offcanvasNavbarDropdown">
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Cadastro de Usuário</a></li>
-                                        <li><a class="dropdown-item dropdown__item--list" href="#">Cadastro de Login</a></li>
+                                        <li><a class="dropdown-item dropdown__item--list" href="{{route('administrador.usuarios.index')}}">Cadastro de Login</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="{{route('user.create')}}">Gerador de Acesso</a></li>
                                     </ul>
                                 </li>
@@ -190,7 +192,8 @@
         </head>
         @yield('conteine')
 </main>
-
+<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script>
+    <script src="{{url('/js/dashboard.js')}}"></script>
             <script src="{{url('/js/navbarAdmin.js')}}"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         </body>

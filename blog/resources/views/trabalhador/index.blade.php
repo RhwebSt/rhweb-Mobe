@@ -51,13 +51,36 @@
     })
   </script>
   @enderror
+  
+  <script>
+       
+        Swal.fire({
+          title: '<strong>Evento baixado com sucesso</strong>',
+          icon: 'success',
+          html:
+            '<div class="progress mb-3" style="height: 12px;">'+
+                '<div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">50%</div>'+
+            '</div>' + 
+            '<p>Deseja Integrar esse arquivo com o E-SOCIAL?</p>' +
+            '<a href="">Clique aqui</a> ',
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          showConfirmButton: false,
+          cancelButtonText:
+            'Fechar <i class="fad fa-times"></i>',
+          cancelButtonColor: '#04888B',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        })
+  </script>
 
-  <form id="formulario" method="post" enctype="multipart/form-data">
+  <!-- <form id="formulario" method="post" enctype="multipart/form-data">
     <input type="text" name="campo1" value="hello" />
     <input type="text" name="campo2" value="world" />
     <input name="arquivo" type="file" />
     <button>Enviar</button>
-  </form>
+</form> -->
 
   <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data" method="POST">
 

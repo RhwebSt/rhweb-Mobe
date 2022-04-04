@@ -15,7 +15,7 @@
                                 <datalist id="listapesquisa">
                                 </datalist>
                                 <input type="hidden" name="codicao" value="{{isset($trabalhador->id)?$trabalhador->id:''}}">
-                                <button type="submit" class="modal-botao">
+                                <button type="submit" class="modal-botao btn botaoPesquisa">
                                     <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                 </button>
 

@@ -1,0 +1,50 @@
+.section__btn--new{
+    margin-top: 10%;
+}
+
+
+
+.button__new{
+    background-color: #09866D;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+}
+
+.button__new:hover{
+    background-color: #044e3f;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transform: scale(1.05);
+    transition: 300ms ease-in-out;
+}
+
+.button__new:focus{
+    background-color: #044e3f;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transform: scale(1.05); 
+    box-shadow: none !important;
+}
+
+.search{
+    margin-top: 3%;
+}
+
+.dropdown__filtro{
+    border-radius: 12px;
+}
+
+.dropdown__links--filter{
+    border-radius: 8px;
+    transition: 300ms ease-in-out;
+}
+
+.dropdown__links--filter:hover{
+    background-color: #4719c5;
+    color: white;
+    transition: 300ms ease-in-out;
+}
+
+
+

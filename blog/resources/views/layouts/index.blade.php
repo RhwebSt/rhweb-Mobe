@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
         <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
+        <link href="{{url('/css/notificacaoUser.css')}}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
@@ -25,7 +26,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@800&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet">
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
          <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -189,13 +190,73 @@
               </ul>
             </div>
           </div>
-            <div class="">
+            <div>
+                <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    <i id="bell__notification" class="fad fa-bell bell__notification"></i>
+                    <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      99  
+                    </span>
+                </button>
+            </div>
+          
+            <div class="ms-3">
                 <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust iconbtn"></i></button>
             </div>
             
         </div>
         </div>
     </nav>
+    
+    <section>
+        <div class="offcanvas off__canvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificações <i id="bell__notification--ofcanvas" class="fad fa-bell bell__notification--ofcanvas"></i></h5>
+                <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
+            </div>
+            <div class="offcanvas-body off__canvas--body">
+
+                <div class="body__notification" id="notification">
+                    <div class="d-flex flex-row justify-content-between header__notification">
+                        {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
+                        <div class="">
+                            <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+                        </div>
+                        {{-- inicio da contagem do tempo que a mensagem foi postada --}}
+                        <div class="">
+                            <p class="content__header-notification">1s</p>
+                        </div>
+                        {{-- fim da contagem do tempo que a mensagem foi postada --}}
+                    </div>
+                    {{-- fim do cabecalho --}}
+
+                    {{-- inicio corpo da mensagem --}}
+                    <div class="teste">
+                        <p class="text__body--notification">O sistema será atualizado no dia 30/03/22 as  </p>
+                    </div>
+                    {{-- fim do corpo da mensagem --}}
+
+                    
+                    {{-- inicio da  exclusao da notificacao --}}
+                    <div class="d-flex justify-content-end footer-notification">
+                        <form action=""></form>
+                        <div class="content__footer-notification">
+                            <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+                        </div>
+                    </div>
+                    {{-- fim da exclusão da notificação --}}
+                </div>
+
+                
+                {{-- inicio da contagem de mensagem nao lida --}}
+                <div class="no__read--message">
+                    <p class="no__read--message--content">20 notificações não lidas</p>
+                </div>
+                {{-- fim da contagem da mensagem não lida --}}
+
+            
+                </div>
+            </div>
+    </section>
 
    
    @yield('conteine')
@@ -217,10 +278,11 @@
     </footer>
     <script src="{{url('/js/alteracaoSenha.js')}}"></script>
     <script src="{{url('/js/darkmode.js')}}"></script>
+    <script src="{{url('/js/notificacaoUser.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="{{url('/js/masck.js')}}"></script>
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!--<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>-->
     <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
     <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>

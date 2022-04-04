@@ -24,7 +24,7 @@ $(document).ready(function(){
     }
     function consultaevento(id) {
         $.ajax({
-            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultaridsevento/${id}?ambiente=2&versaomanual=2.5.00`,
+            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${id}?ambiente=2&versaomanual=2.5.00`,
             type: "GET",
             // data: dados,
             // dataType: 'json',
@@ -33,11 +33,11 @@ $(document).ready(function(){
                 // 'content-type':'text/tx2',
                 'cnpj_sh':'34350915000149',
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'26844068000140'
+                'empregador':'34350915000149'
             },
             success: function(retorno){
                 console.log(retorno);
-                buscaxml(retorno.data.eventos[0])
+                // buscaxml(retorno.data.eventos[0])
             }
          });
     }
@@ -54,6 +54,7 @@ $(document).ready(function(){
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
                 'empregador':'26844068000140'
             },
+           
             success: function(retorno){
                 console.log(retorno);
                 enviaxml(retorno.data);
@@ -61,13 +62,14 @@ $(document).ready(function(){
         });
     }
     function enviaxml(dados) {
+        console.log($.parseXML(dados.xml));
         var formData = new FormData();
         formData.append('versaomanual','2.5.00')
         formData.append('empregador',dados.cnpj_sh)
         formData.append('ambiente','2')
         formData.append('inscricao',dados.cnpj_sh)
         formData.append('idgrupoeventos',dados.id)
-        formData.append('xml',dados.xml)
+        formData.append('xml',$.parseXML(dados.xml))
         $.ajax({
             url: "https://api.tecnospeed.com.br/esocial/v1/evento/enviar",
             type: "POST",
@@ -78,7 +80,7 @@ $(document).ready(function(){
                 'content-type':'text/xml',
                 'cnpj_sh':dados.cnpj_sh,
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                // 'empregador':'26844068000140'
+                'empregador':dados.cnpj_sh,
             },
             success: function(retorno){
                 console.log(retorno);

@@ -117,7 +117,7 @@
                                         <a onclick="remove('{{$key}}','v')">
                                             <i class="fas fa-times btn" style="color:white; background-color:Darkred; padding-top: 8px; padding-bottom: 8px; padding-left:10px; padding-right:10px; border-radius: 30%; border: 1px solid red;"></i>
                                         </a>
-                                    </div> 
+                                    </div>
                                 @endif
                             </div>
                         @endforeach

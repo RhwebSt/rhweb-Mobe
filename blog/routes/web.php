@@ -18,6 +18,7 @@ Route::resource('login','Login\\LoginController')->names('login');
 Route::resource('administrador/login','Administrador\\Login\\LoginController')->names('login.administrador');
 Route::get('usuario/cadastro','User\\UserController@index');
 Route::resource('cadastro/empresa','Empresa\\EmpresaController')->only(['store'])->names('cadastro.empresa');
+
 // Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
 Route::get('email',function()
 {
@@ -27,6 +28,7 @@ Route::get('email',function()
     // return new App\Mail\Email($user);
     
 });
+
 Route::post('verifica/senha','Senha\\SenhaController@store')->name('verifica.senha');
 Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.index');
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
@@ -194,6 +196,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
         Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
         Route::get('administrador','Administrador\\AdministradorController@index')->name('administrador');
+        Route::resource('administrador/usuarios','Administrador\\Usuario\\UsuarioController')->names('administrador.usuarios');
     });
     
 });
