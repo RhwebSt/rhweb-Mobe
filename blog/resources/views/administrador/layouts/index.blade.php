@@ -10,8 +10,15 @@
         <link rel="stylesheet" href="{{url('/css/dashboard.css')}}">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="stylesheet" href="{{url('/css/cadastroLoginUsuario.css')}}">
+        <!-- <link rel="stylesheet" href="{{url('/css/cadastroLoginUsuario.css')}}"> -->
+        <link rel="stylesheet" href="{{url('/css/inss.css')}}">
+        <link rel="stylesheet" href="{{url('/css/irrf.css')}}">
         <link rel="stylesheet" href="{{url('/css/tableAdmin.css')}}">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
+        <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -192,7 +199,9 @@
         </head>
         @yield('conteine')
 </main>
-<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script>
+<!-- <script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
+<!-- <script src="{{url('/js/inss.js')}}"></script> -->
+<script src="{{url('/js/irrf.js')}}"></script>
     <script src="{{url('/js/dashboard.js')}}"></script>
             <script src="{{url('/js/navbarAdmin.js')}}"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

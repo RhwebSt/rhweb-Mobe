@@ -83,7 +83,7 @@
                                 </div>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--evento modal-botao" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
+                                <a class="btn__padrao--evento modal-botao" data-id="{{base64_encode($trabalhador->id)}}" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
                             </td>
                             <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                 <button class="btn">

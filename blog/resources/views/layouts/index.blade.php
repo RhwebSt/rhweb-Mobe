@@ -35,7 +35,6 @@
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
         
-
     </head>
     
 

@@ -26,8 +26,8 @@ class Inss extends Model
         ->update([
             'isano'=>$dados['ano'],
             // 'isvalorinicial'=>$dados['valor__inicial'],
-            'isvalorfinal'=>$dados['valor__final'],
-            'isindece'=>$dados['indice'],
+            'isvalorfinal'=>str_replace(",",".",$dados['valor__final']),
+            'isindece'=>str_replace(",",".",$dados['indice']),
             'isreducao'=>str_replace(",",".",$dados['fator'])
         ]);
     }
@@ -38,5 +38,14 @@ class Inss extends Model
     public function deletar($id)
     {
         return Inss::where('isano',$id)->delete();
+    }
+    public function buscaListaInss()
+    {
+        return Inss::selectRaw(
+            'SUM(isvalorfinal) as valor,
+            isano'
+        )
+        ->groupBy('isano')
+        ->paginate(5);
     }
 }

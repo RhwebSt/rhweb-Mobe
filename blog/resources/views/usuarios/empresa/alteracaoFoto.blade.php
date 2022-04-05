@@ -340,7 +340,7 @@
                     confirmButtonText:'Enviar <i class="far fa-paper-plane"></i>',
                     inputAttributes: {
                         'accept': 'image/*',
-                        'aria-label': 'Upload your profile picture',
+                        'aria-label': 'Upload your profile picture', 
                         'class': 'false'
                     }
                     })

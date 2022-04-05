@@ -8,19 +8,30 @@ use Illuminate\Support\Facades\Auth;
 use App\Tomador;
 use App\Empresa;
 use App\Trabalhador;
+use App\Esocial;
 class EsocialController extends Controller
 {
-    private $tomador,$empresa,$trabalhador;
+    private $tomador,$empresa,$trabalhador,$esocial;
     public function __construct()
     {
         $this->tomador = new Tomador;
         $this->empresa = new Empresa;
         $this->trabalhador = new Trabalhador;
+        $this->esocial = new Esocial;
     }
     public function eventS1020($id)
     {
         $user = Auth::user();
         $id = base64_decode($id);
+        $dados = [
+            'nome'=>'',
+            'codigo'=>'',
+            'id'=>'',
+            'ambiente'=>'',
+            'status'=>'',
+            'trabalhador'=>null,
+            'tomador'=>$id
+        ];
         $tomador = $this->tomador->first($id);
         $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         $cd = 
@@ -56,12 +67,22 @@ class EsocialController extends Controller
         header('Pragma: no-cache');
         echo $cd;
         exit;
+        $this->esocial->cadastro($dados);
         return redirect()->back();
     }
     public function eventS2300($id)
     {
         $user = Auth::user();
         $id = base64_decode($id);
+        $dados = [
+            'nome'=>'',
+            'codigo'=>'',
+            'id'=>'',
+            'ambiente'=>0,
+            'status'=>'',
+            'trabalhador'=>$id,
+            'tomador'=>null
+        ];
         $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
         // dd($trabalhador->nsraca[1],$empresa,$trabalhador);
@@ -106,6 +127,10 @@ class EsocialController extends Controller
         'nmFuncao_177='.self::montastring($trabalhador->cbo)[0].self::montastring($trabalhador->cbo)[1]."\r\n".                                   
         'CBOFuncao_178='.self::montastring($trabalhador->cbo)[0]."\r\n".                                                          
         'SALVARS2300';
+        $verificar =  $this->esocial->verificarTrabalhador($id);
+        if (!$verificar) {
+            $this->esocial->cadastro($dados);
+        }
         $file_name = 'S2300_'.date("Ymd").'11475900170.txt';
         $file = fopen( $file_name, "w" );
         fwrite($file, $cd);
@@ -116,9 +141,21 @@ class EsocialController extends Controller
         header("Content-Transfer-Encoding: binary");
         header('Expires: 0');
         header('Pragma: no-cache');
+        
         echo $cd;
         exit;
-        return redirect()->back();
+        
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+    }
+    public function update(Request $request,$id)
+    {
+        $dados = $request->all();
+        $id = base64_decode($id);
+        $dados['trabalhador']=$id;
+        $esocial =  $this->esocial->editar($dados,$id);
+        if ($esocial) {
+            return response()->json('Cadastro realizado com sucesso.');
+        }
     }
     public function montastring($valor)
     {

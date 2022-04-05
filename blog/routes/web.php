@@ -162,6 +162,7 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
+    Route::put('trabalhador/esocial/{id}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
@@ -191,8 +192,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     });
     Route::group(['middleware' => ['permission:Super Admin']], function () {
         Route::resource('user','User\\UserController')->names('user'); 
-        Route::resource('inss','Inss\\InssController')->names('inss');
-        Route::resource('irrf','Irrf\\IrrfController')->names('irrf');
+        Route::resource('inss','Administrador\\Inss\\InssController')->names('inss');
+        Route::resource('irrf','Administrador\\Irrf\\IrrfController')->names('irrf');
         Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
         Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
         Route::get('administrador','Administrador\\AdministradorController@index')->name('administrador');

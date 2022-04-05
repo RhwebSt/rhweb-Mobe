@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Irrf;
+namespace App\Http\Controllers\Administrador\Inss;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Irrf;
-class IrrfController extends Controller
+use App\Inss;
+class InssController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $inss;
+    public function __construct()
+    {
+        $this->inss = new Inss;
+    }
     public function index()
     {
         $user = Auth::user();
-        return view('irrf.index',compact('user'));
+        $inss = $this->inss->buscaListaInss();
+        return view('administrador.inss.index',compact('inss'));
     }
 
     /**
@@ -26,7 +27,7 @@ class IrrfController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrador.inss.criar');
     }
 
     /**
@@ -39,80 +40,77 @@ class IrrfController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'irsano'=>'required|max:4|unique:irrves',
+            'isano'=>'required|max:5|unique:insses',
         ],[
-            'irsano.unique'=>'Este ano já está cadastrado.'
+            'isano.unique'=>'Este ano já está cadastrado.'
         ]);
         $contador = 1;
         $novodados = [
             'ano'=>'',
-            'ded__dependente'=>'',
             'valor__inicial'=>'',
             'valor__final'=>'',
             'indice'=>'',
+            'fator'=>'',
             'user'=>''
         ];
-        $irrf = new Irrf;
+        $inss = new Inss;
         try {
         foreach ($dados as $key => $value) {
             if ($key === 'user') {
                 $novodados['user'] = $value;
             }
-            if ($key === 'irsano') {
+            if ($key === 'isano') {
                 $novodados['ano'] = $value;
             }
-            if ($key === 'ded__dependente') {
-                $novodados['ded__dependente'] = $value;
-            }
-           
-            if ($contador == 6) {
+            
+            if ($contador == 5) {
                 $novodados['valor__final'] = $value;
+            }elseif ($contador == 6) {
+                $novodados['indice'] = $value;
             }elseif ($contador == 7) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 8) {
                 $novodados['fator'] = $value;
-                $irrf->cadastro($novodados);
+                $inss->cadastro($novodados);
             }
-            elseif ($contador == 9) {
+            elseif ($contador == 8) {
                 $novodados['valor__final'] = $value;
+            }elseif ($contador == 9) {
+                $novodados['indice'] = $value;
             }elseif ($contador == 10) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 11) {
                 $novodados['fator'] = $value;
-                $irrf->cadastro($novodados);
+                $inss->cadastro($novodados);
             }
-            elseif ($contador == 12) {
+            elseif ($contador == 11) {
                 $novodados['valor__final'] = $value;
+            }elseif ($contador == 12) {
+                $novodados['indice'] = $value;
             }elseif ($contador == 13) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 14) {
                 $novodados['fator'] = $value;
-                $irrf->cadastro($novodados);
+                $inss->cadastro($novodados);
             }
-            elseif ($contador == 15) {
+            elseif ($contador == 14) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 16) {
+            }elseif ($contador == 15) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 17) {
+            }elseif ($contador == 16) {
                 $novodados['fator'] = $value;
-                $irrf->cadastro($novodados);
+                $inss->cadastro($novodados);
                
             }
-            elseif ($contador == 18) {
+            elseif ($contador == 17) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 19) {
+            }elseif ($contador == 18) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
+            }elseif ($contador == 19) {
                 $novodados['fator'] = $value;
-                $irrf->cadastro($novodados);
+                $inss->cadastro($novodados);
                
             }
             $contador++;
         }
-        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -124,8 +122,8 @@ class IrrfController extends Controller
      */
     public function show($id)
     {
-        $inss = new Irrf;
-        $in = $inss->buscaListaIrrf($id);
+        $inss = new Inss;
+        $in = $inss->buscaUnidadeInss($id);
         return response()->json($in);
     }
 
@@ -137,7 +135,8 @@ class IrrfController extends Controller
      */
     public function edit($id)
     {
-        //
+        $inss = $this->inss->buscaUnidadeInss($id);
+        return view('administrador.inss.editar',compact('inss','id'));
     }
 
     /**
@@ -150,35 +149,40 @@ class IrrfController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        // dd($dados);
         $request->validate([
-            'irsano'=>'required|max:4',
+            'isano'=>'required|max:5',
         ]);
-        $contador = 1;
+        $contador = 0;
         $novodados = [
             'ano'=>'',
-            'ded__dependente'=>'',
             'valor__inicial'=>'',
             'valor__final'=>'',
             'indice'=>'',
             'fator'=>'',
         ];
-        $irrf = new Irrf;
+        $inss = new Inss;
         try {
         foreach ($dados as $key => $value) {
            
-            if ($key === 'irsano') {
+            if ($key === 'isano') {
                 $novodados['ano'] = $value;
             }
-            if ($key === 'ded__dependente') {
-                $novodados['ded__dependente'] = $value;
+           if ($contador == 3) {
+                $novodados['valor__final'] = $value;
+            }elseif ($contador == 4) {
+                $novodados['indice'] = $value;
+            }elseif ($contador == 5) {
+                $novodados['fator'] = $value;
+                $inss->edita($novodados,$dados['id01']);
             }
-            if ($contador == 6) {
+            elseif ($contador == 6) {
                 $novodados['valor__final'] = $value;
             }elseif ($contador == 7) {
                 $novodados['indice'] = $value;
             }elseif ($contador == 8) {
                 $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id01']);
+                $inss->edita($novodados,$dados['id02']);
             }
             elseif ($contador == 9) {
                 $novodados['valor__final'] = $value;
@@ -186,7 +190,7 @@ class IrrfController extends Controller
                 $novodados['indice'] = $value;
             }elseif ($contador == 11) {
                 $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id02']);
+                $inss->edita($novodados,$dados['id03']);
             }
             elseif ($contador == 12) {
                 $novodados['valor__final'] = $value;
@@ -194,33 +198,26 @@ class IrrfController extends Controller
                 $novodados['indice'] = $value;
             }elseif ($contador == 14) {
                 $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id03']);
-            }
-            elseif ($contador == 15) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 16) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 17) {
-                $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id04']);
+                $inss->edita($novodados,$dados['id04']);
                
             }
-            elseif ($contador == 18) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 19) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
-                $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id05']);
+            // elseif ($contador == 15) {
+            //     $novodados['valor__final'] = $value;
+            // }elseif ($contador == 16) {
+            //     $novodados['indice'] = $value;
+            // }elseif ($contador == 17) {
+            //     $novodados['fator'] = $value;
+            //     $inss->edita($novodados,$dados['id05']);
                
-            }
+            // }
             $contador++;
-        }
-        return redirect()->back()->withSuccess('Atualizado com sucesso.');
-        } catch (\Throwable $th) {
-            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            
         }
         
+        return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+       } catch (\Throwable $th) {
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+       }
     }
 
     /**
@@ -231,6 +228,12 @@ class IrrfController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inss = new Inss;
+        try {
+            $inss->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
+        }
     }
 }
