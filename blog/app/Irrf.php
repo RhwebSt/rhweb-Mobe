@@ -13,15 +13,15 @@ class Irrf extends Model
     {
         return Irrf::create([
             'irsano'=>$dados['ano'],
-            'irdepedente'=>$dados['ded__dependente'],
+            'irdepedente'=>str_replace(",",".",str_replace(".","",$dados['ded__dependente'])),
             // 'irsvalorinicial'=>$dados['valor__inicial'],
-            'irsvalorfinal'=>$dados['valor__final'],
-            'irsindece'=>$dados['indice'],
-            'irsreducao'=>$dados['fator'],
+            'irsvalorfinal'=>str_replace(",",".",str_replace(".","",$dados['valor__final'])),
+            'irsindece'=>str_replace(",",".",str_replace(".","",$dados['indice'])),
+            'irsreducao'=>str_replace(",",".",str_replace(".","",$dados['fator'])),
             'user'=>$dados['user']
         ]);
     }
-    public function buscaListaIrrf($id)
+    public function buscaUnidadeIrrf($id)
     {
         return Irrf::where('irsano',$id)->get();
     }
@@ -30,11 +30,27 @@ class Irrf extends Model
         return Irrf::where('id', $id)
         ->update([
             'irsano'=>$dados['ano'],
-            'irdepedente'=>$dados['ded__dependente'],
+            'irdepedente'=>str_replace(",",".",str_replace(".","",$dados['ded__dependente'])),
             // 'irsvalorinicial'=>$dados['valor__inicial'],
-            'irsvalorfinal'=>$dados['valor__final'],
-            'irsindece'=>$dados['indice'],
-            'irsreducao'=>$dados['fator'],
+            'irsvalorfinal'=>str_replace(",",".",str_replace(".","",$dados['valor__final'])),
+            'irsindece'=>str_replace(",",".",str_replace(".","",$dados['indice'])),
+            'irsreducao'=>str_replace(",",".",str_replace(".","",$dados['fator'])),
         ]);
+    }
+    public function buscaListaIrrf($ano)
+    {
+        return Irrf::where(function($query) use ($ano){
+            if ($ano) {
+                $query->where('irsano',$ano);
+            }else{
+                $query->where('id','>',0);
+            }
+        })->selectRaw(
+            'SUM(irsvalorfinal) as valor,
+            irsano'
+        )
+        ->groupBy('irsano')
+        ->orderBy('irsano','desc')
+        ->paginate(5);
     }
 }

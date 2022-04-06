@@ -1,5 +1,5 @@
-@extends('layouts.index')
-@section('titulo','Rhweb - Rúbricas')
+@extends('administrador.layouts.index')
+@section('titulo','Rhweb - Cadastra rública')
 @section('conteine')
 <div class="container">
     @if(session('success'))
@@ -54,7 +54,7 @@
     
     <section class="section__form-rubrica">
         <form class="row g-3 mt-1 mb-3 mt-5" id="form" method="POST" action="{{route('rublica.store')}}">
-            <input type="hidden" name="empresa" value="{{$user->empresa}}">
+            <input type="hidden" name="empresa" value="">
             <input type="hidden" id="method" name="_method" value="">
             @csrf
             <div class="row">
@@ -68,7 +68,7 @@
                         <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2" id="imprimir" role="button">Rol das Rúbricas</a></li>
                     </ul>
                     
-                    <a class="btn button__sair--rubrica" href="#" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                    <a class="btn button__sair--rubrica" href="{{route('rublica.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                 </div>
             </div>
             <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>

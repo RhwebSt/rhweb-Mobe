@@ -15,7 +15,7 @@ class Rublica extends Model
             'rsrublica'=>$dados['rubricas'],
             'rsdescricao'=>$dados['descricao'],
             'rsincidencia'=>$dados['incidencia'],
-            'rscd'=>$dados['dc'],
+            'rsdc'=>$dados['dc'],
             'empresa'=>$dados['empresa'],
         ]);
     }

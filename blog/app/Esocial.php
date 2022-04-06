@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Esocial extends Model
 {
     protected $fillable = [
@@ -35,5 +35,20 @@ class Esocial extends Model
     public function verificarTrabalhador($id)
     {
         return Esocial::where('trabalhador', $id)->count();
+    }
+    public function notificacaoCadastroTrabalhador()
+    {
+        return DB::table('empresas')
+            ->join('trabalhadors', 'empresas.id', '=', 'trabalhadors.empresa')
+            ->join('esocials', 'trabalhadors.id', '=', 'esocials.trabalhador')
+            ->select(
+                'trabalhadors.tsnome',
+                'esocials.created_at',
+            )
+            ->where([
+                ['esocials.escodigo',' '],
+                ['esocials.esid', ' '],
+            ])
+            ->get();
     }
 }

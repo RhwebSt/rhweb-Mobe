@@ -12,13 +12,15 @@
 
     {{-- incio da pesquisa --}}
     <section class="search">
-        <form action="">
+        <form action="{{route('administrador.usuarios.index')}}"  method="GET">
             <div class="d-flex">
                 <div class="col-10 col-md-3 me-1">
-                    <input class="form-control" id="inputPesquisar" type="search" placeholder="Pesquisar...">
+                    <input class="form-control" id="pesquisa" list="listapesquisa" name="search" type="search" placeholder="Pesquisar...">
+                    <datalist id="listapesquisa">
+                    </datalist>
                 </div>
                 <div>
-                    <button type="button" id="pesquisar" class="button__search btn"><i class="fad fa-search"></i></button>
+                    <button type="submit"  class="button__search btn"><i class="fad fa-search"></i></button>
                 </div>
             </div>
         </form>
@@ -34,8 +36,8 @@
                         <i class="fad fa-sort"></i>
                     </button>
                     <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <li><a class="dropdown-item dropdown__links--filter" href="{{route('usuario.ordem','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item dropdown__links--filter" href="{{route('usuario.ordem','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                     </ul>
                 </div>
             </div>
@@ -205,4 +207,24 @@
         </div>
     </section>
 </div>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "{{url('pesquisa/usuario')}}",
+            type: 'get',
+            contentType: 'application/json',
+            success: function(data) {
+                let nome = ''
+                if (data.length >= 1) {
+                    data.forEach(element => {
+                        nome += `<option value="${element.esnome}">`
+                        // nome += `<option value="${element.rsrublica}">`
+                    });
+                    $('#listapesquisa').html(nome)
+                }
+               
+            }
+        })
+    })
+</script>
 @stop

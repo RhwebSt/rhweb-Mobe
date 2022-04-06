@@ -39,13 +39,20 @@ class Inss extends Model
     {
         return Inss::where('isano',$id)->delete();
     }
-    public function buscaListaInss()
+    public function buscaListaInss($ano)
     {
-        return Inss::selectRaw(
+        return Inss::where(function($query) use ($ano){
+            if ($ano) {
+                $query->where('isano',$ano);
+            }else{
+                $query->where('id','>',0);
+            }
+        })->selectRaw(
             'SUM(isvalorfinal) as valor,
             isano'
         )
         ->groupBy('isano')
+        ->orderBy('isano','desc')
         ->paginate(5);
     }
 }

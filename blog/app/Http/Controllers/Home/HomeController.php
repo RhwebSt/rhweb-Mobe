@@ -5,21 +5,24 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Esocial;
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $esocial;
+    public function __construct()
+    {
+        $this->esocial = new Esocial;
+    }
     public function index()
     {
+        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
+        // dd($esocialtrabalhador);
         if (auth()->check()){
             $user = Auth::user();   
             if ($user->hasPermissionTo('Super Admin')) {
                 return redirect()->route('administrador');
             }else{
-                return view('login.home',compact('user')); 
+                return view('login.home',compact('user','esocialtrabalhador')); 
             }
         }
         return view('index'); 

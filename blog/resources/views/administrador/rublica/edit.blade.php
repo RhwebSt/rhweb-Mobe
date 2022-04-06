@@ -1,5 +1,5 @@
-@extends('layouts.index')
-@section('titulo','Rhweb - Editar rúbricas')
+@extends('administrador.layouts.index')
+@section('titulo','Rhweb - Editar rública')
 @section('conteine')
     <div class="container">
          @if(session('success'))

@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Administrador\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Empresa;
 class UsuarioController extends Controller
 {
-    private $user;
+    private $user,$empresa;
     public function __construct()
     {
         $this->user = new User;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
         $id = [];
-        $lista = $this->user->listaUserAdministrador('asc',null);
+        $search = request('search');
+        $lista = $this->user->listaUserAdministrador('asc',$search);
         foreach ($lista as $key => $use) {
             array_push($id,$use->id);
         }
@@ -23,11 +26,16 @@ class UsuarioController extends Controller
         return view('administrador.usuarios.lista',compact('lista','permissao'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function ordem($ordem)
+    {
+        $id = [];
+        $lista = $this->user->listaUserAdministrador($ordem,null);
+        foreach ($lista as $key => $use) {
+            array_push($id,$use->id);
+        }
+        $permissao = $this->user->permissaoSupAdmin($id);
+        return view('administrador.usuarios.lista',compact('lista','permissao'));
+    }
     public function create()
     {
         return view('administrador.usuarios.cadastrar');
@@ -77,13 +85,11 @@ class UsuarioController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function pesquisa()
+    { 
+        $lista = $this->empresa->buscaEmpresaUsuario();
+        return response()->json($lista);
+    }
     public function edit($id)
     {
         $editar = $this->user->edit($id);

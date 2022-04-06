@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Rublica;
+namespace App\Http\Controllers\Administrador\Rublica;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,24 +19,26 @@ class RublicaController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $lista = $this->rublica->lista($search,'asc');
-        if ($condicao) {
-            $rublicas = $this->rublica->editarRublicas($condicao);
-            return view('rublica.edit', compact('user','rublicas','lista'));
-        }else{
-            return view('rublica.index',compact('user','lista'));
-        }
+        return view('administrador.rublica.lista',compact('user','lista'));
+        // if ($condicao) {
+        //     $rublicas = $this->rublica->editarRublicas($condicao);
+        //     return view('administrador.rublica.edit', compact('user','rublicas','lista'));
+        // }else{
+        //     return view('administrador.rublica.lista',compact('user','lista'));
+        // }
     }
 
     public function ordem($ordem,$id = null)
     {
         $user = Auth::user();
         $lista = $this->rublica->lista(null,$ordem);
-        if ($id) {
-            $rublicas = $this->rublica->editarRublicas($id);
-            return view('rublica.edit', compact('user','rublicas','lista'));
-        }else{
-            return view('rublica.index',compact('user','lista'));
-        }
+        return view('administrador.rublica.lista',compact('lista'));
+        // if ($id) {
+        //     $rublicas = $this->rublica->editarRublicas($id);
+        //     return view('rublica.edit', compact('user','rublicas','lista'));
+        // }else{
+        //     return view('rublica.index',compact('user','lista'));
+        // }
     }
     /**
      * Show the form for creating a new resource.
@@ -45,7 +47,7 @@ class RublicaController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrador.rublica.criar');
     }
 
     /**
@@ -107,7 +109,7 @@ class RublicaController extends Controller
         $user = Auth::user();
         $rublicas = $this->rublica->editarRublicas($id);
         $lista = $this->rublica->lista(null,'asc');
-        return view('rublica.edit', compact('user','rublicas','lista'));
+        return view('administrador.rublica.edit', compact('user','rublicas','lista'));
     }
 
     /**
@@ -134,9 +136,9 @@ class RublicaController extends Controller
         ]);
         try {
             $rublicas = $this->rublica->editar($dados,$id);
-            return redirect()->route('rublica.index')->withSuccess('Atualizado com sucesso.'); 
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Rublica;
+namespace App\Http\Controllers\Administrador\Rublica;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

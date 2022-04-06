@@ -8,25 +8,26 @@ use Illuminate\Support\Facades\Auth;
 use App\Irrf;
 class IrrfController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $irrf;
+    public function __construct()
+    {
+        $this->irrf = new Irrf;
+    }
     public function index()
     {
-        $user = Auth::user();
-        return view('irrf.index',compact('user'));
+        $irrf = $this->irrf->buscaListaIrrf(null);
+        return view('administrador.irrf.index',compact('irrf'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function ordem($ano = null)
+    {
+        $irrf = $this->irrf->buscaListaIrrf($ano);
+        return view('administrador.irrf.index',compact('irrf'));
+       
+    }
     public function create()
     {
-        //
+        return view('administrador.irrf.criar');
     }
 
     /**
@@ -137,7 +138,8 @@ class IrrfController extends Controller
      */
     public function edit($id)
     {
-        //
+        $irrf = $this->irrf->buscaUnidadeIrrf($id);
+        return view('administrador.irrf.editar',compact('irrf','id'));
     }
 
     /**
@@ -150,10 +152,11 @@ class IrrfController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        $request->validate([
-            'irsano'=>'required|max:4',
-        ]);
-        $contador = 1;
+        // dd($dados);
+        // $request->validate([
+        //     'irsano'=>'required|max:4',
+        // ]);
+        $contador = 0;
         $novodados = [
             'ano'=>'',
             'ded__dependente'=>'',
@@ -163,7 +166,7 @@ class IrrfController extends Controller
             'fator'=>'',
         ];
         $irrf = new Irrf;
-        try {
+        
         foreach ($dados as $key => $value) {
            
             if ($key === 'irsano') {
@@ -172,50 +175,51 @@ class IrrfController extends Controller
             if ($key === 'ded__dependente') {
                 $novodados['ded__dependente'] = $value;
             }
-            if ($contador == 6) {
+            if ($contador == 4) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 7) {
+            }elseif ($contador == 5) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 8) {
+            }elseif ($contador == 6) {
                 $novodados['fator'] = $value;
                 $irrf->edita($novodados,$dados['id01']);
             }
-            elseif ($contador == 9) {
+            elseif ($contador == 7) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 10) {
+            }elseif ($contador == 8) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 11) {
+            }elseif ($contador == 9) {
                 $novodados['fator'] = $value;
                 $irrf->edita($novodados,$dados['id02']);
             }
-            elseif ($contador == 12) {
+            elseif ($contador == 10) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 13) {
+            }elseif ($contador == 11) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 14) {
+            }elseif ($contador == 12) {
                 $novodados['fator'] = $value;
                 $irrf->edita($novodados,$dados['id03']);
             }
-            elseif ($contador == 15) {
+            elseif ($contador == 13) {
                 $novodados['valor__final'] = $value;
-            }elseif ($contador == 16) {
+            }elseif ($contador == 14) {
                 $novodados['indice'] = $value;
-            }elseif ($contador == 17) {
+            }elseif ($contador == 15) {
                 $novodados['fator'] = $value;
                 $irrf->edita($novodados,$dados['id04']);
                
             }
-            elseif ($contador == 18) {
-                $novodados['valor__final'] = $value;
-            }elseif ($contador == 19) {
-                $novodados['indice'] = $value;
-            }elseif ($contador == 20) {
-                $novodados['fator'] = $value;
-                $irrf->edita($novodados,$dados['id05']);
+            // elseif ($contador == 16) {
+            //     $novodados['valor__final'] = $value;
+            // }elseif ($contador == 17) {
+            //     $novodados['indice'] = $value;
+            // }elseif ($contador == 18) {
+            //     $novodados['fator'] = $value;
+            //     $irrf->edita($novodados,$dados['id05']);
                
-            }
+            // }
             $contador++;
         }
+        try {
         return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);

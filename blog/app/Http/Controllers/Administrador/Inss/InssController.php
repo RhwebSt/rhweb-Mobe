@@ -16,15 +16,16 @@ class InssController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $inss = $this->inss->buscaListaInss();
-        return view('administrador.inss.index',compact('inss'));
+        $inss = $this->inss->buscaListaInss(null);
+        return view('administrador.inss.index',compact('inss')); 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function ordem($ano = null)
+    {
+        $inss = $this->inss->buscaListaInss($ano);
+        return view('administrador.inss.index',compact('inss'));
+       
+    }
+    
     public function create()
     {
         return view('administrador.inss.criar');

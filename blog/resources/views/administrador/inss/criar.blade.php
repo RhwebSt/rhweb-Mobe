@@ -218,7 +218,7 @@
             $(`.campo${index}`).remove();
             let quantidade = parseInt($('#quantidade').val());
             $('#quantidade').val(quantidade - 1);
-        }
+    }
 
     $(document).ready(function() {
         $('.padrao').mask('000.000.000.000.000,00', {reverse: true});

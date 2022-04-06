@@ -183,21 +183,24 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
 
         Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
-        
-        Route::get('ordem/rublica/{ordem}/{id?}','Rublica\\RublicaController@ordem')->name('ordem.rublica');
-        Route::get('relatorio/rublica','Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
-        Route::get('rublica/pesquisa/{id}','Rublica\\RublicaController@pesquisa');
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        
     });
     Route::group(['middleware' => ['permission:Super Admin']], function () {
         Route::resource('user','User\\UserController')->names('user'); 
         Route::resource('inss','Administrador\\Inss\\InssController')->names('inss');
+        Route::get('ordem/inss/{ano?}','Administrador\\Inss\\InssController@ordem')->name('inss.ordem');
         Route::resource('irrf','Administrador\\Irrf\\IrrfController')->names('irrf');
-        Route::resource('rublica','Rublica\\RublicaController')->names('rublica');
+        Route::get('ordem/irrf/{ano?}','Administrador\\Irrf\\IrrfController@ordem')->name('irrf.ordem');
+        Route::resource('rublica','Administrador\\Rublica\\RublicaController')->names('rublica');
+        Route::get('relatorio/rublica','Administrador\\Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
+        Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
+        Route::get('ordem/rublica/{ordem}/{id?}','Administrador\\Rublica\\RublicaController@ordem')->name('ordem.rublica');
         Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
         Route::get('administrador','Administrador\\AdministradorController@index')->name('administrador');
         Route::resource('administrador/usuarios','Administrador\\Usuario\\UsuarioController')->names('administrador.usuarios');
+        Route::get('pesquisa/usuario','Administrador\\Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa');
+        Route::get('ordem/usuario/{ordem}','Administrador\\Usuario\\UsuarioController@ordem')->name('usuario.ordem');
     });
     
 });

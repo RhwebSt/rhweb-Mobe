@@ -189,11 +189,19 @@
               </ul>
             </div>
           </div>
+            <?php
+              $quantidade = 0;
+              $naolida = 0;
+              if (isset($esocialtrabalhador) && count($esocialtrabalhador) > 0) {
+                $quantidade += 1;
+                $naolida = count($esocialtrabalhador);
+              }
+            ?>
             <div>
                 <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <i id="bell__notification" class="fad fa-bell bell__notification"></i>
                     <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                      99  
+                      {{$quantidade}} 
                     </span>
                 </button>
             </div>
@@ -213,42 +221,50 @@
                 <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
             </div>
             <div class="offcanvas-body off__canvas--body">
-
-                <div class="body__notification" id="notification">
-                    <div class="d-flex flex-row justify-content-between header__notification">
-                        {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
-                        <div class="">
-                            <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+                @if(isset($esocialtrabalhador) && count($esocialtrabalhador) > 0)
+                  @foreach($esocialtrabalhador as $esocialtrabalhadores)
+                    <div class="body__notification" id="notification">
+                        <div class="d-flex flex-row justify-content-between header__notification">
+                            {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
+                            <div class="">
+                                <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+                            </div>
+                            {{-- inicio da contagem do tempo que a mensagem foi postada --}}
+                            <div class="">
+                                <p class="content__header-notification">
+                                  <?php
+                                    $data = explode(' ',$esocialtrabalhadores->created_at)
+                                  ?>
+                                  {{date("d/m/Y",strtotime($data[0]))}}
+                                </p>
+                            </div>
+                            {{-- fim da contagem do tempo que a mensagem foi postada --}}
                         </div>
-                        {{-- inicio da contagem do tempo que a mensagem foi postada --}}
-                        <div class="">
-                            <p class="content__header-notification">1s</p>
-                        </div>
-                        {{-- fim da contagem do tempo que a mensagem foi postada --}}
-                    </div>
-                    {{-- fim do cabecalho --}}
+                        {{-- fim do cabecalho --}}
 
-                    {{-- inicio corpo da mensagem --}}
-                    <div class="teste">
-                        <p class="text__body--notification">O sistema será atualizado no dia 30/03/22 as  </p>
-                    </div>
-                    {{-- fim do corpo da mensagem --}}
-
-                    
-                    {{-- inicio da  exclusao da notificacao --}}
-                    <div class="d-flex justify-content-end footer-notification">
-                        <form action=""></form>
-                        <div class="content__footer-notification">
-                            <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+                        {{-- inicio corpo da mensagem --}}
+                        <div class="teste">
+                            <p class="text__body--notification">O sistema será atualizado no dia 30/03/22 as  </p>
                         </div>
+                        {{-- fim do corpo da mensagem --}}
+
+                        
+                        {{-- inicio da  exclusao da notificacao --}}
+                        <div class="d-flex justify-content-end footer-notification">
+                            <form action=""></form>
+                            <div class="content__footer-notification">
+                                <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+                            </div>
+                        </div>
+                        {{-- fim da exclusão da notificação --}}
                     </div>
-                    {{-- fim da exclusão da notificação --}}
-                </div>
+                  @endforeach
+                @endif
 
                 
                 {{-- inicio da contagem de mensagem nao lida --}}
                 <div class="no__read--message">
-                    <p class="no__read--message--content">20 notificações não lidas</p>
+                    <p class="no__read--message--content">{{$naolida}} notificações não lidas</p>
                 </div>
                 {{-- fim da contagem da mensagem não lida --}}
 

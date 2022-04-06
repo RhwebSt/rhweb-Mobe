@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{{url('/css/inss.css')}}">
         <link rel="stylesheet" href="{{url('/css/irrf.css')}}">
         <link rel="stylesheet" href="{{url('/css/tableAdmin.css')}}">
+        <link rel="stylesheet" href="{{url('/css/rubrica.css')}}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>

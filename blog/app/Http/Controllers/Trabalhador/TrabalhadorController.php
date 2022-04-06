@@ -17,10 +17,12 @@ use App\Lancamentorublica;
 use App\Comissionado;
 use App\ValoresRublica;
 use App\BaseCalculo;
+use App\Esocial;
 class TrabalhadorController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
-    $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo;
+    $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo,
+    $esocial;
     public function __construct()
     {
         $this->trabalhador = new Trabalhador;
@@ -35,6 +37,7 @@ class TrabalhadorController extends Controller
         $this->lancamentorublica = new Lancamentorublica; 
         $this->comissionado = new Comissionado;
         $this->basecalculo = new BaseCalculo;  
+        $this->esocial = new Esocial; 
     }
     public function index()
     {
@@ -42,12 +45,13 @@ class TrabalhadorController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $trabalhadors = $this->trabalhador->lista($search,'asc');
+        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($condicao) {
             $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($condicao);
-            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
+            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
             $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
+            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
 
@@ -55,12 +59,13 @@ class TrabalhadorController extends Controller
     {
         $user = Auth::user();
         $trabalhadors = $this->trabalhador->lista($search,$ordem);
+        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($id) {
             $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
-            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
+            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
             $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors'));
+            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
     /**
@@ -290,9 +295,10 @@ class TrabalhadorController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
+        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         $trabalhadors = $this->trabalhador->lista($search,'asc');
         $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
-        return view('trabalhador.edit',compact('user','trabalhador','trabalhadors'));
+        return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
     }
 
     /**

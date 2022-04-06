@@ -12,7 +12,7 @@
     {{-- final do botao novo --}}
 
     {{-- incio da pesquisa --}}
-    <section class="search">
+    <!-- <section class="search">
         <form action="">
             <div class="d-flex">
                 <div class="col-10 col-md-3 me-1">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </form>
-    </section>
+    </section> -->
     {{-- fim da pesquisa --}}
 
     {{-- inicio do filtro --}}
@@ -35,8 +35,15 @@
                         <i class="fad fa-sort"></i>
                     </button>
                     <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                        <!-- <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item dropdown__links--filter" href="#"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li> -->
+                        @foreach($inss as $i)
+                            @if($i->isano)
+                                <li><a class="dropdown-item dropdown__links--filter" href="{{route('inss.ordem',$i->isano)}}"><i class="fad fa-sort-amount-down-alt"></i>{{$i->isano}}</a></li>
+                            @endif
+                           
+                        @endforeach
+                        <li><a class="dropdown-item dropdown__links--filter" href="{{route('inss.ordem',null)}}"><i class="fad fa-sort-amount-down-alt"></i>Todos</a></li>
                     </ul>
                 </div>
             </div>
