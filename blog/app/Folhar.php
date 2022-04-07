@@ -425,4 +425,19 @@ class Folhar extends Model
         ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
         ->count();
     }
+    public function listaTrabalhadorFolhar($id)
+    {
+        return DB::table('folhars')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->select(
+            'folhars.fscodigo',
+            'folhars.fsinicio', 
+            'folhars.fsfinal'
+            )
+        ->where('trabalhadors.id', $id)
+        ->orderBy('folhars.fsfinal', 'desc')
+        ->distinct()
+        ->get();
+    }
 }

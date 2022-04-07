@@ -201,6 +201,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::resource('administrador/usuarios','Administrador\\Usuario\\UsuarioController')->names('administrador.usuarios');
         Route::get('pesquisa/usuario','Administrador\\Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa');
         Route::get('ordem/usuario/{ordem}','Administrador\\Usuario\\UsuarioController@ordem')->name('usuario.ordem');
+        Route::resource('administrador/trabalhador','Administrador\\Trabalhador\\HistoricaController')->names('administrador.trabalhador.historico');
+
     });
     
 });

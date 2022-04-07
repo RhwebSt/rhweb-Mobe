@@ -414,4 +414,5 @@ class Lancamentotabela extends Model
         ->where('lancamentotabelas.lsstatus', 'M')
         ->count();
     }
+    
 }

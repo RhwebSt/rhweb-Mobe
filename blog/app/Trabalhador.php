@@ -197,46 +197,26 @@ class Trabalhador extends Model
                 )
             ->where(function($query) use ($id){
                 $user = auth()->user();
-                $query->where([
-                    ['trabalhadors.tsnome',$id],
-                    ['trabalhadors.empresa', $user->empresa]
-                ])
-                ->orWhere([
-                    ['trabalhadors.tscpf',$id],
-                    ['trabalhadors.empresa', $user->empresa],
-                ])
-                // ->orWhere([
-                //     ['trabalhadors.tsmatricula',$id],
-                //     ['trabalhadors.empresa', $user->empresa],
-                // ])
-                ->orWhere([
-                    ['trabalhadors.id',$id],
-                    ['trabalhadors.empresa', $user->empresa],
-                ]);
-
-                // if ($user->hasPermissionTo('admin')) {
-                //     $query->where('tsnome',$id) 
-                //     ->orWhere('tscpf',$id)
-                //     // ->orWhere('tsmatricula',$id)
-                //     ->orWhere('trabalhadors.id',$id);
-                // }else{
-                //     $query->where([
-                //         ['trabalhadors.tsnome',$id],
-                //         ['trabalhadors.empresa', $user->empresa]
-                //     ])
-                //     ->orWhere([
-                //         ['trabalhadors.tscpf',$id],
-                //         ['trabalhadors.empresa', $user->empresa],
-                //     ])
-                //     // ->orWhere([
-                //     //     ['trabalhadors.tsmatricula',$id],
-                //     //     ['trabalhadors.empresa', $user->empresa],
-                //     // ])
-                //     ->orWhere([
-                //         ['trabalhadors.id',$id],
-                //         ['trabalhadors.empresa', $user->empresa],
-                //     ]);
-                // }
+                if ($user->hasPermissionTo('Super Admin')) {
+                    $query->where('trabalhadors.id',$id);
+                }else{
+                    $query->where([
+                        ['trabalhadors.tsnome',$id],
+                        ['trabalhadors.empresa', $user->empresa]
+                    ])
+                    ->orWhere([
+                        ['trabalhadors.tscpf',$id],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ])
+                    // ->orWhere([
+                    //     ['trabalhadors.tsmatricula',$id],
+                    //     ['trabalhadors.empresa', $user->empresa],
+                    // ])
+                    ->orWhere([
+                        ['trabalhadors.id',$id],
+                        ['trabalhadors.empresa', $user->empresa],
+                    ]);
+                }
                
             })
         ->first();
@@ -396,5 +376,21 @@ class Trabalhador extends Model
         return DB::table('trabalhadors')
         ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa')
         ->count();
+    }
+    public function listaTrabalhadorEmpresa()
+    {
+        return DB::table('trabalhadors')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa')
+        ->select(
+            'trabalhadors.id',
+            'trabalhadors.tsnome',
+            'trabalhadors.tscpf', 
+            'categorias.csadmissao',
+            'empresas.esnome',
+            'empresas.escnpj'
+        )
+        ->distinct()
+        ->paginate(10);
     }
 }

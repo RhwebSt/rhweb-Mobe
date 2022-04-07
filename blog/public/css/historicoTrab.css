@@ -1,0 +1,130 @@
+.section__title--historico--trab{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.title__historico--trab{
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.button__historico--trabalhador{
+    background-color: #00477A;
+    color: #fff;
+    border: 1px solid #90cefa;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+}
+
+.button__historico--trabalhador:hover{
+    background-color: #012742;
+    color: #fff;
+    border: 1px solid #90cefa;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__historico--trabalhador:focus{
+    background-color: #012742;
+    color: #fff;
+    border: 1px solid #90cefa;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.div__image--historico--trab{
+    display: flex;
+    justify-content: center;
+}
+
+.image--historico--trab{
+    width: 120px;
+    height: 120px;
+    transition: 300ms ease-in-out;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+}
+
+.image--historico--trab:hover{
+    transform: scale(1.18);
+    transition: 300ms ease-in-out;
+}
+
+
+
+.dados__historico{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    
+}
+
+.accoordion__historico{
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.lista__historico--trab{
+    border-radius: 12px;
+    background-color: rgb(226, 226, 226);
+    padding: 3%;
+    color: rgb(5, 5, 5);
+}
+
+.item__lista--historico--trab{
+    text-decoration: none;
+    list-style: none;
+}
+
+
+.accoordion__header{
+    border-radius: 12px;
+    background-color: rgb(31, 31, 31);
+}
+
+.button__accoordion{
+    background-color: rgb(70, 70, 70);
+    color: white;
+    border-radius: 9px !important;
+    transition: 300ms ease-in-out;
+}
+
+.button__accoordion:hover{
+    transform: scale(1.01);
+    transition: 300ms ease-in-out;
+}
+
+.button__accoordion:focus{
+    background-color: rgb(24, 24, 24);
+    color: white;
+    box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: rgb(24, 24, 24);
+    color: white;
+    box-shadow: none !important;
+}
+
+.item__acorddion{
+    border-radius: 9px;
+    background-color: rgb(43, 42, 42);
+    margin-top: 3px;
+}
+
+.item__acorddion:first-child{
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+}
+
+.item__acorddion:last-child{
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+
+.letter__color{
+    color: white;
+}
+

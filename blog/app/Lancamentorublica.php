@@ -275,4 +275,19 @@ class Lancamentorublica extends Model
         ->groupBy('lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
         ->get();
     }
+    public function buscaListaTablelaTrabalhador($id)
+    {
+        return DB::table('trabalhadors')
+        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentotabelas.*', 
+            'tomadors.tsnome'
+            )
+        ->where('trabalhadors.id',$id)
+        ->orderBy('lancamentotabelas.lsdata', 'desc')
+        ->distinct()
+        ->get();
+    }
 }

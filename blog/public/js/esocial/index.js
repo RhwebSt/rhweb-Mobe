@@ -52,7 +52,7 @@ $(document).ready(function(){
             success: function(retorno){
                 $('#msg').text('Lote Recebido com Sucesso.')
                 $('#progress').text('50%').css({"width": "50%"});
-                consultaevento(retorno.data.id,trabalhador)
+                setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
             }
          });
     }

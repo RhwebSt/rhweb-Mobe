@@ -41,6 +41,7 @@ class TrabalhadorController extends Controller
     }
     public function index()
     {
+        
         $user = Auth::user(); 
         $search = request('search');
         $condicao = request('codicao');

@@ -294,4 +294,18 @@ class Bolcartaoponto extends Model
         })
         ->get();
     }
+    public function buscaListaCartaoPontoTrabalhador($id)
+    {
+        return DB::table('trabalhadors')
+        ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->select(
+            'lancamentotabelas.*', 
+            'tomadors.tsnome'
+            )
+        ->where('trabalhadors.id',$id)
+        ->orderBy('lancamentotabelas.lsdata', 'desc')
+        ->get();
+    }
 }

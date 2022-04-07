@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{{url('/css/irrf.css')}}">
         <link rel="stylesheet" href="{{url('/css/tableAdmin.css')}}">
         <link rel="stylesheet" href="{{url('/css/rubrica.css')}}">
+        <link rel="stylesheet" href="{{url('/css/historicoTrab.css')}}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
          <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -96,6 +97,7 @@
                                         <li><a class="dropdown-item dropdown__item--list" href="{{route('rublica.index')}}">Rúbricas</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">CBO</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Categoria do trabalhador</a></li>
+                                        <li><a class="dropdown-item dropdown__item--list" href="{{route('administrador.trabalhador.historico.index')}}">Trabalhador</a></li>
                                     </ul>
                                 </li>
 
