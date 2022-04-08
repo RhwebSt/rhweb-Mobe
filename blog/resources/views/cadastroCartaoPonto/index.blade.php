@@ -344,7 +344,7 @@
       })
     }
 
-    function tabelaPreco(tomador) {
+    function tabelaPreco(tomador) { 
       var resul = false;
       $.ajax({
         url: "{{url('verifica/tabela/preco')}}/" + tomador,

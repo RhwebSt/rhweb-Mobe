@@ -23,7 +23,7 @@
 
     Toast.fire({
       icon: 'success',
-      title: ''
+      title: "{{session('success')}}"
     })
   </script>
   @endif

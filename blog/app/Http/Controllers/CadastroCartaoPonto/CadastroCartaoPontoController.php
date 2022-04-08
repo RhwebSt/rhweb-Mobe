@@ -10,6 +10,7 @@ use App\Bolcartaoponto;
 use App\Trabalhador;
 use App\TabelaPreco;
 use App\ValoresRublica;
+use Carbon\Carbon;
 use PDF;
 class CadastroCartaoPontoController extends Controller
 {
@@ -66,9 +67,11 @@ class CadastroCartaoPontoController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        
         $user = Auth::user();
-        
+        $today = Carbon::today();
+        if (strtotime($dados['data']) > strtotime($today) ) {
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+        }
         $lancamentotabelas = $this->lancamentotabela->verificaBoletimDias($dados);
         $tabelaprecos = $this->tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
         
@@ -100,7 +103,7 @@ class CadastroCartaoPontoController extends Controller
             
         ]);
         try {
-            $lancamentotabelas = $this->lancamentotabela->cadastro($dados);
+            $lancamentotabelas = $this->lancamentotabela->cadastro($dados); 
             if ($lancamentotabelas) {
                 $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
             }

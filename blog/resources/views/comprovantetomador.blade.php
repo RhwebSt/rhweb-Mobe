@@ -311,10 +311,10 @@
                         <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
                         <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
                         <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            {{number_format((float)$valorcalculo->vireferencia, 2, ',', '.')}}
+                            {{$valorcalculo->vireferencia?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
                         </td>
-                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$valorcalculo->vivencimento, 2, ',', '.')}}</td>
-                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$valorcalculo->videscinto, 2, ',', '.')}}</td>
+                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}</td>
                     </tr>
                 @endif
         @endforeach
@@ -324,10 +324,10 @@
                         <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
                         <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
                         <td class="small__font border-left text-center referencia text-bold border-bottom">
-                            {{number_format((float)$valorcalculo->vireferencia, 2, ',', '.')}}
+                            {{$valorcalculo->vireferencia?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
                         </td>
-                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$valorcalculo->vivencimento, 2, ',', '.')}}</td>
-                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$valorcalculo->videscinto, 2, ',', '.')}}</td>
+                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}</td>
                     </tr>
                 @endif
         @endforeach
@@ -363,14 +363,14 @@
                     }
                 ?>
             </td>
-            <td class="small__font border-left text-bold total__vencimentos text-center border-bottom border-right">{{number_format((float)$folhar->bivalorvencimento, 2, ',', '.')}}</td>
-            <td class="small__font border-left text-bold border-right total__descontos text-center border-bottom">{{number_format((float)$folhar->bivalordesconto, 2, ',', '.')}}</td>
+            <td class="small__font border-left text-bold total__vencimentos text-center border-bottom border-right">{{$folhar->bivalorvencimento?number_format((float)$folhar->bivalorvencimento, 2, ',', '.'):''}}</td>
+            <td class="small__font border-left text-bold border-right total__descontos text-center border-bottom">{{$folhar->bivalordesconto?number_format((float)$folhar->bivalordesconto, 2, ',', '.'):''}}</td>
         </tr>
 
         <tr>
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaque border-top border-bottom">Valor Líquido</td>
-            <td class="small__font text-bold border-right total__descontos text-center destaque border-top border-bottom">{{number_format((float)$folhar->bivalorliquido, 2, ',', '.')}}</td>
+            <td class="small__font text-bold border-right total__descontos text-center destaque border-top border-bottom">{{$folhar->bivalorliquido?number_format((float)$folhar->bivalorliquido, 2, ',', '.'):''}}</td>
         </tr>
     </table>
 
@@ -387,14 +387,14 @@
         </tr>
 
         <tr>
-            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$folhar->biservico, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$folhar->biservicodsr, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$folhar->biinss, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$folhar->bifgts, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$folhar->bifgtsmes, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhar->biirrf > 0 ? $folhar->biirrf : 0, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$folhar->bifaixairrf, 2, ',', '.')}}</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$folhar->binumfilhos}}</td>
+            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{$folhar->biservico?number_format((float)$folhar->biservico, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{$folhar->biservicodsr?number_format((float)$folhar->biservicodsr, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">{{$folhar->biinss?number_format((float)$folhar->biinss, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">{{$folhar->bifgts?number_format((float)$folhar->bifgts, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{$folhar->bifgtsmes?number_format((float)$folhar->bifgtsmes, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{$folhar->biirrf > 0? number_format((float)$folhar->biirrf, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center">{{$folhar->bifaixairrf?number_format((float)$folhar->bifaixairrf, 2, ',', '.'):''}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$folhar->binumfilhos?$folhar->binumfilhos:''}}</td>
         </tr>
     </table>
 

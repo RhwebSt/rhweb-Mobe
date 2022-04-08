@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>RHWEB - Comprovante de Pagamento por dia2131321</title>
+    <title>RHWEB - Comprovante de Pagamento por dia</title>
 </head>
 
 <style>
@@ -222,36 +222,44 @@
 </style>
 
 <body>
-   @foreach($trabalhadores as $t => $trabalhado)
+    
+   
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$trabalhado->esnome}}</td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$folhar->esnome}}</td>
         </tr>
     </table>
     
     <table>
         <tr>
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
-            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:</td>
-            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$trabalhado->escnpj}}</td>
+            <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:
+                <?php
+                    $data = explode('-',$folhar->fsfinal)
+                ?>
+                {{$data[1]}}/{{$data[0]}}
+            </td>
+            <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$folhar->escnpj}}</td>
         </tr>
 
     </table>
     
     <table>
         <tr>
-            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$trabalhado->tsnome}}</td>
+            <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">
+                {{$folhar->tsnome}}
+            </td>
         </tr>
     </table>
 
     <table>
         <tr>
-            <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong>{{$trabalhado->tsmatricula}}</td>
-            <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong>{{$trabalhado->tscpf}}</td>
-            <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong>{{$trabalhado->dspis}}</td>
+            <td class="small__font matric border-left text-center border-bottom border-top"><strong>Matrícula:</strong>{{$folhar->tsmatricula}}</td>
+            <td class="small__font cpf border-left text-center border-bottom border-top"><strong>CPF:</strong>{{$folhar->tscpf}}</td>
+            <td class="small__font pis border-left text-center border-bottom border-top"><strong>PIS:</strong>{{$folhar->dspis}}</td>
             <td class="small__font cbo border-left border-right text-center border-bottom border-top"><strong>CBO:</strong>
                 <?php
-                    $cbo = explode('-',$trabalhado->cbo);
+                    $cbo = explode('-',$folhar->cbo);
                 ?>
                 {{$cbo[0]}}
             </td>
@@ -266,200 +274,72 @@
             <td class="small__font border-left text-center vencimentos text-bold border-bottom border-top destaque">Vencimentos</td>
             <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
         </tr>
-                @foreach($boletim_tabela['diariaNormais']['id'] as $i => $boletim_tabela_diariaNormais_id)
-                    @if($boletim_tabela_diariaNormais_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1000</td>
-                            <td class="small__font border-left descricao border-bottom">Diaria normais</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['diariaNormais']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['diariaNormais']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['horasNormais']['id'] as $i => $boletim_tabela_horasNormais_id)
-                    @if($boletim_tabela_horasNormais_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1002</td>
-                            <td class="small__font border-left descricao border-bottom">Horas normais</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['horasNormais']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['horasNormais']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['hora extra 50%']['id'] as $i => $boletim_tabela_ex50_id)
-                    @if($boletim_tabela_ex50_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1003</td>
-                            <td class="small__font border-left descricao border-bottom">hora extra 50%</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 50%']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 50%']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['hora extra 100%']['id'] as $i => $boletim_tabela_ex100_id)
-                    @if($boletim_tabela_ex100_id === $trabalhado->id && $boletim_tabela['hora extra 100%']['valor'][$i] > 0)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1004</td>
-                            <td class="small__font border-left descricao border-bottom">Hora extra 100%</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 100%']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['hora extra 100%']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['adicional noturno']['id'] as $i => $boletim_tabela_noturno_id)
-                    @if($boletim_tabela_noturno_id === $trabalhado->id && $boletim_tabela['adicional noturno']['valor'][$i] > 0)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1005</td>
-                            <td class="small__font border-left descricao border-bottom">Adicional noturno</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['adicional noturno']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['adicional noturno']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['gratificação']['id'] as $i => $boletim_tabela_gradificacao_id)
-                    @if($boletim_tabela_gradificacao_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">1005</td>
-                            <td class="small__font border-left descricao border-bottom">Gratifição</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['gratificação']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['gratificação']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['dsr1818']['id'] as $i => $boletim_tabela_dsr1818_id)
-                    @if($boletim_tabela_dsr1818_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">DSR 18,18%</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">18,18</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['dsr1818']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['inss']['id'] as $i => $boletim_tabela_inss_id)
-                    @if($boletim_tabela_inss_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">INSS</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['inss']['indece'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['inss']['resultadoinss'][$i], 2, ',', '')}}</td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['irrf']['id'] as $i => $boletim_tabela_irrf_id)
-                    @if($boletim_tabela_irrf_id === $trabalhado->id && $boletim_tabela['irrf']['resultadoinss'][$i])
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">IRRF</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$boletim_tabela['irrf']['indece'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['irrf']['resultadoinss'][$i], 2, ',', '')}}</td>
-                        </tr>
-                    @endif
-                @endforeach
-                @if($sindicator)
-                <tr>
-                    <td class="small__font border-left cod text-center border-bottom">9999</td>
-                    <td class="small__font border-left descricao border-bottom">Sindicator</td>
-                    <td class="small__font border-left text-center referencia text-bold border-bottom"></td>
-                    <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                    <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$sindicator, 2, ',', '')}}</td>
-                </tr>
+        @foreach($valorcalculos[0] as $v => $valorcalculo)
+                @if($valorcalculo->basecalculo === $folhar->id && $valorcalculo->vivencimento || $valorcalculo->basecalculo === $folhar->id && $valorcalculo->videscinto)
+                    <tr>
+                        <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
+                        <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            {{$valorcalculo->vireferencia?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
+                        </td>
+                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}</td>
+                    </tr>
                 @endif
-                @foreach($boletim_tabela['ferias_decimoter']['id'] as $i => $boletim_tabela_ferias_decimoter_id)
-                    @if($boletim_tabela_ferias_decimoter_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">Ferias + 1/3</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">11,12</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['ferias_decimoter']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['decimo_ter']['id'] as $i => $boletim_tabela_decimo_ter_id)
-                    @if($boletim_tabela_decimo_ter_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">13º Salário</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">8,34</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$boletim_tabela['decimo_ter']['valor'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['inss_sobre_ter']['id'] as $i => $boletim_tabela_inss_sobre_ter_id)
-                    @if($boletim_tabela_inss_sobre_ter_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom">9999</td>
-                            <td class="small__font border-left descricao border-bottom">INSS Sobre 13º Salário</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">7,5</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['inss_sobre_ter']['resultadoinss'][$i], 2, ',', '')}}</td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($dadosTrabalhador['id'] as $i => $boletim_tabela_vt_id)
-                    @if($boletim_tabela_vt_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom"></td>
-                            <td class="small__font border-left descricao border-bottom">Vale transporte</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_vt'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($dadosTrabalhador['id'] as $i => $boletim_tabela_vt_id)
-                    @if($boletim_tabela_vt_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom"></td>
-                            <td class="small__font border-left descricao border-bottom">Vale alimentação</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{number_format((float)$dadosTrabalhador['tomador_cartao_ponto_va'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom"></td>
-                        </tr>
-                    @endif
-                @endforeach
-                @foreach($boletim_tabela['adiantamento']['id'] as $i => $boletim_tabela_adiantamento_id)
-                    @if($boletim_tabela_adiantamento_id === $trabalhado->id)
-                        <tr>
-                            <td class="small__font border-left cod text-center border-bottom"></td>
-                            <td class="small__font border-left descricao border-bottom">Adiantamento</td>
-                            <td class="small__font border-left text-center referencia text-bold border-bottom">{{number_format((float) $boletim_tabela['adiantamento']['quantidade'][$i], 2, ',', '')}}</td>
-                            <td class="small__font border-left text-center vencimentos text-bold border-bottom"></td>
-                            <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{number_format((float)$boletim_tabela['adiantamento']['valor'][$i], 2, ',', '')}}</td>
-                        </tr>
-                    @endif
-                @endforeach
+        @endforeach
+        @foreach($valorcalculos[1] as $v => $valorcalculo)
+                @if($valorcalculo->basecalculo === $folhar->id && $valorcalculo->vivencimento || $valorcalculo->basecalculo === $folhar->id && $valorcalculo->videscinto)
+                    <tr>
+                        <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
+                        <td class="small__font border-left text-center referencia text-bold border-bottom">
+                            {{$valorcalculo->vireferencia?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
+                        </td>
+                        <td class="small__font border-left text-center vencimentos text-bold border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
+                        <td class="small__font border-left border-right text-center descontos text-bold border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}ola</td>
+                    </tr>
+                @endif
+        @endforeach
 
     </table>
 
     <table>
         <tr>
-            <td class="small__font border-left border-top tipoTrab">Trabalhador Intermitente Conforme a Lei 13.467/2017</td>
+            <td class="small__font border-left border-top tipoTrab">
+                <?php
+                    $categoria = explode('-',$folhar->cscategoria);
+                    foreach ($leis[0] as $key => $valor_lei1) {
+                        if (strpos($valor_lei1, $categoria[0]) !== false) {
+                            $valor_lei1 = explode('-',$valor_lei1);
+                            echo($valor_lei1[1]);
+                        }
+                    }
+                ?>
+            </td>
             <td class="small__font border-left text-bold border-top total__vencimentos text-center destaque border-bottom border-right">Total Vencimento</td>
             <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
         </tr>
 
         <tr>
-            <td class="small__font border-left tipoTrab">Dispõe sobre atividades de trabalhadores categoria 04 Intermitentes</td>
-            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$boletim_tabela['vencimento']['valor'][$t], 2, ',', '')}}</td>
-            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$boletim_tabela['novodesconto']['valor'][$t], 2, ',', '')}}</td>
+            <td class="small__font border-left tipoTrab">
+                <?php
+                    $categoria = explode('-',$folhar->cscategoria);
+                    foreach ($leis[1] as $key => $valor_lei1) {
+                        if (strpos($valor_lei1, $categoria[0]) !== false) {
+                            $valor_lei1 = explode('-',$valor_lei1);
+                            echo($valor_lei1[1]);
+                        }
+                    }
+                ?>
+            </td>
+            <td class="small__font border-left text-bold total__vencimentos text-center destaque border-bottom border-right">{{number_format((float)$folhar->bivalorvencimento, 2, ',', '.')}}</td>
+            <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$folhar->bivalordesconto, 2, ',', '.')}}</td>
         </tr>
 
         <tr>
             <td class="small__font border-left tipoTrab border-bottom"></td>
             <td class="small__font border-left text-bold total__vencimentos text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$boletim_tabela['vencimento']['valor'][$t] - $boletim_tabela['novodesconto']['valor'][$t], 2, ',', '')}}</td>
+            <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$folhar->bivalorliquido, 2, ',', '.')}}</td>
         </tr>
     </table>
 
@@ -476,15 +356,14 @@
         </tr>
 
         <tr>
-            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$boletim_tabela['salario']['valor'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$boletim_tabela['serviso_dsr']['valor'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$boletim_tabela['base_inss']['valor'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$boletim_tabela['base_fgts']['valor'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$boletim_tabela['fgts_mes']['valor'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$boletim_tabela['base_irrf']['valor'][$t], 2, ',', '')}}</td>
-            
-            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$boletim_tabela['irrf']['indece'][$t], 2, ',', '')}}</td>
-            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$depedentes[$t]->depedentes}}</td>
+            <td class="little__font border-left border-top border-bottom servicosbase text-center">{{number_format((float)$folhar->biservico, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom servrsr text-center">{{number_format((float)$folhar->biservicodsr, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bainss text-center">{{number_format((float)$folhar->biinss, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bafgts text-center">{{number_format((float)$folhar->bifgts, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom fgtsmes text-center">{{number_format((float)$folhar->bifgtsmes, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom bairrf text-center">{{number_format((float)$folhar->biirrf > 0 ? $folhar->biirrf : 0, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-top border-bottom fairrf text-center">{{number_format((float)$folhar->bifaixairrf, 2, ',', '.')}}</td>
+            <td class="little__font border-left border-right border-bottom border-top num__filho text-center">{{$folhar->binumfilhos}}</td>
         </tr>
     </table>
 
@@ -512,150 +391,70 @@
         <tr>
             <td class="text-center border-left dia small__font border-bottom">1</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '01' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '01' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+            @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '01' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                    @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">9</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '09' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '09' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '09' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                    @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">17</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '17' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '17' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '17' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                    @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">25</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '25' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '25' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '25' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
       
         <tr>
             <td class="text-center border-left dia small__font border-bottom">2</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '02' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '02' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                    @if($relacaodia->rsdia === '02' && $relacaodia->basecalculo === $folhar->id)
+                        {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                    @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">10</td>
             <td  class="text-center border-left small__font border-bottom valor">
-                <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '10' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '10' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '10' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">18</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '18' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '18' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '18' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">26</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '26' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '26' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '26' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
@@ -663,435 +462,205 @@
         <tr>
             <td class="text-center border-left dia small__font border-bottom">3</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '03' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '03' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '03' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">11</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '11' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '11' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '11' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">19</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '19' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '19' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '19' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">27</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '27' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '27' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '27' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">4</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '04' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '04' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '04' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">12</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '12' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '12' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '12' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">20</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '20' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '20' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '20' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">28</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '28' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '28' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '28' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">5</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '05' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '05' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '05' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">13</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '13' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '13' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '13' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">21</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '21' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '21' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '21' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">29</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '29' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '29' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '29' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">6</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '06' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '06' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '06' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">14</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '14' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '14' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '14' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">22</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '22' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '22' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '22' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">30</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '30' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '30' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-              ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '30' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float) $relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">7</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '07' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '07' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '07' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">15</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '15' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '15' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '15' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">23</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '23' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '23' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '23' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">31</td>
             <td  class="text-center border-left small__font border-bottom border-right valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '31' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '31' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '31' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
         </tr>
 
         <tr>
             <td class="text-center border-left dia small__font border-bottom">8</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '08' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '08' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '08' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '.')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">16</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '16' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '16' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '16' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left small__font border-bottom dia">24</td>
             <td  class="text-center border-left small__font border-bottom valor">
-            <?php
-                  $vencimento = 0;
-                  $valorboletim = 0;
-                  foreach ($cartaoponto_diarias['campos']['dia'] as $key => $cartaopontodiarias) {
-                      if ($cartaopontodiarias === '24' && $trabalhado->id == $cartaoponto_diarias['campos']['id'][$key]) {
-                          $vencimento += $cartaoponto_diarias['campos']['valor'][$key];
-                      }
-                  }
-                  foreach ($boletim_tabela['campos']['dia'] as $key => $boletimtabelas) {
-                      if ($boletimtabelas === '24' && $trabalhado->id == $boletim_tabela['campos']['id'][$key]) {
-                         $valorboletim += $boletim_tabela['campos']['valor'][$key];
-                      }
-                  }
-            ?>
-               {{number_format((float)$vencimento +  $valorboletim, 2, ',', '')}}
+                @foreach($relacaodias as $r => $relacaodia)
+                        @if($relacaodia->rsdia === '24' && $relacaodia->basecalculo === $folhar->id)
+                            {{number_format((float)$relacaodia->rivalor, 2, ',', '')}}
+                        @endif
+                @endforeach
             </td>
             <td  class="text-center border-left border-top  small__font border-bottom destaqueDark dia text-bold">Total</td>
-            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold"></td>
+            <td  class="text-center small__font border-top border-bottom border-right destaqueDark valor text-bold">{{number_format((float)$folhar->bitotaldiaria, 2, ',', '.')}}</td>
         </tr>  
        
     </table>
@@ -1104,15 +673,25 @@
     <table>
         <tr>
             <td class="declaracao fontDeclaracao border-top border-left border-right">Declaro ter recebido a importância líquida neste recibo do periodo 
-            <strong></strong> 
-            <strong><strong> 
+            <strong>
+                <?php
+                    $data_inicial = explode('-',$folhar->fsinicio);
+                    echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
+                ?>
+            </strong>  a 
+            <strong>
+                <?php
+                    $data_final = explode('-',$folhar->fsfinal);
+                    echo($data_final[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
+                ?>
+            <strong> 
             </td>
         </tr>
 
         <tr>
-            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong>{{$trabalhado->bsbanco}}</strong> Agência: <strong>{{$trabalhado->bsagencia}}</strong> Operação:<strong>{{$trabalhado->bsoperacao}}</strong> Conta: <strong>{{$trabalhado->bsconta}}</strong></td>
+            <td class="declaracao fontDeclaracao  border-left border-right">Deposito: Banco: <strong>{{$folhar->bsbanco}}</strong> Agência: <strong>{{$folhar->bsagencia}}</strong> Operação:<strong>{{$folhar->bsoperacao}}</strong> Conta: <strong>{{$folhar->bsconta}}</strong></td>
         </tr>
-    </table> 
+    </table>
 
     <table>
         <tr class="assinatura">
@@ -1125,8 +704,6 @@
             <td class="fontDeclaracao text-center border-right border-bottom">Assinatura Trabalhador</td>
         </tr>
     </table>
-    
-    <h1 style="page-break-after: always;">{{$t+1}}</h1>
-    @endforeach
+    <h1 style="page-break-after: always;"></h1>
 </body>
 </html>

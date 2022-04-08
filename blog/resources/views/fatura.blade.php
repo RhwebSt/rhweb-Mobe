@@ -404,21 +404,21 @@
         <table class="margin-top">
             <tr>
                 <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[0]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[0]->fiindece, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[0]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$faturaprincipais[0]->fiindece?number_format((float)$faturaprincipais[0]->fiindece, 2, ',', '.'):''}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$faturaprincipais[0]->fivalor?number_format((float)$faturaprincipais[0]->fivalor, 2, ',', '.'):''}}</td>
                 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">
                     
                     {{$faturasecundarios[0]->fsdescricao}}
                 </td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturasecundarios[0]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{$faturasecundarios[0]->fiindece?number_format((float)$faturasecundarios[0]->fiindece, 2, ',', '.'):''}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$faturasecundarios[0]->fivalor?number_format((float)$faturasecundarios[0]->fivalor, 2, ',', '.'):''}}</td>
             </tr>
 
             <tr>
                 <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$faturaprincipais[1]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$faturaprincipais[1]->fiindece, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$faturaprincipais[1]->fivalor, 2, ',', '.')}}</td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$faturaprincipais[1]->fiindece?number_format((float)$faturaprincipais[1]->fiindece, 2, ',', '.'):''}}</td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$faturaprincipais[1]->fivalor?number_format((float)$faturaprincipais[1]->fivalor, 2, ',', '.'):''}}</td>
                 
                 <td class="small__font border-bottom border-left border-right border-top text-bold dsr">{{$faturasecundarios[1]->fsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice  text-center">{{number_format((float)$faturasecundarios[1]->fiindece, 2, ',', '.')}}</td>

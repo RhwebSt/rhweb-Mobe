@@ -28,12 +28,9 @@ class RelatorioCartaoPontoController extends Controller
         $data = base64_decode($data);
         $boletim = base64_decode($boletim);
         $tomador = base64_decode($tomador);
-        
         $ano = explode('-',$data);
-      
-        
-         
-            $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0]); 
+        try {
+            $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0],null,'asc'); 
             if (count($tabelaprecos) < 1) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada a tabela de preço deste tomador.']);
             }
@@ -47,7 +44,7 @@ class RelatorioCartaoPontoController extends Controller
             $trabalhadors = $this->trabalhador->relatorioBoletimTabela($dados);
             $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','empresa','trabalhadors','tabelaprecos'));
             return $pdf->setPaper('a4','landscape')->stream('Relatório.pdf');
-            try { 
+             
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

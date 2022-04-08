@@ -51,7 +51,7 @@ class calculoFolhaPorTomadorController extends Controller
             
             $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
             $pdf = PDF::loadView('comprovantetomador',compact('folhas','leis','valorcalculos','relacaodias'));
-            return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
+            return $pdf->setPaper('a4')->stream('CALCULO FOLHA TOMADOR.pdf');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
@@ -76,12 +76,12 @@ class calculoFolhaPorTomadorController extends Controller
             $folhar = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador1'],$dados['tomador']);
             
             $basecalculo_id = [];
-            array_push($basecalculo_id,$folhar->id); 
+            array_push($basecalculo_id,$folhar->id);  
             $valorcalculos = $this->valorcalculo->buscaImprimirTomador($basecalculo_id,$incide,$naoincide);
             
             $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
             $pdf = PDF::loadView('comprovantetrabalhador',compact('folhar','leis','valorcalculos','relacaodias'));
-            return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
+            return $pdf->setPaper('a4')->stream('CALCULO FOLHA TRABALHADOR.pdf');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

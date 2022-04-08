@@ -83,8 +83,8 @@ class FolhaAnaliticaTomadorController extends Controller
         $vale = $valorcalculo->calculoFolhaAnaliticaDesconto($id,$sim,$tomador);
         
         $pdf = PDF::loadView('folhaAnaliticaTomador',compact('sindicator','seguro','inss','inss_sobre13','irrf','salario13','vt','va','ferias','dsr','adiantamento','vale','producao','folhas'));
-        return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA.pdf');
-        } catch (\Throwable $th) {
+        return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA TOMADOR.pdf');
+        } catch (\Throwable $th) { 
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a folha.']);
         }
     }

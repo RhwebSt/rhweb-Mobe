@@ -97,7 +97,7 @@ class TabelaPreco extends Model
         ->orderBy('tsrubrica', 'asc')
         ->get();
     }
-    public function buscaTabelaTomador($tomador,$ano,$condicao,$ordem)
+    public function buscaTabelaTomador($tomador,$ano,$condicao,$ordem) 
     {
         return TabelaPreco::where(function($query) use ($tomador,$ano,$condicao){
             $user = auth()->user();

@@ -175,7 +175,7 @@ class TabelaPrecoController extends Controller
     public function verificaTabelaPreco($tomador)
     {
         $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, date('Y'));
+        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, date('Y'),null,'asc');
         if (count($tabelaprecos) > 0) {
             return response()->json(true);
         } else {

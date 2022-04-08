@@ -36,6 +36,19 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
+
+    public function cadastroadicionalNoturno($dados,$basecalculo,$trabalahdor,$i,$data)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> (int)$dados['adicional noturno']['codigos'][$i],
+            'vsdescricao'=>$dados['adicional noturno']['rublicas'][$i],
+            'vireferencia'=>$dados['adicional noturno']['quantidade'][$i],
+            'vivencimento'=>$dados['adicional noturno']['valor'][$i],
+            'basecalculo'=>$basecalculo,
+            'trabalhador'=>$trabalahdor,
+            'created_at'=>$data
+        ]);
+    }
    
     public function cadastroHorasEx50($dados,$basecalculo,$trabalahdor,$i,$data)
     {

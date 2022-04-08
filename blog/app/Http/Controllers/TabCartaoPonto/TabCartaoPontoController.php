@@ -9,6 +9,7 @@ use App\Lancamentotabela;
 use App\Lancamentorublica;
 use App\ValoresRublica;
 use App\Bolcartaoponto;
+use Carbon\Carbon;
 class TabCartaoPontoController extends Controller
 {
     /**
@@ -71,9 +72,13 @@ class TabCartaoPontoController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
+        $dados = $request->all(); 
     
         $user = auth()->user();
+        $today = Carbon::today();
+        if (strtotime($dados['data']) > strtotime($today) ) {
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+        }
         $novadata = explode('-',$dados['data']);
         $lancamentotabelas = $this->lancamentotabela->verificaBoletimMes($dados,$novadata); 
         
