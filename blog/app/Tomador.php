@@ -368,7 +368,9 @@ class Tomador extends Model
             $query->where([
                 ['tomadors.id',$tomador],
                 ['tomadors.empresa', $user->empresa]
-            ])->whereDate('folhars.fsfinal', $final);
+            ])
+            // ->whereDate('folhars.fsfinal', $final)
+            ->whereBetween('folhars.fsfinal',[$inicio,$final]); 
 
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('tomadors.id',$tomador) 

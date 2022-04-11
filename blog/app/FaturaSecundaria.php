@@ -14,7 +14,7 @@ class FaturaSecundaria extends Model
         return FaturaSecundaria::create([
             'fsdescricao'=>$dados['descricao'],
             'fiindece'=>$dados['indice'],
-            'fivalor'=>str_replace(",",".",$dados['valor']), 
+            'fivalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0, 
             'fatura'=>$dados['fatura']
         ]);
     }

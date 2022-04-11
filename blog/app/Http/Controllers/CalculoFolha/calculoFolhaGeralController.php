@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CalculoFolha;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Trabalhador;
 use App\Tomador;
 use App\Empresa;
@@ -55,8 +56,14 @@ class calculoFolhaGeralController extends Controller
     }
     public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
-        $folhar = new Folhar;
-      
+        $folhar = new Folhar; 
+        $today = Carbon::today();
+        // if (strtotime($datafinal) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
+        // }
+        // if (strtotime($datainicio) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
+        // }
         $folhas = $folhar->verificaFolhar($datainicio,$datafinal);
         $lancamentotabela = $this->lancamentotabela->verificarFolhar($datainicio,$datafinal);
         if(!$lancamentotabela){

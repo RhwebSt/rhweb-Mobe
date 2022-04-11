@@ -3,7 +3,7 @@
 @section('conteine')
 <div class="container">
 
-    <section class="section__btn--new--rubrica">
+    <section class="section__btn--new--rubrica"> 
         <div class="">
             <a href="{{route('rublica.create')}}" class="button__new--rubrica btn">Novo <i class="fad fa-user-plus"></i></a>
         </div>

@@ -202,7 +202,10 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('pesquisa/usuario','Administrador\\Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa');
         Route::get('ordem/usuario/{ordem}','Administrador\\Usuario\\UsuarioController@ordem')->name('usuario.ordem');
         Route::resource('administrador/trabalhador','Administrador\\Trabalhador\\HistoricaController')->names('administrador.trabalhador.historico');
-
+        Route::resource('administrador/cbo','Administrador\\Cbo\\CboController')->names('administrador.cbo');
+        Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
+        Route::get('administrador/ordem/cbo/{ordem}/{id?}','Administrador\\Cbo\\CboController@ordem')->name('administrador.cbo.ordem');
+        Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
     });
     
 });

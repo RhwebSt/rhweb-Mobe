@@ -1,0 +1,124 @@
+.section__botao--voltar--categoria{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+
+
+.section__title--categoria{
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+.button__voltar--categoria{
+    background-color: #00477A;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+}
+
+.button__voltar--categoria:hover{
+    background-color: #002641;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__voltar--categoria:focus{
+    background-color: #002641;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.title__categoria{
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+
+.button__new--categoria{
+    background-color: #09866D;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+}
+
+.button__new--categoria:hover{
+    background-color: #013f33;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__new--categoria:focus{
+    background-color: #013f33;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.button__incluir--categoria{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__incluir--categoria:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__incluir--categoria:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.button__atualizar--categoria{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__atualizar--categoria:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__atualizar--categoria:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.conteudo__categoria{
+    margin-top: 5%;
+    
+}
+
+
+

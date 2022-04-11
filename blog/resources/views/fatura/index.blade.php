@@ -76,7 +76,7 @@
         
                 <div class="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <form class="row g-3" action="{{route('fatura.gera')}}" method="POST">
-                        <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
+                        <input type="hidden" name="tomador" value="{{old('tomador')}}" class="@error('tomador') is-invalid @enderror" id="tomador">
                         <div class="" id="quadro1">
                         @csrf
                             <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Tomador <i class="fas fa-search"></i></div>
@@ -85,7 +85,7 @@
                                         <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
                                             <div class="d-flex">
                                             <label for="exampleDataList" class="form-label"></label>
-                                            <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                            <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" value="{{old('pesquisa')}}" name="pesquisa" id="pesquisa">
                                             
                                             <datalist id="listapesquisa">
                                             </datalist>
@@ -143,7 +143,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="valor__adiantamento" class="form-label">Valor Adiantamento</label>
-                                    <input type="text" class="form-control @error('valor__adiantamento') is-invalid @enderror" name="valor__adiantamento" value="{{old('valor__adiantamento')}}" id="valor__adiantamento">
+                                    <input type="text" class="form-control @error('valor__adiantamento') is-invalid @enderror" name="valor__adiantamento" value="{{old('valor__adiantamento','0,00')}}" id="valor__adiantamento">
                                     @error('valor__adiantamento')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -164,7 +164,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="valor__creditos" class="form-label">Valor Créditos</label>
-                                    <input type="text" class="form-control @error('valor__creditos') is-invalid @enderror" name="valor__creditos" value="{{old('valor__creditos')}}" id="valor__creditos">
+                                    <input type="text" class="form-control @error('valor__creditos') is-invalid @enderror" name="valor__creditos" value="{{old('valor__creditos','0,00')}}" id="valor__creditos">
                                           @error('valor__creditos')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -176,13 +176,15 @@
                             
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="vencimento" class="form-label">Data Vencimento</label>
-                                    <input type="date" class="form-control" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
-                                        <span class="text-danger"></span>
+                                    <input type="date" class="form-control @error('vencimento') is-invalid @enderror" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
+                                    @error('vencimento')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
                                     <label for="competencia" class="form-label">Competência</label>
-                                    <input type="month" class="form-control @error('competencia') is-invalid @enderror" name="competencia" value="" id="competencia">
+                                    <input type="month" value="{{old('competencia')}}" class="form-control @error('competencia') is-invalid @enderror" name="competencia"  id="competencia">
                                     @error('competencia')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

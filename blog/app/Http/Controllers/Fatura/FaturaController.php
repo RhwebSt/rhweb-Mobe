@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fatura;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use PDF;
 use App\Tomador;
 use App\ValorCalculo;
@@ -75,15 +76,22 @@ class FaturaController extends Controller
     {
         $dados = $request->all();
         // dd($dados);
+        $today = Carbon::today();
+        // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
+        // }
+        // if (strtotime($dados['ano_final']) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
+        // }
         $request->validate([
             'tomador'=>'required',
             'ano_inicial'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'ano_final'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'vencimento'=>'max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'text__adiantamento'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'texto__credito'=>'max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'valor__creditos'=>'required',
-            'valor__adiantamento'=>'required',
+            'vencimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'text__adiantamento'=>'max:30',
+            'texto__credito'=>'max:30',
+            'valor__creditos'=>'',
+            'valor__adiantamento'=>'',
             'competencia'=>'required|max:10'
         ]);
         $user = auth()->user();
@@ -125,7 +133,7 @@ class FaturaController extends Controller
         $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
         $rublicasfaturainss = $this->valorcalculor->rublicasFaturaInss($dados);
         $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
-        // dd($indecefatura,$tabelaprecos);
+        // dd($indecefatura,$tabelaprecos,$rublicasfatura);
         if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
@@ -353,19 +361,19 @@ class FaturaController extends Controller
                 $faturatotais = $this->faturatotal->cadastro($producao);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
-            try {
-        } catch (\Throwable $th) {
-            $this->faturaprincipal->deletarFatura($faturas['id']);
-            $this->faturasecundario->deletarFatura($faturas['id']);
-            $this->faturademostrativa->deletarFatura($faturas['id']);
-            $this->faturarublica->deletarFatura($faturas['id']);
-            $this->faturatotal->deletarFatura($faturas['id']);
-            $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            $quantidade = $valorrublica_fatura->vsnrofatura - 1;
-            $this->fatura->deletar($faturas['id']);
-            $this->valorrublica->editarFatura($quantidade,$user->empresa);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
-        }
+        //     try {
+        // } catch (\Throwable $th) {
+        //     $this->faturaprincipal->deletarFatura($faturas['id']);
+        //     $this->faturasecundario->deletarFatura($faturas['id']);
+        //     $this->faturademostrativa->deletarFatura($faturas['id']);
+        //     $this->faturarublica->deletarFatura($faturas['id']);
+        //     $this->faturatotal->deletarFatura($faturas['id']);
+        //     $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        //     $quantidade = $valorrublica_fatura->vsnrofatura - 1;
+        //     $this->fatura->deletar($faturas['id']);
+        //     $this->valorrublica->editarFatura($quantidade,$user->empresa);
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+        // }
     }
     public function destroy($id)
     {
@@ -388,7 +396,7 @@ class FaturaController extends Controller
     }
     public function relatorio($id,$inicio,$final)
     {
-        try {
+        
             $faturas = $this->fatura->buscaRelatorio($id,$inicio,$final);
             $faturaprincipais = $this->faturaprincipal->buscaRelatorio($faturas->id);
             $faturarublicas = $this->faturarublica->buscaRelatorio($faturas->id);
@@ -399,8 +407,10 @@ class FaturaController extends Controller
             $faturatotais = $this->faturatotal->buscaRelatorio($faturas->id);
             $tomadores = $this->tomador->tomadorFatura($id,$inicio,$final);
             $empresas = $this->empresa->buscaUnidadeEmpresa($tomadores->empresa);
+            // dd($faturasecundarios,$faturavalestrans,$faturavalesalim);
             $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
             return $pdf->setPaper('a4')->stream('fatura.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

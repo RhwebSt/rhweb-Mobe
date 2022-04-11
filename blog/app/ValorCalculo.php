@@ -658,11 +658,11 @@ class ValorCalculo extends Model
             valor_calculos.vireferencia,
             valor_calculos.vicodigo,
             valor_calculos.vsdescricao'
-        )
+        ) 
         ->groupBy('valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador',$dados['tomador'])
         ->whereBetween('valor_calculos.vicodigo',[1008,2003])
-        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->whereBetween('base_calculos.created_at',[$dados['ano_inicial'],$dados['ano_final']])
         ->orderBy('vicodigo','asc')
         ->get();
     }
@@ -680,7 +680,8 @@ class ValorCalculo extends Model
         ->groupBy('valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador',$dados['tomador'])
         ->whereBetween('valor_calculos.vicodigo',[1008,2003])
-        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        // ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->whereBetween('base_calculos.created_at',[$dados['ano_inicial'],$dados['ano_final']])
         ->orderBy('vicodigo','asc')
         ->get();
     }
