@@ -20,8 +20,8 @@
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@800&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet">
@@ -34,6 +34,7 @@
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vivus@0.4.6/dist/vivus.min.js"></script>
         
     </head>
     
@@ -80,14 +81,14 @@
     <main>
         <nav class="navbar navbar-expand-lg navbar-dark mb-5" style="background-image: linear-gradient(90deg, #366bdd, #0751f3, rgb(71, 42, 236)); ">
             <div class="container-fluid">
-            <a class="" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
+            <a class="logo__clickavel" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
               </button>
             <div class="collapse navbar-collapse " id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white fonttop " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                    <a class="nav-link dropdown-toggle fonttop " href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                       Cadastro
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -114,7 +115,7 @@
                       <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                         <ul class="navbar-nav">
                           <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                  Rotina Mensal
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink" >
@@ -134,22 +135,26 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                  <a class="nav-link text-white" href="{{ url('fatura') }}">Fatura</a>
+                                  <a class="nav-link" href="{{ url('fatura') }}">Fatura</a>
                                 </li>
                             </ul>
 
 
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                          <ul class="navbar-nav">
-                            <li class="nav-item">
-                              <a class="nav-link text-white" href="{{route('avuso.index')}}">Recibo Avulso</a>
-                            </li>
-                        </ul>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{{route('avuso.index')}}">Recibo Avulso</a>
+                                </li>
+                            </ul>
+                            
+
+                            
+                            
 
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                           <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle text-white fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link dropdown-toggle fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Relatórios
                               </a>
                               <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
@@ -158,31 +163,56 @@
                               </ul>
                             </li>
                           </ul>
+                          
+                          
+                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                          <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                            @if($user->name)
+                              <a class="nav-link dropdown-toggle fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
+                              </a>
+                            @else
+                                <a class="nav-link dropdown-toggle fonttop" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
+                                </a>
+                            @endif  
+                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                                @can('admin')
+                                <li><a class="dropdown-item" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>
+                                <li><a class="dropdown-item" href="{{route('altera.index')}}">Alterar Senha</a></li>
+                                <li><a class="dropdown-item" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>
+                                <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}">Dados Pessoais</a></li>
+                                 @endcan
+                                <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
+                              </ul>
+                            </li>
+                          </ul>
       
 
-                  <div class="userwidth"> 
-                    <div class="flex-shrink-0 dropdown flex-row-reverse fonttop">
-                      @if($user->name)
-                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}
-                      </a> 
-                      @else
-                      <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user fa-md"></i> MOBE
-                      </a>
-                      @endif
+                  <!--<div class="userwidth"> -->
+                  <!--  <div class="flex-shrink-0 dropdown flex-row-reverse fonttop">-->
+                  <!--    @if($user->name)-->
+                  <!--    <a href="#" class="nav-link text-decoration-none dropdown-toggle"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">-->
+                  <!--      <i class="fad fa-user-circle fa-lg"></i> {{$user->name}}-->
+                  <!--    </a> -->
+                  <!--    @else-->
+                  <!--    <a href="#" class="link-dark text-decoration-none dropdown-toggle text-white"  id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">-->
+                  <!--      <i class="fas fa-user fa-md"></i> MOBE-->
+                  <!--    </a>-->
+                  <!--    @endif-->
                      
-                      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                      @can('admin')
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>
-                        <li><a class="dropdown-item border-bottom border-secundary" href="{{route('perfil.edit',$user->id)}}">Dados Pessoais</a></li>
-                      @endcan
-                        <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
-                      </ul>
-                    </div>
-                  </div>
+                  <!--    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">-->
+                  <!--    @can('admin')-->
+                  <!--      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>-->
+                  <!--      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('altera.index')}}">Alterar Senha</a></li>-->
+                  <!--      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>-->
+                  <!--      <li><a class="dropdown-item border-bottom border-secundary" href="{{route('perfil.edit',$user->id)}}">Dados Pessoais</a></li>-->
+                  <!--    @endcan-->
+                  <!--      <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>-->
+                  <!--    </ul>-->
+                  <!--  </div>-->
+                  <!--</div>-->
                 </div>
                 
 
@@ -289,8 +319,9 @@
         <!--</div>-->
     
     <footer>
-        <p class="text-nowrap">&copy; Copyright RHWeb Sistemas Inteligentes - 2021</p>
+        <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2021</p>
     </footer>
+    
     <script src="{{url('/js/alteracaoSenha.js')}}"></script>
     <script src="{{url('/js/darkmode.js')}}"></script>
     <script src="{{url('/js/notificacaoUser.js')}}"></script>

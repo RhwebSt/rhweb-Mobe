@@ -163,6 +163,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
     Route::put('trabalhador/esocial/{id}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
+    Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
+    Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
+    Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
@@ -203,9 +206,11 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('ordem/usuario/{ordem}','Administrador\\Usuario\\UsuarioController@ordem')->name('usuario.ordem');
         Route::resource('administrador/trabalhador','Administrador\\Trabalhador\\HistoricaController')->names('administrador.trabalhador.historico');
         Route::resource('administrador/cbo','Administrador\\Cbo\\CboController')->names('administrador.cbo');
-        Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
+        
         Route::get('administrador/ordem/cbo/{ordem}/{id?}','Administrador\\Cbo\\CboController@ordem')->name('administrador.cbo.ordem');
-        Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
+       
+        
+        Route::get('administrador/ordem/categoria/{ordem}/{id?}','Administrador\\Categoria\\CategoriaController@ordem')->name('administrador.categoria.ordem');
     });
     
 });

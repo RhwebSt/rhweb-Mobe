@@ -2,6 +2,7 @@
 :root{
     --body-bg:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(237,237,241,1) 14%, rgba(228,228,232,1) 29%, rgba(222,225,226,1) 51%, rgba(236,236,236,1) 83%);
     --body-color: black;
+    
     --input-hover:1px 0.5px rgb(5, 133, 252), 0 0 1px rgba(0, 89, 255, 0.986);
     --input-focus-color: #6606e4;
     --input-focus-box: 1px 0.5px  rgba(18, 89, 243, 0.507), 0 0 1px rgba(96, 64, 240, 0.486);
@@ -19,11 +20,14 @@
     --btn-fechar-bg: #033977;
     --btn-deletar-bg: #CB1531;
     --btn-success-bg: #088f5b;
+    --color-teste: rgb(15, 15, 15);
+    --color-bg-svg-home: rgb(237,237,241,1);
 }
 
 .darkmode{
     --body-bg: linear-gradient(90deg, rgba(38,37,37,1) 0%, rgba(73,71,71,1) 45%, rgba(34,33,33,1) 100%);
-    --body-color: rgb(247, 243, 243);
+    --body-color: white;
+    
     --input-hover: 1px 1px rgb(5, 252, 252), 0 0px 1px rgba(0, 140, 255, 0.986);
     --input-focus-color: #060aff;
     --input-focus-box: 1px 1px  rgba(18, 89, 243, 0.507), 0 0 1px rgba(96, 64, 240, 0.486);
@@ -41,30 +45,71 @@
     --btn-fechar-bg: #033977;
     --btn-deletar-bg: #CB1531;
     --btn-success-bg: #088f5b;
+    --color-teste: rgb(252, 252, 252);
+    --color-bg-svg-home:rgba(73,71,71,1)
 }
 
 html, body {
     min-height: 100%;
 }
 
-
+/* inicio da navbar*/
 .dropdown-menu{
-    background-image: linear-gradient(120deg, #1250d6, #0751f3, rgb(71, 42, 236));
+    background-color:#474747;
+    color:black ;
     margin-top: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
+
+
 
 .dropdown-item{
     color: white;
-    transition: ease-in-out 300ms;
+    transition: ease-in-out 400ms;
 }
 
 .dropdown-item:hover{
     color: black;
-    transition: ease-in-out 300ms;
+    background-color: white;
+    border-radius: 10px;
+    transition: ease-in-out 400ms;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.3);
 }
 
 
+.nav-link{
+    color: #E0E0E0 !important;
+    transition: 200ms ease-in-out;
+}
 
+.nav-link:hover{
+    color: white !important;
+    transform: scale(1.06);
+    transition: 200ms ease-in-out;
+    font-weight: 500;
+    
+    
+}
+
+.nav-link:focus{
+    color: white !important;
+    transform: scale(1.02);
+    transition: 200ms ease-in-out;
+    box-shadow: none !important;
+    font-weight: 500;
+}
+
+.logo__clickavel{
+    transition: 300ms ease-in-out;
+}
+
+.logo__clickavel:hover{
+    transform: scale(1.08);
+    transition: 300ms ease-in-out;
+}
+
+/* fim da navbar*/
 
 body{
     font-family: 'Poppins', sans-serif;
@@ -74,6 +119,7 @@ body{
     flex-direction: column;
     position: absolute;
     width: 100%;
+    overflow: hidden;
 }
 
 main{
@@ -120,16 +166,23 @@ main{
     font-size: 16px;
 }
 
+
+
 .botao{
+    border-radius: 6px;
     background-color: #194bf0;
     border: 1px solid #477EFF;
     color: white;
+    transition: 300ms ease-in-out;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3);
 }
 
 .botao:hover{
     background-color: #002B8F;
     border: 1px solid #6567F6;
     color: white;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
 }
 
 
@@ -546,7 +599,41 @@ main{
 
 
 
+.svg-home-letter{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    top: 45%;
+}
 
+.letterRhweb {
+    fill: none;
+    stroke: var(--color-teste);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: teste ease-in-out 600ms forwards 2.3s;
+}
+
+.letterRhwebNone{
+    fill: none;
+    stroke: var(--color-teste);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: teste1 ease-in-out 600ms forwards 2.3s;
+}
+
+@keyframes teste1{
+    to{
+      fill: var(--color-bg-svg-home);
+    }
+}
+
+@keyframes teste{
+    to{
+      fill: var(--color-teste);
+    }
+}
 
 
 
@@ -586,6 +673,7 @@ footer{
     bottom: 0;
     left: 0;
     font-size:14px;
+    overflow: hidden;
 }
 
 @media only screen and (max-width: 280px) {

@@ -1,4 +1,5 @@
-let  categoriatrabalhador = ["101-Empregado Geral inclusive o empregado público da administração direta ou indireta contratado pela CLT",
+let  categoriatrabalhador = [
+"101-Empregado Geral inclusive o empregado público da administração direta ou indireta contratado pela CLT",
 "102-Empregado Trabalhador rural por pequeno prazo da Lei 11.718/2008",
 "103-Empregado Aprendiz",
 "104-Empregado Doméstico",
@@ -10,14 +11,20 @@ let  categoriatrabalhador = ["101-Empregado Geral inclusive o empregado público
 "201-Trabalhador avulso portuário",
 "202-Trabalhador avulso não portuário",
 "301-Servidor público titular de cargo efetivo magistrado ministro de Tribunal de Contas conselheiro de Tribunal de Contas e membro do Ministério Público",
-"302-Servidor público ocupante de cargo exclusivo em comissão", "303-Exercente de mandato eletivo",
+"302-Servidor público ocupante de cargo exclusivo em comissão", 
+"303-Exercente de mandato eletivo",
 "304-Servidor público exercente de mandato eletivo, inclusive com exercício de cargo em comissão",
 "305-Servidor público indicado para conselho ou órgão deliberativo na condição de representante do governo órgão ou entidade da administração pública",
 "306-Servidor público contratado por tempo determinado sujeito a regime administrativo especial definido em lei própria",
-"307-Militar", "308-Conscrito", "309-Agente público Outros", "310-Servidor público eventual",
+"307-Militar", 
+"308-Conscrito", 
+"309-Agente público Outros", 
+"310-Servidor público eventual",
 "311-Ministros juízes procuradores promotores ou oficiais de justiça à disposição da Justiça Eleitoral",
-"312-Auxiliar local", "313-Servidor público exercente de atividade de instrutoria capacitação treinamento-curso ou concurso-ou convocado para pareceres técnicos ou depoimentos", 
-"401-Dirigente Sindical informação prestada pelo sindicato","410-Trabalhador cedido/exercício em outro órgão/juiz auxiliar Informação prestada pelo cessionário/destino",
+"312-Auxiliar local", 
+"313-Servidor público exercente de atividade de instrutoria capacitação treinamento-curso ou concurso-ou convocado para pareceres técnicos ou depoimentos", 
+"401-Dirigente Sindical informação prestada pelo sindicato",
+"410-Trabalhador cedido/exercício em outro órgão/juiz auxiliar Informação prestada pelo cessionário/destino",
 "701-Contribuinte individual Autônomo em geral exceto se enquadrado em uma das demais categorias de contribuinte individual",
 "711-Contribuinte individual Transportador autônomo de passageiros",
 "712-Contribuinte individual Transportador autônomo de carga",
@@ -38,7 +45,8 @@ let  categoriatrabalhador = ["101-Empregado Geral inclusive o empregado público
 "904-Participante de curso de formação, como etapa de concurso público, sem vínculo de emprego/estatutário"]
 
 
-let primeiroTextoCategoria = ["101-Trabalhador geral contratado pela CLT conforme a Lei N° 9.601/1998",
+let primeiroTextoCategoria = [
+"101-Trabalhador geral contratado pela CLT conforme a Lei N° 9.601/1998",
 "102-Trabalhador rural por pequeno prazo da Lei 11.718/2008",
 "103-Trabalhador aprendiz conforme a Lei N°10.097/2000",
 "104-Trabalhador doméstico conforme a Lei Complementar Nº150, de 1 de Junho de 2015",
@@ -80,7 +88,8 @@ let primeiroTextoCategoria = ["101-Trabalhador geral contratado pela CLT conform
 "904-Participante de curso de formação conforme Lei N° 11.273/2006"]
 
 
-let segundoTextoCategoria = ["101-Dispõe sobre o contrato de trabalho por prazo determinado e dá outras providências. Sob a categoria 101",
+let segundoTextoCategoria = [
+"101-Dispõe sobre o contrato de trabalho por prazo determinado e dá outras providências. Sob a categoria 101",
 "102-Dispõe sobre a categoria 102 e estabelece normas transitórias sobre a aposentadoria do trabalhador rural; prorroga o prazo de contratação de financiamentos rurais de que trata o § 6o do art.",
 "103-Dispõe sobre a atividade da categoria 103",
 "104-Dispõe sobre a atividade da categoria 104",
@@ -120,5 +129,25 @@ let segundoTextoCategoria = ["101-Dispõe sobre o contrato de trabalho por prazo
 "903-Dispõe sobre a atividade da categoria 903",
 "904-Dispõe sobre a atividade da categoria 904"]
 
+categoriatrabalhador.forEach(element => {
+  
+});
 
+// $.ajax({
+//     url: "http://127.0.0.1:8000/administrador/categoria",
+//     type: 'POST',
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     },
+//     data:categoriatrabalhador,
+//     // contentType: 'application/json',
+//     success: function(data) {
+//         // let nome = ''
+//         // data.forEach(element => {
+//         //     nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
+//         //     // nome += `<option value="${element.csdescricao}">`
+//         // });
+//         // $('#cbo_list').html(nome)
+//     }
+// })
 

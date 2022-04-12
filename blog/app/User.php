@@ -71,7 +71,7 @@ class User extends Authenticatable
     }
     public function buscaUnidadeUser($id)
     {
-        return User::where('name', $id)->first();
+        return User::where('name', $id)->orWhere('email',$id)->first();
     }
     public function buscaListaUser($id)
     {

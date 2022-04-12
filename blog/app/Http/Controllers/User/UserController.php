@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\notificaUser;
 use App\User;
 use App\Empresa;
 use App\Pessoai;
@@ -45,6 +46,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all(); 
+        
         $request->validate([
             'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
@@ -71,7 +73,8 @@ class UserController extends Controller
             $pessoais = $this->pessoais->cadastra($dados);
             $dados['pessoal'] = $pessoais['id'];
             $this->endereco->cadastro($dados);
-            \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
+            $use->notify(new notificaUser($use,$dados['senha']));
+            // \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
             // Mail::send(new \App\Mail\Email($dados));
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {

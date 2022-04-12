@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Senha;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\notificaEsqueceuSenha;
 use App\User;
 class SenhaController extends Controller
 {
@@ -21,7 +22,9 @@ class SenhaController extends Controller
     {
         $dados = $request->all();
         $dados['password'] = rand(100000, 999999);
-        \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
+        $use = $this->user->buscaUnidadeUser($dados['email']);
+        $use->notify(new notificaEsqueceuSenha($use,$dados['password']));
+        // \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15)); 
         // $dados['password'] = rand(100000, 999999);
         // $user = $this->user->editarSenharLogin($dados);
         // if (!$user) {

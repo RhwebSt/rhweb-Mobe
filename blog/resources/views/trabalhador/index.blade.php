@@ -863,33 +863,58 @@
         $('#formrelatorioempresa').attr('action', "")
       }
     })
-    $('#cbo').on('keyup focus', function() {
-      if (!$(this).val()) {
-        cbolista(cbo);
+    // $('#cbo').on('keyup focus', function() {
+    //   // if (!$(this).val()) {
+    //   //   cbolista(cbo);
+    //   // }
+    // })
+    $.ajax({
+      url: "{{route('administrador.cbo.pesquisa')}}",
+      type: 'get',
+      contentType: 'application/json',
+      success: function(data) {
+          let nome = ''
+          data.forEach(element => {
+              nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
+              // nome += `<option value="${element.csdescricao}">`
+          });
+          $('#cbo_list').html(nome)
       }
     })
-
-    $('#categoria').on('keyup focus', function() {
-      if (!$(this).val()) {
-        listacategoria(categoriatrabalhador);
-      }
+    $.ajax({
+        url: "{{route('administrador.categoria.pesquisa')}}",
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+            let nome = ''
+            data.forEach(element => {
+                nome += `<option value="${element.codigo}-${element.descricao}">`
+                // nome += `<option value="${element.descricao}">`
+            });
+            $('#categoria_list').html(nome)
+        }
     })
+    // $('#categoria').on('keyup focus', function() {
+    //   if (!$(this).val()) {
+    //     listacategoria(categoriatrabalhador);
+    //   }
+    // })
 
-    function cbolista(cbo) {
-      cbo.forEach(element => {
-        cbolist += `<option value="${element.code} - ${element.name}">`
-      });
-      $('#cbo_list').html(cbolist)
-    }
-    cbolista(cbo)
+    // function cbolista(cbo) {
+    //   cbo.forEach(element => {
+    //     cbolist += `<option value="${element.code} - ${element.name}">`
+    //   });
+    //   $('#cbo_list').html(cbolist)
+    // }
+    // cbolista(cbo)
 
-    function listacategoria(categoriatrabalhador) {
-      categoriatrabalhador.forEach(element => {
-        categorialist += `<option value="${element}">`
-      });
-      $('#categoria_list').html(categorialist);
-    }
-    listacategoria(categoriatrabalhador)
+    // function listacategoria(categoriatrabalhador) {
+    //   categoriatrabalhador.forEach(element => {
+    //     categorialist += `<option value="${element}">`
+    //   });
+    //   $('#categoria_list').html(categorialist);
+    // }
+    // listacategoria(categoriatrabalhador)
     $("#pesquisa").on('keyup focus', function() {
       let dados = '0'
       if ($(this).val()) {

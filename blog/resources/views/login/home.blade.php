@@ -2,13 +2,33 @@
 @section('titulo','Rhweb - Página Principal')
 @section('conteine')
 
+    <div class="svg-home-letter">
+        <!--<object id="rhwebLetter" type="image/svg+xml" data="imagem/homeLetter.svg"></object>-->
+        <svg id="rhwebLetter" xmlns="http://www.w3.org/2000/svg" viewBox="-300 0 800 100">
+              <title>rhwebLetter</title>
+              <g id="letra_R" data-name="letra R">
+                <path class="cls-1 letterRhweb" d="M110.16,215.64v41h11.67v-14.5l2-.17L130,256.67h12.33L135.83,240a13.28,13.28,0,0,0,6.5-13.67c-1.33-9.66-12.5-10.69-12.5-10.69Z" transform="translate(-109.66 -214.67)"/>
+                <path class="cls-1 letterRhwebNone" d="M121.67,227.17v3h7.66s2.84-.67,0-3C129,226.87,121.67,227.17,121.67,227.17Z" transform="translate(-109.66 -214.67)"/>
+              </g>
+              <g id="letra_h" data-name="letra h">
+                <polygon class="cls-1 letterRhweb" points="35.51 0.97 35.51 42 47.17 42 47.17 27.5 56.17 27.5 56.17 42 67.51 42 67.51 0.97 55.84 0.97 56.17 15.5 47.01 15.5 47.17 0.97 35.51 0.97"/>
+              </g>
+              <g id="letra_w" data-name="letra w">
+                <path class="cls-1 letterRhweb" d="M179.33,215.17" transform="translate(-109.66 -214.67)"/>
+                <polygon class="cls-1 letterRhweb" points="80.84 42 69.67 0.5 81.51 0.97 88.67 26 95.01 0.97 107.67 0.97 114.67 25.5 121.84 0.97 133.17 0.97 122.51 42 107.51 42 101.42 21.48 96.17 42 80.84 42"/>
+              </g>
+              <g id="letra_e" data-name="letra e">
+                <polygon class="cls-1 letterRhweb" points="155.67 0.97 135.34 0.97 135.34 42 155.67 42 155.67 30.17 147.01 30 147.01 27 155.67 27.17 155.67 15.5 147.01 15.5 146.67 12.37 155.67 12.37 155.67 0.97"/>
+              </g>
+              <g id="letra_b" data-name="letra b">
+                <path class="cls-1 letterRhweb" d="M268.33,215.64v41h21a13.69,13.69,0,0,0,10.5-8.17c3.34-7.5-1.33-12.35-1.33-12.35s8.17-13.71-7.83-20.51Z" transform="translate(-109.66 -214.67)"/>
+                <path class="cls-1 letterRhwebNone" d="M279.83,227.17v3h7.67s2.83-.67,0-3C287.13,226.87,279.83,227.17,279.83,227.17Z" transform="translate(-109.66 -214.67)"/>
+                <path class="cls-1 letterRhwebNone" d="M279.85,242.12v3h7.67s2.83-.66,0-3C287.15,241.82,279.85,242.12,279.85,242.12Z" transform="translate(-109.66 -214.67)"/>
+              </g>
+            </svg>
+    </div>
 
 
-<div class="box__principal">
-    <!--<img class="img-fluid logo__principal" src="{{url('/imagem/arrowMobe.png')}}">-->
-    <h1 class="titleHome">RHWEB</h1>
-    <h1 class="titleHomeLittle">Sistemas Inteligentes</h1>
-</div>
 
 
 <div class="float-end ms-auto p-2 bd-highlight feedback">
@@ -26,6 +46,12 @@
 <!--</div>-->
 
 <script>
+
+     new Vivus('rhwebLetter', {duration: 140,
+        type: 'delayed',
+        animTimingFunction: Vivus.EASE_IN_OUT
+      });
+
     var feedbackBotao = document.querySelector("#feedback");
 
 

@@ -41,26 +41,30 @@ class CboController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $verificar =  $this->cbo->verificarCbo($dados['codigo__cbo']);
-        if ($verificar) {
-            return redirect()->back()->withInput()->withErrors(['codigo__cbo'=>'Este CBO já esta cadastrador.']);
-        }
-        $request->validate([
-            'codigo__cbo'=>'required|max:11',
-            'descricao__cbo'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
-        ],[
-            'codigo__cbo.required'=>'O campo não pode estar vazio.',
-            'codigo__cbo.max'=>'O campo não pode conter mais de 11 caracteres.',
-            'descricao__cbo.required'=>'O campo não pode estar vazio.',
-            'descricao__cbo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'descricao__cbo.regex'=>'O campo possui um formato inválido.',
-        ]);
-        try{
-            $this->cbo->cadastro($dados);
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-        } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
-        }
+       
+        // dd($dados);
+        // $verificar =  $this->cbo->verificarCbo($dados['codigo__cbo']);
+        // if ($verificar) {
+        //     return redirect()->back()->withInput()->withErrors(['codigo__cbo'=>'Este CBO já esta cadastrador.']);
+        // }
+        // $request->validate([
+        //     'codigo__cbo'=>'required|max:11',
+        //     'descricao__cbo'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
+        // ],[
+        //     'codigo__cbo.required'=>'O campo não pode estar vazio.',
+        //     'codigo__cbo.max'=>'O campo não pode conter mais de 11 caracteres.',
+        //     'descricao__cbo.required'=>'O campo não pode estar vazio.',
+        //     'descricao__cbo.max'=>'O campo não pode conter mais de 100 caracteres.',
+        //     'descricao__cbo.regex'=>'O campo possui um formato inválido.',
+        // ]);
+        $this->cbo->cadastro($dados);
+        return response()->json($dados);
+        // try{
+            
+        //     return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+        // }
     }
 
     /**
@@ -75,7 +79,7 @@ class CboController extends Controller
     }
 
     public function pesquisa()
-    {
+    { 
         $cbo = $this->cbo->lista();
         return response()->json($cbo);
     }

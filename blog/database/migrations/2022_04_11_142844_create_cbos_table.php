@@ -16,7 +16,7 @@ class CreateCbosTable extends Migration
         Schema::create('cbos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cscodigo')->nullable();
-            $table->char('csdescricao', 100)->nullable();
+            $table->char('csdescricao', 255)->nullable();
             $table->integer('user')->unsigned()->nullable();
             $table->foreign('user')->references('id')->on('users');
             $table->timestamps();
