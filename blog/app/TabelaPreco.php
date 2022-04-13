@@ -104,18 +104,18 @@ class TabelaPreco extends Model
             if ($condicao) {
                 $query->orWhere([
                     ['tomador',$tomador],
-                    ['tsano',$ano],
+                    // ['tsano',$ano],
                     ['tsrubrica',$condicao]
                 ])
                 ->orWhere([
                     ['tomador',$tomador],
-                    ['tsano',$ano],
+                    // ['tsano',$ano],
                     ['tsdescricao','like','%'.$condicao.'%']
                 ]);
             }else{
                 $query->where([
                     ['tomador',$tomador],
-                    ['tsano',$ano]
+                    // ['tsano',$ano]
                 ]);
             }
 

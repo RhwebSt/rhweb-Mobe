@@ -98,8 +98,8 @@ class TomadorController extends Controller
         $dados = $request->all(); 
         $user = Auth::user();
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
             'cnpj' => 'required|max:19|cnpj',
             'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
@@ -109,7 +109,7 @@ class TomadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/',
             'taxa_adm'=>'',
             'taxa__fed'=>'',
             'deflator'=>'|max:100',
@@ -143,7 +143,7 @@ class TomadorController extends Controller
             'agencia'=>'max:4',
             'operacao'=>'max:3',
             'conta'=>'max:10',
-            'pix'=>'max:255'
+            'pix'=>'max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
         ],[
             'nome__completo.required'=>'Este campo é obrigatório.',
             'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
@@ -214,6 +214,11 @@ class TomadorController extends Controller
             'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
         ]
         );
+        if ($dados['banco']) {
+            $request->validate([
+                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
+            ]);
+        }
         $tomadores = $this->tomador->verificaCadastroCnpj($dados);
         if ($tomadores) {
             return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já está cadastrado.']);
@@ -309,10 +314,10 @@ class TomadorController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        // dd($dados);
+        
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
+            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
             'cnpj' => 'required|max:19|cnpj',
             'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
@@ -322,36 +327,36 @@ class TomadorController extends Controller
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'taxa_adm'=>'required',
-            'taxa__fed'=>'required',
-            'deflator'=>'required|max:100',
-            'das'=>'required',
-            'cod__fpas'=>'required',
-            // 'cod__fap'=>'required',
-            'cod__grps'=>'required',
-            'cod__recol'=>'required',
-            'cnae'=>'required',
-            'fap__aliquota'=>'required',
-            'rat__ajustado'=>'required',
-            'fpas__terceiros'=>'required',
-            'aliq__terceiros'=>'required',
-            'alimentacao'=>'required',
-            'transporte'=>'required',
-            'epi'=>'required',
-            'seguro__trabalhador'=>'required',
-            'folhartransporte'=>'required',
-            'folhartipotrans'=>'required',
-            'folharalim'=>'required',
-            'folhartipoalim'=>'required',
-            'dias_uteis'=>'max:5',
+            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/',
+            'taxa_adm'=>'',
+            'taxa__fed'=>'',
+            'deflator'=>'|max:100',
+            'das'=>'',
+            'cod__fpas'=>'',
+            // 'cod__fap'=>'',
+            'cod__grps'=>'',
+            'cod__recol'=>'',
+            'cnae'=>'',
+            'fap__aliquota'=>'',
+            'rat__ajustado'=>'',
+            'fpas__terceiros'=>'',
+            'aliq__terceiros'=>'',
+            'alimentacao'=>'',
+            'transporte'=>'',
+            'epi'=>'',
+            'seguro__trabalhador'=>'',
+            'folhartransporte'=>'',
+            'folhartipotrans'=>'',
+            'folharalim'=>'',
+            'folhartipoalim'=>'',
+            'dias_uteis'=>'required|max:5',
             'sabados'=>'max:5',
             'domingos'=>'max:5',
-            // 'inss__empresa'=>'required',
-            // 'retencaoinss'=>'required',
-            // 'fgts__empresa'=>'required',
-            // 'retencaofgts'=>'required',
-            // 'valor_fatura'=>'required',
+            // 'inss__empresa'=>'',
+            // 'retencaoinss'=>'',
+            // 'fgts__empresa'=>'',
+            // 'retencaofgts'=>'',
+            // 'valor_fatura'=>'',
             'banco'=>'max:100',
             'agencia'=>'max:4',
             'operacao'=>'max:3',
@@ -428,6 +433,7 @@ class TomadorController extends Controller
             
         ]
         );
+       
      
         try {
         

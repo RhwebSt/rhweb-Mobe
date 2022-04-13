@@ -53,6 +53,23 @@ html, body {
     min-height: 100%;
 }
 
+
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-image: var(--body-bg);
+    color: var(--body-color);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+main{
+    margin-bottom: 100px;
+}
+
 /* inicio da navbar*/
 .dropdown-menu{
     background-color:#474747;
@@ -110,21 +127,6 @@ html, body {
 }
 
 /* fim da navbar*/
-
-body{
-    font-family: 'Poppins', sans-serif;
-    background-image: var(--body-bg);
-    color: var(--body-color);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    width: 100%;
-    overflow: hidden;
-}
-
-main{
-    margin-bottom: 100px;
-}
 
 
 .conteudo{

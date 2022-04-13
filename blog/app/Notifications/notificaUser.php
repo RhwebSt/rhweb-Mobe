@@ -44,7 +44,7 @@ class notificaUser extends Notification
         return (new MailMessage)
                     ->line('Enviado email de teste.')
                     ->subject('Testando notificação')
-                    ->greeting('Usuario:'.$this->usuario->name.'Senha:'.$this->senha)
+                    ->greeting('Usuario:'.$this->usuario->name.' palavra-chave:'.$this->senha)
                     ->action('entra no sistema', route('user.edit',$this->usuario->id))
                     ->line('Obrigador por usar o sistema');
     }

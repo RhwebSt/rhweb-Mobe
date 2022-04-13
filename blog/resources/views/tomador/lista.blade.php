@@ -6,124 +6,136 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                
                 <div class="d-flex justify-content-between">
                     <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                        <form action="{{route('tomador.index')}}" method="GET">
-                            <div class="d-flex">
-                                <label for="exampleDataList" class="form-label"></label>
-                                <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
-                                <datalist id="listapesquisa">
-                                </datalist>
-                                <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
-                                <button type="submit" class="modal-botao btn botaoPesquisa">
-                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                </button>
-
-                                <div class="text-center d-none p-1" id="refres">
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                        <span class="visually-hidden">Loading...</span>
+                            <form action="{{route('tomador.index')}}" method="GET">
+                                <div class="d-flex">
+                                    <label for="exampleDataList" class="form-label"></label>
+                                    <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
+                                    <datalist id="listapesquisa">
+                                    </datalist>
+                                    <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
+                                    <button type="submit" class="modal-botao btn botaoPesquisa">
+                                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                    </button>
+    
+                                    <div class="text-center d-none p-1" id="refres">
+                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
                                     </div>
-                                </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="dropdown  mt-2 p-1">
-                    <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-sort"></i> Filtro
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <!-- <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                                    <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tomador',['asc',isset($tomador->id)?$tomador->id:''])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tomador',['desc',isset($tomador->id)?$tomador->id:''])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="table-responsive-xxl">
-                <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                    <thead>
-                        <th class="col text-center text-nowrap" style="width:80px;">Matrícula</th>
-                        <th class="col text-center text-nowrap" style="width:400px;">Tomador</th>
-                        <th class="col text-center text-nowrap" style="width:200px">CNPJ</th>
-                        <th class="col text-center text-nowrap" style="width:120px">Tabela Preço</th>
-                        <th class="col text-center text-nowrap" style="width:60px">Relatórios</th>
-                        <th class="col text-center text-nowrap" style="width:60px">S-1020</th>
-                        <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
-                        <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
-                    </thead>
-                    <tbody style="background-color: #081049; color: white;">
-                        @if(count($tomadors) > 0)
-                        @foreach($tomadors as $tomador)
-                        <tr class="bodyTabela">
-                            <td class="col text-center border-bottom text-nowrap" style="width:80px;">{{$tomador->tsmatricula}}</td>
-                            <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tomador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
-                                    <a>{{$tomador->tsnome}}</a>
+                
+                    
+                    
+                <section>
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fad fa-sort"></i>
                                 </button>
-                            </td>
-                            <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:200px">
-                                {{$tomador->tscnpj}}
-                            </td>
-
-                            <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:120px">
-                                <a class="btn__padrao--preco modal-botao" href="{{route('tabelapreco.index',[' ',base64_encode($tomador->id)])}}" class=""><i style="color:white;" class="fas fa-dollar-sign"></i></a>
-                            </td>
-
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <div class="dropdown">
-                                    <button class="btn btn__padrao--relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i style="color:white;" class="fas fa-file-alt"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item modal-botao" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
-                                        <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--evento modal-botao" href="{{route('esocial.tomador',base64_encode($tomador->id))}}" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <button class="btn">
-                                    <a class="btn__padrao--editar modal-botao" href="{{route('tomador.edit',base64_encode($tomador->id))}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
-                                </button>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <form action="{{route('tomador.destroy',$tomador->id)}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn modal-botao btn__padrao--excluir modal-botao"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td class="text-center text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                    </tbody>
-                    <tfoot>
-                        <tr class="">
-                            <td colspan="11">
-                                @if ($tomadors->lastPage() > 1)
-                                <ul class="pagination">
-                                    @for ($i = 1; $i <= $tomadors->lastPage(); $i++)
-                                        <li class="page-item {{ ($tomadors->currentPage() == $i) ? ' active' : ''     }}">
-                                            <a class="page-link modal-botao" href="{{ $tomadors->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                        @endfor
+                                <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['asc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['desc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
+                              </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                
+                
+            
+                <section class="table">
+                    <div class="table-responsive-xxl">
+                        <table class="table">
+                            <thead class="tr__header">
+                                <th class="th__header text-nowrap" style="width:80px;">Matrícula</th>
+                                <th class="th__header text-nowrap">Tomador</th>
+                                <th class="th__header text-nowrap" style="width:200px">CNPJ</th>
+                                <th class="th__header text-nowrap" style="width:120px">Tab Preço</th>
+                                <th class="th__header text-nowrap" style="width:60px">Relatórios</th>
+                                <th class="th__header text-nowrap" style="width:60px">S-1020</th>
+                                <th class="th__header text-nowrap" style="width:60px;">Editar</th>
+                                <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
+                            </thead>
+                            
+                            <tbody class="table__body">
+                                @if(count($tomadors) > 0)
+                                @foreach($tomadors as $tomador)
+                                <tr class="tr__body">
+                                    <td class="td__body text-nowrap col" style="width:80px;">{{$tomador->tsmatricula}}</td>
+                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$tomador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                        {{$tomador->tsnome}}
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:200px">
+                                        {{$tomador->tscnpj}}
+                                    </td>
+        
+                                    <td class="td__body text-nowrap col" style="width:120px">
+                                        <a class="btn btn__tabela--preco modal-botao" href="{{route('tabelapreco.index',[' ',base64_encode($tomador->id)])}}" class=""><i class="icon__color fas fa-dollar-sign"></i></a>
+                                    </td>
+        
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <div class="dropdown">
+                                            <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="icon__color fas fa-file-alt"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item modal-botao" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
+                                                <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <a class="btn__padrao--evento modal-botao" href="{{route('esocial.tomador',base64_encode($tomador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        
+                                        <a class="button__editar btn modal-botao" href="{{route('tomador.edit',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                        
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <form action="{{route('tomador.destroy',$tomador->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr class="tr__body">
+                                    <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                </tr>
                                 @endif
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                            </tbody>
+                            <tfoot>
+                                <tr class="">
+                                    <td colspan="11">
+                                        @if ($tomadors->lastPage() > 1)
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination pagination__table pagination-sm">
+                                                @for ($i = 1; $i <= $tomadors->lastPage(); $i++)
+                                                    <li class="page-item {{ ($tomadors->currentPage() == $i) ? ' active' : ''     }}">
+                                                        <a class="page-link modal-botao" href="{{ $tomadors->url($i) }}">{{ $i }}</a>
+                                                    </li>
+                                                    @endfor
+                                            </ul>
+                                        </nav>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </section>
         </div>
         <div class="modal-footer">
         </div>

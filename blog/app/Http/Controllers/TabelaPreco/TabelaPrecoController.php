@@ -24,7 +24,7 @@ class TabelaPrecoController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $tomador = base64_decode($tomador);
-        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$this->dt->year,$search,'asc');
+        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,null,$search,'asc');
         $user = Auth::user();
         if ($condicao) {
             $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($condicao);
@@ -66,7 +66,10 @@ class TabelaPrecoController extends Controller
     {
         $dados = $request->all();
         $tabelapreco = new TabelaPreco;
-        $request->validate([
+        if ($dados['ano'] > $this->dt->year) {
+            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
+        }
+        $request->validate([ 
             'ano' => 'required|max:4',
             'rubricas' => 'required|max:30',
             'descricao' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-%]*$/',
@@ -136,6 +139,9 @@ class TabelaPrecoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        if ($dados['ano'] > $this->dt->year) {
+            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
+        }
         $request->validate([
             'ano' => 'required|max:4',
             'rubricas' => 'required|max:30',

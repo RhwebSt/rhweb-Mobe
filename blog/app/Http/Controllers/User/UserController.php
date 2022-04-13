@@ -48,25 +48,23 @@ class UserController extends Controller
         $dados = $request->all(); 
         
         $request->validate([
-            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'name' => 'required|unique:users|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users',
         ],[
             
             'name.required'=>'O campo não pode estar vazio!',
+            'name.unique'=>'Este usuario já esta cadastrado!',
             'name.regex'=>'O campo não pode ter caracteres especiais!',
             'name.max'=>'O campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
-            // 'email.unique'=>'Este email já esta cadastrado!',
+            'email.unique'=>'Este email já esta cadastrado!',
             'email.required'=>'O campo não pode estar vazio!',
             'email.email'=>'O campo não é um email valido!',
             
         ]);
-        // $user = $this->user->verificaemail($dados);
-        // if ($user) {
-        //     return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
-        // }
-        try {
+       
+        
             $use = $this->user->precadastro($dados);
             $dados['id'] = $use['id']; 
             $dados['user'] = $use['id'];
@@ -77,6 +75,7 @@ class UserController extends Controller
             // \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
             // Mail::send(new \App\Mail\Email($dados));
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }

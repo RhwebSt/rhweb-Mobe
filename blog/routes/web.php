@@ -200,7 +200,9 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
         Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
         Route::get('ordem/rublica/{ordem}/{id?}','Administrador\\Rublica\\RublicaController@ordem')->name('ordem.rublica');
         Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
+        
         Route::get('administrador','Administrador\\AdministradorController@index')->name('administrador');
+
         Route::resource('administrador/usuarios','Administrador\\Usuario\\UsuarioController')->names('administrador.usuarios');
         Route::get('pesquisa/usuario','Administrador\\Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa');
         Route::get('ordem/usuario/{ordem}','Administrador\\Usuario\\UsuarioController@ordem')->name('usuario.ordem');

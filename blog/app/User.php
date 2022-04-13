@@ -192,10 +192,7 @@ class User extends Authenticatable
                 'email' => $dados['email'],
             ]);
     }
-    public function verificaemail($dados)
-    {
-        return User::where('email', $dados['email'])->count();
-    }
+   
     public function verificausuario($id)
     {
         return DB::table('users')

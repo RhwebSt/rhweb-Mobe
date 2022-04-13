@@ -42,9 +42,9 @@ class notificaEsqueceuSenha extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->line('Sua nova senha.')
+                ->line('Sua nova palavra chaver.')
                 ->subject('Testando notificação')
-                ->greeting('Senha:'.$this->senha)
+                ->greeting('palavra chaver:'.$this->senha)
                 // ->action('entra no sistema', route('user.edit',$this->usuario->id))
                 ->line('Obrigador por usar o sistema');
     }
