@@ -277,15 +277,15 @@
                 ];
                 function horas_em_segundos($horas)
                 {
-                    $horas = explode(':',$horas);
-                    if (count($horas) > 1) {
+                    if (strpos($horas,':')) {
+                        $horas = explode(':',$horas);
                         list($horas,$minitos) = $horas;
                         $horasex = $horas * 3600 + $minitos * 60;
                         $horasex = $horasex/60;
                         $horasex = ($horasex/60);
                         return $horasex;
                     }else{
-                        return $horas[0] * 3600;
+                        return $horas;
                     }
                 };
             ?>
@@ -302,7 +302,7 @@
                                 $lancamentorublica->licodigo == 1004 && $lancamentorublica->licodigo == 1005) {
                                     array_push($resultadogreal['quantidade'], horas_em_segundos($lancamentorublica->quantidade));
                                 }else{
-                                    array_push($resultadogreal['quantidade'], $lancamentorublica->quantidade);
+                                    array_push($resultadogreal['quantidade'], horas_em_segundos($lancamentorublica->quantidade));
                                 }
                                 
                             ?>
@@ -314,16 +314,16 @@
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                         </td>
                         <td class="border-left border-top border-bottom border-right small__font text-center padrao"> 
-                            {{number_format((float)$lancamentorublica->lfvalor * $lancamentorublica->quantidade, 2, ',', '.')}}
+                            {{number_format((float)$lancamentorublica->lfvalor * horas_em_segundos($lancamentorublica->quantidade), 2, ',', '.')}}
                             <?php 
-                                $totaltrabalhado += ($lancamentorublica->lfvalor * $lancamentorublica->quantidade); 
+                                $totaltrabalhado += ($lancamentorublica->lfvalor * horas_em_segundos($lancamentorublica->quantidade)); 
                                 
                             ?>
                         </td>
                         <td class="border-left border-top border-bottom border-right small__font text-center padrao">
-                            {{number_format((float)$lancamentorublica->lftomador * $lancamentorublica->quantidade, 2, ',', '.')}}
+                            {{number_format((float)$lancamentorublica->lftomador * horas_em_segundos($lancamentorublica->quantidade), 2, ',', '.')}}
                             <?php 
-                                $totaltomadors += ($lancamentorublica->lftomador * $lancamentorublica->quantidade); 
+                                $totaltomadors += ($lancamentorublica->lftomador * horas_em_segundos($lancamentorublica->quantidade)); 
                                 array_push($resultadogreal['valor'],$lancamentorublica->lftomador);
                             ?>
                         </td>
@@ -371,19 +371,25 @@
                 ?>
             <table>
                 
-                @foreach($bolcartaopontos as $bolcartaoponto)
+            @foreach($boletins as $boletim)
+                 @if($boletim->lsstatus === 'D')
                 <tr>
-                    <td class="border-left border-top border-bottom border-right small__font text-center padrao">{{$bolcartaoponto->liboletim}}</td>
+                    <td class="border-left border-top border-bottom border-right small__font text-center padrao">{{$boletim->liboletim}}</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center padrao">
                         <?php
                             $quantcartaoponto += 1;
-                            $data = explode('-',$bolcartaoponto->lsdata)
+                            $data = explode('-',$boletim->lsdata)
                         ?>
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                     </td>
                     <td class="border-left border-top border-bottom border-right small__font text-center padrao">
+                        <?php
+                            $valortotal = 0;
+                        ?>
+                        @foreach($bolcartaopontos as $bolcartaoponto)
+                            @if($bolcartaoponto->lancamento === $boletim->id)
                             <?php
-                                $valortotal = 0; 
+                                 
                                 foreach ($tabelaprecos as $key => $value) {
                                     if ($value->tsrubrica == 1003 && $bolcartaoponto->bshoraex) {
                                         $valortotal += calculovalores($bolcartaoponto->bshoraex,$value->tsvalor);
@@ -395,45 +401,63 @@
                                         $valortotal += calculovalores($bolcartaoponto->bsadinortuno,$value->tsvalor);
                                     }
                                 }
-                                $totalfolhar += $valortotal;
-                                echo(number_format((float)$valortotal, 2, ',', '.'));
+                                
+                                // echo(number_format((float)$valortotal, 2, ',', '.'));
                            ?>
+                           @endif
+                        @endforeach
+                        <?php
+                            $totalfolhar += $valortotal;
+                        ?>
+                        {{number_format((float)$valortotal, 2, ',', '.')}}
                     </td>
                     <td class="border-left border-top border-bottom border-right small__font text-center padrao">
-                            <?php
-                                $valortomador = 0;
-                                foreach ($tabelaprecos as $key => $value) {
-                                    if ($value->tsrubrica == 1003 && (int)$bolcartaoponto->bshoraex > 0) {
-                                        $valortomador += calculovalores($bolcartaoponto->bshoraex,$value->tstomvalor);
-                                        array_push($resultadogreal['historico'],$value->tsdescricao);
-                                        array_push($resultadogreal['item'],$value->tsrubrica);
-                                        array_push($resultadogreal['valor'],$valortomador);
-                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraex));
-                                    }elseif($value->tsrubrica == 1002 && (int)$bolcartaoponto->horas_normais > 0){
-                                        $valortomador += calculovalores($bolcartaoponto->horas_normais,$value->tstomvalor);
-                                        array_push($resultadogreal['historico'],$value->tsdescricao);
-                                        array_push($resultadogreal['item'],$value->tsrubrica);
-                                        array_push($resultadogreal['valor'],$valortomador);
-                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->horas_normais));
-                                    }elseif($value->tsrubrica == 1004 &&  (int)$bolcartaoponto->bshoraexcem > 0){
-                                        $valortomador += calculovalores($bolcartaoponto->bshoraexcem,$value->tstomvalor);
-                                        array_push($resultadogreal['historico'],$value->tsdescricao);
-                                        array_push($resultadogreal['item'],$value->tsrubrica);
-                                        array_push($resultadogreal['valor'],$valortomador);
-                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraexcem));
-                                    }elseif ($value->tsrubrica == 1005 && (int)$bolcartaoponto->bsadinortuno > 0) {
-                                        $valortomador += calculovalores($bolcartaoponto->bsadinortuno,$value->tstomvalor);
-                                        array_push($resultadogreal['historico'],$value->tsdescricao);
-                                        array_push($resultadogreal['item'],$value->tsrubrica);
-                                        array_push($resultadogreal['valor'],$valortomador);
-                                        array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bsadinortuno));
+                        <?php
+                            $valortomador = 0;
+                        ?>
+                        @foreach($bolcartaopontos as $bolcartaoponto)
+                            @if($bolcartaoponto->lancamento === $boletim->id)
+                                <?php
+                                    
+                                    foreach ($tabelaprecos as $key => $value) {
+                                        if ($value->tsrubrica == 1003 && (int)$bolcartaoponto->bshoraex > 0) {
+                                            $valortomador += calculovalores($bolcartaoponto->bshoraex,$value->tstomvalor);
+                                            array_push($resultadogreal['historico'],$value->tsdescricao);
+                                            array_push($resultadogreal['item'],$value->tsrubrica);
+                                            array_push($resultadogreal['valor'],$valortomador);
+                                            array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraex));
+                                        }elseif($value->tsrubrica == 1002 && (int)$bolcartaoponto->horas_normais > 0){
+                                            $valortomador += calculovalores($bolcartaoponto->horas_normais,$value->tstomvalor);
+                                            array_push($resultadogreal['historico'],$value->tsdescricao);
+                                            array_push($resultadogreal['item'],$value->tsrubrica);
+                                            array_push($resultadogreal['valor'],$valortomador);
+                                            array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->horas_normais));
+                                        }elseif($value->tsrubrica == 1004 &&  (int)$bolcartaoponto->bshoraexcem > 0){
+                                            $valortomador += calculovalores($bolcartaoponto->bshoraexcem,$value->tstomvalor);
+                                            array_push($resultadogreal['historico'],$value->tsdescricao);
+                                            array_push($resultadogreal['item'],$value->tsrubrica);
+                                            array_push($resultadogreal['valor'],$valortomador);
+                                            array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bshoraexcem));
+                                        }elseif ($value->tsrubrica == 1005 && (int)$bolcartaoponto->bsadinortuno > 0) {
+                                            $valortomador += calculovalores($bolcartaoponto->bsadinortuno,$value->tstomvalor);
+                                            array_push($resultadogreal['historico'],$value->tsdescricao);
+                                            array_push($resultadogreal['item'],$value->tsrubrica);
+                                            array_push($resultadogreal['valor'],$valortomador);
+                                            array_push($resultadogreal['quantidade'],horas_em_segundos($bolcartaoponto->bsadinortuno));
+                                        }
                                     }
-                                }
-                                $totaltomador += $valortomador;
-                                echo(number_format((float)$valortomador, 2, ',', '.'));
-                            ?>
+                                   
+                                    // echo(number_format((float)$valortomador, 2, ',', '.'));
+                                ?>
+                            @endif
+                        @endforeach
+                        <?php
+                             $totaltomador += $valortomador;
+                        ?>
+                        {{number_format((float)$valortomador, 2, ',', '.')}}
                     </td>
                 </tr>
+                @endif
                 @endforeach
             </table>
            

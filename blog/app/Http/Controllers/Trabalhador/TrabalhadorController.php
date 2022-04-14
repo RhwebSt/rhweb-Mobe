@@ -45,7 +45,7 @@ class TrabalhadorController extends Controller
         $user = Auth::user(); 
         $search = request('search');
         $condicao = request('codicao');
-        $trabalhadors = $this->trabalhador->lista($search,'asc');
+        $trabalhadors = $this->trabalhador->lista($search,'desc');
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($condicao) {
             $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($condicao);
@@ -98,27 +98,27 @@ class TrabalhadorController extends Controller
         
         
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
             'nome__social' => 'max:100',
             'cpf' => 'required|max:15|cpf|formato_cpf',
             'pis'=>'required|max:20|pis',
             'data_nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
+            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
+            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
             'telefone'=>'required|max:16',
             'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'uf'=>'required|max:2|uf',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'categoria__contrato'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'categoria__contrato'=>'required|max:255',
+            'cbo'=>'required|max:255',
             'ctps'=>'required|max:20',
-            'serie__ctps'=>'required|max:20',
-            'uf__ctps'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'serie__ctps'=>'required|max:20|regex:/^[0-9]*$/',
+            'uf__ctps'=>'required|max:2|uf',
             'data__afastamento'=>'max:10',
             'banco'=>'max:100',
             'agencia'=>'max:4',
@@ -222,6 +222,13 @@ class TrabalhadorController extends Controller
             'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
         ]
         );
+        if ($dados['banco'] || $dados['pix'] || $dados['nome__social']) {
+            $request->validate([
+                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
+                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/',
+                'nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/'
+            ]);
+        }
         if ($trabalhadorscpf) {
             return redirect()->back()->withInput()->withErrors(['cpf'=>'Este CPF já está cadastrado.']);
         }elseif ($documentospis) {
@@ -313,29 +320,27 @@ class TrabalhadorController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__social' => 'max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
+            'nome__social' => 'max:100',
             'cpf' => 'required|max:15|cpf|formato_cpf',
-            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'pis'=>'required|max:20|pis',
             'data_nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'telefone'=>'required|max:16|celular_com_ddd',
+            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
+            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
+            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
+            'telefone'=>'required|max:16',
             'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'uf'=>'required|max:2|uf',
             'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'categoria__contrato'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'cbo'=>'required|max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            
+            'categoria__contrato'=>'required|max:255',
+            'cbo'=>'required|max:255',
             'ctps'=>'required|max:20',
-            'serie__ctps'=>'required|max:20',
-            'uf__ctps'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+            'serie__ctps'=>'required|max:20|regex:/^[0-9]*$/',
+            'uf__ctps'=>'required|max:2|uf',
             'data__afastamento'=>'max:10',
             'banco'=>'max:100',
             'agencia'=>'max:4',
@@ -345,12 +350,12 @@ class TrabalhadorController extends Controller
         ],
         [
             'nome__completo.required'=>'O campo não pode estar vazio.',
-            'nome__completo.max'=>'Campo não pode conter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo nome social possui um formato inválido.',
+            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
+            'nome__completo.regex'=>'O campo nome social tem um formato inválido.',
             
             'nome__social.required'=>'O campo não pode estar vazio.',
             'nome__social.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__social.regex'=>'O campo nome social possui um formato inválido.',
+            'nome__social.regex'=>'O campo nome social tem um formato inválido.',
             
             'cpf.required'=>'O campo não pode estar vazio.',
             'cpf.max'=>'O campo não pode conter mais de 15 caracteres.',
@@ -375,7 +380,7 @@ class TrabalhadorController extends Controller
             
             'nome__mae.required'=>'O campo não pode estar vazio.',
             'nome__mae.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'nome__mae.regex'=>'O campo nome social possui um formato inválido.',
+            'nome__mae.regex'=>'O campo nome social tem um formato inválido.',
             
             'telefone.required'=>'O campo não pode estar vazio.',
             'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
@@ -428,7 +433,7 @@ class TrabalhadorController extends Controller
             'serie__ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
             
             'uf__ctps.required'=>'O campo não pode estar vazio.',
-            'uf__ctps.max'=>'O campo não pode conter mais de 255 caracteres.',
+            'uf__ctps.max'=>'O campo não ter mais de 255 caracteres.',
             'uf__ctps.regex'=>'O campo nome social possui um formato inválido.',
             
             'data__afastamento.max'=>'O campo não pode conter mais de 10 caracteres.',
@@ -437,9 +442,15 @@ class TrabalhadorController extends Controller
             'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
             'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
             'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-            
         ]
         );
+        if ($dados['banco'] || $dados['pix'] || $dados['nome__social']) {
+            $request->validate([
+                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
+                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/',
+                'nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/'
+            ]);
+        }
        
         
             $trabalhadors = $this->trabalhador->editar($dados,$id);

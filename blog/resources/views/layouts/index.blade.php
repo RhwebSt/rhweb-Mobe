@@ -104,7 +104,7 @@
                           <!-- <li><a class="dropdown-item border-bottom border-secundary" href="#">Bancos</a></li> -->
                           
                           <li><a class="dropdown-item border-secundary" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
-                          <li><a class="dropdown-item border-secundary" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
+                          <li><a class="dropdown-item border-secundary d-none" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
                       @endcan
                       <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
                     </ul>

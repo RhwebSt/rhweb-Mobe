@@ -414,5 +414,16 @@ class Lancamentotabela extends Model
         ->where('lancamentotabelas.lsstatus', 'M')
         ->count();
     }
-    
+    public function boletimTomador($id,$ano_inicio,$ano_final)
+    {
+        return Lancamentotabela::select(
+            'liboletim',
+            'lsdata',
+            'lsstatus',
+            'id'
+        )
+        ->where('tomador',$id)
+        ->whereBetween('lsdata',[$ano_inicio, $ano_final])
+        ->get();
+    }
 }

@@ -14,15 +14,20 @@ class RelatorioController extends Controller
     {
         $tabelapreco = new TabelaPreco;
         $tomador = new Tomador;
-        try {
+        $empresa = new Empresa;
+        $id = base64_decode($id);
+        $user = auth()->user();
+        
+            $empresa = $empresa->buscaUnidadeEmpresa($user->empresa);
             $tomadores = $tomador->buscaNomeTomadorTabelaPreco($id);
-            $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);
+            $tabelaprecos = $tabelapreco->listaUnidadeTomador($id); 
         
             if(!isset($tabelaprecos[0]->id)){
                 return redirect()->back()->withInput()->withErrors(['tabelavazia'=>'Não possui nenhum cadastro na tabela de preço.']);
             }
-            $pdf = PDF::loadView('relatorioTabpreco',compact('tabelaprecos','tomadores'));
+            $pdf = PDF::loadView('relatorioTabpreco',compact('tabelaprecos','tomadores','empresa'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO DA TABELA PRECO.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

@@ -64,6 +64,7 @@
                 <div class="mt-5" id="conteiner" >
                     @if(count($listaepi) > 0)
                         @foreach($listaepi as $key=>$valor)
+                        @if($key < 1)
                             <div class="row mb-3" style="background-color: #141414; padding-bottom: 20px; padding-top:5px; border-radius: 10px; margin:1px;">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
                                     <label for="quantidade{{$key}}" class="form-label text-white">Quant.</label>
@@ -112,14 +113,66 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                @if($key > 0)
+                                
+                            </div>
+                        @else
+                        <div class="row mb-3 campo{{$key}}" style="background-color: #141414; padding-bottom: 20px; padding-top:5px; border-radius: 10px; margin:1px;">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
+                                    <label for="quantidade{{$key}}" class="form-label text-white">Quant.</label>
+                                    <input type="text" class="form-control numero input fw-bold text-dark @error('quantidade{{$key}}') is-invalid @enderror numero" name="quantidade{{$key}}" value="{{$valor->eiquantidade}}" maxlength="100" id="quantidade{{$key}}">
+                                    @error('quantidade{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4 mt-2">
+                                    <label for="descricao{{$key}}" class="form-label text-white">Descrição</label>
+                                    <input type="text" class="form-control input fw-bold text-dark @error('descricao{{$key}}') is-invalid @enderror"  name="descricao{{$key}}" value="{{$valor->esdescricao}}" maxlength="100" id="descricao{{$key}}">
+                                    @error('descricao{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
+                                    <label for="tamanho{{$key}}" class="form-label text-white">Tam.</label>
+                                    <input type="text" class="form-control input fw-bold text-dark @error('tamanho{{$key}}') is-invalid @enderror"  name="tamanho{{$key}}" value="{{$valor->estm}}" maxlength="100" id="tamanho{{$key}}">
+                                    @error('tamanho{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
+                                    <label for="ca{{$key}}" class="form-label text-white">CA</label>
+                                    <input type="text" class="form-control numero input fw-bold text-dark @error('ca{{$key}}') is-invalid @enderror"  name="ca{{$key}}" value="{{$valor->eica}}" maxlength="100" id="ca{{$key}}">
+                                    @error('ca{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2 col-xxl-2 mt-2">
+                                    <label for="data__recolhimento{{$key}}" class="form-label text-white">Dta.Rec</label>
+                                    <input type="date" class="form-control input fw-bold text-dark @error('data__recolhimento{{$key}}') is-invalid @enderror"  name="data__recolhimento{{$key}}" value="{{$valor->esdatares}}" maxlength="100" id="data__recolhimento{{$key}}">
+                                    @error('data__recolhimento{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2 col-xxl-2 mt-2">
+                                    <label for="data__devolucao{{$key}}" class="form-label text-white">Dta.Dev</label>
+                                    <input type="date" class="form-control input fw-bold text-dark @error('data__devolucao{{$key}}') is-invalid @enderror"  name="data__devolucao{{$key}}" value="{{$valor->esdatadev}}" maxlength="100" id="data__devolucao{{$key}}">
+                                    @error('data__devolucao{{$key}}')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                
                                     <div class="d-flex align-items-center col-md-1" id="botaoDelete" style="padding-top: 32px;">    
-                                        <a onclick="remove('{{$key}}','v')">
+                                        <a onclick="remove('{{$key}}')">
                                             <i class="fas fa-times btn" style="color:white; background-color:Darkred; padding-top: 8px; padding-bottom: 8px; padding-left:10px; padding-right:10px; border-radius: 30%; border: 1px solid red;"></i>
                                         </a>
                                     </div>
-                                @endif
+                                
                             </div>
+                        @endif
                         @endforeach
                         <input type="hidden" name="quantidade" value="{{count($listaepi)}}" id="quantidade">
                     @else
@@ -183,7 +236,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="quantidade" value="1" id="quantidade">
+                
 
                     <div class="d-grid d-md-flex justify-content-md-end">
                         <div class="mt-2">
@@ -199,19 +252,26 @@
         </main>
 
         <script>
-            function remove(i,status) {
-                console.log(i,status);
-                if (status === 'v') {
-                    $('#conteiner .row').eq(i).remove()
-                }else{
-                    $('#conteiner .row').eq(i - 1).remove()
-                }
+            // function remove(i,status) {
+            //     console.log(status,i);
+            //     if (status === 'v') {
+            //         $('#conteiner .row').eq(i).remove()
+            //     }else{
+            //         $('#conteiner .row').eq(i - 1).remove()
+            //     }
+            //     let quantidade =  parseInt($('#quantidade').val());
+            //     $('#quantidade').val(quantidade - 1);
                 
+            // }
+            function remove(index) {
+                $(`.campo${index}`).remove();
+                // let quantidade = parseInt($('#quantidade').val());
+                // $('#quantidade').val(quantidade - 1);
             }
             let index = 0;
             function conteiner(index) {
                     let conteiner = '';
-                    conteiner += `<div class="row d-flex mb-3" style="background-color: #141414; padding-bottom: 20px; padding-top:5px; border-radius: 10px; margin:1px;">
+                    conteiner += `<div class="row d-flex mb-3 campo${index}" style="background-color: #141414; padding-bottom: 20px; padding-top:5px; border-radius: 10px; margin:1px;">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
                             <label for="quantidade" class="form-label text-white">Quant.</label>
                             <input type="text" class="form-control numero input fw-bold text-dark" name="quantidade${index}" maxlength="100" id="quantidade${index}">
@@ -261,7 +321,7 @@
                         </div>
 
                         <div class="d-flex align-items-center col-md-1" id="botaoDelete" style="padding-top: 32px;">  
-                        <a onclick="remove(${index},'f')">  
+                        <a onclick="remove(${index})">  
                             <i class="fas fa-times btn" style="color:white; background-color:Darkred; padding-top: 8px; padding-bottom: 8px; padding-left:10px; padding-right:10px; border-radius: 30%; border: 1px solid red;"></i>
                         </a>
                         </div>
@@ -302,10 +362,9 @@
                     if ($('#quantidade').val() <= 20) {
                         index += 1;
                         let quantidade =  parseInt($('#quantidade').val());
-                        quantidade += 1;
-                        $('#quantidade').val(quantidade)
                         $('#conteiner').append(conteiner(quantidade));
                         $('.numero').mask('00000000000');
+                        $('#quantidade').val(quantidade + 1);
                     }else{
                         alerta()
                         $(this).addClass('disabled')

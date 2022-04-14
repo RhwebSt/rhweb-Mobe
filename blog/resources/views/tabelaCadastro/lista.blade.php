@@ -12,112 +12,130 @@
                            <div class="d-flex justify-content-between">
                                 
                                 <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                                <form action="{{  route('tabcartaoponto.index')}}" method="GET">
-                                    <div class="d-flex">
-                                        <label for="exampleDataList" class="form-label"></label>
-                                        <input placeholder="Pesquisa..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
-                                        <datalist id="listapesquisa">
-                                        </datalist>
-                                        <input type="hidden" name="codicao" value="{{isset($dados->id)?$dados->id:null}}">
-                                        <button type="submit" class="modal-botao">
-                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                        </button>
-                                       
-                                        <div class="text-center d-none p-1" id="refres" >
-                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                              <span class="visually-hidden">Loading...</span>
+                                    <form action="{{  route('tabcartaoponto.index')}}" method="GET">
+                                        <div class="d-flex">
+                                            <label for="exampleDataList" class="form-label"></label>
+                                            <input placeholder="Pesquisa..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
+                                            <datalist id="listapesquisa">
+                                            </datalist>
+                                            <input type="hidden" name="codicao" value="{{isset($dados->id)?$dados->id:null}}">
+                                            <button type="submit" class="modal-botao btn botaoPesquisa">
+                                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                            </button>
+                                           
+                                            <div class="text-center d-none p-1" id="refres" >
+                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
+                                                  <span class="visually-hidden">Loading...</span>
+                                            </div>
                                         </div>
+                                        </form>
                                     </div>
-                                    </form>
+                                    
                                 </div>
+        
+                                <!--<div class="dropdown  mt-2 p-1">-->
+                                <!--    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">-->
+                                <!--        <i class="fad fa-sort"></i> Filtro -->
+                                <!--    </button>-->
+                                <!--    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">-->
+                                <!--    <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>-->
+                                <!--    <li><a class="dropdown-item text-white modal-botao" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>-->
+                                <!--    </ul>-->
+                                <!--</div>-->
                                 
                             </div>
-        
-                                <div class="dropdown  mt-2 p-1">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                        <i class="fad fa-sort"></i> Filtro 
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                                    <li><a class="dropdown-item text-white modal-botao" id="ordemCres" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                    <li><a class="dropdown-item text-white modal-botao" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                                    </ul>
+                            
+                            <section>
+                                <div class="d-flex justify-content-end">
+                                    <div>
+                                        <div class="dropdown">
+                                            <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fad fa-sort"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                                                <li><a class="dropdown-item dropdown__links--filter" id="ordemCres" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                                <li><a class="dropdown-item dropdown__links--filter" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                            </ul>
+                                          </div>
+                                    </div>
+            
                                 </div>
-                            </div>
-                
-                            <div class="table-responsive-xxl">
-                                <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                    <thead>
-                                        <th class="col text-center border-start border-top text-nowrap" style="width:400px">Nome do Trabalhador</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:70px">Cod</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:400px">Descrição</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:100px">Quantidade</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:170px">Valor Unitário</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:170px">Total R$</th>
-                                        <th class="col text-center border-top text-nowrap" style="width:70px">Editar</th>
-                                        <th class="col text-center border-end border-top text-nowrap" style="width:70px">Excluir</th>
-                                    </thead>
-                                    <tbody style="background-color: #081049; color: white;">
-                                        @if(count($lista) > 0)
-                                        @foreach($lista as $listas)
-                                            <tr class="bodyTabela">
-                                                <td class="col text-center border-bottom border-start text-nowrap text-uppercase" style="width:400px">{{$listas->tsnome}}</td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">{{$listas->licodigo}}</td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:400px">{{$listas->lshistorico}}</td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:100px">
-                                                    
-                                                    @if(str_contains($listas->lsquantidade,':'))
-                                                            {{$listas->lsquantidade}}
-                                                    @else
-                                                            {{number_format((float)$listas->lsquantidade, 2, ',', '.')}}
-                                                    @endif
-                                                </td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:170px">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
-                                                <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:70px">
-                                                    <button class="btn">
-                                                    <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fa fa-edit"></i></a>
-                                                    </button> 
-                                                </td>
-                                                <td class="col text-center border-bottom border-end text-nowrap" style="width:70px">
-                                                <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn__padrao--excluir modal-botao"><i style="color:#FFFFFF;" class="fal fa-trash"></i></button>
-                                                </form> 
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        @else
-                                            <tr>
-                                                <td class="text-center border-bottom border-end border-start text-nowrap" colspan="8" style="background-color: #081049; color: white;">
-                                                    <div class="alert" role="alert" style="background-color: #CC2836;">
-                                                        Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="8" class="text-end">
-                                                @if ($lista->lastPage() > 1)
-                                                    <ul class="pagination">
-                                                       
-                                                        @for ($i = 1; $i <= $lista->lastPage(); $i++)
-                                                            <li class="page-item {{ ($lista->currentPage() == $i) ? ' active' : ''     }}">
-                                                                <a class="page-link modal-botao" href="{{ $lista->url($i) }}">{{ $i }}</a>
-                                                            </li>
-                                                        @endfor
+                            </section>
+                            
+                            <section class="table">
+                                <div class="table-responsive-xxl">
+                                    <table class="table">
+                                        <thead class="tr__header">
+                                            <th class="th__header text-nowrap">Nome do Trabalhador</th>
+                                            <th class="th__header text-nowrap" style="width:70px">Cod</th>
+                                            <th class="th__header text-nowrap">Descrição</th>
+                                            <th class="th__header text-nowrap" style="width:100px">Quantidade</th>
+                                            <th class="th__header text-nowrap" style="width:170px">Valor Unitário</th>
+                                            <th class="th__header text-nowrap" style="width:170px">Total R$</th>
+                                            <th class="th__header text-nowrap" style="width:70px">Editar</th>
+                                            <th class="th__header text-nowrap" style="width:70px">Excluir</th>
+                                        </thead>
+                                        <tbody class="table__body">
+                                            @if(count($lista) > 0)
+                                            @foreach($lista as $listas)
+                                                <tr class="tr__body">
+                                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->tsnome}}</td>
+                                                    <td class="td__body text-nowrap col" style="width:70px">{{$listas->licodigo}}</td>
+                                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->lshistorico}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->lshistorico}}</td>
+                                                    <td class="td__body text-nowrap col" style="width:100px">
                                                         
-                                                    </ul>
-                                                    @endif
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                                                        @if(str_contains($listas->lsquantidade,':'))
+                                                                {{$listas->lsquantidade}}
+                                                        @else
+                                                                {{number_format((float)$listas->lsquantidade, 2, ',', '.')}}
+                                                        @endif
+                                                    </td>
+                                                    <td class="td__body text-nowrap col" style="width:170px">R$ {{number_format((float)$listas->lfvalor, 2, ',', '')}}</td>
+                                                    <td class="td__body text-nowrap col" style="width:170px">R$ {{number_format((float)calculovalores($listas->lsquantidade , $listas->lfvalor), 2, ',', '')}}</td>
+                                                    <td class="td__body text-nowrap col" style="width:70px">
+                                                        <a href="{{route('boletim.tabela.edit',[base64_encode($quantidade),base64_encode($boletim),base64_encode($tomador),base64_encode($listas->lancamento),base64_encode($listas->id),base64_encode($data)])}}" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>
+                                                    </td>
+                                                    <td class="td__body text-nowrap col" style="width:70px">
+                                                        
+                                                        <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
+                                                        </form> 
+                                                        
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            @else
+                                                <tr class="tr__body">
+                                                    <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="8" class="text-end">
+                                                    @if ($lista->lastPage() > 1)
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul class="pagination pagination__table pagination-sm">
+                                                           
+                                                            @for ($i = 1; $i <= $lista->lastPage(); $i++)
+                                                                <li class="page-item {{ ($lista->currentPage() == $i) ? ' active' : ''     }}">
+                                                                    <a class="page-link modal-botao" href="{{ $lista->url($i) }}">{{ $i }}</a>
+                                                                </li>
+                                                            @endfor
+                                                            
+                                                            </ul>
+                                                        </nav>
+                                                            @endif
+                                                            
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </section>
+                            
                           </div>
                         </div>
                             

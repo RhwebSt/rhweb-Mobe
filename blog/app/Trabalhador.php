@@ -145,7 +145,7 @@ class Trabalhador extends Model
                 ])
                 ->orWhere([
                     ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-                    ['trabalhadors.empresa', $user->empresa],
+                    ['trabalhadors.empresa', $user->empresa], 
                 ]);
 
                 // if ($user->hasPermissionTo('admin')) {

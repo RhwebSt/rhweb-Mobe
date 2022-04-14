@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Novo Usuario')
+@section('titulo','Rhweb - Editar Novo Usuario')
 @section('conteine')
 
         @if(session('success'))

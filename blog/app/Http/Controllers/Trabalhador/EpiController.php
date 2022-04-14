@@ -40,13 +40,16 @@ class EpiController extends Controller
             'quantidade0'=>'required|max:11',
             'descricao0'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/'
         ]);
-        try {
+        
             $this->epi->deletar_cadastra($dados['trabalhador']);
             for ($i=0; $i < $dados['quantidade']; $i++) { 
-                $this->epi->cadastro($dados,$i);
+                if (isset($dados['quantidade'.$i])) {
+                    $this->epi->cadastro($dados,$i);
+                }
             }
             return redirect()->route('epi.show',[$dados['trabalhador']]);
         // return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }

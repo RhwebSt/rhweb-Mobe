@@ -247,14 +247,28 @@ class Lancamentorublica extends Model
     {
         return Lancamentorublica::where('trabalhador', $id)->delete();
     }
-    public function boletimTabela($id,$ano_inicio,$ano_final)
+    // public function boletimTabela($id)
+    // {
+    //     return Lancamentorublica::select(
+    //         'lsquantidade',
+    //         'lshistorico',
+    //         'lfvalor',
+    //         'lftomador',
+    //         'licodigo',
+    //         'lancamento'
+    //         )
+    //     ->whereIn('lancamento', $id)
+    //     //->groupBy('lftomador','lfvalor','licodigo','lshistorico','liboletim','lsdata')
+    //     ->get();
+    // }
+    public function boletimTabela($id)
     {
         return DB::table('lancamentotabelas')
         ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
         ->selectRaw(
             '
-            SUM(lancamentorublicas.lsquantidade) as quantidade,
+            lancamentorublicas.lsquantidade as quantidade,
             lancamentotabelas.liboletim,
             lancamentotabelas.lsdata,
             lancamentorublicas.lshistorico,
@@ -262,17 +276,18 @@ class Lancamentorublica extends Model
             lancamentorublicas.lftomador,
             lancamentorublicas.licodigo'
         )
-        ->where(function($query) use ($id,$ano_inicio,$ano_final){
-            $user = auth()->user();
-            $query->where('lancamentotabelas.tomador',$id)
-            ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+        // ->where(function($query) use ($id,$ano_inicio,$ano_final){
+        //     $user = auth()->user();
+        //     $query->where('lancamentotabelas.tomador',$id)
+        //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
 
-            // if ($user->hasPermissionTo('admin')) {
-            //     $query->where('lancamentotabelas.tomador',$id)
-            //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
-            // }
-        })
-        ->groupBy('lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
+        //     // if ($user->hasPermissionTo('admin')) {
+        //     //     $query->where('lancamentotabelas.tomador',$id)
+        //     //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
+        //     // }
+        // })
+        ->whereIn('lancamentorublicas.lancamento', $id)
+        ->groupBy('lancamentorublicas.lsquantidade','lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
         ->get();
     }
     public function buscaListaTablelaTrabalhador($id)

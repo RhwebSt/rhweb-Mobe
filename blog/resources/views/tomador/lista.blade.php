@@ -89,7 +89,7 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li><a class="dropdown-item modal-botao" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
-                                                <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
+                                                <li><a class="dropdown-item modal-botao" href="{{route('tabela.preco.relatorio',base64_encode($tomador->id))}}"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
                                             </ul>
                                         </div>
                                     </td>

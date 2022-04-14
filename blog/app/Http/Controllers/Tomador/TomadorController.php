@@ -143,7 +143,7 @@ class TomadorController extends Controller
             'agencia'=>'max:4',
             'operacao'=>'max:3',
             'conta'=>'max:10',
-            'pix'=>'max:255|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
+            'pix'=>'max:255'
         ],[
             'nome__completo.required'=>'Este campo é obrigatório.',
             'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
@@ -214,9 +214,10 @@ class TomadorController extends Controller
             'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
         ]
         );
-        if ($dados['banco']) {
+        if ($dados['banco'] || $dados['pix']) {
             $request->validate([
                 'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
+                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
             ]);
         }
         $tomadores = $this->tomador->verificaCadastroCnpj($dados);
@@ -362,8 +363,7 @@ class TomadorController extends Controller
             'operacao'=>'max:3',
             'conta'=>'max:10',
             'pix'=>'max:255'
-        ],
-        [
+        ],[
             'nome__completo.required'=>'Este campo é obrigatório.',
             'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
             'nome__completo.regex'=>'O campo não pode conter caracteres especiais.',
@@ -372,7 +372,7 @@ class TomadorController extends Controller
             'nome__fantasia.regex'=>'O campo não pode conter caracteres especiais.',
             'cnpj.required'=>'Este campo é obrigatório.',
             'cnpj.max'=>'O campo não pode conter mais de 19 caracteres.',
-            'cnpj.cnpj'=>'Não e um CNPJ valido.',
+            'cnpj.cnpj'=>'Não é um CNPJ valido.',
             'matricula.required'=>'Este campo é obrigatório.',
             'matricula.max'=>'O campo não pode conter mais de 10 caracteres.',
             'matricula.regex'=>'O campo não pode conter caracteres especiais.',
@@ -399,7 +399,7 @@ class TomadorController extends Controller
             'uf.required'=>'Este campo é obrigatório.',
             'uf.max'=>'O campo não pode conter mais de 2 caracteres.',
             'uf.regex'=>'O campo não pode conter caracteres especiais.',
-            'uf.uf'=>'Esta sigla não esta correta.',
+            'uf.uf'=>'Esta sigla não está correta.',
             'deflator.required'=>'Este campo é obrigatório.',
             'deflator.max'=>'O campo não pode conter mais de 100 caracteres.',
             'taxa_adm.required'=>'Este campo é obrigatório.',
@@ -422,6 +422,7 @@ class TomadorController extends Controller
             'folhartipotrans.required'=>'Este campo é obrigatório.',
             'folharalim.required'=>'Este campo é obrigatório.',
             'folhartipoalim.required'=>'Este campo é obrigatório.',
+            'dias_uteis.required'=>'Este campo é obrigatório.',
             'dias_uteis.max'=>'O campo não pode conter mais de 5 caracteres.',
             'sabados.max'=>'O campo não pode conter mais de 5 caracteres.',
             'domingos.max'=>'O campo não pode conter mais de 5 caracteres.',
@@ -430,11 +431,14 @@ class TomadorController extends Controller
             'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
             'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
             'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-            
         ]
         );
-       
-     
+        if ($dados['banco'] || $dados['pix']) {
+            $request->validate([
+                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
+                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
+            ]);
+        }
         try {
         
             $tomadors = $this->tomador->editar($dados,$id);

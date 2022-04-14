@@ -33,6 +33,8 @@ class TabCadastroController extends Controller
         $tomador = base64_decode($tomador);
         $id = base64_decode($id);
         $data = base64_decode($data); 
+        $search = request('search');
+        // dd($search);
         $user = Auth::user(); 
         $lista = $this->lancamentorublica->listacadastro($id);
         return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
@@ -113,6 +115,7 @@ class TabCadastroController extends Controller
        $trabalhador = base64_decode($trabalhador);
        $data = base64_decode($data);
        $user = Auth::user();
+       dd('ok');
        $lista = $this->lancamentorublica->listacadastro($id);
        $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
        return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data'));

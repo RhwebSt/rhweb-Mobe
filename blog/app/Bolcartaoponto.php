@@ -273,7 +273,15 @@ class Bolcartaoponto extends Model
     {
         return Bolcartaoponto::where('trabalhador', $id)->delete();
     }
-    public function boletimCartaoPonto($id,$ano_inicio,$ano_final)
+    public function CartaoPonto($id)
+    {
+        return Bolcartaoponto::select(
+            'bolcartaopontos.*'
+        )
+        ->whereIn('lancamento', $id)
+        ->get();
+    }
+    public function boletimCartaoPonto($id,$ano_inicio,$ano_final) 
     {
         return DB::table('lancamentotabelas')
         ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')

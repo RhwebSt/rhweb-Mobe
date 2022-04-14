@@ -63,8 +63,8 @@
                     <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao"><i class="fad fa-save"></i> Incluir</button>
                     <a class="btn botao d-none" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-alt"></i> Relatório</a>
                     <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                          <i class="fas fa-search"></i> Pesquisar
-                        </button>
+                          <i class="fad fa-list-ul"></i> Lista
+                    </button>
                     <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
               </div>
           </div>
