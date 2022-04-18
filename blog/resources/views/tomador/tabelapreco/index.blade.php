@@ -67,7 +67,7 @@
   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
 
 
-    <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-usd-square fa-lg"></i></h5>
+    <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-sack-dollar"></i></h5>
 
 
     <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
@@ -91,7 +91,7 @@
         </ul>
         <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
         <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-          <i class="fa-solid fa-list"></i> Lista
+          <i class="fad fa-list-ul"></i> Lista
         </a>
 
         <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>

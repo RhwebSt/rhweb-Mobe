@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -29,6 +30,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
     </head>
+    <script>
+        var url = window.location.protocol + "//" +window.location.host+window.location.pathname
+    </script>
     <body>
 <main>
             
@@ -207,7 +211,9 @@
 </main>
 <!-- <script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
 <!-- <script src="{{url('/js/inss.js')}}"></script> -->
+<script src="{{url('/js/banco/index.js')}}"></script>
 <script src="{{url('/js/irrf.js')}}"></script>
+
     <script src="{{url('/js/dashboard.js')}}"></script>
             <script src="{{url('/js/navbarAdmin.js')}}"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

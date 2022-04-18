@@ -55,6 +55,7 @@
     color: white;
     transition: 300ms ease-in-out;
     border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .button__permission:hover{
@@ -98,6 +99,7 @@
     color: white;
     transition: 300ms ease-in-out;
     border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .button__editar:hover{
@@ -125,6 +127,7 @@
     color: white;
     transition: 300ms ease-in-out;
     border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .button__excluir:hover{
@@ -157,6 +160,7 @@
     border-radius: 10px;
     border: 1px solid #bebebe;
     transition: 300ms ease-in-out;
+    box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.2);
 }
 
 .button__filter:hover{
@@ -184,6 +188,7 @@
     color: white;
     transition: 300ms ease-in-out;
     border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .btn__tabela--preco:hover{
@@ -211,6 +216,7 @@
     color: white;
     border: 1px solid #8CD6F8;
     transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .btn__relatorio:hover{
@@ -232,6 +238,113 @@
     box-shadow: none !important;
 }
 
+.btn__vizualizar{
+    background-color:#9649CB;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #E4CFF2;
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
+}
 
+.btn__vizualizar:hover{
+    background-color:#9649CB;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #E4CFF2;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__vizualizar:focus{
+    background-color:#9649CB;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #E4CFF2;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__evento{
+    background-color:#092434;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #97CDED;
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn__evento:hover{
+    background-color:#092434;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #97CDED;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__evento:focus{
+    background-color:#092434;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #97CDED;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__depedente{
+    background-color:#E09900;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #FFDF99;
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn__depedente:hover{
+    background-color:#E09900;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #FFDF99;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__depedente:focus{
+    background-color:#E09900;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #FFDF99;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__permissao{
+    background-color:#51039E;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid#D6AFFD;
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn__permissao:hover{
+    background-color:#51039E;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #D6AFFD;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
+
+.btn__permissao:focus{
+    background-color:#51039E;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #D6AFFD;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06); 
+}
 
 

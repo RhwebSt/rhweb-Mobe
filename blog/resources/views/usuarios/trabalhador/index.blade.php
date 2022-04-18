@@ -58,7 +58,7 @@
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('usuario.store')}}">
               @csrf
               
-              <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Usuários <i class="fas fa-user"></i></h5>
+              <h5 class="card-title text-center mt-5 fs-3 mb-5">Cadastro de Acesso <i class="fas fa-user"></i></h5>
                 <!-- <input type="hidden" id="method" name="_method" value=""> -->
                 <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa}}">
                 <div class="row">

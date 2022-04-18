@@ -28,24 +28,43 @@ class TabCadastroController extends Controller
      */
     public function create($quantidade,$boletim,$tomador,$id,$data)
     {
-        $quantidade = base64_decode($quantidade);
-        $boletim = base64_decode($boletim);
-        $tomador = base64_decode($tomador);
+        // $quantidade = base64_decode($quantidade);
+        // $boletim = base64_decode($boletim);
+        // $tomador = base64_decode($tomador);
         $id = base64_decode($id);
-        $data = base64_decode($data); 
+        
+        // $data = base64_decode($data); 
         $search = request('search');
-        // dd($search);
+        $trabalhador = request('codicao');
         $user = Auth::user(); 
-        $lista = $this->lancamentorublica->listacadastro($id);
-        return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
+        $lista = $this->lancamentorublica->listacadastro($search,$id,'M','asc');
+        if ($trabalhador) {
+            $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
+            return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
+        }else{
+            return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function ordem($quantidade,$boletim,$tomador,$id,$trabalhador,$data,$ordem)
+    {
+        // $quantidade = base64_decode($quantidade);
+        // $boletim = base64_decode($boletim);
+        // $tomador = base64_decode($tomador);
+        $id = base64_decode($id);
+        $trabalhador = base64_decode($trabalhador);
+        
+        // $data = base64_decode($data); 
+        $search = request('search');
+        $user = Auth::user(); 
+        $lista = $this->lancamentorublica->listacadastro($search,$id,'M',$ordem);
+        if ($trabalhador) {
+            $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
+            return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
+        }else{
+            return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
+        }
+    }
     public function store(Request $request)
     {
         $dados = $request->all();
@@ -108,17 +127,16 @@ class TabCadastroController extends Controller
     public function edit($quantidade,$boletim,$tomador,$id,$trabalhador,$data)
     {
         
-       $quantidade = base64_decode($quantidade);
-       $boletim = base64_decode($boletim);
-       $tomador = base64_decode($tomador);
+    //    $quantidade = base64_decode($quantidade);
+    //    $boletim = base64_decode($boletim);
+    //    $tomador = base64_decode($tomador);
        $id = base64_decode($id);
        $trabalhador = base64_decode($trabalhador);
-       $data = base64_decode($data);
+    //    $data = base64_decode($data);
        $user = Auth::user();
-       dd('ok');
-       $lista = $this->lancamentorublica->listacadastro($id);
+       $lista = $this->lancamentorublica->listacadastro(null,$id,'M','asc');
        $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
-       return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data'));
+       return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
     }
 
     /**

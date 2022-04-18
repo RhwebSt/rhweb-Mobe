@@ -22,7 +22,7 @@ class Lancamentorublica extends Model
             'lfvalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0,
             'lftomador'=>$dados['lftomador']?str_replace(",",".",$dados['lftomador']):0        ]);
     }
-    public function listacadastro($id)
+    public function listacadastro($dados,$id,$status,$condicao)
     {
         return DB::table('trabalhadors')
         ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
@@ -31,10 +31,38 @@ class Lancamentorublica extends Model
             'trabalhadors.tsnome', 
             'lancamentorublicas.*', 
             )
-        ->where('lancamentotabelas.id', $id)
+            ->where(function($query) use ($status,$id,$dados){
+                $user = auth()->user();
+                if ($dados) {
+                    $query->where([
+                        ['lancamentotabelas.lsstatus',$status],
+                        ['lancamentotabelas.empresa', $user->empresa],
+                        ['lancamentotabelas.id',$id], 
+                        ['lancamentotabelas.liboletim','like','%'.$dados.'%'] 
+                    ])
+                    ->orWhere([
+                        ['lancamentotabelas.lsstatus',$status],
+                        ['lancamentotabelas.empresa', $user->empresa],
+                        ['lancamentotabelas.id',$id], 
+                        ['trabalhadors.tsnome','like','%'.$dados.'%']
+                    ]);
+                    // ->orWhere([
+                    //     ['lancamentotabelas.lsstatus',$status],
+                    //     ['lancamentotabelas.empresa', $user->empresa],
+                    //     ['tomadors.tscnpj','like','%'.$id.'%']
+                    // ]);
+                }else{
+                    $query->where([
+                        ['lancamentotabelas.lsstatus',$status],
+                        ['lancamentotabelas.empresa', $user->empresa],
+                        ['lancamentotabelas.id',$id] 
+                    ]);
+                }
+            })
+        ->orderBy('lancamentotabelas.liboletim', $condicao)
         ->paginate(5);
     }
-    public function buscaUnidadeRublica($id)
+    public function buscaUnidadeRublica($id) 
     {
         return DB::table('trabalhadors')
         ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')

@@ -28,104 +28,114 @@
                         </form>
                     </div>
                     </div>
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-sort"></i> Filtro
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <!-- <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.cadastro.cartao.ponto','asc')}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.cadastro.cartao.ponto','desc')}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                        </ul>
+
+                </div>
+                
+                <section>
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fad fa-sort"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.cadastro.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.cadastro.cartao.ponto','asc')}}{{route('ordem.cadastro.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                </ul>
+                              </div>
+                        </div>
+
                     </div>
-                </div>
-                <div class="table-responsive-xxl">
-                    <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                        <thead>
-                            <th class="col text-center text-nowrap" style="width:115px;">Boletim</th>
-                            <th class="col text-center text-nowrap" style="width:400px;">Tomador</th>
-                            <th class="col text-center text-nowrap " style="width:200px">Data</th>
-                            <th class="col text-center text-nowrap" style="width:200px">Quantidade</th>
-                            <th class="col text-center text-nowrap" style="width:60px">Feriado</th>
-                            <th class="col text-center text-nowrap" style="width:60px">Relatório</th>
-                            <th class="col text-center text-nowrap" style="width:60px">Boletim</th>
-                            <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
-                            <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
-                        </thead>
-                        <tbody style="background-color: #081049; color: white;">
-                            @if(count($lancamentotabelas) > 0)
-                            @foreach($lancamentotabelas as $lancamentotabela)
-                            <tr class="bodyTabela">
-                                <td class="col text-center border-bottom text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
-                                <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                </section>
+                
+                <section class="table">
+                    <div class="table-responsive-xxl">
+                        <table class="table">
+                            <thead class="tr__header">
+                                <th class="th__header text-nowrap" style="width:115px;">Boletim</th>
+                                <th class="th__header text-nowrap" style="width:400px;">Tomador</th>
+                                <th class="th__header text-nowrap " style="width:200px">Data</th>
+                                <th class="th__header text-nowrap" style="width:200px">Quant</th>
+                                <th class="th__header text-nowrap" style="width:60px">Feriado</th>
+                                <th class="th__header text-nowrap" style="width:60px">Relatório</th>
+                                <th class="th__header text-nowrap" style="width:60px">Boletim</th>
+                                <th class="th__header text-nowrap" style="width:60px;">Editar</th>
+                                <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
+                            </thead>
+                            <tbody class="table__body">
+                                @if(count($lancamentotabelas) > 0)
+                                @foreach($lancamentotabelas as $lancamentotabela)
+                                <tr class="tr__body">
+                                    <td class="td__body text-nowrap col" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
+                                    
+                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
                                         <a>{{$lancamentotabela->tsnome}}</a>
-                                    </button>
-                                </td>
-                                <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:200px">
-                                    <?php
-                                    $data = explode('-', $lancamentotabela->lsdata)
-                                    ?>
-                                    {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                </td>
-
-                                <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:200px">
-                                    {{$lancamentotabela->lsnumero}}
-                                </td>
-
-                                <td class="col text-center border-bottom text-nowrap" style="width:120px">
-                                    {{$lancamentotabela->lsferiado}}
-                                </td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--relatorio modal-botao" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}" class=""><i class="fad fa-file-invoice"></i></a>
-                                </td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--editar" href="{{route('boletimcartaoponto.create',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}" class=""><i class="fad fa-door-open"></i></a>
-                                </td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                    <button class="btn">
-                                        <a class="btn__padrao--editar" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
-                                    </button>
-                                </td>
-                                <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                    <form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn modal-botao" style="background-color:#FF331F; border: 1px solid #E5767D;"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <tr>
-                                <td class="text-center text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                    <div class="alert" role="alert" style="background-color: #CC2836;">
-                                        Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endif
-                        </tbody>
-                        <tfoot>
-                            <tr class="">
-                                <td colspan="11">
-                                    @if ($lancamentotabelas->lastPage() > 1)
-                                    <ul class="pagination">
-
-                                        @for ($i = 1; $i <= $lancamentotabelas->lastPage(); $i++)
-                                            <li class="page-item {{ ($lancamentotabelas->currentPage() == $i) ? ' active' : ''     }}">
-                                                <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>
-                                            </li>
-                                            @endfor
-
-                                    </ul>
-                                    @endif
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                                    </td>
+                                    
+                                    <td class="td__body text-nowrap col" style="width:200px">
+                                        <?php
+                                        $data = explode('-', $lancamentotabela->lsdata)
+                                        ?>
+                                        {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                    </td>
+    
+                                    <td class="td__body text-nowrap col" style="width:200px">
+                                        {{$lancamentotabela->lsnumero}}
+                                    </td>
+    
+                                    <td class="td__body text-nowrap col" style="width:120px">
+                                        {{$lancamentotabela->lsferiado}}
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <a class="btn btn__relatorio modal-botao" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fas fa-file-alt"></i></a>
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <a class="btn btn__vizualizar" href="{{route('boletimcartaoponto.create',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fad fa-eye"></i></a>
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <button class="btn">
+                                            <a class="button__editar btn modal-botao" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class=""><i class="icon__color fas fa-pen"></i></a>
+                                        </button>
+                                    </td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr class="tr__body">
+                                    <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                </tr>
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <tr class="">
+                                    <td colspan="11">
+                                        @if ($lancamentotabelas->lastPage() > 1)
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination pagination__table pagination-sm">
+    
+                                            @for ($i = 1; $i <= $lancamentotabelas->lastPage(); $i++)
+                                                <li class="page-item {{ ($lancamentotabelas->currentPage() == $i) ? ' active' : ''     }}">
+                                                    <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>
+                                                </li>
+                                                @endfor
+    
+                                            </ul>
+                                        </nav>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </section>
+                
+                
             </div>
             <div class="modal-footer">
             </div>

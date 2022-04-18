@@ -94,7 +94,7 @@
                                         </div>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="btn__padrao--evento modal-botao" href="{{route('esocial.tomador',base64_encode($tomador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                        <a class="btn__evento btn modal-botao" href="{{route('esocial.tomador',base64_encode($tomador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         

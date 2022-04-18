@@ -54,7 +54,7 @@
             </script>
         @enderror  
         <h1 class="container text-center mt-5 fs-4 mb-2">Boletim com Tabela de Preço <i class="fas fa-money-check-alt"></i></h1>
-        <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('tabcadastro.store')}}">
+        <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletim.tabela.store')}}">
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <div class="row">

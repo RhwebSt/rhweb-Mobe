@@ -12,13 +12,13 @@
                            <div class="d-flex justify-content-between">
                                 
                                 <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                                    <form action="{{  route('tabcartaoponto.index')}}" method="GET">
+                                    <form action="{{  route('boletim.tabela.create',[$quantidade,$boletim,$tomador,base64_encode($id),$data])}}" method="GET">
                                         <div class="d-flex">
                                             <label for="exampleDataList" class="form-label"></label>
                                             <input placeholder="Pesquisa..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
                                             <datalist id="listapesquisa">
                                             </datalist>
-                                            <input type="hidden" name="codicao" value="{{isset($dados->id)?$dados->id:null}}">
+                                            <input type="hidden" name="codicao" value="{{isset($trabalhador)?$trabalhador:null}}">
                                             <button type="submit" class="modal-botao btn botaoPesquisa">
                                                 <i class="fas fa-search fa-md iconsear" id="icon"></i>
                                             </button>
@@ -53,8 +53,8 @@
                                                 <i class="fad fa-sort"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                                <li><a class="dropdown-item dropdown__links--filter" id="ordemCres" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                                <li><a class="dropdown-item dropdown__links--filter" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                                <li><a class="dropdown-item dropdown__links--filter" id="ordemCres" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                                <li><a class="dropdown-item dropdown__links--filter" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                             </ul>
                                           </div>
                                     </div>
@@ -97,7 +97,7 @@
                                                     </td>
                                                     <td class="td__body text-nowrap col" style="width:70px">
                                                         
-                                                        <form action="{{route('tabcadastro.destroy',$listas->id)}}"  method="post">
+                                                        <form action="{{route('boletim.tabela.destroy',$listas->id)}}"  method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>

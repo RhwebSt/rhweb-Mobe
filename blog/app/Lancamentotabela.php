@@ -129,7 +129,7 @@ class Lancamentotabela extends Model
             $query->where([
                 ['lancamentotabelas.lsstatus',$status],
                 ['tomadors.empresa', $user->empresa],
-                ['lancamentotabelas.liboletim','like','%'.$dados.'%']
+                ['lancamentotabelas.liboletim','like','%'.$dados.'%'] 
             ])
             ->orWhere([
                 ['lsstatus',$status],

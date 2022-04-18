@@ -70,7 +70,7 @@
   <!--</script>-->
 
 
-  <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="far fa-clock"></i></h5>
+  <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="fad fa-alarm-clock"></i></h5>
   <div class="container">
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
       @csrf
@@ -82,7 +82,7 @@
 
           <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
           <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-            <i class="fas fa-search"></i> Pesquisar
+            <i class="fad fa-list-ul"></i> lista
           </a>
           <a id="boletim" class="btn botao disabled d-none"><i class="fad fa-door-open "></i> Boletim</a>
           <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fad fa-edit "></i> Editar</button>

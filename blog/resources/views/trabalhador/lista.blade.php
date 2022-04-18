@@ -27,110 +27,123 @@
                         </form>
                     </div>
                 </div>
-                <div class="dropdown  mt-2 p-1">
-                    <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-sort"></i> Filtro
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.trabalhador',['asc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.trabalhador',['desc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                    </ul>
+            </div>
+            
+            
+            <section>
+                <div class="d-flex justify-content-end">
+                    <div>
+                        <div class="dropdown">
+                            <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fad fa-sort"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                              <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.trabalhador',['asc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                              <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.trabalhador',['desc',isset($trabalhador->id)?$trabalhador->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                            </ul>
+                          </div>
+                    </div>
+
                 </div>
-            </div>
-            <div class="table-responsive-xxl">
-                <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                    <thead>
-                        <th class="col text-center text-nowrap" style="width:80px;">Matrícula</th>
-                        <th class="col text-center text-nowrap" style="width:400px;">Trabalhador</th>
-                        <th class="col text-center text-nowrap" style="width:200px">CPF</th>
-                        <th class="col text-center text-nowrap" style="width:120px">Depedentes</th>
-                        <th class="col text-center text-nowrap" style="width:60px">Relatórios</th>
-                        <th class="col text-center text-nowrap" style="width:60px">S-2300</th>
-                        <th class="col text-center text-nowrap" style="width:60px;">Editar</th>
-                        <th class="col text-center text-nowrap" style="width:60px;">Excluir</th>
-                    </thead>
-                    <tbody style="background-color: #081049; color: white;">
-                        @if(count($trabalhadors) > 0)
-                        @foreach($trabalhadors as $trabalhador)
-                        <tr class="bodyTabela">
-                            <td class="col text-center border-bottom text-nowrap" style="width:80px;">{{$trabalhador->tsmatricula}}</td>
-                            <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$trabalhador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
-                                    <a>{{$trabalhador->tsnome}}</a>
-                                </button>
-                            </td>
-                            <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:200px">
-                                {{$trabalhador->tscpf}}
-                            </td>
-
-                            <td class="col text-center border-bottom text-capitalize text-nowrap " style="width:120px">
-                                <a class="btn__padrao--preco modal-botao" href="{{route('depedente.mostrar.index',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fad fa-users"></i></a>
-                            </td>
-
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <div class="dropdown">
-                                    <button class="btn btn__padrao--relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i style="color:white;" class="fas fa-file-alt"></i>
+            </section>
+            
+            
+            <section class="table">
+                <div class="table-responsive-xxl">
+                    <table class="table">
+                        <thead class="tr__header">
+                            <th class="th__header text-nowrap" style="width:80px;">Matrícula</th>
+                            <th class="th__header text-nowrap">Trabalhador</th>
+                            <th class="th__header text-nowrap" style="width:200px">CPF</th>
+                            <th class="th__header text-nowrap" style="width:120px">Depedentes</th>
+                            <th class="th__header text-nowrap" style="width:60px">Relatórios</th>
+                            <th class="th__header text-nowrap" style="width:60px">S-2300</th>
+                            <th class="th__header text-nowrap" style="width:60px;">Editar</th>
+                            <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
+                        </thead>
+                        <tbody class="table__body">
+                            @if(count($trabalhadors) > 0)
+                            @foreach($trabalhadors as $trabalhador)
+                            <tr class="tr__body">
+                                <td class="td__body text-nowrap col" style="width:80px;">{{$trabalhador->tsmatricula}}</td>
+                                <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$trabalhador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                        <a>{{$trabalhador->tsnome}}</a>
+                                </td>
+                                <td class="td__body text-nowrap col" style="width:200px">
+                                    {{$trabalhador->tscpf}}
+                                </td>
+    
+                                <td class="td__body text-nowrap col" style="width:120px">
+                                    <a class="btn__depedente btn modal-botao" href="{{route('depedente.mostrar.index',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fad fa-users"></i></a>
+                                </td>
+    
+                                <td class="td__body text-nowrap col" style="width:60px;">
+                                    <div class="dropdown">
+                                        <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="icon__color fas fa-file-alt"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('ficha.registro.trabalhador',base64_encode($trabalhador->id))}}" id="imprimir" role="button">Ficha de Registro</a></li>
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('epi.show',base64_encode($trabalhador->id))}}" id="fichaepi" role="button">Ficha de EPI</a></li>
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('declaracao.afastamento.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('declaracao.admissao.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__adm" role="button">Declaração de Admissão</a></li>
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('cracha.trabalhador',base64_encode($trabalhador->id))}}" id="cracha" role="button">Crachá</a></li>
+                                            <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('devolucao.ctps.trabalhador',base64_encode($trabalhador->id))}}" id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="td__body text-nowrap col" style="width:60px;">
+                                    <a class="btn__evento btn modal-botao" data-id="{{base64_encode($trabalhador->id)}}" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                </td>
+                                <td class="td__body text-nowrap col" style="width:60px;">
+                                    <button class="btn">
+                                        <a class="button__editar btn modal-botao" href="{{route('trabalhador.edit',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-pen"></i></a>
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('ficha.registro.trabalhador',base64_encode($trabalhador->id))}}" id="imprimir" role="button">Ficha de Registro</a></li>
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('epi.show',base64_encode($trabalhador->id))}}" id="fichaepi" role="button">Ficha de EPI</a></li>
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('declaracao.afastamento.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('declaracao.admissao.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__adm" role="button">Declaração de Admissão</a></li>
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('cracha.trabalhador',base64_encode($trabalhador->id))}}" id="cracha" role="button">Crachá</a></li>
-                                        <li class=""><a class="dropdown-item text-decoration-none ps-2" href="{{route('devolucao.ctps.trabalhador',base64_encode($trabalhador->id))}}" id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <a class="btn__padrao--evento modal-botao" data-id="{{base64_encode($trabalhador->id)}}" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i style="color:white" class="fas fa-file-invoice"></i></a>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <button class="btn">
-                                    <a class="btn__padrao--editar " href="{{route('trabalhador.edit',base64_encode($trabalhador->id))}}" class=""><i style="color: white;" class="fas fa-pen"></i></a>
-                                </button>
-                            </td>
-                            <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                <form action="{{route('trabalhador.destroy',$trabalhador->id)}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn modal-botao btn__padrao--excluir"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td class="text-center text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                    </tbody>
-                    <tfoot>
-                        <tr class="">
-                            <td colspan="11">
-
-                                @if ($trabalhadors->lastPage() > 1)
-                                <ul class="pagination">
-
-                                    @for ($i = 1; $i <= $trabalhadors->lastPage(); $i++)
-                                        <li class="page-item {{ ($trabalhadors->currentPage() == $i) ? ' active' : ''     }}">
-                                            <a class="page-link modal-botao" href="{{ $trabalhadors->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                        @endfor
-
-
-                                </ul>
-                                @endif
-
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                                </td>
+                                <td class="td__body text-nowrap col" style="width:60px;">
+                                    <form action="{{route('trabalhador.destroy',$trabalhador->id)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr class="tr__body">
+                                <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                            </tr>
+                            @endif
+                        </tbody>
+                        <tfoot>
+                            <tr class="">
+                                <td colspan="11">
+    
+                                    @if ($trabalhadors->lastPage() > 1)
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination pagination__table pagination-sm">
+        
+                                            @for ($i = 1; $i <= $trabalhadors->lastPage(); $i++)
+                                                <li class="page-item {{ ($trabalhadors->currentPage() == $i) ? ' active' : ''     }}">
+                                                    <a class="page-link modal-botao" href="{{ $trabalhadors->url($i) }}">{{ $i }}</a>
+                                                </li>
+                                                @endfor
+        
+        
+                                        </ul>
+                                    </nav>
+                                    @endif
+    
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+            
+            
+            
+            
         </div>
         <div class="modal-footer">
         </div>

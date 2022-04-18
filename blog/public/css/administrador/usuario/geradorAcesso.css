@@ -1,0 +1,90 @@
+
+
+.form__bg{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div__form--gerador{
+    width:70%;
+    padding: 15px;
+    border-radius:12px;
+    background-color: #313335;
+    box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1E1F20;
+}
+
+.section__gerador{
+    margin-top: 10%;
+}
+
+.icon__copy{
+    color:white;
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.icon__copy:hover{
+    color:gray;
+    transform: scale(1.06);
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.copy{
+    color: green;
+    text-decoration:none;
+    
+}
+
+.copy:hover{
+    color: green;
+    text-decoration:none;
+}
+
+.botao__vincular--gerador{
+    background-color: #4D9383;
+    color: white;
+    border: 1px solid #79B9AA;
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.botao__vincular--gerador:hover{
+    background-color: #315E53;
+    color: white;
+    border: 1px solid #79B9AA;
+    transition: 300ms ease-in-out;
+    transform: scale(1.03);
+}
+
+.btn__voltar-gerador{
+    background-color: #6e7bee;
+    color: #fff;
+    border: 1px solid #aeb6ff;
+    border-radius: 10px;
+    transition: 300ms ease-in-out;
+}
+
+.btn__voltar-gerador:hover{
+    background-color: #2c3799;
+    color: #fff;
+    border: 1px solid #aeb6ff;
+    border-radius: 10px;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
+.btn__voltar-gerador:hover{
+    background-color: #2c3799;
+    color: #fff;
+    border: 1px solid #aeb6ff;
+    border-radius: 10px;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+    box-shadow: none;
+}
+
+

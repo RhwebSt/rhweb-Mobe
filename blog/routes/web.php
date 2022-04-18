@@ -56,9 +56,11 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
     Route::get('edit/ordem/tabela/cartao/ponto/{id?}/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.tabela.cartao.ponto');
     
 
-    Route::get('tabcadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('tabcadastro.create');
+    Route::get('boletim/tabela/cadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('boletim.tabela.create');
+
     Route::get('boletim/tabela/edita/{quantidade}/{boletim}/{tomador}/{lancamento}/{id}/{data}','TabCadastro\\TabCadastroController@edit')->name('boletim.tabela.edit');
-    Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show']);
+    Route::get('boletim/ordem/tabela/{quantidade}/{boletim}/{tomador}/{id}/{trabalhador?}/{data}/{ordem}','TabCadastro\\TabCadastroController@ordem')->name('boletim.tabela.ordem');
+    Route::resource('tabcadastro','TabCadastro\\TabCadastroController')->only(['store', 'update', 'destroy','show'])->names('boletim.tabela');
     Route::get('logout','Login\\LoginController@logout')->name('logout');
     
     Route::post('altera/editer','Login\\alteraSenhaController@store')->name('altera.store');
@@ -213,6 +215,8 @@ Route::group(['middleware' => ['permission:user','autenticacao']], function () {
        
         
         Route::get('administrador/ordem/categoria/{ordem}/{id?}','Administrador\\Categoria\\CategoriaController@ordem')->name('administrador.categoria.ordem');
+
+        Route::post('administrador/cadastro/texto','Administrador\\Tomador\\BancoController@cadastroTxt');
     });
     
 });

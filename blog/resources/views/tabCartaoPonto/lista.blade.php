@@ -99,7 +99,7 @@
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                         
-                                                        <a href="{{route('tabcadastro.create',[base64_encode($lancamentotabela->lsnumero),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->lsdata)])}}" class="btn btn__padrao--vizualizar"><i class="fas fa-eye" style="color: white;"></i></a>
+                                                        <a href="{{route('boletim.tabela.create',[base64_encode($lancamentotabela->lsnumero),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->lsdata)])}}" class="btn btn__padrao--vizualizar"><i class="fas fa-eye" style="color: white;"></i></a>
                                                     </td>
                                                     <td class="col text-center border-bottom text-nowrap" style="width:60px;">
                                                         <button class="btn">

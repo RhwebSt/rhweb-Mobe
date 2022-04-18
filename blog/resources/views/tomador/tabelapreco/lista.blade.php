@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Preços cadastrados</h5>
+                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Preços Cadastrados</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -28,80 +28,88 @@
                         </form>
                     </div>
                     </div>
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle buttonFilter" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-sort"></i> Filtro
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <!-- <li><a class="dropdown-item text-white" href="#"><i class="fas fa-history"></i> Mais Recente</a></li>
-                                    <li><a class="dropdown-item text-white" href="#"><i class="fas fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'asc'])}}"><i class="fas fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                            <li><a class="dropdown-item text-white modal-botao" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'desc'])}}"><i class="fas fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
                 </div>
-                <div class="table-responsive-xxl">
-                  <table class="table border-bottom text-white mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                            <thead>
-                                <th class="col text-center  text-nowrap" style="width:60px;">Ano</th>
-                                <th class="col text-center  text-nowrap" style="width:80px">Código</th>
-                                <th class="col text-center  text-nowrap capitalize" style="width:900px">Descrição</th>
-                                <th class="col text-center  text-nowrap" style="width:110px;">Valor Trabalhador</th>
-                                <th class="col text-center  text-nowrap" style="width:110px;">Valor Tomador</th>
-                                <th class="col text-center  text-nowrap" style="width:60px;">Editar</th>
-                                <th colspan="2" class="col text-center  text-nowrap" style="width:60px;">Excluir</th>
-                            </thead>
-                            
-                            <tbody style="background-color: #081049; color: white;">
-                            @if(count($tabelaprecos) > 0)
-                              @foreach($tabelaprecos as $tabelapreco)
-                                <tr class="bodyTabela">
-                                    <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:60px;">{{$tabelapreco->tsano}}</td>
-                                    <td class="col text-center  border-bottom text-nowrap text-uppercase" style="width:80px">
-                                        <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tabelapreco->tsrubrica}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
-                                            <a class="text-uppercase text-decoration-none text-white">{{$tabelapreco->tsrubrica}}</a>
-                                        </button>
-                                    </td>
-                                    <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:900px">
-                                        <button type="button" class="btn text-white text-center" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tabelapreco->tsdescricao}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
-                                            <a class="text-uppercase text-decoration-none text-white">{{$tabelapreco->tsdescricao}}</a>
-                                        </button>
-                                    </td>
-                                    <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
-                                    <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
-                                    <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
-                                        <button class="btn">
-                                        <a href="{{route('tabela.preco.editar',[base64_encode($tabelapreco->id),base64_encode($tomador)])}}" class="btn__padrao--editar" ><i style="color:white" class="fas fa-pen"></i></a>
-                                        </button>
-                                    </td>
-                                    <td colspan="2" class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                        <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
-                                          @csrf
-                                          @method('delete')
-                                          <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF; padding-right: 1px;" class="fal fa-trash"></i></button>
-                                        </form>
-                                      </td>
-                                </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                  <td class="text-center text-nowrap" colspan="8" style="background-color: #081049; color: white;">
-                                    <div class="alert" role="alert" style="background-color: #CC2836;">
-                                        Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                    </div>
-                                </td>
-                                </tr>
-                                @endif
-                            </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="11">
-                                        {{ $tabelaprecos->links() }}
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                
+                
+                <section>
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fad fa-sort"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'asc'])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tabela.preco',[base64_encode($id), base64_encode($tomador),'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                </ul>
+                              </div>
+                        </div>
+
                     </div>
+                </section>
+                
+                
+                <section class="table">
+                    <div class="table-responsive-xxl">
+                      <table class="table">
+                                <thead class="tr__header">
+                                    <th class="th__header text-nowrap" style="width:60px;">Ano</th>
+                                    <th class="th__header text-nowrap">Código</th>
+                                    <th class="th__header text-nowrap">Descrição</th>
+                                    <th class="th__header text-nowrap" style="width:110px;">Valor Trab</th>
+                                    <th class="th__header text-nowrap" style="width:110px;">Valor Tom</th>
+                                    <th class="th__header text-nowrap" style="width:60px;">Editar</th>
+                                    <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
+                                </thead>
+                                
+                                <tbody class="table__body">
+                                @if(count($tabelaprecos) > 0)
+                                  @foreach($tabelaprecos as $tabelapreco)
+                                    <tr class="tr__body">
+                                        <td class="td__body text-nowrap col" style="width:60px;">{{$tabelapreco->tsano}}</td>
+                                        
+                                        <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tabelapreco->tsrubrica}}" style="max-width: 10ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                            <a>{{$tabelapreco->tsrubrica}}</a>
+                                        </td>
+                                        
+                                        <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tabelapreco->tsdescricao}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
+                                                <a>{{$tabelapreco->tsdescricao}}</a>
+                                        </td>
+                                        
+                                        <td class="td__body text-nowrap col" style="width:110px;">R$ {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}</td>
+                                        <td class="td__body text-nowrap col" style="width:110px;">R$ {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}</td>
+                                        <td class="td__body text-nowrap col" style="width:60px;">
+                                                <a href="{{route('tabela.preco.editar',[base64_encode($tabelapreco->id),base64_encode($tomador)])}}" class="button__editar btn modal-botao" ><i class="icon__color fas fa-pen"></i></a>
+                                        </td>
+                                        <td colspan="2" class="td__body text-nowrap col" style="width:60px;">
+                                            <form action="{{route('tabelapreco.destroy',$tabelapreco->id)}}" method="post">
+                                              @csrf
+                                              @method('delete')
+                                              <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
+                                            </form>
+                                         </td>
+                                    </tr>
+                                    @endforeach
+                                    @else
+                                    <tr class="tr__body">
+                                        <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="11">
+                                            {{ $tabelaprecos->links() }}
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                        </div>
+                    </section>
+                    
+                    
+                    
+                    
             </div>
             <div class="modal-footer">
             </div>

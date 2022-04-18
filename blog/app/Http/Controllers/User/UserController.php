@@ -50,7 +50,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|unique:users|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
-            'email'=>'required|email|unique:users',
+            // 'email'=>'required|email|unique:users',
         ],[
             
             'name.required'=>'O campo não pode estar vazio!',
@@ -71,10 +71,14 @@ class UserController extends Controller
             $pessoais = $this->pessoais->cadastra($dados);
             $dados['pessoal'] = $pessoais['id'];
             $this->endereco->cadastro($dados);
-            $use->notify(new notificaUser($use,$dados['senha']));
+            $url = route('user.edit',$use['id']);
+            $usuario = $dados['name'];
+            $email = $dados['email'];
+            $senha = $dados['senha'];
+            // $use->notify(new notificaUser($use,$dados['senha']));
             // \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
             // Mail::send(new \App\Mail\Email($dados));
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            return redirect()->back()->with(compact('url','email','senha','usuario'))->withSuccess('Cadastro realizado com sucesso.'); 
             try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);

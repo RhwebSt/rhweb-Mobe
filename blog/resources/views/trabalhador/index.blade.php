@@ -80,7 +80,7 @@
       </button>
 
       <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-        <i class="fa-solid fa-list"></i> Lista
+        <i class="fad fa-list-ul"></i> Lista
       </a>
 
       <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
