@@ -2,12 +2,12 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Tomadores cadastrados</h5>
+                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Comissionados</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
-                <div class="d-flex justify-content-between">
+               
+               <div class="d-flex justify-content-between">
                     <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
                             <form action="{{route('tomador.index')}}" method="GET">
                                 <div class="d-flex">
@@ -30,8 +30,7 @@
                     </div>
                 </div>
                 
-                    
-                    
+              
                 <section>
                     <div class="d-flex justify-content-end">
                         <div>
@@ -40,73 +39,54 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['asc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['desc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
 
                     </div>
                 </section>
-
                 
-                
-            
                 <section class="table">
                     <div class="table-responsive-xxl">
                         <table class="table">
+                            
                             <thead class="tr__header">
-                                <th class="th__header text-nowrap" style="width:80px;">Matrícula</th>
-                                <th class="th__header text-nowrap">Tomador</th>
-                                <th class="th__header text-nowrap" style="width:200px">CNPJ</th>
-                                <th class="th__header text-nowrap" style="width:120px">Tab Preço</th>
-                                <th class="th__header text-nowrap" style="width:60px">Relatórios</th>
-                                <th class="th__header text-nowrap" style="width:60px">S-1020</th>
+                                <th class="th__header text-nowrap" style="width:115px;">Matrícula</th>
+                                <th class="th__header text-nowrap">Nome Trabalhador</th>
+                                <th class="th__header text-nowrap" style="width:200px">Indice %</th>
+                                <th class="th__header text-nowrap">Nome Tomador</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Editar</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
                             </thead>
                             
                             <tbody class="table__body">
-                                @if(count($tomadors) > 0)
-                                @foreach($tomadors as $tomador)
-                                <tr class="tr__body">
-                                    <td class="td__body text-nowrap col" style="width:80px;">{{$tomador->tsmatricula}}</td>
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$tomador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
-                                        {{$tomador->tsnome}}
+                                @if(count($comissionados) > 0)
+                                @foreach($comissionados as $comissionado)
+                                <tr class="tr__body">               
+                                    <td class="td__body text-nowrap col" style="width:115px;">{{$comissionado->tsmatricula}}</td>
+                                    
+                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <a>{{$comissionado->trabalhador}}</a>
                                     </td>
-                                    <td class="td__body text-nowrap col" style="width:200px">
-                                        {{$tomador->tscnpj}}
-                                    </td>
-        
-                                    <td class="td__body text-nowrap col" style="width:120px">
-                                        <a class="btn btn__tabela--preco modal-botao" href="{{route('tabelapreco.index',[' ',base64_encode($tomador->id)])}}" class=""><i class="icon__color fas fa-dollar-sign"></i></a>
-                                    </td>
-        
-                                    <td class="td__body text-nowrap col" style="width:60px;">
-                                        <div class="dropdown">
-                                            <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="icon__color fas fa-file-alt"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item modal-botao" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
-                                                <li><a class="dropdown-item modal-botao" href="{{route('tabela.preco.relatorio',base64_encode($tomador->id))}}"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="btn__evento btn modal-botao" href="{{route('esocial.tomador',base64_encode($tomador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                    
+                                    <td class="td__body text-nowrap col"style="width:200px">{{$comissionado->csindece}}</td>
+                                    
+                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                            <a>{{$comissionado->tomador}}</a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         
-                                        <a class="button__editar btn modal-botao" href="{{route('tomador.edit',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                            <a class="button__editar btn modal-botao" href="{{route('comisionado.edit',$comissionado->id)}}"><i class="icon__color fas fa-pen"></i></a>
                                         
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <form action="{{route('tomador.destroy',$tomador->id)}}" method="post">
+                                        <form action="{{route('comisionado.destroy',$comissionado->id)}}"  method="post">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
-                                        </form>
+                                        </form> 
                                     </td>
                                 </tr>
                                 @endforeach
@@ -116,42 +96,32 @@
                                 </tr>
                                 @endif
                             </tbody>
+                            
                             <tfoot>
                                 <tr class="">
                                     <td colspan="11">
-                                    {{$tomadors->links()}}
-                                        <!-- @if ($tomadors->lastPage() > 1)
-                                       
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination pagination__table pagination-sm">
-                                                @for ($i = 1; $i <= $tomadors->lastPage(); $i++)
-                                                    @if($tomadors->currentPage() == $i && $i < 1)
-                                                        <li class="page-item active">
-                                                            <a class="page-link modal-botao" href="{{ $tomadors->url($i) }}">{{ $i }}</a>
-                                                        </li>
-                                                    @elseif($i > 160)
-                                                        <li class="page-item">
-                                                            <a class="page-link modal-botao" href="{{ $tomadors->url($i) }}">{{ $i }}</a>
-                                                        </li>
-                                                    @endif
-                                                @endfor
+                                                    <li class="">
+                                                        <a class="page-link modal-botao" href=""></a>
+                                                    </li>
                                             </ul>
                                         </nav>
-                                        @endif -->
-                                        
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </section>
-        </div>
-        <div class="modal-footer">
+               
+               
+            </div>
+            <div class="modal-footer">
+            </div>
         </div>
     </div>
 </div>
-</div>
-</div>
+
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -173,5 +143,4 @@
             </form>
         </div>
     </div>
-</div>
 </div>

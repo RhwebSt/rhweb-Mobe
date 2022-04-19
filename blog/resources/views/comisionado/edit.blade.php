@@ -54,7 +54,7 @@
             @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.update',$dados->id)}}">
                   
-                  <h5 class="card-title text-center mt-5 fs-3 ">Editar Comissionado <i class="far fa-percent"></i></h5>
+                  
                 @csrf
                 @method('PATCH')
                 <input type="hidden" value="{{$dados->idtomador}}" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">
@@ -62,11 +62,14 @@
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit"   class="btn botao" ><i class="fad fa-sync-alt"></i> Atualizar</button>
+                        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list-ul"></i> Lista
+                        </a>
                         <a class="btn botao" href="{{route('comisionado.index')}}"  role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </div>
                 
-                
+                <h5 class="card-title text-center mt-5 fs-3 ">Editar Comissionado <i class="fad fa-percentage"></i></h5>
 
 
                 <div class="col-md-8">
@@ -113,56 +116,10 @@
                 </div>
                 
               </form>
-              
-              <div class="d-flex justify-content-end">
-        
-        
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fad fa-sort"></i> Filtro 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                
-                
-                <div class="table-responsive-xxl">
-                            <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                <thead>
-                                    <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Matrícula</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 300px;">Nome Trabalhador</th>
-                                    <th class="col text-center border-top text-nowrap " style="width:200px">Indice %</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:300px">Nome Tomador</th>
-                                </thead>
-                                <tbody style="background-color: #081049; color: white;">
-                                   
-                                    <tr class="bodyTabela">               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;"></td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white text-uppercase" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliel FElipe dos Santos Rocha" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>Eliel FElipe dos Santos Rocha</a>
-                                            </button>
-                                            
-                                        </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px"></td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:300px">
-                                            <button type="button" class="btn text-white text-uppercase" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mobe Maõ de obra Terceirizada LTDA" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>Mobe Maõ de obra Terceirizada LTDA</a>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                
-                            </table>
-                        </div>
 
-            </div>
+
+</div>      
+            @include('comisionado.lista')
             <script>
         $(document).ready(function(){
            

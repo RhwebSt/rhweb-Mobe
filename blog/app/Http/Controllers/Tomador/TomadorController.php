@@ -55,6 +55,7 @@ class TomadorController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $tomadors = $this->tomador->buscaListaTomadorPaginate($search,'asc'); 
+        // dd($tomadors);
         if ($condicao) {
             $tomador = $this->tomador->first($condicao);
             return view('tomador.edit',compact('user','tomador','tomadors'));

@@ -54,7 +54,7 @@
             @enderror
               <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('comisionado.store')}}">
                   
-                  <h5 class="card-title text-center mt-5 fs-3 ">Comissionado <i class="far fa-percent"></i></h5>
+                  
                 @csrf
                 <input type="hidden" id="method" name="_method" value="">
                 <input type="hidden" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">
@@ -62,31 +62,17 @@
                 <div class="row">
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir"  class="btn botao" ><i class="fad fa-save"></i> Incluir</button>
+                        
+                        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list-ul"></i> Lista
+                        </a>
+                        
                         <a class="btn botao" href="{{route('home.index')}}"  role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                        
                     </div>
                 </div>
                 
-                <div class="container mt-5 text-start fs-5 fw-bold">Pesquisar <i class="fas fa-search"></i></div>
-                
-                <div>
-                    <div class="col-md-5 mb-4 p-1 pesquisar">
-                        <div class="d-flex">
-                        <label for="exampleDataList" class="form-label"></label>
-                        <input class="form-control fw-bold text-dark pesquisa" list="datalistOptions" name="pesquisa" id="pesquisa">
-                        <datalist id="datalistOptions">
-                          
-                        </datalist>
-                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                        <div class="text-center d-none p-1" id="refres" >
-                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                              <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
+                <h5 class="card-title text-center mt-5 fs-3 ">Comissionado <i class="fad fa-percentage"></i></h5>
 
 
                 <div class="col-md-8">
@@ -136,83 +122,8 @@
                 
               </form>
               
-              <div class="d-flex justify-content-end">
-        
-        
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fad fa-sort"></i> Filtro 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="table-responsive-xxl">
-                            <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                <thead>
-                                    <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Matrícula</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 300px;">Nome Trabalhador</th>
-                                    <th class="col text-center border-top text-nowrap " style="width:200px">Indice %</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:300px">Nome Tomador</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Editar</th>
-                                    <th class="col text-center border-end border-top text-nowrap" style="width:60px;">Excluir</th>
-                                </thead>
-                                <tbody style="background-color: #081049; color: white;">
-                                   @if(count($comissionados) > 0)
-                                   @foreach($comissionados as $comissionado)
-                                    <tr class="bodyTabela">               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$comissionado->tsmatricula}}</td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="text-uppercase btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$comissionado->trabalhador}}</a>
-                                            </button>
-                                            
-                                        </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">{{$comissionado->csindece}}</td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:300px">
-                                            <button type="button" class="text-uppercase btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 50ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$comissionado->tomador}}</a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                            <button class="btn">
-                                                <a href="{{route('comisionado.edit',$comissionado->id)}}" class="btn__padrao--editar" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
-                                           <form action="{{route('comisionado.destroy',$comissionado->id)}}"  method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn__padrao--excluir"><i style="color:#FFFFFF;" class="fad fa-trash"></i></button>
-                                            </form> 
-                                            </td>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endif
-                                </tbody>
-                                <tfoot>
-                                <tr class=" border-end border-start border-bottom">
-                                    <td colspan="11">
-                                    {{ $comissionados->links() }}
-                                    </td>
-                                </tr>
-                            </tfoot>
-                            </table>
-                        </div>
+              
+              
                 
                 
                 
@@ -241,6 +152,7 @@
                         </div>
                     </div>
             </div>
+            @include('comisionado.lista')
             <script>
             
             function validaInputQuantidade(idCampo,QuantidadeCarcteres){

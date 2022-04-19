@@ -98,8 +98,9 @@ class Tomador extends Model
            
         })
         ->orderBy('tsnome',$condicao) 
+        ->orderBy('tsmatricula',$condicao)
         ->distinct()
-        ->paginate(10);
+        ->paginate(20);
     }
     public function first($id)
     {

@@ -11,7 +11,6 @@ class Parametrosefip extends Model
     ];
     public function cadastro($dados)
     {
-        
        return Parametrosefip::create([
             'psfpas'=>$dados['cod__fpas'],
             'psgrps'=>$dados['cod__grps'],

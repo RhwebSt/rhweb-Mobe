@@ -7,6 +7,10 @@ $(document).ready(function(){
         '</div>' +
         '<p id="msg">Deseja Integrar esse arquivo com o E-SOCIAL?</p>',
         input: 'file',
+        inputAttributes: {
+            'accept': 'text/*',
+            'aria-label': 'Upload your profile picture'
+          },
         showCloseButton: true,
         showCancelButton: false,
         focusConfirm: false,
@@ -21,7 +25,7 @@ $(document).ready(function(){
             var type = event.type.split('/')
             if (ext.indexOf(type[0]) !== -1) {
                 $('#msg').text('Evento sendo enviado para SEFAZ.')
-                $('#progress').text('25%').css({"width": "25%"});
+                $('#progress').text('50%').css({"width": "50%"});
                 var myFormData = new FormData();
                 myFormData.append('file', event);
                 tomador_txt(myFormData)
@@ -35,16 +39,17 @@ $(document).ready(function(){
             url: `${url}/cadastro/texto`,
             type: "POST",
             data: dados,
+            dataType: 'json',
             contentType: false,
             processData: false,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }, 
-            // async:false,
+            async:false,
+            // cache: false,
             success: function(retorno){
                 $('#msg').text('Lote Recebido com Sucesso.')
                 $('#progress').text('50%').css({"width": "50%"});
-                // setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
             }
          });
     }

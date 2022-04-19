@@ -119,21 +119,22 @@
                             <tr class="">
                                 <td colspan="11">
     
-                                    @if ($trabalhadors->lastPage() > 1)
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination pagination__table pagination-sm">
+                                    <!--@if ($trabalhadors->lastPage() > 1)-->
+                                    <!--<nav aria-label="Page navigation example">-->
+                                    <!--    <ul class="pagination pagination__table pagination-sm">-->
         
-                                            @for ($i = 1; $i <= $trabalhadors->lastPage(); $i++)
-                                                <li class="page-item {{ ($trabalhadors->currentPage() == $i) ? ' active' : ''     }}">
-                                                    <a class="page-link modal-botao" href="{{ $trabalhadors->url($i) }}">{{ $i }}</a>
-                                                </li>
-                                                @endfor
+                                    <!--        @for ($i = 1; $i <= $trabalhadors->lastPage(); $i++)-->
+                                    <!--            <li class="page-item {{ ($trabalhadors->currentPage() == $i) ? ' active' : ''     }}">-->
+                                    <!--                <a class="page-link modal-botao" href="{{ $trabalhadors->url($i) }}">{{ $i }}</a>-->
+                                    <!--            </li>-->
+                                    <!--            @endfor-->
         
         
-                                        </ul>
-                                    </nav>
-                                    @endif
-    
+                                    <!--    </ul>-->
+                                    <!--</nav>-->
+                                    <!--@endif-->
+                                    
+
                                 </td>
                             </tr>
                         </tfoot>
