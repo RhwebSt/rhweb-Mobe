@@ -118,7 +118,7 @@
                         <tfoot>
                             <tr class="">
                                 <td colspan="11">
-    
+                                {{$trabalhadors->links()}}
                                     <!--@if ($trabalhadors->lastPage() > 1)-->
                                     <!--<nav aria-label="Page navigation example">-->
                                     <!--    <ul class="pagination pagination__table pagination-sm">-->

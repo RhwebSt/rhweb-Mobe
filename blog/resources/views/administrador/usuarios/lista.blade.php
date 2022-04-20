@@ -1,7 +1,8 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Novo Usuario')
+@section('titulo','Rhweb - Lista Usuario')
 @section('conteine')
 <div class="container">
+    
     {{-- inicio do botão novo --}}
     <section class="section__btn--new">
         <div class="">
@@ -29,15 +30,15 @@
 
     {{-- inicio do filtro --}}
     <section>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end align-content-end">
             <div>
                 <div class="dropdown">
                     <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-sort"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item dropdown__links--filter" href="{{route('usuario.ordem','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item dropdown__links--filter" href="{{route('usuario.ordem','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                    <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item dropdown-item--filter" href="{{route('usuario.ordem','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                        <li><a class="dropdown-item dropdown-item--filter" href="{{route('usuario.ordem','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                     </ul>
                 </div>
             </div>
@@ -60,6 +61,7 @@
                         <th class="th__header text-nowrap" style="width:320px">Email</th>
                         <th class="th__header text-nowrap" style="width:300px">Cargo</th>
                         <th class="th__header text-nowrap" style="width:80px">Permissão</th>
+                        <th class="th__header text-nowrap" style="width:80px">Backup</th>
                         <th class="th__header text-nowrap" style="width:80px">Editar</th>
                         <!-- <th class="th__header text-nowrap" style="width:80px">Excluir</th> -->
                     </tr>
@@ -72,9 +74,9 @@
                     @if(count($lista) > 0)
                     @foreach($lista as $key=>$listas)
                     <tr class="tr__body">
-                    <td class="td__body text-nowrap col" style="width:300px" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->esnome}}</td>
-                        <td class="td__body text-nowrap col" style="width:300px" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->name}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->name}}</td>
-                        <td class="td__body text-nowrap col" style="width:320px">{{$listas->email}}</td>
+                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->esnome}}</td>
+                        <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->name}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->name}}</td>
+                        <td class="td__body text-nowrap col"  data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->email}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->email}}</td>
                         <td class="td__body text-nowrap col" style="width:300px">{{$listas->cargo}}</td>
                         {{-- inicio do botao de permissao --}}
                         <td class="td__body text-nowrap col" style="width:80px">
@@ -83,19 +85,19 @@
                                 <button class="btn button__permission dropdown-toggle" type="button" id="dropdownMenuButton{{$key}}" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fad fa-user-lock"></i>
                                 </button>
-                                <ul class="dropdown-menu button__permission--dropdown" aria-labelledby="dropdownMenuButton{{$key}}">
+                                <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton{{$key}}">
                                     @foreach($permissao as $permisso)
                                         @if($listas->id === $permisso->model_id && $permisso->name === 'user')
                                             @if($permisso->model_type)
-                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">Bloquear</a></li>
+                                                <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">Bloquear</a></li>
                                             @else
-                                            <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">Bloqueador <i class="fad fa-ban text-danger"></i></a></li>
+                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">Bloqueador <i class="fad fa-ban text-danger"></i></a></li>
                                             @endif
                                         @elseif($listas->id === $permisso->model_id && $permisso->name !== 'user')
                                             @if($permisso->model_type)
-                                                <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
+                                                <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
                                             @else
-                                            <li><a class="dropdown-item botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">{{$permisso->name}} <i class="fad fa-ban text-danger"></i></a></li>
+                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">{{$permisso->name}} <i class="fad fa-ban text-danger"></i></a></li>
                                             @endif
                                         @endif
                                     @endforeach
@@ -104,6 +106,20 @@
 
                         </td>
                         {{-- fim do botao de permissao --}}
+                        
+                        <td class="td__body text-nowrap col" style="width:80px">
+
+                            <div class="dropdown">
+                                <button class="btn button__upload dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fad fa-upload"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" id="txtTrabalhador">Txt Trabalhador</a></li>
+                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" id="txtTomador">Txt Tomador</a></li>
+                                </ul>
+                            </div>
+
+                        </td>
 
                         {{-- inicio do botao de editar --}}
                         <td class="td__body text-nowrap" style="width:80px">

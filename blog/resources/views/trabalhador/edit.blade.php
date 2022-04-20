@@ -84,13 +84,16 @@
     <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->biid}}">
     <div class="col-md-6">
       <label for="nome__completo" class="form-label">Nome Completo</label>
-      <input type="text" class="form-control fw-bold" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+      @error('nome__completo')
+        <span class="text-danger">{{ $message }}</span>
+      @enderror
     </div>
     <div class="col-md-6">
       <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" /> Nome Social (Opcional) </label>
       <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
       @error('nome__social')
-      <span class="text-danger">{{ $message }}</span>
+      <span class="text-danger">{{ $message }}</span> 
       @enderror
     </div>
     <script>
@@ -129,17 +132,26 @@
     </script>
     <div class="col-md-2">
       <label for="cpf" class="form-label">CPF</label>
-      <input type="text" class="form-control fw-bold cpf-mask" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+      <input type="text" class="form-control fw-bold cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+      @error('cpf')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-2">
       <label for="matricula" class="form-label">Matrícula</label>
-      <input type="text" class="form-control fw-bold" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}">
+      <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}">
+      @error('matricula')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-2">
       <label for="pis" class="form-label">PIS</label>
-      <input type="text" class="form-control fw-bold" name="pis" id="pis" value="{{$trabalhador->dspis}}">
+      <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->dspis}}">
+      @error('pis')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
@@ -332,48 +344,76 @@
 
     <div class="col-md-3">
       <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-      <input type="date" class="form-control fw-bold" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nsnascimento}}">
+      <input type="date" class="form-control fw-bold @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nsnascimento}}">
+      @error('data_nascimento')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
     <div class="col-md-3">
       <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-      <input type="text" class="form-control fw-bold" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nsnaturalidade}}">
+      <input type="text" list="pais_nascimento_list" class="form-control fw-bold @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nsnaturalidade}}">
+      @error('pais__nascimento')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
+      <datalist id="pais_nascimento_list">
+              </datalist>
     </div>
 
     <div class="col-md-3">
       <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-      <input type="text" class="form-control fw-bold" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nsnacionalidade}}">
+      <input type="text" list="pais_nacionalidade_list" class="form-control fw-bold @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nsnacionalidade}}">
+      @error('pais__nacionalidade')
+              <span class="text-danger">{{ $message }}</span>
+              @enderror
+              <datalist id="pais_nacionalidade_list">
+              </datalist>
     </div>
 
     <div class="col-md-6">
       <label for="nome__mae" class="form-label">Nome da Mãe</label>
-      <input type="text" class="form-control fw-bold" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
+      <input type="text" class="form-control fw-bold @error('nome__mae') is-invalid @enderror" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
+      @error('nome__mae')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Local de Residência</div>
 
     <div class="col-md-3">
       <label for="cep" class="form-label">Cep</label>
-      <input type="text" class="form-control fw-bold" name="cep" id="cep" value="{{$trabalhador->escep}}">
+      <input type="text" class="form-control fw-bold @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->escep}}">
+      @error('cep')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
 
     <div class="col-md-7">
       <label for="logradouro" class="form-label">Rua</label>
-      <input type="text" class="form-control fw-bold" name="logradouro" id="logradouro" value="{{$trabalhador->eslogradouro}}">
+      <input type="text" class="form-control fw-bold @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->eslogradouro}}">
+      @error('logradouro')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-2">
       <label for="numero" class="form-label">Número</label>
-      <input type="text" class="form-control fw-bold" name="numero" id="numero" value="{{$trabalhador->esnum}}">
+      <input type="text" class="form-control fw-bold @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->esnum}}">
+      @error('numero')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
 
     </div>
 
     <div class="col-md-2 d-none">
       <label for="tipo" class="form-label">Tipo</label>
-      <input type="text" class="form-control fw-bold" name="tipo__endereco" id="tipo" value="">
+      <input type="text" class="form-control fw-bold @error('tipo__endereco') is-invalid @enderror" name="tipo__endereco" id="tipo" value="">
+      @error('tipo__endereco')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
     <div class="col-md-4">
       <label for="tipoconstrucao" class="form-label">Tipo</label>
@@ -570,59 +610,89 @@
 
     <div class="col-md-8">
       <label for="bairro" class="form-label">Bairro</label>
-      <input type="text" class="form-control fw-bold" name="bairro" id="bairro" value="{{$trabalhador->esbairro}}">
+      <input type="text" class="form-control fw-bold @error('bairro') is-invalid @enderror" name="bairro" id="bairro" value="{{$trabalhador->esbairro}}">
+      @error('bairro')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
     <div class="col-md-7">
       <label for="localidade" class="form-label">Municipio</label>
-      <input type="text" class="form-control fw-bold" name="localidade" id="localidade" value="{{$trabalhador->esmunicipio}}">
+      <input type="text" class="form-control fw-bold @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->esmunicipio}}">
+      @error('localidade')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-2">
       <label for="uf" class="form-label">UF</label>
-      <input type="text" class="form-control fw-bold" name="uf" id="uf" value="{{$trabalhador->esuf}}">
+      <input type="text" class="form-control fw-bold @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->esuf}}">
+      @error('uf')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
    
 
     <div class="col-md-3">
       <label for="telefone" class="form-label">Telefone</label>
-      <input type="text" class="form-control fw-bold" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
+      <input type="text" class="form-control fw-bold @error('telefone') is-invalid @enderror" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
+      @error('telefone')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="container text-center mt-5 mb-3 fs-4 fw-bold">Contrato de Trabalho</div>
 
     <div class="col-md-4">
       <label for="data__admissao" class="form-label">Data de Admissão</label>
-      <input type="date" class="form-control fw-bold" name="data__admissao" id="data__admissao" value="{{$trabalhador->csadmissao}}">
+      <input type="date" class="form-control fw-bold @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->csadmissao}}">
+      @error('data__admissao')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-4">
       <label for="categoria" class="form-label">Categoria</label>
-      <input type="text" class="form-control fw-bold" name="categoria__contrato" id="categoria" value="{{$trabalhador->cscategoria}}">
+      <input type="text" class="form-control fw-bold @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->cscategoria}}">
+      @error('categoria__contrato')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-4">
       <label for="cbo" class="form-label">CBO</label>
-      <input type="text" class="form-control fw-bold" name="cbo" id="cbo" value="{{$trabalhador->cbo}}">
+      <input type="text" class="form-control fw-bold @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->cbo}}">
+      @error('cbo')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
 
     <div class="col-md-4">
       <label for="ctps" class="form-label">CTPS</label>
-      <input type="text" class="form-control fw-bold" name="ctps" id="ctps" value="{{$trabalhador->dsctps}}">
+      <input type="text" class="form-control fw-bold @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->dsctps}}">
+      @error('ctps')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-4">
       <label for="serie__ctps" class="form-label">Série</label>
-      <input type="text" class="form-control fw-bold" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->dsserie}}">
+      <input type="text" class="form-control fw-bold @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->dsserie}}">
+      @error('serie__ctps')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-4">
       <label for="uf__ctps" class="form-label">UF</label>
-      <input type="text" class="form-control fw-bold" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->dsuf}}">
+      <input type="text" class="form-control fw-bold @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->dsuf}}">
+      @error('uf__ctps')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
     <div class="col-md-5">
@@ -645,7 +715,10 @@
 
     <div class="col-md-4">
       <label for="data__afastamento" class="form-label">Data de Afastamento</label>
-      <input type="date" class="form-control fw-bold" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->csafastamento}}">
+      <input type="date" class="form-control fw-bold @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->csafastamento}}">
+      @error('data__afastamento')
+      <span class="text-danger">{{ $message }}</span> 
+      @enderror
     </div>
 
 
@@ -684,6 +757,7 @@
   @include('trabalhador.lista')
 </div>
 <script>
+  let paisnascimento = ''
   $('.modal-botao').click(function() {
     localStorage.setItem("modal", "enabled");
   })
@@ -722,6 +796,7 @@
     }
     reader.readAsDataURL(file);
   }
+  
   $("#pesquisa").on('keyup focus', function() {
       let dados = '0'
       if ($(this).val()) {
@@ -755,6 +830,20 @@
         }
       });
     });
+    $('#pais__nacionalidade,#pais__nascimento').on('keyup focus', function() {
+      if (!$(this).val()) {
+        paisnascimento = ''
+        paisnascimentolista(pais__nascimento)
+      }
+    })
 
+    function paisnascimentolista(pais__nascimento) {
+      pais__nascimento.forEach(element => {
+        paisnascimento += `<option value="${element}">`
+      });
+      $('#pais_nascimento_list').html(paisnascimento)
+      $('#pais_nacionalidade_list').html(paisnascimento)
+    }
+    paisnascimentolista(pais__nascimento)
 </script>
 @stop

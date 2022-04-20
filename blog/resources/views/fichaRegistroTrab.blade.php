@@ -293,10 +293,7 @@
                     <td></td>
                     <td></td>
                     <td class="small__font width__padrao capitalize"><strong>Data de Admissão:</strong> 
-                            <?php
-                                $data = explode('-',$trabalhadors->csadmissao)
-                            ?>
-                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                            {{date('d/m/Y',strtotime($trabalhadors->csadmissao))}}
                     </td>
                 </tr>
     
@@ -314,10 +311,7 @@
                 <td class="small__font documentos border-left border-top capitalize border-bottom border-right"><strong>PIS:</strong>  {{$trabalhadors->dspis}}</td>
                 <td class="small__font documentos border-top capitalize border-bottom border-right"><strong>CPF:</strong> {{$trabalhadors->tscpf}}</td>
                 <td class="small__font documentos border-right border-top capitalize border-bottom border-left"><strong>Data Nascimento:</strong> 
-                    <?php
-                        $data = explode('-',$trabalhadors->nsnascimento)
-                    ?>
-                    {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                    {{date('d/m/Y',strtotime($trabalhadors->nsnascimento))}}
                 </td>
             </tr>
         </table>

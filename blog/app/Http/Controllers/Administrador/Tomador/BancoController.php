@@ -102,22 +102,22 @@ class BancoController extends Controller
                     'empresa' => 15,
                     'trabalhador' => null,
                 ];
-                $tomador['matricula'] = str_replace("  ", "",substr($linha, 0, 6));
-                $tomador['nome__completo'] = str_replace("  ", "",substr($linha, 6, 40));
-                $tomador['logradouro'] = str_replace("  ", "",substr($linha, 40, 40));
-                $tomador['numero'] = str_replace("  ", "",substr($linha, 86, 5));
-                $tomador['bairro'] = str_replace("  ", "",substr($linha, 91, 30));
-                $tomador['localidade'] = str_replace("  ", "",substr($linha, 121, 30));
-                $tomador['uf'] = str_replace("  ", "",substr($linha, 151, 2));
-                $tomador['cep'] = str_replace("  ", "",substr($linha, 153, 8));
-                $tomador['telefone'] = str_replace("  ", "",substr($linha, 161, 12));
-                $tomador['tipo'] = substr($linha, 173, 1) == 1 ? str_replace("  ", "",substr($linha, 173, 1)) . '-CNPJ' : str_replace("  ", "",substr($linha, 173, 1)) . '-CPF';
-                $tomador['cnpj'] = str_replace("  ", "",substr($linha, 174, 14));
+                $tomador['matricula'] = str_replace("  ", "",substr(utf8_encode($linha), 0, 6));
+                $tomador['nome__completo'] = str_replace("  ", "",substr(utf8_encode($linha), 6, 40));
+                $tomador['logradouro'] = str_replace("  ", "",substr(utf8_encode($linha), 40, 40));
+                $tomador['numero'] = str_replace("  ", "",substr(utf8_encode($linha), 86, 5));
+                $tomador['bairro'] = str_replace("  ", "",substr(utf8_encode($linha), 91, 30));
+                $tomador['localidade'] = str_replace("  ", "",substr(utf8_encode($linha), 121, 30));
+                $tomador['uf'] = str_replace("  ", "",substr(utf8_encode($linha), 151, 2));
+                $tomador['cep'] = str_replace("  ", "",substr(utf8_encode($linha), 153, 8));
+                $tomador['telefone'] = str_replace("  ", "",substr(utf8_encode($linha), 161, 12));
+                $tomador['tipo'] = substr($linha, 173, 1) == 1 ? str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CNPJ' : str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CPF';
+                $tomador['cnpj'] = str_replace("  ", "",substr(utf8_encode($linha), 174, 14));
                 // dd($tomador);
                 $tomadors = $this->tomador->cadastro($tomador);
                 if ($tomadors) {
                     $tomador['tomador'] = $tomadors['id'];
-                    $id = 
+                    $id = $tomador['id'];
                     foreach ($rublicas as $key => $rublica) {
                         $dadostabelapreco = [
                             'ano' => date('Y'),

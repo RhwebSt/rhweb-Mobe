@@ -1,0 +1,58 @@
+.form__cadastro--acesso{
+    margin-top: 6%;
+}
+
+.text__title{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.6em;
+}
+
+.button__incluir{
+    background-color: #6e7bee;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+}
+
+.button__incluir:hover{
+    background-color: #2d3aaf;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__incluir:focus{
+    background-color: #2d3aaf;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.button__sair{
+    background-color: #6e7bee;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+}
+
+.button__sair:hover{
+    background-color: #2d3aaf;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__sair:focus{
+    background-color: #2d3aaf;
+    color: white;
+    border: 1px solid #a6afff;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}

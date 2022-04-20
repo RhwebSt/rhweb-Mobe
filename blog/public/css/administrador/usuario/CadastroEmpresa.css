@@ -1,0 +1,105 @@
+.section__btn--new-empresa{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.button__new--empresa{
+    background-color: #09866D;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+}
+
+.button__new--empresa:hover{
+    background-color: #055545;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__new--empresa:focus{
+    background-color: #055545;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.cadastrar__empresa--botoes{
+    margin-top: 10%;
+}
+
+.botao__incluir--cadastrar--empresa{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.botao__incluir--cadastrar--empresa:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.botao__incluir--cadastrar--empresa:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.botao__incluir--cadastrar--sair{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.botao__incluir--cadastrar--sair:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.botao__incluir--cadastrar--sair:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+
+.section___cadastrar--empresa{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.foto__cadastro--empresa{
+    margin-top: 10%;
+}
+
+.div__logo--empresa{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6%;
+}
+
+.logo__empresa{
+    width: 130px;
+    height: 130px;
+    transition: 300ms ease-in-out;
+}
+
+.logo__empresa:hover{
+    transform: scale(1.4);
+    transition: 300ms ease-in-out;
+}

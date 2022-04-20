@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
         <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
-        <link href="{{url('/css/notificacaoUser.css')}}" rel="stylesheet" />
+        <link href="{{url('/css/usuario/componentes/notificacaoUser.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
 		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">

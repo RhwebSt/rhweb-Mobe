@@ -12,17 +12,21 @@
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <!-- <link rel="stylesheet" href="{{url('/css/cadastroLoginUsuario.css')}}"> -->
-        <link rel="stylesheet" href="{{url('/css/inss.css')}}">
-        <link rel="stylesheet" href="{{url('/css/irrf.css')}}">
-        <link rel="stylesheet" href="{{url('/css/tableAdmin.css')}}">
-        <link rel="stylesheet" href="{{url('/css/categoriaAutomatica.css')}}">
-        <link rel="stylesheet" href="{{url('/css/rubrica.css')}}">
-        <link rel="stylesheet" href="{{url('/css/cbo.css')}}">
-        <link rel="stylesheet" href="{{url('/css/historicoTrab.css')}}">
-        <link rel="stylesheet" href="{{url('/css/administrador/usuario/geradorAcesso.css')}}"
+        <link rel="stylesheet" href="{{url('/css/administrador/inss/inss.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/irrf/irrf.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/componentes/tableAdmin.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/categoria/categoriaAutomatica.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/rubricas/rubrica.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/cbo/cbo.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/trabalhador/historicoTrab.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/usuario/geradorAcesso.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/usuario/cadastrarLoginAcesso.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/usuario/editarLoginAcesso.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/usuario/indexLoginUsuario.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/usuario/CadastroEmpresa.css')}}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +49,7 @@
                         <div class="me-2">
                             <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-                                <button class="btn button__search type="submit"><i class="fad fa-search"></i></button>
+                                <button class="btn button__search" type="submit"><i class="fad fa-search"></i></button>
                             </form>
                         </div>
                         {{-- fim do pesquisar navbar --}}
@@ -209,10 +213,13 @@
         </head>
         @yield('conteine')
 </main>
-<!-- <script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
-<!-- <script src="{{url('/js/inss.js')}}"></script> -->
+
+<!--<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
+<!--<script src="{{url('/js/inss.js')}}"></script> -->
 <script src="{{url('/js/banco/index.js')}}"></script>
-<script src="{{url('/js/irrf.js')}}"></script>
+<!--<script src="{{url('/js/irrf.js')}}"></script>-->
+<script src="{{url('js/administrador/usuario/tableUsuario.js')}}"></script>
+
 
     <script src="{{url('/js/dashboard.js')}}"></script>
             <script src="{{url('/js/navbarAdmin.js')}}"></script>

@@ -16,7 +16,7 @@ class fichaRegistroTrabController extends Controller
         $trabalhador = new Trabalhador;
         $empresa = new Empresa;
         $depedente = new Dependente;
-        try {
+        
             $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
             if ($trabalhadors) {
                 $empresas = $empresa->buscaUnidadeEmpresa($trabalhadors->empresa); 
@@ -24,6 +24,7 @@ class fichaRegistroTrabController extends Controller
                 $pdf = PDF::loadView('fichaRegistroTrab',compact('trabalhadors','empresas','depedentes'));
                 return $pdf->setPaper('a4')->stream('ficha_'.$trabalhadors->tsnome.'.pdf');
             }
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha de registro do trabalhador.']);
         }

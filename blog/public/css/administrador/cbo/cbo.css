@@ -1,0 +1,124 @@
+.section__botao--voltar--cbo{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+
+
+.section__title--cbo{
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+.button__voltar--cbo{
+    background-color: #00477A;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+}
+
+.button__voltar--cbo:hover{
+    background-color: #002641;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__voltar--cbo:focus{
+    background-color: #002641;
+    color: #fff;
+    border: 1px solid #6ebff8;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.title__cbo{
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+
+.button__new--cbo{
+    background-color: #09866D;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+}
+
+.button__new--cbo:hover{
+    background-color: #013f33;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+}
+
+.button__new--cbo:focus{
+    background-color: #013f33;
+    color: white;
+    border: 1px solid #d7fcf4;
+    transition: 300ms ease-in-out;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.button__incluir--cbo{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__incluir--cbo:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__incluir--cbo:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.button__atualizar--cbo{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__atualizar--cbo:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__atualizar--cbo:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.conteudo__cbo{
+    margin-top: 5%;
+    
+}
+
+
+

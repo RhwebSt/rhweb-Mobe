@@ -320,7 +320,7 @@ class TrabalhadorController extends Controller
     {
         $dados = $request->all();
         $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
+            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ ]*$/',
             'nome__social' => 'max:100',
             'cpf' => 'required|max:15|cpf|formato_cpf',
             'pis'=>'required|max:20|pis',

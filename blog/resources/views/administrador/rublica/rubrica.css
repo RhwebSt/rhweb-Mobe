@@ -1,0 +1,107 @@
+.section__btn--new--rubrica{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.button__new--rubrica{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__new--rubrica:hover{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__new--rubrica:focus{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.section__form-rubrica{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.button__atualizar--rubrica{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__atualizar--rubrica:hover{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__atualizar--rubrica:focus{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.button__sair--rubrica{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__sair--rubrica:hover{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__sair--rubrica:focus{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+
+.button__incluir--rubrica{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__incluir--rubrica:hover{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__incluir--rubrica:focus{
+    background-color: #2f3cb1;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
