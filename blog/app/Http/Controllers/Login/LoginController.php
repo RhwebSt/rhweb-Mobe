@@ -46,9 +46,10 @@ class LoginController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $user = $this->user->verificausuario($dados['user']);
-        if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Você precissa informa e sua empresa.']);
+        // $user = $this->user->verificausuario($dados['user']);
+        $user = $this->user->where('name', $dados['user'])->with('empresa.user')->first();
+        if (!$user->empresa) {
+            return redirect()->back()->withInput()->withErrors(['mensagem'=>'Você precissa informa e sua empresa.']);
         }
         $request->validate([
             'user' => 'required',
@@ -76,6 +77,7 @@ class LoginController extends Controller
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
             // $this->user->editeLoginContador($dados,null);
             // $user->givePermissionTo('user');
+            
             return redirect()->route('home.index');
         } 
         return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuário. Tente novamente.']);

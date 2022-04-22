@@ -374,10 +374,18 @@ main{
     background-color: #194bf0 !important;
     border:  1px solid #477EFF;
     border-radius:3px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
+}
+
+.nav-pills .nav-link:hover{
+    background-color: #182D63 !important;
+    transform: scale(1.03);
 }
 
 .nav-pills .nav-link.active{
     background-color: #182D63 !important;
+    transform: scale(1.01);
 }
 
 .offcanvas-end{

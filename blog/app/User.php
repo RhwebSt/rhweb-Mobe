@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 
+
+
 class User extends Authenticatable
 {
     use Notifiable, HasRoles;
@@ -19,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'usuario', 'cargo', 'empresa', 'remember_token'
+        'name', 'email', 'password', 'usuario', 'cargo', 'empresa_id', 'remember_token'
     ];
 
     /**
@@ -39,6 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+   
     public function login($dados)
     {
         return User::where([
@@ -67,7 +74,7 @@ class User extends Authenticatable
             'name' => $dados['name'],
             'email' => $dados['email'],
             'password' => Hash::make($dados['senha'])
-        ])->givePermissionTo('user', 'admin');
+        ])->givePermissionTo('admin');
     }
     public function buscaUnidadeUser($id)
     {
@@ -100,7 +107,7 @@ class User extends Authenticatable
                     // 'usuario'=>$dados['usuario'],
                     'password' => Hash::make($dados['senha']),
                     'cargo' => $dados['cargo'],
-                    'empresa' => $dados['empresa'],
+                    'empresa_id' => $dados['empresa'],
                 ]);
         } else {
             return User::where('id', $id)
@@ -109,7 +116,7 @@ class User extends Authenticatable
                     'email' => $dados['email'],
                     // 'usuario'=>$dados['usuario'],
                     'cargo' => $dados['cargo'],
-                    'empresa' => $dados['empresa'],
+                    'empresa_id' => $dados['empresa'],
                 ]);
         }
     }
@@ -263,23 +270,25 @@ class User extends Authenticatable
     }
     public function listaUserAdministrador($condicao, $dados)
     {
-        return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
-            ->select('users.id', 'users.name', 'users.email', 'users.cargo', 'empresas.esnome')
-            ->where(function ($query) use ($dados) {
-                $user = auth()->user();
-                if ($dados) {
-                    $query->where('users.name', 'like', '%' . $dados . '%')
-                        ->orWhere('empresas.esnome', 'like', '%' . $dados . '%')
-                        ->orWhere('empresas.escnpj', 'like', '%' . $dados . '%');
-                } else {
-                    $query->where('users.id', '>', 0);
-                }
-            })
+        // return DB::table('users')
+        //     ->join('empresas', 'empresas.id', '=', 'users.empresa')
+        //     ->select('users.id', 'users.name', 'users.email', 'users.cargo', 'empresas.esnome')
+        //     ->where(function ($query) use ($dados) {
+        //         $user = auth()->user();
+        //         if ($dados) {
+        //             $query->where('users.name', 'like', '%' . $dados . '%')
+        //                 ->orWhere('empresas.esnome', 'like', '%' . $dados . '%')
+        //                 ->orWhere('empresas.escnpj', 'like', '%' . $dados . '%');
+        //         } else {
+        //             $query->where('users.id', '>', 0);
+        //         }
+        //     })
 
-            ->orderBy('users.name', $condicao)
-            ->paginate(10);
+        //     ->orderBy('users.name', $condicao)
+        //     ->paginate(10);
+
     }
+    
     public function permissaoSupAdmin($id)
     {
         return DB::table('model_has_permissions')

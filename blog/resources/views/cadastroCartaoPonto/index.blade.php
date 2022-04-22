@@ -70,15 +70,15 @@
   <!--</script>-->
 
 
-  <h5 class="card-title text-center fs-3 ">Cartão Ponto <i class="fad fa-alarm-clock"></i></h5>
+  <h5 class="card-title text-center mt-5 mb-5 fs-3 ">Cartão Ponto <i class="fad fa-alarm-clock"></i></h5>
   <div class="container">
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
       @csrf
       <input type="hidden" id="method" name="_method" value="">
       <input type="hidden" name="status" value="D" id="status">
       <input type="hidden" name="empresa" value="{{$user->empresa}}">
-      <div class="row">
-        <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+
+        <div class="btn d-grid gap-1 mb-5  mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
 
           <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
           <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
@@ -93,7 +93,7 @@
 
           <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
         </div>
-      </div>
+
       <?php
       if (isset($numboletimtabela->vsnrocartaoponto)) {
         $boletim = $numboletimtabela->vsnrocartaoponto + 1;
@@ -101,7 +101,7 @@
         $boletim = 1;
       }
       ?>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
         <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim">
         @error('liboletim')
@@ -111,7 +111,7 @@
         </datalist>
       </div>
 
-      <div class="col-md-6 input">
+      <div class="col-md-8 input">
         <label for="tomador" class="form-label ">Tomador
           <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
         </label>
@@ -129,15 +129,9 @@
       <input type="hidden" id="domingo" name="domingo">
       <input type="hidden" name="sabado" id="sabado">
       <input type="hidden" name="diasuteis" id="diasuteis">
-      <div class="col-md-2 d-none">
-        <label for="matricula" class="form-label ">Matrícula <i class="fas fa-lock"></i></label>
-        <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula" Readonly>
-        @error('matricula')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-      </div>
 
-      <div class="col-md-3">
+
+      <div class="col-md-4">
         <label for="data" class="form-label">Data</label>
         <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="" id="data">
         @error('data')
@@ -145,7 +139,7 @@
         @enderror
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label for="num__trabalhador" class="form-label">Quantidade de Cadastros</label>
         <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
         @error('num__trabalhador')
@@ -153,7 +147,7 @@
         @enderror
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <label for="feriado" class="form-label">Feriado</label>
         <select id="feriado" name="feriado" class="form-select fw-bold text-dark">
           <option>Sim</option>

@@ -15,8 +15,8 @@ class HomeController extends Controller
     }
     public function index()
     {
+        
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
-        // dd($esocialtrabalhador);
         if (auth()->check()){
             $user = Auth::user();   
             if ($user->hasPermissionTo('Super Admin')) {

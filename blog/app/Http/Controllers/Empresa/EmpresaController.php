@@ -129,7 +129,7 @@ class EmpresaController extends Controller
     }
     public function pesquisa($id)
     {
-        $empresas = $this->empresa->buscaListaEmpresa($id);
+        $empresas = $this->empresa->select('id', 'esnome', 'escnpj', 'esresponsavel', 'estelefone')->get();
         return response()->json($empresas);
     }
     /**

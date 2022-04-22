@@ -75,11 +75,11 @@
 
                     <div class="col-md-3">
                         <label for="empresa" class="form-label">Empresa</label>
-                        <input type="text" list="listempresa" class="form-control fw-bold @error('empresa') is-invalid @enderror"   value="{{$editar->esnome}}" id="empresa">
+                        <input type="text" list="listempresa" class="form-control fw-bold @error('empresa') is-invalid @enderror"   value="{{$editar->empresa->esnome}}" id="empresa">
                         @error('empresa')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                        <input type="hidden" name="empresa" value="{{$editar->empresa}}">
+                        <input type="hidden" name="empresa" value="{{$editar->empresa->id}}">
                         <datalist id="listempresa">    
                         </datalist>
                     </div>

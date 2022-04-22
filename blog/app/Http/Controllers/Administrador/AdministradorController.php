@@ -13,31 +13,33 @@ use App\Trabalhador;
 use App\Lancamentotabela;
 class AdministradorController extends Controller
 {
-    private $quantuser,$quantomador,$quantrabalhador,$quantfatura,$quantfolhar,
+    private $user,$tomador,$quantrabalhador,$quantfatura,$quantfolhar,
     $quantcartaoponto;
     public function __construct()
     {
-        $this->quantuser = new User;
-        $this->quantomador = new Tomador;
-        $this->quantrabalhador=new Trabalhador;
-        $this->quantfatura = new Fatura;
-        $this->quantfolhar = new Folhar;
-        $this->quantcartaoponto = new Lancamentotabela;
+        $this->user = new User;
+        $this->tomador = new Tomador;
+        $this->trabalhador=new Trabalhador;
+        $this->fatura = new Fatura;
+        $this->folhar = new Folhar;
+        $this->cartaoponto = new Lancamentotabela;
     }
     public function index()
     {
         if (auth()->check()){
-            $user = Auth::user();   
+            $user = Auth::user(); 
             if ($user->hasPermissionTo('Super Admin')) {
-                $quantuser = $this->quantuser->quantidadeUsuarios();
-                $quantuserbloqueador = $this->quantuser->quantidadeBloqueadoUsuarios();
-                $quantomador = $this->quantomador->quantidadeTomador();
-                $quantrabalhador = $this->quantrabalhador->quantidadeTrabalhador();
-                $quantfatura = $this->quantfatura->quantidadeFatura();
-                $quantfolhar = $this->quantfolhar->quantidadeFolhar();
-                $quantcartaoponto = $this->quantcartaoponto->quantidadeCartaoPonto();
-                $quantboletimtabela = $this->quantcartaoponto->quantidadeBoletimTabela();
-                return view('administrador.index',compact('quantuser','quantuserbloqueador','quantomador','quantrabalhador','quantfatura','quantfolhar','quantcartaoponto','quantboletimtabela'));
+                $quantuser = $this->user->count();
+                $quantuserbloqueador = $this->user->with('permissions')->get();
+                $quantomador = $this->tomador->count();
+                $quantrabalhador = $this->trabalhador->count();
+                // dd($quantrabalhador);
+                $quantfatura = $this->fatura->count();
+                $quantfolhar = $this->folhar->count();
+                $quantcartaoponto = $this->cartaoponto->count();
+                $quantboletimtabela = $this->cartaoponto->count();
+                
+                return view('administrador.index',compact('user','quantuser','quantuserbloqueador','quantomador','quantrabalhador','quantfatura','quantfolhar','quantcartaoponto','quantboletimtabela'));
             }
         }
         return redirect()->route('login.administrador');

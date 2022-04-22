@@ -80,7 +80,7 @@
 
         <section class="container">
             <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('descontos.store')}}">
-                <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Descontos <i class="fas fa-percent"></i></div>
+                <div class="container text-center mt-4 mb-3  fs-4 fw-bold">Descontos <i class="fad fa-percentage"></i></div>
                 @csrf
                 <input type="hidden" name="empresa" value="{{$user->empresa}}">
                 <input type="hidden" name="trabalhador" id="trabalhador">
@@ -97,6 +97,10 @@
                               </button>
                         </li>
                       </ul>
+                      
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                        <i class="fad fa-list-ul"></i> Lista
+                    </a>
                     <a class="btn botao" href="" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                 </div>
 
@@ -189,93 +193,7 @@
                     @enderror
                 </div>
                 </form>
-                
-                <div class="d-flex justify-content-end">
-        
-        
-                    <div class="dropdown  mt-2 p-1">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                            <i class="fad fa-sort"></i> Filtro 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                        <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="table-responsive-xxl">
-                    <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                              <thead>
-                                  <th class="col text-center border-start border-top  text-nowrap" style="width:80px;">Matrícula</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:400px">Nome</th>
-                                  <th class="col text-center border-top  text-nowrap capitalize" style="400px;">Descrição</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Quinzena</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Competência</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:150px;">Valor</th>
-                                  <th class="col text-center border-top  text-nowrap" style="width:60px;">Editar</th>
-                                  <th colspan="2" class="col text-center border-end border-top  text-nowrap" style="width:60px;">Excluir</th>
-                              </thead>
-                              
-                              <tbody style="background-color: #081049; color: white;">
-                              @if(count($descontos) > 0)
-                                @foreach($descontos as $desconto)
-                                  <tr class="bodyTabela">
-                                  <td class="col text-center border-start  border-bottom text-nowrap text-uppercase" style="width:80px;">{{$desconto->tsmatricula}}</td>
-                                  <td class="col text-center  border-bottom text-nowrap text-uppercase" style="width:400px">
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$desconto->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
-                                        <a>{{$desconto->tsnome}}</a>
-                                    </button>    
-                                </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="400px;">
-                                    <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$desconto->dsdescricao}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis; padding: 0 0; margin:0 0;">
-                                        <a>{{$desconto->dsdescricao}}</a>
-                                    </button>
-                                </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">{{$desconto->dsquinzena}}</td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">
-                                    <?php
-                                        $data = explode('-',$desconto->dscompetencia);
-                                    ?>
-                                    {{$data[1]}}/{{$data[0]}}
-                                  </td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:150px;">{{number_format((float)$desconto->dfvalor, 2, ',', '')}}</td>
-                                  <td class="col text-center  border-bottom  text-nowrap text-uppercase" style="width:60px;">
-                                      <button class="btn" >
-                                        <a class="btn__padrao--editar" href="{{route('descontos.edit',base64_encode($desconto->id))}}" class=""><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-edit"></i></a>
-                                      </button>
-                                  </td>
-                                  <td colspan="2" class="col text-center border-end border-bottom text-nowrap" style="width:60px;">
-                                      <form action="{{route('descontos.destroy',$desconto->id)}}" method="post">
-                                      @csrf
-                                      @method('delete')
-                                        <button type="submit" class="btn btn__padrao--excluir" style=""><i style="color:#FFFFFF; padding-right: 1px;" class="fad fa-trash"></i></button>
-                                      </form>
-                                    </td>
-                                  </tr>
-                                  @endforeach
-                                  @else
-                                  <tr>
-                                    <td class="text-center border-bottom border-end border-start text-nowrap" colspan="8" style="background-color: #081049; color: white;">
-                                      <div class="alert" role="alert" style="background-color: #CC2836;">
-                                          Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                      </div>
-                                  </td>
-                                  </tr>
-                                  @endif
-                              </tbody>
-                                  <tfoot>
-                                      <tr class=" border-end border-start border-bottom">
-                                          <td colspan="11">
-                                            {{$descontos->links()}}
-                                          </td>
-                                      </tr>
-                                  </tfoot>
-                              </table>
-                          </div>
-            
+
         </section>
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -353,7 +271,7 @@
     </div>
   </div>
   
-  
+  @include('desconto.lista')
         <script>
                 var botaolimpaCampos = document.querySelector("#refre");
         

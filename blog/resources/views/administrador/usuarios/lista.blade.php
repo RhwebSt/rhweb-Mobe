@@ -2,7 +2,8 @@
 @section('titulo','Rhweb - Lista Usuario')
 @section('conteine')
 <div class="container">
-    
+
+    <example-component></example-component>
     {{-- inicio do botão novo --}}
     <section class="section__btn--new">
         <div class="">
@@ -74,7 +75,7 @@
                     @if(count($lista) > 0)
                     @foreach($lista as $key=>$listas)
                     <tr class="tr__body">
-                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->esnome}}</td>
+                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->empresa->esnome}}</td>
                         <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->name}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->name}}</td>
                         <td class="td__body text-nowrap col"  data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->email}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->email}}</td>
                         <td class="td__body text-nowrap col" style="width:300px">{{$listas->cargo}}</td>
@@ -86,19 +87,20 @@
                                     <i class="fad fa-user-lock"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton{{$key}}">
-                                    @foreach($permissao as $permisso)
-                                        @if($listas->id === $permisso->model_id && $permisso->name === 'user')
-                                            @if($permisso->model_type)
-                                                <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">Bloquear</a></li>
-                                            @else
-                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">Bloqueador <i class="fad fa-ban text-danger"></i></a></li>
-                                            @endif
-                                        @elseif($listas->id === $permisso->model_id && $permisso->name !== 'user')
-                                            @if($permisso->model_type)
-                                                <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'R'])}}">{{$permisso->name}} <i class="fas fa-check text-success"></i></a></li>
-                                            @else
-                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($permisso->permission_id),'D'])}}">{{$permisso->name}} <i class="fad fa-ban text-danger"></i></a></li>
-                                            @endif
+                                    <?php
+                                        $perm = [];
+                                        foreach ($listas->permissions as $permissao) {
+                                            array_push($perm,$permissao->pivot->permission_id);
+                                        }
+                                    ?>
+                                    @foreach($listas->permissions as $permissao)
+                                        @if($permissao->pivot->model_type)
+                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($permissao->id),base64_encode($permissao->pivot->permission_id),'R'])}}">{{$permissao->name}}<i class="fas fa-check text-success"></i></a></li>
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1)
+                                            <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($listas->id),base64_encode($p->id),'D'])}}">{{$p->name}}<i class="fad fa-ban text-danger"></i></a></li>
                                         @endif
                                     @endforeach
                                 </ul>

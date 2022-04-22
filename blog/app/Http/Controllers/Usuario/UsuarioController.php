@@ -30,6 +30,7 @@ class UsuarioController extends Controller
     {
         $user = Auth::user();
         $id = [];
+        
         $search = request('search');
         $codicao = request('codicao');
         $users = $this->user->listaUser('asc',$search); 

@@ -72,7 +72,7 @@
             <!--</script>-->
                
                                 
-              <h5 class="card-title text-center fs-3 ">Boletim com Tabela <i class="fad fa-table"></i></h5>
+              <h5 class="card-title text-center fs-3 mt-5 mb-5">Boletim com Tabela <i class="fad fa-ballot"></i></h5>
 
               
 
@@ -89,10 +89,10 @@
                         <button type="submit" id="atualizar" disabled class="btn botao d-none">Editar <i class="fad fa-edit"></i></button>
                         <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#teste">
                           Excluir <i class="fad fa-trash"></i>
-                      </button>
-                      <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                      <i class="fad fa-list"></i> Lista
-            </a>
+                        </button>
+                        <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                            <i class="fad fa-list"></i> Lista
+                        </a>
                     <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                   </div>
               </div>
@@ -109,7 +109,7 @@
                     $boletim = 1;
                   }
                 ?>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
                     <input type="text" value="{{$boletim}}" list="listaboletim" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim" >
                     @error('liboletim')
@@ -120,7 +120,7 @@
                 </div>
 
               
-                <div class="col-md-6 input">
+                <div class="col-md-8 input">
                   <label for="tomador" class="form-label">Tomador
                     <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
                   </label>
@@ -148,7 +148,7 @@
 
                 
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <label for="data" class="form-label">Data</label>
                   <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="" id="data">
                     @error('data')
@@ -156,7 +156,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <label for="num__trabalhador" class="form-label">Quantidade de cadastros</label>
                   <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
                   @error('num__trabalhador')

@@ -569,7 +569,7 @@
                         
                         <div class="accordion-body row">
                             
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="data__admissao" class="form-label letter__color">Data de Admissão</label>
                                   <input type="date" class="form-control input fw-bold text-dark  @error('data__admissao') is-invalid @enderror" value="{{old('data__admissao')}}" name="data__admissao" id="data__admissao">
                                   @error('data__admissao')
@@ -577,7 +577,7 @@
                                   @enderror
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="categoria" class="form-label letter__color">Categoria</label>
                                   <input type="text" list="categoria_list" class="form-control input fw-bold text-dark  @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}" maxlength="100" name="categoria__contrato" id="categoria">
                                   @error('categoria__contrato')
@@ -587,7 +587,7 @@
                                   </datalist>
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="cbo" class="form-label letter__color">CBO</label>
                                   <input type="text" list="cbo_list" class="form-control input fw-bold text-dark  @error('cbo') is-invalid @enderror" value="{{old('cbo')}}" name="cbo" id="cbo" value="">
                                   @error('cbo')
@@ -599,7 +599,7 @@
                         
                         
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="ctps" class="form-label letter__color">CTPS</label>
                                   <input type="text" class="form-control input fw-bold text-dark @error('ctps') is-invalid @enderror" maxlength="20" value="{{old('ctps')}}" name="ctps" id="ctps">
                                   @error('ctps')
@@ -607,7 +607,7 @@
                                   @enderror
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="serie__ctps" class="form-label letter__color">Série</label>
                                   <input type="text" class="form-control input fw-bold text-dark @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps">
                                   @error('serie__ctps')
@@ -615,7 +615,7 @@
                                   @enderror
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="uf__ctps" class="form-label letter__color">UF</label>
                                   <input type="text" class="form-control input fw-bold text-dark  @error('uf__ctps') is-invalid @enderror" value="{{old('uf__ctps')}}" name="uf__ctps" maxlength="2" id="uf__ctps">
                                   @error('uf__ctps')
@@ -623,7 +623,7 @@
                                   @enderror
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                               <label for="situacao__contrato" class="form-label letter__color">Situação</label>
                               <select name="situacao__contrato" id="situacao__contrato" class="form-select fw-bold text-dark">
                                     <option selected>Ativo</option>
@@ -633,7 +633,7 @@
                               </select>
                             </div>
                         
-                            <div class="col-md-4 mt-2">
+                            <div class="col-md-6 mt-2">
                                   <label for="data__afastamento" class="form-label letter__color">Data de Afastamento</label>
                                   <input type="date" class="form-control input fw-bold text-dark  @error('data__afastamento') is-invalid @enderror" value="{{old('data__afastamento')}}" name="data__afastamento" id="data__afastamento">
                                   @error('data__afastamento')

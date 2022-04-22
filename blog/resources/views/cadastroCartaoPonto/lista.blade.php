@@ -94,7 +94,7 @@
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         <button class="btn">
-                                            <a class="button__editar btn modal-botao" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}" class=""><i class="icon__color fas fa-pen"></i></a>
+                                            <a class="button__editar btn modal-botao" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}"><i class="icon__color fas fa-pen"></i></a>
                                         </button>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
@@ -115,19 +115,20 @@
                             <tfoot>
                                 <tr class="">
                                     <td colspan="11">
-                                        @if ($lancamentotabelas->lastPage() > 1)
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination pagination__table pagination-sm">
+                                        {{$lancamentotabelas->links()}}
+                                        <!--@if ($lancamentotabelas->lastPage() > 1)-->
+                                        <!--<nav aria-label="Page navigation example">-->
+                                        <!--    <ul class="pagination pagination__table pagination-sm">-->
     
-                                            @for ($i = 1; $i <= $lancamentotabelas->lastPage(); $i++)
-                                                <li class="page-item {{ ($lancamentotabelas->currentPage() == $i) ? ' active' : ''     }}">
-                                                    <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>
-                                                </li>
-                                                @endfor
+                                        <!--    @for ($i = 1; $i <= $lancamentotabelas->lastPage(); $i++)-->
+                                        <!--        <li class="page-item {{ ($lancamentotabelas->currentPage() == $i) ? ' active' : ''     }}">-->
+                                        <!--            <a class="page-link modal-botao" href="{{ $lancamentotabelas->url($i) }}">{{ $i }}</a>-->
+                                        <!--        </li>-->
+                                        <!--        @endfor-->
     
-                                            </ul>
-                                        </nav>
-                                        @endif
+                                        <!--    </ul>-->
+                                        <!--</nav>-->
+                                        <!--@endif-->
                                     </td>
                                 </tr>
                             </tfoot>

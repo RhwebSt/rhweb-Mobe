@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Editar Boletim com tabela')
+@section('titulo','Rhweb - Editar Boletim com Tabela')
 @section('conteine')
 <div class="card-body">
          @if(session('success'))
@@ -54,26 +54,26 @@
                 @enderror
                
                                 
-              <h5 class="card-title text-center fs-3 ">Editar Boletim com Tabela <i class="fas fa-money-check-alt"></i></h5>
+              <h5 class="card-title text-center mt-5 mb-5 fs-3 ">Boletim com Tabela <i class="fad fa-ballot"></i></h5>
 
               
 
-                <div class="container">
-              <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.update',$dados->id)}}">
+        <div class="container">
+            <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.update',$dados->id)}}">
                 <input type="hidden" name="lancamento" value="{{$dados->id}}">
-              @csrf
-              @method('PATCH')
+                @csrf
+                @method('PATCH')
               
                 <div class="row">
-                  <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                        <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                        <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                          <i class="fa-solid fa-list"></i> Lista
-                        </button>
-                        <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao d-none">Boletim <i class="fad fa-door-open"></i></a>
-                        <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
-                  </div>
-              </div>
+                      <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+                            <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                            <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                              <i class="fad fa-list"></i> Lista
+                            </button>
+                            <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao d-none">Boletim <i class="fad fa-door-open"></i></a>
+                            <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                      </div>
+                </div>
 
               
                 <?php
@@ -83,7 +83,7 @@
                     $boletim = 1;
                   }
                 ?>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
                     <input type="text" value="{{$dados->liboletim}}" list="listaboletim" class="form-control fw-bold @error('liboletim') is-invalid @enderror" name="liboletim" id="num__boletim" Readonly>
                     @error('liboletim')
@@ -94,7 +94,7 @@
                 </div>
 
               
-                <div class="col-md-6 input">
+                <div class="col-md-8 input">
                   <label for="tomador" class="form-label">Tomador <i class="fas fa-lock"></i></label>
                   <input type="text" list="datalistOptions" class=" fw-bold form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="{{$dados->tsnome}}" id="nome__completo" Readonly>
                   <datalist id="datalistOptions">
@@ -116,11 +116,11 @@
                     @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
-                  </div>
+                </div>
 
                 
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <label for="data" class="form-label">Data</label>
                   <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="{{$dados->lsdata}}" id="data">
                     @error('data')
@@ -128,7 +128,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6">
                   <label for="num__trabalhador" class="form-label">Quantidade de cadastros</label>
                   <input type="number" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="{{$dados->lsnumero}}" id="num__trabalhador">
                   @error('num__trabalhador')
@@ -136,71 +136,20 @@
                     @enderror
                 </div>
                 
-                    <div class="col-md-3 d-none">
-                        <label for="feriado" class="form-label">Feriado</label>
-                        <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
-                          <option>Sim</option>
-                          <option selected>Não</option>
-                        </select>
-                    </div>
+                <div class="col-md-3 d-none">
+                    <label for="feriado" class="form-label">Feriado</label>
+                    <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
+                      <option>Sim</option>
+                      <option selected>Não</option>
+                    </select>
+                </div>
                     
                     
-                    </form>
-                    @include('tabCartaoPonto.lista')
-                <!-- <div class="table-responsive-xxl">
-                            <table class="table border-bottom text-white mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                <thead>
-                                    <th class="col text-center border-top border-start text-nowrap" style="width:115px;">Nº do Boletim</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 400px;">Nome Tomador</th>
-                                    <th class="col text-center border-top text-nowrap " style="width:200px">Data</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:200px">Quantidade de Cadastro</th>
-                                </thead>
-                                <tbody style="background-color: #081049; color: white;">
-                                   
-                                @if( count($lancamentotabelas) > 0)
-                                   @foreach($lancamentotabelas as $lancamentotabela)
-                                    <tr class="bodyTabela">               
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 300px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis;">
-                                                <a>{{$lancamentotabela->tsnome}}</a>
-                                            </button>
-                                        </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap "style="width:200px">
-                                          <?php
-                                            //$data = explode('-',$lancamentotabela->lsdata)
-                                          ?>
-                                          
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
-                                        
-                                    </tr>
-                                    @endforeach
-                                @else
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endif
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                      <td colspan="8" class="text-end">
-                                          {{$lancamentotabelas->links()}}
-                                      </td>
-                                  </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                
-                
-                 
-              </div> -->
+            </form>
+            @include('tabCartaoPonto.lista')
 
-            </div>
+
+        </div>
             <script>
             $('.modal-botao').click(function() {
                 localStorage.setItem("modal", "enabled");

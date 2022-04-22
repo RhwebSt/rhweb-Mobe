@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="{{url('/css/administrador/usuario/indexLoginUsuario.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/usuario/CadastroEmpresa.css')}}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+        <!-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
@@ -39,7 +40,9 @@
     </script>
     <body>
 <main>
-            
+            <div >
+
+          
         <head>
             <nav class="navbar nav__bar">
                 <div class="container-fluid">
@@ -209,11 +212,11 @@
                     </div>
                 </div>
             </section>
-            <!--fim da side bar da notificação-->
         </head>
         @yield('conteine')
+        </div>
 </main>
-
+<!-- <script src="{{asset('js/app.js')}}"></script> -->
 <!--<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
 <!--<script src="{{url('/js/inss.js')}}"></script> -->
 <script src="{{url('/js/banco/index.js')}}"></script>

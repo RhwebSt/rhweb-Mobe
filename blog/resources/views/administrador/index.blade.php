@@ -4,6 +4,7 @@
 
 <div class="container">
     <section class="section__select">
+        <example-component></example-component>
         <div class="d-flex flex-row justify-content-end">
             {{-- inicio da escolha da data, mes ou semana que a pessoa quer os dados --}}
             <div class="dropdown">
@@ -44,7 +45,21 @@
                     <div class="card-body card__body d-flex justify-content-between align-items-center">
                         <div>
                             <p class="texto__card--usuario">Bloqueados</p>
-                            <p class="texto__card--usuario--valor">{{$quantuserbloqueador}}</p>
+
+                            <p class="texto__card--usuario--valor">
+                                <?php
+                                $bloqueador = 0;
+                                foreach ($quantuserbloqueador as $usuario) {
+                                    foreach ($usuario->permissions as $permissao) {
+                                        if (!$permissao->pivot->model_type) {
+                                            $bloqueador += 1;
+                                        }
+                                    }
+                                }
+                                ?>
+
+                                {{$bloqueador}}
+                            </p>
                         </div>
 
                         <div class="icone__card--usuario">
@@ -170,7 +185,7 @@
         </div>
     </section>
 
-    
+
 </div>
 <script src="{{url('/js/dashboard.js')}}"></script>
 @stop

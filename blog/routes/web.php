@@ -34,7 +34,7 @@ Route::get('esqueci/senha','Senha\\SenhaController@index')->name('esqueci.senha.
 Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name('error.index');
 
 
-Route::group(['middleware' => ['permission:user','autenticacao']], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('relatorioboletimtabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');

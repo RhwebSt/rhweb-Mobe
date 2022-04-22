@@ -59,6 +59,7 @@
                         
                         <div class="col-md-8 mt-3 d-flex justify-content-start mb-3">
                             <a href="{{route('administrador')}}" class="btn btn__voltar-gerador align-self-start mt-2 mb-2"><i class="fad fa-arrow-left"></i> Voltar</a>
+                            <a href="{{route('administrador')}}" class="btn btn__voltar-gerador align-self-start mt-2 mb-2"><i class="fad fa-arrow-left"></i> Lista</a>
                         </div>
                         
                         <h1 class="text-center fs-5 text-white mt-2 mb-2" style="font-size:14px">Gerador de Acesso <i class="fad fa-door-open"></i></h1>

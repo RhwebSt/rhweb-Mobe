@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
 class Empresa extends Model
 {
     protected $fillable = [
-        'esnome', 'escnpj', 'escpf', 'esfoto', 'estelefone', 'esdataregitro', 'esresponsavel', 'esemail', 'esseguro', 'escnae', 'escondicaosindicato', 'esretemferias', 'essindicalizado', 'escodigomunicipio', 'user'
+        'esnome', 'escnpj', 'escpf', 'esfoto', 'estelefone', 'esdataregitro', 'esresponsavel', 'esemail', 'esseguro', 'escnae', 'escondicaosindicato', 'esretemferias', 'essindicalizado', 'escodigomunicipio'
     ];
     public function cadastro($dados)
     {
@@ -30,6 +29,11 @@ class Empresa extends Model
 
         ]);
     }
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+   
     public function buscaUnidadeEmpresa($id)
     {
         return DB::table('empresas')
@@ -122,49 +126,26 @@ class Empresa extends Model
     {
         return Empresa::select('id', 'esnome', 'escnpj', 'esresponsavel', 'estelefone')->where(function ($query) use ($id) {
             $user = auth()->user();
-            $query->where([
-                ['empresas.esnome', 'like', '%' . $id . '%'],
-                ['empresas.id', $user->empresa]
-            ])->orWhere([
-                ['empresas.escnpj', 'like', '%' . $id . '%'],
-                ['empresas.id', $user->empresa]
-            ])->orWhere([
-                ['empresas.escnae', 'like', '%' . $id . '%'],
-                ['empresas.id', $user->empresa]
-            ])->orWhere([
-                ['empresas.escodigomunicipio', 'like', '%' . $id . '%'],
-                ['empresas.id', $user->empresa]
-            ])
-                ->orWhere([
-                    ['empresas.id', $id],
-                    ['empresas.id', $user->empresa]
-                ]);
-            // if ($user->hasPermissionTo('admin')) {
-            //     $query->where('empresas.esnome','like','%'.$id.'%')
-            //     ->orWhere('empresas.escnpj','like','%'.$id.'%')
-            //     ->orWhere('empresas.escnae','like','%'.$id.'%')
-            //     ->orWhere('empresas.escodigomunicipio','like','%'.$id.'%')
-            //     ->orWhere('empresas.id',$id);
-            // }else{
-            //     $query->where([
-            //         ['empresas.esnome','like','%'.$id.'%'],
-            //         ['empresas.id', $user->empresa]
-            //     ])->orWhere([
-            //         ['empresas.escnpj','like','%'.$id.'%'],
-            //         ['empresas.id', $user->empresa]
-            //     ])->orWhere([
-            //         ['empresas.escnae','like','%'.$id.'%'],
-            //         ['empresas.id', $user->empresa]
-            //     ])->orWhere([
-            //         ['empresas.escodigomunicipio','like','%'.$id.'%'],
-            //         ['empresas.id', $user->empresa]
-            //     ])
-            //     ->orWhere([
-            //         ['empresas.id',$id],
-            //         ['empresas.id', $user->empresa] 
-            //     ]);
-            // }
-        })
+                if ($id) {
+                    $query->where([
+                        ['empresas.esnome', 'like', '%' . $id . '%'],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escnpj', 'like', '%' . $id . '%'],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escnae', 'like', '%' . $id . '%'],
+                        ['empresas.id', $user->empresa]
+                    ])->orWhere([
+                        ['empresas.escodigomunicipio', 'like', '%' . $id . '%'],
+                        ['empresas.id', $user->empresa]
+                    ])
+                    ->orWhere([
+                            ['empresas.id', $id],
+                            ['empresas.id', $user->empresa]
+                    ]);
+                }
+            })
             ->orderBy('empresas.esnome', 'asc')
             ->distinct()
             ->limit(100)

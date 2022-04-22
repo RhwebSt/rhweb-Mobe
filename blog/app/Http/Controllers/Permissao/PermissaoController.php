@@ -16,17 +16,22 @@ class PermissaoController extends Controller
     {
         $id = base64_decode($id);
         $permisao = base64_decode($permisao);
+        
         switch ($condicao) {
             case 'D':
                     $permissao = $this->user->givePermissionTos($id,$permisao);
                     if ($permissao) {
                         return redirect()->back()->withSuccess('Permissão consedida com sucesso.');
+                    }else{
+                        return redirect()->back()->withSuccess('Não foi porssivél consedida permissão.');
                     }
                 break;
             case 'R':
                     $permissao = $this->user->revokePermissionTo($id,$permisao);
                     if ($permissao) {
                         return redirect()->back()->withSuccess('Permissão revogada com sucesso.');
+                    }else{
+                        return redirect()->back()->withSuccess('Não foi porssivél revogada permissão.');
                     }
                 break;
             default:
