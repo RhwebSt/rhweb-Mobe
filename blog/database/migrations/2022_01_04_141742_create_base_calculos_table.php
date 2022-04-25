@@ -27,12 +27,12 @@ class CreateBaseCalculosTable extends Migration
             $table->float('bivalorliquido',8,2)->nullable();
             $table->float('bivalorvencimento',8,2)->nullable();
             $table->float('bivalordesconto',8,2)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
-            $table->integer('folhar')->unsigned()->nullable();
-            $table->foreign('folhar')->references('id')->on('folhars');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
+            $table->unsignedInteger('folhar_id')->unsigned()->nullable();
+            $table->foreign('folhar_id')->references('id')->on('folhars')->onDelete('cascade');
             $table->timestamps();
         });
     }

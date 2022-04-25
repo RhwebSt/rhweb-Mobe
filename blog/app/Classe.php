@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\DB;
 class Classe extends Model
 {
     protected $fillable = [
-        'cscodigo', 'csdescricao', 'user'
+        'cscodigo', 'csdescricao', 'user_id'
     ];
     public function cadastro($dados)
     {
        return Classe::create([
             'cscodigo'=>$dados['codigo__categoria'],
             'csdescricao'=>$dados['descricao__categoria'],
-            'user'=>$dados['user']
+            'user_id'=>$dados['user']
         ]);
     }
     public function buscaListaCategoria($id,$condicao)
     {
         return DB::table('classes')
-        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes')
-        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes')
+        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes_id')
+        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes_id')
         ->select(
             'classes.id',
             'classes.cscodigo as codigo',
@@ -43,8 +43,8 @@ class Classe extends Model
     public function lista()
     {
         return DB::table('classes')
-        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes')
-        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes')
+        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes_id')
+        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes_id')
         ->select(
             'classes.id',
             'classes.cscodigo as codigo',
@@ -58,8 +58,8 @@ class Classe extends Model
     public function editar($id)
     {
         return DB::table('classes')
-        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes')
-        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes')
+        ->join('classe_primeiras', 'classes.id', '=', 'classe_primeiras.classes_id')
+        ->join('classe_segundas', 'classes.id', '=', 'classe_segundas.classes_id')
         ->select(
             'classes.id',
             'classes.cscodigo as codigo',

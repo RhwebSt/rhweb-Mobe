@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Taxa extends Model
 {
     protected $fillable = [
-        'tftaxaadm','tfdefaltor','tfdas','tftaxafed','tomador'
+        'tftaxaadm','tfdefaltor','tfdas','tftaxafed','tomador_id'
     ];
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
         return Taxa::create([
@@ -17,12 +21,12 @@ class Taxa extends Model
             'tfdefaltor'=>$dados['deflator']?str_replace(",",".",str_replace(",",".",$dados['deflator'])):0,
             'tfdas'=>$dados['das']?str_replace(",",".",str_replace(",",".",$dados['das'])):0,
             'tftaxafed'=>$dados['taxa__fed']?str_replace(",",".",str_replace(",",".",$dados['taxa__fed'])):0,
-            'tomador'=>$dados['tomador']
+            'tomador_id'=>$dados['tomador']
         ]);
     }
     public function editar($dados,$id)
     {
-      return Taxa::where('tomador', $id)
+      return Taxa::where('tomador_id', $id)
       ->update([
         'tftaxaadm'=>str_replace(",",".",str_replace(",",".",$dados['taxa_adm'])),
             // 'tfbenef'=>str_replace(",",".",$dados['caixa_benef']),
@@ -33,6 +37,6 @@ class Taxa extends Model
     }
     public function deletar($id)
     {
-      return Taxa::where('tomador', $id)->delete();
+      return Taxa::where('tomador_id', $id)->delete();
     }
 }

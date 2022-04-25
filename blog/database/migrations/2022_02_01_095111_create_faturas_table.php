@@ -20,10 +20,10 @@ class CreateFaturasTable extends Migration
             $table->char('fsfinal', 15)->nullable();
             $table->char('fsvencimento', 15)->nullable();
             $table->char('fscompetencia', 15)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

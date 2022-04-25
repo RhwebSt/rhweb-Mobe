@@ -20,8 +20,8 @@ class CreateNascimentosTable extends Migration
             $table->char('nsnaturalidade', 60)->nullable();
             $table->char('nsnacionalidade', 60)->nullable();
             $table->char('nsraca', 15)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

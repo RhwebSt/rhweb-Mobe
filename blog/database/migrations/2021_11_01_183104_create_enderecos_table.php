@@ -24,14 +24,14 @@ class CreateEnderecosTable extends Migration
             $table->char('esuf', 2)->nullable();
             $table->char('escomplemento', 50)->nullable();
             $table->char('esnum', 10)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
-            $table->integer('pessoais')->unsigned()->nullable();
-            $table->foreign('pessoais')->references('id')->on('pessoais');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
+            $table->integer('pessoais_id')->unsigned()->nullable();
+            $table->foreign('pessoais_id')->references('id')->on('pessoais')->onDelete('cascade');
             $table->timestamps();
         });
     }

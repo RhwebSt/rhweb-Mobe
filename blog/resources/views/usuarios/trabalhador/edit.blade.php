@@ -59,14 +59,14 @@
               @method('PATCH')
               <h5 class="card-title text-center mt-5 fs-3 ">Cadastro de Usuários</h5>
                 
-                <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa}}">
+                <input type="hidden" name="empresa" id="idempresa" value="{{$user->empresa->id}}">
                 <div class="row">
                       <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                           <button type="submit" id="atualizar"  class="btn btn botao "><i class="fad fa-sync-alt"></i> Atualizar</button>
                           <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
                             <i class="fad fa-list"></i> Lista
                         </a>
-                          <a class="btn btn botao " href="{{route('user.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
+                          <a class="btn btn botao " href="{{route('usuario.create')}}" role="button" ><i class="fad fa-edit"></i> Sair </a>
                       </div>
                 </div>
                 <div class="col-md-3">
@@ -101,7 +101,7 @@
               
               
               </form> 
-              @include('usuarios.lista');
+              @include('usuarios.trabalhador.lista');
             </div> 
             <script>
         $(document).ready(function(){
@@ -119,29 +119,20 @@
               }
           }
           verficarModal()
-          $( "#pesquisa" ).on('keyup focus',function() {
-                var dados = 0;
-                if ($(this).val()) {
-                  dados = $(this).val();
+          $.ajax({
+              url: "{{route('usuario.pesquisa.admin')}}", 
+              type: 'get',
+              success: function(data) {
+              
+                let nome = '';
+                if (data.length >= 1) {
+                    data.forEach(element => {
+                      nome += `<option value="${element.name}">`
+                    });
+                    $('#listapesquisa').html(nome)    
                 }
-                $.ajax({
-                      url: "{{url('user/pesquisa')}}/"+dados, 
-                      type: 'get',
-                      success: function(data) {
-                      // $('#mensagemtomador').text(' ')
-                      // $( "#usuario" ).removeClass('is-invalid')
-                        let nome = '';
-                        if (data.length >= 1) {
-                            data.forEach(element => {
-                              nome += `<option value="${element.name}">`
-                            });
-                            $('#listapesquisa').html(nome)    
-                        }
-                        // if(data.length === 1 && dados.length >= 2){
-                        //   usuario(dados)
-                        // }
-                      }
-                });
+                
+              }
             });
             function usuario(dados) {
               $.ajax({

@@ -20,8 +20,8 @@ class CreateDocumentosTable extends Migration
             $table->char('dsuf', 2)->nullable();
             $table->char('dsctps', 20)->nullable();
             $table->char('dspis', 20)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

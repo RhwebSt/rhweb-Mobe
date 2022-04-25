@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->integer('contador')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->unsignedInteger('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

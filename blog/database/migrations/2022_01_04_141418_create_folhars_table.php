@@ -19,8 +19,8 @@ class CreateFolharsTable extends Migration
             $table->char('fscompetencia', 10)->nullable();
             $table->char('fsinicio', 10)->nullable();
             $table->char('fsfinal', 10)->nullable();
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

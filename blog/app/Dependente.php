@@ -9,6 +9,10 @@ class Dependente extends Model
     protected $fillable = [
         'dsnome','dstipo','dsdata','dscpf','dsirrf','dssexo','dssf','trabalhador'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
        return Dependente::create([
@@ -19,34 +23,34 @@ class Dependente extends Model
             'dscpf'=>$dados['dscpf'],
             'dsirrf'=>$dados['irrf'],
             'dssf'=>$dados['sf'],
-            'trabalhador'=>$dados['trabalhador'],
+            'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
     public function verificaCpf($dados)
     {
         return Dependente::where([
-            ['trabalhador', $dados['trabalhador']],
+            ['trabalhador_id', $dados['trabalhador']],
             ['dscpf',$dados['dscpf']]
         ])->count();
     }
     public function quantidadeDependente($dados)
     {
-        return Dependente::where('trabalhador', $dados['trabalhador'])->count();
+        return Dependente::where('trabalhador_id', $dados['trabalhador'])->count();
     }
     public function buscaListaDepedente($id)
     {
-        return Dependente::where('trabalhador', $id)->get();
+        return Dependente::where('trabalhador_id', $id)->get();
     }
     public function buscaListaDepedenteInt($id)
     {
         return Dependente::select(DB::raw('count(*) as depedentes,trabalhador'))
         ->groupBy('trabalhador')
-        ->whereIn('trabalhador', $id)
+        ->whereIn('trabalhador_id', $id)
         ->get();
     }
     public function buscaQuantidadeDepedente($id)
     {
-        return Dependente::where('trabalhador', $id)->count();
+        return Dependente::where('trabalhador_id', $id)->count();
     }
     public function buscaUnidadeDepedente($id)
     {
@@ -71,6 +75,6 @@ class Dependente extends Model
     }
     public function deletarTrabalhador($id)
     {
-        return Dependente::where('trabalhador', $id)->delete();
+        return Dependente::where('trabalhador_id', $id)->delete();
     }
 }

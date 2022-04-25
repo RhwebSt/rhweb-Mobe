@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FaturaRubrica extends Model
 {
     protected $fillable = [
-        'rsitem', 'rsdescricao', 'riunidade', 'ripreco', 'ritotal', 'fatura'
+        'rsitem', 'rsdescricao', 'riunidade', 'ripreco', 'ritotal', 'fatura_id'
     ];
     public function cadastro($dados)
     {
@@ -18,17 +18,17 @@ class FaturaRubrica extends Model
             'riunidade'=>$dados['unidade'],
             'ripreco'=>$dados['preco'],
             'ritotal'=>$dados['total'],
-            'fatura'=>$dados['fatura']
+            'fatura_id'=>$dados['fatura']
         ]);
     }
     public function buscaRelatorio($fatura)
     {
-        return FaturaRubrica::where('fatura',$fatura)
+        return FaturaRubrica::where('fatura_id',$fatura)
         ->get();
 
     }
     public function deletarFatura($id)
     {
-        return FaturaRubrica::where('fatura',$id)->delete();
+        return FaturaRubrica::where('fatura_id',$id)->delete();
     }
 }

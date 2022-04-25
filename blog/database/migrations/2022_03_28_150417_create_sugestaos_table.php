@@ -17,8 +17,8 @@ class CreateSugestaosTable extends Migration
             $table->increments('id');
             $table->char('ssdescricao', 60)->nullable();
             $table->char('ssicon', 10)->nullable();
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

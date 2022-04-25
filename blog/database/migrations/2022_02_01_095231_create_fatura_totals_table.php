@@ -17,8 +17,8 @@ class CreateFaturaTotalsTable extends Migration
             $table->increments('id');
             $table->char('fstitulo', 50)->nullable();
             $table->float('fivalor',8,2)->nullable();
-            $table->integer('fatura')->unsigned()->nullable();
-            $table->foreign('fatura')->references('id')->on('faturas');
+            $table->unsignedInteger('fatura_id')->unsigned()->nullable();
+            $table->foreign('fatura_id')->references('id')->on('faturas')->onDelete('cascade');
             $table->timestamps();
         });
     }

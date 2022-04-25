@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Fatura extends Model
 {
     protected $fillable = [
-        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia', 'tomador', 'empresa'
+        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia', 'tomador_id', 'empresa_id'
     ];
     public function cadastro($dados)
     {
@@ -17,18 +17,18 @@ class Fatura extends Model
             'fsfinal'=>$dados['ano_final'],
             'fsvencimento'=>$dados['vencimento'],
             'fscompetencia'=>$dados['competencia'],
-            'tomador'=>$dados['tomador'],
-            'empresa'=>$dados['empresa'],
+            'tomador_id'=>$dados['tomador'],
+            'empresa_id'=>$dados['empresa'],
         ]);
     }
     public function buscaListaFatura()
     {
         return DB::table('tomadors')
-        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador')
+        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador_id')
         ->select(
             'tomadors.tsmatricula',
             'tomadors.tsnome',
-            'faturas.tomador',
+            'faturas.tomador_id',
             'faturas.fsnumero',
             'faturas.fsinicio',
             'faturas.fsfinal',
@@ -36,7 +36,7 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            $query->where('faturas.empresa', $user->empresa);
+            $query->where('faturas.empresa_id', $user->empresa);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('faturas.id','>',0);
             // }else{
@@ -49,11 +49,11 @@ class Fatura extends Model
     public function buscaListaFaturaOrdem($condicao)
     {
         return DB::table('tomadors')
-        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador')
+        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador_id')
         ->select(
             'tomadors.tsmatricula',
             'tomadors.tsnome',
-            'faturas.tomador',
+            'faturas.tomador_id',
             'faturas.fsnumero',
             'faturas.fsinicio',
             'faturas.fsfinal',
@@ -61,7 +61,7 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            $query->where('faturas.empresa', $user->empresa);
+            $query->where('faturas.empresa_id', $user->empresa);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('faturas.id','>',0);
             // }else{
@@ -74,11 +74,11 @@ class Fatura extends Model
     public function filtroPesquisa($dados)
     {
         return DB::table('tomadors')
-        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador')
+        ->join('faturas', 'tomadors.id', '=', 'faturas.tomador_id')
         ->select(
             'tomadors.tsmatricula',
             'tomadors.tsnome',
-            'faturas.tomador',
+            'faturas.tomador_id',
             'faturas.fsnumero',
             'faturas.fsinicio',
             'faturas.fsfinal',
@@ -87,7 +87,7 @@ class Fatura extends Model
         ->where(function($query) use($dados){
             $user = auth()->user();
             $query->where([
-                ['faturas.empresa', $user->empresa],
+                ['faturas.empresa_id', $user->empresa],
                 ['tomadors.tsnome',$dados['pesquisa']]
             ])
             ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
@@ -113,8 +113,8 @@ class Fatura extends Model
         return Fatura::where(function($query) use ($tomador,$inicio,$final){
             $user = auth()->user();
             $query->where([
-                ['faturas.tomador',$tomador],
-                ['faturas.empresa', $user->empresa]
+                ['faturas.tomador_id',$tomador],
+                ['faturas.empresa_id', $user->empresa]
             ])->whereDate('faturas.fsfinal', $final);
 
             // if ($user->hasPermissionTo('admin')) {

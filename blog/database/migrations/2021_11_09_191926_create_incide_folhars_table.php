@@ -19,8 +19,8 @@ class CreateIncideFolharsTable extends Migration
             $table->float('instransporte',8,2)->nullable();
             $table->integer('instipotrans')->nullable();
             $table->integer('instipoali')->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

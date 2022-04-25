@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Folhar extends Model
 {
     protected $fillable = [
-        'fscodigo','fsinicio','fsfinal','fscompetencia','empresa','created_at'
+        'fscodigo','fsinicio','fsfinal','fscompetencia','empresa_id','created_at'
     ];
     public function cadastro($dados,$empresa){
         return Folhar::create([
@@ -15,7 +15,7 @@ class Folhar extends Model
             'fsinicio'=>$dados['inicio'],
             'fsfinal'=>$dados['final'],
             'fscompetencia'=>$dados['competencia'],
-            'empresa'=>$empresa
+            'empresa_id'=>$empresa
         ]);
     }
     public function buscaUnidadeFolhar($id)
@@ -24,14 +24,14 @@ class Folhar extends Model
     }
     public function buscaUltimaoRegistroFolhar($empresa)
     {
-        return Folhar::orderBy('created_at', 'desc')->where('empresa',$empresa)->first();
+        return Folhar::orderBy('created_at', 'desc')->where('empresa_id',$empresa)->first();
     }
     public function verificaFolhar($datainicio,$datafinal)
     {
         $user = auth()->user();
         return Folhar::whereDate('fsinicio', $datainicio) 
         ->whereDate('fsfinal', $datafinal)
-        ->where('empresa',$user->empresa)
+        ->where('empresa_id',$user->empresa)
         ->count();
     }
 
@@ -40,16 +40,16 @@ class Folhar extends Model
         $user = auth()->user();
         return Folhar::whereDate('fsinicio', $datainicio) 
         ->whereDate('fsfinal', $datafinal)
-        ->where('empresa',$user->empresa)
+        ->where('empresa_id',$user->empresa)
         ->first();
     }
     public function buscaListaFolhar($empresa)
     {
-        return Folhar::where('empresa',$empresa)->get();
+        return Folhar::where('empresa_id',$empresa)->get();
     }
     public function buscaListaOrdem($empresa,$condicao)
     {
-        return Folhar::where('empresa',$empresa)
+        return Folhar::where('empresa_id',$empresa)
         ->orderBy('fscodigo', $condicao)
         ->orderBy('fsfinal', $condicao)
         ->get();
@@ -57,8 +57,8 @@ class Folhar extends Model
     public function filtraListaTomador($dados,$empresa)
     {
         return DB::table('folhars')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa_id')
         ->select('folhars.id','folhars.fscodigo','folhars.fsinicio','folhars.fsfinal')
         ->where([
             ['tomadors.tsnome','like','%'.$dados['pesquisa'].'%'],
@@ -72,8 +72,8 @@ class Folhar extends Model
     public function filtraListaGeral($dados,$empresa)
     {
         return DB::table('folhars')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('tomadors', 'empresas.id', '=', 'tomadors.empresa_id')
         ->select('folhars.id','folhars.fscodigo','folhars.fsinicio','folhars.fsfinal')
         ->where([
             ['folhars.fscodigo',$dados['pesquisa']],
@@ -87,11 +87,11 @@ class Folhar extends Model
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
-        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
-        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador_id')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador_id')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
         ->select(
             'folhars.fsinicio',
             'folhars.fsfinal',
@@ -125,9 +125,9 @@ class Folhar extends Model
             $user = auth()->user();
             $query->where([
                 ['folhars.id',$id],
-                ['base_calculos.tomador',null],
+                ['base_calculos.tomador_id',null],
                 ['base_calculos.bivalorliquido','>',0],
-                ['trabalhadors.empresa', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -151,12 +151,12 @@ class Folhar extends Model
     public function buscaTrabalhadorUnidade($id,$trabalhador,$tomador = null)
     {
         return DB::table('folhars')
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
-        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
-        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador_id')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador_id')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
         ->select(
             'folhars.fsinicio', 
             'folhars.fsfinal',
@@ -191,8 +191,8 @@ class Folhar extends Model
             $query->where([
                 ['folhars.id',$id],
                 ['trabalhadors.tsnome',$trabalhador],
-                ['base_calculos.tomador',$tomador],
-                ['trabalhadors.empresa', $user->empresa]
+                ['base_calculos.tomador_id',$tomador],
+                ['trabalhadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -217,13 +217,13 @@ class Folhar extends Model
     public function buscaTrabalhadorLista($id,$tomador)
     {
         return DB::table('folhars')
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
         ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador')
-        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
-        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador')
-        ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador_id')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador_id')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
+        ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador_id')
         ->select(
             'folhars.fsinicio', 
             'folhars.fsfinal',
@@ -263,8 +263,8 @@ class Folhar extends Model
             $query->where([
                 ['folhars.id',$id],
                 // ['trabalhadors.tsnome',$tomador],
-                ['base_calculos.tomador',$tomador],
-                ['trabalhadors.empresa', $user->empresa]
+                ['base_calculos.tomador_id',$tomador],
+                ['trabalhadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -288,10 +288,10 @@ class Folhar extends Model
     public function buscaListaBancos($id,$banco,$empresas)
     {
         return DB::table('folhars')
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador_id')
         ->select(
             'folhars.fsinicio', 
             'folhars.fsfinal',
@@ -324,7 +324,7 @@ class Folhar extends Model
             $query->where([
                 ['folhars.id',$id],
                 ['bancarios.bsbanco',$banco],
-                ['trabalhadors.empresa', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -346,10 +346,10 @@ class Folhar extends Model
     public function buscaListaRublica($dados)
     {
         return DB::table('folhars')
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('empresas', 'empresas.id', '=', 'folhars.empresa')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+        ->join('empresas', 'empresas.id', '=', 'folhars.empresa_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo_id')
         ->select(
             'folhars.fscodigo',
             'folhars.fsinicio', 
@@ -369,8 +369,8 @@ class Folhar extends Model
             $query->where([
                 ['folhars.id',$dados['folharublica']],
                 ['valor_calculos.vsdescricao',$dados['rublica']],
-                ['trabalhadors.empresa', $dados['empresarublica']],
-                ['base_calculos.tomador',null]
+                ['trabalhadors.empresa_id', $dados['empresarublica']],
+                ['base_calculos.tomador_id',null]
             ])
             ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']]);
 
@@ -397,7 +397,7 @@ class Folhar extends Model
     public function buscaFolhaAnalitica($id) 
     {
         return DB::table('empresas')
-        ->join('folhars', 'empresas.id', '=', 'folhars.empresa')
+        ->join('folhars', 'empresas.id', '=', 'folhars.empresa_id')
         ->select('folhars.*','empresas.esnome')
         ->where('folhars.id',$id)
         ->first();
@@ -405,12 +405,12 @@ class Folhar extends Model
     public function buscaFolhaAnaliticaTomador($id,$tomador) 
     {
         return DB::table('tomadors')
-        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador')
-        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador_id')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar_id')
         ->select('folhars.*','tomadors.tsnome')
         ->where([
             ['folhars.id',$id],
-            ['base_calculos.tomador',$tomador]
+            ['base_calculos.tomador_id',$tomador]
         ])
 
         ->first();
@@ -428,8 +428,8 @@ class Folhar extends Model
     public function listaTrabalhadorFolhar($id)
     {
         return DB::table('folhars')
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
         ->select(
             'folhars.fscodigo',
             'folhars.fsinicio', 

@@ -17,8 +17,8 @@ class CreateClassesTable extends Migration
             $table->increments('id');
             $table->integer('cscodigo')->nullable();
             $table->char('csdescricao', 100)->nullable();
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+            $table->unsignedInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

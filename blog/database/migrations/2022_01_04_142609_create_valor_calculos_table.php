@@ -20,10 +20,10 @@ class CreateValorCalculosTable extends Migration
             $table->float('vireferencia',8,2)->nullable();
             $table->float('vivencimento',8,2)->nullable();
             $table->float('videscinto',8,2)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
-            $table->integer('basecalculo')->unsigned()->nullable();
-            $table->foreign('basecalculo')->references('id')->on('base_calculos');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
+            $table->unsignedInteger('basecalculo_id')->unsigned()->nullable();
+            $table->foreign('basecalculo_id')->references('id')->on('base_calculos')->onDelete('cascade');
             $table->timestamps();
         });
     }

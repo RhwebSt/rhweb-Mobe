@@ -20,10 +20,10 @@ class CreateLancamentotabelasTable extends Migration
             $table->char('lsnumero', 11)->nullable();
             $table->char('lsstatus', 2)->nullable();
             $table->char('lsferiado', 10)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

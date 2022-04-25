@@ -226,6 +226,7 @@
                                 </div>
                                
                             </div>
+                            <input type="hidden" name="quantidade" value="1" id="quantidade">
                     @endif
                    
                 </div>

@@ -8,8 +8,40 @@ use Illuminate\Support\Facades\DB;
 class Tomador extends Model
 {
     protected $fillable = [
-        'tsnome','tsfantasia','tsstatusfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','empresa'
+        'tsnome','tsfantasia','tsstatusfantasia','tscnpj','tsmatricula','tstipo','tssimples','tstelefone','empresa_id'
     ];
+    public function empresa()
+    {
+        return $this->hasMany(Empresa::class);
+    }
+    public function incidefolhar()
+    {
+        return $this->hasMany(IncideFolhar::class);
+    }
+    public function endereco()
+    {
+        return $this->hasMany(Endereco::class);
+    }
+    public function taxa()
+    {
+        return $this->hasMany(Taxa::class);
+    }
+    public function bancario()
+    {
+        return $this->hasMany(Bancario::class);
+    }
+    public function cartaoponto()
+    {
+        return $this->hasMany(CartaoPonto::class);
+    }
+    public function parametrosefip()
+    {
+        return $this->hasMany(Parametrosefip::class);
+    }
+    public function indicefatura()
+    {
+        return $this->hasMany(IndiceFatura::class);
+    }
     public function cadastro($dados)
     {
         
@@ -22,7 +54,7 @@ class Tomador extends Model
             'tssimples'=>$dados['simples'],
             'tstelefone'=>$dados['telefone'],
             'tstipo'=>$dados['tipo'],
-            'empresa'=>$dados['empresa']
+            'empresa_id'=>$dados['empresa']
 
         ]);
     }
@@ -32,13 +64,13 @@ class Tomador extends Model
         $user = auth()->user();
         return Tomador::where([
             ['tscnpj',$dados['cnpj']],
-            ['empresa',$user->empresa]
+            ['empresa_id',$user->empresa]
         ])
         ->count();
     }
     public function buscaListaTomador($tomador)
     {
-        return Tomador::where('empresa',$tomador)->select('id')->get();
+        return Tomador::where('empresa_id',$tomador)->select('id')->get();
     }
     public function buscaListaTomadorPaginate($id,$condicao)
     {
@@ -53,18 +85,18 @@ class Tomador extends Model
             if ($id) {
                 $query->orWhere([
                     ['tomadors.tsnome','like','%'.$id.'%'],
-                    ['tomadors.empresa', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa]
                 ])
                 ->orWhere([
                     ['tomadors.tscnpj','like','%'.$id.'%'],
-                    ['tomadors.empresa', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa]
                     ])
                 ->orWhere([
                     ['tomadors.tsmatricula','like','%'.$id.'%'],
-                    ['tomadors.empresa', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa]
                 ]);
             }else{
-                $query->where('tomadors.empresa', $user->empresa);
+                $query->where('tomadors.empresa_id', $user->empresa);
             }
 
             // if ($user->hasPermissionTo('admin')) {
@@ -105,14 +137,14 @@ class Tomador extends Model
     public function first($id)
     {
        return DB::table('tomadors')
-            ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador')
-            ->join('taxas', 'tomadors.id', '=', 'taxas.tomador')
+            ->join('enderecos', 'tomadors.id', '=', 'enderecos.tomador_id')
+            ->join('taxas', 'tomadors.id', '=', 'taxas.tomador_id')
             // ->join('retencao_faturas', 'tomadors.id', '=', 'retencao_faturas.tomador')
-            ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
-            ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
-            ->join('incide_folhars', 'tomadors.id', '=', 'incide_folhars.tomador')
-            ->join('indice_faturas', 'tomadors.id', '=', 'indice_faturas.tomador')
-            ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
+            ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
+            ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador_id')
+            ->join('incide_folhars', 'tomadors.id', '=', 'incide_folhars.tomador_id')
+            ->join('indice_faturas', 'tomadors.id', '=', 'indice_faturas.tomador_id')
+            ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador_id')
             ->select(
                 
                 'enderecos.*',
@@ -129,15 +161,15 @@ class Tomador extends Model
                 $user = auth()->user();
                 $query->where([
                     ['tsnome',$id],
-                    ['tomadors.empresa', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                 ])
                 ->orWhere([
                     ['tscnpj',$id],
-                    ['tomadors.empresa', $user->empresa],
+                    ['tomadors.empresa_id', $user->empresa_id],
                 ])
                 ->orWhere([
                     ['tomadors.id',$id],
-                    ['tomadors.empresa', $user->empresa],
+                    ['tomadors.empresa_id', $user->empresa_id],
                 ]);
                 // ->orWhere([
                 //     ['tsmatricula',$id],
@@ -174,7 +206,7 @@ class Tomador extends Model
     public function pesquisa($id)
     {
         return DB::table('tomadors')
-        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
         ->select(
             'tomadors.tsnome',
             'tomadors.tsmatricula',
@@ -189,24 +221,24 @@ class Tomador extends Model
             if ($id) {
                 $query->where([
                        ['tsnome','like','%'.$id.'%'],
-                       ['tomadors.empresa', $user->empresa]
+                       ['tomadors.empresa_id', $user->empresa_id]
                    ])
                    ->orWhere([
                        ['tscnpj','like','%'.$id.'%'],
-                       ['tomadors.empresa', $user->empresa],
+                       ['tomadors.empresa_id', $user->empresa_id],
                    ])
                    ->orWhere([
                        ['tomadors.id','like','%'.$id.'%'],
-                       ['tomadors.empresa', $user->empresa],
+                       ['tomadors.empresa_id', $user->empresa_id],
                    ])
                    ->orWhere([
                        ['tsmatricula','like','%'.$id.'%'],
-                       ['tomadors.empresa', $user->empresa],
+                       ['tomadors.empresa_id', $user->empresa_id],
                    ]);
                }else{
                    $query->where([
                        ['tomadors.id','>',$id],
-                       ['tomadors.empresa', $user->empresa]
+                       ['tomadors.empresa_id', $user->empresa_id]
                    ]);
                }
 
@@ -280,13 +312,13 @@ class Tomador extends Model
     public function tomadorBoletim($id)
     {
         return DB::table('tomadors')
-        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa_id')
         ->select('empresas.esnome','tomadors.tsnome')
         ->where(function($query) use ($id){
             $user = auth()->user();
             $query->where([
                 ['tomadors.id',$id],
-                ['tomadors.empresa', $user->empresa]
+                ['tomadors.empresa_id', $user->empresa_id]
             ]);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('tomadors.id',$id);
@@ -304,11 +336,11 @@ class Tomador extends Model
     public function tomadorFatura($tomador,$inicio,$final)
     {
         return DB::table('enderecos')
-        ->join('tomadors', 'tomadors.id', '=', 'enderecos.tomador')
-        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'enderecos.tomador_id')
+        ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador_id')
         ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
-        ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador')
-        ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador')
+        ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador_id')
+        ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador_id')
         ->select(
             'folhars.fscodigo',
             'tomadors.tsnome',
@@ -368,7 +400,7 @@ class Tomador extends Model
             $user = auth()->user();
             $query->where([
                 ['tomadors.id',$tomador],
-                ['tomadors.empresa', $user->empresa]
+                ['tomadors.empresa_id', $user->empresa_id]
             ])
             // ->whereDate('folhars.fsfinal', $final)
             ->whereBetween('folhars.fsfinal',[$inicio,$final]); 
@@ -388,7 +420,7 @@ class Tomador extends Model
     }
     public function relatorioGeral($empresa)
     {
-        return Tomador::where('empresa', $empresa)
+        return Tomador::where('empresa_id', $empresa)
         ->select('tsnome','tscnpj','tstelefone','tsmatricula','id')
         ->orderBy('tsnome', 'asc')
         ->get();
@@ -396,7 +428,7 @@ class Tomador extends Model
     public function quantidadeTomador()
     {
         return DB::table('tomadors')
-        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa_id')
         ->count();
     }
 }

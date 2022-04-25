@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Pessoai extends Model
 {
     protected $fillable = [
-        'pscpf','psnascimento','pstelefone','user'
+        'pscpf','psnascimento','pstelefone','user_id'
     ];
     public function cadastra($dados)
     {
@@ -15,14 +15,14 @@ class Pessoai extends Model
             'pscpf'=>isset($dados['cpf'])?$dados['cpf']:null,
             'psnascimento'=>isset($dados['data__nascimento'])?$dados['data__nascimento']:null,
             'pstelefone'=>isset($dados['telefone'])?$dados['telefone']:null,
-            'user'=>$dados['user']
+            'user_id'=>$dados['user']
         ]);
     }
     public function editar($id)
     {
         return DB::table('users')
-        ->join('pessoais', 'users.id', '=', 'pessoais.user')
-        ->join('enderecos', 'pessoais.id', '=', 'enderecos.pessoais')
+        ->join('pessoais', 'users.id', '=', 'pessoais.user_id')
+        ->join('enderecos', 'pessoais.id', '=', 'enderecos.pessoais_id')
         ->select(
             'users.name',
             'users.email',
@@ -44,7 +44,7 @@ class Pessoai extends Model
     }
     public function atualizar($dados,$id)
     {
-        return Pessoai::where('user', $id)
+        return Pessoai::where('user_id', $id)
         ->update([
             'pscpf'=>$dados['cpf'],
             'psnascimento'=>$dados['data__nascimento'],
@@ -53,7 +53,7 @@ class Pessoai extends Model
     } 
     public function buscaUnidadePessoais($id)
     {
-        return Pessoai::where('user', $id)->first();
+        return Pessoai::where('user_id', $id)->first();
     }
     
 }

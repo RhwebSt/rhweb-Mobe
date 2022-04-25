@@ -183,10 +183,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
 
         Route::resource('usuario','Usuario\\UsuarioController')->names('usuario');
+        Route::get('usuario/pesquisa/admin','Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa.admin');
         
         Route::resource('perfil','Perfil\\PerfilController')->names('perfil'); 
 
-        Route::get('ordem/pesquisa/user/{condicao}','User\\UserController@filtroPesquisa')->name('ordem.pesquisa.user');
+        Route::get('usuario/ordem/admin/{ordem}/{id?}','Usuario\\UsuarioController@ordem')->name('usuario.ordem.admin');
+
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
        

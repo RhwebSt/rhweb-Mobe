@@ -159,13 +159,7 @@
   </div>
 
   <script>
-    var botaolimpaCampos = document.querySelector("#refre");
 
-    botaolimpaCampos.addEventListener('click', function() {
-      var quantidade = document.querySelector("#num__trabalhador").value = '';
-      var tomador = document.querySelector("#nome__completo").value = '';
-      var data = document.querySelector("#data").value = '';
-    })
 
     $('#num__trabalhador').mask('#.##0', {
       reverse: true

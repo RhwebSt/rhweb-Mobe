@@ -189,6 +189,7 @@
                         <thead>
                             <tr>
                                 <td class="border" rowspan="3"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:55px; height: 55px; padding:2px"></td>
+                                
                             </tr>
 
                             <tr>
@@ -217,15 +218,13 @@
                         </tr>
 
                         <tr>
-                            <td class=" uppercase name__title__trab font__trab pad"><strong>CTPS:</strong> {{$trabalhadors->dsctps}}  <strong>UF:</strong> {{$trabalhadors->dsuf}}  <strong>Série:</strong> {{$trabalhadors->dsserie}}</td>
+                            <td class=" uppercase name__title__trab font__trab pad"><strong>CTPS:</strong> {{$trabalhadors->documento[0]->dsctps}}  <strong>UF:</strong> {{$trabalhadors->documento[0]->dsuf}}  <strong>Série:</strong> {{$trabalhadors->documento[0]->dsserie}}</td>
                         </tr>
 
                         <tr>
                             <td class=" uppercase name__title__trab font__trab pad margin__bottom"><strong>Data de Nascimento:</strong>
-                                <?php
-                                    $data = explode('-',$trabalhadors->nsnascimento)
-                                ?>
-                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                
+                                {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
                             </td>
                         </tr>
                         
@@ -264,15 +263,13 @@
                         </tr>
 
                         <tr>
-                            <td class="font__trab name__title2 pad2"><strong>PIS:</strong> {{$trabalhadors->dspis}}</td>
+                            <td class="font__trab name__title2 pad2"><strong>PIS:</strong> {{$trabalhadors->documento[0]->dspis}}</td>
                         </tr>
 
                         <tr>
                             <td class="font__trab name__title2 margin__bottom pad2"><strong>Data de Admissão:</strong>
-                                <?php
-                                    $data = explode('-',$trabalhadors->csadmissao);
-                                ?>
-                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                
+                                {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->csadmissao))}}
                             </td>
                         </tr>
                     </table>
@@ -293,11 +290,11 @@
                         </tr>
 
                         <tr>
-                            <td class="font__trab name__title2 pad2 capitalize"><strong>Rua:</strong> {{$trabalhadors->eslogradouro}}, {{$trabalhadors->esnum}}</td>
+                            <td class="font__trab name__title2 pad2 capitalize"><strong>Rua:</strong> {{$trabalhadors->endereco[0]->eslogradouro}}, {{$trabalhadors->endereco[0]->esnum}}</td>
                         </tr>
 
                         <tr>
-                            <td class="font__trab name__title2 pad2 capitalize margin__bottom"><strong>Cidade:</strong> {{$trabalhadors->esmunicipio}}  {{$trabalhadors->esuf}}</td>
+                            <td class="font__trab name__title2 pad2 capitalize margin__bottom"><strong>Cidade:</strong> {{$trabalhadors->endereco[0]->esmunicipio}}  {{$trabalhadors->endereco[0]->esuf}}</td>
                         </tr>
                     </table>
                 </div>

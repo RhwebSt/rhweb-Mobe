@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Cadastro Cartão Ponto')
+@section('titulo','Rhweb - Cartão Ponto')
 @section('conteine')
 <div class="container"> 
         
@@ -55,7 +55,7 @@
         @enderror
         <form class="row g-3 mt-1 mb-5" id="form" method="POST" action="{{route('boletimcartaoponto.store')}}">
             
-            <h1 class="container text-center mt-3 fs-4 mb-5">Boletim com Cartão Ponto <i class="fas fa-user-clock"></i></h1>
+            <h1 class="container text-center mt-5 fs-4 mb-5">Cartão Ponto <i class="fad fa-user-clock"></i></h1>
         @csrf
         <input type="hidden" id="method" name="_method" value="">
         <input type="hidden" name="domingo" id="domingo" value="{{$domingo}}">
@@ -64,31 +64,32 @@
         <input type="hidden" name="data" value="{{$data}}">
         <input type="hidden" name="tomador" value="{{$tomador}}">
         <input type="hidden" name="feriado" value="{{$feriado}}">
+        
         <div class="row">
-                  <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-       
-                        <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
-                        <button type="submit" id="atualizar" disabled class="btn botao"><i class="fas fa-edit"></i> Editar</button>
-                        <button class="btn botao dropdown-toggle d-none" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-invoice"></i> Relatório
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($id),$domingo?base64_encode($domingo):' ',base64_encode($sabado),base64_encode($diasuteis),base64_encode($data),base64_encode($boletim),base64_encode($tomador)])}}">Boletim Cartão ponto</a></li>
-                      </ul>
-                        
-                        
-                        <button type="button" class="btn botao  " disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                          <i class="fas fa-trash"></i> Excluir
-                      </button>
-                    <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
-                  </div>
-              </div>
-            <input type="hidden" name="lancamento" id="lancamento" value="{{$id}}"> 
-            <input type="hidden" name="trabalhador" value="{{old('matricula')}}" id="trabalhador">
-            <input type="hidden" name="boletim" value="{{$boletim}}">
+            <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+
+                <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
+                <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fas fa-edit"></i> Editar</button>
+                
+                <button type="button" class="btn botao  d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <i class="fas fa-trash"></i> Excluir
+                </button>
+                <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#listaDiurno">
+                    <i class="fad fa-sun"></i> Lista Diurno
+                </a>
+                
+                <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#listaNoturno">
+                    <i class="fad fa-moon"></i> Lista Noturno
+                </a>
+                <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </div>
+        </div>
+        <input type="hidden" name="lancamento" id="lancamento" value="{{$id}}"> 
+        <input type="hidden" name="trabalhador" value="{{old('matricula')}}" id="trabalhador">
+        <input type="hidden" name="boletim" value="{{$boletim}}">
            
             
-            
+             
             <div class="col-md-10 mt-5 input">
                 <label for="nome__completo" class="form-label">Nome Trabalhador</label>
                 <input class="pesquisa form-control text-dark fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo">
@@ -111,12 +112,9 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <!-- <div class="col-md-2 input">
-                <label for="data" class="form-label">Data</label>
-                <input type="date" class="form-control " name="data" value="" id="data">
-            </div> -->
+
             
-            <h1 class="text-center fs-5 fw-bold">Diurno <i class="fad fa-sun fa-lg"></i></h1>
+            <h1 class="text-center fs-5 mb-3 mt-5 fw-bold">Diurno <i class="fad fa-sun fa-lg"></i></h1>
             
             <div class="col-md-3 input">
                 <label for="entrada1" class="form-label">Entrada</label>
@@ -154,7 +152,7 @@
                 @enderror
             </div>
             
-            <h1 class="text-center fs-5 fw-bold">Noturno <i class="fad fa-moon fa-md"></i></h1>
+            <h1 class="text-center fs-5 mb-3 mt-5 fw-bold">Noturno <i class="fad fa-moon fa-md"></i></h1>
             
             <div class="col-md-3 input">
                 <label for="entrada3" class="form-label">Entrada(adc.noturno)</label>
@@ -192,30 +190,30 @@
                 @enderror
             </div>
             
-            <h1 class="text-center fs-5 fw-bold">Totais <i class="fad fa-calculator fa-md"></i></h1>
+            <h1 class="text-center fs-5 mb-3 mt-5 fw-bold">Totais <i class="fad fa-calculator fa-md"></i></h1>
 
             <div class="col-md-3 input">
-                <label for="horas_normais" class="form-label">Horas Normais</label>
-                <input type="text" class="form-control fw-bold" name="horas_normais" value="" id="horas_normais">
+                <label for="horas_normais" class="form-label">Horas Normais <i class="fad fa-lock"></i></label>
+                <input type="text" class="form-control fw-bold" name="horas_normais" value="" id="horas_normais" readonly>
             </div>
 
             <div class="col-md-2 input">
-                <label for="hora__extra" class="form-label">HRS 50%</label>
-                <input type="text" class="form-control fw-bold" name="hora__extra" value="" id="hora__extra">
+                <label for="hora__extra" class="form-label">Hrs 50% <i class="fad fa-lock"></i></label>
+                <input type="text" class="form-control fw-bold" name="hora__extra" value="" id="hora__extra" readonly>
             </div>
 
             <div class="col-md-2 input">
-                <label for="horas__cem" class="form-label">HRS 100%</label>
-                <input type="text" class="form-control fw-bold" name="horas__cem" value="" id="horas__cem">
+                <label for="horas__cem" class="form-label">Hrs 100% <i class="fad fa-lock"></i></label>
+                <input type="text" class="form-control fw-bold" name="horas__cem" value="" id="horas__cem" readonly>
             </div>
 
             <div class="col-md-2 input">
-                <label for="adc__noturno" class="form-label">ADC.NOT</label>
-                <input type="text" class="form-control fw-bold" name="adc__noturno" value="" id="adc__noturno">
+                <label for="adc__noturno" class="form-label">Adc.Not <i class="fad fa-lock"></i></label>
+                <input type="text" class="form-control fw-bold" name="adc__noturno" value="" id="adc__noturno" readonly>
             </div>
             <div class="col-md-3 input">
-                <label for="total" class="form-label">Total</label>
-                <input type="text" class="form-control fw-bold @error('total') is-invalid @enderror" name="total" value="" id="total">
+                <label for="total" class="form-label">Total <i class="fad fa-lock"></i></label>
+                <input type="text" class="form-control fw-bold @error('total') is-invalid @enderror" name="total" value="" id="total" readonly>
                 @error('total')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -224,175 +222,31 @@
         </form>
         
         
-        <ul class="nav nav-pills " id="pills-tab" role="tablist">
-          <li class="nav-item" role="presentation" style="background-color: #9098A2; border-radius:3px;">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-sun fa-lg"></i> Diurno</button>
-          </li>
-          <li class="nav-item ms-1" role="presentation" style="background-color: #9098A2; border-radius:3px;">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-moon fa-lg"></i> Noturno</button>
-          </li>
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-              
-             <div class="table-responsive-xxl">
-                  <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                <thead>
-                    <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
-                    <th class="col text-center border-top text-nowrap capitalize" style="width:420px">Nome</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 50%</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 100%</th>
-                    <th class="col text-center border-top text-nowrap" style="width:140px;">Horas Normais</th>
-                    <th class="col text-center border-end border-top text-nowrap" style="width:140px;">Total Geral</th>
-                </thead>
-                <tbody style="background-color: #081049; color: white;">
-                @if(count($lista) > 0)
-                    @foreach($lista as $listas)
-                    @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
-                    $listas->bsentradatarde && $listas->bssaidatarde)
-                    <tr>
-                    <td class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
-                    <td class="col text-center border-bottom text-nowrap text-uppercase" style="width:420px">{{$listas->tsnome}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamanhao}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidamanhao}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradatarde}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidatarde}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraex}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraexcem}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:140px;">{{$listas->horas_normais}}</td>
-                    <td class="col text-center border-bottom border-end text-nowrap" style="width:140px;">{{$listas->bstotal}}</td>
-                   
-                    </tr>
-                   @endif
-                @endforeach
-                @else
-                        <tr>
-                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                @endif
-                </tbody>
-                
-                <tfoot>
-                    <tr class=" border-end border-start border-bottom">
-                        <td colspan="11">
-                        {{ $lista->links() }}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-              
-              
-              
-              
-          </div>
-          
-  
-          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            
-            <div class="table-responsive-xxl">
-                  <table class="table border-bottom text-white mt-3 mb-5 table-responsive" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                <thead>
-                    <th class="col text-center border-start border-top text-nowrap" style="width:80px;">Matricula</th>
-                    <th class="col text-center border-top text-nowrap text-uppercase" style="width:330px">Nome</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Entrada</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">Saída</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 50%</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">HRS 100%</th>
-                    <th class="col text-center border-top text-nowrap" style="width:90px;">AD.NOT</th>
-                    <th class="col text-center border-end border-top text-nowrap" style="width:140px;">Total Geral</th>
-                </thead>
-                <tbody style="background-color: #081049; color: white;">
-                @if(count($lista) > 0)
-                    @foreach($lista as $listas)
-                    @if($listas->bsentradanoite && $listas->bsentradanoite ||
-                    $listas->bsentradamadrugada && $listas->bssaidamadrugada)
-                    <tr>
-                    <td   class="col text-center border-bottom border-start text-nowrap" style="width:80px;">{{$listas->tsmatricula}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:330px;">{{$listas->tsnome}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradanoite}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidanoite}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsentradamadrugada}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bssaidamadrugada}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraex}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bshoraexcem}}</td>
-                    <td class="col text-center border-bottom text-nowrap" style="width:90px;">{{$listas->bsadinortuno}}</td>
-                    <td class="col text-center border-end border-bottom text-nowrap" style="width:140px;">{{$listas->bstotal}}</td>
-                    </tr>
-                   @endif
-                    @endforeach
-                    @else
-                        <tr>
-                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    Não a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-                
-                <tfoot>
-                    <tr class=" border-end border-start border-bottom">
-                        <td colspan="11">
-                        {{ $lista->links() }}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-                  
-                  
-              </div>
-            </div>
-         </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       
-          
-        
-        
-
-        
-
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="" id="formdelete" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <div class="modal-header modal__delete">
-                                            <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body modal-delbody">
-                                            <p class="mb-1">Deseja realmente excluir?</p>
-                                        </div>
-                                        <div class="modal-footer modal-delfooter">
-                                            <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                            <button type="submit" class="btn btn__deletar">Deletar</button>
-                                        </div>
-                                </form>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="" id="formdelete" method="post">
+                            @csrf
+                            @method('delete')
+                            <div class="modal-header modal__delete">
+                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        </div>
-                    </div>
+                            <div class="modal-body modal-delbody">
+                                <p class="mb-1">Deseja realmente excluir?</p>
+                            </div>
+                            <div class="modal-footer modal-delfooter">
+                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn__deletar">Deletar</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 </div>
+
+@include('cadastroCartaoPonto.cartaoPonto.listaDiurno')
+@include('cadastroCartaoPonto.cartaoPonto.listaNoturno')
 <script>
  var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
 $('.horas').keyup(function() {

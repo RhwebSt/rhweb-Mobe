@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentotabela extends Model
 {
     protected $fillable = [
-        'liboletim','lsdata','lsnumero','lsstatus','lsferiado','tomador','empresa'
+        'liboletim','lsdata','lsnumero','lsstatus','lsferiado','tomador_id','empresa_id'
     ];
     public function cadastro($dados)
     {
@@ -17,14 +17,14 @@ class Lancamentotabela extends Model
             'lsnumero'=>$dados['num__trabalhador'],
             'lsstatus'=>$dados['status'],
             'lsferiado'=>$dados['feriado'],
-            'tomador'=>$dados['tomador'],
-            'empresa'=>$dados['empresa']
+            'tomador_id'=>$dados['tomador'],
+            'empresa_id'=>$dados['empresa']
         ]);
     }
     public function buscaListaLancamentoTab($id,$status)
     {
         return DB::table('lancamentotabelas')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'tomadors.tsnome',
             'tomadors.tscnpj', 
@@ -36,13 +36,13 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['lancamentotabelas.liboletim',$id],
                     ['lancamentotabelas.lsstatus',$status],
-                    ['lancamentotabelas.empresa', $user->empresa]
+                    ['lancamentotabelas.empresa_id', $user->empresa]
                 ]);
             }else{
                 $query->where([
                     ['lancamentotabelas.id','>',$id],
                     ['lancamentotabelas.lsstatus',$status],
-                    ['lancamentotabelas.empresa', $user->empresa]
+                    ['lancamentotabelas.empresa_id', $user->empresa]
                 ]);
             }
 
@@ -84,8 +84,8 @@ class Lancamentotabela extends Model
     public function buscaListas($status,$condicao = null)
     {
         return DB::table('lancamentotabelas')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
         ->select(
             'tomadors.tsnome',
             'cartao_pontos.csdiasuteis',
@@ -97,7 +97,7 @@ class Lancamentotabela extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentotabelas.lsstatus',$status],
-                ['tomadors.empresa', $user->empresa]
+                ['tomadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -115,8 +115,8 @@ class Lancamentotabela extends Model
     public function pesquisaLista($status,$condicao = null,$dados)
     {
         return DB::table('lancamentotabelas')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
         ->select(
             'tomadors.tsnome', 
             'cartao_pontos.csdiasuteis',
@@ -128,17 +128,17 @@ class Lancamentotabela extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentotabelas.lsstatus',$status],
-                ['tomadors.empresa', $user->empresa],
+                ['tomadors.empresa_id', $user->empresa_id],
                 ['lancamentotabelas.liboletim','like','%'.$dados.'%'] 
             ])
             ->orWhere([
                 ['lsstatus',$status],
-                ['tomadors.empresa', $user->empresa],
+                ['tomadors.empresa_id', $user->empresa_id],
                 ['tomadors.tsnome','like','%'.$dados.'%']
             ])
             ->orWhere([
                 ['lsstatus',$status],
-                ['tomadors.empresa', $user->empresa],
+                ['tomadors.empresa_id', $user->empresa_id],
                 ['tomadors.tscnpj','like','%'.$dados.'%']
             ]);
 
@@ -179,8 +179,8 @@ class Lancamentotabela extends Model
     public function buscaUnidade($id)
     {
         return DB::table('lancamentotabelas')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
         ->select(
             'tomadors.tsnome',
             'tomadors.id as tomador', 
@@ -193,7 +193,7 @@ class Lancamentotabela extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentotabelas.id',$id],
-                ['tomadors.empresa', $user->empresa]
+                ['tomadors.empresa_id', $user->empresa_id]
             ]);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('lancamentotabelas.id',$id);
@@ -213,7 +213,7 @@ class Lancamentotabela extends Model
             $query->where([
                 ['liboletim',$id],
                 ['lsstatus',$status],
-                ['empresa', $user->empresa]
+                ['empresa_id', $user->empresa_id]
             ]);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where([
@@ -235,7 +235,7 @@ class Lancamentotabela extends Model
     }
     public function buscaTomador($id)
     {
-        return Lancamentotabela::where('tomador',$id)->get();
+        return Lancamentotabela::where('tomador_id',$id)->get();
     }
     public function verificaBoletimMes($dados,$novadata)
     {
@@ -244,7 +244,7 @@ class Lancamentotabela extends Model
             $query->where([
                 ['liboletim',$dados['liboletim']],
                 ['lsstatus',$dados['status']],
-                ['empresa', $user->empresa]
+                ['empresa_id', $user->empresa_id]
             ])
             ->whereMonth('created_at',$novadata[1])
             ->whereYear('created_at',$novadata[0]);
@@ -271,7 +271,7 @@ class Lancamentotabela extends Model
     {
         $user = auth()->user();
         return Lancamentotabela::whereBetween('lsdata',[$inicio,$final])
-        ->where('empresa',$user->empresa)
+        ->where('empresa_id',$user->empresa_id)
         ->count();
     }
     public function verificaBoletimDias($dados)
@@ -281,7 +281,7 @@ class Lancamentotabela extends Model
             $query->where([
                 ['liboletim',$dados['liboletim']],
                 ['lsstatus',$dados['status']],
-                ['empresa', $user->empresa]
+                ['empresa_id', $user->empresa_id]
             ])
             ->whereDate('created_at',$dados['data']);
             // if ($user->hasPermissionTo('admin')) {
@@ -304,9 +304,9 @@ class Lancamentotabela extends Model
     { 
         return DB::table('lancamentotabelas')
         // ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa_id')
         ->select(
             // 'trabalhadors.tsnome as trabalhadornome',
             // 'trabalhadors.id as trabalhadorid',
@@ -316,7 +316,7 @@ class Lancamentotabela extends Model
             'lancamentorublicas.lsquantidade',
             'lancamentorublicas.lfvalor',
             'lancamentorublicas.lftomador',
-            'lancamentorublicas.trabalhador',
+            'lancamentorublicas.trabalhador_id',
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
             'empresas.esnome',
@@ -327,7 +327,7 @@ class Lancamentotabela extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentotabelas.liboletim',$id],
-                ['lancamentotabelas.empresa', $user->empresa]
+                ['lancamentotabelas.empresa_id', $user->empresa]
             ]);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('lancamentotabelas.liboletim',$id);
@@ -343,10 +343,10 @@ class Lancamentotabela extends Model
     public function relatoriocartaoponto($id) 
     {
         return DB::table('trabalhadors')
-        ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
-        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa')
+        ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('empresas', 'empresas.id', '=', 'tomadors.empresa_id')
         ->select(
             'trabalhadors.tsnome as trabalhadornome',
             // 'trabalhadors.id as trabalhadorid',
@@ -359,7 +359,7 @@ class Lancamentotabela extends Model
             'bolcartaopontos.*',
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
-            'lancamentotabelas.empresa',
+            'lancamentotabelas.empresa_id',
             'empresas.esnome',
             'tomadors.tsnome' 
             )
@@ -367,7 +367,7 @@ class Lancamentotabela extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentotabelas.liboletim',$id],
-                ['trabalhadors.empresa', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa_id]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -389,7 +389,7 @@ class Lancamentotabela extends Model
             'lsdata'=>$dados['data'],
             'lsnumero'=>$dados['num__trabalhador'],
             'lsferiado'=>$dados['feriado'],
-            'tomador'=>$dados['tomador']
+            'tomador_id'=>$dados['tomador']
         ]);
     }
     public function deletar($id)
@@ -398,19 +398,19 @@ class Lancamentotabela extends Model
     }
     public function deletarTomador($id)
     {
-        return Lancamentotabela::where('tomador', $id)->delete();
+        return Lancamentotabela::where('tomador_id', $id)->delete();
     }
     public function quantidadeCartaoPonto()
     {
         return DB::table('lancamentotabelas')
-        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa')
+        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa_id')
         ->where('lancamentotabelas.lsstatus', 'D')
         ->count();
     }
     public function quantidadeBoletimTabela()
     {
         return DB::table('lancamentotabelas')
-        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa')
+        ->join('empresas', 'empresas.id', '=', 'lancamentotabelas.empresa_id')
         ->where('lancamentotabelas.lsstatus', 'M')
         ->count();
     }
@@ -422,7 +422,7 @@ class Lancamentotabela extends Model
             'lsstatus',
             'id'
         )
-        ->where('tomador',$id)
+        ->where('tomador_id',$id)
         ->whereBetween('lsdata',[$ano_inicio, $ano_final])
         ->get();
     }

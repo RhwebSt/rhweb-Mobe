@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tomador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ValidacaoTomador;
 use App\Tomador;
 use App\Taxa;
 use App\Endereco;
@@ -51,10 +52,33 @@ class TomadorController extends Controller
     }
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $search = request('search');
         $condicao = request('codicao');
-        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,'asc'); 
+        $tomadors = $this->tomador 
+        ->where(function($query) use ($search,$user){
+          
+            if ($search) {
+                $query->orWhere([
+                    ['tomadors.tsnome','like','%'.$search.'%'],
+                    ['tomadors.empresa_search', $user->empresa]
+                ])
+                ->orWhere([
+                    ['tomadors.tscnpj','like','%'.$search.'%'],
+                    ['tomadors.empresa_search', $user->empresa]
+                    ])
+                ->orWhere([
+                    ['tomadors.tsmatricula','like','%'.$search.'%'],
+                    ['tomadors.empresa_id', $user->empresa]
+                ]);
+            }else{
+                $query->where('empresa_id', $user->empresa_id);
+            }   
+        })
+        ->orderBy('tsnome','asc') 
+        ->orderBy('tsmatricula','asc')
+        ->distinct()
+        ->paginate(20);
         // dd($tomadors);
         if ($condicao) {
             $tomador = $this->tomador->first($condicao);
@@ -94,135 +118,27 @@ class TomadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidacaoTomador $request)
     {
         $dados = $request->all(); 
         $user = Auth::user();
-        $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
-            'cnpj' => 'required|max:19|cnpj',
-            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'telefone'=>'required|max:16',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/',
-            'taxa_adm'=>'',
-            'taxa__fed'=>'',
-            'deflator'=>'|max:100',
-            'das'=>'',
-            'cod__fpas'=>'',
-            // 'cod__fap'=>'',
-            'cod__grps'=>'',
-            'cod__recol'=>'',
-            'cnae'=>'',
-            'fap__aliquota'=>'',
-            'rat__ajustado'=>'',
-            'fpas__terceiros'=>'',
-            'aliq__terceiros'=>'',
-            'alimentacao'=>'',
-            'transporte'=>'',
-            'epi'=>'',
-            'seguro__trabalhador'=>'',
-            'folhartransporte'=>'',
-            'folhartipotrans'=>'',
-            'folharalim'=>'',
-            'folhartipoalim'=>'',
-            'dias_uteis'=>'required|max:5',
-            'sabados'=>'max:5',
-            'domingos'=>'max:5',
-            // 'inss__empresa'=>'',
-            // 'retencaoinss'=>'',
-            // 'fgts__empresa'=>'',
-            // 'retencaofgts'=>'',
-            // 'valor_fatura'=>'',
-            'banco'=>'max:100',
-            'agencia'=>'max:4',
-            'operacao'=>'max:3',
-            'conta'=>'max:10',
-            'pix'=>'max:255'
-        ],[
-            'nome__completo.required'=>'Este campo é obrigatório.',
-            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo não pode conter caracteres especiais.',
-            'nome__fantasia.required'=>'Este campo é obrigatório.',
-            'nome__fantasia.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__fantasia.regex'=>'O campo não pode conter caracteres especiais.',
-            'cnpj.required'=>'Este campo é obrigatório.',
-            'cnpj.max'=>'O campo não pode conter mais de 19 caracteres.',
-            'cnpj.cnpj'=>'Não é um CNPJ valido.',
-            'matricula.required'=>'Este campo é obrigatório.',
-            'matricula.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'matricula.regex'=>'O campo não pode conter caracteres especiais.',
-            'simples.required'=>'Este campo é obrigatório.',
-            'simples.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'simples.regex'=>'O campo não pode conter caracteres especiais.',
-            'telefone.required'=>'Este campo é obrigatório.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.required'=>'Este campo é obrigatório.',
-            'cep.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.regex'=>'O campo não pode conter caracteres especiais.',
-            'logradouro.required'=>'Este campo é obrigatório.',
-            'logradouro.max'=>'O campo não pode conter mais de 50 caracteres.',
-            'logradouro.regex'=>'O campo não pode conter caracteres especiais.',
-            'numero.required'=>'Este campo é obrigatório.',
-            'numero.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'numero.regex'=>'O campo não pode conter caracteres especiais.',
-            'bairro.required'=>'Este campo é obrigatório.',
-            'bairro.max'=>'O campo não pode conter mais de 40 caracteres.',
-            'bairro.regex'=>'O campo não pode conter caracteres especiais.',
-            'localidade.required'=>'Este campo é obrigatório.',
-            'localidade.max'=>'O campo não pode conter mais de 30 caracteres.',
-            'localidade.regex'=>'O campo não pode conter caracteres especiais.',
-            'uf.required'=>'Este campo é obrigatório.',
-            'uf.max'=>'O campo não pode conter mais de 2 caracteres.',
-            'uf.regex'=>'O campo não pode conter caracteres especiais.',
-            'uf.uf'=>'Esta sigla não está correta.',
-            'deflator.required'=>'Este campo é obrigatório.',
-            'deflator.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'taxa_adm.required'=>'Este campo é obrigatório.',
-            'taxa__fed.required'=>'Este campo é obrigatório.',
-            'das.required'=>'Este campo é obrigatório.',
-            'cod__fpas.required'=>'Este campo é obrigatório.',
-            'cod__fpas.required'=>'Este campo é obrigatório.',
-            'cod__grps.required'=>'Este campo é obrigatório.',
-            'cod__recol.required'=>'Este campo é obrigatório.',
-            'cnae.required'=>'Este campo é obrigatório.',
-            'fap__aliquota.required'=>'Este campo é obrigatório.',
-            'rat__ajustado.required'=>'Este campo é obrigatório.',
-            'fpas__terceiros.required'=>'Este campo é obrigatório.',
-            'aliq__terceiros.required'=>'Este campo é obrigatório.',
-            'alimentacao.required'=>'Este campo é obrigatório.',
-            'transporte.required'=>'Este campo é obrigatório.',
-            'epi.required'=>'Este campo é obrigatório.',
-            'seguro__trabalhador.required'=>'Este campo é obrigatório.',
-            'folhartransporte.required'=>'Este campo é obrigatório.',
-            'folhartipotrans.required'=>'Este campo é obrigatório.',
-            'folharalim.required'=>'Este campo é obrigatório.',
-            'folhartipoalim.required'=>'Este campo é obrigatório.',
-            'dias_uteis.required'=>'Este campo é obrigatório.',
-            'dias_uteis.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'sabados.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'domingos.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'banco.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'agencia.max'=>'O campo não pode conter mais de 4 caracteres.',
-            'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
-            'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-        ]
-        );
-        if ($dados['banco'] || $dados['pix']) {
-            $request->validate([
-                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
-                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
-            ]);
+        
+        if ($dados['banco']) {
+            $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
         }
-        $tomadores = $this->tomador->verificaCadastroCnpj($dados);
-        if ($tomadores) {
+        if($dados['pix']){
+            $request->validate(['pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/']);
+        }
+        if ($dados['nome__fantasia']) {
+            $request->validate(['nome__fantasia'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
+        }
+        // $tomadores = $this->tomador->verificaCadastroCnpj($dados);
+        $tomador = $this->tomador->where([
+            ['tscnpj',$dados['cnpj']],
+            ['empresa_id',$user->empresa_id]
+        ])->count();
+        
+        if ($tomador) {
             return redirect()->back()->withErrors(['cnpj'=>'Este CNPJ já está cadastrado.']);
         }
        
@@ -239,7 +155,7 @@ class TomadorController extends Controller
                         'status'=>'',
                         'valor'=>0,
                         'valor__tomador'=>0,
-                        'empresa'=>$user->empresa,
+                        'empresa'=>$user->empresa_id,
                         'tomador'=>$tomadors['id']
                     ];
                     $this->tabelapreco->cadastro($dadostabelapreco);
@@ -253,20 +169,20 @@ class TomadorController extends Controller
                 $parametrosefips = $this->parametrosefip->cadastro($dados);
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
                 $indicefaturas = $this->indicefatura->cadastro($dados);
-                $this->valorrublica->editarMatricularTomador($dados,$user->empresa);
+                $this->valorrublica->editarMatricularTomador($dados,$user->empresa_id);
 
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
             try {
         } catch (\Throwable $th) {
-            $cartaoponto = $this->cartaoponto->deletar($dados['tomador']);
-            $parametrosefips = $this->parametrosefip->deletar($dados['tomador']);
-            $indicefaturas = $this->indicefatura->deletar($dados['tomador']);
-            $taxas = $this->taxa->deletar($dados['tomador']);
-            $incidefolhars = $this->incidefolhar->deletar($dados['tomador']);
-            $this->endereco->deletarTomador($dados['tomador']);
-            $this->bancario->deletarTomador($dados['tomador']);
-            $this->tabelapreco->deletatomador($dados['tomador']);
+            // $cartaoponto = $this->cartaoponto->deletar($dados['tomador']);
+            // $parametrosefips = $this->parametrosefip->deletar($dados['tomador']);
+            // $indicefaturas = $this->indicefatura->deletar($dados['tomador']);
+            // $taxas = $this->taxa->deletar($dados['tomador']);
+            // $incidefolhars = $this->incidefolhar->deletar($dados['tomador']);
+            // $this->endereco->deletarTomador($dados['tomador']);
+            // $this->bancario->deletarTomador($dados['tomador']);
+            // $this->tabelapreco->deletatomador($dados['tomador']);
             $this->tomador->deletar($dados['tomador']); 
             return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
@@ -301,8 +217,32 @@ class TomadorController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
-        $tomador = $this->tomador->first($id);
-        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,'asc');
+        // $tomador = $this->tomador->first($id);
+        $tomador = $this->tomador->where('id',$id)
+        ->with(['taxa','endereco','bancario','cartaoponto','parametrosefip','indicefatura','incidefolhar'])->first();
+        $tomadors = $this->tomador 
+        ->where(function($query) use ($search,$user){
+            if ($search) {
+                $query->orWhere([
+                    ['tomadors.tsnome','like','%'.$search.'%'],
+                    ['tomadors.empresa_search', $user->empresa]
+                ])
+                ->orWhere([
+                    ['tomadors.tscnpj','like','%'.$search.'%'],
+                    ['tomadors.empresa_search', $user->empresa]
+                    ])
+                ->orWhere([
+                    ['tomadors.tsmatricula','like','%'.$search.'%'],
+                    ['tomadors.empresa_id', $user->empresa]
+                ]);
+            }else{
+                $query->where('empresa_id', $user->empresa_id);
+            }   
+        })
+        ->orderBy('tsnome','asc') 
+        ->orderBy('tsmatricula','asc')
+        ->distinct()
+        ->paginate(20);
         return view('tomador.edit',compact('user','tomador','tomadors'));
     }
    
@@ -313,135 +253,19 @@ class TomadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ValidacaoTomador $request, $id)
     {
         $dados = $request->all();
-        
-        $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
-            'nome__fantasia' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-]*$/',
-            'cnpj' => 'required|max:19|cnpj',
-            'matricula'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'simples'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'telefone'=>'required|max:16',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/',
-            'taxa_adm'=>'',
-            'taxa__fed'=>'',
-            'deflator'=>'|max:100',
-            'das'=>'',
-            'cod__fpas'=>'',
-            // 'cod__fap'=>'',
-            'cod__grps'=>'',
-            'cod__recol'=>'',
-            'cnae'=>'',
-            'fap__aliquota'=>'',
-            'rat__ajustado'=>'',
-            'fpas__terceiros'=>'',
-            'aliq__terceiros'=>'',
-            'alimentacao'=>'',
-            'transporte'=>'',
-            'epi'=>'',
-            'seguro__trabalhador'=>'',
-            'folhartransporte'=>'',
-            'folhartipotrans'=>'',
-            'folharalim'=>'',
-            'folhartipoalim'=>'',
-            'dias_uteis'=>'required|max:5',
-            'sabados'=>'max:5',
-            'domingos'=>'max:5',
-            // 'inss__empresa'=>'',
-            // 'retencaoinss'=>'',
-            // 'fgts__empresa'=>'',
-            // 'retencaofgts'=>'',
-            // 'valor_fatura'=>'',
-            'banco'=>'max:100',
-            'agencia'=>'max:4',
-            'operacao'=>'max:3',
-            'conta'=>'max:10',
-            'pix'=>'max:255'
-        ],[
-            'nome__completo.required'=>'Este campo é obrigatório.',
-            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo não pode conter caracteres especiais.',
-            'nome__fantasia.required'=>'Este campo é obrigatório.',
-            'nome__fantasia.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__fantasia.regex'=>'O campo não pode conter caracteres especiais.',
-            'cnpj.required'=>'Este campo é obrigatório.',
-            'cnpj.max'=>'O campo não pode conter mais de 19 caracteres.',
-            'cnpj.cnpj'=>'Não é um CNPJ valido.',
-            'matricula.required'=>'Este campo é obrigatório.',
-            'matricula.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'matricula.regex'=>'O campo não pode conter caracteres especiais.',
-            'simples.required'=>'Este campo é obrigatório.',
-            'simples.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'simples.regex'=>'O campo não pode conter caracteres especiais.',
-            'telefone.required'=>'Este campo é obrigatório.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.required'=>'Este campo é obrigatório.',
-            'cep.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.regex'=>'O campo não pode conter caracteres especiais.',
-            'logradouro.required'=>'Este campo é obrigatório.',
-            'logradouro.max'=>'O campo não pode conter mais de 50 caracteres.',
-            'logradouro.regex'=>'O campo não pode conter caracteres especiais.',
-            'numero.required'=>'Este campo é obrigatório.',
-            'numero.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'numero.regex'=>'O campo não pode conter caracteres especiais.',
-            'bairro.required'=>'Este campo é obrigatório.',
-            'bairro.max'=>'O campo não pode conter mais de 40 caracteres.',
-            'bairro.regex'=>'O campo não pode conter caracteres especiais.',
-            'localidade.required'=>'Este campo é obrigatório.',
-            'localidade.max'=>'O campo não pode conter mais de 30 caracteres.',
-            'localidade.regex'=>'O campo não pode conter caracteres especiais.',
-            'uf.required'=>'Este campo é obrigatório.',
-            'uf.max'=>'O campo não pode conter mais de 2 caracteres.',
-            'uf.regex'=>'O campo não pode conter caracteres especiais.',
-            'uf.uf'=>'Esta sigla não está correta.',
-            'deflator.required'=>'Este campo é obrigatório.',
-            'deflator.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'taxa_adm.required'=>'Este campo é obrigatório.',
-            'taxa__fed.required'=>'Este campo é obrigatório.',
-            'das.required'=>'Este campo é obrigatório.',
-            'cod__fpas.required'=>'Este campo é obrigatório.',
-            'cod__fpas.required'=>'Este campo é obrigatório.',
-            'cod__grps.required'=>'Este campo é obrigatório.',
-            'cod__recol.required'=>'Este campo é obrigatório.',
-            'cnae.required'=>'Este campo é obrigatório.',
-            'fap__aliquota.required'=>'Este campo é obrigatório.',
-            'rat__ajustado.required'=>'Este campo é obrigatório.',
-            'fpas__terceiros.required'=>'Este campo é obrigatório.',
-            'aliq__terceiros.required'=>'Este campo é obrigatório.',
-            'alimentacao.required'=>'Este campo é obrigatório.',
-            'transporte.required'=>'Este campo é obrigatório.',
-            'epi.required'=>'Este campo é obrigatório.',
-            'seguro__trabalhador.required'=>'Este campo é obrigatório.',
-            'folhartransporte.required'=>'Este campo é obrigatório.',
-            'folhartipotrans.required'=>'Este campo é obrigatório.',
-            'folharalim.required'=>'Este campo é obrigatório.',
-            'folhartipoalim.required'=>'Este campo é obrigatório.',
-            'dias_uteis.required'=>'Este campo é obrigatório.',
-            'dias_uteis.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'sabados.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'domingos.max'=>'O campo não pode conter mais de 5 caracteres.',
-            'banco.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'agencia.max'=>'O campo não pode conter mais de 4 caracteres.',
-            'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
-            'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-        ]
-        );
-        if ($dados['banco'] || $dados['pix']) {
-            $request->validate([
-                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
-                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/'
-            ]);
+        if ($dados['banco']) {
+            $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
+        }
+        if($dados['pix']){
+            $request->validate(['pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/']);
+        }
+        if ($dados['nome__fantasia']) {
+            $request->validate(['nome__fantasia'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
         }
         try {
-        
             $tomadors = $this->tomador->editar($dados,$id);
             $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
             $bancarios = $this->bancario->editar($dados,$dados['bancario']);
@@ -452,16 +276,7 @@ class TomadorController extends Controller
             $indicefaturas = $this->indicefatura->editar($dados,$id);
             $incidefolhars = $this->incidefolhar->editar($dados,$id);
             $taxas = $this->taxa->editar($dados,$id);
-            // dd($tomadors , $enderecos , $taxas
-            // , $bancarios , 
-            // $cartaoponto , $parametrosefips , $indicefaturas);
-            if ($tomadors && $enderecos && $taxas
-            && $bancarios  && $incidefolhars &&
-            $cartaoponto && $parametrosefips && $indicefaturas) {
-                return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
-                
-            }
-            
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
         }

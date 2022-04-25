@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Irrf extends Model
 {
     protected $fillable = [
-        'irsano','irsvalorinicial','irsvalorfinal','irsindece','irsreducao','irdepedente','user'
+        'irsano','irsvalorinicial','irsvalorfinal','irsindece','irsreducao','irdepedente','user_id'
     ];
     public function cadastro($dados)
     {
@@ -18,7 +18,7 @@ class Irrf extends Model
             'irsvalorfinal'=>str_replace(",",".",str_replace(".","",$dados['valor__final'])),
             'irsindece'=>str_replace(",",".",str_replace(".","",$dados['indice'])),
             'irsreducao'=>str_replace(",",".",str_replace(".","",$dados['fator'])),
-            'user'=>$dados['user']
+            'user_id'=>$dados['user']
         ]);
     }
     public function buscaUnidadeIrrf($id)

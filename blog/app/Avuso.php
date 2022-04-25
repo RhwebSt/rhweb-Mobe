@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Avuso extends Model
 {
     protected $fillable = [
-     'asinicial', 'asfinal','aicodigo','ailiquido', 'asnome', 'ascpf','empresa'
+     'asinicial', 'asfinal','aicodigo','ailiquido', 'asnome', 'ascpf','empresa_id'
     ];
     public function cadastro($dados)
     {
@@ -18,14 +18,14 @@ class Avuso extends Model
             'ailiquido'=>$dados['liquido'],
             'asnome'=>$dados['nome'],
             'ascpf'=>$dados['cpf'],
-            'empresa'=>$dados['empresa']
+            'empresa_id'=>$dados['empresa']
         ]);
     }
     public function buscaListaRecibos()
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            $query->where('avusos.empresa', $user->empresa);
+            $query->where('avusos.empresa_id', $user->empresa);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('avusos.id','>',0);
             // }else{
@@ -38,7 +38,7 @@ class Avuso extends Model
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            $query->where('avusos.empresa', $user->empresa);
+            $query->where('avusos.empresa_id', $user->empresa);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('avusos.id','>',0);
             // }else{
@@ -54,15 +54,15 @@ class Avuso extends Model
             $user = auth()->user();
                 $query->where([
                     ['avusos.aicodigo',$dados['pesquisa']],
-                    ['avusos.empresa',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa]
                 ])
                 ->orWhere([
                     ['avusos.asnome',$dados['pesquisa']],
-                    ['avusos.empresa',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa]
                 ])
                 ->orWhere([
                     ['avusos.ascpf',$dados['pesquisa']],
-                    ['avusos.empresa',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa]
                 ])
                 ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
 
@@ -107,16 +107,16 @@ class Avuso extends Model
             if ($id) {
                 $query->where([
                     ['asnome','like','%'.$id.'%'],
-                    ['empresa', $user->empresa]
+                    ['empresa_id', $user->empresa]
                 ])
                 ->orWhere([
                     ['ascpf','like','%'.$id.'%'],
-                    ['empresa', $user->empresa],
+                    ['empresa_id', $user->empresa],
                 ]);
             }else{
                 $query->where([
                     ['id','>',$id],
-                    ['empresa', $user->empresa]
+                    ['empresa_id', $user->empresa]
                 ]);
             }
 
@@ -155,8 +155,8 @@ class Avuso extends Model
     public function buscaTrabalhador($trabalhador,$inicio,$final)
     {
         return DB::table('avusos')
-        ->join('empresas', 'empresas.id', '=', 'avusos.empresa')
-        ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
+        ->join('empresas', 'empresas.id', '=', 'avusos.empresa_id')
+        ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa_id')
         ->select(
             'empresas.escnpj',
             'empresas.esnome',
@@ -201,11 +201,11 @@ class Avuso extends Model
     public function buscaUnidadeTrabalhador($id = null,$trabalhador,$inicio = null,$final = null)
     {
         return DB::table('avusos')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'avusos.trabalhador')
-        ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa')
-        ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
-        ->join('categorias','trabalhadors.id','=','categorias.trabalhador')
-        ->join('documentos','trabalhadors.id','=','documentos.trabalhador')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'avusos.trabalhador_id')
+        ->join('empresas', 'empresas.id', '=', 'trabalhadors.empresa_id')
+        ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa_id')
+        ->join('categorias','trabalhadors.id','=','categorias.trabalhador_id')
+        ->join('documentos','trabalhadors.id','=','documentos.trabalhador_id')
         ->select(
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',

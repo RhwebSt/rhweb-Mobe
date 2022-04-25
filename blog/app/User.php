@@ -64,9 +64,10 @@ class User extends Authenticatable
             // 'usuario'=>$dados['usuario'],
             'password' => Hash::make($dados['senha']),
             'cargo' => $dados['cargo'],
-            'empresa' => $dados['empresa'],
+            'empresa_id' => $dados['empresa'],
             // 'remember_token'=>$dados['_token'],
-        ])->givePermissionTo('user', 'cadastro', 'editar', 'deleta', 'rotinamensal', 'fatura', 'recibo', 'relatorio');
+        ]);
+        // ->givePermissionTo('cadastro', 'editar', 'deleta', 'rotinamensal', 'fatura', 'recibo', 'relatorio');
     }
     public function precadastro($dados)
     {
@@ -126,7 +127,7 @@ class User extends Authenticatable
     }
     public function deleteempresa($id)
     {
-        return User::where('empresa', $id)->delete();
+        return User::where('empresa_id', $id)->delete();
     }
 
     public function editarSenhar($dados)
@@ -137,30 +138,30 @@ class User extends Authenticatable
     public function listaUser($condicao, $dados)
     {
         return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
+            ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
             ->select('users.id', 'users.name', 'users.email', 'users.cargo')
             ->where(function ($query) use ($dados) {
                 $user = auth()->user();
                 if ($dados) {
                     $query->where([
                         ['users.name', 'like', '%' . $dados . '%'],
-                        ['users.empresa', $user->empresa],
+                        ['users.empresa_id', $user->empresa_id],
                         ['users.cargo', '!=', 'admin']
                     ])
                         ->orWhere([
                             ['empresas.esnome', 'like', '%' . $dados . '%'],
-                            ['users.empresa', $user->empresa],
+                            ['users.empresa_id', $user->empresa_id],
                             ['users.cargo', '!=', 'admin']
                         ])
                         ->orWhere([
                             ['empresas.escnpj', 'like', '%' . $dados . '%'],
-                            ['users.empresa', $user->empresa],
+                            ['users.empresa_id', $user->empresa_id],
                             ['users.cargo', '!=', 'admin']
                         ]);
                 } else {
                     $query->where([
                         ['users.id', '>', 0],
-                        ['users.empresa', $user->empresa],
+                        ['users.empresa_id', $user->empresa_id],
                         ['users.cargo', '!=', 'admin']
                     ]);
                 }
@@ -172,7 +173,7 @@ class User extends Authenticatable
     public function edit($id)
     {
         return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
+            ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
             ->select('users.id', 'users.name', 'users.email', 'users.cargo', 'users.empresa', 'empresas.esnome')
             ->where('users.id', $id)
             ->first();
@@ -203,14 +204,14 @@ class User extends Authenticatable
     public function verificausuario($id)
     {
         return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
+            ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
             ->where('users.id', $id)
             ->orWhere('users.name', $id)->count();
     }
     public function editusuarioprecadastro($id, $empresa)
     {
         return User::where('id', $id)
-            ->update(['empresa' => $empresa]);
+            ->update(['empresa_id' => $empresa]);
     }
     public function permissao($id)
     {
@@ -254,13 +255,13 @@ class User extends Authenticatable
     public function quantidadeUsuarios()
     {
         return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
+            ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
             ->count();
     }
     public function quantidadeBloqueadoUsuarios()
     {
         return DB::table('users')
-            ->join('empresas', 'empresas.id', '=', 'users.empresa')
+            ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
             ->join('model_has_permissions', 'users.id', '=', 'model_has_permissions.model_id')
             ->where([
                 ['model_has_permissions.model_type', ' '],

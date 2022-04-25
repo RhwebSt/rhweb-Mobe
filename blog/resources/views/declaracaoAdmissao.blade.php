@@ -158,47 +158,53 @@
         </table>
         
         <div class="borderT">
-            <table>
-                    <tr>
-                        <td rowspan="6"><img class="logo" src="{{$empresas->esfoto}}" title="foto" alt="" style="width:80px; height: 80px; padding:4px;"></td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresas->escnpj}}</td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
-                    </tr>
+            <table >
+                <tr>
+                    <td rowspan="6">
+                        @if($empresas->esfoto)
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                    
+                </tr>
+    
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
+                </tr>
+    
             </table>
         </div>
-
         <table class=" protco">
             <tr>
                 <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Declaração de Admissão do Trabalhador Avulso</td>
@@ -207,15 +213,11 @@
 
         <div class="marginTerm borderT">
             <p class=" text name__title2">Declaro para todos os fíns de direito, principalemnte trabalhistas e previdênciárias, que irei exercer a atividade de <b>
-                <?php
-                    $cbo = explode('-',$trabalhadors->cbo);
-                ?>
-                {{$cbo[1]}},
+                
+                {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->cbo))}},
             </b> na condição de <b>
-                <?php
-                    $categoria = explode('-',$trabalhadors->cscategoria);
-                ?>
-                "{{$categoria[1]}}"
+               
+                 {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->cscategoria))}}
             </b> sob a representação do <b>{{$empresas->esnome}}</b> (sem vínculo empregatício), com a remuneração por tarefa e anotações em carteria a teor do artigo VI do decreto 611 de 21/07/1992.</p>
             <p class="text name__title2">Outrosim, declaro que tenho pleno conhecimento do sistema de pagamento  da minha <b>Remuneração</b> e dos adicionais, cujo indices são os seguintes:<i>Férias 11,12% incidente sobre 18,18% repouso remunerado sobre a produção (LEI 5.085/66, já acrescida de 1/3 , CF/88, valores pagos e discriminados nos recibos.) 13º Salário 8,34% incidente sobre 18,18% repouso remunerado sobre a produção, (LEI 5.080/68, regulamentada pelo Decreto 63.912/68) Valores pagos e discriminados nos recibos.</i></p>
             <p class="text name__title2"><i>FGTS (LEI 8.036//90, deposito mensal em conta na Caixa, (produção + repouso(18,18%)) + férias + 13º salário) incidência de 8%.</i></b></p>
@@ -247,14 +249,12 @@
             </tr>
 
             <tr>
-                <td class="small__font border-right border-left border-top border-bottom indentificacao text-center">{{$trabalhadors->dspis}}</td>
+                <td class="small__font border-right border-left border-top border-bottom indentificacao text-center">{{$trabalhadors->documento[0]->dspis}}</td>
                 <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->tscpf}}</td>
                 <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">0000-000</td>
                 <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">
-                    <?php
-                        $data = explode('-',$trabalhadors->nsnascimento);
-                    ?>
-                    {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                   
+                    {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
                 </td>
                 
             </tr>
@@ -270,14 +270,12 @@
 
             <tr>
                 <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">
-                    <?php
-                        $data = explode('-',$trabalhadors->csadmissao);
-                    ?>
-                    {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                  
+                    {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->csadmissao))}}
                 </td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->dsctps}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->dsserie}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->dsuf}}</td>
+                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsctps}}</td>
+                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsserie}}</td>
+                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsuf}}</td>
             </tr>
         </table>
 
@@ -300,7 +298,7 @@
 
             <table class="margin-top">
                 <tr>
-                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->esmunicipio}} - {{$empresas->esuf}}</td>
+                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
                     <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
                 </tr>
             </table>

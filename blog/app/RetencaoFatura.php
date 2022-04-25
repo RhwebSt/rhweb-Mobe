@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RetencaoFatura extends Model
 {
     protected $fillable = [
-        'rsinssempresa','rstipoinssempresa','rsfgts','rstipofgts','rsvalorfatura','tomador'
+        'rsinssempresa','rstipoinssempresa','rsfgts','rstipofgts','rsvalorfatura','tomador_id'
     ];
     public function cadastro($dados)
     {
@@ -18,12 +18,12 @@ class RetencaoFatura extends Model
             'rstipoinssempresa'=>$dados['retencaoinss'],
             'rstipofgts'=>$dados['retencaofgts'],
             'rsvalorfatura'=>$dados['valor_fatura'],
-            'tomador'=>$dados['tomador']
+            'tomador_id'=>$dados['tomador']
         ]);
     }
     public function editar($dados,$id)
     {
-        return RetencaoFatura::where('tomador', $id)
+        return RetencaoFatura::where('tomador_id', $id)
         ->update([
             'rsinssempresa'=>str_replace(",",".",$dados['inss__empresa']),
             'rsfgts'=>str_replace(",",".",$dados['fgts__empresa']),
@@ -34,6 +34,6 @@ class RetencaoFatura extends Model
     }
     public function deletar($id)
     {
-      return RetencaoFatura::where('tomador', $id)->delete();
+      return RetencaoFatura::where('tomador_id', $id)->delete();
     }
 }

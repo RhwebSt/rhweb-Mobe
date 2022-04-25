@@ -15,12 +15,12 @@ class FaturaSecundaria extends Model
             'fsdescricao'=>$dados['descricao'],
             'fiindece'=>$dados['indice'],
             'fivalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0, 
-            'fatura'=>$dados['fatura']
+            'fatura_id'=>$dados['fatura']
         ]);
     }
     public function buscaRelatorio($fatura)
     {
-        return FaturaSecundaria::where('fatura',$fatura)
+        return FaturaSecundaria::where('fatura_id',$fatura)
         ->where([
             ['fsdescricao','!=','Vale Transporte'],
             ['fsdescricao','!=','Vale Alimentação']
@@ -31,7 +31,7 @@ class FaturaSecundaria extends Model
     public function buscaRelatorioValesTrans($fatura)
     {
         return FaturaSecundaria::where([
-            ['fatura',$fatura],
+            ['fatura_id',$fatura],
             ['fsdescricao','Vale Transporte'],
         ])
         ->get();
@@ -39,13 +39,13 @@ class FaturaSecundaria extends Model
     public function buscaRelatorioValesAlim($fatura)
     {
         return FaturaSecundaria::where([
-            ['fatura',$fatura],
+            ['fatura_id',$fatura],
             ['fsdescricao','Vale Alimentação']
         ])
         ->get();
     }
     public function deletarFatura($id)
     {
-        return FaturaSecundaria::where('fatura',$id)->delete();
+        return FaturaSecundaria::where('fatura_id',$id)->delete();
     }
 }

@@ -7,8 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Endereco extends Model
 {
     protected $fillable = [
-        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa','trabalhador','tomador','pessoais'
+        'escep','eslogradouro','esbairro','estipo','esmunicipio','esuf','escomplemento','esnum','empresa_id','trabalhador_id','tomador_id','pessoais_id'
     ];
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
         return Endereco::create([
@@ -19,10 +31,10 @@ class Endereco extends Model
             'esuf'=>isset($dados['uf'])?$dados['uf']:null,
             'escomplemento'=>isset($dados['complemento__endereco'])?$dados['complemento__endereco']:null,
             'esnum'=>isset($dados['numero'])?$dados['numero']:null,
-            'tomador'=>isset($dados['tomador'])?$dados['tomador']:null,
-            'trabalhador'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
-            'empresa'=>isset($dados['empresa'])?$dados['empresa']:null,
-            'pessoais'=>isset($dados['pessoal'])?$dados['pessoal']:null
+            'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
+            'trabalhador_id'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
+            'empresa_id'=>isset($dados['empresa'])?$dados['empresa']:null,
+            'pessoais_id'=>isset($dados['pessoal'])?$dados['pessoal']:null
         ]);
     }
     // public function editar($dados,$id)
@@ -109,14 +121,14 @@ class Endereco extends Model
     }
     public function deletarTrabalhador($id)
     {
-        return Endereco::where('trabalhador', $id)->delete();
+        return Endereco::where('trabalhador_id', $id)->delete();
     }
     public function deletarTomador($id)
     {
-        return Endereco::where('tomador', $id)->delete();
+        return Endereco::where('tomador_id', $id)->delete();
     }
     public function deletarEmpresa($id)
     {
-        return Endereco::where('empresa', $id)->delete();
+        return Endereco::where('empresa_id', $id)->delete();
     }
 }

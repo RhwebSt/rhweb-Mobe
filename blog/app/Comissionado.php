@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Comissionado extends Model
 {
     protected $fillable = [
-        'csmatricula','csindece','trabalhador','tomador'
+        'csmatricula','csindece','trabalhador_id','tomador_id'
     ];
     public function cadastro($dados)
     {
@@ -15,21 +15,21 @@ class Comissionado extends Model
        return Comissionado::create([
             'csmatricula'=>$dados['matricula__trab'],
             'csindece'=>$dados['indice'],
-            'tomador'=>$dados['tomador'],
-            'trabalhador'=>$dados['trabalhador'],
+            'tomador_id'=>$dados['tomador'],
+            'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
     public function verifica($dados) 
     {
         return Comissionado::where([
-            ['tomador',$dados['tomador']],
-            ['trabalhador',$dados['trabalhador']],
+            ['tomador_id',$dados['tomador']],
+            ['trabalhador_id',$dados['trabalhador']],
         ])->count();
     }
     public function first($id)
     {
         return DB::table('comissionados')
-        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador_id')
         
         ->select(
             'tomadors.*', 
@@ -37,7 +37,7 @@ class Comissionado extends Model
         )
         ->where(function($query) use ($id){
             $user = auth()->user();
-            $query->where('trabalhador', $id);
+            $query->where('trabalhador_id', $id);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('trabalhador', $id);
             // }
@@ -47,8 +47,8 @@ class Comissionado extends Model
     public function buscaListaComissionado()
     {
         return DB::table('comissionados')
-        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador_id')
         ->select(
             'tomadors.tsnome as tomador',
             'trabalhadors.tsnome as trabalhador',
@@ -58,15 +58,15 @@ class Comissionado extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            $query->where('trabalhadors.empresa',$user->empresa);
+            $query->where('trabalhadors.empresa_id',$user->empresa);
         })
         ->paginate(10);
     }
     public function buscaUnidadeComissionado($id)
     {
         return DB::table('comissionados')
-        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador')
+        ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador_id')
         ->select(
             'tomadors.tsnome as tomador',
             'trabalhadors.tsnome as trabalhador',
@@ -79,7 +79,7 @@ class Comissionado extends Model
         ->where(function($query) use ($id){
             $user = auth()->user();
             $query->where([
-                ['trabalhadors.empresa',$user->empresa],
+                ['trabalhadors.empresa_id',$user->empresa],
                 ['comissionados.id',$id]
             ]);
         })
@@ -100,11 +100,11 @@ class Comissionado extends Model
     }
     public function deletaTomador($id)
     {
-        return Comissionado::where('tomador', $id)->delete();
+        return Comissionado::where('tomador_id', $id)->delete();
     }
     public function deletaTrabalhador($id)
     {
-        return Comissionado::where('trabalhador', $id)->delete();
+        return Comissionado::where('trabalhador_id', $id)->delete();
     }
     public function deletar($id)
     {

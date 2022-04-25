@@ -18,8 +18,8 @@ class CreatePessoaisTable extends Migration
             $table->string('pscpf',15)->nullable();
             $table->char('psnascimento', 10)->nullable();
             $table->string('pstelefone',18)->nullable();
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+            $table->unsignedInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

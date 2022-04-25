@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Trabalhador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Validacao;
 use Illuminate\Support\Facades\Auth;
 use App\Trabalhador;
 use App\Endereco;
@@ -18,11 +19,12 @@ use App\Comissionado;
 use App\ValoresRublica;
 use App\BaseCalculo;
 use App\Esocial;
+use App\Empresa;
 class TrabalhadorController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
     $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo,
-    $esocial;
+    $esocial,$empresa;
     public function __construct()
     {
         $this->trabalhador = new Trabalhador;
@@ -38,20 +40,41 @@ class TrabalhadorController extends Controller
         $this->comissionado = new Comissionado;
         $this->basecalculo = new BaseCalculo;  
         $this->esocial = new Esocial; 
+        $this->empresa = new Empresa;
     }
     public function index()
     {
-        
-        $user = Auth::user(); 
+        $user = auth()->user();
         $search = request('search');
         $condicao = request('codicao');
-        $trabalhadors = $this->trabalhador->lista($search,'desc');
+        // $trabalhadors = $this->trabalhador->lista($search,'desc');
+        $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
+                if ($search) {
+                    $query->where([
+                        ['tsnome','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id]
+                    ])
+                    ->orWhere([
+                        ['tscpf','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id],
+                    ])
+                    ->orWhere([
+                        ['tsmatricula','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id],
+                    ]);
+                }else{
+                    $query->where('empresa_id', $user->empresa_id);
+                }
+        }) 
+        ->orderBy('tsnome', 'asc')
+        ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($condicao) {
-            $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($condicao);
+            $trabalhador = $this->trabalhador->where('id',$condicao)
+            ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
             return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
             return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
@@ -59,13 +82,34 @@ class TrabalhadorController extends Controller
     public function ordem($ordem,$id = null,$search = null)
     {
         $user = Auth::user();
-        $trabalhadors = $this->trabalhador->lista($search,$ordem);
+        // $trabalhadors = $this->trabalhador->lista($search,$ordem);
+        $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
+            if ($search) {
+                $query->where([
+                    ['tsnome','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id]
+                ])
+                ->orWhere([
+                    ['tscpf','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id],
+                ])
+                ->orWhere([
+                    ['tsmatricula','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id],
+                ]);
+            }else{
+                $query->where('empresa_id', $user->empresa_id);
+            }
+    }) 
+    ->orderBy('tsnome', $ordem)
+    ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($id) {
             $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
             return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+            // $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
             return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
@@ -86,156 +130,33 @@ class TrabalhadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */ 
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
         $user = auth()->user();
        
-        
-        $trabalhadorscpf = $this->trabalhador->VerificarCadastroCpf($dados);
-        $documentospis = $this->documento->VerificarCadastroPis($dados);
-        $documentosctps = $this->documento->VerificarCadastroCtps($dados);
-        
-        
-        $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
-            'nome__social' => 'max:100',
-            'cpf' => 'required|max:15|cpf|formato_cpf',
-            'pis'=>'required|max:20|pis',
-            'data_nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
-            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
-            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
-            'telefone'=>'required|max:16',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf',
-            'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'categoria__contrato'=>'required|max:255',
-            'cbo'=>'required|max:255',
-            'ctps'=>'required|max:20',
-            'serie__ctps'=>'required|max:20|regex:/^[0-9]*$/',
-            'uf__ctps'=>'required|max:2|uf',
-            'data__afastamento'=>'max:10',
-            'banco'=>'max:100',
-            'agencia'=>'max:4',
-            'operacao'=>'max:3',
-            'conta'=>'max:10',
-            'pix'=>'max:255'
-        ],
-        [
-            'nome__completo.required'=>'O campo não pode estar vazio.',
-            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'nome__social.required'=>'O campo não pode estar vazio.',
-            'nome__social.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__social.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'cpf.required'=>'O campo não pode estar vazio.',
-            'cpf.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'cpf.cpf'=>'Este CPF é invalido.',
-            'cpf.formato_cpf'=>'Este CPF não possui um formato valido.',
-            
-            'pis.required'=>'O campo não pode estar vazio.',
-            'pis.max'=>'O campo não pode conter mais de 20 caracteres.',
-            'pis.pis'=>'Este CPF é invalido.',
-            
-            'data_nascimento.required'=>'O campo não pode estar vazio.',
-            'data_nascimento.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'data_nascimento.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'pais__nascimento.required'=>'O campo não pode estar vazio.',
-            'pais__nascimento.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'pais__nascimento.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'pais__nacionalidade.required'=>'O campo não pode estar vazio.',
-            'pais__nacionalidade.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'pais__nacionalidade.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'nome__mae.required'=>'O campo não pode estar vazio.',
-            'nome__mae.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'nome__mae.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'telefone.required'=>'O campo não pode estar vazio.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não é valido.',
-            
-            'telefone.required'=>'O campo não pode estar vazio.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não é valido.',
-            
-            'cep.required'=>'O campo não pode estar vazio.',
-            'cep.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'logradouro.required'=>'O campo não pode estar vazio.',
-            'logradouro.max'=>'O campo não pode conter mais de 50 caracteres.',
-            'logradouro.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'numero.required'=>'O campo não pode estar vazio.',
-            'numero.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'numero.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'bairro.required'=>'O campo não pode estar vazio.',
-            'bairro.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'bairro.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'localidade.required'=>'O campo não pode estar vazio.',
-            'localidade.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'localidade.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'uf.required'=>'O campo não pode estar vazio.',
-            'uf.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'uf.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'data__admissao.required'=>'O campo não pode estar vazio.',
-            'data__admissao.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'data__admissao.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'categoria__contrato.required'=>'O campo não pode estar vazio.',
-            'categoria__contrato.max'=>'O campo não pode conter mais de 255 caracteres.',
-            'categoria__contrato.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'cbo.required'=>'O campo não pode estar vazio.',
-            'cbo.max'=>'O campo não pode conter mais de 225 caracteres.',
-            'cbo.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'ctps.required'=>'O campo não pode estar vazio.',
-            'ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
-            
-            'serie__ctps.required'=>'O campo não pode estar vazio.',
-            'serie__ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
-            
-            'uf__ctps.required'=>'O campo não pode estar vazio.',
-            'uf__ctps.max'=>'O campo não ter mais de 255 caracteres.',
-            'uf__ctps.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'data__afastamento.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'banco.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'agencia.max'=>'O campo não pode conter mais de 4 caracteres.',
-            'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
-            'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-        ]
-        );
-        if ($dados['banco'] || $dados['pix'] || $dados['nome__social']) {
-            $request->validate([
-                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
-                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/',
-                'nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/'
-            ]);
-        }
-        if ($trabalhadorscpf) {
+        $documentos = $this->trabalhador->where([
+            ['tscpf', $dados['cpf']],
+            ['empresa_id',$user->empresa_id]
+        ])
+        ->with('documento.trabalhador')->first();
+        if (isset($documentos->tscpf)) {
             return redirect()->back()->withInput()->withErrors(['cpf'=>'Este CPF já está cadastrado.']);
-        }elseif ($documentospis) {
+        }elseif (isset($documentos->documento[0]->dspis)) {
             return redirect()->back()->withInput()->withErrors(['pis'=>'Este PIS já está cadastrado.']);
-        }elseif ($documentosctps) {
+        }elseif (isset($documentos->documento[0]->dsctps)) {
             return redirect()->back()->withInput()->withErrors(['ctps'=>'Este CTPS já está cadastrado.']);
         }
+        if ($dados['banco']) {
+            $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
+        }
+        if($dados['pix']){
+            $request->validate(['pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/']);
+        }
+        if ($dados['nome__social']) {
+            $request->validate(['nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
+        }
+      
         // if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
         //     $novafoto = $request->foto;
         //     $extension = $novafoto->getClientOriginalExtension();
@@ -250,26 +171,21 @@ class TrabalhadorController extends Controller
      
         
         try {
-        $trabalhadors = $this->trabalhador->cadastro($dados);
-        if ($trabalhadors) {
+            $trabalhadors = $this->trabalhador->cadastro($dados);
             $dados['trabalhador'] = $trabalhadors['id'];
             $enderecos = $this->endereco->cadastro($dados); 
             $bancarios = $this->bancario->cadastro($dados);
             $nascimentos = $this->nascimento->cadastro($dados);
             $categorias = $this->categoria->cadastro($dados);
             $documentos = $this->documento->cadastro($dados);
-            $this->valorrublica->editarMatricular($dados,$user->empresa);
-            if ($enderecos &&  $bancarios && 
-                $nascimentos && $categorias && $documentos) {   
-                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-            }
-        }
+            $this->valorrublica->editarMatricular($dados,$user->empresa_id);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
-            $this->nascimento->deletar($dados['trabalhador']);
-            $this->categoria->deletar($dados['trabalhador']);
-            $this->documento->deletar($dados['trabalhador']);
-            $this->endereco->deletarTrabalhador($dados['trabalhador']);
-            $this->bancario->deletarTrabalhador($dados['trabalhador']);
+            // $this->nascimento->deletar($dados['trabalhador']);
+            // $this->categoria->deletar($dados['trabalhador']);
+            // $this->documento->deletar($dados['trabalhador']);
+            // $this->endereco->deletarTrabalhador($dados['trabalhador']);
+            // $this->bancario->deletarTrabalhador($dados['trabalhador']);
             $this->trabalhador->deletar($dados['trabalhador']);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
@@ -303,9 +219,33 @@ class TrabalhadorController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
+        $trabalhador = $this->trabalhador->where('id',$id)
+        ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
+       
+        $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
+            if ($search) {
+                $query->where([
+                    ['tsnome','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id]
+                ])
+                ->orWhere([
+                    ['tscpf','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id],
+                ])
+                ->orWhere([
+                    ['tsmatricula','like','%'.$search.'%'],
+                    ['empresa_id', $user->empresa_id],
+                ]);
+            }else{
+                $query->where('empresa_id', $user->empresa_id);
+            }
+        }) 
+        ->orderBy('tsnome', 'asc')
+        ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
-        $trabalhadors = $this->trabalhador->lista($search,'asc');
-        $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
+        // $trabalhadors = $this->trabalhador->lista($search,'asc');
+        // $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
+
         return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
     }
 
@@ -316,154 +256,27 @@ class TrabalhadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-        $request->validate([
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ ]*$/',
-            'nome__social' => 'max:100',
-            'cpf' => 'required|max:15|cpf|formato_cpf',
-            'pis'=>'required|max:20|pis',
-            'data_nascimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'pais__nascimento'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
-            'pais__nacionalidade'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9 -]*$/',
-            'nome__mae'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ]*$/',
-            'telefone'=>'required|max:16',
-            'cep'=>'required|max:16|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'logradouro'=>'required|max:50|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'numero'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'bairro'=>'required:max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'localidade'=>'required|max:30|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'uf'=>'required|max:2|uf',
-            'data__admissao'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'categoria__contrato'=>'required|max:255',
-            'cbo'=>'required|max:255',
-            'ctps'=>'required|max:20',
-            'serie__ctps'=>'required|max:20|regex:/^[0-9]*$/',
-            'uf__ctps'=>'required|max:2|uf',
-            'data__afastamento'=>'max:10',
-            'banco'=>'max:100',
-            'agencia'=>'max:4',
-            'operacao'=>'max:3',
-            'conta'=>'max:10',
-            'pix'=>'max:255'
-        ],
-        [
-            'nome__completo.required'=>'O campo não pode estar vazio.',
-            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'nome__social.required'=>'O campo não pode estar vazio.',
-            'nome__social.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'nome__social.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'cpf.required'=>'O campo não pode estar vazio.',
-            'cpf.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'cpf.cpf'=>'Este CPF é invalido.',
-            'cpf.formato_cpf'=>'Este CPF não possui um formato valido.',
-            
-            'pis.required'=>'O campo não pode estar vazio.',
-            'pis.max'=>'O campo não pode conter mais de 20 caracteres.',
-            'pis.pis'=>'Este CPF é invalido.',
-            
-            'data_nascimento.required'=>'O campo não pode estar vazio.',
-            'data_nascimento.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'data_nascimento.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'pais__nascimento.required'=>'O campo não pode estar vazio.',
-            'pais__nascimento.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'pais__nascimento.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'pais__nacionalidade.required'=>'O campo não pode estar vazio.',
-            'pais__nacionalidade.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'pais__nacionalidade.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'nome__mae.required'=>'O campo não pode estar vazio.',
-            'nome__mae.max'=>'O campo não pode conter mais de 60 caracteres.',
-            'nome__mae.regex'=>'O campo nome social tem um formato inválido.',
-            
-            'telefone.required'=>'O campo não pode estar vazio.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não é valido.',
-            
-            'telefone.required'=>'O campo não pode estar vazio.',
-            'telefone.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não é valido.',
-            
-            'cep.required'=>'O campo não pode estar vazio.',
-            'cep.max'=>'O campo não pode conter mais de 16 caracteres.',
-            'cep.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'logradouro.required'=>'O campo não pode estar vazio.',
-            'logradouro.max'=>'O campo não pode conter mais de 50 caracteres.',
-            'logradouro.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'numero.required'=>'O campo não pode estar vazio.',
-            'numero.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'numero.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'bairro.required'=>'O campo não pode estar vazio.',
-            'bairro.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'bairro.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'localidade.required'=>'O campo não pode estar vazio.',
-            'localidade.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'localidade.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'uf.required'=>'O campo não pode estar vazio.',
-            'uf.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'uf.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'data__admissao.required'=>'O campo não pode estar vazio.',
-            'data__admissao.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'data__admissao.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'categoria__contrato.required'=>'O campo não pode estar vazio.',
-            'categoria__contrato.max'=>'O campo não pode conter mais de 255 caracteres.',
-            'categoria__contrato.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'cbo.required'=>'O campo não pode estar vazio.',
-            'cbo.max'=>'O campo não pode conter mais de 225 caracteres.',
-            'cbo.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'ctps.required'=>'O campo não pode estar vazio.',
-            'ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
-            
-            'serie__ctps.required'=>'O campo não pode estar vazio.',
-            'serie__ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
-            
-            'uf__ctps.required'=>'O campo não pode estar vazio.',
-            'uf__ctps.max'=>'O campo não ter mais de 255 caracteres.',
-            'uf__ctps.regex'=>'O campo nome social possui um formato inválido.',
-            
-            'data__afastamento.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'banco.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'agencia.max'=>'O campo não pode conter mais de 4 caracteres.',
-            'operacao.max'=>'O campo não pode conter mais de 3 caracteres.',
-            'conta.max'=>'O campo não pode conter mais de 10 caracteres.',
-            'pix.max'=>'O campo não pode conter mais de 225 caracteres.'
-        ]
-        );
-        if ($dados['banco'] || $dados['pix'] || $dados['nome__social']) {
-            $request->validate([
-                'banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/',
-                'pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/',
-                'nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ]*$/'
-            ]);
+      
+        if ($dados['banco']) {
+            $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
         }
-       
-        
+        if($dados['pix']){
+            $request->validate(['pix'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9]*$/']);
+        }
+        if ($dados['nome__social']) {
+            $request->validate(['nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
+        }
+        try {
             $trabalhadors = $this->trabalhador->editar($dados,$id);
             $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
             $bancarios = $this->bancario->editar($dados,$dados['bancario']);
             $nascimentos = $this->nascimento->editar($dados,$id);
             $categorias = $this->categoria->editar($dados,$id);
             $documentos = $this->documento->editar($dados,$id);
-            if ($trabalhadors && $enderecos &&  $bancarios && 
-            $nascimentos && $categorias && $documentos) {
-                return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
-            }
-            try {
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }
@@ -477,36 +290,38 @@ class TrabalhadorController extends Controller
      */
     public function destroy($id)
     {
-        
-        $trabalhador = $this->basecalculo->verificaTrabalhador($id);
+        $trabalhador = $this->basecalculo->where('trabalhador_id',$id)->count();
+        // $trabalhador = $this->basecalculo->verificaTrabalhador($id);
         if ($trabalhador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletador.']);
         }
-        $campoendereco = 'trabalhador';
-        $campobacario = 'trabalhador';
-        $user = auth()->user();
-        $dados = ['matricula'=>''];
-        try {
-            $comissionados = $this->comissionado->deletaTrabalhador($id);
-            $bolcartaopontos = $this->bolcartaoponto->deletarTrabalador($id);
-            $lancamentorublicas = $this->lancamentorublica->deletarTrabalhador($id);
-            $dependentes = $this->dependente->deletarTrabalhador($id); 
-            $exenderecos = $this->endereco->deletarTrabalhador($id); 
+        $this->trabalhador->deletar($id);
+        // $campoendereco = 'trabalhador';
+        // $campobacario = 'trabalhador';
+        // $user = auth()->user();
+        // $dados = ['matricula'=>''];
+        
+            // $comissionados = $this->comissionado->deletaTrabalhador($id);
+            // $bolcartaopontos = $this->bolcartaoponto->deletarTrabalador($id);
+            // $lancamentorublicas = $this->lancamentorublica->deletarTrabalhador($id);
+            // $dependentes = $this->dependente->deletarTrabalhador($id); 
+            // $exenderecos = $this->endereco->deletarTrabalhador($id); 
     
-            $bancarios = $this->bancario->first($id,$campobacario);
+            // $bancarios = $this->bancario->first($id,$campobacario);
             
-            $exbancarios = $this->bancario->deletar($bancarios->biid);
+            // $exbancarios = $this->bancario->deletar($bancarios->biid);
     
-            $nascimentos = $this->nascimento->deletar($id);
-            $categorias = $this->categoria->deletar($id);
-            $documentos = $this->documento->deletar($id);
-            $trabalhadors = $this->trabalhador->deletar($id);
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            if (isset($valorrublica_matricular->vimatricular)) {
-                $dados['matricula'] =  $valorrublica_matricular->vimatricular - 1;
-                $this->valorrublica->editarMatricular($dados,$user->empresa);
-            }
+            // $nascimentos = $this->nascimento->deletar($id);
+            // $categorias = $this->categoria->deletar($id);
+            // $documentos = $this->documento->deletar($id);
+            // $trabalhadors = $this->trabalhador->deletar($id);
+            // $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            // if (isset($valorrublica_matricular->vimatricular)) {
+            //     $dados['matricula'] =  $valorrublica_matricular->vimatricular - 1;
+            //     $this->valorrublica->editarMatricular($dados,$user->empresa);
+            // }
             return redirect()->back()->withSuccess('Deletado com sucesso.');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }

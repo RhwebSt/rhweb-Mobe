@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Parametrosefip extends Model
 {
     protected $fillable = [
-        'psfpas','psconfpas','psgrps','psresol','pscnae','psfapaliquota','psratajustados','psfpasterceiros','psaliquotaterceiros','tomador'
+        'psfpas','psconfpas','psgrps','psresol','pscnae','psfapaliquota','psratajustados','psfpasterceiros','psaliquotaterceiros','tomador_id'
     ];
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
        return Parametrosefip::create([
@@ -26,7 +30,7 @@ class Parametrosefip extends Model
     }
     public function editar($dados,$id)
     {
-       return Parametrosefip::where('tomador', $id)
+       return Parametrosefip::where('tomador_id', $id)
       ->update([
         'psfpas'=>$dados['cod__fpas'],
         'psgrps'=>$dados['cod__grps'],
@@ -42,10 +46,10 @@ class Parametrosefip extends Model
     }
     public function deletar($id)
     {
-      return Parametrosefip::where('tomador', $id)->delete();
+      return Parametrosefip::where('tomador_id', $id)->delete();
     }
     public function buscaUnidadeTomador($tomador)
     {
-        return Parametrosefip::where('tomador', $tomador)->first();
+        return Parametrosefip::where('tomador_id', $tomador)->first();
     }
 }

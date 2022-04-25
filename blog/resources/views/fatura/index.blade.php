@@ -65,10 +65,10 @@
     <div class="container">
         <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
             <li class="nav-item ms-2 mt-2" role="presentation">
-            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" style="color: white;"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
+                <button class="nav-link botao" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
             </li>
             <li class="nav-item ms-1 pillstop mt-2" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" style="color: white;"><i class="fad fa-list"></i> Lista de Faturas</button>
+                <button class="nav-link botao" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fad fa-list"></i> Lista de Faturas</button>
             </li>
         </ul>
 
@@ -107,7 +107,7 @@
                             <div class="data mt-4">
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
                                 <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="tano">
+                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="ano_inicial">
                                     @error('ano_inicial')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -115,7 +115,7 @@
                                 
                                 <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tano">
+                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="ano_final">
                                     @error('ano_final')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -205,7 +205,7 @@
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
                 <form class="row g-3" action="{{route('filtro.pesquisa.fatura')}}" method="POST">
-                @csrf
+                    @csrf
                     <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
                         
                             <div class="d-flex justify-content-between mb-3 mt-0">
@@ -255,116 +255,118 @@
 
                     </form>
                     
-                    <form class="row g-3" action="" method="POST">
-                    </form>
-                        <div class="d-flex justify-content-end">
-                            <div class="dropdown  mt-2 p-1">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:#111317; color: white;">
-                                    <i class="fad fa-sort"></i> Filtro 
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <!-- <li><a class="dropdown-item text-white" href="#"><i class="fad fa-history"></i> Mais Recente</a></li>
-                                <li><a class="dropdown-item text-white" href="#"><i class="fad fa-sort-numeric-down-alt"></i> Mais Antigo</a></li> -->
-                                <li><a class="dropdown-item text-white" href="{{route('filtro.ordem.fatura','asc')}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                <li><a class="dropdown-item text-white" href="{{route('filtro.ordem.fatura','desc')}}"><i class="fad fa-sort-amount-up"></i> Ordem Decrescente</a></li>
-                                </ul>
+                        <section>
+                            <div class="d-flex justify-content-end">
+                                <div>
+                                    <div class="dropdown">
+                                        <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fad fa-sort"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
+                                          <li><a class="dropdown-item dropdown__links--filter" href="{{route('filtro.ordem.fatura','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                          <li><a class="dropdown-item dropdown__links--filter" href="{{route('filtro.ordem.fatura','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                        </ul>
+                                      </div>
+                                </div>
+        
                             </div>
-                        </div>
-                        
+                        </section>
 
-                        <div class="table-responsive-xxl">
-                            <table class="table border-bottom text-white mt-3 mb-5" style="background-image:linear-gradient(80deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                <thead>
+
+                        <section class="table">
+                            <div class="table-responsive-xxl">
+                                <table class="table">
+                                    <thead class="tr__header">
+                                        <th class="th__header text-nowrap" style="width:60px;">Matrícula</th>
+                                        <th class="th__header text-nowrap">Tomador</th>
+                                        <th class="th__header text-nowrap">Data inicial</th>
+                                        <th class="th__header text-nowrap">Data Final</th>
+                                        <th class="th__header text-nowrap" style="width:110px;">Nº Fatura</th>
+                                        <th class="th__header text-nowrap" style="width:60px;">Imprimir</th>
+                                        <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
+                                    </thead>
                                     
-                                    <th class="col text-center border-start border-top text-nowrap" style="width:60px;">Matrícula</th>
-                                    <th class="col text-center border-top text-nowrap" style="width: 450px;">Tomador</th>
-                                    <th class="col text-center border-top text-nowrap">Data inicial</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:200px">Data Final</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:110px;">Nº Fatura</th>
-                                    <th class="col text-center border-top text-nowrap" style="width:60px;">Imprimir</th>
-                                    <th class="col text-center border-top text-nowrap border-end" style="width:60px;">Excluir</th>
-                                </thead>
-                                <tbody style="background-color: #081049; color: white;">
-                                @if(count($faturas) > 0)
-                                    @foreach($faturas as $fatura)
-                                    <tr class="bodyTabela">  
-                                        <td class="col text-center border-bottom border-start text-nowrap" style="width:60px;">{{$fatura->tsmatricula}}</td>             
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap" style="width: 450px;">
-                                            <button type="button" class="btn text-white" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$fatura->tsnome}}" style="max-width: 60ch; overflow: hidden; text-overflow: ellipsis; padding:0px; margin:0px;">
-                                                <a>{{$fatura->tsnome}}</a>
-                                            </button>
-                                        
-                                        </td>
-                                        <td class="col text-center border-bottom text-capitalize text-nowrap">
-                                            <?php
-                                                $data = explode('-',$fatura->fsinicio);
-                                            ?>
-                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:200px">
-                                            <?php
-                                                $data = explode('-',$fatura->fsfinal);
-                                            ?>
-                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:110px;">
-                                            {{$fatura->fsnumero}}
-                                        </td>
-                                        <td class="col text-center border-bottom text-nowrap" style="width:60px;">
-                                        
-                                            <button class="btn">
-                                                <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn__padrao--imprimir" ><i style="color:#FFFFFF; padding-left: 3px;" class="fad fa-lg fa-print"></i></a>
-                                            </button>
-                                        </td>                               
-                                        <td class="col text-center border-bottom border-end text-nowrap" style="width:60px;">
+                                    <tbody class="table__body">
+                                    @if(count($faturas) > 0)
+                                        @foreach($faturas as $fatura)
+                                        <tr class="tr__body">  
+                                            <td class="td__body text-nowrap col" style="width:60px;">{{$fatura->tsmatricula}}</td>  
                                             
+                                            <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$fatura->tsnome}}">
+                                                {{$fatura->tsnome}}
+                                            </td>
                                             
-                                            <button class="btn btn__padrao--excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$fatura->id}}">
-                                                <i style="color:#FFFFFF; padding-right: 3px;" class="fad fa-trash"></i>
-                                            </button>
+                                            <td class="td__body text-nowrap col">
+                                                <?php
+                                                    $data = explode('-',$fatura->fsinicio);
+                                                ?>
+                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                            </td>
+                                            <td class="td__body text-nowrap col">
+                                                <?php
+                                                    $data = explode('-',$fatura->fsfinal);
+                                                ?>
+                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                            </td>
+                                            <td class="td__body text-nowrap col" style="width:110px;">
+                                                {{$fatura->fsnumero}}
+                                            </td>
                                             
-                                            <!-- Modal --> 
-                                            <div class="modal fade" id="staticBackdrop{{$fatura->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{route('fatura.deleta',$fatura->id)}}" id="formdelete" method="post">
-                                                        <div class="modal-header modal__delete">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body modal-delbody">
-                                                            <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                                                        </div>
-                                                        <div class="modal-footer modal-delfooter">
-                                                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                                        <button type="submit" class="btn btn__deletar">Deletar</button>
-                
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            @else
+                                            <td class="td__body text-nowrap col" style="width:60px;">
+                                                    <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn btn__imprimir" ><i class="icon__color fad fa-print"></i></a>
+                                            </td> 
+                                            
+                                            <td class="td__body text-nowrap col" style="width:60px;">
+                                                
+                                                <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$fatura->id}}">
+                                                    <i class="icon__color fad fa-trash"></i>
+                                                </button>
 
-                                <tr>
-                                    <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                        <div class="alert" role="alert" style="background-color: #CC2836;">
-                                            Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endif
-                                </tbody>
+                                                
+                                                <!-- Modal --> 
+                                                <div class="modal fade" id="staticBackdrop{{$fatura->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form action="{{route('fatura.deleta',$fatura->id)}}" id="formdelete" method="post">
+                                                                <div class="modal-header modal__delete">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body modal-delbody">
+                                                                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                                                                </div>
+                                                                <div class="modal-footer modal-delfooter">
+                                                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                                                <button type="submit" class="btn btn__deletar">Deletar</button>
+                        
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @else
+                                        <tr class="tr__body">
+                                            <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                    
+                                    <tfoot>
+                                        <tr class="">
+                                            <td colspan="11">
+        
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                 
-                            </table>
-                        </div>
-
+                                </table>
+                            </div>
+                        </section>
                      
 
 

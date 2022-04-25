@@ -22,8 +22,8 @@ class CreateDependentesTable extends Migration
             $table->char('dscpf', 14)->nullable();
             $table->char('dsirrf', 20)->nullable();
             $table->char('dssf', 10)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

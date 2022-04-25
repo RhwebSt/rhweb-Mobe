@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Cbo extends Model
 {
     protected $fillable = [
-        'cscodigo', 'csdescricao', 'user'
+        'cscodigo', 'csdescricao', 'user_id'
     ];
     public function cadastro($dados)
     {
        return Cbo::create([
             'cscodigo'=>$dados['codigo__cbo'],
             'csdescricao'=>$dados['descricao__cbo'],
-            'user'=>$dados['user']
+            'user_id'=>$dados['user']
         ]);
     }
     public function verificarCbo($codigo)

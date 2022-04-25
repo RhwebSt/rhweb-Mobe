@@ -20,8 +20,8 @@ class CreateFaturaRubricasTable extends Migration
             $table->float('riunidade',8,2)->nullable();
             $table->float('ripreco',8,2)->nullable();
             $table->float('ritotal',8,2)->nullable();
-            $table->integer('fatura')->unsigned()->nullable();
-            $table->foreign('fatura')->references('id')->on('faturas');
+            $table->unsignedInteger('fatura_id')->unsigned()->nullable();
+            $table->foreign('fatura_id')->references('id')->on('faturas')->onDelete('cascade');
             $table->timestamps();
         });
     }

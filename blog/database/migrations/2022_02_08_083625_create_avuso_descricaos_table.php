@@ -18,8 +18,8 @@ class CreateAvusoDescricaosTable extends Migration
             $table->char('asdescricao', 60)->nullable();
             $table->float('aivalor',8,2)->nullable();
             $table->char('asstatus', 14)->nullable();
-            $table->integer('avuso')->unsigned()->nullable();
-            $table->foreign('avuso')->references('id')->on('avusos');
+            $table->unsignedInteger('avuso_id')->unsigned()->nullable();
+            $table->foreign('avuso_id')->references('id')->on('avusos')->onDelete('cascade');
             $table->timestamps();
         });
     }

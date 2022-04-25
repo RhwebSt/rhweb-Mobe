@@ -30,8 +30,8 @@ class CreateTrabalhadorsTable extends Migration
             $table->string('tsescolaridade',30)->nullable();
             $table->string('tsindice',20)->nullable();
             $table->string('tsirrf',10)->nullable();
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

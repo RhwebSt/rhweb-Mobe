@@ -20,8 +20,8 @@ class CreateRetencaoFaturasTable extends Migration
             $table->float('rsfgts',8,2)->nullable();
             $table->char('rstipofgts',5)->nullable();
             $table->char('rsvalorfatura',15)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

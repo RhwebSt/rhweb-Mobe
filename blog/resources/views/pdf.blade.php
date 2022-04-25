@@ -280,27 +280,17 @@
                     <td class="nome small__font border-right border-left border-bottom uppercase">{{$trabalhador->tsnome}}</td>
                     <td class="cpf small__font border-right border-left border-bottom uppercase">{{$trabalhador->tscpf}}</td>
                     <td class="adm small__font border-right border-left border-bottom uppercase">
-                         @if($trabalhador->csadmissao)
-                            <?php
-                                $dataadmissao = explode('-',$trabalhador->csadmissao);
-                                $dataadmissao = $dataadmissao[2]."/".$dataadmissao[1]."/".$dataadmissao[0];
-                            ?>
-                         {{$dataadmissao}}
-                        @endif
+                        
+                        {{date('d/m/Y',strtotime($trabalhador->categoria[0]->csadmissao))}}
                        
                     </td>
                     <td class="nasc small__font border-right border-left border-bottom uppercase">
-                        @if($trabalhador->nsnascimento)
-                            <?php
-                                $datanascimento = explode('-',$trabalhador->nsnascimento);
-                                $datanascimento = $datanascimento[2]."/".$datanascimento[1]."/".$datanascimento[0];
-                            ?>
-                        {{$datanascimento}}
-                        @endif
+                       
+                        {{date('d/m/Y',strtotime($trabalhador->nascimento[0]->nsnascimento))}}
                         
                     </td>
-                    <td class="pis small__font border-right border-left border-bottom uppercase">{{$trabalhador->dspis}}</td>
-                    <td class="situacao small__font border-right border-left border-bottom uppercase">{{$trabalhador->cssituacao}}</td>
+                    <td class="pis small__font border-right border-left border-bottom uppercase">{{$trabalhador->documento[0]->dspis}}</td>
+                    <td class="situacao small__font border-right border-left border-bottom uppercase">{{$trabalhador->categoria[0]->cssituacao}}</td>
                 </tr>
             @endforeach
           </tbody>

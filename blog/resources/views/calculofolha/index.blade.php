@@ -343,6 +343,13 @@
                                 </tr>
                                 @endif
                             </tbody>
+                            <tfoot>
+                                <tr class="">
+                                    <td colspan="11">
+                                        
+                                    </td>
+                                </tr>
+                            </tfoot>
                 
                         </table>
                     </div>
@@ -458,47 +465,49 @@
 
                                         
                                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel1">
-                                        <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                            <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-print-search"></i></h5>
-                                            <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
-                                            @csrf
-                                            <div class="offcanvas-body">
-                                                <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
-                                                
-                                                <div class="d-flex justify-content-between mb-3">
+                                            
+                                            <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-print-search"></i></h5>
+                                                <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                            </div>
+                                            
+                                            <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
+                                                @csrf
+                                                <div class="offcanvas-body">
+                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
                                                     
-                                                    <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                        <div class="d-flex">
-                                                        <label for="exampleDataList" class="form-label"></label>
-                                                        <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                        <input type="hidden" name="empresa" value="{{$user->empresa}}">
-                                                        <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"  list="lista{{$folhar->id}}">
-                                                    
-                                                        <datalist id="lista{{$folhar->id}}">
-                                                            @foreach($trabalhadores as $trabalhador)
-                                                                @if($trabalhador->folhar === $folhar->id)
-                                                                    <option value="{{$trabalhador->tsnome}}">
-                                                                @endif
-                                                            @endforeach
-                                                        </datalist>
-                                                        <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
-                                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                        </button>
+                                                    <div class="d-flex justify-content-between mb-3">
                                                         
-                                                        <div class="text-center d-none" id="refres" >
-                                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                <span class="visually-hidden">Carregando...</span>
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input type="hidden" name="folhar" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                                                                <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"  list="lista{{$folhar->id}}">
+                                                            
+                                                                <datalist id="lista{{$folhar->id}}">
+                                                                    @foreach($trabalhadores as $trabalhador)
+                                                                        @if($trabalhador->folhar === $folhar->id)
+                                                                            <option value="{{$trabalhador->tsnome}}">
+                                                                        @endif
+                                                                    @endforeach
+                                                                </datalist>
+                                                                <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        </div>
+                                    
                                                     </div>
-                                
+                                                    
                                                 </div>
-                                                
-                                            </div>
-                                        </form>
+                                            </form>
                                         </div>
                                         
                                     </td>
@@ -510,43 +519,45 @@
                                             <i class="icon__color fad fa-file-invoice"></i>
                                         </a>
                                         <div class="offcanvas offcanvas-end" tabindex="-1" id="rublica{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
-                                        <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                            <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Rùbrica <i class="fas fa-file-signature"></i></h5>
-                                            <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{route('calculo.folha.rublica.imprimir')}}" method="post">
-                                            @csrf
-                                            <div class="offcanvas-body">
-                                                <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Rúbrica <i class="fas fa-search"></i></h1>
-                                                
-                                                <div class="d-flex justify-content-between mb-3">
+                                            
+                                            <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Rùbrica <i class="fas fa-file-signature"></i></h5>
+                                                <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                            </div>
+                                            
+                                            <form action="{{route('calculo.folha.rublica.imprimir')}}" method="post">
+                                                @csrf
+                                                <div class="offcanvas-body">
+                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Rúbrica <i class="fas fa-search"></i></h1>
                                                     
-                                                    <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                        <div class="d-flex">
-                                                        <input type="hidden" name="folharublica" value="{{$folhar->id}}">
-                                                        <input type="hidden" name="empresarublica" value="{{$user->empresa}}">
-                                                        <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
-                                                        <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
-                                                        <label for="exampleDataList" class="form-label"></label>
-                                                        <input class="form-control fw-bold text-dark pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="">
-                                                        <datalist id="listarublica{{$folhar->fscodigo}}">
-                                                           
-                                                        </datalist>
-                                                        <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
-                                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                        </button>
-                                                        <div class="text-center d-none" id="refres" >
-                                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                <span class="visually-hidden">Carregando...</span>
+                                                    <div class="d-flex justify-content-between mb-3">
+                                                        
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <input type="hidden" name="folharublica" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresarublica" value="{{$user->empresa}}">
+                                                                <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
+                                                                <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control fw-bold text-dark pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="">
+                                                                <datalist id="listarublica{{$folhar->fscodigo}}">
+                                                                   
+                                                                </datalist>
+                                                                <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        </div>
+                                    
                                                     </div>
-                                
+                                                    
                                                 </div>
-                                                
-                                            </div>
-                                        </form>
+                                            </form>
                                         </div>
                                         
                                     </td>
@@ -558,41 +569,43 @@
                                             <i class="icon__color fad fa-envelope-open-dollar"></i>
                                         </a>
                                         <div class="offcanvas offcanvas-end" tabindex="-1" id="banco{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
-                                        <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
-                                            <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-file-invoice-dollar"></i></h5>
-                                            <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
-                                            @csrf
-                                            <div class="offcanvas-body">
-                                                <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
-                                                
-                                                <div class="d-flex justify-content-between mb-3">
+                                            
+                                            <div class="offcanvas-header border border-primary" style="background-image:linear-gradient(220deg, rgb(71, 42, 236), #1250d6, #0751f3, rgb(71, 42, 236));">
+                                                <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-file-invoice-dollar"></i></h5>
+                                                <button type="button" class="btn-close bg-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                            </div>
+                                            
+                                            <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
+                                                @csrf
+                                                <div class="offcanvas-body">
+                                                    <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
                                                     
-                                                    <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                        <div class="d-flex">
-                                                        <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
-                                                        <input type="hidden" name="empresabanco" value="{{$user->empresa}}">
-                                                        <label for="exampleDataList" class="form-label"></label>
-                                                        <input class="form-control fw-bold text-dark banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa">
-                                                        <datalist id="listabanco{{$folhar->id}}">
-                                                           
-                                                        </datalist>
-                                                        <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
-                                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                        </button>
-                                                        <div class="text-center d-none" id="refres" >
-                                                            <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                <span class="visually-hidden">Carregando...</span>
+                                                    <div class="d-flex justify-content-between mb-3">
+                                                        
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresabanco" value="{{$user->empresa}}">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control fw-bold text-dark banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa">
+                                                                <datalist id="listabanco{{$folhar->id}}">
+                                                                   
+                                                                </datalist>
+                                                                <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
+                                                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                                                </button>
+                                                                <div class="text-center d-none" id="refres" >
+                                                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
+                                                                        <span class="visually-hidden">Carregando...</span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        </div>
+                                    
                                                     </div>
-                                
+                                                    
                                                 </div>
-                                                
-                                            </div>
-                                        </form>
+                                            </form>
                                         </div>
                                         
                                     </td>
@@ -610,17 +623,21 @@
                                     </td>
                                         
                                 </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                                    Não á registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                @endforeach
+                                @else
+                                <tr class="tr__body">
+                                    <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                </tr>
+                                @endif
                             </tbody>
+                            
+                            <tfoot>
+                                <tr class="">
+                                    <td colspan="11">
+                                        
+                                    </td>
+                                </tr>
+                            </tfoot>
                 
                         </table>
                             
@@ -634,98 +651,98 @@
         
         
         
-        <script>
+<script>
         
-            function validaInputQuantidade(idCampo,QuantidadeCarcteres){
-                var telefone = document.querySelector(idCampo);
-        
-                telefone.addEventListener('input', function(){
-                    var telefone = document.querySelector(idCampo);
-                    var result = telefone.value;
-                    if(result > " " && result.length >= QuantidadeCarcteres){
-                      telefone.classList.add('is-valid');  
-                    }else{
-                        telefone.classList.remove('is-valid');
-                    }
-                     
-                });
+    function validaInputQuantidade(idCampo,QuantidadeCarcteres){
+        var telefone = document.querySelector(idCampo);
+
+        telefone.addEventListener('input', function(){
+            var telefone = document.querySelector(idCampo);
+            var result = telefone.value;
+            if(result > " " && result.length >= QuantidadeCarcteres){
+              telefone.classList.add('is-valid');  
+            }else{
+                telefone.classList.remove('is-valid');
             }
-            
-            var tano = validaInputQuantidade("#tano",8);
-            var tanoFinal = validaInputQuantidade("#tanoFinal",8);
-            var competencia = validaInputQuantidade("#competencia",1);
-            var tano1 = validaInputQuantidade("#tano1",8);
-            var tano1Final = validaInputQuantidade("#tano1Final",8);
-            var tano2 = validaInputQuantidade("#tano2",8);
-            var tano2Final = validaInputQuantidade("#tano2Final",8);
-            var tano = validaInputQuantidade("#tano",8);
-            var tano = validaInputQuantidade("#tano",8);
-            var tano = validaInputQuantidade("#tano",8);
-            var tano = validaInputQuantidade("#tano",8);
+             
+        });
+    }
+    
+    var tano = validaInputQuantidade("#tano",8);
+    var tanoFinal = validaInputQuantidade("#tanoFinal",8);
+    var competencia = validaInputQuantidade("#competencia",1);
+    var tano1 = validaInputQuantidade("#tano1",8);
+    var tano1Final = validaInputQuantidade("#tano1Final",8);
+    var tano2 = validaInputQuantidade("#tano2",8);
+    var tano2Final = validaInputQuantidade("#tano2Final",8);
+    var tano = validaInputQuantidade("#tano",8);
+    var tano = validaInputQuantidade("#tano",8);
+    var tano = validaInputQuantidade("#tano",8);
+    var tano = validaInputQuantidade("#tano",8);
+
+    
+
+
+    var Back = document.getElementById('pills-home-tab');
+    Back.addEventListener("click", function(){
+       localStorage.setItem('Back', 'backpill1');
+       
+   })
+   
+   var Back1 = document.getElementById('pills-contact-tab');
+    Back1.addEventListener("click", function(){
+       localStorage.setItem('Back', 'backpill3');
+       
+   })
+   
+   var Back2 = document.getElementById('pills-profile-tab');
+    Back2.addEventListener("click", function(){
+       localStorage.setItem('Back', 'backpill2');
+       
+   })
+   
+   backActive =  document.getElementById("pills-profile");
+   backActive1 =  document.getElementById("pills-home");
+   backActive2 =  document.getElementById("pills-contact");
+
+    voltar = localStorage.getItem("Back");
+
+    
+    if(voltar === null){
+        localStorage.setItem('Back', 'backpill1');
+        Back.classList.add("active");
+        backActive1.classList.add("show", "active");
+        backActive.classList.remove("show", "active");
+        backActive2.classList.remove("show", "active");
+        document.getElementById("pills-home-tab").click();
+    }
+
+    if(voltar === "backpill1"){
+        Back.classList.add("active");
+        backActive1.classList.add("show", "active");
+        backActive.classList.remove("show", "active");
+        backActive2.classList.remove("show", "active");
+        document.getElementById("pills-home-tab").click();
         
-            
+
+    }else if (voltar === "backpill2"){
+        Back2.classList.add("active");
+        backActive.classList.add("show", "active");
+        backActive1.classList.remove("show", "active");
+        backActive2.classList.remove("show", "active");
+        document.getElementById("pills-profile-tab").click();
+
         
-        
-            var Back = document.getElementById('pills-home-tab');
-            Back.addEventListener("click", function(){
-               localStorage.setItem('Back', 'backpill1');
-               
-           })
-           
-           var Back1 = document.getElementById('pills-contact-tab');
-            Back1.addEventListener("click", function(){
-               localStorage.setItem('Back', 'backpill3');
-               
-           })
-           
-           var Back2 = document.getElementById('pills-profile-tab');
-            Back2.addEventListener("click", function(){
-               localStorage.setItem('Back', 'backpill2');
-               
-           })
-           
-           backActive =  document.getElementById("pills-profile");
-           backActive1 =  document.getElementById("pills-home");
-           backActive2 =  document.getElementById("pills-contact");
+    }else if (voltar === "backpill3"){
+        Back1.classList.add("active");
+        backActive2.classList.add("show", "active");
+        backActive.classList.remove("show", "active");
+        backActive1.classList.remove("show", "active");
+        document.getElementById("pills-contact-tab").click();
 
-            voltar = localStorage.getItem("Back");
+    }    
 
-            
-            if(voltar === null){
-                localStorage.setItem('Back', 'backpill1');
-                Back.classList.add("active");
-                backActive1.classList.add("show", "active");
-                backActive.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-home-tab").click();
-            }
-
-            if(voltar === "backpill1"){
-                Back.classList.add("active");
-                backActive1.classList.add("show", "active");
-                backActive.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-home-tab").click();
-                
-
-            }else if (voltar === "backpill2"){
-                Back2.classList.add("active");
-                backActive.classList.add("show", "active");
-                backActive1.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-profile-tab").click();
-
-                
-            }else if (voltar === "backpill3"){
-                Back1.classList.add("active");
-                backActive2.classList.add("show", "active");
-                backActive.classList.remove("show", "active");
-                backActive1.classList.remove("show", "active");
-                document.getElementById("pills-contact-tab").click();
-
-            }    
-
-        </script>
+</script>
         
         
         

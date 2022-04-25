@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Nascimento extends Model
 {
     protected $fillable = [
-        'nsnascimento','nscivil','nsnaturalidade','nsraca','nsnacionalidade','trabalhador'
+        'nsnascimento','nscivil','nsnaturalidade','nsraca','nsnacionalidade','trabalhador_id'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
        return Nascimento::create([
@@ -17,12 +21,12 @@ class Nascimento extends Model
             'nscivil'=>$dados['estado__civil'],
             'nsnaturalidade'=>$dados['pais__nascimento'],
             'nsnacionalidade'=>$dados['pais__nacionalidade'],
-            'trabalhador'=>$dados['trabalhador'],
+            'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
     public function editar($dados,$id)
     {
-        return Nascimento::where('trabalhador', $id)
+        return Nascimento::where('trabalhador_id', $id)
         ->update([
             'nsnascimento'=>$dados['data_nascimento'],
             'nscivil'=>$dados['estado__civil'],
@@ -33,6 +37,6 @@ class Nascimento extends Model
     }
     public function deletar($id)
     {
-        return Nascimento::where('trabalhador', $id)->delete();
+        return Nascimento::where('trabalhador_id', $id)->delete();
     }
 }

@@ -163,7 +163,7 @@
                         <div class="container text-center mb-3  fs-4 fw-bold">Dados da Empresa <i class="fad fa-building"></i></div>
                         @csrf
                         <input type="hidden" id="method" name="_method" value="">
-                        <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                        <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
                         <input type="hidden" name="trabalhador">
                        
                         <div class="col-md-4">
@@ -220,7 +220,7 @@
                         </div>
 
                         <div class="col-md-8">
-                            <label for="nome__fantasia" class="form-label"><i class="fa-sm required fas fa-asterisk"></i> Nome Fantasia <input type="checkbox" id="radio" name="radio_fantasia" data-bs-toggle="tooltip" data-bs-placement="top" title="Definir como padrão"></label>
+                            <label for="nome__fantasia" class="form-label"> Nome Fantasia <input type="checkbox" id="radio" name="radio_fantasia" data-bs-toggle="tooltip" data-bs-placement="top" title="Definir como padrão"></label>
                             <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror valid" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia">
                             @error('nome__fantasia')
                                 <span class="text-danger">{{ $message }}</span>
@@ -508,10 +508,7 @@
                             @enderror
                         </div>
 
-                        <!-- <div class="col-md-5 d-none">
-                            <label for="complemento" class="form-label">Complemento</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="complemento__endereco" value="" id="complemento">
-                        </div> -->
+                     
                         
                         
                         <section class="section__accoordion row">
@@ -862,135 +859,6 @@
     
                             </div>
                         </section>
-                        
-
-                        <!-- <div class="col-md-3 d-none">
-                            <label for="caixa_benef" class="form-label">Caixa benef. %</label>
-                            <input type="text" class="form-control  input fw-bold text-dark " name="caixa_benef" value="" id="caixa_benef">
-                        </div>
-
-                        <div class="col-md-3 d-none">
-                            <label for="ferias" class="form-label">Férias 1,00 %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="ferias" value="" id="ferias">
-                        </div>
-
-                        <div class="col-md-3 d-none">
-                            <label for="13_salario" class="form-label">13º Salário 0,66 %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="13_salario" value="" id="13_salario">
-                        </div> -->
-
-                        
-                        <!-- <h1 class="container text-center  fs-4 fw-bold">Trabalhador</h1> -->
-
-
-                        <!-- <div class="col-md-3 d-none">
-                            <label for="ferias_trab" class="form-label">Férias %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="ferias_trab" value="" id="ferias_trab">
-                        </div>
-
-                        <div class="col-md-3 d-none">
-                            <label for="13__saltrab" class="form-label">13º Sálario %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="13__saltrab" value="" id="13__saltrab">
-                        </div>
-
-                        <div class="col-md-3 d-none">
-                            <label for="rsr" class="form-label">RSR %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="rsr" value="" id="rsr">
-                        </div> -->
-
-                        <!-- <div class="col-md-3">
-                            <label for="das" class="form-label">DAS %</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="das" value="" id="das">
-                        </div> -->
-
-
-                        <h1 class="container text-center mt-4 mb-3   fs-4 fw-bold"></h1>
-
-
-                        
-
-                        <!-- <div class="col-md-3 d-none">
-                            <label for="esocial" class="form-label">E-SOCIAL Nº</label>
-                            <input type="text" class="form-control  input fw-bold text-dark" name="esocial" id="esocial">
-                        </div> -->
-
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold"></h1>
-
-
-                        
-
-
-                        <!-- <div class="col-md-4 d-none">
-                            <label for="indice__folha" class="form-label">Indíce sobre Folha ( 1 Paga - 2 Desconta )</label>
-                            <input type="text" class="form-control  input fw-bold text-dark" name="indice__folha"  id="indice__folha">
-                        </div> -->
-
-                        <!-- <div class="col-md-2 d-none">
-                            <label for="valor__transporte" class="form-label">Valor Vale Transporte</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="valor__transporte"  id="valor__transporte">
-                        </div>
-
-                        <div class="col-md-3 d-none">
-                            <label for="valor__alimentacao" class="form-label">Valor Vale Alimentação</label>
-                            <input type="text" class="form-control input fw-bold text-dark" name="valor__alimentacao"  id="valor__alimentacao">
-                        </div> -->
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold"></h1>
-
-
-                        
-                        
-                        <!--<h1 class="container text-center mt-4 mb-3  fs-4 fw-bold">Informação para o </h1>-->
-
-                        
-
-
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold d-none">Retenções na Fatura <i class="fad fa-calculator"></i></h1>
-
-
-                        <div class="col-md-3 d-none">
-                            <label for="inss__empresa" class="form-label">INSS Empresa %</label>
-                            <input type="text" class="form-control @error('inss__empresa') is-invalid @enderror input fw-bold text-dark" name="inss__empresa" value="{{old('inss__empresa')}}" id="inss__empresa">
-                            @error('inss__empresa')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-3 d-none">
-                        <label for="retencaoinss" class="form-label">Retenção INSS</label>
-                        <select class="form-select fw-bold text-dark" id="retencaoinss" name="retencaoinss" aria-label="Default select example">
-                            <option  selected>SIM</option>
-                            <option>NÃO</option>
-                        </select>
-                        </div>
-                        <div class="col-md-3 d-none">
-                            <label for="fgts__empresa" class="form-label">FGTS Empresa %</label>
-                            <input type="text" class="form-control @error('fgts__empresa') is-invalid @enderror input fw-bold text-dark" name="fgts__empresa" value="{{old('fgts__empresa')}}" id="fgts__empresa">
-                            @error('fgts__empresa')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-3 d-none">
-                        <label for="retencaofgts" class="form-label">Retenção FGTS</label>
-                        <select class="form-select fw-bold text-dark" id="retencaofgts" name="retencaofgts" aria-label="Default select example">
-                            <option selected>SIM</option>
-                            <option >NÃO</option>
-                        </select>
-                        </div>
-                        <div class="col-md-3 d-none">
-                        <label for="valorfatura" class="form-label">Base da Fatura</label>
-                        <select class="form-select fw-bold text-dark" id="valorfatura" name="valor_fatura" aria-label="Default select example">
-                            <option selected>Produção</option>
-                            <option>Fatura</option>
-                        </select>
-                        </div>
-                        <h1 class="container text-center mt-4 mb-3  fs-4 fw-bold"></h1>
-                        <!-- <div class="col-md-6 d-none">
-                            <label for="nome__conta" class="form-label">Nome do Titular</label>
-                            <input type="text" class="form-control  input fw-bold text-dark" name="nome__conta"  id="nome__conta">
-                        </div> -->
-
-                        
-
-                       
                     <input type="hidden" name="endereco" id="endereco">
 
                     <input type="hidden" name="bancario" id="bancario">

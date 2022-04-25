@@ -188,9 +188,15 @@
         </table>
         
         <div class="borderT">
-            <table>
+            <table >
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
+                    <td rowspan="6">
+                        @if($empresas->esfoto)
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
                 </tr>
     
                 <tr>
@@ -206,7 +212,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                     
                 </tr>
     
@@ -215,7 +221,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
                     
                 </tr>
     
@@ -224,7 +230,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
@@ -267,14 +273,14 @@
             <table>
                 <tr>
                     <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">CPF: {{$trabalhadors->tscpf}}</td>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">PIS:  {{$trabalhadors->dspis}}</td>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">CTPS:{{$trabalhadors->dsctps}}</td>
+                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">PIS:  {{$trabalhadors->documento[0]->dspis}}</td>
+                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">CTPS:{{$trabalhadors->documento[0]->dsctps}}</td>
                 </tr>
             </table>
 
             <table>
                 <tr>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold cbo">CBO: {{$trabalhadors->cbo}}</td>
+                    <td class="border-left border-top border-right border-bottom small__font text-bold cbo">CBO: {{$trabalhadors->categoria[0]->cbo}}</td>
                 </tr>
             </table>
 
@@ -288,7 +294,7 @@
                     <td class="small__font text-bold border-top border-bottom border-left text-center data">Dta.Dev</td>
                     <td class="small__font text-bold border-top border-bottom border-left text-center border-right assina">Assinatura</td>
                 </tr>
-                @foreach($epi as $epi_valor)
+                @foreach($trabalhadors->epi as $epi_valor) 
                     <tr>
                         <td class="small__font text-bold border-bottom border-left text-center quant">{{$epi_valor->eiquantidade}}</td>
                         <td class="small__font text-bold border-bottom border-left descr">{{$epi_valor->esdescricao}}</td>
@@ -296,18 +302,14 @@
                         <td class="small__font text-bold border-bottom border-left text-center ca">{{$epi_valor->eica}}</td>
                         <td class="small__font text-bold border-bottom border-left text-center data">
                             @if($epi_valor->esdatares)
-                                <?php
-                                    $data = explode('-',$epi_valor->esdatares);
-                                ?>
-                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                               
+                                {{date('d/m/Y',strtotime($epi_valor->esdatares))}}
                             @endif
                         </td>
                         <td class="small__font text-bold border-bottom border-left text-center data">
                             @if($epi_valor->esdatadev)
-                                <?php
-                                    $data = explode('-',$epi_valor->esdatadev);
-                                ?>
-                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                               
+                                 {{date('d/m/Y',strtotime($epi_valor->esdatadev))}}
                             @endif
                         </td>
                         <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
@@ -427,7 +429,7 @@
     
                 <table class="margin-top">
                     <tr>
-                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->esmunicipio}} - {{$empresas->esuf}}</td>
+                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
                         <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
                     </tr>
                 </table>

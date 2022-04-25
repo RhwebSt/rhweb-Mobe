@@ -94,7 +94,7 @@
         <input type="hidden" name="tomador">
         <input type="hidden" name="pessoal">
         <!-- <input type="hidden" name="empresa">  -->
-        <input type="hidden" name="empresa" value="{{$user->empresa}}">
+        <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
     
         <div>
           <div class="col-md-6">
@@ -171,8 +171,8 @@
         </div>
     
         <?php
-        if (isset($valorrublica_matricular->vimatricular)) {
-          $matricular = $valorrublica_matricular->vimatricular + 1;
+        if (isset($valorrublica_matricular->valoresrublica[0]->vimatricular)) {
+          $matricular = $valorrublica_matricular->valoresrublica[0]->vimatricular + 1;
         } else {
           $matricular = 1;
         }

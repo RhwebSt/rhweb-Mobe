@@ -22,8 +22,8 @@ class CreateIndiceFaturasTable extends Migration
             $table->char('isindecesobrefolha', 15)->nullable();
             $table->float('isvaletransporte',8,2)->nullable();
             $table->float('isvalealimentacao',8,2)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

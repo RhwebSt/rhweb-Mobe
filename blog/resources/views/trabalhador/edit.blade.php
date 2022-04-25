@@ -79,8 +79,8 @@
     <!-- <input type="hidden"  name="deflator" > -->
     <!-- <input type="hidden"  name="tomador" > -->
     <input type="hidden" name="foto" id="foto" value="{{$trabalhador->tsfoto}}">
-    <input type="hidden" name="endereco" id="endereco" value="{{$trabalhador->eiid}}">
-    <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->biid}}">
+    <input type="hidden" name="endereco" id="endereco" value="{{$trabalhador->endereco[0]->eiid}}">
+    <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->bancario[0]->biid}}">
     <div class="col-md-6">
       <label for="nome__completo" class="form-label">Nome Completo</label>
       <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
@@ -147,7 +147,7 @@
 
     <div class="col-md-3">
       <label for="pis" class="form-label">PIS</label>
-      <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->dspis}}">
+      <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
       @error('pis')
       <span class="text-danger">{{ $message }}</span> 
       @enderror
@@ -176,174 +176,82 @@
     <div class="col-md-6">
       <label for="estado__civil" class="form-label">Estado Civil</label>
       <select id="estado__civil" name="estado__civil" class="form-select fw-bold" value="">
-
-        @if($trabalhador->nscivil ==='Solteiro')
-        <option selected>Solteiro</option>
-        <option>Casado</option>
-        <option>Separados</option>
-        <option>Divorciados</option>
-        <option>viúvo</option>
-        @elseif($trabalhador->nscivil ==='Casado')
-        <option>Solteiro</option>
-        <option selected>Casado</option>
-        <option>Separados</option>
-        <option>Divorciados</option>
-        <option>viúvo</option>
-        @elseif($trabalhador->nscivil ==='Separados')
-        <option>Solteiro</option>
-        <option>Casado</option>
-        <option selected>Separados</option>
-        <option>Divorciados</option>
-        <option>viúvo</option>
-        @elseif($trabalhador->nscivil ==='Divorciados')
-        <option>Solteiro</option>
-        <option>Casado</option>
-        <option>Separados</option>
-        <option selected>Divorciados</option>
-        <option>viúvo</option>
-        @else
-        <option>Solteiro</option>
-        <option>Casado</option>
-        <option>Separados</option>
-        <option>Divorciados</option>
-        <option selected>viúvo</option>
-        @endif
+        <?php
+            $civil = [
+              '1-Solteiro',
+              '2-Casado',
+              '3-Divorciados',
+              '4-Separados',
+              '5-Viúvo',
+            ];
+        ?>
+        @foreach($civil as $civis)
+            @if($trabalhador->nascimento[0]->nscivil === $civis)
+              <option selected>{{$civis}}</option>
+            @else
+              <option>{{$civis}}</option>
+            @endif
+        @endforeach
       </select>
     </div>
 
     <div class="col-md-6">
       <label for="raca" class="form-label">Raça</label>
       <select id="raca" name="raca" class="form-select fw-bold">
-
-        @if($trabalhador->nsraca === 'Preto')
-        <option selected>Preto</option>
-        <option>Pardo</option>
-        <option>Branco</option>
-        <option>Indígena</option>
-        <option>Amarela</option>
-        <option>Não informado</option>
-        @elseif($trabalhador->nsraca === 'Pardo')
-        <option>Preto</option>
-        <option selected>Pardo</option>
-        <option>Branco</option>
-        <option>Indígena</option>
-        <option>Amarela</option>
-        <option>Não informado</option>
-        @elseif($trabalhador->nsraca === 'Branco')
-        <option>Preto</option>
-        <option>Pardo</option>
-        <option selected>Branco</option>
-        <option>Indígena</option>
-        <option>Amarela</option>
-        <option>Não informado</option>
-        @elseif($trabalhador->nsraca === 'Indígena')
-        <option>Preto</option>
-        <option>Pardo</option>
-        <option>Branco</option>
-        <option selected>Indígena</option>
-        <option>Amarela</option>
-        <option>Não informado</option>
-        @elseif($trabalhador->nsraca === 'Amarela')
-        <option>Preto</option>
-        <option>Pardo</option>
-        <option>Branco</option>
-        <option>Indígena</option>
-        <option selected>Amarela</option>
-        <option>Não informado</option>
-        @else
-        <option>Preto</option>
-        <option>Pardo</option>
-        <option>Branco</option>
-        <option>Indígena</option>
-        <option>Amarela</option>
-        <option selected>Não informado</option>
-        @endif
+        <?php
+          $raca = [
+            '1-Branco',
+            '2-Preta',
+            '3-Pardo',
+            '4-Amarela',
+            '5-Indígena',
+            '6-Não informado',
+          ];
+        ?>
+         @foreach($raca as $racas)
+            @if($trabalhador->nascimento[0]->nsraca === $racas)
+              <option selected>{{$racas}}</option>
+            @else
+              <option>{{$racas}}</option>
+            @endif
+        @endforeach
+     
       </select>
     </div>
 
     <div class="col-md-6">
       <label for="grau__instrucao" class="form-label">Grau de Instrução</label>
       <select id="grau__instrucao" name="grau__instrucao" class="form-select fw-bold" value="">
-        @if($trabalhador->tsescolaridade === 'Superior Completo')
-        <option selected>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Superior incompleto')
-        <option>Superior Completo</option>
-        <option selected>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Ensino Médio Completo')
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option selected>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Ensino Médio Incompleto')
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option selected>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Ensino Fundamental Completo')
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option selected>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Ensino Fundamental Incompleto')
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option selected>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @elseif($trabalhador->tsescolaridade === 'Lê e Escreve')
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option selected>Lê e Escreve</option>
-        <option>Analfabetos</option>
-        @else
-        <option>Superior Completo</option>
-        <option>Superior incompleto</option>
-        <option>Ensino Médio Completo</option>
-        <option>Ensino Médio Incompleto</option>
-        <option>Ensino Fundamental Completo</option>
-        <option>Ensino Fundamental Incompleto</option>
-        <option>Lê e Escreve</option>
-        <option selected>Analfabetos</option>
-        @endif
+        <?php
+          $escolaridade = [
+                'Analfabetos'
+                ,'02-Até o 5º incompleto do ensino fundamental'
+                ,'03-5º ano completo do ensino fundamental'
+                ,'04-Do 6º ao 9º ano do ensino fundamental incompleto (antiga 5ª a 8ª série)'
+                ,'05-Ensino Fundamental Completo'
+                ,'06-Ensino Médio Incompleto'
+                ,'07-Ensino Médio Completo'
+                ,'08-Educação superior incompleta'
+                ,'09-Educação superior completa'
+                ,'10-Pós-graduação completa'
+                ,'11-Mestrado completo'
+                ,'12-Doutorado completo'
+          ];
+        ?>
+        @foreach($escolaridade as $escolaridades)
+          @if($trabalhador->tsescolaridade === $escolaridades)
+            <option selected>{{$escolaridades}}</option>
+          @else
+            <option>{{$escolaridades}}</option>
+          @endif
+        @endforeach
       </select>
     </div>
 
 
     <div class="col-md-6">
       <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-      <input type="date" class="form-control fw-bold @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nsnascimento}}">
+      <input type="date" class="form-control fw-bold @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nascimento[0]->nsnascimento}}">
       @error('data_nascimento')
       <span class="text-danger">{{ $message }}</span> 
       @enderror
@@ -352,7 +260,7 @@
 
     <div class="col-md-6">
       <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-      <input type="text" list="pais_nascimento_list" class="form-control fw-bold @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nsnaturalidade}}">
+      <input type="text" list="pais_nascimento_list" class="form-control fw-bold @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nascimento[0]->nsnaturalidade}}">
       @error('pais__nascimento')
       <span class="text-danger">{{ $message }}</span> 
       @enderror
@@ -362,7 +270,7 @@
 
     <div class="col-md-6">
       <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-      <input type="text" list="pais_nacionalidade_list" class="form-control fw-bold @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nsnacionalidade}}">
+      <input type="text" list="pais_nacionalidade_list" class="form-control fw-bold @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nascimento[0]->nsnacionalidade}}">
       @error('pais__nacionalidade')
               <span class="text-danger">{{ $message }}</span>
               @enderror
@@ -406,7 +314,7 @@
                             
                             <div class="col-md-3 mt-2">
                               <label for="cep" class="form-label letter__color">Cep</label>
-                              <input type="text" class="form-control fw-bold @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->escep}}">
+                              <input type="text" class="form-control fw-bold @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->endereco[0]->escep}}">
                               @error('cep')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -416,7 +324,7 @@
                         
                             <div class="col-md-7 mt-2">
                               <label for="logradouro" class="form-label letter__color">Rua</label>
-                              <input type="text" class="form-control fw-bold @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->eslogradouro}}">
+                              <input type="text" class="form-control fw-bold @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->endereco[0]->eslogradouro}}">
                               @error('logradouro')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -424,7 +332,7 @@
                         
                             <div class="col-md-2 mt-2">
                               <label for="numero" class="form-label letter__color">Número</label>
-                              <input type="text" class="form-control fw-bold @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->esnum}}">
+                              <input type="text" class="form-control fw-bold @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->endereco[0]->esnum}}">
                               @error('numero')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -616,8 +524,8 @@
                                 ];
                                 ?>
                                 @foreach($complemento as $complementos)
-                                @if($complementos === $trabalhador->escomplemento)
-                                <option selected>{{$trabalhador->escomplemento}}</option>
+                                @if($complementos === $trabalhador->endereco[0]->escomplemento)
+                                <option selected>{{$trabalhador->endereco[0]->escomplemento}}</option>
                                 @else
                                 <option>{{$complementos}}</option>
                                 @endif
@@ -627,7 +535,7 @@
                         
                             <div class="col-md-8 mt-2">
                               <label for="bairro" class="form-label letter__color">Bairro</label>
-                              <input type="text" class="form-control fw-bold @error('bairro') is-invalid @enderror" name="bairro" id="bairro" value="{{$trabalhador->esbairro}}">
+                              <input type="text" class="form-control fw-bold @error('bairro') is-invalid @enderror" name="bairro" id="bairro" value="{{$trabalhador->endereco[0]->esbairro}}">
                               @error('bairro')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -636,7 +544,7 @@
                         
                             <div class="col-md-8 mt-2">
                               <label for="localidade" class="form-label letter__color">Municipio</label>
-                              <input type="text" class="form-control fw-bold @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->esmunicipio}}">
+                              <input type="text" class="form-control fw-bold @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->endereco[0]->esmunicipio}}">
                               @error('localidade')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -644,7 +552,7 @@
                         
                             <div class="col-md-4 mt-2">
                               <label for="uf" class="form-label letter__color">UF</label>
-                              <input type="text" class="form-control fw-bold @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->esuf}}">
+                              <input type="text" class="form-control fw-bold @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->endereco[0]->esuf}}">
                               @error('uf')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -671,7 +579,7 @@
                             
                             <div class="col-md-6 mt-2">
                               <label for="data__admissao" class="form-label letter__color">Data de Admissão</label>
-                              <input type="date" class="form-control fw-bold @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->csadmissao}}">
+                              <input type="date" class="form-control fw-bold @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->categoria[0]->csadmissao}}">
                               @error('data__admissao')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -679,7 +587,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="categoria" class="form-label letter__color">Categoria</label>
-                              <input type="text" class="form-control fw-bold @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->cscategoria}}">
+                              <input type="text" class="form-control fw-bold @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
                               @error('categoria__contrato')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -687,7 +595,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="cbo" class="form-label letter__color">CBO</label>
-                              <input type="text" class="form-control fw-bold @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->cbo}}">
+                              <input type="text" class="form-control fw-bold @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
                               @error('cbo')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -697,7 +605,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="ctps" class="form-label letter__color">CTPS</label>
-                              <input type="text" class="form-control fw-bold @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->dsctps}}">
+                              <input type="text" class="form-control fw-bold @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->documento[0]->dsctps}}">
                               @error('ctps')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -705,7 +613,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="serie__ctps" class="form-label letter__color">Série</label>
-                              <input type="text" class="form-control fw-bold @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->dsserie}}">
+                              <input type="text" class="form-control fw-bold @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->documento[0]->dsserie}}">
                               @error('serie__ctps')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -713,7 +621,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="uf__ctps" class="form-label letter__color">UF</label>
-                              <input type="text" class="form-control fw-bold @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->dsuf}}">
+                              <input type="text" class="form-control fw-bold @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->documento[0]->dsuf}}">
                               @error('uf__ctps')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -728,7 +636,7 @@
                                   $situacao=['Ativo','Inativo','Afastado','Em processo'];
                                 ?>
                                 @foreach($situacao as $situacaos)
-                                  @if($situacaos === $trabalhador->cssituacao)
+                                  @if($situacaos === $trabalhador->categoria[0]->cssituacao)
                                     <option selected>{{$situacaos}}</option>
                                   @else
                                   <option >{{$situacaos}}</option>
@@ -739,7 +647,7 @@
                         
                             <div class="col-md-6 mt-2">
                               <label for="data__afastamento" class="form-label letter__color">Data de Afastamento</label>
-                              <input type="date" class="form-control fw-bold @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->csafastamento}}">
+                              <input type="date" class="form-control fw-bold @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->categoria[0]->csafastamento}}">
                               @error('data__afastamento')
                               <span class="text-danger">{{ $message }}</span> 
                               @enderror
@@ -766,27 +674,27 @@
                             
                             <div class="col-md-4 mt-2">
                               <label for="banco" class="form-label letter__color">Banco</label>
-                              <input type="text" class="form-control fw-bold" name="banco" id="banco" value="{{$trabalhador->bsbanco}}">
+                              <input type="text" class="form-control fw-bold" name="banco" id="banco" value="{{$trabalhador->bancario[0]->bsbanco}}">
                             </div>
                         
                             <div class="col-md-4 mt-2">
                               <label for="agencia" class="form-label letter__color">Agência</label>
-                              <input type="text" class="form-control fw-bold" name="agencia" id="agencia" value="{{$trabalhador->bsagencia}}">
+                              <input type="text" class="form-control fw-bold" name="agencia" id="agencia" value="{{$trabalhador->bancario[0]->bsagencia}}">
                             </div>
                         
                             <div class="col-md-4 mt-2">
                               <label for="operacao" class="form-label letter__color">Operação</label>
-                              <input type="text" class="form-control fw-bold" name="operacao" id="operacao" value="{{$trabalhador->bsoperacao}}">
+                              <input type="text" class="form-control fw-bold" name="operacao" id="operacao" value="{{$trabalhador->bancario[0]->bsoperacao}}">
                             </div>
                         
                             <div class="col-md-4 mt-2">
                               <label for="conta" class="form-label letter__color">Conta</label>
-                              <input type="text" class="form-control fw-bold" name="conta" id="conta" value="{{$trabalhador->bsconta}}">
+                              <input type="text" class="form-control fw-bold" name="conta" id="conta" value="{{$trabalhador->bancario[0]->bsconta}}">
                             </div>
                         
                             <div class="col-md-4 mt-2">
                               <label for="pix" class="form-label letter__color">PIX</label>
-                              <input type="text" class="form-control fw-bold" name="pix" id="pix" value="{{$trabalhador->bspix}}">
+                              <input type="text" class="form-control fw-bold" name="pix" id="pix" value="{{$trabalhador->bancario[0]->bspix}}">
                             </div>
                             
                         </div>

@@ -33,7 +33,22 @@ class Empresa extends Model
     {
         return $this->hasMany(User::class);
     }
-   
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
+    public function endereco()
+    {
+        return $this->hasMany(Endereco::class);
+    }
+    public function valoresrublica()
+    {
+        return $this->hasMany(ValoresRublica::class);
+    }
     public function buscaUnidadeEmpresa($id)
     {
         return DB::table('empresas')

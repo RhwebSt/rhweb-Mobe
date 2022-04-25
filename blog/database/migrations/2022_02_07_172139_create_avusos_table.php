@@ -21,8 +21,8 @@ class CreateAvusosTable extends Migration
             $table->char('ascpf', 15)->nullable();
             $table->float('aicodigo',8,2)->nullable();
             $table->float('ailiquido',8,2)->nullable();
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

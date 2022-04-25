@@ -20,8 +20,8 @@ class CreateInssesTable extends Migration
             $table->char('isvalorfinal', 10)->nullable();
             $table->float('isindece',8,2)->nullable();
             $table->float('isreducao',8,2)->nullable();
-            $table->integer('user')->unsigned()->nullable();
-            $table->foreign('user')->references('id')->on('users');
+            $table->unsignedInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

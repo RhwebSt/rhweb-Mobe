@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class TabelaPreco extends Model
 {
     protected $fillable = [
-        'tsano','tsrubrica','tsdescricao','tsvalor','tstomvalor','tsstatus','empresa','tomador'
+        'tsano','tsrubrica','tsdescricao','tsvalor','tstomvalor','tsstatus','empresa_id','tomador_id'
     ];
 
     public function cadastro($dados)
@@ -19,8 +19,8 @@ class TabelaPreco extends Model
             'tsstatus'=>$dados['status'],
             'tsvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
             'tstomvalor'=>str_replace(",",".",str_replace(".","",$dados['valor__tomador'])),
-            'empresa'=>$dados['empresa'],
-            'tomador'=>$dados['tomador']
+            'empresa_id'=>$dados['empresa'],
+            'tomador_id'=>$dados['tomador']
         ]);
     }
     public function buscaListaTabela($id,$tomador)
@@ -30,21 +30,21 @@ class TabelaPreco extends Model
             if ($id) {
                 $query->where([
                     ['tsrubrica','like','%'.$id.'%'],
-                    ['tomador',$tomador],
-                    ['empresa', $user->empresa]
+                    ['tomador_id',$tomador],
+                    ['empresa_id', $user->empresa_id]
                 ])
                 ->where('tsano', date("Y"))
                 ->orWhere([
                     ['tsdescricao','like','%'.$id.'%'],
-                    ['tomador',$tomador],
-                    ['empresa', $user->empresa],
+                    ['tomador_id',$tomador],
+                    ['empresa_id', $user->empresa_id],
                 ])
                 ->where('tsano', date("Y"));
             }else{
                 $query->where([
                     ['id','>',$id],
                     ['tomador',$tomador],
-                    ['empresa', $user->empresa]
+                    ['empresa_id', $user->empresa_id]
                 ])
                 ->where('tsano', date("Y"));
             } 
@@ -103,18 +103,18 @@ class TabelaPreco extends Model
             $user = auth()->user();
             if ($condicao) {
                 $query->orWhere([
-                    ['tomador',$tomador],
+                    ['tomador_id',$tomador],
                     // ['tsano',$ano],
                     ['tsrubrica',$condicao]
                 ])
                 ->orWhere([
-                    ['tomador',$tomador],
+                    ['tomador_id',$tomador],
                     // ['tsano',$ano],
                     ['tsdescricao','like','%'.$condicao.'%']
                 ]);
             }else{
                 $query->where([
-                    ['tomador',$tomador],
+                    ['tomador_id',$tomador],
                     // ['tsano',$ano]
                 ]);
             }
@@ -153,8 +153,8 @@ class TabelaPreco extends Model
         return TabelaPreco::where(function($query) use ($tomador){
             $user = auth()->user();
             $query->where([
-                ['tomador',$tomador],
-                ['empresa', $user->empresa]
+                ['tomador_id',$tomador],
+                ['empresa_id', $user->empresa_id]
             ]);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('tomador',$tomador);
@@ -173,8 +173,8 @@ class TabelaPreco extends Model
     {
         return TabelaPreco::where(function($query) use ($tomador){
             $user = auth()->user();
-            $query->where('empresa', $user->empresa)
-            ->whereIn('tomador', $tomador);
+            $query->where('empresa_id', $user->empresa_id)
+            ->whereIn('tomador_id', $tomador);
 
             // if ($user->hasPermissionTo('admin')) {
             //     $query->whereIn('tomador', $tomador);
@@ -192,17 +192,17 @@ class TabelaPreco extends Model
             $user = auth()->user();
             $query->where([
                 ['tsrubrica',$id],
-                ['tomador',$tomador],
-                ['empresa', $user->empresa]
+                ['tomador_id',$tomador],
+                ['empresa_id', $user->empresa_id]
             ])
             ->orWhere([
                 ['tsdescricao',$id],
-                ['tomador',$tomador],
-                ['empresa', $user->empresa],
+                ['tomador_id',$tomador],
+                ['empresa_id', $user->empresa_id],
             ])
             ->orWhere([
                 ['id',$id],
-                ['empresa', $user->empresa]
+                ['empresa_id', $user->empresa_id]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -237,22 +237,22 @@ class TabelaPreco extends Model
     }
     public function buscaUnidadeTabelaRelatorio($tomador)
     {
-        return TabelaPreco::where('tomador',$tomador)->get();
+        return TabelaPreco::where('tomador_id',$tomador)->get();
     }
     public function verificaRublica($dados)
     {
         return TabelaPreco::where([
             ['tsano',$dados['ano']],
             ['tsrubrica',$dados['rubricas']],
-            ['tomador',$dados['tomador']]
+            ['tomador_id',$dados['tomador']]
         ])->count();
     }
     public function tomadorFolhar($id)
     {
         return DB::table('base_calculos')
-        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
-        ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador')
-        ->join('rublicas', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica')
+        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador_id')
+        ->join('tabela_precos', 'tomadors.id', '=', 'tabela_precos.tomador_id')
+        ->join('rublicas', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica_id')
         ->select('tabela_precos.tsrubrica','rublicas.rsincidencia')
         ->where('base_calculos.folhar',$id)
         ->distinct()
@@ -272,7 +272,7 @@ class TabelaPreco extends Model
     public function Atualizar($tomador,$ano_h,$ano_o)
     {
         DB::table('tabela_precos')->where([
-            ['tomador', $tomador],
+            ['tomador_id', $tomador],
             ['tsano', $ano_o],
         ])
         ->chunkById(100, function ($tabelaprecos) use($ano_h) {
@@ -284,8 +284,8 @@ class TabelaPreco extends Model
                     'tsstatus'=>$tabelapreco->tsstatus,
                     'tsvalor'=>$tabelapreco->tsvalor,
                     'tstomvalor'=>$tabelapreco->tstomvalor,
-                    'empresa'=>$tabelapreco->empresa,
-                    'tomador'=>$tabelapreco->tomador
+                    'empresa_id'=>$tabelapreco->empresa,
+                    'tomador_id'=>$tabelapreco->tomador
                 ]);
             }
         });
@@ -296,7 +296,7 @@ class TabelaPreco extends Model
     }
     public function deletatomador($id)
     {
-        return TabelaPreco::where('tomador', $id)->delete();
+        return TabelaPreco::where('tomador_id', $id)->delete();
     }
     public function buscaTabelaPrecoEditar($id)
     {

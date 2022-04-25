@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inss extends Model
 {
     protected $fillable = [
-        'isano','isvalorinicial','isvalorfinal','isindece','isreducao','user'
+        'isano','isvalorinicial','isvalorfinal','isindece','isreducao','user_id'
     ];
     public function cadastro($dados)
     {
@@ -17,7 +17,7 @@ class Inss extends Model
             'isvalorfinal'=>$dados['valor__final'],
             'isindece'=>str_replace(",",".",$dados['indice']),
             'isreducao'=>str_replace(",",".",$dados['fator']),
-            'user'=>$dados['user'] 
+            'user_id'=>$dados['user'] 
         ]);
     }
     public function edita($dados,$id)

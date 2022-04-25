@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class FaturaPrincipal extends Model
 {
     protected $fillable = [
-        'dsdescricao', 'fiindece', 'fivalor', 'fatura'
+        'dsdescricao', 'fiindece', 'fivalor', 'fatura_id'
     ];
     public function cadastro($dados)
     {
@@ -15,17 +15,17 @@ class FaturaPrincipal extends Model
             'dsdescricao'=>$dados['descricao'],
             'fiindece'=>$dados['indice'],
             'fivalor'=>$dados['valor'],
-            'fatura'=>$dados['fatura']
+            'fatura_id'=>$dados['fatura']
         ]);
     }
     public function buscaRelatorio($fatura)
     {
-        return FaturaPrincipal::where('fatura',$fatura)
+        return FaturaPrincipal::where('fatura_id',$fatura)
         ->get();
 
     }
     public function deletarFatura($id)
     {
-        return FaturaPrincipal::where('fatura',$id)->delete();
+        return FaturaPrincipal::where('fatura_id',$id)->delete();
     }
 }

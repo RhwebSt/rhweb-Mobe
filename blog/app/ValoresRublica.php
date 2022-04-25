@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class ValoresRublica extends Model
 {
     protected $fillable = [
-    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','vitomador','empresa'
+    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','vitomador','empresa_id'
     ];
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
     public function cadastro($dados)
     {
         return ValoresRublica::create([
@@ -23,7 +27,7 @@ class ValoresRublica extends Model
             'vsnroflha'=>isset($dados['nro__folha'])?$dados['nro__folha']:null,
             'vimatricular'=>isset($dados['matricular'])?$dados['matricular']:null,
             'vimatriculartomador'=>isset($dados['matriculartomador'])?$dados['matriculartomador']:null,
-            'empresa'=>$dados['empresa'],
+            'empresa_id'=>$dados['empresa'],
         ]);
     }
     public function editar($dados,$id)
@@ -46,56 +50,56 @@ class ValoresRublica extends Model
     }
     public function editarMatricular($dados,$empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update([
             'vimatricular'=>$dados['matricula'],
         ]);
     }
     public function editarAvuso($dados,$empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update([
             'vsreciboavulso'=>$dados['codigo'],
         ]);
     }
     public function editarMatricularTomador($dados,$empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update([
             'vimatriculartomador'=>$dados['matricula'],
         ]);
     }
     public function editarFatura($quantidade,$empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update([
             'vsnrofatura'=>$quantidade,
         ]);
     }
     public function editarBoletimTabela($dados,$empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update([
             'vsnroboletins'=>$dados['liboletim'],
         ]);
     }
     public function buscaUnidadeEmpresa($empresa)
     {
-        return ValoresRublica::where('empresa', $empresa)->first();
+        return ValoresRublica::where('empresa_id', $empresa)->first();
     }
     public function editarUnidadeNuFolhar($empresa,$numerofolhar)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update(['vsnroflha'=>$numerofolhar]);
     }
     public function editarUnidadeNuCartaoPonto($empresa,$dados)
     {
-        return ValoresRublica::where('empresa', $empresa)
+        return ValoresRublica::where('empresa_id', $empresa)
         ->update(['vsnrocartaoponto'=>$dados['liboletim']]);
     }
     public function deletar($id)
     {
-        return ValoresRublica::where('empresa', $id)->delete();
+        return ValoresRublica::where('empresa_id', $id)->delete();
     }
     
 }

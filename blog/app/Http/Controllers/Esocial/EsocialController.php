@@ -83,15 +83,19 @@ class EsocialController extends Controller
             'trabalhador'=>$id,
             'tomador'=>null
         ];
-        $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
-        $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
+        // $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
+        // $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
         // dd($trabalhador->nsraca[1],$empresa,$trabalhador);
+        $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
+        $trabalhador = $this->trabalhador->where('id',$id)
+        ->with(['documento','endereco','categoria','nascimento','bancario','depedente','epi'])->first();
+        // dd($trabalhador);
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=2.5.00'."\r\n".
-        'ambiente=8'."\r\n".
+        'ambiente=2'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
         'indRetif_4=1'."\r\n".                                                                    
         'nrRecibo_5='."\r\n".                                                                   
@@ -103,31 +107,31 @@ class EsocialController extends Controller
         'cpfTrab_13='.substr(str_replace(array(".", ",", "-", "/"), "", $trabalhador->tscpf),0,-6)."\r\n".                                                         
         'nmTrab_15='."\r\n".                                     
         'sexo_16='.$trabalhador->tssexo[0]."\r\n".                                                                       
-        'racaCor_17='.$trabalhador->nsraca[0].$trabalhador->nsraca[1]."\r\n".                                                                   
-        'estCiv_18='.$trabalhador->nscivil[0]."\r\n".                                                                    
-        'grauInstr_19='.$trabalhador->nsraca[0].$trabalhador->nsraca[1]."\r\n".                                                                  
-        'dtNascto_22='.$trabalhador->nsnascimento."\r\n".                                                         
-        'paisNascto_25='.$trabalhador->nsnacionalidade[0].$trabalhador->nsnacionalidade[1].$trabalhador->nsnacionalidade[2]."\r\n".                                                              
-        'paisNac_26='.$trabalhador->nsnaturalidade[0].$trabalhador->nsnaturalidade[1].$trabalhador->nsnaturalidade[2]."\r\n".                                                              
-        'tpLograd_60='.$empresa->escomplemento[0]."\r\n".                                                                
-        'dscLograd_61='.$empresa->eslogradouro."\r\n".                                          
-        'nrLograd_62='.$empresa->esnum."\r\n".                                                          
+        'racaCor_17='.$trabalhador->nascimento[0]->nsraca[0]."\r\n".                                                                   
+        'estCiv_18='.$trabalhador->nascimento[0]->nscivil[0]."\r\n".                                                                    
+        'grauInstr_19='.$trabalhador->tsescolaridade[0].$trabalhador->tsescolaridade[1]."\r\n".                                                                  
+        'dtNascto_22='.$trabalhador->nascimento[0]->nsnascimento."\r\n".                                                         
+        'paisNascto_25='.substr(str_replace(array(".", ",", "-", "/"), "", $trabalhador->nascimento[0]->nsnacionalidade),0,3)."\r\n".                                                              
+        'paisNac_26='.substr(str_replace(array(".", ",", "-", "/"), "", $trabalhador->nascimento[0]->nsnaturalidade),0,3)."\r\n".                                                              
+        'tpLograd_60='.$empresa->endereco[0]->escomplemento[0]."\r\n".                                                                
+        'dscLograd_61='.$empresa->endereco[0]->eslogradouro."\r\n".                                          
+        'nrLograd_62='.$empresa->endereco[0]->esnum."\r\n".                                                          
         'complemento_63='."\r\n".                                                               
-        'bairro_64='.$empresa->esbairro."\r\n".                                                      
-        'cep_65='.str_replace(array(".", ",", "-", "/"), "",$empresa->escep)."\r\n".                                                               
+        'bairro_64='.$empresa->endereco[0]->esbairro."\r\n".                                                      
+        'cep_65='.str_replace(array(".", ",", "-", "/"), "",$empresa->endereco[0]->escep)."\r\n".                                                               
         'codMunic_66='.$empresa->escodigomunicipio."\r\n".                                                           
-        'UF_67='.$empresa->esuf."\r\n".                                                                       
+        'UF_67='.$empresa->endereco[0]->esuf."\r\n".                                                                       
         'cadIni_164=N'."\r\n".                                                                  
         'matricula_173='.$trabalhador->tsmatricula."\r\n".                                                           
-        'codCateg_104='.$trabalhador->cscategoria[0].$trabalhador->cscategoria[1].$trabalhador->cscategoria[2]."\r\n".                                                               
-        'dtInicio_105='.$trabalhador->csadmissao."\r\n".                                                      
+        'codCateg_104='.$trabalhador->categoria[0]->cscategoria[0].$trabalhador->categoria[0]->cscategoria[1].$trabalhador->categoria[0]->cscategoria[2]."\r\n".                                                               
+        'dtInicio_105='.$trabalhador->categoria[0]->csadmissao."\r\n".                                                      
         'natAtividade_106=1'."\r\n".                                                             
-        'nmCargo_175='.self::montastring($trabalhador->cbo)[0].self::montastring($trabalhador->cbo)[1]."\r\n".                             
-        'CBOCargo_176='.self::montastring($trabalhador->cbo)[0]."\r\n".                                                      
-        'nmFuncao_177='.self::montastring($trabalhador->cbo)[0].self::montastring($trabalhador->cbo)[1]."\r\n".                                   
-        'CBOFuncao_178='.self::montastring($trabalhador->cbo)[0]."\r\n".                                                          
+        'nmCargo_175='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
+        'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
+        'nmFuncao_177='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
+        'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                          
         'SALVARS2300';
-        $verificar =  $this->esocial->verificarTrabalhador($id);
+        $verificar =  $this->esocial->where('trabalhador_id',$id)->count();
         if (!$verificar) {
             $this->esocial->cadastro($dados);
         }

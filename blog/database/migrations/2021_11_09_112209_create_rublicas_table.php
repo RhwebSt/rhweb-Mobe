@@ -20,8 +20,8 @@ class CreateRublicasTable extends Migration
             $table->char('rsincidencia', 10)->nullable();
             $table->char('rsstatus', 10)->nullable();
             $table->char('rsdc', 14)->nullable();
-            $table->integer('empresa')->unsigned()->nullable();
-            $table->foreign('empresa')->references('id')->on('empresas');
+            $table->unsignedInteger('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();
         });
     }

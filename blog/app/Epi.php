@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Epi extends Model
 {
     protected $fillable = [
-        'eiquantidade', 'esdescricao', 'estm', 'eica', 'esdatares', 'esdatadev', 'trabalhador'
+        'eiquantidade', 'esdescricao', 'estm', 'eica', 'esdatares', 'esdatadev', 'trabalhador_id'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados,$i)
     {
         return Epi::create([
@@ -18,12 +22,12 @@ class Epi extends Model
             'eica'=>$dados['ca'.$i],
             'esdatares'=>$dados['data__recolhimento'.$i],
             'esdatadev'=>$dados['data__devolucao'.$i],
-            'trabalhador'=>base64_decode($dados['trabalhador']),
+            'trabalhador_id'=>base64_decode($dados['trabalhador']),
         ]);
     }
     public function buscalista($id)
     {
-        return Epi::where('trabalhador',base64_decode($id))->get();
+        return Epi::where('trabalhador_id',base64_decode($id))->get();
     }
     public function deletar($id)
     {
@@ -31,6 +35,6 @@ class Epi extends Model
     }
     public function deletar_cadastra($trabalhador)
     {
-        return Epi::where('trabalhador',base64_decode($trabalhador))->delete();
+        return Epi::where('trabalhador_id',base64_decode($trabalhador))->delete();
     }
 }

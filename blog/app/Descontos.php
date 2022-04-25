@@ -16,8 +16,8 @@ class Descontos extends Model
            'dsquinzena'=>$dados['quinzena'],
            'dscompetencia'=>$dados['competencia'],
            'dfvalor'=>str_replace(",",".",str_replace(".","",$dados['valor'])),
-           'trabalhador'=>$dados['trabalhador'],
-           'empresa'=>$dados['empresa'],
+           'trabalhador_id'=>$dados['trabalhador'],
+           'empresa_id'=>$dados['empresa'],
         ]);
     }
     public function editar($dados,$id)
@@ -33,20 +33,20 @@ class Descontos extends Model
     public function lista($empresa)
     {
         return DB::table('trabalhadors')
-        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
         ->select(
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
             'descontos.*'
         )
-        ->where('descontos.empresa',$empresa)
+        ->where('descontos.empresa_id',$empresa)
         ->paginate(10);
     }
 
     public function buscaUnidadeDesconto($id)
     {
         return DB::table('trabalhadors')
-        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
         ->select(
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
@@ -58,23 +58,23 @@ class Descontos extends Model
     public function buscaRelatorio($empresa,$dataincio,$datafinal)
     {
         return DB::table('trabalhadors') 
-        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
-        ->join('empresas', 'empresas.id', '=', 'descontos.empresa')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
+        ->join('empresas', 'empresas.id', '=', 'descontos.empresa_id')
         ->select(
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
             'empresas.esnome',
             'descontos.*' 
         )
-        ->where('descontos.empresa',$empresa)
+        ->where('descontos.empresa_id',$empresa)
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
         ->get();
     }
     public function relatorioTrabalhador($empresa,$dados)
     {
         return DB::table('trabalhadors')
-        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
-        ->join('empresas', 'empresas.id', '=', 'descontos.empresa')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
+        ->join('empresas', 'empresas.id', '=', 'descontos.empresa_id')
         ->select(
             'trabalhadors.tsnome',
             'trabalhadors.tsmatricula',
@@ -82,7 +82,7 @@ class Descontos extends Model
             'descontos.*' 
         )
         ->where([
-            ['descontos.empresa',$empresa],
+            ['descontos.empresa_id',$empresa],
             ['trabalhadors.id',$dados['idtrabalhador']]
         ])
         ->whereBetween('descontos.dscompetencia',[substr($dados['ano_inicial'], 0, 7),substr($dados['ano_final'], 0, 7)])
@@ -91,7 +91,7 @@ class Descontos extends Model
     public function buscaRelatorioTrabalhador($empresa,$trabalhador,$dataincio,$datafinal)
     {
         return DB::table('trabalhadors') 
-        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador')
+        ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
         ->selectRaw(
             'trabalhadors.id,
             descontos.dsquinzena,
@@ -101,7 +101,7 @@ class Descontos extends Model
             SUM(descontos.dfvalor) as valor'
         )
         ->whereIn('trabalhadors.id',$trabalhador)
-        ->where('descontos.empresa',$empresa)
+        ->where('descontos.empresa_id',$empresa)
         ->groupBy('trabalhadors.id','descontos.dscompetencia','descontos.dsquinzena','descontos.dsdescricao')
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
         ->get();

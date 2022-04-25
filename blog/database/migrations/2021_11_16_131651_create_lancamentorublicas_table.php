@@ -21,10 +21,10 @@ class CreateLancamentorublicasTable extends Migration
             $table->char('lsdescricao', 100)->nullable();
             $table->float('lfvalor',8,2)->nullable();
             $table->float('lftomador',8,2)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
-            $table->integer('lancamento')->unsigned()->nullable();
-            $table->foreign('lancamento')->references('id')->on('lancamentotabelas');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
+            $table->unsignedInteger('lancamento_id')->unsigned()->nullable();
+            $table->foreign('lancamento_id')->references('id')->on('lancamentotabelas')->onDelete('cascade');
             $table->timestamps();
         });
     }

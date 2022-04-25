@@ -201,7 +201,13 @@
         <div class="borderT">
             <table >
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px"></td>
+                <td rowspan="6">
+                        @if($empresas->esfoto)
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
                 </tr>
     
                 <tr>
@@ -217,7 +223,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->eslogradouro}}, {{$empresas->esnum}} - {{$empresas->escep}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                     
                 </tr>
     
@@ -226,7 +232,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->esbairro}} - {{$empresas->esuf}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
                     
                 </tr>
     
@@ -274,7 +280,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Categoria:</strong> {{$trabalhadors->cscategoria}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Categoria:</strong> {{$trabalhadors->categoria[0]->cscategoria}}</td>
                     
                 </tr>
     
@@ -283,7 +289,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>CBO: </strong>{{$trabalhadors->cbo}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>CBO: </strong>{{$trabalhadors->categoria[0]->cbo}}</td>
                     
                 </tr>
     
@@ -308,7 +314,7 @@
 
         <table>
             <tr>
-                <td class="small__font documentos border-left border-top capitalize border-bottom border-right"><strong>PIS:</strong>  {{$trabalhadors->dspis}}</td>
+                <td class="small__font documentos border-left border-top capitalize border-bottom border-right"><strong>PIS:</strong>  {{$trabalhadors->documento[0]->dspis}}</td>
                 <td class="small__font documentos border-top capitalize border-bottom border-right"><strong>CPF:</strong> {{$trabalhadors->tscpf}}</td>
                 <td class="small__font documentos border-right border-top capitalize border-bottom border-left"><strong>Data Nascimento:</strong> 
                     {{date('d/m/Y',strtotime($trabalhadors->nsnascimento))}}
@@ -318,9 +324,9 @@
             
         <table>
             <tr>
-                <td class="small__font documento__info border-left border-bottom capitalize border-right border-top"><strong>CTPS:</strong> {{$trabalhadors->dsctps}}</td>
-                <td class="small__font documento__info uppercase border-bottom border-right  border-top"><strong>Série:</strong> {{$trabalhadors->dsserie}} - {{$trabalhadors->dsuf}}</td>
-                <td class="small__font documento__info  capitalize border-bottom border-right  border-top"><strong>Estado Cívil:</strong> {{$trabalhadors->nscivil}}</td>
+                <td class="small__font documento__info border-left border-bottom capitalize border-right border-top"><strong>CTPS:</strong> {{$trabalhadors->documento[0]->dsctps}}</td>
+                <td class="small__font documento__info uppercase border-bottom border-right  border-top"><strong>Série:</strong> {{$trabalhadors->documento[0]->dsserie}} - {{$trabalhadors->documento[0]->dsuf}}</td>
+                <td class="small__font documento__info  capitalize border-bottom border-right  border-top"><strong>Estado Cívil:</strong> {{$trabalhadors->nascimento[0]->nscivil}}</td>
                 <td class="small__font documento__info border-right capitalize border-bottom border-left border-top"><strong>Sexo:</strong> {{$trabalhadors->tssexo}}</td>
             </tr>
         </table>
@@ -335,15 +341,15 @@
 
         <table>
             <tr>
-                <td class="small__font border-left rua border-top border-bottom capitalize border-right"><strong>Endereço:</strong>  {{$trabalhadors->eslogradouro}}, {{$trabalhadors->esnum}}</td>
-                <td class="small__font uf border-top text-center capitalize border-bottom  border-right"><strong>UF:</strong> {{$trabalhadors->esuf}}</td>
-                <td class="small__font border-right cep text-center border-top border-bottom capitalize  border-left"><strong>CEP:</strong> {{$trabalhadors->escep}}</td>
+                <td class="small__font border-left rua border-top border-bottom capitalize border-right"><strong>Endereço:</strong>  {{$trabalhadors->endereco[0]->eslogradouro}}, {{$trabalhadors->endereco[0]->esnum}} {{$trabalhadors->endereco[0]->esbairro}}</td>
+                <td class="small__font uf border-top text-center capitalize border-bottom  border-right"><strong>UF:</strong> {{$trabalhadors->endereco[0]->esuf}}</td>
+                <td class="small__font border-right cep text-center border-top border-bottom capitalize  border-left"><strong>CEP:</strong> {{$trabalhadors->endereco[0]->escep}}</td>
             </tr>
         </table>
         <table>    
             <tr>
-                <td class="small__font cidade2 border-left border-bottom capitalize border-top border-right"><strong>Cidade:</strong> {{$trabalhadors->esmunicipio}}</td>
-                <td class="small__font natural border-bottom capitalize border-top text-center border-right"><strong>Natural:</strong> {{$trabalhadors->nsnaturalidade}}</td>
+                <td class="small__font cidade2 border-left border-bottom capitalize border-top border-right"><strong>Cidade:</strong> {{$trabalhadors->endereco[0]->esmunicipio}}</td>
+                <td class="small__font natural border-bottom capitalize border-top text-center border-right"><strong>Natural:</strong> {{$trabalhadors->nascimento[0]->nsnaturalidade}}</td>
                 <td class="small__font border-right cep telefone border-bottom capitalize border-top border-left"><strong>Telefone:</strong>{{$trabalhadors->tstelefone}}</td>
             </tr>
         </table>
@@ -367,8 +373,8 @@
         </table>
 
         <table>
-            @if(count($depedentes) > 0)
-                @foreach($depedentes as $depedente)
+            @if(count($trabalhadors->depedente) > 0)
+                @foreach($trabalhadors->depedente as $depedente)
                     <tr>
                         <td class="small__font border-top border-left border-bottom nome capitalize"><strong>Nome: </strong>{{$depedente->dsnome}}</td>
                         <td class="small__font border-right border-top border-bottom border-left data capitalize"><strong>Data Nascimento: </strong>
@@ -394,9 +400,9 @@
 
         <table>
             <tr>
-                <td class="small__font bancario2 border-top border-bottom border-left border-right text-center capitalize"><strong>Banco:</strong> {{$trabalhadors->bsbanco}}</td>
-                <td class="small__font bancario text-center border-top border-bottom  border-right capitalize"><strong>Agência:</strong> {{$trabalhadors->bsagencia}}</td>
-                <td class="small__font bancario text-center border-top border-bottom  border-right  capitalize"><strong>Conta:</strong> {{$trabalhadors->bsconta}}</td>
+                <td class="small__font bancario2 border-top border-bottom border-left border-right text-center capitalize"><strong>Banco:</strong> {{$trabalhadors->bancario[0]->bsbanco}}</td>
+                <td class="small__font bancario text-center border-top border-bottom  border-right capitalize"><strong>Agência:</strong> {{$trabalhadors->bancario[0]->bsagencia}}</td>
+                <td class="small__font bancario text-center border-top border-bottom  border-right  capitalize"><strong>Conta:</strong> {{$trabalhadors->bancario[0]->bsconta}}</td>
             </tr>
         </table>
 
@@ -413,7 +419,7 @@
 
             <table class="margin-top">
                 <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->esmunicipio}} - {{$empresas->esuf}}</td>
+                <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
                     <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
                 </tr>
             </table>

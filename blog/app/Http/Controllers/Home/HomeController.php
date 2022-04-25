@@ -5,23 +5,26 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Esocial;
+use App\Trabalhador;
 class HomeController extends Controller
 {
-    private $esocial;
+    private $esocial,$trabalhador;
     public function __construct()
     {
         $this->esocial = new Esocial;
+        $this->trabalhador = new Trabalhador;
     }
     public function index()
     {
-        
-        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
+        // dd(Hash::make('123456'));
         if (auth()->check()){
             $user = Auth::user();   
             if ($user->hasPermissionTo('Super Admin')) {
                 return redirect()->route('administrador');
             }else{
+                $esocialtrabalhador = $this->trabalhador->with('esocial.trabalhador')->get();
                 return view('login.home',compact('user','esocialtrabalhador')); 
             }
         }

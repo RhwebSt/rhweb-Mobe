@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     protected $fillable = [
-        'cscategoria','cssituacao','csafastamento','csadmissao','cbo','trabalhador'
+        'cscategoria','cssituacao','csafastamento','csadmissao','cbo','trabalhador_id'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
        return Categoria::create([
@@ -17,12 +21,12 @@ class Categoria extends Model
             'csafastamento'=>$dados['data__afastamento'],
             'csadmissao'=>$dados['data__admissao'],
             'cbo'=>$dados['cbo'],
-            'trabalhador'=>$dados['trabalhador'],
+            'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
     public function editar($dados,$id)
     {
-        return Categoria::where('trabalhador', $id)
+        return Categoria::where('trabalhador_id', $id)
         ->update([
             'cscategoria'=>$dados['categoria__contrato'],
             'cssituacao'=>$dados['situacao__contrato'],
@@ -33,6 +37,6 @@ class Categoria extends Model
     }
     public function deletar($id)
     {
-        return Categoria::where('trabalhador', $id)->delete();
+        return Categoria::where('trabalhador_id', $id)->delete();
     }
 }

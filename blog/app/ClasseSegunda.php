@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClasseSegunda extends Model
 {
     protected $fillable = [
-        'cscodigo', 'csdescricao', 'classes'
+        'cscodigo', 'csdescricao', 'classes_id'
     ];
     public function cadastro($dados)
     {
@@ -19,7 +19,7 @@ class ClasseSegunda extends Model
     }
     public function atualizar($dados, $id)
     {
-        return ClasseSegunda::where('classes', $id)
+        return ClasseSegunda::where('classes_id', $id)
         ->update([
             'csdescricao'=>$dados['texto2'],
         ]);

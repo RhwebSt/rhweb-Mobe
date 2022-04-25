@@ -246,7 +246,7 @@
         
         <div class="col-md-3">
             <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror valid" name="cep" value="{{$tomador->escep}}" id="cep">
+            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror valid" name="cep" value="{{$tomador->endereco[0]->escep}}" id="cep">
             @error('cep')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -254,7 +254,7 @@
         
         <div class="col-md-7">
             <label for="logradouro" class="form-label">Rua</label>
-            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{$tomador->eslogradouro}}" id="logradouro">
+            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{$tomador->endereco[0]->eslogradouro}}" id="logradouro">
             @error('logradouro')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -262,7 +262,7 @@
         
         <div class="col-md-2">
             <label for="numero" class="form-label">Número</label>
-            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror valid" name="numero" value="{{$tomador->esnum}}" id="numero">
+            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror valid" name="numero" value="{{$tomador->endereco[0]->esnum}}" id="numero">
             @error('numero')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -452,8 +452,8 @@
                 ];
                 ?>
                 @foreach($complemento as $complementos)
-                @if($complementos === $tomador->escomplemento)
-                <option selected>{{$tomador->escomplemento}}</option>
+                @if($complementos === $tomador->endereco[0]->escomplemento)
+                <option selected>{{$tomador->endereco[0]->escomplemento}}</option>
                 @else
                 <option>{{$complementos}}</option>
                 @endif
@@ -464,7 +464,7 @@
         
         <div class="col-md-8">
             <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror valid" name="bairro" value="{{$tomador->esbairro}}" id="bairro">
+            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror valid" name="bairro" value="{{$tomador->endereco[0]->esbairro}}" id="bairro">
             @error('bairro')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -472,7 +472,7 @@
         
         <div class="col-md-8">
             <label for="localidade" class="form-label">Municipio</label>
-            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror valid" name="localidade" value="{{$tomador->esmunicipio}}" id="localidade">
+            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror valid" name="localidade" value="{{$tomador->endereco[0]->esmunicipio}}" id="localidade">
             @error('localidade')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -481,7 +481,7 @@
         
         <div class="col-md-4">
             <label for="uf" class="form-label">UF</label>
-            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror valid" name="uf" value="{{$tomador->esuf}}" id="uf">
+            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror valid" name="uf" value="{{$tomador->endereco[0]->esuf}}" id="uf">
             @error('uf')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -510,7 +510,7 @@
                         
                             <div class="col-md-3 mt-2">
                                 <label for="taxa_adm" class="form-label letter__color">Taxa Adm %</label>
-                                <input type="text" class="form-control input fw-bold text-dark @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{$tomador->tftaxaadm}}" id="taxa_adm">
+                                <input type="text" class="form-control input fw-bold text-dark @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{$tomador->taxa[0]->tftaxaadm}}" id="taxa_adm">
                                 @error('taxa_adm')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -518,7 +518,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="taxa__fed" class="form-label letter__color">Taxa Fed. %</label>
-                                <input type="text" class="form-control input fw-bold text-dark  @error('taxa__fed') is-invalid @enderror" name="taxa__fed" value="{{$tomador->tftaxafed}}" id="taxa__fed">
+                                <input type="text" class="form-control input fw-bold text-dark  @error('taxa__fed') is-invalid @enderror" name="taxa__fed" value="{{$tomador->taxa[0]->tftaxafed}}" id="taxa__fed">
                                 @error('taxa__fed')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -526,7 +526,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="deflator" class="form-label letter__color">% DEFLATOR</label>
-                                <input type="text" class="form-control input fw-bold text-dark @error('deflator') is-invalid @enderror" name="deflator" value="{{$tomador->tfdefaltor}}" id="deflator">
+                                <input type="text" class="form-control input fw-bold text-dark @error('deflator') is-invalid @enderror" name="deflator" value="{{$tomador->taxa[0]->tfdefaltor}}" id="deflator">
                                 @error('deflator')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -534,7 +534,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="das" class="form-label letter__color">DAS %</label>
-                                <input type="text" class="form-control @error('das') is-invalid @enderror input fw-bold text-dark" name="das" value="{{$tomador->tfdas}}" id="das">
+                                <input type="text" class="form-control @error('das') is-invalid @enderror input fw-bold text-dark" name="das" value="{{$tomador->taxa[0]->tfdas}}" id="das">
                                 @error('das')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

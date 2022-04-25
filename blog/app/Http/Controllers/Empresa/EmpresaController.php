@@ -64,7 +64,6 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        
         $request->validate([
             'esnome'=>'required|max:100|unique:empresas',
             'escnpj'=>'required|max:100|unique:empresas|cnpj',
@@ -102,16 +101,16 @@ class EmpresaController extends Controller
             if ($empresas) {
                 $dados['empresa'] = $empresas['id'];
                 $enderecos = $this->endereco->cadastro($dados);
-                $this->user->editusuarioprecadastro($dados['usuario'],$empresas['id']);
                 $valoresrublicas = $this->valoresrublica->cadastro($dados);
+                $this->user->editusuarioprecadastro($dados['usuario'],$empresas['id']);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
             
         } catch (\Throwable $th) {
-            $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
-            $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
-            $this->empresa->deletar($empresas['id']);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
+            // $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
+            // $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
+            // $this->empresa->deletar($empresas['id']);
+            // return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
         }
        
     }

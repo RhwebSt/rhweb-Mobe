@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class IndiceFatura extends Model
 {
     protected $fillable = [
-        'isalimentacao','istransporte','isepi','isseguroportrabalhador','isvaletransporte','isindecesobrefolha','isvalealimentacao','tomador'
+        'isalimentacao','istransporte','isepi','isseguroportrabalhador','isvaletransporte','isindecesobrefolha','isvalealimentacao','tomador_id'
     ];
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
         return IndiceFatura::create([
@@ -19,12 +23,12 @@ class IndiceFatura extends Model
             // 'isindecesobrefolha'=>$dados['indice__folha'],
             // 'isvaletransporte'=>str_replace(",",".",$dados['valor__transporte']),
             // 'isvalealimentacao'=>str_replace(",",".",$dados['valor__alimentacao']),
-            'tomador'=>$dados['tomador']
+            'tomador_id'=>$dados['tomador']
         ]);
     }
    public function editar($dados,$id)
    {
-        return IndiceFatura::where('tomador', $id)
+        return IndiceFatura::where('tomador_id', $id)
         ->update([
             'isalimentacao'=>str_replace(",",".",str_replace(".","",$dados['alimentacao'])),
             'istransporte'=>str_replace(",",".",str_replace(".","",$dados['transporte'])),
@@ -37,6 +41,6 @@ class IndiceFatura extends Model
    }
    public function deletar($id)
     {
-      return IndiceFatura::where('tomador', $id)->delete();
+      return IndiceFatura::where('tomador_id', $id)->delete();
     }
 }

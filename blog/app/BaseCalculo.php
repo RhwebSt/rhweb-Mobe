@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\DB;
 class BaseCalculo extends Model
 {
     protected $fillable = [
-        'biservico','biservicodsr','biinss','bifgts','bifgtsmes','biirrf','bifaixairrf','binumfilhos','bitotaldiaria','bivalorliquido','bivalorvencimento','bivalordesconto','bsadinortuno','trabalhador','tomador','folhar','created_at'
+        'biservico','biservicodsr','biinss','bifgts','bifgtsmes','biirrf','bifaixairrf','binumfilhos','bitotaldiaria','bivalorliquido','bivalorvencimento','bivalordesconto','bsadinortuno','trabalhador_id','tomador_id','folhar_id','created_at'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados,$depedentes,$tomador,$folhar = null,$i,$data)
     {
         return BaseCalculo::create([
@@ -24,9 +28,9 @@ class BaseCalculo extends Model
             'bivalorliquido'=>$dados['vencimento']['valor'][$i] - $dados['novodesconto']['valor'][$i],
             'bivalorvencimento'=>$dados['vencimento']['valor'][$i],
             'bivalordesconto'=>$dados['novodesconto']['valor'][$i],
-            'trabalhador'=>$dados['salario']['id'][$i],
-            'tomador'=>$tomador,
-            'folhar'=>$folhar,
+            'trabalhador_id'=>$dados['salario']['id'][$i],
+            'tomador_id'=>$tomador,
+            'folhar_id'=>$folhar,
             'created_at'=>$data
         ]);
     }
@@ -45,13 +49,13 @@ class BaseCalculo extends Model
                  SUM(bivalorliquido) as valorliquido,
                  SUM(bivalorvencimento) as valorvencimento,
                  SUM(bivalordesconto) as valordesconto,
-                 trabalhador,
+                 trabalhador_id,
                  binumfilhos,
                  created_at'
                 )
         )
-        ->groupBy('trabalhador','binumfilhos','created_at')
-        ->whereIn('trabalhador',$trabalhador)
+        ->groupBy('trabalhador_id','binumfilhos','created_at')
+        ->whereIn('trabalhador_id',$trabalhador)
         ->whereDate('created_at', $data)
         ->get();
     }
@@ -71,33 +75,33 @@ class BaseCalculo extends Model
             'bivalorliquido'=>$dados->valorliquido,
             'bivalorvencimento'=>$dados->valorvencimento,
             'bivalordesconto'=>$dados->valordesconto,
-            'trabalhador'=>$dados->trabalhador,
-            'folhar'=>$folhar,
+            'trabalhador_id'=>$dados->trabalhador,
+            'folhar_id'=>$folhar,
             'created_at'=>$dados->created_at
         ]);
     }
     public function listaBaseCalculo($trabalahdor)
     {
         return BaseCalculo::select('id')
-        ->whereIn('trabalhador',$trabalahdor)
+        ->whereIn('trabalhador_id',$trabalahdor)
         ->get();
     }
     public function boletimBusca($trabalhador,$datainicio,$datafinal)
     {
         return DB::table('base_calculos')
-        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar_id')
         ->select(
             'base_calculos.bivalorliquido',
             'base_calculos.trabalhador'
         )
-        ->whereIn('trabalhador',$trabalhador)
-        ->where('tomador',null)
+        ->whereIn('trabalhador_id',$trabalhador)
+        ->where('tomador_id',null)
         ->whereBetween('base_calculos.created_at',[$datainicio, $datafinal])
         ->get();
     }
     public function editerFk($tomador,$data,$folhar)
     {
-        return BaseCalculo::whereIn('tomador',$tomador)
+        return BaseCalculo::whereIn('tomador_id',$tomador)
         ->whereDate('created_at', $data)
         ->update([
             'folhar'=>$folhar
@@ -110,10 +114,10 @@ class BaseCalculo extends Model
     public function listaTrabalhador($folhar)
     {
         return DB::table('base_calculos')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador')
-        ->select('trabalhadors.tsnome','trabalhadors.id','base_calculos.folhar')
-        ->whereIn('base_calculos.folhar',$folhar)
-        ->where('base_calculos.tomador',null)
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'base_calculos.trabalhador_id')
+        ->select('trabalhadors.tsnome','trabalhadors.id','base_calculos.folhar_id')
+        ->whereIn('base_calculos.folhar_id',$folhar)
+        ->where('base_calculos.tomador_id',null)
         ->distinct()
         ->orderBy('trabalhadors.tsnome', 'asc')
         ->get();
@@ -121,29 +125,29 @@ class BaseCalculo extends Model
     public function listaTomador($folhar,$condicao)
     {
         return DB::table('base_calculos')
-        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador')
-        ->select('tomadors.tsnome','tomadors.id','base_calculos.folhar')
-        ->whereIn('base_calculos.folhar',$folhar)
+        ->join('tomadors', 'tomadors.id', '=', 'base_calculos.tomador_id')
+        ->select('tomadors.tsnome','tomadors.id','base_calculos.folhar_id')
+        ->whereIn('base_calculos.folhar_id',$folhar)
         ->distinct()
         ->orderBy('tomadors.tsnome', $condicao)
         ->get();
     }
     public function buscaId($folhar)
     {
-        return BaseCalculo::select('id')->where('folhar',$folhar)
+        return BaseCalculo::select('id')->where('folhar_id',$folhar)
         ->get();
     }
     public function verifica($folhar)
     {
-        return BaseCalculo::where('folhar',$folhar)->count();
+        return BaseCalculo::where('folhar_id',$folhar)->count();
     }
     public function verificaTrabalhador($id)
     {
-        return BaseCalculo::where('trabalhador',$id)->count();
+        return BaseCalculo::where('trabalhador_id',$id)->count();
     }
 
     public function verificaTomador($id)
     {
-        return BaseCalculo::where('tomador',$id)->count();
+        return BaseCalculo::where('tomador_id',$id)->count();
     }
 }

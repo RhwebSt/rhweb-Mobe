@@ -163,6 +163,12 @@ main{
 /*}*/
 
 
+.limitaCarcteres{
+    max-width: 30ch !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .form-check-label{
     font-size: 16px;

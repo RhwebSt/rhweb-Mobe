@@ -173,18 +173,7 @@
             var nomeTrablhador = validaInputQuantidade("#nome__trabalhador",1);
             var indice = validaInputQuantidade("#indice",1);
             var nome_tomador = validaInputQuantidade("#nome_tomador",1);
-            
-            var botaolimpaCampos = document.querySelector("#refre");
 
-            botaolimpaCampos.addEventListener('click', function(){
-                var nomeTrabalhador = document.querySelector("#nome__trabalhador").value='';
-                var matriculaTrabalhador = document.querySelector("#matricula__trab").value='';
-                var indice = document.querySelector("#indice").value='';
-                var nomeTomador = document.querySelector("#nome_tomador").value='';
-            });
-            
-            
-            
             
         $(document).ready(function(){
            

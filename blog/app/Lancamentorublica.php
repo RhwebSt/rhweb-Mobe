@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador','lancamento','created_at'
+        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador_id','lancamento_id','created_at'
     ];
     public function cadastro($dados)
     {
@@ -16,8 +16,8 @@ class Lancamentorublica extends Model
             'lsquantidade'=>str_replace(",",".",$dados['quantidade']),
             'licodigo'=>$dados['codigo'],
             'lsdescricao'=>$dados['descricao'],
-            'trabalhador'=>$dados['trabalhador'],
-            'lancamento'=>$dados['lancamento'],
+            'trabalhador_id'=>$dados['trabalhador'],
+            'lancamento_id'=>$dados['lancamento'],
             'created_at'=>$dados['data'],
             'lfvalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0,
             'lftomador'=>$dados['lftomador']?str_replace(",",".",$dados['lftomador']):0        ]);
@@ -25,8 +25,8 @@ class Lancamentorublica extends Model
     public function listacadastro($dados,$id,$status,$condicao)
     {
         return DB::table('trabalhadors')
-        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
         ->select(
             'trabalhadors.tsnome', 
             'lancamentorublicas.*', 
@@ -54,7 +54,7 @@ class Lancamentorublica extends Model
                 }else{
                     $query->where([
                         ['lancamentotabelas.lsstatus',$status],
-                        ['lancamentotabelas.empresa', $user->empresa],
+                        ['lancamentotabelas.empresa_id', $user->empresa],
                         ['lancamentotabelas.id',$id] 
                     ]);
                 }
@@ -65,9 +65,9 @@ class Lancamentorublica extends Model
     public function buscaUnidadeRublica($id) 
     {
         return DB::table('trabalhadors')
-        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'trabalhadors.*', 
             'lancamentorublicas.*', 
@@ -76,10 +76,10 @@ class Lancamentorublica extends Model
             $user = auth()->user();
             $query->where([
                 ['lancamentorublicas.licodigo',$id],
-                ['trabalhadors.empresa', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa]
             ])->orWhere([
                 ['lancamentorublicas.id',$id],
-                ['trabalhadors.empresa', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa]
             ]);
 
             // if ($user->hasPermissionTo('admin')) { 
@@ -106,11 +106,11 @@ class Lancamentorublica extends Model
     {
        
         return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
         ->where([
             ['lancamentorublicas.licodigo', $dados['codigo']],
-            ['lancamentorublicas.trabalhador', $dados['trabalhador']],
-            ['lancamentotabelas.tomador',$dados['tomador']]
+            ['lancamentorublicas.trabalhador_id', $dados['trabalhador']],
+            ['lancamentotabelas.tomador_id',$dados['tomador']]
         ])
         ->whereMonth('lancamentorublicas.created_at',$novadata[1])
         ->whereYear('lancamentorublicas.created_at',$novadata[0])
@@ -119,7 +119,7 @@ class Lancamentorublica extends Model
     public function verificaTrabalhador($dados,$novadata)
     {
         return Lancamentorublica::select('trabalhador')
-        ->where('lancamento', $dados['lancamento'])
+        ->where('lancamento_id', $dados['lancamento'])
         ->distinct()
         ->whereMonth('created_at',$novadata[1])
         ->whereYear('created_at',$novadata[0])
@@ -129,26 +129,26 @@ class Lancamentorublica extends Model
     {
         
         return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'lancamentorublicas.*',
-            'lancamentotabelas.tomador'
+            'lancamentotabelas.tomador_id'
         )
        ->where(function($query) use ($dados){ 
             $user = auth()->user();
             if ($dados['tomador']) {
                 $query->where([
                     ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                    ['lancamentorublicas.empresa', $user->empresa]
+                    ['lancamentorublicas.empresa_id', $user->empresa]
                 ]) 
                 ->whereBetween('lancamentotabelas.lsdata',
                 [$dados['ano_inicial'], 
                 $dados['ano_final']]);
             }else{
                 $query->where([
-                    ['lancamentorublicas.trabalhador',$dados['trabalhador']],
-                    ['lancamentorublicas.empresa', $user->empresa],
+                    ['lancamentorublicas.trabalhador_id',$dados['trabalhador']],
+                    ['lancamentorublicas.empresa_id', $user->empresa],
                     ['tomadors.id',$dados['tomador']]
                 ]) 
                 ->whereBetween('lancamentotabelas.lsdata',
@@ -197,17 +197,17 @@ class Lancamentorublica extends Model
     {
         
         return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'lancamentorublicas.*',
-            'lancamentotabelas.tomador'
+            'lancamentotabelas.tomador_id'
         )
         ->where(function($query) use ($tomador,$ano_inicio,$ano_final){
             $user = auth()->user();
             $query->where([
-                ['lancamentotabelas.tomador',$tomador],
-                ['lancamentotabelas.empresa',$user->empresa]
+                ['lancamentotabelas.tomador_id',$tomador],
+                ['lancamentotabelas.empresa_id',$user->empresa]
             ])
             ->whereBetween('lancamentotabelas.lsdata',[$ano_inicio, $ano_final]);
 
@@ -227,15 +227,15 @@ class Lancamentorublica extends Model
     public function buscaListaGeral($empresa,$ano_inicio,$ano_final)
     {
         return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'lancamentorublicas.*',
-            'lancamentotabelas.tomador'
+            'lancamentotabelas.tomador_id'
         )
         ->where(function($query) use ($empresa,$ano_inicio,$ano_final){
             $user = auth()->user();
-            $query->where('lancamentotabelas.empresa',$empresa)
+            $query->where('lancamentotabelas.empresa_id',$empresa)
             ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -262,18 +262,18 @@ class Lancamentorublica extends Model
     }
     public function editarBoletim($dados,$id)
     {
-        return Lancamentorublica::where('lancamento', $id)
+        return Lancamentorublica::where('lancamento_id', $id)
         ->update([
             'created_at'=>$dados['data'],
         ]);
     }
     public function deletar($id)
     {
-      return Lancamentorublica::where('id', $id)->orWhere('lancamento', $id)->delete();
+      return Lancamentorublica::where('id', $id)->orWhere('lancamento_id', $id)->delete();
     }
     public function deletarTrabalhador($id)
     {
-        return Lancamentorublica::where('trabalhador', $id)->delete();
+        return Lancamentorublica::where('trabalhador_id', $id)->delete();
     }
     // public function boletimTabela($id)
     // {
@@ -292,8 +292,8 @@ class Lancamentorublica extends Model
     public function boletimTabela($id)
     {
         return DB::table('lancamentotabelas')
-        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->selectRaw(
             '
             lancamentorublicas.lsquantidade as quantidade,
@@ -314,16 +314,16 @@ class Lancamentorublica extends Model
         //     //     ->whereBetween('lancamentorublicas.created_at',[$ano_inicio, $ano_final]);
         //     // }
         // })
-        ->whereIn('lancamentorublicas.lancamento', $id)
+        ->whereIn('lancamentorublicas.lancamento_id', $id)
         ->groupBy('lancamentorublicas.lsquantidade','lancamentorublicas.lftomador','lancamentorublicas.lfvalor','lancamentorublicas.licodigo','lancamentorublicas.lshistorico','lancamentotabelas.liboletim','lancamentotabelas.lsdata')
         ->get();
     }
     public function buscaListaTablelaTrabalhador($id)
     {
         return DB::table('trabalhadors')
-        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
+        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamento_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'lancamentotabelas.*', 
             'tomadors.tsnome'

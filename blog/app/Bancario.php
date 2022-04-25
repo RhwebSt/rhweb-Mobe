@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Bancario extends Model
 {
     protected $fillable = [
-        'bstitular','bsbanco','bsagencia','bsoperacao','bsconta','bspix','tomador','trabalhador'
+        'bstitular','bsbanco','bsagencia','bsoperacao','bsconta','bspix','tomador_id','trabalhador_id'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
         
@@ -19,8 +27,8 @@ class Bancario extends Model
             'bsoperacao'=>$dados['operacao'],
             'bsconta'=>$dados['conta'],
             'bspix'=>$dados['pix'],
-            'tomador'=>$dados['tomador'],
-            'trabalhador'=>$dados['trabalhador']
+            'tomador_id'=>$dados['tomador'],
+            'trabalhador_id'=>$dados['trabalhador']
         ]);
     }
     public function editar($dados,$id)
@@ -58,10 +66,10 @@ class Bancario extends Model
     }
     public function deletarTrabalhador($id)
     {
-        return Bancario::where('trabalhador', $id)->delete();
+        return Bancario::where('trabalhador_id', $id)->delete();
     }
     public function deletarTomador($id)
     {
-        return Bancario::where('tomador', $id)->delete();
+        return Bancario::where('tomador_id', $id)->delete();
     }
 }

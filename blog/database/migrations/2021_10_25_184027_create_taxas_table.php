@@ -22,8 +22,8 @@ class CreateTaxasTable extends Migration
             $table->char('tfdefaltor',100)->nullable();
             $table->float('tftaxafed',8,2)->nullable(); 
             $table->float('tfdas',8,2)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

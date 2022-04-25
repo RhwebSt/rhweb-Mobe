@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Rublica extends Model
 {
     protected $fillable = [
-        'rsrublica','rsdescricao','rsincidencia','rsdc','empresa'
+        'rsrublica','rsdescricao','rsincidencia','rsdc','empresa_id'
     ];
     public function cadastro($dados)
     {
@@ -16,7 +16,7 @@ class Rublica extends Model
             'rsdescricao'=>$dados['descricao'],
             'rsincidencia'=>$dados['incidencia'],
             'rsdc'=>$dados['dc'],
-            'empresa'=>$dados['empresa'],
+            'empresa_id'=>$dados['empresa'],
         ]);
     }
     public function editar($dados,$id)
@@ -36,9 +36,9 @@ class Rublica extends Model
     public function buscaTabelaPreco($tomador)
     {
         return DB::table('rublicas')
-        ->join('tabela_precos', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica')
+        ->join('tabela_precos', 'rublicas.rsrublica', '=', 'tabela_precos.tsrubrica_id')
         ->select('tabela_precos.tsrubrica','rublicas.rsincidencia')
-        ->where('tabela_precos.tomador',$tomador)
+        ->where('tabela_precos.tomador_id',$tomador)
         ->get();
 
     }

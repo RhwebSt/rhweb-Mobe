@@ -18,8 +18,8 @@ class CreateCartaoPontosTable extends Migration
             $table->char('csdiasuteis',5)->nullable();
             $table->char('cssabados',5)->nullable();
             $table->char('csdomingos',5)->nullable();
-            $table->integer('tomador')->unsigned()->nullable();
-            $table->foreign('tomador')->references('id')->on('tomadors');
+            $table->unsignedInteger('tomador_id')->unsigned()->nullable();
+            $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
             $table->timestamps();
         });
     }

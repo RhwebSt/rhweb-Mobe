@@ -28,10 +28,10 @@ class CreateBolcartaopontosTable extends Migration
             $table->char('bshoraex',10)->nullable();
             $table->char('bshoraexcem',10)->nullable();
             $table->char('bsadinortuno',10)->nullable();
-            $table->integer('trabalhador')->unsigned()->nullable();
-            $table->foreign('trabalhador')->references('id')->on('trabalhadors');
-            $table->integer('lancamento')->unsigned()->nullable();
-            $table->foreign('lancamento')->references('id')->on('lancamentotabelas');
+            $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
+            $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
+            $table->unsignedInteger('lancamento_id')->unsigned()->nullable();
+            $table->foreign('lancamento_id')->references('id')->on('lancamentotabelas')->onDelete('cascade');
             $table->timestamps();
         });
     }

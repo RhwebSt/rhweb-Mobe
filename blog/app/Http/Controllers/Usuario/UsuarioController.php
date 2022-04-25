@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use App\User;
 use App\Pessoai;
+use App\Empresa;
 class UsuarioController extends Controller
 {
     private $user;
@@ -14,6 +16,7 @@ class UsuarioController extends Controller
     {
         $this->user = new User;
         $this->pessoais = new Pessoai;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -28,37 +31,71 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $id = [];
-        
+        $user = auth()->user();
         $search = request('search');
         $codicao = request('codicao');
-        $users = $this->user->listaUser('asc',$search); 
-        $permissio = $this->user->permission(); 
-
-        foreach ($users as $key => $use) {
-            array_push($id,$use->id);
-        }
-        $permissao = $this->user->permissao($id);
-        // dd($permissao);
+        $lista = $this->user->with(['empresa.user', 'permissions'])
+            ->where(function ($query) use ($search) {
+                $user = auth()->user();
+                if ($search) {
+                    $query->where([
+                        ['name', 'like', '%' . $search . '%'],
+                        ['empresa_id',$user->empresa_id]
+                    ])
+                    ->orWhere([
+                        ['email', 'like', '%' . $search . '%'],
+                        ['empresa_id',$user->empresa_id]
+                    ]);
+                } else {
+                    $query->where([
+                        ['id', '>', 0],
+                        ['empresa_id',$user->empresa_id]
+                    ]);
+                }
+            })
+        ->orderBy('name', 'asc')
+        ->paginate(10);
+        $permissions = Permission::get();
         if ($codicao) {
-            $editar = $this->user->edit($codicao);
-            return view('usuarios.edit',compact('user','users','editar','permissao','permissio'));
+            $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
+            return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
         }else{
-            return view('usuarios.trabalhador.index',compact('user','users','permissao','permissio'));
+            return view('usuarios.trabalhador.index',compact('user','lista','permissions'));
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function ordem($ordem,$codicao = null)
+    {
+        $user = auth()->user();
+        $lista = $this->user->with(['empresa.user', 'permissions'])
+            ->where(function ($query){
+                $user = auth()->user();
+                $query->where([
+                    ['id', '>', 0],
+                    ['empresa_id',$user->empresa_id]
+                ]);
+            })
+        ->orderBy('name', $ordem)
+        ->paginate(10);
+        $permissions = Permission::get();
+        if ($codicao) {
+            $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
+            return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
+        }else{
+            return view('usuarios.trabalhador.index',compact('user','lista','permissions'));
+        }
+    }
     public function store(Request $request)
     {
         $dados = $request->all();
-        // dd($dados);
+        $user = auth()->user();
+        $verificar = $this->user->where([
+            ['email', $dados['email']],
+            ['empresa_id',$user->empresa_id]
+        ])->with('user')->count();
+        if ($verificar) {
+            return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
+        }
         $request->validate([
             'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
@@ -73,10 +110,11 @@ class UsuarioController extends Controller
             'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
             // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
         ]);
-        $user = new User;
+
         try {
-            $users = $user->cadastro($dados);
+            $users = $this->user->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
         }
@@ -90,11 +128,16 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        $user = new User;
-        $users = $user->first($id);
+        
+        $users = $this->user->first($id);
         return response()->json($users);
     }
-
+    public function pesquisa()
+    { 
+        $user = auth()->user();
+        $users = $this->user->where('empresa_id',$user->empresa_id)->get();
+        return response()->json($users);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -103,21 +146,33 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        // $user = Auth::user();
-        // $dados = $this->user->edit($id);
-        // return view('usuarios.dadosPessoais.index',compact('user'));
         $id = base64_decode($id);
-
-        $user = Auth::user();
+        $user = auth()->user();
         $search = request('search');
-        $editar = $this->user->edit($id);
-        $id = [];
-        $users = $this->user->listaUser('asc',$search);
-        foreach ($users as $key => $use) {
-            array_push($id,$use->id);
-        }
-        $permissao = $this->user->permissao($id);
-        return view('usuarios.trabalhador.edit',compact('user','users','editar','permissao'));
+        $editar = $this->user->where('id', $id)->with('empresa.user')->first();
+        $lista = $this->user->with(['empresa.user', 'permissions'])
+            ->where(function ($query) use ($search) {
+                $user = auth()->user();
+                if ($search) {
+                    $query->where([
+                        ['name', 'like', '%' . $search . '%'],
+                        ['empresa_id',$user->empresa_id]
+                    ])
+                    ->orWhere([
+                        ['email', 'like', '%' . $search . '%'],
+                        ['empresa_id',$user->empresa_id]
+                    ]);
+                } else {
+                    $query->where([
+                        ['id', '>', 0],
+                        ['empresa_id',$user->empresa_id]
+                    ]);
+                }
+            })
+        ->orderBy('name', 'asc')
+        ->paginate(10);
+        $permissions = Permission::get();
+        return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
     }
 
     /**
@@ -144,10 +199,10 @@ class UsuarioController extends Controller
             'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
             // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
         ]);
-        $user = new User;
         try {
-            $users = $user->editar($dados,$id);
+            $users = $this->user->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél realizar a atualização.']);
         }
