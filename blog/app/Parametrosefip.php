@@ -25,7 +25,7 @@ class Parametrosefip extends Model
             'psratajustados'=>$dados['rat__ajustado']?str_replace(",",".",$dados['rat__ajustado']):0,
             'psfpasterceiros'=>$dados['fpas__terceiros'],
             'psaliquotaterceiros'=>$dados['aliq__terceiros']?str_replace(",",".",$dados['aliq__terceiros']):0,
-            'tomador'=>$dados['tomador']
+            'tomador_id'=>$dados['tomador']
         ]);
     }
     public function editar($dados,$id)

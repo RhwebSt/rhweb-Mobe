@@ -71,11 +71,8 @@
 
 
     <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
-    @if($user->empresa)
-    <input type="hidden" name="empresa" value="{{$user->empresa}}">
-    @else
-    <input type="hidden" name="empresa" value="">
-    @endif
+   
+    <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
     @csrf
     <input type="hidden" id="method" name="_method" value="">
     <div class="row">

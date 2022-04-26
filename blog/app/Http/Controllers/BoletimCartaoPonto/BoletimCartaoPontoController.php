@@ -5,16 +5,16 @@ namespace App\Http\Controllers\BoletimCartaoPonto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Boletim\CartaoPonto\Lanca\Validacao;
 use App\Bolcartaoponto;
 use App\CartaoPonto;
 class BoletimCartaoPontoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $bolcartaoponto;
+    public function __construct()
+    {
+        $this->bolcartaoponto = new Bolcartaoponto;
+    }
     public function index()
     {
         $user = Auth::user();
@@ -38,8 +38,10 @@ class BoletimCartaoPontoController extends Controller
         $tomador = base64_decode($tomador);
         $feriado = base64_decode($feriado);
         $user = Auth::user();
-        $bolcartaoponto = new Bolcartaoponto;
-        $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
+        
+        // $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
+        $lista = $this->bolcartaoponto->where('lancamento_id',$id)
+        ->with('trabalhador')->paginate(5);
         return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
 
@@ -49,54 +51,24 @@ class BoletimCartaoPontoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all(); 
-        $bolcartaoponto = new Bolcartaoponto;
         try {
-        $bolcartaopontos = $bolcartaoponto->verifica($dados);
+        // $bolcartaopontos = $bolcartaoponto->verifica($dados);
+        $bolcartaopontos = $this->bolcartaoponto->where([
+            ['lancamento_id', $dados['lancamento']],
+            ['trabalhador_id', $dados['trabalhador']],
+        ])
+        ->whereDate('created_at', $dados['data'])
+        ->count();
         if ($bolcartaopontos) {
             return redirect()->back()->withErrors(['false'=>'Este trabalhador já está cadastrado!']);
         }
-        $validator = Validator::make($request->all(), [
-            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'trabalhador'=>'required',
-            'matricula'=>'required|max:4',
-            'entrada1'=>'max:5',
-            'saida'=>'max:5',
-            'entrada2'=>'max:5',
-            'saida2'=>'max:5',
-            'entrada3'=>'max:5',
-            'saida3'=>'max:5',
-            'entrada4'=>'max:5',
-            'saida4'=>'max:5',
-            'total'=>'max:5|required'
-
-        ],[
-            // 'total.required'=>'O campo não pode esta vazio!',
-            // 'total.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'nome__completo.required'=>'O campo não pode esta vazio!',
-            // 'trabalhador.required'=>'O campo não pode esta vazio!',
-            // 'matricula.required'=>'O campo não pode esta vazio!',
-            // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
-        ]);
-        if ($validator->fails()) { 
-            return redirect()->back()->withErrors($validator);
-        }
-        $bolcartaopontos = $bolcartaoponto->cadastro($dados);
-        if ($bolcartaopontos) {
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-        }else{
-            return redirect()->back()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
-        }
+      
+        $bolcartaopontos = $this->bolcartaoponto->cadastro($dados);
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+       
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
@@ -132,49 +104,12 @@ class BoletimCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-        
-        $bolcartaoponto = new Bolcartaoponto;  
-        $validator = Validator::make($request->all(), [
-            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'trabalhador'=>'required',
-            'matricula'=>'required|max:4',
-            'entrada1'=>'max:5',
-            'saida'=>'max:5',
-            'entrada2'=>'max:5',
-            'saida2'=>'max:5',
-            'entrada3'=>'max:5',
-            'saida3'=>'max:5',
-            'entrada4'=>'max:5',
-            'saida4'=>'max:5',
-            'total'=>'max:5|required'
-
-        ],[
-            // 'total.required'=>'O campo não pode esta vazio!',
-            // 'total.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada1.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida2.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida3.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'entrada4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'saida4.max'=>'Campo não pode ter mais de 5 caracteres!',
-            // 'nome__completo.required'=>'O campo não pode esta vazio!',
-            // 'trabalhador.required'=>'O campo não pode esta vazio!',
-            // 'matricula.required'=>'O campo não pode esta vazio!',
-            // 'matricula.min'=>'O campo não pode ter menos de 4 caracteres'
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
         try {
-            $bolcartaopontos = $bolcartaoponto->editar($dados,$id);
-            if ($bolcartaopontos) {
-                return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
-            }
+            $bolcartaopontos = $this->bolcartaoponto->editar($dados,$id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
         }
@@ -188,12 +123,9 @@ class BoletimCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        $bolcartaoponto = new Bolcartaoponto; 
         try {
-            $bolcartaopontos = $bolcartaoponto->deletar($id);
-            if ($bolcartaopontos) {
-                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
-            }
+            $bolcartaopontos = $this->bolcartaoponto->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
         }

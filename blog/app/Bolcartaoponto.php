@@ -9,6 +9,14 @@ class Bolcartaoponto extends Model
     protected $fillable = [
         'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador_id','lancamento_id','created_at'
     ];
+    public function lancamento()
+    {
+        return $this->belongsTo(Lancamentotabela::class);
+    }
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
        return Bolcartaoponto::create([
@@ -65,7 +73,6 @@ class Bolcartaoponto extends Model
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
         ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador')
         ->select(
             'trabalhadors.*', 
             'bolcartaopontos.*', 
@@ -75,23 +82,9 @@ class Bolcartaoponto extends Model
             $query->where([
                 ['trabalhadors.tsnome',$id],
                 ['bolcartaopontos.lancamento_id',$boletim],
-                ['trabalhadors.empresa_id', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa_id]
             ])
             ->whereDate('bolcartaopontos.created_at', $data);
-            // if ($user->hasPermissionTo('admin')) {
-            //     $query->where([
-            //         ['trabalhadors.tsnome', 'like', '%'.$id.'%'],
-            //         ['bolcartaopontos.lancamento',$boletim]
-            //     ])
-            //     ->whereDate('bolcartaopontos.created_at', $data);
-            // }else{
-            //     $query->where([
-            //         ['trabalhadors.tsnome',$id],
-            //         ['bolcartaopontos.lancamento',$boletim],
-            //         ['trabalhadors.empresa', $user->empresa]
-            //     ])
-            //     ->whereDate('bolcartaopontos.created_at', $data);
-            // }
         })
         ->first();
     }

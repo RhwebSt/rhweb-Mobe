@@ -32,8 +32,11 @@ class EsocialController extends Controller
             'trabalhador'=>null,
             'tomador'=>$id
         ];
-        $tomador = $this->tomador->first($id);
-        $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
+        // $tomador = $this->tomador->first($id);
+        // $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
+        $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
+        $tomador = $this->tomador->where('id',$id)->with('parametrosefip')->first();
+        // dd($tomador);
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
@@ -52,8 +55,8 @@ class EsocialController extends Controller
         'tpLotacao_17=09'."\r\n".                                                                
         'tpInsc_18=1'."\r\n".                                                                    
         'nrInsc_19='.str_replace(array(".", ",", "-", "/"), "", $tomador->tscnpj)."\r\n".                                                        
-        'fpas_21='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psfpas)."\r\n".                                                                     
-        'codTercs_22='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->psfpasterceiros)."\r\n".                                                             
+        'fpas_21='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->parametrosefip[0]->psfpas)."\r\n".                                                                     
+        'codTercs_22='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->parametrosefip[0]->psfpasterceiros)."\r\n".                                                             
         'SALVARS1020';
         $file_name = 'S1020_'.date("Ymd").'11475900170.txt';
         $file = fopen( $file_name, "w" );

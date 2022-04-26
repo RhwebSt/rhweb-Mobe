@@ -69,7 +69,7 @@
             <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
 
                 <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
-                <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fas fa-edit"></i> Editar</button>
+                <button type="submit" id="atualizar" disabled class="btn botao "><i class="fas fa-edit"></i> Editar</button>
                 
                 <button type="button" class="btn botao  d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                   <i class="fas fa-trash"></i> Excluir

@@ -61,8 +61,6 @@
                   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
                   @csrf
                   <input type="hidden" id="method" name="_method" value="PUT">
-                  <input type="hidden" name="status" value="D" id="status">
-                  <input type="hidden" name="empresa" value="{{$user->empresa}}">
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-5 mb-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
@@ -77,13 +75,7 @@
 
                     
                     
-                    <?php
-                      if ($numboletimtabela->vsnrocartaoponto) {
-                        $boletim = $numboletimtabela->vsnrocartaoponto + 1;
-                      }else{
-                        $boletim = 1;
-                      }
-                    ?>
+                  
                     <div class="col-md-4">
                         <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
                         <input type="text"  class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" value="{{$dados->liboletim}}" id="num__boletim" Readonly>
@@ -98,7 +90,7 @@
                       <label for="tomador" class="form-label ">Tomador
                         <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
                       </label>
-                      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{$dados->tsnome}}" id="nome__completo">
+                      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{$dados->tomador->tsnome}}" id="nome__completo">
                       <datalist id="datalistOptions">
                       </datalist>
                       @error('nome__completo')
@@ -108,10 +100,10 @@
                           <span class="text-danger">{{ $message }}</span>
                       @enderror
                     </div>
-                      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador}}">
-                      <input type="hidden" id="domingo" name="domingo" value="{{$dados->csdomingos}}">
-                      <input type="hidden" name="sabado" id="sabado" value="{{$dados->cssabados}}">
-                      <input type="hidden" name="diasuteis" id="diasuteis" value="{{$dados->csdiasuteis}}">
+                      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador->id}}">
+                      <input type="hidden" id="domingo" name="domingo">
+                      <input type="hidden" name="sabado" id="sabado">
+                      <input type="hidden" name="diasuteis" id="diasuteis">
 
 
                     <div class="col-md-4">
@@ -159,7 +151,7 @@
             </script>
             
             <script>
-              localStorage.setItem('cartao','{{$boletim}}')
+            
             $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {
@@ -269,11 +261,11 @@
                         $('#datalistOptions').html(nome)
                       }
                       if(data.length === 1 && dados.length >= 4){
-                        let tabela = tabelaPreco(data[0].tomador);
+                        let tabela = tabelaPreco(data[0].id);
                         if (tabela) {
                           tomador(data[0])
                         }else{
-                          Alerta(data[0].tomador)
+                          Alerta(data[0].id)
                         }
                       }           
                   }
@@ -322,7 +314,7 @@
               })
             }
             function tomador(data) {
-              $('#tomador').val(data.tomador)
+              $('#tomador').val(data.id)
               $('#matricula').val(data.tsmatricula)
               $('#domingo').val(data.csdomingos?data.csdomingos: 0.00)
               $('#sabado').val(data.cssabados?data.cssabados:0.00)

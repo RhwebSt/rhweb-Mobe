@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TabelaPreco;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\Tomador\TabelaPreco\Validacao;
 use App\TabelaPreco;
 use App\Tomador;
 use Carbon\Carbon;
@@ -21,13 +22,40 @@ class TabelaPrecoController extends Controller
     }
     public function index($id = null, $tomador)
     {
+        $user = auth()->user();
         $search = request('search');
         $condicao = request('codicao');
         $tomador = base64_decode($tomador);
-        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,null,$search,'asc');
-        $user = Auth::user();
+        // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,null,$search,'asc'); 
+        $tabelaprecos = $this->tabelapreco->where(function($query) use ($tomador,$search){
+            if ($search) {
+                $query->where([
+                    ['tomador_id',$tomador],
+                    ['tsano',$this->dt->year],
+                    ['tsrubrica','like','%'.$search.'%']
+                ])
+                ->orWhere([
+                    ['tomador_id',$tomador],
+                    ['tsano',$this->dt->year],
+                    ['tsdescricao','like','%'.$search.'%']
+                ]);
+            }else{
+                $query->where([
+                    ['tomador_id',$tomador],
+                    ['tsano',$this->dt->year]
+                ]);
+            }
+        })
+        ->orderBy('tsano', 'asc')
+        ->paginate(5);
         if ($condicao) {
-            $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($condicao);
+            // $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($condicao);
+            $tabelaprecos_editar = $this->tabelapreco
+            ->where([
+                ['id',$id],
+                ['tsano',$this->dt->year]
+            ])
+            ->first();
             return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
         }else{
             return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
@@ -37,10 +65,24 @@ class TabelaPrecoController extends Controller
     {
         $tomador = base64_decode($tomador);
         $id = base64_decode($id);
-        $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$this->dt->year,null,$ordem);
-        $user = Auth::user();
+        // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$this->dt->year,null,$ordem);
+        $user = auth()->user();
+        $tabelaprecos = $this->tabelapreco->where(function($query) use ($tomador){
+            $query->where([
+                ['tomador_id',$tomador],
+                ['tsano',$this->dt->year]
+            ]);
+        })
+        ->orderBy('tsano', $ordem)
+        ->paginate(5);
         if ($id && $id != ' ') {
-            $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($id);
+            // $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($id);
+            $tabelaprecos_editar = $this->tabelapreco
+            ->where([
+                ['id',$id],
+                ['tsano',$this->dt->year]
+            ])
+            ->first();
             return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
         }else{
             return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
@@ -62,29 +104,25 @@ class TabelaPrecoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
-        $tabelapreco = new TabelaPreco;
         if ($dados['ano'] > $this->dt->year) {
             return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
         }
-        $request->validate([ 
-            'ano' => 'required|max:4',
-            'rubricas' => 'required|max:30',
-            'descricao' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-%]*$/',
-            'valor' => 'required',
-            'valor__tomador' => 'required'
-        ]);
-        $tabelaprecos = $tabelapreco->verificaRublica($dados);
+        // $tabelaprecos = $tabelapreco->verificaRublica($dados);
+        $tabelaprecos = $this->tabelapreco->where([
+            ['tsano',$dados['ano']],
+            ['tsrubrica',$dados['rubricas']],
+            ['tomador_id',$dados['tomador']]
+        ])->count();
         if ($tabelaprecos) {
             return redirect()->back()->withInput()->withErrors(['descricao' => 'Esta rúbrica já está cadastrada.']);
         }
-        try {
-            $tabelaprecos = $tabelapreco->cadastro($dados);
-            if ($tabelaprecos) {
-                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
-            }
+        
+            $tabelaprecos = $this->tabelapreco->cadastro($dados);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false' => 'Não foi possível cadastrar.']);
         }
@@ -105,9 +143,33 @@ class TabelaPrecoController extends Controller
     }
     public function pesquisa($id, $tomador)
     {
-
-        $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaListaTabela($id, $tomador);
+        // $tabelaprecos = $tabelapreco->buscaListaTabela($id, $tomador);
+        $tabelaprecos = $this->tabelapreco->where(function($query) use ($id,$tomador){
+            $user = auth()->user();
+            if ($id) {
+                $query->where([
+                    ['tsrubrica','like','%'.$id.'%'],
+                    ['tomador_id',$tomador],
+                    ['empresa_id', $user->empresa_id]
+                ])
+                ->where('tsano', $this->dt->year)
+                ->orWhere([
+                    ['tsdescricao','like','%'.$id.'%'],
+                    ['tomador_id',$tomador],
+                    ['empresa_id', $user->empresa_id],
+                ])
+                ->where('tsano', $this->dt->year);
+            }else{
+                $query->where([
+                    ['id','>',$id],
+                    ['tomador_id',$tomador],
+                    ['empresa_id', $user->empresa_id]
+                ])
+                ->where('tsano', $this->dt->year);
+            }  
+        })
+        ->orderBy('tsrubrica', 'asc')
+        ->get();
         return response()->json($tabelaprecos);
     }
 
@@ -120,12 +182,17 @@ class TabelaPrecoController extends Controller
     public function edit($id, $tomador)
     {
         $id = base64_decode($id);
-        
         $tomador = base64_decode($tomador);
         $user = Auth::user();
-        $tabelapreco = new TabelaPreco;
-        $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, $this->dt->year,null,'asc');
-        $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
+        // $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, $this->dt->year,null,'asc');
+         // $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
+        $tabelaprecos = $this->tabelapreco->where('tomador_id',$tomador)->paginate(5);
+        $tabelaprecos_editar = $this->tabelapreco
+        ->where([
+            ['id',$id],
+            ['tsano',$this->dt->year]
+        ])
+        ->first();
         return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
     }
 
@@ -136,26 +203,15 @@ class TabelaPrecoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         $dados = $request->all();
         if ($dados['ano'] > $this->dt->year) {
             return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
         }
-        $request->validate([
-            'ano' => 'required|max:4',
-            'rubricas' => 'required|max:30',
-            'descricao' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîïôõûùüÿñæœ 0-9_\-%]*$/',
-            'valor' => 'required',
-            'valor__tomador' => 'required'
-        ]);
-
-        $tabelapreco = new TabelaPreco;
         try {
-            $tabelaprecos = $tabelapreco->editar($dados, $id);
-            if ($tabelaprecos) {
-                return redirect()->back()->withSuccess('Atualizador com sucesso.');
-            }
+            $tabelaprecos = $this->tabelapreco->editar($dados, $id);
+            return redirect()->back()->withSuccess('Atualizador com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false' => 'Não foi porssível realizar a atualização.']);
         }
@@ -169,10 +225,9 @@ class TabelaPrecoController extends Controller
      */
     public function destroy($id)
     {
-        $tabelapreco = new TabelaPreco;
         try {
-            $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
-            $excluir = $tabelapreco->deletar($id);
+            // $tabelaprecos = $tabelapreco->buscaUnidadeTabela($id);
+            $excluir = $this->tabelapreco->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false' => 'Não foi possível deletar o registro.']);

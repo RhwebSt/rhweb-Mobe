@@ -42,6 +42,14 @@ class Tomador extends Model
     {
         return $this->hasMany(IndiceFatura::class);
     }
+    public function tabelapreco()
+    {
+        return $this->hasMany(TabelaPreco::class);
+    }
+    public function lancamentotabela()
+    {
+        return $this->hasMany(Lancamentotabela::class);
+    }
     public function cadastro($dados)
     {
         

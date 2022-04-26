@@ -68,8 +68,8 @@
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:115px;">{{$lancamentotabela->liboletim}}</td>
                                     
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
-                                        <a>{{$lancamentotabela->tsnome}}</a>
+                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$lancamentotabela->tomador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                        <a>{{$lancamentotabela->tomador->tsnome}}</a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:200px">
@@ -87,10 +87,10 @@
                                         {{$lancamentotabela->lsferiado}}
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="btn btn__relatorio modal-botao" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fas fa-file-alt"></i></a>
+                                        <a class="btn btn__relatorio modal-botao" href="{{route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis)?base64_encode($lancamentotabela->csdiasuteis):' ',base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador->id),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fas fa-file-alt"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="btn btn__vizualizar" href="{{route('boletimcartaoponto.create',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis),base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fad fa-eye"></i></a>
+                                        <a class="btn btn__vizualizar" href="{{route('boletimcartaoponto.create',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?base64_encode($lancamentotabela->csdomingos):' ',base64_encode($lancamentotabela->cssabados)?base64_encode($lancamentotabela->cssabados):' ',base64_encode($lancamentotabela->csdiasuteis)?base64_encode($lancamentotabela->csdiasuteis):' ',base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fad fa-eye"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         <button class="btn">
@@ -101,6 +101,7 @@
                                         <form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}" method="post">
                                             @csrf
                                             @method('delete')
+                                            <input type="hidden" name="editar" value="1">
                                             <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
                                         </form>
                                     </td>

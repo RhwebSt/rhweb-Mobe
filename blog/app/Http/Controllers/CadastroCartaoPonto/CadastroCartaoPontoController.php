@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CadastroCartaoPonto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Boletim\CartaoPonto\Validacao;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
 use App\Trabalhador;
@@ -30,14 +31,45 @@ class CadastroCartaoPontoController extends Controller
     public function index()
     {
         $search = request('search');
-        $condicao = request('codicao');
-        if ($search) {
-            $lancamentotabelas = $this->lancamentotabela->pesquisaLista('D','asc',$search);
-        }else{
-            $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
-        }
-        $user = Auth::user(); 
-        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $condicao = request('codicao'); 
+        $today = Carbon::today();
+        $user = auth()->user();
+        $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
+           if ($search) {
+            $query->where([
+                ['lsstatus','D'],
+                ['empresa_id', $user->empresa_id],
+                ['liboletim','like','%'.$search.'%'] 
+            ])
+            ->orWhere([
+                ['lsstatus','D'],
+                ['empresa_id', $user->empresa_id],
+                ['tsnome','like','%'.$search.'%']
+            ])
+            ->orWhere([
+                ['lsstatus','D'],
+                ['empresa_id', $user->empresa_id],
+                ['tscnpj','like','%'.$search.'%']
+            ]);
+           }else{
+            $query->where([
+                ['lsstatus','D'],
+                ['empresa_id', $user->empresa_id]
+            ]);
+           }
+        })
+        ->with('tomador')
+        ->orderBy('liboletim', 'asc')
+        ->paginate(10);
+        // dd($lancamentotabelas);
+        // if ($search) {
+        //     $lancamentotabelas = $this->lancamentotabela->pesquisaLista('D','asc',$search);
+        // }else{
+        //     $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
+        // }
+        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        
+        // ->buscaUnidadeEmpresa($user->empresa);
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
     public function filtroPesquisaOrdem($condicao)
@@ -64,48 +96,41 @@ class CadastroCartaoPontoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
+        
         $user = Auth::user();
         $today = Carbon::today();
         if (strtotime($dados['data']) > strtotime($today) ) {
             return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
         }
-        $lancamentotabelas = $this->lancamentotabela->verificaBoletimDias($dados);
-        $tabelaprecos = $this->tabelapreco->verificaTabelaPrecoAtual($dados['tomador'],date('Y'));
-        
-        if (count($tabelaprecos) < 5) {
+        // $lancamentotabelas = $this->lancamentotabela->verificaBoletimDias($dados);
+        $lancamentotabelas = $this->lancamentotabela->where([
+            ['liboletim',$dados['liboletim']],
+            ['lsstatus',$dados['status']],
+            ['empresa_id', $dados['empresa']]
+        ])
+        ->whereDate('created_at',$dados['data'])
+        ->count();
+        $tabelaprecos = $this->tabelapreco
+        ->where([
+            ['tomador_id',$dados['tomador']],
+            ['tsano',$today->year]
+        ])->count();
+        if (!$tabelaprecos) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rúbricas necessárias do ano '.date('Y').'!']);
         }
         if ($lancamentotabelas) { 
             return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrado hoje!']);
         }
-        $request->validate([
-            'nome__completo' => 'required',
-            'tomador'=>'required',
-            'liboletim'=>'required|numeric',
-            'matricula'=>'required|max:6',
-            'num__trabalhador'=>'numeric',
-            'num__trabalhador'=>'required',
-            'data'=>'required'
-        ],[
-            'nome__completo.required'=>'O campo não pode estar vazio!',
-            'tomador.required'=>'O campo não pode estar vazio!',
-            'matricula.required'=>'O campo não pode estar vazio!',
-            'matricula.max'=>'A matrícula não pode conter mais de 4 caracteres!',
-            'num__trabalhador.required'=>'O campo não pode estar vazio!',
-            'num__trabalhador.numeric'=>'O campo não pode conter letras',
-            'liboletim.required'=>'O campo não pode estar vazio!',
-            'liboletim.numeric'=>'O campo não pode conter letras',
-            'liboletim.exists'=>'Este boletim ja está cadastrado',
-            'data.required'=>'O campo não pode estar vazio!'
-            
-        ]);
+        
         try {
             $lancamentotabelas = $this->lancamentotabela->cadastro($dados); 
             if ($lancamentotabelas) {
-                $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
+                // $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
+                ->update(['vsnrocartaoponto'=>$dados['liboletim']]);
             }
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
@@ -136,11 +161,41 @@ class CadastroCartaoPontoController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $valorrublica = new ValoresRublica;
-        $lancamentotabela = new Lancamentotabela;
-        $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $lancamentotabela->buscaListas('D','asc');
-        $dados = $lancamentotabela->buscaUnidade($id);
+        // $valorrublica = new ValoresRublica;
+        // $lancamentotabela = new Lancamentotabela;
+        // $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $search = request('search');
+        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        // $lancamentotabelas = $lancamentotabela->buscaListas('D','asc');
+        $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
+            if ($search) {
+             $query->where([
+                 ['lsstatus','D'],
+                 ['empresa_id', $user->empresa_id],
+                 ['liboletim','like','%'.$search.'%'] 
+             ])
+             ->orWhere([
+                 ['lsstatus','D'],
+                 ['empresa_id', $user->empresa_id],
+                 ['tsnome','like','%'.$search.'%']
+             ])
+             ->orWhere([
+                 ['lsstatus','D'],
+                 ['empresa_id', $user->empresa_id],
+                 ['tscnpj','like','%'.$search.'%']
+             ]);
+            }else{
+             $query->where([
+                 ['lsstatus','D'],
+                 ['empresa_id', $user->empresa_id]
+             ]);
+            }
+         })
+         ->with('tomador')
+         ->orderBy('liboletim', 'asc')
+         ->paginate(10);
+        $dados = $this->lancamentotabela->where('id',$id)->with('tomador')->first();
+        
         return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
     }
     public function filtroPesquisaOrdemEdit($id,$condicao)
@@ -158,25 +213,12 @@ class CadastroCartaoPontoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-        $request->validate([
-            'nome__completo' => 'required',
-            'num__trabalhador'=>'required',
-            'data'=>'required',
-            'feriado'=>'required',
-            'liboletim'=>'required'
-        ],[
-            'nome__completo.required'=>'O campo não pode estar vazio!',
-            'num__trabalhador.required'=>'O campo não pode estar vazio!',
-            'liboletim.required'=>'O campo não pode estar vazio!',
-            'data.required'=>'O campo não pode estar vazio!'
-            
-        ]);
         try {
             $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
-            $lista = $this->bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
+            // $lista = $this->bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
@@ -191,12 +233,20 @@ class CadastroCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $bolcartaopontos = $this->bolcartaoponto->deletarLancamentoTabela($id);
-            if ($bolcartaopontos) {
-                $this->lancamentotabela->deletar($id);
-                return redirect()->back()->withSuccess('Deletado com sucesso.'); 
+       
+        $user = Auth::user();
+        $this->valorrublica->where('id', $user->empresa_id)
+        ->chunkById(100, function ($valorrublica) use ($user) {
+            foreach ($valorrublica as $valorrublicas) {
+                $numero = $valorrublicas->vsnrocartaoponto -= 1;
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
+                ->update(['vsnrocartaoponto'=>$numero]);
             }
+        });
+        try {
+            // $bolcartaopontos = $this->bolcartaoponto->deletarLancamentoTabela($id);
+            $this->lancamentotabela->deletar($id);
+            return redirect()->route('cadastrocartaoponto.index')->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }

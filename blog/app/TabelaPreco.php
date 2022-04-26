@@ -9,7 +9,10 @@ class TabelaPreco extends Model
     protected $fillable = [
         'tsano','tsrubrica','tsdescricao','tsvalor','tstomvalor','tsstatus','empresa_id','tomador_id'
     ];
-
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function cadastro($dados)
     {
         return TabelaPreco::create([

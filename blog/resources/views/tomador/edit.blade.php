@@ -561,7 +561,7 @@
                         
                             <div class="col-md-4 mt-2">
                                 <label for="cod__fpas" class="form-label letter__color">Cod FPAS</label>
-                                <input type="text" class="form-control input fw-bold text-dark @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{$tomador->psfpas}}" id="cod__fpas">
+                                <input type="text" class="form-control input fw-bold text-dark @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{$tomador->parametrosefip[0]->psfpas}}" id="cod__fpas">
                                 @error('cod__fpas')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -569,7 +569,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="cod__fap" class="form-label letter__color">Cod RAT</label>
-                                <input type="text" class="form-control input fw-bold text-dark @error('cod__fap') is-invalid @enderror " name="cod__fap" value="{{$tomador->psconfpas}}" id="cod__fap">
+                                <input type="text" class="form-control input fw-bold text-dark @error('cod__fap') is-invalid @enderror " name="cod__fap" value="{{$tomador->parametrosefip[0]->psconfpas}}" id="cod__fap">
                                 @error('cod__fap')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -577,7 +577,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="cod__grps" class="form-label letter__color">Cod GRPS</label>
-                                <input type="text" class="form-control @error('cod__grps') is-invalid @enderror input fw-bold text-dark" name="cod__grps" value="{{$tomador->psgrps}}" id="cod__grps">
+                                <input type="text" class="form-control @error('cod__grps') is-invalid @enderror input fw-bold text-dark" name="cod__grps" value="{{$tomador->parametrosefip[0]->psgrps}}" id="cod__grps">
                                 @error('cod__grps')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -585,7 +585,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="cod__recol" class="form-label letter__color">Cod Recol</label>
-                                <input type="text" class="form-control @error('cod__recol') is-invalid @enderror input fw-bold text-dark" name="cod__recol" value="{{$tomador->psresol}}" id="cod__recol">
+                                <input type="text" class="form-control @error('cod__recol') is-invalid @enderror input fw-bold text-dark" name="cod__recol" value="{{$tomador->parametrosefip[0]->psresol}}" id="cod__recol">
                                 @error('cod__recol')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -593,7 +593,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="cnae" class="form-label letter__color">CNAE</label>
-                                <input type="text" class="form-control @error('cnae') is-invalid @enderror input fw-bold text-dark" name="cnae" value="{{$tomador->pscnae}}" id="cnae">
+                                <input type="text" class="form-control @error('cnae') is-invalid @enderror input fw-bold text-dark" name="cnae" value="{{$tomador->parametrosefip[0]->pscnae}}" id="cnae">
                                 @error('cnae')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -601,7 +601,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="fap__aliquota" class="form-label letter__color">FAP Aliquota %</label>
-                                <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror input fw-bold text-dark" name="fap__aliquota" value="{{$tomador->psfapaliquota}}" id="fap__aliquota">
+                                <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror input fw-bold text-dark" name="fap__aliquota" value="{{$tomador->parametrosefip[0]->psfapaliquota}}" id="fap__aliquota">
                                 @error('fap__aliquota')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -609,7 +609,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="rat__ajustado" class="form-label letter__color">RAT Ajustado %</label>
-                                <input type="text" class="form-control @error('rat__ajustado') is-invalid @enderror input fw-bold text-dark" name="rat__ajustado" value="{{$tomador->psratajustados}}" id="rat__ajustado">
+                                <input type="text" class="form-control @error('rat__ajustado') is-invalid @enderror input fw-bold text-dark" name="rat__ajustado" value="{{$tomador->parametrosefip[0]->psratajustados}}" id="rat__ajustado">
                                 @error('rat__ajustado')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -617,7 +617,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="fpas__terceiros" class="form-label letter__color">FPAS Terceiros</label>
-                                <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror input fw-bold text-dark" name="fpas__terceiros" value="{{$tomador->psfpasterceiros}}" id="fpas__terceiros">
+                                <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror input fw-bold text-dark" name="fpas__terceiros" value="{{$tomador->parametrosefip[0]->psfpasterceiros}}" id="fpas__terceiros">
                                 @error('fpas__terceiros')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -625,7 +625,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="aliq__terceiros" class="form-label letter__color">Aliq. Terceiros</label>
-                                <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror input fw-bold text-dark" name="aliq__terceiros" value="{{$tomador->psaliquotaterceiros}}" id="aliq__terceiros">
+                                <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror input fw-bold text-dark" name="aliq__terceiros" value="{{$tomador->parametrosefip[0]->psaliquotaterceiros}}" id="aliq__terceiros">
                                 @error('aliq__terceiros')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -653,7 +653,7 @@
                         
                             <div class="col-md-2 mt-2">
                                 <label for="alimentacao" class="form-label letter__color"> Alimentação</label>
-                                <input type="text" class="form-control @error('alimentacao') is-invalid @enderror input fw-bold text-dark" name="alimentacao" value="{{$tomador->isalimentacao}}" id="alimentacao">
+                                <input type="text" class="form-control @error('alimentacao') is-invalid @enderror input fw-bold text-dark" name="alimentacao" value="{{$tomador->indicefatura[0]->isalimentacao}}" id="alimentacao">
                                 @error('alimentacao')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -661,7 +661,7 @@
                             
                             <div class="col-md-2 mt-2">
                                 <label for="transporte" class="form-label letter__color">Transporte</label>
-                                <input type="text" class="form-control @error('transporte') is-invalid @enderror input fw-bold text-dark" name="transporte" value="{{$tomador->istransporte}}" id="transporte">
+                                <input type="text" class="form-control @error('transporte') is-invalid @enderror input fw-bold text-dark" name="transporte" value="{{$tomador->indicefatura[0]->istransporte}}" id="transporte">
                                 @error('transporte')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -669,7 +669,7 @@
                             
                             <div class="col-md-5 mt-2">
                                 <label for="epi" class="form-label letter__color">EPI % (Sobre(PROD+RSR)Folha)</label>
-                                <input type="text" class="form-control @error('epi') is-invalid @enderror input fw-bold text-dark" name="epi" value="{{$tomador->isepi}}" id="epi">
+                                <input type="text" class="form-control @error('epi') is-invalid @enderror input fw-bold text-dark" name="epi" value="{{$tomador->indicefatura[0]->isepi}}" id="epi">
                                 @error('epi')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -677,7 +677,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="seguro__trabalhador" class="form-label letter__color">Seguro (Val.Trab)</label>
-                                <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror input fw-bold text-dark" name="seguro__trabalhador" value="{{$tomador->isseguroportrabalhador}}" id="seguro__trabalhador">
+                                <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror input fw-bold text-dark" name="seguro__trabalhador" value="{{$tomador->indicefatura[0]->isseguroportrabalhador}}" id="seguro__trabalhador">
                                 @error('seguro__trabalhador')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -707,7 +707,7 @@
                             
                             <div class="col-md-6 mt-2">
                                 <label for="folhartransporte" class="form-label letter__color">VT Transporte</label>
-                                <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror input fw-bold text-dark" name="folhartransporte" value="{{$tomador->instransporte}}" id="folhartransporte">
+                                <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror input fw-bold text-dark" name="folhartransporte" value="{{$tomador->incidefolhar[0]->instransporte}}" id="folhartransporte">
                                 @error('folhartransporte')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -726,7 +726,7 @@
                             <div class="col-md-6 mt-2">
                                 
                                 <label for="folharalim" class="form-label letter__color">VA Alimentação</label>
-                                <input type="text" class="form-control @error('folharalim') is-invalid @enderror input fw-bold text-dark" name="folharalim" value="{{$tomador->insalimentacao}}" id="folharalim">
+                                <input type="text" class="form-control @error('folharalim') is-invalid @enderror input fw-bold text-dark" name="folharalim" value="{{$tomador->incidefolhar[0]->insalimentacao}}" id="folharalim">
                                 @error('folharalim')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -767,7 +767,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="dias_uteis" class="form-label letter__color">Dias Úteis</label>
-                                <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror input fw-bold text-dark" name="dias_uteis" value="{{$tomador->csdiasuteis}}" id="dias_uteis">
+                                <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror input fw-bold text-dark" name="dias_uteis" value="{{$tomador->cartaoponto[0]->csdiasuteis}}" id="dias_uteis">
                                 @error('dias_uteis')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -775,7 +775,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="sabados" class="form-label letter__color">Sábados</label>
-                                <input type="time" class="form-control @error('sabados') is-invalid @enderror input fw-bold text-dark" name="sabados" value="{{$tomador->cssabados}}" id="sabados">
+                                <input type="time" class="form-control @error('sabados') is-invalid @enderror input fw-bold text-dark" name="sabados" value="{{$tomador->cartaoponto[0]->cssabados}}" id="sabados">
                                 @error('sabados')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -783,7 +783,7 @@
                             
                             <div class="col-md-4 mt-2">
                                 <label for="domingos" class="form-label letter__color">Domingos</label>
-                                <input type="time" class="form-control @error('domingos') is-invalid @enderror input fw-bold text-dark" name="domingos" value="{{$tomador->csdomingos}}" id="domingos">
+                                <input type="time" class="form-control @error('domingos') is-invalid @enderror input fw-bold text-dark" name="domingos" value="{{$tomador->cartaoponto[0]->csdomingos}}" id="domingos">
                                 @error('domingos')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -812,7 +812,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="banco" class="form-label letter__color">Banco</label>
-                                <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark " aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{$tomador->bsbanco}}" id="banco">
+                                <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark " aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{$tomador->bancario[0]->bsbanco}}" id="banco">
                                 <div id="menssagem-banco" class="valid-feedback">
                             
                                 </div>
@@ -823,7 +823,7 @@
                             
                             <div class="col-md-2 mt-2">
                                 <label for="agencia" class="form-label letter__color">Agência</label>
-                                <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{$tomador->bsagencia}}" id="agencia">
+                                <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{$tomador->bancario[0]->bsagencia}}" id="agencia">
                                 @error('agencia')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -831,7 +831,7 @@
                             
                             <div class="col-md-2 mt-2">
                                 <label for="operacao" class="form-label letter__color">Operação</label>
-                                <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{$tomador->bsoperacao}}" id="operacao">
+                                <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{$tomador->bancario[0]->bsoperacao}}" id="operacao">
                                 @error('aperacao')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -839,7 +839,7 @@
                             
                             <div class="col-md-2 mt-2">
                                 <label for="conta" class="form-label letter__color">Conta</label>
-                                <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{$tomador->bsconta}}" id="conta">
+                                <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{$tomador->bancario[0]->bsconta}}" id="conta">
                                 @error('conta')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -847,7 +847,7 @@
                             
                             <div class="col-md-3 mt-2">
                                 <label for="pix" class="form-label letter__color">PIX</label>
-                                <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{$tomador->bspix}}" id="pix">
+                                <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{$tomador->bancario[0]->bspix}}" id="pix">
                                 @error('pix')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

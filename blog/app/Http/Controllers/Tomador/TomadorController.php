@@ -203,7 +203,37 @@ class TomadorController extends Controller
     }
     public function pesquisa($id)
     {
-        $tomadors = $this->tomador->pesquisa($id);
+        // $tomadors = $this->tomador->pesquisa($id);
+        $tomadors = $this->tomador->where(function($query) use ($id){
+            $user = auth()->user();
+            if ($id) {
+                $query->where([
+                       ['tsnome','like','%'.$id.'%'],
+                       ['tomadors.empresa_id', $user->empresa_id]
+                   ])
+                   ->orWhere([
+                       ['tscnpj','like','%'.$id.'%'],
+                       ['tomadors.empresa_id', $user->empresa_id],
+                   ])
+                   ->orWhere([
+                       ['tomadors.id','like','%'.$id.'%'],
+                       ['tomadors.empresa_id', $user->empresa_id],
+                   ])
+                   ->orWhere([
+                       ['tsmatricula','like','%'.$id.'%'],
+                       ['tomadors.empresa_id', $user->empresa_id],
+                   ]);
+               }else{
+                   $query->where([
+                       ['tomadors.id','>',$id],
+                       ['tomadors.empresa_id', $user->empresa_id]
+                   ]);
+               }
+           
+        })
+        ->orderBy('tsnome','asc')
+        ->distinct()
+        ->get();
         return response()->json($tomadors);
     }
     /**
@@ -291,37 +321,37 @@ class TomadorController extends Controller
     public function destroy($id)
     {
         
-        $tomador = $this->basecalculo->verificaTomador($id);
+        $tomador = $this->basecalculo->where('tomador_id',$id)->count();
         if ($tomador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletador.']);
         }
-        $user = auth()->user();
-        $dados = ['matricula'=>''];
-        $lancamentotabelas = $this->lancamentotabela->buscaTomador($id);
+        $tomadors = $this->tomador->deletar($id); 
+        // $dados = ['matricula'=>''];
+        // $lancamentotabelas = $this->lancamentotabela->buscaTomador($id);
         
-            foreach ($lancamentotabelas as $key => $value) {
-                $bolcartaopontos = $this->bolcartaoponto->deletar($value->id);
-                $lancamentorublicas = $this->lancamentorublica->deletar($value->id);
-            }
+        //     foreach ($lancamentotabelas as $key => $value) {
+        //         $bolcartaopontos = $this->bolcartaoponto->deletar($value->id);
+        //         $lancamentorublicas = $this->lancamentorublica->deletar($value->id);
+        //     }
             
-            $campoendereco = 'tomador';
-            $campobacario = 'tomador';
-            $lancamentotabelas = $this->lancamentotabela->deletarTomador($id);
-            $comissionados = $this->comissionado->deletaTomador($id);
-            $exbancarios = $this->bancario->deletarTomador($id);
-            $tabelaprecos = $this->tabelapreco->deletatomador($id);
-            $exenderecos = $this->endereco->deletarTomador($id); 
-            $cartaoponto = $this->cartaoponto->deletar($id);
-            $parametrosefips = $this->parametrosefip->deletar($id);
-            $indicefaturas = $this->indicefatura->deletar($id);
-            $taxas = $this->taxa->deletar($id);
-            $incidefolhars = $this->incidefolhar->deletar($id);
-            $tomadors = $this->tomador->deletar($id); 
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            if (isset($valorrublica_matricular->vimatriculartomador)) {
-                $dados['matricula'] =  $valorrublica_matricular->vimatriculartomador - 1;
-                $this->valorrublica->editarMatricularTomador($dados,$user->empresa);
-            }
+        //     $campoendereco = 'tomador';
+        //     $campobacario = 'tomador';
+        //     $lancamentotabelas = $this->lancamentotabela->deletarTomador($id);
+        //     $comissionados = $this->comissionado->deletaTomador($id);
+        //     $exbancarios = $this->bancario->deletarTomador($id);
+        //     $tabelaprecos = $this->tabelapreco->deletatomador($id);
+        //     $exenderecos = $this->endereco->deletarTomador($id); 
+        //     $cartaoponto = $this->cartaoponto->deletar($id);
+        //     $parametrosefips = $this->parametrosefip->deletar($id);
+        //     $indicefaturas = $this->indicefatura->deletar($id);
+        //     $taxas = $this->taxa->deletar($id);
+        //     $incidefolhars = $this->incidefolhar->deletar($id);
+            
+            // $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            // if (isset($valorrublica_matricular->vimatriculartomador)) {
+            //     $dados['matricula'] =  $valorrublica_matricular->vimatriculartomador - 1;
+            //     $this->valorrublica->editarMatricularTomador($dados,$user->empresa);
+            // }
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         try {
             

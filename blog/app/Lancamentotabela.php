@@ -8,7 +8,19 @@ class Lancamentotabela extends Model
 {
     protected $fillable = [
         'liboletim','lsdata','lsnumero','lsstatus','lsferiado','tomador_id','empresa_id'
-    ];
+    ]; 
+    public function empresa()
+    {
+        return $this->hasMany(Empresa::class);
+    }
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
+    public function bolcartaoponto()
+    {
+        return $this->hasMany(Bolcartaoponto::class);
+    }
     public function cadastro($dados)
     {
        return Lancamentotabela::create([

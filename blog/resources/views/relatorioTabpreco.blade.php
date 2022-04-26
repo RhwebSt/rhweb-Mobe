@@ -97,14 +97,21 @@
             
             <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresa->esnome}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
             </tr>
         </table>
         
+        
         <div class="borderT margin-top">
-            <table>
+            <table >
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+                <td rowspan="6">
+                        @if($empresas->esfoto)
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
                 </tr>
     
                 <tr>
@@ -112,7 +119,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresa->escnpj}}</td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
                 </tr>
     
                 <tr>
@@ -120,7 +127,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                     
                 </tr>
     
@@ -129,7 +136,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
                     
                 </tr>
     
@@ -138,15 +145,14 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresa->estelefone}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
         </div>
-            
             <table class="margin-top">
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Tomador: {{$tomadores->tsnome}}</td>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Tomador: {{$tomador[0]->tsnome}}</td>
                 </tr>
             </table>
 
@@ -168,7 +174,7 @@
         
         <div id="content">
             <table>
-                @foreach($tabelaprecos as $tabelapreco)
+                @foreach($tomador[0]->tabelapreco as $tabelapreco)
                 <tr>
                     <td class="small__font border-top border-bottom border-left ano text-center">{{$tabelapreco->tsano}}</td>
                     <td class="small__font border-top border-bottom border-left text-center codigo">{{$tabelapreco->tsrubrica}}</td>

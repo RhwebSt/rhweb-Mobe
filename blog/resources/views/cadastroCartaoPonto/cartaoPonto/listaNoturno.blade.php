@@ -49,8 +49,8 @@
                                 @if($listas->bsentradanoite && $listas->bsentradanoite ||
                                 $listas->bsentradamadrugada && $listas->bssaidamadrugada)
                                 <tr class="tr__body">
-                                    <td class="td__body text-nowrap col" style="width:60px;">{{$listas->tsmatricula}}</td>
-                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->tsnome}}">{{$listas->tsnome}}</td>
+                                    <td class="td__body text-nowrap col" style="width:60px;">{{$listas->trabalhador->tsmatricula}}</td>
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bsentradanoite}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bssaidanoite}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bsentradamadrugada}}</td>

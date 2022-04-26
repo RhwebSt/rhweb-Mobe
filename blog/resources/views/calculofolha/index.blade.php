@@ -195,6 +195,7 @@
                                 <th class="th__header text-nowrap">Nome</th>
                                 <th class="th__header text-nowrap" style="width:200px">Data Inicial</th>
                                 <th class="th__header text-nowrap" style="width:200px">Data Final</th>
+                                <th class="th__header text-nowrap" style="width:60px;">Relatórios</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Imprimir</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Recibo</th>
                                 <th class="th__header text-nowrap" style="width:50px;">Analítico</th>
@@ -234,7 +235,19 @@
                                             {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                                             @endif
                                         @endforeach
-                                    </td>  
+                                    </td>
+                                    
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                        <div class="dropdown">
+                                            <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="icon__color fas fa-file-alt"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-file"></i> Resumo Folha de Pagamento</a></li>
+                                                <li><a class="dropdown-item modal-botao" href="#"><i class="fad fa-file-invoice"></i> Resumo Evento s-1270</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         
@@ -425,6 +438,7 @@
                                 <th class="th__header text-nowrap" style="width:160px">Data Inicial</th>
                                 <th class="th__header text-nowrap" style="width:160px">Data Final</th>
                                 <th class="th__header text-nowrap" style="width:50px;">Imprimir</th>
+                                <th class="th__header text-nowrap" style="width:50px;">s-1270</th>
                                 <th class="th__header text-nowrap" style="width:50px;">Recibo</th>
                                 <th class="th__header text-nowrap" style="width:50px;">Rúbricas</th>
                                 <th class="th__header text-nowrap" style="width:50px;">Depósito</th>
@@ -455,6 +469,10 @@
                                     
                                     <td class="td__body text-nowrap col" style="width:50px;">
                                         <a class="btn btn__imprimir" href="{{route('calculo.folha.imprimir',$folhar->id)}}"><i class="icon__color fad fa-print"></i></a>
+                                    </td>
+                                    
+                                    <td class="td__body text-nowrap col" style="width:50px;">
+                                        <a class="btn btn__evento" href=""><i class="icon__color fas fa-file-invoice"></i></a>
                                     </td>
                                             
                                     <td class="td__body text-nowrap col" style="width:60px;">

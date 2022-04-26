@@ -50,8 +50,8 @@
                                 @if($listas->bsentradamanhao && $listas->bssaidamanhao || 
                                 $listas->bsentradatarde && $listas->bssaidatarde)
                                 <tr class="tr__body">
-                                    <td class="td__body text-nowrap col" style="width:40px;">{{$listas->tsmatricula}}</td>
-                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->tsnome}}">{{$listas->tsnome}}</td>
+                                    <td class="td__body text-nowrap col" style="width:40px;">{{$listas->trabalhador->tsmatricula}}</td>
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bsentradamanhao}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bssaidamanhao}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bsentradatarde}}</td>

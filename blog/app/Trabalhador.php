@@ -49,6 +49,10 @@ class Trabalhador extends Model
     {
         return $this->hasMany(Epi::class);
     }
+    public function bolcartaoponto()
+    {
+        return $this->hasMany(Bolcartaoponto::class);
+    }
     
     public function cadastro($dados)
     {

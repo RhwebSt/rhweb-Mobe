@@ -76,7 +76,7 @@
       @csrf
       <input type="hidden" id="method" name="_method" value="">
       <input type="hidden" name="status" value="D" id="status">
-      <input type="hidden" name="empresa" value="{{$user->empresa}}">
+      <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
 
         <div class="btn d-grid gap-1 mb-5  mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
 
@@ -299,11 +299,11 @@
             $('#datalistOptions').html(nome)
           }
           if (data.length === 1 && dados.length >= 4) {
-            let tabela = tabelaPreco(data[0].tomador);
+            let tabela = tabelaPreco(data[0].id);
             if (tabela) {
               tomador(data[0])
             } else {
-              Alerta(data[0].tomador)
+              Alerta(data[0].id)
             }
           }
         }
@@ -362,7 +362,7 @@
     }
 
     function tomador(data) {
-      $('#tomador').val(data.tomador)
+      $('#tomador').val(data.id)
       $('#matricula').val(data.tsmatricula)
       $('#domingo').val(data.csdomingos ? data.csdomingos : 0.00)
       $('#sabado').val(data.cssabados ? data.cssabados : 0.00)
