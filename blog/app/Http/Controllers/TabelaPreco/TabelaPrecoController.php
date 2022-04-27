@@ -144,6 +144,7 @@ class TabelaPrecoController extends Controller
     public function pesquisa($id, $tomador)
     {
         // $tabelaprecos = $tabelapreco->buscaListaTabela($id, $tomador);
+        $tomador = base64_decode($tomador);
         $tabelaprecos = $this->tabelapreco->where(function($query) use ($id,$tomador){
             $user = auth()->user();
             if ($id) {

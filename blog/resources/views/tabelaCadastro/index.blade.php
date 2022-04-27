@@ -60,7 +60,7 @@
         <div class="row">
               <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
-                    <button type="submit" id="incluir" @if(count($lista) >= $quantidade) disabled @endif class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                    <button type="submit" id="incluir" @if($lista->count() >= $quantidade) disabled @endif class="btn botao"><i class="fad fa-save"></i> Incluir</button>
                     <a class="btn botao d-none" href="{{url('relatorioboletimtabela')}}/{{$boletim}}" id="relatorio" role="button"><i class="fad fa-file-alt"></i> Relatório</a>
                     <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
                           <i class="fad fa-list-ul"></i> Lista
@@ -75,7 +75,7 @@
             <input type="hidden" name="lftomador" id="lftomador">
             <input type="hidden" name="boletim" value="{{$boletim}}">
             <input type="hidden" name="tomador" id="tomador" value="{{$tomador}}">
-            <input type="hidden" name="data" value="{{$data}}">
+            <input type="hidden" name="data" value="{{base64_decode($data)}}">
             <input type="hidden" name="descricao" id="descricao">
             
             

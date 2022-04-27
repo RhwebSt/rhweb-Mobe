@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Bolcartaoponto extends Model
 {
     protected $fillable = [
-        'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador_id','lancamento_id','created_at'
+        'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador_id','lancamentotabela_id','created_at'
     ];
     public function lancamento()
     {
@@ -35,14 +35,14 @@ class Bolcartaoponto extends Model
             'bshoraexcem'=>str_replace(",",".",$dados['horas__cem']),
             'bsadinortuno'=>str_replace(",",".",$dados['adc__noturno']),
             'trabalhador_id'=>$dados['trabalhador'],
-            'lancamento_id'=>$dados['lancamento'],
+            'lancamentotabela_id'=>$dados['lancamento'],
         ]);
     }
     public function listaCartaoPontoPaginacao($id,$data)
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->select(
             'trabalhadors.*', 
             'bolcartaopontos.*', 
@@ -72,7 +72,7 @@ class Bolcartaoponto extends Model
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->select(
             'trabalhadors.*', 
             'bolcartaopontos.*', 
@@ -81,7 +81,7 @@ class Bolcartaoponto extends Model
             $user = auth()->user();
             $query->where([
                 ['trabalhadors.tsnome',$id],
-                ['bolcartaopontos.lancamento_id',$boletim],
+                ['bolcartaopontos.lancamentotabela_id',$boletim],
                 ['trabalhadors.empresa_id', $user->empresa_id]
             ])
             ->whereDate('bolcartaopontos.created_at', $data);
@@ -91,7 +91,7 @@ class Bolcartaoponto extends Model
     public function buscaUnidadeLancamento($id)
     {
         return DB::table('lancamentotabelas')
-        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->select(
             'lancamentotabelas.liboletim',
             'lancamentotabelas.lsdata',
@@ -105,7 +105,7 @@ class Bolcartaoponto extends Model
    public function buscaListaRelatorioLancamentoBolcartao($dados)
    {
        return DB::table('lancamentotabelas')
-       ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+       ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
        ->select(
             'bolcartaopontos.*',
@@ -171,7 +171,7 @@ class Bolcartaoponto extends Model
    public function buscaListaLancamentoBolcartao($tomador,$ano_inicio,$ano_final)
    {
         return DB::table('lancamentotabelas')
-        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'bolcartaopontos.*',
@@ -201,7 +201,7 @@ class Bolcartaoponto extends Model
    public function buscaListaGeral($empresa,$ano_inicio,$ano_final)
    {
     return DB::table('lancamentotabelas')
-    ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+    ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
     ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
     ->select(
         'bolcartaopontos.*',
@@ -277,7 +277,7 @@ class Bolcartaoponto extends Model
     public function boletimCartaoPonto($id,$ano_inicio,$ano_final) 
     {
         return DB::table('lancamentotabelas')
-        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('bolcartaopontos', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'bolcartaopontos.*',
@@ -299,7 +299,7 @@ class Bolcartaoponto extends Model
     {
         return DB::table('trabalhadors')
         ->join('bolcartaopontos', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
-        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamento_id')
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select(
             'lancamentotabelas.*', 

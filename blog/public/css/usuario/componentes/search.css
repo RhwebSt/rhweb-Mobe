@@ -1,0 +1,35 @@
+:root{
+   
+}
+
+.section__search{
+    margin-top: 3%;
+}
+
+
+.botao__search{
+    background-color: #2C188B;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    margin-left: 5px;
+    transition: 300ms ease-in-out;
+}
+
+
+.botao__search:hover{
+    background-color: #1B0F57;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
+.botao__search:focus{
+    background-color: #1B0F57;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.icon__search{
+    color: white;
+}

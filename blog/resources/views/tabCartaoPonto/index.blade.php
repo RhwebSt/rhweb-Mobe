@@ -137,7 +137,7 @@
                 
                   <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
                   <input type="hidden" name="status" value="M" id="status">
-                  <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                  <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
                 <div class="col-md-2 d-none">
                     <label for="matricula" class="form-label ">Matrícula <i class="fas fa-lock"></i></label>
                     <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror " name="matricula" value="" id="matricula" Readonly>
@@ -409,7 +409,7 @@
               })
             }
             function tomador(data) {
-              $('#tomador').val(data.tomador)
+              $('#tomador').val(data.id)
               $('#matricula').val(data.tsmatricula)
               $('#domingo').val(data.csdomingos)
               $('#sabado').val(data.cssabados)

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\TabCadastro;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Boletim\Tabela\Lanca\Validacao;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
 class TabCadastroController extends Controller
@@ -28,7 +28,8 @@ class TabCadastroController extends Controller
      */
     public function create($quantidade,$boletim,$tomador,$id,$data)
     {
-        // $quantidade = base64_decode($quantidade);
+        $quantidade = base64_decode($quantidade);
+        // dd($quantidade);
         // $boletim = base64_decode($boletim);
         // $tomador = base64_decode($tomador);
         $id = base64_decode($id);
@@ -37,7 +38,9 @@ class TabCadastroController extends Controller
         $search = request('search');
         $trabalhador = request('codicao');
         $user = Auth::user(); 
-        $lista = $this->lancamentorublica->listacadastro($search,$id,'M','asc');
+        // $lista = $this->lancamentorublica->listacadastro($search,$id,'M','asc');
+        $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
+        ->with('trabalhador')->paginate(10);
         if ($trabalhador) {
             $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
             return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
@@ -65,35 +68,36 @@ class TabCadastroController extends Controller
             return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
         }
     }
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
-        
-        $novadata = explode('-',$dados['data']);
+        $user = auth()->user();
+        // dd($dados);
+        // $novadata = explode('-',$dados['data']);
 
         
-        $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
-          
-            $lancamentorublicas = $this->lancamentorublica->verifica($dados,$novadata);
-            if ($lancamentorublicas) {
+        // $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
+        // $lancamentorublicas = $this->lancamentorublica->verifica($dados,$novadata);
+        $trabalhador = $this->lancamentorublica->where([
+            ['lancamentotabela_id',$dados['lancamento']],
+            ['trabalhador_id',$dados['trabalhador']],
+            ['licodigo',$dados['codigo']]
+            // ['empresa_id', $user->empresa_id]
+        ])
+        ->whereDate('created_at',$dados['data'])
+        ->count();
+        $quantrabalhador = $this->lancamentorublica->where([
+            ['lancamentotabela_id',$dados['lancamento']],
+            // ['empresa_id', $user->empresa_id]
+        ])
+        ->whereDate('created_at', $dados['data'])
+        ->count();
+            if ($trabalhador) {
                 return redirect()->back()->withErrors(['false'=>'Este trabalhador já foi lançado com esse código.']);
             }
-            $validator = Validator::make($request->all(), [
-                'nome__completo' => 'required',
-                'matricula'=>'required|max:4',
-                'codigo'=>'required|max:4', 
-                'rubrica'=>'required|max:60',
-                'quantidade'=>'required'
-            ],
-                [
-                    'codigo.required'=>'O campo codigo é obrigatório.',
-                    'codigo.max'=>'O campo código não pode ser superior a 4 caracteres.'
-                ]
-            );
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator);
-            }
-            if ( count($quantidadeTrabalhador) == $dados['numtrabalhador']) {
+          
+          
+            if ( $quantrabalhador == $dados['numtrabalhador']) {
                 return redirect()->back()->withErrors(['false'=>'Os'.$dados['numtrabalhador'].' já foram lançados.']);
             }else{
                 $this->lancamentorublica->cadastro($dados);

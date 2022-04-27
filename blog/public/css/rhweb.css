@@ -12,8 +12,6 @@
     --hover-dark-mode-bg: rgb(14, 13, 13);
     --hover-dark-mode-color: white;
     --img-trab-color:1.7px solid #5345B0;
-    --pesq-background: #1D1D20;
-    --pesq-color-font: white;
     --modal-delete-bg: #2E50DC;
     --modal-delbody-bg: #044C9F;
     --modal-delfooter-bg: #2E50DC;
@@ -70,64 +68,6 @@ main{
     margin-bottom: 100px;
 }
 
-/* inicio da navbar*/
-.dropdown-menu{
-    background-color:#474747;
-    color:black ;
-    margin-top: 10px;
-    border-radius: 12px;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.dropdown-item{
-    color: white;
-    transition: ease-in-out 400ms;
-}
-
-.dropdown-item:hover{
-    color: black;
-    background-color: white;
-    border-radius: 10px;
-    transition: ease-in-out 400ms;
-    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.3);
-}
-
-
-.nav-link{
-    color: #E0E0E0 !important;
-    transition: 200ms ease-in-out;
-}
-
-.nav-link:hover{
-    color: white !important;
-    transform: scale(1.06);
-    transition: 200ms ease-in-out;
-    font-weight: 500;
-    
-    
-}
-
-.nav-link:focus{
-    color: white !important;
-    transform: scale(1.02);
-    transition: 200ms ease-in-out;
-    box-shadow: none !important;
-    font-weight: 500;
-}
-
-.logo__clickavel{
-    transition: 300ms ease-in-out;
-}
-
-.logo__clickavel:hover{
-    transform: scale(1.08);
-    transition: 300ms ease-in-out;
-}
-
-/* fim da navbar*/
-
 
 .conteudo{
     flex: 1 0 auto;
@@ -145,22 +85,6 @@ main{
     margin-left:none;
 }
 
-/*form input[type="text"] {*/
-/*            text-transform: uppercase;*/
-/*            color:black !important;*/
-/*            font-weight: bold !important;*/
-/*            margin-left: 0 !important;*/
-/*        }*/
-
-
-/*input:hover{*/
-/*    border-color: #4f29f89a;*/
-/*    border-radius: 5px;*/
-/*    box-shadow: var(--input-hover);*/
-/*    transition:  ease-in-out .4s;*/
-/*    margin-left: 0 !important;*/
-
-/*}*/
 
 
 .limitaCarcteres{
@@ -224,13 +148,13 @@ main{
     transition: ease-in 800ms;
 }
 
-.form-control:focus {
-    border-color: var(--input-focus-color);
-    border-radius: 5px;
-    box-shadow: var(--input-focus-box);
-    transition: 900ms;
+/*.form-control:focus {*/
+/*    border-color: var(--input-focus-color);*/
+/*    border-radius: 5px;*/
+/*    box-shadow: var(--input-focus-box);*/
+/*    transition: 900ms;*/
 
-}
+/*}*/
 
 
 
@@ -239,31 +163,7 @@ main{
     transition: ease-in-out .2s;
 }
 
-.pesquisar{
-    background-color:var(--pesq-background);
-    color:var(--pesq-color-font);
-    border-radius: 8px;
-}
 
-.iconsear{
-    padding-top: 10px;
-    padding-left:10px;
-    padding-right:10px;
-}
-
-.modal__delete{
-    background-color: var(--modal-delete-bg);
-}
-
-.modal-delbody{
-    background-color: var(--modal-delbody-bg);
-    color:white;
-}
-
-.modal-delfooter{
-    background-color: var(--modal-delfooter-bg);
-    color:white;
-}
 
 .btn__fechar{
     background-color: var(--btn-fechar-bg);
@@ -312,11 +212,6 @@ main{
 
 }
 
-.searhicon{
-    border-radius: 3px;
-    padding-right:10px;
-    padding-left: 10px;
-}
 
 .trabfoto{
     width: 100px; 
@@ -330,9 +225,7 @@ main{
     border: var(--img-trab-color) ;
 }
 
-.trash__delete{
-    background-color: red;
-}
+
 
 .data{
     display: flex;
@@ -394,155 +287,7 @@ main{
     transform: scale(1.01);
 }
 
-.offcanvas-end{
-    background-color: #1250d6;
-}
 
-.offcanvas-body{
-    background-color: #1250d6;
-}
-
-.botaoPesquisa{
-    border-radius: 8px;
-    margin-left: 5px;
-    background-color:#394041;
-    color: white;
-}
-
-.botaoPesquisa:hover{
-    background-color:#5F6B6D;
-    color: white;
-}
-
-
-.bodyTabela{
-    background-color: #081049;
-    color: white;
-    transition: 400ms;
-    transition-timing-function: ease-in-out;
-}
-
-.bodyTabela:hover{
-    background-color: #0C186E;
-    color: white;
-}
-
-.table{
-    border-radius: 10px !important;
-    border: none !important;
-    box-shadow: 0px 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.btn__padrao--vizualizar{
-    background-color:#42287B;
-    border: 1px solid #ea8dfd;
-    padding-top:7.5px;
-    padding-bottom:7.5px;
-    padding-left: 11px;
-    padding-right: 11px;
-    border-radius: 6px;
-    transition: 400ms;
-}
-
-.btn__padrao--vizualizar:hover{
-    background-color:#7707ac;
-}
-
-
-.btn__padrao--imprimir{
-    padding-top:7.5px;
-    padding-bottom:7.5px;
-    padding-left: 11px;
-    padding-right: 11px;
-    border-radius: 6px;
-    background-color:#1E16B6;
-    border: 1px solid #5149E9;
-    transition: 400ms;
-}
-
-.btn__padrao--imprimir:hover{
-    background-color:#0F0B5B;
-}
-
-.btn__padrao--editar{
-    padding-top:7px;
-    padding-bottom:7px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 6px;
-    background-color:#117E25;
-    border: 1px solid #5DE977;
-    transition: 400ms;
-}
-
-.btn__padrao--editar:hover{
-    background-color:#0C5A1A;
-    
-}
-
-.btn__padrao--excluir{
-    padding-top:7px;
-    padding-bottom:7px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 6px;
-    background-color:#A30E00;
-    border: 1px solid #FF5747;
-    transition: 400ms;
-}
-
-.btn__padrao--excluir:hover{
-    background-color:#8A1005;
-}
-
-.btn__padrao--relatorio{
-    padding-top:7px;
-    padding-bottom:7px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 6px;
-    background-color:#0B87C1;
-    border: 1px solid #8CD6F8;
-    transition: 400ms;
-}
-
-.btn__padrao--relatorio:hover{
-    background-color:#075174;
-}
-
-.btn__padrao--preco{
-    padding-top:7px;
-    padding-bottom:7px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 6px;
-    background-color:#E09900;
-    border: 1px solid #FFDF99;
-    transition: 400ms;
-}
-
-.btn__padrao--preco:hover{
-    background-color:#A37000;
-}
-
-.btn__padrao--evento{
-    padding-top:7px;
-    padding-bottom:7px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 6px;
-    background-color:#119DA4;
-    border: 1px solid #7EECF1;
-    transition: 400ms;
-}
-
-.btn__padrao--evento:hover{
-    background-color:#0C696E;
-}
-
-.iconPesquisar:hover{
-    color: red;
-}
 
 
 .box__principal{
@@ -587,30 +332,6 @@ main{
     max-width: 30ch; 
     overflow: hidden; 
     text-overflow: ellipsis;
-}
-
-.modalHeader{
-    background-color: #FFFFFC;
-    color:black;
-    font-size: 16px;
-   
-}
-
-.modalBody{
-  background-color:#FFFFFC;
-}
-
-.modalClose{
-    filter: none;
-    border-radius: 50%;
-    border: 3px solid black;
-    z-index: 1;
-
-}
-
-.buttonFilter{
-    background-color:#111317;
-    color: white;
 }
 
 
@@ -676,21 +397,7 @@ main{
 
 
 
-footer{
-    
-    background-image: linear-gradient(75deg, #03256C, #0751f3, rgb(33, 5, 197));
-    position: absolute;
-    color: #FFF;
-    width: 100%;
-    height: 60px;    
-    text-align: center;
-    line-height: 60px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    font-size:14px;
-    overflow: hidden;
-}
+
 
 @media only screen and (max-width: 280px) {
     .quadro{

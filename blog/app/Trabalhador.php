@@ -53,7 +53,10 @@ class Trabalhador extends Model
     {
         return $this->hasMany(Bolcartaoponto::class);
     }
-    
+    public function lancamentorublica()
+    {
+        return $this->hasMany(Lancamentorublica::class);
+    }
     public function cadastro($dados)
     {
         

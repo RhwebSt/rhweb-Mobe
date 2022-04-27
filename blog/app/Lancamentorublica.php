@@ -7,8 +7,16 @@ use Illuminate\Support\Facades\DB;
 class Lancamentorublica extends Model
 {
     protected $fillable = [
-        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador_id','lancamento_id','created_at'
+        'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador_id','lancamentotabela_id','created_at'
     ];
+    public function lancamento()
+    {
+        return $this->belongsTo(Lancamentotabela::class);
+    }
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
        return Lancamentorublica::create([
@@ -17,7 +25,7 @@ class Lancamentorublica extends Model
             'licodigo'=>$dados['codigo'],
             'lsdescricao'=>$dados['descricao'],
             'trabalhador_id'=>$dados['trabalhador'],
-            'lancamento_id'=>$dados['lancamento'],
+            'lancamentotabela_id'=>$dados['lancamento'],
             'created_at'=>$dados['data'],
             'lfvalor'=>$dados['valor']?str_replace(",",".",$dados['valor']):0,
             'lftomador'=>$dados['lftomador']?str_replace(",",".",$dados['lftomador']):0        ]);

@@ -194,14 +194,20 @@
                 
                 <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$lancamentotabelas[0]->esnome}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
             </tr>
         </table>
         
         <div class="borderT margin-top">
-        <table>
+        <table >
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+                    <td rowspan="6">
+                        @if($empresas->esfoto)
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
                 </tr>
     
                 <tr>
@@ -209,7 +215,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresa->escnpj}}</td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
                 </tr>
     
                 <tr>
@@ -217,7 +223,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                     
                 </tr>
     
@@ -226,7 +232,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
                     
                 </tr>
     
@@ -235,7 +241,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresa->estelefone}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
@@ -244,15 +250,10 @@
                 <table class="margin-top">
                     <tr>
                         <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center destaque uppercase">Planilha do Cartão Ponto</td>
-                        <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim N° {{$lancamentotabelas[0]->liboletim}}</td>
+                        <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim N° {{$lancamentotabelas->liboletim}}</td>
                         <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência:
-                        @if(isset($lancamentotabelas[0]->lsdata))
-                            <?php
-                                $data = explode('-',$lancamentotabelas[0]->lsdata);
-                                $data2 = $data[2].'/'.$data[1].'/'.$data[0];
-                            ?>
-                            {{$data2}}
-                         @endif
+                       
+                         {{date('d/m/Y',strtotime($lancamentotabelas->lsdata))}}
                         </td>
                     </tr>
                 </table>
@@ -270,37 +271,37 @@
                     <tr>
                         <td class="small__font border-left border-bottom text-center valor__padrao">Base Empresa</td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1000)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
+                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1002)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
+                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1003)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
+                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1004)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
+                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1005)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '')}}
+                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                 @endif
                             @endforeach
                         </td>
@@ -309,35 +310,35 @@
                     <tr>
                         <td class="small__font border-left border-bottom text-center valor__padrao">Base Folha</td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1000)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1002)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1003)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1004)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
                             @endforeach
                         </td>
                         <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
-                            @foreach($tabelaprecos as $tabelapreco)
+                            @foreach($tomador->tabelapreco as $tabelapreco)
                                 @if($tabelapreco->tsrubrica == 1005)
                                     {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                 @endif
@@ -386,11 +387,7 @@
             <div id="footer">
               <p class="page destaque borderT padding-footer">Página:  </p>
             </div>
-            
-            <div id="content">
-                <table>
-                    
-                    <?php
+            <?php
                         $totalfolhar = 0;
                         $totaltomador = 0;
                         function calculovalores($horas,$valores)
@@ -402,33 +399,40 @@
                             return $horasex; 
                         }
                     ?>
-                    @foreach($lancamentotabelas as $lancamentotabela)
+            <div id="content">
+               
+                <table>
+                    
+                  
+                    @foreach($bolcartaoponto as $bolcartaopontos)
+                    
                     <tr>
-                        <td class="small__font border-top border-bottom border-left nome spacing uppercase">{{$lancamentotabela->trabalhadornome}}</td>
-                        <td class="small__font border-top border-bottom border-left ent text-center">{{$lancamentotabela->bsentradamanhao?$lancamentotabela->bsentradamanhao:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left pad text-center">{{$lancamentotabela->bssaidamanhao?$lancamentotabela->bssaidamanhao:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left ent  text-center">{{$lancamentotabela->bsentradatarde?$lancamentotabela->bsentradatarde:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left pad text-center">{{$lancamentotabela->bssaidatarde?$lancamentotabela->bssaidatarde:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center ent ">{{$lancamentotabela->bsentradanoite?$lancamentotabela->bsentradanoite:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bssaidanoite?$lancamentotabela->bssaidanoite:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center ent ">{{$lancamentotabela->bsentradamadrugada?$lancamentotabela->bsentradamadrugada:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bssaidamadrugada?$lancamentotabela->bssaidamadrugada:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center normais">{{$lancamentotabela->horas_normais?$lancamentotabela->horas_normais:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bshoraex?$lancamentotabela->bshoraex:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center pad">{{$lancamentotabela->bshoraexcem?$lancamentotabela->bshoraexcem:' '}}</td>
-                        <td class="small__font border-top border-bottom border-left text-center adcnot">{{$lancamentotabela->bsadinortuno?$lancamentotabela->bsadinortuno:' '}}</td>
+                        
+                        <td class="small__font border-top border-bottom border-left nome spacing uppercase">{{$bolcartaopontos->trabalhador->tsnome}}</td>
+                        <td class="small__font border-top border-bottom border-left ent text-center">{{$bolcartaopontos->bsentradamanhao}}</td>
+                        <td class="small__font border-top border-bottom border-left pad text-center">{{$bolcartaopontos->bssaidamanhao}}</td>
+                        <td class="small__font border-top border-bottom border-left ent  text-center">{{$bolcartaopontos->bsentradatarde}}</td>
+                        <td class="small__font border-top border-bottom border-left pad text-center">{{$bolcartaopontos->bssaidatarde}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center ent ">{{$bolcartaopontos->bsentradanoite}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad">{{$bolcartaopontos->bssaidanoite}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center ent ">{{$bolcartaopontos->bsentradamadrugada}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad">{{$bolcartaopontos->bssaidamadrugada}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center normais">{{$bolcartaopontos->horas_normais}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad">{{$bolcartaopontos->bshoraex}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad">{{$bolcartaopontos->bshoraexcem}}</td>
+                        <td class="small__font border-top border-bottom border-left text-center adcnot">{{$bolcartaopontos->bsadinortuno}}</td>
                         <td class="small__font border-top border-bottom border-left text-center valor">
                            <?php
                                 $valortotal = 0; 
-                                foreach ($tabelaprecos as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $lancamentotabela->bshoraex) {
-                                        $valortotal += calculovalores($lancamentotabela->bshoraex,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $lancamentotabela->horas_normais){
-                                        $valortotal += calculovalores($lancamentotabela->horas_normais,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $lancamentotabela->bshoraexcem){
-                                        $valortotal += calculovalores($lancamentotabela->bshoraexcem,$value->tsvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $lancamentotabela->bsadinortuno) {
-                                        $valortotal += calculovalores($lancamentotabela->bsadinortuno,$value->tsvalor);
+                                foreach ($tomador->tabelapreco as $key => $value) {
+                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
+                                        $valortotal += calculovalores($bolcartaopontos->bshoraex,$value->tsvalor);
+                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais){
+                                        $valortotal += calculovalores($bolcartaopontos->horas_normais,$value->tsvalor);
+                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem){
+                                        $valortotal += calculovalores($bolcartaopontos->bshoraexcem,$value->tsvalor);
+                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
+                                        $valortotal += calculovalores($bolcartaopontos->bsadinortuno,$value->tsvalor);
                                     }
                                 }
                                 $totalfolhar += $valortotal;
@@ -438,15 +442,15 @@
                         <td class="small__font border-top border-bottom border-left border-right text-center valor">
                             <?php
                                 $valortomador = 0;
-                                foreach ($tabelaprecos as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $lancamentotabela->bshoraex) {
-                                        $valortomador += calculovalores($lancamentotabela->bshoraex,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $lancamentotabela->horas_normais){
-                                        $valortomador += calculovalores($lancamentotabela->horas_normais,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $lancamentotabela->bshoraexcem){
-                                        $valortomador += calculovalores($lancamentotabela->bshoraexcem,$value->tstomvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $lancamentotabela->bsadinortuno) {
-                                        $valortomador += calculovalores($lancamentotabela->bsadinortuno,$value->tstomvalor);
+                                foreach ($tomador->tabelapreco as $key => $value) {
+                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
+                                        $valortomador += calculovalores($bolcartaopontos->bshoraex,$value->tstomvalor);
+                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais){
+                                        $valortomador += calculovalores($bolcartaopontos->horas_normais,$value->tstomvalor);
+                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem){
+                                        $valortomador += calculovalores($bolcartaopontos->bshoraexcem,$value->tstomvalor);
+                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
+                                        $valortomador += calculovalores($bolcartaopontos->bsadinortuno,$value->tstomvalor);
                                     }
                                 }
                                 $totaltomador += $valortomador;
@@ -466,12 +470,12 @@
                  ?>
                 <table>
                     <tr>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left qtnd__trab">Quantidades de Trabalhadores: {{count($trabalhadors)}}</td>
+                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left qtnd__trab">Quantidades de Trabalhadores:{{$bolcartaoponto->count()}}</td>
                         <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left totalizacao">Totalizações</td>
                         <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left normais">
                             <?php
                                 $horasnormal = 0;
-                                foreach ($lancamentotabelas as $key => $value) {
+                                foreach ($bolcartaoponto as $key => $value) {
                                     if ($value->horas_normais) {
                                         list($horas,$minitos) = explode(':',$value->horas_normais);
                                         $horasnormal += $horas * 3600 + $minitos * 60;
@@ -483,7 +487,7 @@
                         <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">
                             <?php
                                 $horasex = 0;
-                                foreach ($lancamentotabelas as $key => $value) {
+                                foreach ($bolcartaoponto as $key => $value) {
                                     if ($value->bshoraex) {
                                         list($horas,$minitos) = explode(':',$value->bshoraex);
                                         $horasex += $horas * 3600 + $minitos * 60;
@@ -495,7 +499,7 @@
                         <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">
                             <?php
                                 $horascem = 0;
-                                foreach ($lancamentotabelas as $key => $value) {
+                                foreach ($bolcartaoponto as $key => $value) {
                                     if ($value->bshoraexcem) {
                                         list($horas,$minitos) = explode(':',$value->bshoraexcem);
                                         $horascem += $horas * 3600 + $minitos * 60;
@@ -507,7 +511,7 @@
                         <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left adcnot">
                             <?php
                                 $noturno = 0;
-                                foreach ($lancamentotabelas as $key => $value) {
+                                foreach ($bolcartaoponto as $key => $value) {
                                     if ($value->bsadinortuno) {
                                         list($horas,$minitos) = explode(':',$value->bsadinortuno);
                                         $noturno += $horas * 3600 + $minitos * 60;

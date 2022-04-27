@@ -70,7 +70,7 @@
                             <button type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
                               <i class="fad fa-list"></i> Lista
                             </button>
-                            <a  id="boletim" href="{{route('tabcadastro.create',[base64_encode($dados->lsnumero),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->id),base64_encode($dados->lsdata)])}}" class="btn botao d-none">Boletim <i class="fad fa-door-open"></i></a>
+                            
                             <a class="btn botao" href="{{route('tabcartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                       </div>
                 </div>
@@ -96,7 +96,7 @@
               
                 <div class="col-md-8 input">
                   <label for="tomador" class="form-label">Tomador <i class="fas fa-lock"></i></label>
-                  <input type="text" list="datalistOptions" class=" fw-bold form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="{{$dados->tsnome}}" id="nome__completo" Readonly>
+                  <input type="text" list="datalistOptions" class=" fw-bold form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="{{$dados->tomador->tsnome}}" id="nome__completo" Readonly>
                   <datalist id="datalistOptions">
                   </datalist>
                   @error('nome__completo')
@@ -107,7 +107,7 @@
                       @enderror
                 </div>
                 
-                  <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador}}">
+                  <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador->id}}">
                   <input type="hidden" name="status" value="M" id="status">
                   <input type="hidden" name="empresa" value="{{$user->empresa}}">
                 <div class="col-md-2 d-none">

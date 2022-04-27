@@ -79,7 +79,7 @@
                                             @if(count($lista) > 0)
                                             @foreach($lista as $listas)
                                                 <tr class="tr__body">
-                                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->tsnome}}</td>
+                                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->trabalhador->tsnome}}</td>
                                                     <td class="td__body text-nowrap col" style="width:70px">{{$listas->licodigo}}</td>
                                                     <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->lshistorico}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->lshistorico}}</td>
                                                     <td class="td__body text-nowrap col" style="width:100px">

@@ -38,8 +38,8 @@
                                         <i class="fad fa-sort"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                      <li><a class="dropdown-item dropdown__links--filter" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                      <li><a class="dropdown-item dropdown__links--filter" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                      <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                      <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('edit.ordem.tabela.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                     </ul>
                                   </div>
                             </div>
@@ -81,12 +81,12 @@
                                         <td class="td__body text-nowrap col" style="width:200px">{{$lancamentotabela->lsnumero}}</td>
                                         
                                         <td class="td__body text-nowrap col" style="width:60px">
-                                            <a class="btn btn__relatorio modal-botao" href="{{route('relatorio.boletim.tabela',base64_encode($lancamentotabela->liboletim))}}"><i class="icon__color fas fa-file-alt"></i></a>
+                                            <a class="btn btn__relatorio modal-botao" href="{{route('relatorio.boletim.tabela',base64_encode($lancamentotabela->id))}}"><i class="icon__color fas fa-file-alt"></i></a>
                                         </td>
                                         
                                         <td class="td__body text-nowrap col" style="width:60px;">
                                             
-                                            <a class="btn btn__vizualizar" href="{{route('boletim.tabela.create',[base64_encode($lancamentotabela->lsnumero),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador),base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->lsdata)])}}"><i class="icon__color fad fa-eye"></i></a>
+                                            <a class="btn btn__vizualizar" href="{{route('boletim.tabela.create',[base64_encode($lancamentotabela->lsnumero),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador->id),base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->lsdata)])}}"><i class="icon__color fad fa-eye"></i></a>
                                         </td>
                                         
                                         <td class="td__body text-nowrap col" style="width:60px;">

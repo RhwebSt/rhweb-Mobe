@@ -33,10 +33,11 @@ class RelatorioCartaoPontoController extends Controller
         $tomador = base64_decode($tomador);
         $ano = explode('-',$data);
         $user = auth()->user();
-        $lancamentotabelas = $this->lancamento->where('id',$id)
-        ->with(['bolcartaoponto','tomador'])->get();
+        $lancamentotabelas = $this->lancamento->where('id',$id)->first();
+        // dd($lancamentotabelas);
         $bolcartaoponto = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->get();
+    
         // dd($lancamentotabelas,$bolcartaoponto,$id);
             // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0],null,'asc'); 
             $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
@@ -56,7 +57,7 @@ class RelatorioCartaoPontoController extends Controller
             //     array_push($dados,$value->trabalhador);
             // }
             // $trabalhadors = $this->trabalhador->relatorioBoletimTabela($dados);
-            $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','empresa','bolcartaoponto'));
+            $pdf = PDF::loadView('relatorioCartaoPonto',compact('lancamentotabelas','empresas','bolcartaoponto','tomador'));
             return $pdf->setPaper('a4','landscape')->stream('Relatório.pdf');
             try {
         } catch (\Throwable $th) {

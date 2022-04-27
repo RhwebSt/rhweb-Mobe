@@ -1,0 +1,79 @@
+.navb__burger--button{
+    background-color: #716E72;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: 300ms ease-in-out;
+}
+
+.navb__burger--button:hover{
+    background-color: #484649;
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
+.navb__burger--button:focus{
+    background-color: #484649;
+    transform: scale(1.06);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: 300ms ease-in-out;
+}
+
+.nav__bar{
+    background-image: linear-gradient(260deg, #08295E, #2C188B);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.logo__clickavel{
+    transition: 300ms ease-in-out;
+}
+
+.logo__clickavel:hover{
+    transform: scale(1.08);
+    transition: 300ms ease-in-out;
+}
+
+
+.dropdown-menu{
+    background-color:#474747;
+    color:black ;
+    margin-top: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.dropdown-item{
+    color: white;
+    transition: ease-in-out 400ms;
+}
+
+.dropdown-item:hover{
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+    transition: ease-in-out 400ms;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+
+.nav-link{
+    color: #E0E0E0 !important;
+    transition: 200ms ease-in-out;
+}
+
+.nav-link:hover{
+    color: white !important;
+    transform: scale(1.06);
+    transition: 200ms ease-in-out;
+    font-weight: 500;
+    
+    
+}
+
+.nav-link:focus{
+    color: white !important;
+    transform: scale(1.02);
+    transition: 200ms ease-in-out;
+    box-shadow: none !important;
+    font-weight: 500;
+}

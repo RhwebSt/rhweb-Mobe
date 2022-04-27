@@ -21,6 +21,10 @@ class Lancamentotabela extends Model
     {
         return $this->hasMany(Bolcartaoponto::class);
     }
+    public function lacamentorublica()
+    {
+        return $this->hasMany(Lancamentorublica::class);
+    }
     public function cadastro($dados)
     {
        return Lancamentotabela::create([
@@ -48,45 +52,17 @@ class Lancamentotabela extends Model
                 $query->where([
                     ['lancamentotabelas.liboletim',$id],
                     ['lancamentotabelas.lsstatus',$status],
-                    ['lancamentotabelas.empresa_id', $user->empresa]
+                    ['lancamentotabelas.empresa_id', $user->empresa_id]
                 ]);
             }else{
                 $query->where([
                     ['lancamentotabelas.id','>',$id],
                     ['lancamentotabelas.lsstatus',$status],
-                    ['lancamentotabelas.empresa_id', $user->empresa]
+                    ['lancamentotabelas.empresa_id', $user->empresa_id]
                 ]);
             }
 
-            // if ($user->hasPermissionTo('admin')) {
-            //     if ($id) {
-            //         $query->where([
-            //             ['lancamentotabelas.liboletim',$id],
-            //             ['lancamentotabelas.lsstatus',$status]
-            //         ])
-            //         ->orWhere('lancamentotabelas.id',$id);
-            //     }else{
-            //         $query->where([
-            //             ['lancamentotabelas.id','>',$id],
-            //             ['lancamentotabelas.lsstatus',$status]
-            //         ]);
-            //     }
-              
-            // }else{
-            //     if ($id) {
-            //         $query->where([
-            //             ['lancamentotabelas.liboletim',$id],
-            //             ['lancamentotabelas.lsstatus',$status],
-            //             ['lancamentotabelas.empresa', $user->empresa]
-            //         ]);
-            //     }else{
-            //         $query->where([
-            //             ['lancamentotabelas.id','>',$id],
-            //             ['lancamentotabelas.lsstatus',$status],
-            //             ['lancamentotabelas.empresa', $user->empresa]
-            //         ]);
-            //     }
-            // }
+            
         })
         ->orderBy('created_at','desc')
         ->distinct()

@@ -58,7 +58,7 @@ class CadastroCartaoPontoController extends Controller
             ]);
            }
         })
-        ->with('tomador')
+        ->with('tomador.cartaoponto')
         ->orderBy('liboletim', 'asc')
         ->paginate(10);
         // dd($lancamentotabelas);

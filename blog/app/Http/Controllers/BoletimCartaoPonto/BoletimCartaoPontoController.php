@@ -40,7 +40,7 @@ class BoletimCartaoPontoController extends Controller
         $user = Auth::user();
         
         // $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
-        $lista = $this->bolcartaoponto->where('lancamento_id',$id)
+        $lista = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(5);
         return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
@@ -57,7 +57,7 @@ class BoletimCartaoPontoController extends Controller
         try {
         // $bolcartaopontos = $bolcartaoponto->verifica($dados);
         $bolcartaopontos = $this->bolcartaoponto->where([
-            ['lancamento_id', $dados['lancamento']],
+            ['lancamentotabela_id', $dados['lancamento']],
             ['trabalhador_id', $dados['trabalhador']],
         ])
         ->whereDate('created_at', $dados['data'])

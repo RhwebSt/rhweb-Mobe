@@ -190,14 +190,14 @@
             
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresa->esnome}}</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
             </tr>
         </table>
         
         <div class="borderT margin-top">
             <table>
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
+               
                 </tr>
     
                 <tr>
@@ -205,7 +205,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresa->escnpj}}</td>
+                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresas->escnpj}}</td>
                 </tr>
     
                 <tr>
@@ -213,7 +213,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}}  - {{$empresas->endereco[0]->escep}}</td>
                     
                 </tr>
     
@@ -222,7 +222,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
+                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
                     
                 </tr>
     
@@ -231,7 +231,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresa->estelefone}}</td>
+                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
@@ -245,17 +245,12 @@
             
             <table>
                 <tr>
-                    <td class="small__font  border-top border-bottom border-right firtprad text-center border-left text-bold">Boletim Nº: {{$lancamentotabelas[0]->liboletim}}</td>
+                    <td class="small__font  border-top border-bottom border-right firtprad text-center border-left text-bold">Boletim Nº: {{$lancamentotabelas->liboletim}}</td>
                     <td class="small__font border-top border-bottom border-right firtprad text-center text-bold">Data do Boletim:
-                        @if(isset($lancamentotabelas[0]->lsdata))
-                            <?php
-                                $data = explode('-',$lancamentotabelas[0]->lsdata);
-                                $data2 = $data[2].'/'.$data[1].'/'.$data[0];
-                            ?>
-                            {{$data2}}
-                        @endif
+                       
+                        {{date('d/m/Y',strtotime($lancamentotabelas->lsdata))}}
                     </td>
-                    <td class="small__font border-top border-bottom border-right firtprad text-center2 text-bold text-center">Ano Referência: {{$data[0]}}</td>
+                    <td class="small__font border-top border-bottom border-right firtprad text-center2 text-bold text-center">Ano Referência: {{date('Y',strtotime($lancamentotabelas->lsdata))}}</td>
                     
                 </tr>
             </table>
@@ -263,7 +258,7 @@
         
             <table class="tomador">
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque uppercase">Tomador: {{$lancamentotabelas[0]->tsnome}}</td>
+                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque uppercase">Tomador: {{$lancamentotabelas->tomador->tsnome}}</td>
                 </tr>
             </table>
         
@@ -299,8 +294,8 @@
             }
         ?>
         <div id="content">
-               @if(count($trabalhadors) > 0)
-                 @foreach($trabalhadors as $trabalhador)
+               @if($trabalhadores->count() > 0)
+               @foreach($trabalhadores as $trabalhador)
                  <?php
                     $valor = 0;
                 ?>
@@ -318,8 +313,8 @@
                                 <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
                                 <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
                             </tr>
-                            @foreach($lancamentotabelas as $lancamentotabela)
-                            @if($lancamentotabela->trabalhador === $trabalhador->id)
+                            @foreach($lancamentotabelas->lacamentorublica as $lancamentotabela)
+                            @if($lancamentotabela->trabalhador_id === $trabalhador->id)
                             <tr>
                                 <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font text-center desc uppercase">{{$lancamentotabela->lshistorico}}</td>
@@ -370,7 +365,7 @@
                                 $dados = [];
                                 $total = 0;
                                 $totaltomador = 0;
-                                foreach ($lancamentotabelas as $key => $value) {
+                                foreach ($lancamentotabelas->lacamentorublica as $key => $value) {
                                     if (!in_array($value->licodigo, $dados)) {
                                         array_push($dados,$value->licodigo.':'.$value->lshistorico);
                                     }
@@ -381,7 +376,7 @@
                                     $quantidade = 0;
                                     $valor = 0;
                                     $valor2 = 0;
-                                    foreach ($lancamentotabelas as $key => $value) {
+                                    foreach ($lancamentotabelas->lacamentorublica as $key => $value) {
                                         if ($value->licodigo == $codigo[0]) {
                                             $quantidade +=  quantidade($value->lsquantidade);
                                             $valor +=  calculovalores($value->lsquantidade,$value->lfvalor);
@@ -411,7 +406,7 @@
                         
                         <table>
                             <tr>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold empregados small__font padding-left ">Numero de Empregados: {{count($trabalhadors)}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold empregados small__font padding-left ">Numero de Empregados: {{$trabalhadores->count()}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
                                 <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$totaltomador, 2, ',', '.')}}</td>
                             </tr>
