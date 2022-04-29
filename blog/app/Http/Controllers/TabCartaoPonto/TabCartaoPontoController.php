@@ -277,7 +277,16 @@ class TabCartaoPontoController extends Controller
     public function destroy($id)
     {
         try {
-            $this->lancamentorublica->deletar($id);
+            // $this->lancamentorublica->deletar($id);
+            $user = Auth::user();
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    $numero = $valorrublicas->vsnroboletins -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnroboletins'=>$numero]);
+                }
+            });
             $this->lancamentotabela->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {

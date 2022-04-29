@@ -1,177 +1,185 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Editar Trabalhador')
 @section('conteine')
-<div class="container">
-  @if(session('success'))
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#5AA300',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: "{{session('success')}}"
-    })
-  </script>
-  @endif
-  @error('false')
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#C53230',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'error',
-      title: '{{$message}}'
-    })
-  </script>
-  @enderror
-  <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
-    <div class="">
-      <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-        <button type="submit" id="atualizar" class="btn botao btn-primary"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
-        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-          <i class="fad fa-list-ul"></i> Lista
-        </a>
-        <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-sign-out"></i> Sair</a>
-      </div>
-    </div>
-    <div class="container text-center mt-4 mb-3   fs-4 fw-bold">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></div>
-    @csrf
-    @method('put')
-    <div>
-      <div class="col-md-6">
-        <img class="trabfoto" id="trabfoto" src="{{$trabalhador->tsfoto}}" alt="foto do trabalhador">
-      </div>
-    </div>
-
-    <div>
-      <div class="mb-4 col-md-4 inputfoto">
-        <label for="formFileSm " class="form-label"><i class="fas fa-file-image fa-lg"></i> Foto do Trabalhador</label>
-        <input class="form-control form-control-sm nice" onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
-        <span id="msgfoto" class="text-danger"></span>
-      </div>
-    </div>
-    <!-- <input type="hidden"  name="deflator" > -->
-    <!-- <input type="hidden"  name="tomador" > -->
-    <input type="hidden" name="foto" id="foto" value="{{$trabalhador->tsfoto}}">
-    <input type="hidden" name="endereco" id="endereco" value="{{$trabalhador->endereco[0]->eiid}}">
-    <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->bancario[0]->biid}}">
-    <div class="col-md-6">
-      <label for="nome__completo" class="form-label">Nome Completo</label>
-      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
-      @error('nome__completo')
-        <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-    <div class="col-md-6">
-      <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" /> Nome Social (Opcional) </label>
-      <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
-      @error('nome__social')
-      <span class="text-danger">{{ $message }}</span> 
-      @enderror
-    </div>
-    <script>
-      var radio = document.getElementById("radio");
-      var radioResult = radio.value;
-      if ('{{$trabalhador->tssocial}}' === 'on') {
-        radio.checked = true;
-      }
-
-      radio.addEventListener('click', function() {
-
-        if (radio.checked) {
-
-          Swal.fire({
-            icon: 'warning',
-            title: 'Deseja definir esse nome como padrão?',
-            showDenyButton: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            confirmButtonText: 'Sim <i class="far fa-check-circle"></i>',
-            confirmButtonColor: '#40A06B',
-            denyButtonText: `Não <i class="far fa-times-circle"></i>`,
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              Swal.fire('Definido com sucesso!!', '', 'success');
-              radio.checked = true;
-            } else if (result.isDenied) {
-              Swal.fire('Nada foi alterado!!', '', 'info')
-              radio.checked = false;
-            }
-          })
-
-        }
-      })
-    </script>
-    <div class="col-md-3">
-      <label for="cpf" class="form-label">CPF</label>
-      <input type="text" class="form-control fw-bold cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
-      @error('cpf')
-      <span class="text-danger">{{ $message }}</span> 
-      @enderror
-    </div>
-
-    <div class="col-md-3">
-      <label for="matricula" class="form-label">Matrícula</label>
-      <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}">
-      @error('matricula')
-      <span class="text-danger">{{ $message }}</span> 
-      @enderror
-    </div>
-
-    <div class="col-md-3">
-      <label for="pis" class="form-label">PIS</label>
-      <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
-      @error('pis')
-      <span class="text-danger">{{ $message }}</span> 
-      @enderror
-    </div>
-
-
-    <div class="col-md-3">
-      <label for="sexo" class="form-label">Sexo</label>
-      <select id="sexo" name="sexo" class="form-select">
-        @if($trabalhador->tssexo === 'Masculino')
-        <option selected>Masculino</option>
-        <option>Feminino</option>
-        <option>Outro</option>
-        @elseif($trabalhador->tssexo === 'Feminino')
-        <option>Masculino</option>
-        <option selected>Feminino</option>
-        <option>Outro</option>
-        @else
-        <option>Masculino</option>
-        <option>Feminino</option>
-        <option selected>Outro</option>
+<main role="main">
+    <div class="container">
+        @if(session('success'))
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#5AA300',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'success',
+          title: "{{session('success')}}"
+        })
+        </script>
         @endif
-      </select>
-    </div>
+        @error('false')
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#C53230',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'error',
+          title: '{{$message}}'
+        })
+        </script>
+        @enderror
+        <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
+            <section class="section__botoes--trabalhador">
+                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                    <button type="submit" id="atualizar" class="btn botao btn-primary"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <i class="fad fa-list-ul"></i> Lista
+                    </a>
+                    <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-sign-out"></i> Sair</a>
+                </div>
+            </section>
+            
+            <h1 class="title__trabalhador">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></h1>
+            
+            @csrf
+            @method('put')
+            <section class="foto__trabalhador">
+                @if($trabalhador->tsfoto === null)
+                <img class="trabfoto" id="trabfoto" src="{{url('imagem/iconFotoTrab.jpg')}}" alt="foto do trabalhador">
+                @else
+                <img class="trabfoto" id="trabfoto" src="{{$trabalhador->tsfoto}}" alt="foto do trabalhador">
+                @endif
+                <div class="col-md-4 div__input--foto">
+                    <label for="formFileSm " class="form-label"><i class="fad fa-lg fa-camera-alt"></i> Foto do Trabalhador</label>
+                    <input class="form-control form-control-sm color__input--foto" onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
+                    <span id="msgfoto" class="text-danger"></span>
+                </div>
+            </section>
+
+            <input type="hidden" name="foto" id="foto" value="{{$trabalhador->tsfoto}}">
+            <input type="hidden" name="endereco" id="endereco" value="{{$trabalhador->endereco[0]->eiid}}">
+            <input type="hidden" name="bancario" id="bancario" value="{{$trabalhador->bancario[0]->biid}}">
+            
+            <div class="col-md-6">
+                <label for="nome__completo" class="form-label">Nome Completo</label>
+                <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+                @error('nome__completo')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+    
+    
+            <div class="col-md-6">
+                <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" /> Nome Social (Opcional) </label>
+                <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
+                @error('nome__social')
+                <span class="text-danger">{{ $message }}</span> 
+                @enderror
+            </div>
+    
+    
+            <script>
+              var radio = document.getElementById("radio");
+              var radioResult = radio.value;
+              if ('{{$trabalhador->tssocial}}' === 'on') {
+                radio.checked = true;
+              }
+        
+              radio.addEventListener('click', function() {
+        
+                if (radio.checked) {
+        
+                  Swal.fire({
+                    icon: 'warning',
+                    title: 'Deseja definir esse nome como padrão?',
+                    showDenyButton: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    confirmButtonText: 'Sim <i class="far fa-check-circle"></i>',
+                    confirmButtonColor: '#40A06B',
+                    denyButtonText: `Não <i class="far fa-times-circle"></i>`,
+                  }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                      Swal.fire('Definido com sucesso!!', '', 'success');
+                      radio.checked = true;
+                    } else if (result.isDenied) {
+                      Swal.fire('Nada foi alterado!!', '', 'info')
+                      radio.checked = false;
+                    }
+                  })
+        
+                }
+              })
+            </script>
+            
+            
+            <div class="col-md-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control fw-bold cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+                @error('cpf')
+                <span class="text-danger">{{ $message }}</span> 
+                @enderror
+            </div>
+
+            <div class="col-md-3">
+                <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
+                <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}" readonly>
+                @error('matricula')
+                <span class="text-danger">{{ $message }}</span> 
+                @enderror
+            </div>
+
+            <div class="col-md-3">
+                <label for="pis" class="form-label">PIS</label>
+                <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
+                @error('pis')
+                <span class="text-danger">{{ $message }}</span> 
+                @enderror
+            </div>
+
+
+            <div class="col-md-3">
+                <label for="sexo" class="form-label">Sexo</label>
+                <select id="sexo" name="sexo" class="form-select">
+                    @if($trabalhador->tssexo === 'Masculino')
+                    <option selected>Masculino</option>
+                    <option>Feminino</option>
+                    <option>Outro</option>
+                    @elseif($trabalhador->tssexo === 'Feminino')
+                    <option>Masculino</option>
+                    <option selected>Feminino</option>
+                    <option>Outro</option>
+                    @else
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                    <option selected>Outro</option>
+                    @endif
+                </select>
+            </div>
 
     <div class="col-md-6">
       <label for="estado__civil" class="form-label">Estado Civil</label>
@@ -714,6 +722,7 @@
   </form>
   @include('trabalhador.lista')
 </div>
+</main>
 <script>
 
     $('#atualizar').mouseover(function(){

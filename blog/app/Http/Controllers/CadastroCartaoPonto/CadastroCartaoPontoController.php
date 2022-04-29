@@ -33,33 +33,36 @@ class CadastroCartaoPontoController extends Controller
         $search = request('search');
         $condicao = request('codicao'); 
         $today = Carbon::today();
-        $user = auth()->user();
-        $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
+        $user = auth()->user(); 
+        $lancamentotabelas = $this->lancamentotabela
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->select('tomadors.tsnome','tomadors.tscnpj','lancamentotabelas.*')
+        ->where(function($query) use ($search,$user){
            if ($search) {
             $query->where([
-                ['lsstatus','D'],
-                ['empresa_id', $user->empresa_id],
-                ['liboletim','like','%'.$search.'%'] 
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['lancamentotabelas.liboletim','like','%'.$search.'%'] 
             ])
             ->orWhere([
-                ['lsstatus','D'],
-                ['empresa_id', $user->empresa_id],
-                ['tsnome','like','%'.$search.'%']
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tsnome','like','%'.$search.'%']
             ])
             ->orWhere([
-                ['lsstatus','D'],
-                ['empresa_id', $user->empresa_id],
-                ['tscnpj','like','%'.$search.'%']
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tscnpj','like','%'.$search.'%']
             ]);
            }else{
             $query->where([
-                ['lsstatus','D'],
-                ['empresa_id', $user->empresa_id]
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id]
             ]);
            }
         })
         ->with('tomador.cartaoponto')
-        ->orderBy('liboletim', 'asc')
+        ->orderBy('lancamentotabelas.liboletim', 'asc')
         ->paginate(10);
         // dd($lancamentotabelas);
         // if ($search) {
@@ -70,13 +73,54 @@ class CadastroCartaoPontoController extends Controller
         $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
         
         // ->buscaUnidadeEmpresa($user->empresa);
+        if ($condicao) {
+            $dados = $this->lancamentotabela->where('id',$condicao)->with('tomador')->first();
+            return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        }
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
-    public function filtroPesquisaOrdem($condicao)
+    public function filtroPesquisaOrdem($condicao = null,$ordem)
     {
-        $user = Auth::user();
-        $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        $lancamentotabelas = $this->lancamentotabela->buscaListas('D',$condicao);
+        $search = request('search');
+        $today = Carbon::today();
+        $user = auth()->user(); 
+        $lancamentotabelas = $this->lancamentotabela
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->select('tomadors.tsnome','tomadors.tscnpj','lancamentotabelas.*')
+        ->where(function($query) use ($search,$user){
+           if ($search) {
+            $query->where([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['lancamentotabelas.liboletim','like','%'.$search.'%'] 
+            ])
+            ->orWhere([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tsnome','like','%'.$search.'%']
+            ])
+            ->orWhere([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tscnpj','like','%'.$search.'%']
+            ]);
+           }else{
+            $query->where([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id]
+            ]);
+           }
+        })
+        ->with('tomador.cartaoponto')
+        ->orderBy('lancamentotabelas.liboletim', $ordem)
+        ->paginate(10);
+        // $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        // $lancamentotabelas = $this->lancamentotabela->buscaListas('D',$condicao);
+        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        if ($condicao != ' ') {
+            $dados = $this->lancamentotabela->where('id',$condicao)->with('tomador')->first();
+            return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        }
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 

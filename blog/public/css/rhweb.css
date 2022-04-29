@@ -59,14 +59,15 @@ body{
     color: var(--body-color);
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     width: 100%;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-main{
-    margin-bottom: 100px;
-}
+/*main{*/
+/*    margin-bottom: 100px;*/
+/*}*/
 
 
 .conteudo{
@@ -98,37 +99,6 @@ main{
     font-size: 16px;
 }
 
-
-
-.botao{
-    border-radius: 6px;
-    background-color: #194bf0;
-    border: 1px solid #477EFF;
-    color: white;
-    transition: 300ms ease-in-out;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3);
-}
-
-.botao:hover{
-    background-color: #002B8F;
-    border: 1px solid #6567F6;
-    color: white;
-    transform: scale(1.06);
-    transition: 300ms ease-in-out;
-}
-
-
-.inputfoto{
-    background-color:#474747;
-    color:white;
-    padding:8px;
-    border-radius: 7px;
-}
-
-.nice{
-    color:white;
-    background-color: gray;
-}
 
 
 
@@ -212,12 +182,6 @@ main{
 
 }
 
-
-.trabfoto{
-    width: 100px; 
-    height: 130px;
-    border: var(--img-trab-color) ;
-}
 
 .logfoto{
     width:100px; 

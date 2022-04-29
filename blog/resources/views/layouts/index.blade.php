@@ -11,17 +11,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
+        <link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/navbar.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/footer.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/offCanvas.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/modal.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/search.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/componentes/botoesPadrao.css')}}">
         <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
         <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
         <link href="{{url('/css/usuario/componentes/notificacaoUser.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
-		<link rel="stylesheet" href="{{url('/css/rhweb.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->

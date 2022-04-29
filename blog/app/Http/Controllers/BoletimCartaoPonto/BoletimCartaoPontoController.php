@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Boletim\CartaoPonto\Lanca\Validacao;
 use App\Bolcartaoponto;
 use App\CartaoPonto;
+use Carbon\Carbon;
 class BoletimCartaoPontoController extends Controller
 {
     private $bolcartaoponto;
@@ -54,13 +55,14 @@ class BoletimCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all(); 
+        $today = Carbon::today();
         try {
         // $bolcartaopontos = $bolcartaoponto->verifica($dados);
         $bolcartaopontos = $this->bolcartaoponto->where([
             ['lancamentotabela_id', $dados['lancamento']],
             ['trabalhador_id', $dados['trabalhador']],
         ])
-        ->whereDate('created_at', $dados['data'])
+        ->whereDate('created_at', $today)
         ->count();
         if ($bolcartaopontos) {
             return redirect()->back()->withErrors(['false'=>'Este trabalhador já está cadastrado!']);
@@ -82,8 +84,9 @@ class BoletimCartaoPontoController extends Controller
      */
     public function show($trabalhador,$boletim,$data)
     {
+        $today = Carbon::today();
         $bolcartaoponto = new Bolcartaoponto;
-        $bolcartaopontos = $bolcartaoponto->buscaBoletimCartaoPonto($trabalhador,$boletim,$data);
+        $bolcartaopontos = $bolcartaoponto->buscaBoletimCartaoPonto($trabalhador,$boletim,$today);
         return response()->json($bolcartaopontos); 
     }
     /**

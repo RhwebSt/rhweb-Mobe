@@ -61,6 +61,7 @@
                   <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
                   @csrf
                   <input type="hidden" id="method" name="_method" value="PUT">
+                  <input type="hidden" name="status" value="D" id="status">
                     <div class="row">
                       <div class="btn d-grid gap-1 mt-5 mb-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
@@ -151,7 +152,20 @@
             </script>
             
             <script>
-            
+              $('.modal-botao').click(function() {
+                localStorage.setItem("modal", "enabled");
+              })
+
+              function verficarModal() {
+                var valueModal = localStorage.getItem('modal');
+                if (valueModal === "enabled") {
+                  $(document).ready(function() {
+                    $("#teste").modal("show");
+                  });
+                  localStorage.setItem("modal", "disabled");
+                }
+              }
+              verficarModal()
             $( "#pesquisa" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {
@@ -167,17 +181,17 @@
                     let nome = ''
                     if (data.length >= 1) {
                       data.forEach(element => {
-                        nome += `<option value="${element.liboletim}">`
+                        nome += `<option value="${element.tsnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
-                        // nome += `<option value="${element.tscpf}">`
+                        nome += `<option value="${element.tscnpj}">`
                       });
                       $('#listapesquisa').html(nome)
                     }
-                    if(data.length === 1 && dados.length > 0){
-                      lancamentoTab(dados,status,data[0].lsdata)
-                    }else{
-                      limpaCamposTab()
-                    }
+                    // if(data.length === 1 && dados.length > 0){
+                    //   lancamentoTab(dados,status,data[0].lsdata)
+                    // }else{
+                    //   limpaCamposTab()
+                    // }
                   }
                 });
             });

@@ -39,8 +39,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.cadastro.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.cadastro.cartao.ponto','asc')}}{{route('ordem.cadastro.cartao.ponto','asc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                    <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('ordem.cadastro.cartao.ponto',[isset($dados->id)?$dados->id:' ','asc'])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                    <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('ordem.cadastro.cartao.ponto',[isset($dados->id)?$dados->id:' ','desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>

@@ -181,7 +181,6 @@
       }
     }
     verficarModal()
-    localStorage.setItem('cartao', '{{$boletim}}')
     $("#pesquisa").on('keyup focus', function() {
       var dados = '0';
       if ($(this).val()) {
@@ -190,19 +189,18 @@
           dados = monta_dados_pesquisa(dados);
         }
       }
-      var status = $('#status').val();
+      var status = $('#status').val(); 
       $.ajax({
         url: "{{url('tabela/cartao/ponto/pesquisa')}}/" + dados + '/' + status,
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
-          console.log(data)
           let nome = ''
           if (data.length >= 1) {
             data.forEach(element => {
-              nome += `<option value="${element.liboletim}  ${element.tsnome}">`
+              nome += `<option value="${element.tsnome}">`
               // nome += `<option value="${element.tsmatricula}">`
-              // nome += `<option value="${element.tscpf}">`
+              nome += `<option value="${element.tscnpj}">`
             });
             $('#listapesquisa').html(nome)
           }

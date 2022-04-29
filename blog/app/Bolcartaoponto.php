@@ -9,7 +9,7 @@ class Bolcartaoponto extends Model
     protected $fillable = [
         'horas_normais','bsentradanoite','bssaidanoite','bsentradamadrugada','bssaidamadrugada','bsentradamanhao','bssaidamanhao','bsentradatarde','bssaidatarde','bstotal','bshoraex','bshoraexcem','bsadinortuno','trabalhador_id','lancamentotabela_id','created_at'
     ];
-    public function lancamento()
+    public function lancamentotabela()
     {
         return $this->belongsTo(Lancamentotabela::class);
     }
