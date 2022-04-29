@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/tomador/tomador.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
         <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
@@ -289,6 +290,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="{{url('/js/masck.js')}}"></script>
         <script src="{{url('/js/ferramentas/limpaCampos.js')}}"></script>
+        <script src="{{url('/js/ferramentas/validaInput.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
         <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>

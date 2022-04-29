@@ -9,7 +9,7 @@ class Lancamentorublica extends Model
     protected $fillable = [
         'lshistorico','lfvalor','lftomador','lsquantidade','licodigo','lsdescricao','trabalhador_id','lancamentotabela_id','created_at'
     ];
-    public function lancamento()
+    public function lancamentotabela()
     {
         return $this->belongsTo(Lancamentotabela::class);
     }

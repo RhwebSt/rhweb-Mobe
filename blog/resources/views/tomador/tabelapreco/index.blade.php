@@ -2,157 +2,151 @@
 @section('titulo','Rhweb - Tabela de preço')
 @section('conteine')
 
+<main role="main">
+    <div class="container">
+        @if(session('success'))
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#5AA300',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'success',
+          title: '{{session("success")}}',
+        })
+        </script>
+        @endif
+        @error('false')
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#C53230',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'error',
+          title: 'Não foi possível realizar o cadastro!'
+        })
+        </script>
+        @enderror
+        @error('tabelavazia')
+        <script>
+        Swal.fire({
+          icon: 'error',
+          title: 'Relatório vazio',
+          text: '{{ $message }}',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: true,
+        })
+        </script>
+        @enderror
+        
+        <form class="row g-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
+            
+            <section class="section__botoes--tomador">
+                
+                <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+                    <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
 
-<div class="container">
-  @if(session('success'))
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#5AA300',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <i class="fad fa-list-ul"></i> Lista
+                    </a>
+            
+                    <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
+              </div>
+                
+            </section>
+    
+    
+            <h1 class="title__tomador">Tabela de Preços <i class="fad fa-sack-dollar"></i></h1>
+    
+    
+            <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
+           
+            <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
+            @csrf
+            <input type="hidden" id="method" name="_method" value="">
+            
 
-    Toast.fire({
-      icon: 'success',
-      title: '{{session("success")}}',
-    })
-  </script>
-  @endif
-  @error('false')
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#C53230',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+            <div class="col-md-7">
+                <label for="descricao" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Descrição</label>
+                <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" value="{{old('descricao')}}" id="descricao">
+                <input type="hidden" name="descricao" value="{{old('descricao')}}">
+                <datalist id="descricoes"></datalist>
+                @error('descricao')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <span class="text-danger" id="descricoesmensagem"></span>
+            </div>
+            
+            <input type="hidden" name="status" value="produção">
+            
+            <div class="col-md-3">
+                <label for="rubricas" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Código</label>
+                <input type="text" class="form-control  pesquisa @error('rubricas') is-invalid @enderror fw-bold" value="{{old('rubricas')}}" id="rubricas">
+                <input type="hidden" name="rubricas" value="{{old('descricao')}}">
+                @error('rubricas')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <datalist id="rubricas">datalist>
+                <span class="text-danger" id="rubricamensagem"></span>
+            </div>
+    
+            <div class="col-md-2">
+                <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Ano</label>
+                <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
+                @error('ano')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-    Toast.fire({
-      icon: 'error',
-      title: 'Não foi possível realizar o cadastro!'
-    })
-  </script>
-  @enderror
-  @error('tabelavazia')
-  <script>
-    Swal.fire({
-      icon: 'error',
-      title: 'Relatório vazio',
-      text: '{{ $message }}',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      allowEnterKey: true,
-    })
-  </script>
-  @enderror
-  <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
-
-
-    <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-sack-dollar"></i></h5>
-
-
-    <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
-   
-    <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
-    @csrf
-    <input type="hidden" id="method" name="_method" value="">
-    <div class="row">
-
-      <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-        <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
-        <button type="submit" disabled class="btn botao  d-none" id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar</button>
-        <button class="btn botao dropdown-toggle d-none" type="button" id="relatoriotrabalhador" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fad fa-file-alt"></i> Relatórios
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-          <li class=""><a href="{{route('tabela.preco.relatorio',$tomador)}}" class="dropdown-item text-decoration-none ps-2" id="imprimir" role="button">Rol Tabela de Preços</a></li>
-        </ul>
-        <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
-        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-          <i class="fad fa-list-ul"></i> Lista
-        </a>
-
-        <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
-      </div>
+            <div class="col-md-6">
+                <label for="valor" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Valor Trabalhador</label>
+                <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
+                @error('valor')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+    
+            <div class="col-md-6">
+                <label for="valor__tomador" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Valor Tomador</label>
+                <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
+                @error('valor__tomador')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            
+        </form>
+      @include('tomador.tabelapreco.lista')
     </div>
+</main>
 
 
-
-    <div class="col-md-7">
-      <label for="descricao" class="form-label">Descrição <span id="refre" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span></label>
-      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" value="{{old('descricao')}}" id="descricao">
-      <input type="hidden" name="descricao" value="{{old('descricao')}}">
-      <datalist id="descricoes">
-
-      </datalist>
-      @error('descricao')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-      <span class="text-danger" id="descricoesmensagem"></span>
-    </div>
-    <input type="hidden" name="status" value="produção">
-    <div class="col-md-3">
-      <label for="rubricas" class="form-label">Código</label>
-      <input type="text" class="form-control  pesquisa @error('rubricas') is-invalid @enderror fw-bold" value="{{old('rubricas')}}" id="rubricas">
-      <input type="hidden" name="rubricas" value="{{old('descricao')}}">
-      @error('rubricas')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-      <datalist id="rubricas">
-
-      </datalist>
-      <span class="text-danger" id="rubricamensagem"></span>
-    </div>
-
-    <div class="col-md-2">
-      <label for="ano" class="form-label">Ano</label>
-      <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
-      @error('ano')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-
-
-
-
-
-    <div class="col-md-6">
-      <label for="valor" class="form-label">Valor Trabalhador</label>
-      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
-      @error('valor')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-
-    <div class="col-md-6">
-      <label for="valor__tomador" class="form-label">Valor Tomador</label>
-      <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
-      @error('valor__tomador')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-  </form>
-  @include('tomador.tabelapreco.lista')
-</div>
 <script>
   $('.modal-botao').click(function() {
     localStorage.setItem("modal", "enabled");
@@ -169,27 +163,7 @@
   }
   verficarModal()
 
-  function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
-    var telefone = document.querySelector(idCampo);
-
-    telefone.addEventListener('input', function() {
-      var telefone = document.querySelector(idCampo);
-      var result = telefone.value;
-      if (result > " " && result.length >= QuantidadeCarcteres) {
-        telefone.classList.add('is-valid');
-      } else {
-        telefone.classList.remove('is-valid');
-      }
-
-    });
-  }
-
-  var descricao = validaInputQuantidade("#descricao", 1);
-  var ano = validaInputQuantidade("#ano", 4);
-  var valorTrabalhador = validaInputQuantidade("#valor", 1);
-  var valorTomador = validaInputQuantidade("#valor__tomador", 1);
-  var codigo = validaInputQuantidade("#rubricas", 1)
-
+ 
   $(document).ready(function() {
     $('#refre').click(function() {
       $('#rubricas').val(' ').removeAttr('disabled')

@@ -7,7 +7,7 @@
 }
 
 .section__botoes--trabalhador{
-    margin-top: 10%;
+    margin-top: 6%;
 }
 
 .title__trabalhador{
@@ -33,7 +33,7 @@
 
 .trabfoto:hover{
     transition: 300ms ease-in-out;
-    transform: scale(1.06);
+    transform: scale(1.13);
 }
 
 .div__input--foto{

@@ -59,29 +59,7 @@
                 <div class="btn d-grid gap-1 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
                     
                     <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
-                    <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                    <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fad fa-trash"></i> Excluir
-                    </button>
 
-                    <button class="btn botao dropdown-toggle disabled d-none" type="button" id="relatoriotrabalhador" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fad fa-file-alt"></i> Relatórios
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="imprimir" role="button">Ficha de Registro</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="fichaepi" role="button">Ficha de EPI</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="declaracao__adm" role="button">Declaração de Admissão</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="cracha" role="button">Crachá</a></li>
-                        <li class=""><a class="dropdown-item text-decoration-none ps-2" id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
-                    </ul>
-                    
-                    <a class="btn botao disabled d-none" id="depedente" role="button"><i class="fad fa-users"></i> Dependentes</a>
-                
-                    <button type="button" class="btn botao disabled d-none" id="recibopagamento" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fad fa-file-invoice"></i> Recibos
-                    </button>
-                
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
@@ -124,7 +102,7 @@
             </div>
 
             <div class="col-md-6">
-                  <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" /> Nome Social (Opcional) </label>
+                  <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" data-toggle="tooltip" data-placement="top" title="Deseja tornar esse nome como padrão? clique" /> Nome Social (Opcional) </label>
                   <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{ old('nome__social')}}" maxlength="40" name="nome__social" id="nome__social" placeholder="digite seu nome social">
                   @error('nome__social')
                   <span class="text-danger">{{ $message }}</span>
@@ -782,85 +760,7 @@
   }
   verficarModal()
 
-  function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
-    var telefone = document.querySelector(idCampo);
-
-    telefone.addEventListener('input', function() {
-      var telefone = document.querySelector(idCampo);
-      var result = telefone.value;
-      if (result > " " && result.length >= QuantidadeCarcteres) {
-        telefone.classList.add('is-valid');
-      } else {
-        telefone.classList.remove('is-valid');
-      }
-
-    });
-  }
-  var nome__completo = validaInputQuantidade("#nome__completo", 1);
-  var nome__social = validaInputQuantidade("#nome__social", 1);
-  var cpf = validaInputQuantidade("#cpf", 14);
-  var pis = validaInputQuantidade("#pis", 14);
-  var pais__nascimento1 = validaInputQuantidade("#pais__nascimento", 1);
-  var pais__nacionalidade = validaInputQuantidade("#pais__nacionalidade", 1);
-  var nome__mae = validaInputQuantidade("#nome__mae", 1);
-  var cep = validaInputQuantidade("#cep", 9);
-  var logradouro = validaInputQuantidade("#logradouro", 1);
-  var bairro = validaInputQuantidade("#bairro", 1);
-  var localidade = validaInputQuantidade("#localidade", 1);
-  var numero = validaInputQuantidade("#numero", 1);
-  var uf = validaInputQuantidade("#uf", 2);
-  var data_nascimento = validaInputQuantidade("#data_nascimento", 10);
-  var telefone = validaInputQuantidade("#telefone", 14);
-  var data__admissao = validaInputQuantidade("#data__admissao", 10);
-  var categoria = validaInputQuantidade("#categoria", 2);
-  var cbo1 = validaInputQuantidade("#cbo", 5);
-  var ctps = validaInputQuantidade("#ctps", 14);
-  var serie__ctps = validaInputQuantidade("#serie__ctps", 1);
-  var uf__ctps = validaInputQuantidade("#uf__ctps", 2);
-  var data__afastamento = validaInputQuantidade("#data__afastamento", 10);
-  var banco = validaInputQuantidade("#banco", 2);
-  var agencia = validaInputQuantidade("#agencia", 4);
-  var operacao = validaInputQuantidade("#operacao", 3);
-  var conta = validaInputQuantidade("#conta", 8);
-  var pix = validaInputQuantidade("#pix", 1);
-
-  var cepFocusOut = document.querySelector('#cep');
-  cepFocusOut.addEventListener('focusout', function() {
-    var logradouro = document.querySelector('#logradouro');
-    var resultlog = logradouro.value;
-    var bairro = document.querySelector('#bairro');
-    var resultbairro = bairro.value;
-    var localidade = document.querySelector('#localidade');
-    var resultlocal = localidade.value;
-    var uf = document.querySelector('#uf');
-    var resultuf = uf.value;
-
-
-    if (resultlog > " ") {
-      logradouro.classList.add('is-valid');
-    } else {
-      logradouro.classList.remove('is-valid');
-    }
-
-    if (resultbairro > " ") {
-      bairro.classList.add('is-valid');
-    } else {
-      bairro.classList.remove('is-valid');
-    }
-
-    if (resultlocal > " ") {
-      localidade.classList.add('is-valid');
-    } else {
-      localidade.classList.remove('is-valid');
-    }
-
-    if (resultuf > " " && resultuf.length > 2) {
-      uf.classList.add('is-valid');
-    } else {
-      uf.classList.remove('is-valid');
-    }
-
-  });
+  
 
 
   function encodeImageFileAsURL(element) {

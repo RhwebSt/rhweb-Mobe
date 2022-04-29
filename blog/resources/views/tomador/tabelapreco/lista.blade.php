@@ -1,35 +1,35 @@
 
 <div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Preços Cadastrados</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header header__modal">
+                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1"><i class="fa-lg fad fa-sack-dollar"></i> Preços Cadastrados</h5>
+                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
             </div>
+            
             <div class="modal-body">
-                <div class="d-flex justify-content-between">
-                    <div class="col-md-5 mb-1 p-1 mt-2 pesquisar">
-                        <form action="{{route('tabelapreco.index',[$id, base64_encode($tomador)])}}" method="GET"> 
+                
+                <section class="section__search">
+                    <div class="col-md-5">
+                        <form action="{{route('tabelapreco.index',[$id, base64_encode($tomador)])}}" method="GET">
+                            
                             <div class="d-flex">
-                                <label for="exampleDataList" class="form-label"></label>
-                                <input placeholder="pesquisar..." class="form-control fw-bold text-dark pesquisa text-uppercase" list="listapesquisa" name="search" id="pesquisa">
-                                <datalist id="listapesquisa">
-                                </datalist>
+                                
+                                <input placeholder="pesquisar..." class="form-control" list="listapesquisa" name="search" id="search">
+                                <datalist id="listapesquisa"></datalist>
+
                                 <input type="hidden" name="codicao" value="{{$id?$id:''}}">
-                                <button type="submit" class="btn botaoPesquisa modal-botao">
-                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
+                                
+                                <button type="submit" class="btn botao__search">
+                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                 </button>
 
-                                <div class="text-center d-none p-1" id="refres">
-                                    <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black; margin-top: 6px;width: 1.2rem; height: 1.2rem;">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
+                            </div>
+                            
                         </form>
                     </div>
-                    </div>
-                </div>
-                
+                </section>
+
                 
                 <section>
                     <div class="d-flex justify-content-end">
@@ -51,7 +51,7 @@
                 
                 <section class="table">
                     <div class="table-responsive-xxl">
-                      <table class="table">
+                        <table class="table">
                                 <thead class="tr__header">
                                     <th class="th__header text-nowrap" style="width:60px;">Ano</th>
                                     <th class="th__header text-nowrap">Código</th>
@@ -96,47 +96,48 @@
                                     </tr>
                                     @endif
                                 </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="11">
-                                            {{ $tabelaprecos->links() }}
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                        </div>
-                    </section>
-                    
-                    
-                    
-                    
+                                
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="11">
+                                        {{ $tabelaprecos->links() }}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                        </table>
+                    </div>
+                </section>
             </div>
+            
             <div class="modal-footer">
             </div>
+            
         </div>
     </div>
 </div>
-</div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="" id="formdelete" method="post">
-                @csrf
-                @method('delete')
-                <div class="modal-header modal__delete">
-                    <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body modal-delbody">
-                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                </div>
-                <div class="modal-footer modal-delfooter">
-                    <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn__deletar">Deletar</button>
 
-                </div>
-            </form>
+
+<section class="delete__tabela--tomador">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" id="formdelete" method="post">
+                    @csrf
+                    @method('delete')
+                    <div class="modal-header modal__delete">
+                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-delbody">
+                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    </div>
+                    <div class="modal-footer modal-delfooter">
+                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn__deletar">Deletar</button>
+    
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</div>
+</section>

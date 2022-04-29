@@ -2,140 +2,137 @@
 @section('titulo','Rhweb - Editar tabela de preço')
 @section('conteine')
 
+<main role="main">
+    <div class="container">
+        @if(session('success'))
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#5AA300',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'success',
+          title: 'Cadastro realizado com Sucesso'
+        })
+        </script>
+        @endif
+        @error('false')
+        <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          width: 500,
+          color: '#ffffff',
+          background: '#C53230',
+          position: 'top-end',
+          showCloseButton: true,
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+    
+        Toast.fire({
+          icon: 'error',
+          title: 'Não foi possível realizar o cadastro!'
+        })
+        </script>
+        @enderror
+    
+        <form class="row g-3" id="form" method="POST" action="{{ route('tabelapreco.update',$id) }}">
+            
+            <section class="section__botoes--tomador">
+                
+               <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+    
+                <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
+                
+                <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <i class="fad fa-list-ul"></i> Lista
+                </a>
 
-<div class="container">
-  @if(session('success'))
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#5AA300',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+                <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
+              </div> 
+                
+            </section>
+    
+            <h1 class="title__tomador">Tabela de Preços <i class="fad fa-sack-dollar"></i></h1>
+    
+    
+            <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
+            @if($user->empresa)
+            <input type="hidden" name="empresa" value="{{$user->empresa}}">
+            @else
+            <input type="hidden" name="empresa" value="">
+            @endif
+            @csrf
+            <input type="hidden" id="method" name="_method" value="PUT">
 
-    Toast.fire({
-      icon: 'success',
-      title: 'Cadastro realizado com Sucesso'
-    })
-  </script>
-  @endif
-  @error('false')
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#C53230',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'error',
-      title: 'Não foi possível realizar o cadastro!'
-    })
-  </script>
-  @enderror
-
-  <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{ route('tabelapreco.update',$id) }}">
-
-    <h5 class="card-title text-center fs-3 ">Tabela de Preços <i class="fad fa-usd-square fa-lg"></i></h5>
-
-
-    <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">
-    @if($user->empresa)
-    <input type="hidden" name="empresa" value="{{$user->empresa}}">
-    @else
-    <input type="hidden" name="empresa" value="">
-    @endif
-    @csrf
-
-    <input type="hidden" id="method" name="_method" value="PUT">
-    <div class="row">
-
-      <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-
-        <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
-        <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-          <i class="fa-solid fa-list"></i> Lista
-        </a>
-        <button type="button" disabled id="excluir" class="btn botao d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Excluir</button>
-
-
-        <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
-      </div>
+    
+    
+            <div class="col-md-2">
+                <label for="ano" class="form-label">Ano</label>
+                <input type="text" class=" form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{$tabelaprecos_editar->tsano}}" id="ano">
+                @error('ano')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+    
+            <div class="col-md-3">
+                <label for="rubricas" class="form-label">Código <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inaterável"></i></label>
+                <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas" readonly>
+                @error('rubricas')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <datalist id="rubricas"></datalist>
+                <span class="text-danger" id="rubricamensagem"></span>
+            </div>
+    
+            <div class="col-md-7">
+                <label for="descricao" class="form-label">Descrição <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inaterável"></i></label>
+                <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}" id="descricao" readonly>
+                <datalist id="descricoes"></datalist>
+                @error('descricao')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <span class="text-danger" id="descricoesmensagem"></span>
+            </div>
+    
+            <div class="col-md-6">
+                <label for="valor" class="form-label">Valor Trabalhador</label>
+                <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{number_format((float)$tabelaprecos_editar->tsvalor, 2, ',', '')}}" id="valor">
+                @error('valor')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+    
+            <div class="col-md-6">
+                <label for="valor__tomador" class="form-label">Valor Tomador</label>
+                <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{number_format((float)$tabelaprecos_editar->tstomvalor, 2, ',', '')}}" id="valor__tomador">
+                @error('valor__tomador')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </form>
+      @include('tomador.tabelapreco.lista')
     </div>
+</main>
 
 
-    <div class="col-md-2">
-      <label for="ano" class="form-label">Ano</label>
-      <input type="text" class=" form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{$tabelaprecos_editar->tsano}}" id="ano">
-      @error('ano')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-
-    <div class="col-md-3">
-      <label for="rubricas" class="form-label">Código <i class="fas fa-lock"></i></label>
-      <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror fw-bold" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas" readonly>
-      @error('rubricas')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-      <datalist id="rubricas">
-
-      </datalist>
-      <span class="text-danger" id="rubricamensagem"></span>
-    </div>
-
-    <div class="col-md-7">
-      <label for="descricao" class="form-label text-uppercase">Descrição <i class="fas fa-lock"></i></label>
-      <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}" id="descricao" readonly>
-      <datalist id="descricoes">
-
-      </datalist>
-      @error('descricao')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-      <span class="text-danger" id="descricoesmensagem"></span>
-    </div>
-
-    <div class="col-md-6">
-      <label for="valor" class="form-label">Valor Trabalhador</label>
-      <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{number_format((float)$tabelaprecos_editar->tsvalor, 2, ',', '')}}" id="valor">
-      @error('valor')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-
-    <div class="col-md-6">
-      <label for="valor__tomador" class="form-label">Valor Tomador</label>
-      <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{number_format((float)$tabelaprecos_editar->tstomvalor, 2, ',', '')}}" id="valor__tomador">
-      @error('valor__tomador')
-      <span class="text-danger">{{ $message }}</span>
-      @enderror
-    </div>
-
-
-
-  </form>
-  @include('tomador.tabelapreco.lista')
-</div>
 <script>
   $('.modal-botao').click(function() {
     localStorage.setItem("modal", "enabled");
