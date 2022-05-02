@@ -13,6 +13,26 @@ class BaseCalculo extends Model
     {
         return $this->belongsTo(Trabalhador::class);
     }
+    public function cadastros($dados)
+    {
+        return BaseCalculo::create([
+            'biservico'=>$dados['servico'],
+            'biservicodsr'=>$dados['servicodsr'],
+            'biinss'=>$dados['base_inss'],
+            'bifgts'=>$dados['base_fgts'],
+            'bifgtsmes'=>$dados['fgts_mes'],
+            // 'biirrf'=>$dados['irrf']['valorbase'][$i],
+            // 'bifaixairrf'=>$dados['irrf']['indece'][$i],
+            'binumfilhos'=>$dados['depedente'],
+            // 'bitotaldiaria'=>$dados['salario']['valor'][$i],
+            'bivalorliquido'=>$dados['liquido'],
+            'bivalorvencimento'=>$dados['vencimento'],
+            'bivalordesconto'=>$dados['desconto'],
+            'trabalhador_id'=>$dados['trabalhador'],
+            'tomador_id'=>$dados['tomador'],
+            'folhar_id'=>$dados['folhar'],
+        ]);
+    }
     public function cadastro($dados,$depedentes,$tomador,$folhar = null,$i,$data)
     {
         return BaseCalculo::create([

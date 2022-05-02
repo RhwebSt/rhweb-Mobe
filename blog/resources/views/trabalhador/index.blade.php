@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Trabalhador')
+@section('titulo','Rhweb - Cadastro do Trabalhador')
 @section('conteine')
 
 <main role="main">
@@ -56,6 +56,11 @@
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data" method="POST">
             
             <section class="section__botoes--trabalhador">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
                 <div class="btn d-grid gap-1 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
                     
                     <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
@@ -63,8 +68,7 @@
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
-                
-                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+
                 </div>
             </section>
 
@@ -273,12 +277,12 @@
             </div>
 
         
-            <section class="section__accoordion row">
+            <section  class="section__accoordion row">
                                 
                 <div class="accordion div__acordion" id="accordionFlushExample">
                     
                     
-                    <div class="accordion-item item__acorddion">
+                    <div id="divEndereco" class="accordion-item item__acorddion">
                         
                         <h2 class="accordion-header accoordion__header" id="contrato">
                               <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#localResidencia" aria-expanded="false" aria-controls="localResidencia">
@@ -288,12 +292,12 @@
                         
                         <div id="localResidencia" class="accordion-collapse collapse" aria-labelledby="contrato" data-bs-parent="#accordionFlushExample">
                             
-                            <div class="accordion-body row">
+                            <div id="endereco" class="accordion-body row">
                                 
-                                <section class="row residencia">
+                                <section  class="row residencia">
                                 
                                     <div class="col-md-3 mt-2">
-                                          <label for="cep" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CEP</label>
+                                          <label for="cep" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CEP <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Após preencher o cep aperte a tecla 'tab' ou clique em outro campo para que seja preenchido alguns dados automáticamente."></i></label>
                                           <input type="text" class="form-control input @error('cep') is-invalid @enderror fw-bold" maxlength="16" value="{{old('cep')}}" name="cep" id="cep" placeholder="Ex: 00000-000">
                                           @error('cep')
                                           <span class="text-danger">{{ $message }}</span>
@@ -680,7 +684,7 @@
                                           @enderror
                                     </div>
                                 
-                                    <div class="col-md-4 mt-2">
+                                    <div id="divpix" class="col-md-4 mt-2">
                                           <label for="pix" class="form-label letter__color">PIX</label>
                                           <input type="text" class="form-control input @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
                                           @error('pix')
@@ -745,6 +749,53 @@
 <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
 
 <script>
+
+    console.log();
+
+    // faz com que quando algum campo que está dentro do accordion não for preenchido//
+            // ele abra e não deixe enviar o formulário até que tudo esteje preenchido.//
+            function verificaCampoObrigatorioAccordion(){
+
+                $('#incluir').click(function(e){
+                    var cep = $('#cep').val();
+                    var logradouro = $('#logradouro').val();
+                    var numero = $('#numero').val();
+                    var bairro = $('#bairro').val();
+                    var localidade = $('#localidade').val();
+                    var uf = $('#uf').val();
+                    
+                    let div = document.querySelector("#divEndereco");
+                    let divCoordenadas = div.getBoundingClientRect();
+                    
+                    var valorBottom = divCoordenadas.y;
+                    var valorTop = divCoordenadas.x;
+
+                    if(cep, logradouro, numero, bairro, localidade, uf != ""){
+                        $('#localResidencia').removeClass('show');
+                        $('#localResidencia').removeClass('collapse');
+                        event.defaultPrevented;
+                        
+
+                    }else{
+                        e.preventDefault(); 
+                        $('#localResidencia').addClass('show');
+                        $('#localResidencia').addClass('collapse');
+                        window.scrollTo(valorTop, valorBottom);
+                        
+                        
+                    }
+
+                });
+                
+                
+            }
+            
+            verificaCampoObrigatorioAccordion();
+            // fim da verificação do accordion//
+
+    
+
+
   $('.modal-botao').click(function() {
     localStorage.setItem("modal", "enabled");
   })

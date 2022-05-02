@@ -14,3 +14,7 @@
     transform: scale(1.06);
     transition: 300ms ease-in-out;
 }
+
+.div__voltar{
+    margin-bottom: 40px;
+}

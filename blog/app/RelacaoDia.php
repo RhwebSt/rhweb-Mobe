@@ -7,8 +7,16 @@ use Illuminate\Support\Facades\DB;
 class RelacaoDia extends Model
 {
     protected $fillable = [
-        'rsdia','rivalor','basecalculo','trabalhador_id','created_at'
+        'rsdia','rivalor','basecalculo_id','trabalhador_id','created_at'
     ];
+    public function cadastros($dados,$i)
+    {
+        return RelacaoDia::create([
+            'rsdia'=>$dados['dias'][$i],
+            'rivalor'=>$dados['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo']
+        ]);
+    }
     public function cadastro($dia,$valor,$basecalculo,$trabalhador,$data)
     {
         return RelacaoDia::create([

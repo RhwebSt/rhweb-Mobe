@@ -69,14 +69,16 @@
             
             <section class="section__botoes--tomador">
                 
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
 
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                       <i class="fad fa-list-ul"></i> Lista
                     </a>
-            
-                    <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
               </div>
                 
             </section>

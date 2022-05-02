@@ -83,13 +83,17 @@
         <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.update',$tomador->id) }}" method="Post">
             
             <section class="section__botoes--tomador">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao" href="{{route('tomador.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar</a>
+                </div>
 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="atualizar" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
-                    <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
+                    
                 </div>
             
             </section>
@@ -258,32 +262,32 @@
                                 
                                 <section class="row endereco">
                                     
-                                    <div class="col-md-3">
-                                        <label for="cep" class="form-label">CEP</label>
+                                    <div class="col-md-3 mt-2">
+                                        <label for="cep" class="form-label letter__color">CEP</label>
                                         <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror valid" name="cep" value="{{$tomador->endereco[0]->escep}}" id="cep">
                                         @error('cep')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     
-                                    <div class="col-md-7">
-                                        <label for="logradouro" class="form-label">Rua</label>
+                                    <div class="col-md-7 mt-2">
+                                        <label for="logradouro" class="form-label letter__color">Rua</label>
                                         <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{$tomador->endereco[0]->eslogradouro}}" id="logradouro">
                                         @error('logradouro')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     
-                                    <div class="col-md-2">
-                                        <label for="numero" class="form-label">Número</label>
+                                    <div class="col-md-2 mt-2">
+                                        <label for="numero" class="form-label letter__color">Número</label>
                                         <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror valid" name="numero" value="{{$tomador->endereco[0]->esnum}}" id="numero">
                                         @error('numero')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     
-                                    <div class="col-md-4">
-                                        <label for="complemento__endereco" class="form-label">Tipo</label>
+                                    <div class="col-md-4 mt-2">
+                                        <label for="complemento__endereco" class="form-label letter__color">Tipo</label>
                                         <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
                                             <?php
                                             $complemento = [
@@ -476,16 +480,16 @@
                                         </select>
                                     </div>
                                     
-                                    <div class="col-md-8">
-                                        <label for="bairro" class="form-label">Bairro</label>
+                                    <div class="col-md-8 mt-2">
+                                        <label for="bairro" class="form-label letter__color">Bairro</label>
                                         <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror valid" name="bairro" value="{{$tomador->endereco[0]->esbairro}}" id="bairro">
                                         @error('bairro')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     
-                                    <div class="col-md-8">
-                                        <label for="localidade" class="form-label">Municipio</label>
+                                    <div class="col-md-8 mt-2">
+                                        <label for="localidade" class="form-label letter__color">Municipio</label>
                                         <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror valid" name="localidade" value="{{$tomador->endereco[0]->esmunicipio}}" id="localidade">
                                         @error('localidade')
                                         <span class="text-danger">{{ $message }}</span>
@@ -493,8 +497,8 @@
                                     </div>
                                     
                                     
-                                    <div class="col-md-4">
-                                        <label for="uf" class="form-label">UF</label>
+                                    <div class="col-md-4 mt-2">
+                                        <label for="uf" class="form-label letter__color">UF</label>
                                         <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror valid" name="uf" value="{{$tomador->endereco[0]->esuf}}" id="uf">
                                         @error('uf')
                                         <span class="text-danger">{{ $message }}</span>
@@ -924,6 +928,13 @@
     
 
     <script>
+        let el = document.getElementById('divpix');
+        // utiliza método
+        let elCoordenadas = el.getBoundingClientRect();
+        // verificar as propriedades com as coord
+        console.log(elCoordenadas.y);
+    
+    
         $('.modal-botao').click(function() {
             localStorage.setItem("modal", "enabled");
         })

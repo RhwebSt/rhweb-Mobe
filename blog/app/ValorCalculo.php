@@ -7,20 +7,120 @@ use Illuminate\Support\Facades\DB;
 class ValorCalculo extends Model
 {
     protected $fillable = [
-        'vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo','trabalhador_id','created_at'
+        'vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo_id','trabalhador_id','created_at'
     ];
-    public function cadastroHorasnormais($dados,$basecalculo,$trabalahdor,$i,$data)
+    public function cadastroHorasnormais($dados,$i)
     {
         return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['horasNormais']['codigos'][$i],
-            'vsdescricao'=>$dados['horasNormais']['rublicas'][$i],
-            'vireferencia'=>$dados['horasNormais']['quantidade'][$i],
-            'vivencimento'=>$dados['horasNormais']['valor'][$i],
-            'basecalculo_id'=>$basecalculo,
-            'trabalhador_id'=>$trabalahdor,
-            'created_at'=>$data
+            'vicodigo'=> (int)$dados['horanormal']['codigos'][$i],
+            'vsdescricao'=>$dados['horanormal']['descricao'][$i],
+            'vireferencia'=>$dados['horanormal']['quantidade'][$i],
+            'vivencimento'=>$dados['horanormal']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
+    public function cadastroHoras50($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['hora50']['codigos'][$i],
+            'vsdescricao'=>$dados['hora50']['descricao'][$i],
+            'vireferencia'=>$dados['hora50']['quantidade'][$i],
+            'vivencimento'=>$dados['hora50']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroHoras100($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['hora100']['codigos'][$i],
+            'vsdescricao'=>$dados['hora100']['descricao'][$i],
+            'vireferencia'=>$dados['hora100']['quantidade'][$i],
+            'vivencimento'=>$dados['hora100']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroNoturno($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['noturno']['codigos'][$i],
+            'vsdescricao'=>$dados['noturno']['descricao'][$i],
+            'vireferencia'=>$dados['noturno']['quantidade'][$i],
+            'vivencimento'=>$dados['noturno']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroProducao($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['producao']['codigos'][$i],
+            'vsdescricao'=>$dados['producao']['descricao'][$i],
+            'vireferencia'=>$dados['producao']['quantidade'][$i],
+            'vivencimento'=>$dados['producao']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+
+    public function cadastroGratificacao($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['gratificacao']['codigos'][$i],
+            'vsdescricao'=>$dados['gratificacao']['descricao'][$i],
+            'vireferencia'=>$dados['gratificacao']['quantidade'][$i],
+            'vivencimento'=>$dados['gratificacao']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroDiarianormal($dados,$i)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['diarianormal']['codigos'][$i],
+            'vsdescricao'=>$dados['diarianormal']['descricao'][$i],
+            'vireferencia'=>$dados['diarianormal']['quantidade'][$i],
+            'vivencimento'=>$dados['diarianormal']['valor'][$i],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroVa($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['va']['codigos'],
+            'vsdescricao'=>$dados['va']['descricao'],
+            'vireferencia'=>$dados['va']['quantidade'],
+            'vivencimento'=>$dados['va']['valor'],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroVt($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['vt']['codigos'],
+            'vsdescricao'=>$dados['vt']['descricao'],
+            'vireferencia'=>$dados['vt']['quantidade'],
+            'vivencimento'=>$dados['vt']['valor'],
+            'basecalculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    // public function cadastroHorasnormais($dados,$basecalculo,$trabalahdor,$i,$data)
+    // {
+    //     return ValorCalculo::create([
+    //         'vicodigo'=> (int)$dados['horasNormais']['codigos'][$i],
+    //         'vsdescricao'=>$dados['horasNormais']['rublicas'][$i],
+    //         'vireferencia'=>$dados['horasNormais']['quantidade'][$i],
+    //         'vivencimento'=>$dados['horasNormais']['valor'][$i],
+    //         'basecalculo_id'=>$basecalculo,
+    //         'trabalhador_id'=>$trabalahdor,
+    //         'created_at'=>$data
+    //     ]);
+    // }
    
 
    
@@ -76,18 +176,18 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
-    public function cadastroGratificacao($dados,$basecalculo,$trabalahdor,$i,$data)
-    {
-        return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['gratificação']['codigos'][$i],
-            'vsdescricao'=>$dados['gratificação']['rublicas'][$i],
-            'vireferencia'=>$dados['gratificação']['quantidade'][$i],
-            'vivencimento'=>$dados['gratificação']['valor'][$i],
-            'basecalculo_id'=>$basecalculo,
-            'trabalhador_id'=>$trabalahdor,
-            'created_at'=>$data
-        ]);
-    }
+    // public function cadastroGratificacao($dados,$basecalculo,$trabalahdor,$i,$data)
+    // {
+    //     return ValorCalculo::create([
+    //         'vicodigo'=> (int)$dados['gratificação']['codigos'][$i],
+    //         'vsdescricao'=>$dados['gratificação']['rublicas'][$i],
+    //         'vireferencia'=>$dados['gratificação']['quantidade'][$i],
+    //         'vivencimento'=>$dados['gratificação']['valor'][$i],
+    //         'basecalculo_id'=>$basecalculo,
+    //         'trabalhador_id'=>$trabalahdor,
+    //         'created_at'=>$data
+    //     ]);
+    // }
     public function cadastraAdiantamento($dados,$basecalculo,$trabalahdor,$data)
     {
         return ValorCalculo::create([
@@ -124,18 +224,18 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
-    public function cadastroProducao($dados,$basecalculo,$trabalahdor,$i,$data)
-    {
-        return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['producao']['codigos'][$i],
-            'vsdescricao'=>$dados['producao']['rublicas'][$i],
-            'vireferencia'=>$dados['producao']['quantidade'][$i],
-            'vivencimento'=>$dados['producao']['valor'][$i],
-            'basecalculo_id'=>$basecalculo,
-            'trabalhador_id'=>$trabalahdor,
-            'created_at'=>$data
-        ]);
-    }
+    // public function cadastroProducao($dados,$basecalculo,$trabalahdor,$i,$data)
+    // {
+    //     return ValorCalculo::create([
+    //         'vicodigo'=> (int)$dados['producao']['codigos'][$i],
+    //         'vsdescricao'=>$dados['producao']['rublicas'][$i],
+    //         'vireferencia'=>$dados['producao']['quantidade'][$i],
+    //         'vivencimento'=>$dados['producao']['valor'][$i],
+    //         'basecalculo_id'=>$basecalculo,
+    //         'trabalhador_id'=>$trabalahdor,
+    //         'created_at'=>$data
+    //     ]);
+    // }
     public function cadastrodsr1818($dados,$basecalculo,$trabalahdor,$i,$data)
     {
         return ValorCalculo::create([
@@ -283,30 +383,30 @@ class ValorCalculo extends Model
             'created_at'=>$data
         ]);
     }
-    public function cadastroVT($dados,$basecalculo,$trabalhador,$i,$data)
-    {
-        return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['vt']['codigos'][$i],
-            'vsdescricao'=>$dados['vt']['rublicas'][$i],
-            'vireferencia'=>$dados['vt']['quantidade'][$i],
-            'vivencimento'=>$dados['vt']['valor'][$i],
-            'basecalculo_id'=>$basecalculo,
-            'trabalhador_id'=>$trabalhador,
-            'created_at'=>$data
-        ]);
-    }
-    public function cadastroVA($dados,$basecalculo,$trabalhador,$i,$data)
-    {
-        return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['va']['codigos'][$i],
-            'vsdescricao'=>$dados['va']['rublicas'][$i],
-            'vireferencia'=>$dados['va']['quantidade'][$i],
-            'vivencimento'=>$dados['va']['valor'][$i],
-            'basecalculo_id'=>$basecalculo,
-            'trabalhador_id'=>$trabalhador,
-            'created_at'=>$data
-        ]);
-    }
+    // public function cadastroVT($dados,$basecalculo,$trabalhador,$i,$data)
+    // {
+    //     return ValorCalculo::create([
+    //         'vicodigo'=> (int)$dados['vt']['codigos'][$i],
+    //         'vsdescricao'=>$dados['vt']['rublicas'][$i],
+    //         'vireferencia'=>$dados['vt']['quantidade'][$i],
+    //         'vivencimento'=>$dados['vt']['valor'][$i],
+    //         'basecalculo_id'=>$basecalculo,
+    //         'trabalhador_id'=>$trabalhador,
+    //         'created_at'=>$data
+    //     ]);
+    // }
+    // public function cadastroVA($dados,$basecalculo,$trabalhador,$i,$data)
+    // {
+    //     return ValorCalculo::create([
+    //         'vicodigo'=> (int)$dados['va']['codigos'][$i],
+    //         'vsdescricao'=>$dados['va']['rublicas'][$i],
+    //         'vireferencia'=>$dados['va']['quantidade'][$i],
+    //         'vivencimento'=>$dados['va']['valor'][$i],
+    //         'basecalculo_id'=>$basecalculo,
+    //         'trabalhador_id'=>$trabalhador,
+    //         'created_at'=>$data
+    //     ]);
+    // }
     public function listaGeral($trabalhador,$data,$codigo)
     {
         if ($codigo === '1002' || $codigo === '1003' || $codigo === '1005'||

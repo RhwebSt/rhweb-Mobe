@@ -53,12 +53,16 @@
         @enderror
         <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
             <section class="section__botoes--trabalhador">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
                     <button type="submit" id="atualizar" class="btn botao btn-primary"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                       <i class="fad fa-list-ul"></i> Lista
                     </a>
-                    <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-sign-out"></i> Sair</a>
                 </div>
             </section>
             
@@ -729,6 +733,8 @@
 
 <script>
 
+    function animarBotaoAtualizar(){
+
     $('#atualizar').mouseover(function(){
         console.log("funcionou");
         $('#animacaoAtualizar').addClass('fa-spin');
@@ -737,8 +743,11 @@
     $('#atualizar').mouseout(function(){
         console.log("tirou");
         $('#animacaoAtualizar').removeClass('fa-spin');
-    })
+    });
+    
+    }
 
+    animarBotaoAtualizar();
 
   let paisnascimento = ''
   $('.modal-botao').click(function() {

@@ -47,10 +47,6 @@
     --color-bg-svg-home:rgba(73,71,71,1)
 }
 
-html, body {
-    min-height: 100%;
-}
-
 
 
 body{
@@ -64,10 +60,6 @@ body{
     overflow-x: hidden;
     min-height: 100vh;
 }
-
-/*main{*/
-/*    margin-bottom: 100px;*/
-/*}*/
 
 
 .conteudo{

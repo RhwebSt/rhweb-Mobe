@@ -57,6 +57,10 @@
             
             <section class="section__botoes--tomador">
                 
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
                <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
     
                 <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
@@ -65,7 +69,6 @@
                     <i class="fad fa-list-ul"></i> Lista
                 </a>
 
-                <a class="btn botao" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair </a>
               </div> 
                 
             </section>
