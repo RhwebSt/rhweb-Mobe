@@ -88,7 +88,7 @@
                 <section class="section__botoes--tomador">
                     
                     <div class="d-flex justify-content-start align-items-start div__voltar">
-                        <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                        <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                     </div>
                     
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -109,7 +109,7 @@
                         html:
                         '<input type="date" name="inicio" id="swal-input1" class="swal2-input">' +
                         '<input type="date" name="final" id="swal-input2" class="swal2-input">',
-                        inputLabel: 'teste',
+                       Label: 'teste',
                         confirmButtonText: 'Buscar',
                         showDenyButton: true,
                         denyButtonText: 'Sair',
@@ -143,7 +143,7 @@
                        
                 <div class="col-md-4">
                     <label for="cnpj" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CNPJ <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Após preencher o cnpj aperte a tecla 'tab' ou clique em outro campo para que seja preenchido alguns dados automáticamente."></i></label>
-                    <input type="text" class="form-control  fw-bold text-dark @error('cnpj') is-invalid @enderror valid" name="cnpj" value="{{old('cnpj')}}" id="cnpj" placeholder="Ex: 00.000.000/0000-00">
+                    <input type="text" class="form-control @error('cnpj') is-invalid @enderror valid" name="cnpj" value="{{old('cnpj')}}" id="cnpj" placeholder="Ex: 00.000.000/0000-00">
                     @error('cnpj')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -151,7 +151,7 @@
                         
                 <div class="col-md-4">
                     <label for="tipo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tipo </label>
-                    <select id="tipo" name="tipo" class="form-select fw-bold text-dark">
+                    <select id="tipo" name="tipo" class="form-select">
                         <option >1-CNPJ</option>
                         <option >2-CPF</option>
                     </select>
@@ -159,7 +159,7 @@
                         
                 <div class="col-md-4">
                     <label for="simple" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Simples</label>
-                    <select name="simples" value="{{old('simples')}}" id="simple" class="form-select fw-bold text-dark">
+                    <select name="simples" value="{{old('simples')}}" id="simple" class="form-select">
                         <option selected >Não</option>
                         <option >Sim</option>
                     </select>
@@ -169,8 +169,8 @@
                 </div>
                        
                 <div class="col-md-8">
-                    <label for="nome__completo" class="form-label "><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome</label>
-                    <input type="text" class="form-control input @error('nome__completo') is-invalid @enderror  fw-bold text-dark valid" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo" placeholder="digite o nome da empresa">
+                    <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome</label>
+                    <input type="text" class="form-control @error('nome__completo') is-invalid @enderror  valid" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo" placeholder="digite o nome da empresa">
                     @error('nome__completo')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -185,7 +185,7 @@
                 ?>
                 <div class="col-md-4">
                     <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                    <input type="text" disabled class="form-control  fw-bold text-dark @error('matricula') is-invalid @enderror"  value="{{$matricular}}" id="matricula">
+                    <input type="text" disabled class="form-control  @error('matricula') is-invalid @enderror"  value="{{$matricular}}" id="matricula">
                     <input type="hidden" value="{{$matricular}}" name="matricula" id="matriculaid">
                     @error('matricula')
                         <span class="text-danger">{{ $message }}</span>
@@ -194,7 +194,7 @@
 
                 <div class="col-md-8">
                     <label for="nome__fantasia" class="form-label"><input type="checkbox" id="radio" name="radio_fantasia" data-bs-toggle="tooltip" data-bs-placement="top" title="Deseja definir como padrão? Clique aqui"> Nome Fantasia </label>
-                    <input type="text" class="form-control input fw-bold text-dark @error('nome__fantasia') is-invalid @enderror valid" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia" placeholder="digite o nome fantasia da empresa">
+                    <input type="text" class="form-control @error('nome__fantasia') is-invalid @enderror valid" name="nome__fantasia" value="{{old('nome__fantasia')}}" id="nome__fantasia" placeholder="digite o nome fantasia da empresa">
                     @error('nome__fantasia')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -235,7 +235,7 @@
 
                 <div class="col-md-4">
                     <label for="telefone" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Telefone</label>
-                    <input type="text" class="form-control input fw-bold text-dark @error('telefone') is-invalid @enderror valid" name="telefone" value="{{old('telefone')}}" id="telefone" placeholder="Ex: (00) 00000-0000">
+                    <input type="text" class="form-control @error('telefone') is-invalid @enderror valid" name="telefone" value="{{old('telefone')}}" id="telefone" placeholder="Ex: (00) 00000-0000">
                     @error('telefone')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -246,7 +246,7 @@
                     
                     <div class="accordion div__acordion" id="accordionFlushExample">
                                 
-                        <div class="accordion-item item__acorddion">
+                        <div id="divEndereco" class="accordion-item item__acorddion">
                                     
                             <h2 class="accordion-header accoordion__header" id="tomadorTaxas">
                                   <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#endereco__accordion" aria-expanded="false" aria-controls="endereco__accordion">
@@ -262,7 +262,7 @@
                                         
                                         <div class="col-md-3 mt-2">
                                             <label for="cep" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CEP <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Após preencher o cep aperte a tecla 'tab' ou clique em outro campo para que seja preenchido alguns dados automáticamente."></i></label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('cep') is-invalid @enderror valid" name="cep" value="{{old('cep')}}" id="cep" placeholder="Ex: 00000-000">
+                                            <input type="text" class="form-control @error('cep') is-invalid @enderror valid" name="cep" value="{{old('cep')}}" id="cep" placeholder="Ex: 00000-000">
                                             @error('cep')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -270,7 +270,7 @@
                                                 
                                         <div class="col-md-7 mt-2">
                                             <label for="logradouro" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Rua</label>
-                                            <input type="text" class="form-control input fw-bold text-dark  @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{old('logradouro')}}" id="logradouro" placeholder="Ex: Rua sem fim">
+                                            <input type="text" class="form-control @error('logradouro') is-invalid @enderror valid" name="logradouro" value="{{old('logradouro')}}" id="logradouro" placeholder="Ex: Rua sem fim">
                                             @error('logradouro')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -278,7 +278,7 @@
                         
                                         <div class="col-md-2 mt-2">
                                             <label for="numero" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Número</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('numero') is-invalid @enderror valid" name="numero" value="{{old('numero')}}" id="numero">
+                                            <input type="text" class="form-control @error('numero') is-invalid @enderror valid" name="numero" value="{{old('numero')}}" id="numero">
                                             @error('numero')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -286,7 +286,7 @@
                         
                                         <div class="col-md-4 mt-2"> 
                                                 <label for="complemento__endereco" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tipo</label>
-                                                <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold text-dark">
+                                                <select name="complemento__endereco" id="complemento__endereco" class="form-select">
                         
                                                     <option >A-Área</option>
                                                     <option >AC-Acesso</option>
@@ -469,7 +469,7 @@
                         
                                         <div class="col-md-8 mt-2">
                                             <label for="bairro" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Bairro</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('bairro') is-invalid @enderror valid" name="bairro" value="{{old('bairro')}}" id="bairro" placeholder="Ex: Eldorado">
+                                            <input type="text" class="form-control @error('bairro') is-invalid @enderror valid" name="bairro" value="{{old('bairro')}}" id="bairro" placeholder="Ex: Eldorado">
                                             @error('bairro')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -477,7 +477,7 @@
                         
                                         <div class="col-md-8 mt-2">
                                             <label for="localidade" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Municipio</label>
-                                            <input type="text" class="form-control input fw-bold text-dark  @error('localidade') is-invalid @enderror valid" name="localidade" value="{{old('localidade')}}" id="localidade" placeholder="Ex: Florianópolis">
+                                            <input type="text" class="form-control @error('localidade') is-invalid @enderror valid" name="localidade" value="{{old('localidade')}}" id="localidade" placeholder="Ex: Florianópolis">
                                             @error('localidade')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -486,7 +486,7 @@
                         
                                         <div class="col-md-4 mt-2">
                                             <label for="uf" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> UF</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('uf') is-invalid @enderror valid" name="uf" value="{{old('uf')}}" id="uf" placeholder="Ex: SC">
+                                            <input type="text" class="form-control @error('uf') is-invalid @enderror valid" name="uf" value="{{old('uf')}}" id="uf" placeholder="Ex: SC">
                                             @error('uf')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -518,7 +518,7 @@
                                     
                                         <div class="col-md-3 mt-2">
                                             <label for="taxa_adm" class="form-label letter__color">Taxa Adm %</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{old('taxa_adm')}}" id="taxa_adm">
+                                            <input type="text" class="form-control @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{old('taxa_adm')}}" id="taxa_adm">
                                             @error('taxa_adm')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -526,21 +526,21 @@
                                         
                                         <div class="col-md-3 mt-2">
                                             <label for="taxa__fed" class="form-label letter__color">Taxa Fed. %</label>
-                                            <input type="text" class="form-control input fw-bold text-dark  @error('taxa__fed') is-invalid @enderror" name="taxa__fed" value="{{old('taxa__fed')}}" id="taxa__fed">
+                                            <input type="text" class="form-control @error('taxa__fed') is-invalid @enderror" name="taxa__fed" value="{{old('taxa__fed')}}" id="taxa__fed">
                                             @error('taxa__fed')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-3 mt-2">
                                             <label for="deflator" class="form-label letter__color">% DEFLATOR</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('deflator') is-invalid @enderror" name="deflator" value="{{old('deflator')}}" id="deflator">
+                                            <input type="text" class="form-control @error('deflator') is-invalid @enderror" name="deflator" value="{{old('deflator')}}" id="deflator">
                                             @error('deflator')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-3 mt-2">
                                             <label for="das" class="form-label letter__color">DAS %</label>
-                                            <input type="text" class="form-control @error('das') is-invalid @enderror input fw-bold text-dark" name="das" value="{{old('das')}}" id="das">
+                                            <input type="text" class="form-control @error('das') is-invalid @enderror" name="das" value="{{old('das')}}" id="das">
                                             @error('das')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -570,7 +570,7 @@
                                     
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__fpas" class="form-label letter__color">Cod FPAS</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas')}}" id="cod__fpas">
+                                            <input type="text" class="form-control @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas')}}" id="cod__fpas">
                                             @error('cod__fpas')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -578,7 +578,7 @@
                                         
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__fap" class="form-label letter__color">Cod RAT</label>
-                                            <input type="text" class="form-control input fw-bold text-dark @error('') is-invalid @enderror " name="cod__fap" value="" id="cod__fap">
+                                            <input type="text" class="form-control @error('') is-invalid @enderror " name="cod__fap" value="" id="cod__fap">
                                             @error('cod__fap')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -586,7 +586,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__grps" class="form-label letter__color">Cod GRPS</label>
-                                            <input type="text" class="form-control @error('cod__grps') is-invalid @enderror input fw-bold text-dark" name="cod__grps" value="{{old('cod__grps')}}" id="cod__grps">
+                                            <input type="text" class="form-control @error('cod__grps') is-invalid @enderror" name="cod__grps" value="{{old('cod__grps')}}" id="cod__grps">
                                             @error('cod__grps')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -594,7 +594,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__recol" class="form-label letter__color">Cod Recol</label>
-                                            <input type="text" class="form-control @error('cod__recol') is-invalid @enderror input fw-bold text-dark" name="cod__recol" value="{{old('cod__recol')}}" id="cod__recol">
+                                            <input type="text" class="form-control @error('cod__recol') is-invalid @enderror" name="cod__recol" value="{{old('cod__recol')}}" id="cod__recol">
                                             @error('cod__recol')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -602,7 +602,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cnae" class="form-label letter__color">CNAE</label>
-                                            <input type="text" class="form-control @error('cnae') is-invalid @enderror input fw-bold text-dark" name="cnae" value="{{old('cnae')}}" id="cnae">
+                                            <input type="text" class="form-control @error('cnae') is-invalid @enderror" name="cnae" value="{{old('cnae')}}" id="cnae">
                                             @error('cnae')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -610,7 +610,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="fap__aliquota" class="form-label letter__color">FAP Aliquota %</label>
-                                            <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror input fw-bold text-dark" name="fap__aliquota" value="{{old('fap__aliquota')}}" id="fap__aliquota">
+                                            <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror" name="fap__aliquota" value="{{old('fap__aliquota')}}" id="fap__aliquota">
                                             @error('fap__aliquota')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -618,7 +618,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="rat__ajustado" class="form-label letter__color">RAT Ajustado %</label>
-                                            <input type="text" class="form-control @error('rat__ajustado') is-invalid @enderror input fw-bold text-dark" name="rat__ajustado" value="{{old('rat__ajustado')}}" id="rat__ajustado">
+                                            <input type="text" class="form-control @error('rat__ajustado') is-invalid @enderror" name="rat__ajustado" value="{{old('rat__ajustado')}}" id="rat__ajustado">
                                             @error('rat__ajustado')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -626,7 +626,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="fpas__terceiros" class="form-label letter__color">FPAS Terceiros</label>
-                                            <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror input fw-bold text-dark" name="fpas__terceiros" value="{{old('fpas__terceiros')}}" id="fpas__terceiros">
+                                            <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror" name="fpas__terceiros" value="{{old('fpas__terceiros')}}" id="fpas__terceiros">
                                             @error('fpas__terceiros')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -634,7 +634,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="aliq__terceiros" class="form-label letter__color">Aliq. Terceiros</label>
-                                            <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror input fw-bold text-dark" name="aliq__terceiros" value="{{old('aliq__terceiros')}}" id="aliq__terceiros">
+                                            <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror" name="aliq__terceiros" value="{{old('aliq__terceiros')}}" id="aliq__terceiros">
                                             @error('aliq__terceiros')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -663,7 +663,7 @@
                                     
                                         <div class="col-md-2 mt-2">
                                             <label for="alimentacao" class="form-label letter__color"> Alimentação</label>
-                                            <input type="text" class="form-control @error('alimentacao') is-invalid @enderror input fw-bold text-dark" name="alimentacao" value="{{old('alimentacao')}}" id="alimentacao">
+                                            <input type="text" class="form-control @error('alimentacao') is-invalid @enderror" name="alimentacao" value="{{old('alimentacao')}}" id="alimentacao">
                                             @error('alimentacao')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -671,7 +671,7 @@
                 
                                         <div class="col-md-2 mt-2">
                                             <label for="transporte" class="form-label letter__color">Transporte</label>
-                                            <input type="text" class="form-control @error('transporte') is-invalid @enderror input fw-bold text-dark" name="transporte" value="{{old('transporte')}}" id="transporte">
+                                            <input type="text" class="form-control @error('transporte') is-invalid @enderror" name="transporte" value="{{old('transporte')}}" id="transporte">
                                             @error('transporte')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -679,7 +679,7 @@
                 
                                         <div class="col-md-5 mt-2">
                                             <label for="epi" class="form-label letter__color">EPI % (Sobre(PROD+DSR)Folha)</label>
-                                            <input type="text" class="form-control @error('epi') is-invalid @enderror input fw-bold text-dark" name="epi" value="{{old('epi')}}" id="epi">
+                                            <input type="text" class="form-control @error('epi') is-invalid @enderror" name="epi" value="{{old('epi')}}" id="epi">
                                             @error('epi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -687,7 +687,7 @@
                 
                                         <div class="col-md-3 mt-2">
                                             <label for="seguro__trabalhador" class="form-label letter__color">Seguro (Val.Trab)</label>
-                                            <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror input fw-bold text-dark" name="seguro__trabalhador" value="{{old('seguro__trabalhador')}}" id="seguro__trabalhador">
+                                            <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror" name="seguro__trabalhador" value="{{old('seguro__trabalhador')}}" id="seguro__trabalhador">
                                             @error('seguro__trabalhador')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -717,7 +717,7 @@
                                     
                                         <div class="col-md-6">
                                             <label for="folhartransporte" class="form-label letter__color">VT Transporte</label>
-                                            <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror input fw-bold text-dark" name="folhartransporte" value="{{old('folhartransporte')}}" id="folhartransporte">
+                                            <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror" name="folhartransporte" value="{{old('folhartransporte')}}" id="folhartransporte">
                                             @error('folhartransporte')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -726,7 +726,7 @@
                                         <div class="col-md-3 d-none">
                                             
                                             <label for="folhartipotrans" class="form-label letter__color">Tipo</label>
-                                            <select class="form-select fw-bold text-dark" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
+                                            <select class="form-select" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
                                                 <option selected>1</option>
                                                 <option >2</option>
                                             </select>
@@ -734,7 +734,7 @@
                                         
                                         <div class="col-md-6">
                                             <label for="folharalim" class="form-label letter__color">VA Alimentação</label>
-                                            <input type="text" class="form-control @error('folharalim') is-invalid @enderror input fw-bold text-dark" name="folharalim" value="{{old('folharalim')}}" id="folharalim">
+                                            <input type="text" class="form-control @error('folharalim') is-invalid @enderror" name="folharalim" value="{{old('folharalim')}}" id="folharalim">
                                             @error('folharalim')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -742,7 +742,7 @@
                                         
                                         <div class="col-md-3 d-none">
                                             <label for="folhartipoalim" class="form-label letter__color">Tipo</label>
-                                            <select class="form-select fw-bold text-dark" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
+                                            <select class="form-select" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
                                                 <option  selected>1</option>
                                                 <option>2</option>
                                             </select>
@@ -773,7 +773,7 @@
                                     
                                         <div class="col-md-4">
                                             <label for="dias_uteis" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Dias Úteis</label>
-                                            <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror input fw-bold text-dark" name="dias_uteis" value="{{old('dias_uteis')}}" id="dias_uteis">
+                                            <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror" name="dias_uteis" value="{{old('dias_uteis')}}" id="dias_uteis">
                                             @error('dias_uteis')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -781,7 +781,7 @@
                 
                                         <div class="col-md-4">
                                             <label for="sabados" class="form-label letter__color">Sábados</label>
-                                            <input type="time" class="form-control @error('sabados') is-invalid @enderror input fw-bold text-dark" name="sabados" value="{{old('sabados')}}" id="sabados">
+                                            <input type="time" class="form-control @error('sabados') is-invalid @enderror" name="sabados" value="{{old('sabados')}}" id="sabados">
                                             @error('sabados')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -789,7 +789,7 @@
                 
                                         <div class="col-md-4">
                                             <label for="domingos" class="form-label letter__color">Domingos</label>
-                                            <input type="time" class="form-control @error('domingos') is-invalid @enderror input fw-bold text-dark" name="domingos" value="{{old('domingos')}}" id="domingos">
+                                            <input type="time" class="form-control @error('domingos') is-invalid @enderror" name="domingos" value="{{old('domingos')}}" id="domingos">
                                             @error('domingos')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -818,7 +818,7 @@
                                     
                                         <div class="col-md-3">
                                             <label for="banco" class="form-label letter__color">Banco</label>
-                                            <input type="text" class="form-control @error('banco') is-invalid @enderror input fw-bold text-dark "  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco" placeholder="digite o número do seu banco">
+                                            <input type="text" class="form-control @error('banco') is-invalid @enderror"  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco" placeholder="digite o número do seu banco">
                                             <div id="menssagem-banco" class="valid-feedback">
                                                
                                             </div>
@@ -829,7 +829,7 @@
                 
                                         <div class="col-md-2">
                                             <label for="agencia" class="form-label letter__color">Agência</label>
-                                            <input type="text" class="form-control @error('agencia') is-invalid @enderror input fw-bold text-dark" name="agencia" value="{{old('agencia')}}" id="agencia" placeholder="Ex: 0000">
+                                            <input type="text" class="form-control @error('agencia') is-invalid @enderror" name="agencia" value="{{old('agencia')}}" id="agencia" placeholder="Ex: 0000">
                                             @error('agencia')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -837,7 +837,7 @@
                 
                                         <div class="col-md-2">
                                             <label for="operacao" class="form-label letter__color">Operação</label>
-                                            <input type="text" class="form-control @error('operacao') is-invalid @enderror input fw-bold text-dark" name="operacao" value="{{old('operacao')}}" id="operacao" placeholder="Ex: 000">
+                                            <input type="text" class="form-control @error('operacao') is-invalid @enderror" name="operacao" value="{{old('operacao')}}" id="operacao" placeholder="Ex: 000">
                                             @error('aperacao')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -845,7 +845,7 @@
                 
                                         <div class="col-md-2">
                                             <label for="conta" class="form-label letter__color">Conta</label>
-                                            <input type="text" class="form-control @error('conta') is-invalid @enderror input fw-bold text-dark" name="conta" value="{{old('conta')}}" id="conta" placeholder="Ex: 00000000-0">
+                                            <input type="text" class="form-control @error('conta') is-invalid @enderror" name="conta" value="{{old('conta')}}" id="conta" placeholder="Ex: 00000000-0">
                                             @error('conta')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -853,7 +853,7 @@
                 
                                         <div class="col-md-3">
                                             <label for="pix" class="form-label letter__color">PIX</label>
-                                            <input type="text" class="form-control @error('pix') is-invalid @enderror input fw-bold text-dark" name="pix" value="{{old('pix')}}" id="pix">
+                                            <input type="text" class="form-control @error('pix') is-invalid @enderror" name="pix" value="{{old('pix')}}" id="pix">
                                             @error('pix')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -900,6 +900,7 @@
                  
             
             <script>
+
             // faz com que quando algum campo que está dentro do accordion não for preenchido
             // ele abra e não deixe enviar o formulário até que tudo esteje preenchido.
             function verificaCampoObrigatorioAccordion(){
@@ -913,6 +914,14 @@
                     var uf = $('#uf').val();
                     var diasUteis = $('#dias_uteis').val();
                     
+                    // descobri na onde a section esta posicionada na tela//
+                    let div = document.querySelector("#divEndereco");
+                    let divCoordenadas = div.getBoundingClientRect();
+                    // fim//
+                    
+                    var valorBottom = divCoordenadas.y;
+                    var valorTop = divCoordenadas.x;
+                    
                     if(cep, logradouro, numero, bairro, localidade, uf, diasUteis != ""){
                         $('#endereco__accordion').removeClass('show');
                         $('#endereco__accordion').removeClass('collapse');
@@ -925,6 +934,9 @@
                         $('#endereco__accordion').addClass('collapse');
                         $('#cartaoPonto__accoordion').addClass('show');
                         $('#cartaoPonto__accoordion').addClass('collapse');
+                        // caso não tiver preenchido ele leva até a section que não foi preenchida
+                        window.scrollTo(valorTop, valorBottom);
+                        //fim
                     }
 
                 });

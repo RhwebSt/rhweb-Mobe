@@ -1,0 +1,21 @@
+:root{
+    --title-color--cadAcesso: black;
+}
+
+.darkmode{
+    --title-color--cadAcesso: white;
+}
+
+
+.section__botoes--cadAcesso{
+    margin-top: 6%;
+}
+
+.title__cadAcesso{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color--cadAcesso);
+}

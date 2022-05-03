@@ -70,7 +70,7 @@
             <section class="section__botoes--tomador">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="btn botao" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{ route('tomador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -96,7 +96,7 @@
 
             <div class="col-md-7">
                 <label for="descricao" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Descrição</label>
-                <input type="text" class="form-control fw-bold  @error('descricao') is-invalid @enderror" list="descricoes" value="{{old('descricao')}}" id="descricao">
+                <input type="text" class="form-control  @error('descricao') is-invalid @enderror" list="descricoes" value="{{old('descricao')}}" id="descricao">
                 <input type="hidden" name="descricao" value="{{old('descricao')}}">
                 <datalist id="descricoes"></datalist>
                 @error('descricao')
@@ -109,7 +109,7 @@
             
             <div class="col-md-3">
                 <label for="rubricas" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Código</label>
-                <input type="text" class="form-control  pesquisa @error('rubricas') is-invalid @enderror fw-bold" value="{{old('rubricas')}}" id="rubricas">
+                <input type="text" class="form-control  pesquisa @error('rubricas') is-invalid @enderror" value="{{old('rubricas')}}" id="rubricas">
                 <input type="hidden" name="rubricas" value="{{old('descricao')}}">
                 @error('rubricas')
                 <span class="text-danger">{{ $message }}</span>
@@ -120,7 +120,7 @@
     
             <div class="col-md-2">
                 <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Ano</label>
-                <input type="text" class="form-control fw-bold @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
+                <input type="text" class="form-control @error('ano') is-invalid @enderror" name="ano" value="{{old('ano')}}" id="ano">
                 @error('ano')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -128,7 +128,7 @@
 
             <div class="col-md-6">
                 <label for="valor" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Valor Trabalhador</label>
-                <input type="text" class="form-control fw-bold @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
+                <input type="text" class="form-control @error('valor') is-invalid @enderror" name="valor" value="{{old('valor')}}" id="valor">
                 @error('valor')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -136,7 +136,7 @@
     
             <div class="col-md-6">
                 <label for="valor__tomador" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Valor Tomador</label>
-                <input type="text" class="form-control fw-bold @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
+                <input type="text" class="form-control @error('valor__tomador') is-invalid @enderror" name="valor__tomador" value="{{old('valor__tomador')}}" id="valor__tomador">
                 @error('valor__tomador')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror

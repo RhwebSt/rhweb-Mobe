@@ -172,3 +172,17 @@ function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
     var valorTomador = validaInputQuantidade("#valor__tomador", 1);
     var codigo = validaInputQuantidade("#rubricas", 1)
         //fim da tabela de preço//
+        
+        
+        //cadastro de Acesso//
+        var cargo = validaInputQuantidade("#cargo",1);
+        var usuarioAcesso = validaInputQuantidade("#usuario",2);
+        //fim do cadastro de acesso//
+        
+        //comissionado//
+        
+        var nomeTrablhador = validaInputQuantidade("#nome__trabalhador",1);
+        var indice = validaInputQuantidade("#indice",1);
+        var nome_tomador = validaInputQuantidade("#nome_tomador",1);
+        
+        //fim do comissionado//

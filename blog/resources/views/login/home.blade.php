@@ -47,11 +47,13 @@
 
 <script>
 
-     new Vivus('rhwebLetter', {duration: 140,
+   
+        new Vivus('rhwebLetter', {duration: 140,
         type: 'delayed',
         animTimingFunction: Vivus.EASE_IN_OUT
       });
 
+     
     var feedbackBotao = document.querySelector("#feedback");
 
 

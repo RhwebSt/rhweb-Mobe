@@ -104,7 +104,7 @@ class Descontos extends Model
         ->where('descontos.empresa_id',$empresa)
         ->groupBy('trabalhadors.id','descontos.dscompetencia','descontos.dsquinzena','descontos.dsdescricao')
         ->whereBetween('descontos.dscompetencia',[substr($dataincio, 0, 7),substr($datafinal, 0, 7)])
-        ->get();
+        ->get(); 
     }
     public function deletar($id)
     {

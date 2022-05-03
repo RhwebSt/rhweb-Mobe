@@ -1,0 +1,21 @@
+:root{
+    --title-color-comissionado: black;
+}
+
+.darkmode{
+    --title-color-comissionado: white;
+}
+
+
+.section__botoes--comissionado{
+    margin-top: 6%;
+}
+
+.title__comissionado{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-comissionado);
+}

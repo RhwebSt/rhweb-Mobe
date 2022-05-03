@@ -9,6 +9,10 @@ class Folhar extends Model
     protected $fillable = [
         'fscodigo','fsinicio','fsfinal','fscompetencia','empresa_id','created_at'
     ];
+    public function basecalculo()
+    {
+        return $this->hasMany(BaseCalculo::class);
+    }
     public function cadastro($dados,$empresa){
         return Folhar::create([
             'fscodigo'=>$dados['codigo'],
@@ -18,6 +22,7 @@ class Folhar extends Model
             'empresa_id'=>$empresa
         ]);
     }
+
     public function buscaUnidadeFolhar($id)
     {
         return Folhar::where('id',$id)->first();

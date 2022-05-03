@@ -14,7 +14,7 @@
                             
                             <div class="d-flex">
                                 
-                                <input placeholder="pesquisar..." class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
                                 <datalist id="listapesquisa"></datalist>
 
                                 <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">

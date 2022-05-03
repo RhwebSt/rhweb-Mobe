@@ -89,7 +89,7 @@
             
             <div class="col-md-6">
                 <label for="nome__completo" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
                 @error('nome__completo')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -98,7 +98,7 @@
     
             <div class="col-md-6">
                 <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" data-toggle="tooltip" data-placement="top" title="Deseja tornar esse nome como padrão? clique" /> Nome Social (Opcional) </label>
-                <input type="text" class="form-control input fw-bold text-dark @error('nome__social') is-invalid @enderror text-dark" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
+                <input type="text" class="form-control @error('nome__social') is-invalid @enderror" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
                 @error('nome__social')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -143,7 +143,7 @@
             
             <div class="col-md-3">
                 <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control fw-bold cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+                <input type="text" class="form-control cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
                 @error('cpf')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -151,7 +151,7 @@
 
             <div class="col-md-3">
                 <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control fw-bold @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}" readonly>
+                <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}" readonly>
                 @error('matricula')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -159,7 +159,7 @@
 
             <div class="col-md-3">
                 <label for="pis" class="form-label">PIS</label>
-                <input type="text" class="form-control fw-bold @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
+                <input type="text" class="form-control @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
                 @error('pis')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -187,7 +187,7 @@
 
             <div class="col-md-6">
                 <label for="estado__civil" class="form-label">Estado Civil</label>
-                <select id="estado__civil" name="estado__civil" class="form-select fw-bold" value="">
+                <select id="estado__civil" name="estado__civil" class="form-select" value="">
                     <?php
                         $civil = [
                           '1-Solteiro',
@@ -209,7 +209,7 @@
 
             <div class="col-md-6">
                 <label for="raca" class="form-label">Raça</label>
-                <select id="raca" name="raca" class="form-select fw-bold">
+                <select id="raca" name="raca" class="form-select">
                     <?php
                       $raca = [
                         '1-Branco',
@@ -233,7 +233,7 @@
 
             <div class="col-md-6">
                 <label for="grau__instrucao" class="form-label">Grau de Instrução</label>
-                <select id="grau__instrucao" name="grau__instrucao" class="form-select fw-bold" value="">
+                <select id="grau__instrucao" name="grau__instrucao" class="form-select" value="">
                     <?php
                       $escolaridade = [
                             'Analfabetos'
@@ -263,7 +263,7 @@
 
             <div class="col-md-6">
                 <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control fw-bold @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nascimento[0]->nsnascimento}}">
+                <input type="date" class="form-control @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nascimento[0]->nsnascimento}}">
                 @error('data_nascimento')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -272,7 +272,7 @@
 
             <div class="col-md-6">
                 <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-                <input type="text" list="pais_nascimento_list" class="form-control fw-bold @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nascimento[0]->nsnaturalidade}}">
+                <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nascimento[0]->nsnaturalidade}}">
                 @error('pais__nascimento')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -282,7 +282,7 @@
 
             <div class="col-md-6">
                 <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-                <input type="text" list="pais_nacionalidade_list" class="form-control fw-bold @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nascimento[0]->nsnacionalidade}}">
+                <input type="text" list="pais_nacionalidade_list" class="form-control @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nascimento[0]->nsnacionalidade}}">
                 @error('pais__nacionalidade')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -291,7 +291,7 @@
 
             <div class="col-md-6">
                 <label for="nome__mae" class="form-label">Nome da Mãe</label>
-                <input type="text" class="form-control fw-bold @error('nome__mae') is-invalid @enderror" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
+                <input type="text" class="form-control @error('nome__mae') is-invalid @enderror" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
                 @error('nome__mae')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -299,7 +299,7 @@
     
             <div class="col-md-6">
                 <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control fw-bold @error('telefone') is-invalid @enderror" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
+                <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
                 @error('telefone')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -326,7 +326,7 @@
                                 
                                     <div class="col-md-3 mt-2">
                                       <label for="cep" class="form-label letter__color">Cep</label>
-                                      <input type="text" class="form-control fw-bold @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->endereco[0]->escep}}">
+                                      <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->endereco[0]->escep}}">
                                       @error('cep')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -336,7 +336,7 @@
                                 
                                     <div class="col-md-7 mt-2">
                                       <label for="logradouro" class="form-label letter__color">Rua</label>
-                                      <input type="text" class="form-control fw-bold @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->endereco[0]->eslogradouro}}">
+                                      <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->endereco[0]->eslogradouro}}">
                                       @error('logradouro')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -344,7 +344,7 @@
                                 
                                     <div class="col-md-2 mt-2">
                                       <label for="numero" class="form-label letter__color">Número</label>
-                                      <input type="text" class="form-control fw-bold @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->endereco[0]->esnum}}">
+                                      <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->endereco[0]->esnum}}">
                                       @error('numero')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -354,7 +354,7 @@
         
                                     <div class="col-md-4 mt-2">
                                       <label for="tipoconstrucao" class="form-label letter__color">Tipo</label>
-                                      <select name="complemento__endereco" id="complemento__endereco" class="fw-bold form-select fw-bold">
+                                      <select name="complemento__endereco" id="complemento__endereco" class="form-select">
                                         <?php
                                         $complemento = [
                                           'A-Área',
@@ -547,7 +547,7 @@
                                 
                                     <div class="col-md-8 mt-2">
                                       <label for="bairro" class="form-label letter__color">Bairro</label>
-                                      <input type="text" class="form-control fw-bold @error('bairro') is-invalid @enderror" name="bairro" id="bairro" value="{{$trabalhador->endereco[0]->esbairro}}">
+                                      <input type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" id="bairro" value="{{$trabalhador->endereco[0]->esbairro}}">
                                       @error('bairro')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -556,7 +556,7 @@
                                 
                                     <div class="col-md-8 mt-2">
                                       <label for="localidade" class="form-label letter__color">Municipio</label>
-                                      <input type="text" class="form-control fw-bold @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->endereco[0]->esmunicipio}}">
+                                      <input type="text" class="form-control @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->endereco[0]->esmunicipio}}">
                                       @error('localidade')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -564,7 +564,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="uf" class="form-label letter__color">UF</label>
-                                      <input type="text" class="form-control fw-bold @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->endereco[0]->esuf}}">
+                                      <input type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->endereco[0]->esuf}}">
                                       @error('uf')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -595,7 +595,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="data__admissao" class="form-label letter__color">Data de Admissão</label>
-                                      <input type="date" class="form-control fw-bold @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->categoria[0]->csadmissao}}">
+                                      <input type="date" class="form-control @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->categoria[0]->csadmissao}}">
                                       @error('data__admissao')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -603,7 +603,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="categoria" class="form-label letter__color">Categoria</label>
-                                      <input type="text" class="form-control fw-bold @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
+                                      <input type="text" class="form-control @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
                                       @error('categoria__contrato')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -611,7 +611,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="cbo" class="form-label letter__color">CBO</label>
-                                      <input type="text" class="form-control fw-bold @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
+                                      <input type="text" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
                                       @error('cbo')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -621,7 +621,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="ctps" class="form-label letter__color">CTPS</label>
-                                      <input type="text" class="form-control fw-bold @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->documento[0]->dsctps}}">
+                                      <input type="text" class="form-control @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->documento[0]->dsctps}}">
                                       @error('ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -629,7 +629,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="serie__ctps" class="form-label letter__color">Série</label>
-                                      <input type="text" class="form-control fw-bold @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->documento[0]->dsserie}}">
+                                      <input type="text" class="form-control @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->documento[0]->dsserie}}">
                                       @error('serie__ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -637,7 +637,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="uf__ctps" class="form-label letter__color">UF</label>
-                                      <input type="text" class="form-control fw-bold @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->documento[0]->dsuf}}">
+                                      <input type="text" class="form-control @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->documento[0]->dsuf}}">
                                       @error('uf__ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -646,7 +646,7 @@
                                     <div class="col-md-6 mt-2">
                                       <label for="situacao__contrato" class="form-label letter__color">Situação</label>
                                      
-                                      <select name="situacao__contrato" id="situacao__contrato" class="form-select fw-bold text-dark">
+                                      <select name="situacao__contrato" id="situacao__contrato" class="form-select">
                                      
                                         <?php
                                           $situacao=['Ativo','Inativo','Afastado','Em processo'];
@@ -663,7 +663,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="data__afastamento" class="form-label letter__color">Data de Afastamento</label>
-                                      <input type="date" class="form-control fw-bold @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->categoria[0]->csafastamento}}">
+                                      <input type="date" class="form-control @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->categoria[0]->csafastamento}}">
                                       @error('data__afastamento')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -693,27 +693,27 @@
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="banco" class="form-label letter__color">Banco</label>
-                                      <input type="text" class="form-control fw-bold" name="banco" id="banco" value="{{$trabalhador->bancario[0]->bsbanco}}">
+                                      <input type="text" class="form-control" name="banco" id="banco" value="{{$trabalhador->bancario[0]->bsbanco}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="agencia" class="form-label letter__color">Agência</label>
-                                      <input type="text" class="form-control fw-bold" name="agencia" id="agencia" value="{{$trabalhador->bancario[0]->bsagencia}}">
+                                      <input type="text" class="form-control" name="agencia" id="agencia" value="{{$trabalhador->bancario[0]->bsagencia}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="operacao" class="form-label letter__color">Operação</label>
-                                      <input type="text" class="form-control fw-bold" name="operacao" id="operacao" value="{{$trabalhador->bancario[0]->bsoperacao}}">
+                                      <input type="text" class="form-control" name="operacao" id="operacao" value="{{$trabalhador->bancario[0]->bsoperacao}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="conta" class="form-label letter__color">Conta</label>
-                                      <input type="text" class="form-control fw-bold" name="conta" id="conta" value="{{$trabalhador->bancario[0]->bsconta}}">
+                                      <input type="text" class="form-control" name="conta" id="conta" value="{{$trabalhador->bancario[0]->bsconta}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="pix" class="form-label letter__color">PIX</label>
-                                      <input type="text" class="form-control fw-bold" name="pix" id="pix" value="{{$trabalhador->bancario[0]->bspix}}">
+                                      <input type="text" class="form-control" name="pix" id="pix" value="{{$trabalhador->bancario[0]->bspix}}">
                                     </div>
                                 
                                 </section>

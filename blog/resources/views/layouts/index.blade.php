@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <meta charset="UTF-8">
+        <meta equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
-        <!-- <title>Cadastro Trabalhador</title> -->
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -18,23 +17,22 @@
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/modal.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/search.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/botoesPadrao.css')}}">
-        <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
-        <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
-        <link href="{{url('/css/usuario/componentes/notificacaoUser.css')}}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{url('/css/usuario/componentes/notificacaoUser.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
+        <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
+        <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/epi/epi.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/tomador/tomador.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/cadastroAcesso/cadastroAcesso.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/comissionado/comissionado.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
-        <!--<link rel="stylesheet" href="{{url('/css/style.css')}}">-->
-        <!--<link rel="stylesheet" href="{{url('/css/folhaPagamento.css')}}">-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@800&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap" rel="stylesheet">
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
          <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
@@ -108,12 +106,12 @@
                                 </a>
                                 
                                 <ul class="dropdown-menu" aria-labelledby="cadastro">
-                                    <li><a class="dropdown-item border-secundary " href="{{ route('tomador.index') }}">Tomador</a></li>
-                                    <li><a class="dropdown-item border-secundary" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
+                                    <li><a class="dropdown-item " href="{{ route('tomador.index') }}">Tomador</a></li>
+                                    <li><a class="dropdown-item" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
                                     
                                     @can('admin')
-                                    <li><a class="dropdown-item border-secundary" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
+                                    <li><a class="dropdown-item" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
+                                    <li><a class="dropdown-item d-none" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
                                     @endcan
                                     <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
                                     
@@ -128,15 +126,15 @@
                                 
                                 <ul class="dropdown-menu" aria-labelledby="rotinaMensal">
                                     
-                                    <li><a class="dropdown-item border-secundary" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
-                                    <li><a class="dropdown-item border-secundary" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
-                                    <li><a class="dropdown-item border-secundary " href="{{route('calculo.folha.index')}}">Cálculo da Folha</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="#">Boletim Extra</a></li>
-                                    <li><a class="dropdown-item border-secundary" href="{{route('descontos.index')}}">Descontos</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="#">Planilha de Fechamento- Boletins</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="#">Rol dos Boletins</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
-                                    <li><a class="dropdown-item border-secundary d-none" href="#">Recibos da Folha</a></li>
+                                    <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
+                                    <li><a class="dropdown-item" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
+                                    <li><a class="dropdown-item " href="{{route('calculo.folha.index')}}">Cálculo da Folha</a></li>
+                                    <li><a class="dropdown-item d-none" href="#">Boletim Extra</a></li>
+                                    <li><a class="dropdown-item" href="{{route('descontos.index')}}">Descontos</a></li>
+                                    <li><a class="dropdown-item d-none" href="#">Planilha de Fechamento- Boletins</a></li>
+                                    <li><a class="dropdown-item d-none" href="#">Rol dos Boletins</a></li>
+                                    <li><a class="dropdown-item d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
+                                    <li><a class="dropdown-item d-none" href="#">Recibos da Folha</a></li>
                                  
                                 </ul>
                             </li>
@@ -156,8 +154,8 @@
                                 </a>
                                 
                                 <ul class="dropdown-menu" aria-labelledby="relatorios">
-                                    <li><a class="dropdown-item border-secundary"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
-                                    <li><a class="dropdown-item border-secundary"  href="{{route('relatorio.geral.tomador')}}">Rol Tomadores - Ordem Nome</a></li>
+                                    <li><a class="dropdown-item"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
+                                    <li><a class="dropdown-item"  href="{{route('relatorio.geral.tomador')}}">Rol Tomadores - Ordem Nome</a></li>
                                 </ul>
                             </li>
     

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\CalculoFolha;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
@@ -16,10 +17,14 @@ use App\Irrf;
 use App\BaseCalculo;
 use App\RelacaoDia;
 use App\ValorCalculo;
+use App\Dependente;
+use App\Descontos;
+use App\Empresa;
+use Carbon\Carbon;
 class calculoFolhaGeralController extends Controller
 {
     private $lancamentotabela,$folhar,$valorrublica,$rublica,$tomador,$trabalhador,$bolcartaoponto,$lancamentorublica,
-    $cartaoponto,$inss,$irrf,$basecalculo,$relacaodia,$valorcalculo;
+    $cartaoponto,$inss,$irrf,$basecalculo,$relacaodia,$valorcalculo,$depedente,$desconto,$empresa;
     public function __construct()
     {
         $this->valorrublica = new ValoresRublica;
@@ -36,12 +41,19 @@ class calculoFolhaGeralController extends Controller
         $this->basecalculo = new BaseCalculo;
         $this->relacaodia = new RelacaoDia;
         $this->valorcalculo = new ValorCalculo;
+        $this->depedente = new Dependente;
+        $this->desconto = new Descontos;
+        $this->empresa = new Empresa;
     }
     public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
         $user = auth()->user();
+        $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
+        $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
+        $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
+        $seguros = $this->empresa->buscaSeguro($user->empresa);
         $tomador = $this->tomador->where('empresa_id',$user->empresa_id)
         ->with(['tabelapreco','cartaoponto','incidefolhar'])->get();
         $tomador_id = [];
@@ -201,7 +213,8 @@ class calculoFolhaGeralController extends Controller
             $dia = [
                 'dias'=>[],
                 'valor'=>[],
-                'basecalculo'=>''
+                'basecalculo'=>'',
+                'trabalhador'=>'',
             ];
             $lancamentotabela = $this->lancamentotabela
             ->with(['lacamentorublica','bolcartaoponto'])
@@ -309,6 +322,7 @@ class calculoFolhaGeralController extends Controller
             ->with('depedente')->get();
             foreach ($trabalhador as $t => $trabalhadores) {
                 $boletim['trabalhador'] = $trabalhadores->id;
+                $dia['trabalhador'] = $trabalhadores->id;
                 foreach ($dados['id'] as $i => $dado) {
                     if ($dado == $trabalhadores->id) {
                         if ($dados['descricao'][$i] == 'hora normal') {
@@ -563,265 +577,239 @@ class calculoFolhaGeralController extends Controller
                 }
                 $this->valorcalculo->cadastroVa($boletim);
                 $this->valorcalculo->cadastroVt($boletim);
+                $this->valorcalculo->cadastrodsr($boletim);
+                $this->valorcalculo->cadastrodecimo_ter($boletim);
+                $this->valorcalculo->cadastroferias_decimoter($boletim);
+                $this->valorcalculo->cadastroinss($boletim);
+                $this->valorcalculo->cadastroinss_decimoter($boletim);
             }
            
         }
-       dd($dados,$boletim,$dia);
-        // dd($trabalhador);
-        // foreach ($trabalhador as $key => $trabalhadores) {
-        //     $salario = 0;
-        //     $boletim = [
-        //         'horanormal'=>[
-        //             'id'=>[],
-        //             'codigos'=>'',
-        //             'dia' => '',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'hora50'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'hora100'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'noturno'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'producao'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'gratificacao'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'diaria'=>[
-        //             'id'=>[],
-        //             'dia' => '',
-        //             'codigos'=>'',
-        //             'valor' =>0,
-        //             'quantidade' => 0,
-        //             'descricao' => ''
-        //         ],
-        //         'dsr1818'=>[
-        //             'valor'=>0,
-        //             'codigos'=>'',
-        //             'quantidade'=> 0,
-        //             'rublicas'=>0,
-        //         ],
-        //         'decimo_ter'=>[
-        //             'valor'=>0,
-        //             'codigos'=>'',
-        //             'quantidade'=> 0,
-        //             'rublicas'=>0,
-        //         ],
-        //         'ferias_decimoter'=>[
-        //             'valor'=>0,
-        //             'codigos'=>'',
-        //             'quantidade'=> 0,
-        //             'rublicas'=>0,
-        //         ],
-        //         'servico'=>0,
-        //         'servicodsr'=>0,
-        //         'base_inss'=>0,
-        //         'base_fgts'=>0,
-        //         'fgts_mes'=>0,
-        //         // 'folhar'=>$folhar['id'],
-        //         'depedente'=>$trabalhadores->depedente->count(),
-                
-        //     ];
-           
-        //     $bolcartaoponto = $this->bolcartaoponto->where('trabalhador_id',$trabalhadores->id)
-        //     ->whereBetween('created_at',[$datainicio,$datafinal])
-        //     ->with('lancamentotabela.tomador.tabelapreco')->get();
-        //     foreach ($bolcartaoponto as $key => $bolcartaopontos) {
-        //         array_push($tomador_id,$bolcartaopontos->lancamentotabela->tomador->id);
-        //         foreach ($bolcartaopontos->lancamentotabela->tomador->tabelapreco as $key => $tabelapreco) {
-        //             if ($tabelapreco->tsdescricao == 'hora normal') {
-        //                 $salario += self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor);
-        //                 $boletim['horanormal']['valor'] +=  self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor);
-        //                 $boletim['horanormal']['quantidade'] += self::calcularhoras($bolcartaopontos->horas_normais);
-        //                 $boletim['horanormal']['dia'] = date('d',strtotime($bolcartaopontos->created_at));
-        //                 $boletim['horanormal']['descricao'] = $tabelapreco->tsdescricao;
-        //                 $boletim['horanormal']['codigos'] = $tabelapreco->tsrubrica;
-        //             }else if ($tabelapreco->tsdescricao == 'hora extra 50%') {
-        //                 $salario += self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor);
-        //                 $boletim['hora50']['valor'] +=  self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor);
-        //                 $boletim['hora50']['quantidade'] += self::calcularhoras($bolcartaopontos->bshoraex);
-        //                 $boletim['hora50']['dia'] = date('d',strtotime($bolcartaopontos->created_at));
-        //                 $boletim['hora50']['descricao'] = $tabelapreco->tsdescricao;
-        //                 $boletim['hora50']['codigos'] = $tabelapreco->tsrubrica;
-        //             }else if ($tabelapreco->tsdescricao == 'hora extra 100%') {
-        //                 $salario += self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor);
-        //                 $boletim['hora100']['valor'] +=  self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor);
-        //                 $boletim['hora100']['quantidade'] += self::calcularhoras($bolcartaopontos->bshoraexcem);
-        //                 $boletim['hora100']['dia'] = date('d',strtotime($bolcartaopontos->created_at));
-        //                 $boletim['hora100']['descricao'] = $tabelapreco->tsdescricao;
-        //                 $boletim['hora100']['codigos'] = $tabelapreco->tsrubrica;
-        //             }elseif ($tabelapreco->tsdescricao == 'adicional noturno') {
-        //                 $salario += self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor);
-        //                 $boletim['noturno']['valor'] +=  self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor);
-        //                 $boletim['noturno']['quantidade'] += self::calcularhoras($bolcartaopontos->bsadinortuno);
-        //                 $boletim['noturno']['dia'] = date('d',strtotime($bolcartaopontos->created_at));
-        //                 $boletim['noturno']['descricao'] = $tabelapreco->tsdescricao;
-        //                 $boletim['noturno']['codigos'] = $tabelapreco->tsrubrica;
-        //             }
-        //         }
+    //    dd($dados,$boletim,$dia)
+       $rublica = $this->rublica->get();
+       $irrf_rublica =  $this->rublica->buscaRublicaUnidade('IRRF');
+       $sim = [];
+       $nao = [];
+       foreach ($rublica as $key => $rublicas) {
+           if ($rublicas->rsincidencia == 'Sim') {
+               array_push($sim,(int) $rublicas->rsrublica);
+           }else{
+              array_push($nao,(int) $rublicas->rsrublica);
+           }
+       }
+       $basecalculo = $this->basecalculo->where('folhar_id',$folhar['id'])
+      
+       ->selectRaw(
+           'SUM(biservico) as biservico,
+           SUM(biservicodsr) as biservicodsr,
+           SUM(biinss) as biinss, 
+           SUM(bifgts) as bifgts, 
+           SUM(bifgtsmes) as bifgtsmes, 
+          
+           SUM(bivalorliquido) as bivalorliquido, 
+           SUM(bivalorvencimento) as bivalorvencimento, 
+           SUM(bivalordesconto) as bivalordesconto,
+           folhar_id,
+           trabalhador_id'
+        )
+       ->groupBy('trabalhador_id','folhar_id')->get();
+       foreach ($basecalculo as $key => $basecalculos) {
+            $depedente = $this->depedente->where('trabalhador_id',$basecalculos->trabalhador_id)->count();
+            $base_irrf = str_replace(',','.',$irrf_lista[0]->irdepedente) * $depedente;
+            $codigo = [2001,2002];
+            $faxa = "";
+            $folhar = 0;
+            $boletim = [
+                'irrf'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'adiantamento'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'descontos'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'seguro'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'trabalhador'=>'',
+                'basecalculo'=>''
+            ];
+            $valorcalculos =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$codigo);
+            foreach ($valorcalculos as $key => $valorcalculo) {
+                $base_irrf += $valorcalculo->desconto;
+            }
+            $base_irrf = $basecalculos->bifgts - $base_irrf;
+            foreach ($irrf_lista as $key => $irrf) {
+                $novoirrf = (float) $irrf->irsvalorfinal;
+                if ($base_irrf < $novoirrf && $key === 0) {
+                    $faxa = 0;
+                    $resultadoinss = 0;
+                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                    $boletim['irrf']['valor'] = 0;
+                    $boletim['irrf']['quantidade'] = 0;
+                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                }elseif ($base_irrf > (float)$irrf_lista[0]->irsvalorfinal && $base_irrf < $novoirrf && $key === 1) {
+                    $faxa = $irrf->irsindece;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                    $boletim['irrf']['valor'] = $resultado;
+                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                    $basecalculos->bivalorliquido -= $resultado;
+                    $basecalculos->bivalordesconto += $resultado;
+                }elseif ($base_irrf > (float)$irrf_lista[1]->irsvalorfinal && $base_irrf < $novoirrf && $key === 2) {
+                    $faxa = $irrf->irsindece;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                    $boletim['irrf']['valor'] = $resultado;
+                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                    $basecalculos->bivalorliquido -= $resultado;
+                    $basecalculos->bivalordesconto += $resultado;
+                }elseif ($base_irrf > (float)$irrf_lista[2]->irsvalorfinal && $base_irrf < $novoirrf && $key === 3) {
+                    $faxa = $irrf->irsindece;
+                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                    $boletim['irrf']['valor'] = $resultado;
+                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                    $basecalculos->bivalorliquido -= $resultado;
+                    $basecalculos->bivalordesconto += $resultado;
+                }
+            }
+            if ($quantdias > 15) {
+                $datafinal = explode('-',$datafinal);
+                $datafinal = $datafinal[0].'-'.$datafinal[1].'-15';
+                $folhar = DB::table('folhars') 
+                ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+                ->select('bivalorliquido')
+                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal])
+                ->where('base_calculos.tomador_id','!=',null)
+                ->where('base_calculos.trabalhador_id',$basecalculos->trabalhador_id)
+                ->first();
+                if ($folhar) {
+                    $basecalculos->bivalorliquido -= $folhar->bivalorliquido;
+                    $basecalculos->bivalordesconto += $folhar->bivalorliquido;
+                }
                
-        //     }
-        //     $lancamentorublica = $this->lancamentorublica->where('trabalhador_id',$trabalhadores->id)
-        //     ->with('lancamentotabela.tomador.tabelapreco')
-        //     ->whereBetween('created_at',[$datainicio,$datafinal])
-        //     ->get();
-            
-        //     foreach ($lancamentorublica as $key => $lancamentorublicas) {
-        //         array_push($tomador_id,$lancamentorublicas->lancamentotabela->tomador->id);
-        //         if ($lancamentorublicas->lsdescricao == 'hora normal') {
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['horanormal']['valor'] += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['horanormal']['quantidade'] +=  self::calcularhoras($lancamentorublicas->lsquantidade);
-        //         }elseif ($lancamentorublicas->lsdescricao == 'hora extra 50%') {
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['hora50']['valor'] += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['hora50']['quantidade'] +=  self::calcularhoras($lancamentorublicas->lsquantidade);
-        //         }elseif ($lancamentorublicas->lsdescricao == 'hora extra 100%') {
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['hora100']['valor'] += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['hora100']['quantidade'] +=  self::calcularhoras($lancamentorublicas->lsquantidade);
-        //         }elseif ($lancamentorublicas->lsdescricao == 'adicional noturno') {
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['noturno']['valor'] += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['noturno']['quantidade'] +=  self::calcularhoras($lancamentorublicas->lsquantidade);
-        //         }elseif ($lancamentorublicas->lsdescricao == 'diaria normal') {
-        //             $dsr =  $this->rublica->buscaRublicaUnidade('diaria normal');
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['diaria']['valor'] +=  $lancamentorublicas->lfvalor;
-        //             $boletim['diaria']['quantidade'] += $lancamentorublicas->lsquantidade;
-        //             $boletim['diaria']['dia'] = date('d',strtotime($lancamentorublicas->created_at));
-        //             $boletim['diaria']['descricao'] = $dsr->rsdescricao;
-        //             $boletim['diaria']['codigos'] = $dsr->rsrublica;
-        //         }elseif ($lancamentorublicas->lsdescricao == 'gratificação') {
-        //             $dsr =  $this->rublica->buscaRublicaUnidade('gratificação');
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);
-        //             $boletim['gratificacao']['valor'] +=  $lancamentorublicas->lfvalor;
-        //             $boletim['gratificacao']['quantidade'] += $lancamentorublicas->lsquantidade;
-        //             $boletim['gratificacao']['dia'] = date('d',strtotime($lancamentorublicas->created_at));
-        //             $boletim['gratificacao']['descricao'] = $dsr->rsdescricao;
-        //             $boletim['gratificacao']['codigos'] = $dsr->rsrublica;
-        //         }else{
-        //             $dsr =  $this->rublica->buscaRublicaUnidade('produção');
-        //             $salario += self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor);;
-        //             $boletim['producao']['valor'] +=  $lancamentorublicas->lfvalor;
-        //             $boletim['producao']['quantidade'] += $lancamentorublicas->lsquantidade;
-        //             $boletim['producao']['dia'] = date('d',strtotime($lancamentorublicas->created_at));
-        //             $boletim['producao']['descricao'] = $dsr->rsdescricao;
-        //             $boletim['producao']['codigos'] = $dsr->rsrublica;
-        //         }
-                
-               
-
-        //     }
-        //     $cartaoponto = $this->cartaoponto->whereIn('tomador_id',$tomador_id)->get();
-        //     dd($cartaoponto);
-        //     // dd($lancamentorublica);
-        //     $boletim['servico'] = $salario;
-        //     $dsr =  $this->rublica->buscaRublicaUnidade('DSR 18,18%');
-        //     $boletim['dsr1818']['codigos'] = $dsr->rsrublica;
-        //     $boletim['dsr1818']['rublicas'] = $dsr->rsdescricao;
-        //     $boletim['dsr1818']['quantidade'] = 18.18;
-        //     $boletim['dsr1818']['valor'] = self::calculoPocentagem($salario,18.18);
-        //     $boletim['servicodsr'] = $boletim['dsr1818']['valor'] + $salario;
-        //     $dsr =  $this->rublica->buscaRublicaUnidade('13º Salário');
-        //     $boletim['decimo_ter']['codigos'] = $dsr->rsrublica;
-        //     $boletim['decimo_ter']['rublicas'] = $dsr->rsdescricao;
-        //     $boletim['decimo_ter']['quantidade'] = 8.34;
-        //     $boletim['decimo_ter']['valor'] = self::calculoPocentagem($salario,8.34);
-        //     $dsr =  $this->rublica->buscaRublicaUnidade('Ferias + 1/3');
-        //     $boletim['ferias_decimoter']['codigos'] = $dsr->rsrublica;
-        //     $boletim['ferias_decimoter']['rublicas'] = $dsr->rsdescricao;
-        //     $boletim['ferias_decimoter']['quantidade'] = 11.12;
-        //     $boletim['ferias_decimoter']['valor'] = self::calculoPocentagem($salario,11.12);
-        //     $boletim['base_inss'] = $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
-        //     $boletim['base_fgts'] = $boletim['decimo_ter']['valor'] + $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
-        //     $boletim['fgts_mes'] = $boletim['base_fgts'] * 0.08;
-        //     dd($boletim);
-        //     echo($salario).'<br>';
-        //     echo($trabalhadores->id).'<br>';
-        //     echo( $boletim['fgts_mes']).'<br>';
-           
-        // }
+            }
+            $desconto = $this->desconto
+            ->where('trabalhador_id',$basecalculos->trabalhador_id)
+            ->whereBetween('dscompetencia',[substr($datainicio, 0, 7),substr($datafinal, 0, 7)])
+            ->selectRaw(
+                'dsquinzena,
+                dsdescricao,
+                dscompetencia,	
+                COUNT(dsdescricao) as quantidade,
+                SUM(dfvalor) as valor'
+            )
+            ->groupBy('dscompetencia','dsquinzena','dsdescricao')
+            ->first();
+            if ($desconto) {
+                if ($quantdias <= 15 && $desconto->dsquinzena === '1 - Primeira') {
+                    $basecalculos->bivalorliquido -= $desconto->valor;
+                    $basecalculos->bivalordesconto += $desconto->valor;
+                }
+                if ($quantdias > 15 && $desconto->dsquinzena === '2 - Segunda') {
+                    $basecalculos->bivalorliquido -= $desconto->valor;
+                    $basecalculos->bivalordesconto += $desconto->valor;
+                }
+            }
+            // dd($base_irrf,$irrf_lista,$boletim,$faxa);
+            $base =  $this->basecalculo->create([
+                'biservico'=>$basecalculos->biservico,
+                'biservicodsr'=>$basecalculos->biservicodsr,
+                'biinss'=>$basecalculos->biinss,
+                'bifgts'=>$basecalculos->bifgts,
+                'bifgtsmes'=>$basecalculos->bifgtsmes,
+                'biirrf'=>$base_irrf,
+                'bifaixairrf'=>$faxa,
+                'binumfilhos'=>$depedente,
+                // 'bitotaldiaria'=>$basecalculos['salario']['valor'][$i],
+                'bivalorliquido'=>$basecalculos->bivalorliquido,
+                'bivalorvencimento'=>$basecalculos->bivalorvencimento,
+                'bivalordesconto'=>$basecalculos->bivalordesconto,
+                'trabalhador_id'=>$basecalculos->trabalhador_id,
+                'folhar_id'=>$basecalculos->folhar_id,
+            ]);
+            if ($folhar) {
+                $adiantamento =  $this->rublica->buscaRublicaUnidade('Adiantamento');
+                $boletim['adiantamento']['codigos'] = $adiantamento->rsrublica;
+                $boletim['adiantamento']['rublicas'] = $adiantamento->rsdescricao;
+                $boletim['adiantamento']['quantidade'] = 1;
+                $boletim['adiantamento']['valor'] = $folhar->bivalorliquido;
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastroadiantamento($boletim);
+            }
+            if ($desconto) {
+                $boletim['descontos']['codigos'] = 0;
+                $boletim['descontos']['rublicas'] = $desconto->rsdescricao;
+                $boletim['descontos']['quantidade'] = $desconto->quantidade;;
+                $boletim['descontos']['valor'] = $desconto->valor;
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastroadesconto($boletim);
+            }
+            $valorcalculo =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$sim);
+            foreach ($valorcalculo as $key => $valorcalculos) {
+                $this->valorcalculo->create([
+                    'vicodigo'=> $valorcalculos->vicodigo,
+                    'vsdescricao'=>$valorcalculos->vsdescricao,
+                    'vireferencia'=>$valorcalculos->referencia,
+                    'vivencimento'=>$valorcalculos->vencimento,
+                    'base_calculo_id'=>$base['id'],
+                    'trabalhador_id'=>$basecalculos->trabalhador_id,
+                ]);
+            }
+            $valorcalculo =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$nao);
+            foreach ($valorcalculo as $key => $valorcalculos) {
+                $this->valorcalculo->create([
+                    'vicodigo'=> $valorcalculos->vicodigo,
+                    'vsdescricao'=>$valorcalculos->vsdescricao,
+                    'vireferencia'=>$valorcalculos->referencia,
+                    'vivencimento'=>$valorcalculos->vencimento,
+                    'base_calculo_id'=>$base['id'],
+                    'trabalhador_id'=>$basecalculos->trabalhador_id,
+                ]);
+            }
+            $relacaodia =   DB::table('base_calculos') 
+            ->join('relacao_dias', 'base_calculos.id', '=', 'relacao_dias.base_calculo_id')
+            ->selectRaw('SUM(relacao_dias.rivalor) as valor,rsdia')
+            ->where('base_calculos.folhar_id',$folhar['id'])
+            ->where('base_calculos.tomador_id','!=',null)
+            ->where('relacao_dias.trabalhador_id',$basecalculos->trabalhador_id)
+            ->groupBy('rsdia')
+            ->get();
+            foreach ($relacaodia as $key => $relacaodias) {
+                $this->relacaodia->create([
+                    'rsdia'=>$relacaodias->rsdia,
+                    'rivalor'=>$relacaodias->valor,
+                    'base_calculo_id'=>$base['id'],
+                    'trabalhador_id'=>$basecalculos->trabalhador_id
+                ]);
+            }
+       }
+      
+       dd($valorcalculo);
        
-        
-       
-        
-        // foreach ($tomador as $key => $tomador) {
-        //     $boletim = [
-        //         'horanormal'=>[
-        //             'id'=>[],
-        //             'dia' => [],
-        //             'valor' => [],
-        //             'quantidade' => [],
-        //             'descricao' => []
-        //         ]
-        //     ];
-            
-        //     $lancamentotabela = $this->lancamentotabela
-        //     ->with(['lacamentorublica','bolcartaoponto'])
-        //     ->whereBetween('lsdata',[$datainicio,$datafinal])
-        //     ->where('tomador_id',$tomador->id)
-        //     ->get();
-        //     foreach ($tomador->tabelapreco as $key => $tabelapreco) {
-        //         foreach ($lancamentotabela as $key => $lancamentotabelas) {
-        //             if ($lancamentotabelas->bolcartaoponto->count()) {
-        //                 foreach ($lancamentotabelas->bolcartaoponto as $key => $bolcartaoponto) {
-        //                     dd($bolcartaoponto->bshoraex);
-        //                     if (!in_array($bolcartaoponto->trabalhador_id, $boletim['horanormal']['id']) && $tabelapreco->tsdescricao == 'hora normal' && $bolcartaoponto->horas_normais) {
-        //                         array_push($boletim['horanormal']['id'],$bolcartaoponto->trabalhador_id);
-        //                         array_push($boletim['horanormal']['descricao'],$tabelapreco->tsdescricao);
-        //                         array_push($boletim['horanormal']['dia'], date('d',strtotime($bolcartaoponto->created_at)));
-        //                     }
-        //                 }
-                        
-        //             }
-                    
-        //         }
-        //         dd($boletim);
-        //     }
-           
-            
-        // }
-       
-        // $lancamentotabela = $this->lancamentotabela
-        // // ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
-        // ->whereBetween('lsdata',[$datainicio,$datafinal])
-        // ->where('empresa_id',$user->empresa_id)
-        // ->with(['lacamentorublica','bolcartaoponto'])
-        // ->get();
-        // dd($lancamentotabela);
     }
     public function calculardia($horas,$valores)
     {

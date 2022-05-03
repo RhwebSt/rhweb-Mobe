@@ -13,6 +13,18 @@ class BaseCalculo extends Model
     {
         return $this->belongsTo(Trabalhador::class);
     }
+    public function folhar()
+    {
+        return $this->belongsTo(Folhar::class);
+    }
+    public function valorcalculo()
+    {
+        return $this->hasMany(ValorCalculo::class);
+    }
+    public function relacaodia()
+    {
+        return $this->hasMany(RelacaoDia::class);
+    }
     public function cadastros($dados)
     {
         return BaseCalculo::create([
@@ -33,6 +45,7 @@ class BaseCalculo extends Model
             'folhar_id'=>$dados['folhar'],
         ]);
     }
+    
     public function cadastro($dados,$depedentes,$tomador,$folhar = null,$i,$data)
     {
         return BaseCalculo::create([

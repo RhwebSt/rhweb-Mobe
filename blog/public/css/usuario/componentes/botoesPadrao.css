@@ -1,3 +1,14 @@
+:root{
+    --color-botao-voltar: black;
+    --color-botao-voltar-hover:#2E3238;
+}
+
+.darkmode{
+    --color-botao-voltar: white;
+    --color-botao-voltar-hover:#E7DADA;
+}
+
+
 .botao{
     border-radius: 8px;
     background-color: #194bf0;
@@ -17,4 +28,18 @@
 
 .div__voltar{
     margin-bottom: 40px;
+}
+
+.botao__voltar{
+    color: var(--color-botao-voltar);
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: 200ms ease-in-out;
+    text-decoration: none;
+}
+
+.botao__voltar:hover{
+    color: var(--color-botao-voltar-hover);
+    transition: 200ms ease-in-out;
+    transform: scale(1.06);
 }

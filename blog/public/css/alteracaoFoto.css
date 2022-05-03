@@ -31,18 +31,18 @@
     opacity: 1;
   }
 
-  .botao__voltar{
-      background-color: #A0031D;
-      color: #fff;
-      border: 1px solid  #FB2347;
-      transition: 600ms;
-  }
+  /*.botao__voltar{*/
+  /*    background-color: #A0031D;*/
+  /*    color: #fff;*/
+  /*    border: 1px solid  #FB2347;*/
+  /*    transition: 600ms;*/
+  /*}*/
 
-  .botao__voltar:hover{
-        background-color: #580110;
-        color: #fff;
-        border: 1px solid  #FB2347;
-  }
+  /*.botao__voltar:hover{*/
+  /*      background-color: #580110;*/
+  /*      color: #fff;*/
+  /*      border: 1px solid  #FB2347;*/
+  /*}*/
 
   .botao__alterar{
     background-color: #059c1e;

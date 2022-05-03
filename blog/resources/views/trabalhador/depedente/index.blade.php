@@ -53,19 +53,19 @@
                     </script>
                 @enderror  
 
-            <div class="container row">
+            <section class="section__botoes--trabalhador">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="botao__voltar" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap">
-                    <div class="btn " role="button" aria-label="Basic example">
-                            <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button"><i class="fad fa-save"></i> Incluir</a>
-                            <a class="btn botao" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
-                    </div>
+                    <a class="btn botao" href="{{ route('depedente.mostrar.create',$id) }}" role="button"><i class="fad fa-user-plus"></i> Novo</a>
                 </div>
-                
-                <div class="col-12 mb-5 mt-5">
-                    <h5 class="card-title text-center fs-3 ">Dependentes <i class="fad fa-users"></i></h5>
-                </div>
-            </div>
+
+            </section>
+            
+            <h1 class="title__trabalhador">Dependentes <i class="fad fa-users"></i></h1>
             
             <section class="table">
                 <div class="table-responsive-xxl">
@@ -121,39 +121,36 @@
                                     
                                     <!-- Modal -->
                                     <div class="modal fade" id="staticBackdrop{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('depedente.destroy',$depedente->id) }}" id="formdelete" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <div class="modal-header modal__delete">
-                                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body modal-delbody">
-                                                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                                                </div>
-                                                <div class="modal-footer modal-delfooter">
-                                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn__deletar">Deletar</button>
-        
-                                                </div>
-                                            </form>
+                                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-content">
+                                                <form action="{{ route('depedente.destroy',$depedente->id) }}" id="formdelete" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <div class="modal-header header__modal">
+                                                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                                                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                    </div>
+                                                    
+                                                    <div class="modal-body body__modal">
+                                                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                                                    </div>
+                                                    
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                                                        <button type="submit" class="btn btn__deletar">Deletar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        </div>
-                                    </div></td>
+                                    </div>
                                 </td>
+
                             </tr>
-                            @endforeach
+                        @endforeach
                         @else
-                        <tr>
-                            <td class="text-center border-end border-start text-nowrap" colspan="11" style="background-color: #081049; color: white;">
-                                <div class="alert" role="alert" style="background-color: #CC2836;">
-                                    N√£o a registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        
+                            <tr class="tr__body">
+                                <td colspan="11" class="no__register--table">Nè´™o hè´° nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                            </tr>
                         @endif
                         </tbody>
                         <tfoot>

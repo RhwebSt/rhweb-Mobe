@@ -160,6 +160,14 @@ $(document).on('keydown', function(e) {
          $("#data").val("");
         // fim do boletim cartao ponto//
         
+        // depedente//
+        $("#data__nascimento").val("");
+        $("#cpf__dependente").val("");
+        $("#nome__dependente").val("");
+        //fim do depedente//
+        
+        
+        
 
 	}
 	
