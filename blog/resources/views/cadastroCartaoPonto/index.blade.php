@@ -1,164 +1,150 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Boletim Cartão Ponto')
 @section('conteine')
-<div class="card-body">
+<main role="main">
+    <div class="container">
 
-  @if(session('success'))
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#5AA300',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: '{{ session("success") }}'
-    })
-  </script>
-  @endif
-  @error('false')
-  <script>
-    const Toast = Swal.mixin({
-      toast: true,
-      width: 500,
-      color: '#ffffff',
-      background: '#C53230',
-      position: 'top-end',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'error',
-      title: '{{ $message }}'
-    })
-  </script>
-  @enderror
-
-  <!--<script>-->
-  <!--    Swal.fire({-->
-  <!--          title: '<strong>Boletim Cartão Ponto</strong>',-->
-  <!--          html:-->
-  <!--            'Você deseja entrar no boletim? ',-->
-  <!--          showCloseButton: true,-->
-  <!--          showCancelButton: true,-->
-  <!--          focusConfirm: false,-->
-  <!--          confirmButtonText:-->
-  <!--            'Sim <i class="far fa-check-circle"></i>',-->
-  <!--            confirmButtonColor: "#1A7552",-->
-  <!--          cancelButtonText:-->
-  <!--            'Não <i class="far fa-times-circle"></i>',-->
-  <!--            cancelButtonColor: "#CA2B3B",-->
-  <!--        })-->
-  <!--</script>-->
-
-
-  <h5 class="card-title text-center mt-5 mb-5 fs-3 ">Cartão Ponto <i class="fad fa-alarm-clock"></i></h5>
-  <div class="container">
-    <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
-      @csrf
-      <input type="hidden" id="method" name="_method" value="">
-      <input type="hidden" name="status" value="D" id="status">
-      <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
-
-        <div class="btn d-grid gap-1 mb-5  mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-
-          <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
-          <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-            <i class="fad fa-list-ul"></i> lista
-          </a>
-          <a id="boletim" class="btn botao disabled d-none"><i class="fad fa-door-open "></i> Boletim</a>
-          <button type="submit" id="atualizar" disabled class="btn botao d-none"><i class="fad fa-edit "></i> Editar</button>
-          <button type="button" class="btn botao d-none" disabled id="excluir" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Excluir <i class="fad fa-trash"></i>
-          </button>
-
-
-          <a class="btn botao" href="{{route('home.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
-        </div>
-
-      <?php
-      if (isset($numboletimtabela->vsnrocartaoponto)) {
-        $boletim = $numboletimtabela->vsnrocartaoponto + 1;
-      } else {
-        $boletim = 1;
-      }
-      ?>
-      <div class="col-md-4">
-        <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
-        <input type="text" value="{{$boletim}}" class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim">
-        @error('liboletim')
-        <span class="text-danger">{{ $message }}</span>
+        @if(session('success'))
+        <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              width: 500,
+              color: '#ffffff',
+              background: '#5AA300',
+              position: 'top-end',
+              showCloseButton: true,
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+        
+            Toast.fire({
+              icon: 'success',
+              title: '{{ session("success") }}'
+            })
+        </script>
+        @endif
+        @error('false')
+        <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              width: 500,
+              color: '#ffffff',
+              background: '#C53230',
+              position: 'top-end',
+              showCloseButton: true,
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+        
+            Toast.fire({
+              icon: 'error',
+              title: '{{ $message }}'
+            })
+        </script>
         @enderror
-        <datalist id="listaboletim">
-        </datalist>
-      </div>
 
-      <div class="col-md-8 input">
-        <label for="tomador" class="form-label ">Tomador
-          <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
-        </label>
-        <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="" id="nome__completo">
-        <datalist id="datalistOptions">
-        </datalist>
-        @error('nome__completo')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-        @error('tomador')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-      </div>
-      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
-      <input type="hidden" id="domingo" name="domingo">
-      <input type="hidden" name="sabado" id="sabado">
-      <input type="hidden" name="diasuteis" id="diasuteis">
+        <form class="row g-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
+            @csrf
+            <input type="hidden" id="method" name="_method" value="">
+            <input type="hidden" name="status" value="D" id="status">
+            <input type="hidden" name="empresa" value="{{$user->empresa->id}}">
+            
+            <section class="section__botoes--cartao--ponto">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="botao__voltar" href="{{route('home.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
+                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+
+                  <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
+                  
+                  <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <i class="fad fa-list-ul"></i> lista
+                  </a>
+
+                </div>
+                
+            </section>
+
+            <h1 class="title__cartao--ponto">Boletim Cartão Ponto <i class="fad fa-alarm-clock"></i></h1>
+        
+            <?php
+                if (isset($numboletimtabela->vsnrocartaoponto)) {
+                    $boletim = $numboletimtabela->vsnrocartaoponto + 1;
+                } else {
+                    $boletim = 1;
+                }
+            ?>
+            
+            
+            <div class="col-md-4">
+                <label for="num__boletim" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nº do Boletim <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Numero do boletim gerado automáticamente"></i></label>
+                <input type="text" value="{{$boletim}}" class="form-control @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" id="num__boletim" value="{{old('liboletim')}}">
+                @error('liboletim')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <datalist id="listaboletim"></datalist>
+            </div>
+
+            <div class="col-md-8 input">
+                <label for="tomador" class="form-label "><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tomador</label>
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{old('nome__completo')}}" id="nome__completo" placeholder="dê um duplo clique para escolher o tomador">
+                <datalist id="datalistOptions"></datalist>
+                @error('nome__completo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                @error('tomador')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
+            <input type="hidden" id="domingo" name="domingo">
+            <input type="hidden" name="sabado" id="sabado">
+            <input type="hidden" name="diasuteis" id="diasuteis">
 
 
-      <div class="col-md-4">
-        <label for="data" class="form-label">Data</label>
-        <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="" id="data">
-        @error('data')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-      </div>
+            <div class="col-md-4">
+                <label for="data" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data</label>
+                <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="" id="data">
+                @error('data')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-      <div class="col-md-4">
-        <label for="num__trabalhador" class="form-label">Quantidade de Cadastros</label>
-        <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="" id="num__trabalhador">
-        @error('num__trabalhador')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-      </div>
+            <div class="col-md-4">
+                <label for="num__trabalhador" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Quantidade de Cadastros</label>
+                <input type="text" class="form-control @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="{{old('num__trabalhador')}}" id="num__trabalhador" maxlength="15"  placeholder="quantidade de trabalhadores">
+                @error('num__trabalhador')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-      <div class="col-md-4">
-        <label for="feriado" class="form-label">Feriado</label>
-        <select id="feriado" name="feriado" class="form-select fw-bold text-dark">
-          <option>Sim</option>
-          <option selected>Não</option>
-        </select>
-      </div>
-    </form>
+            <div class="col-md-4">
+                <label for="feriado" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Feriado</label>
+                <select id="feriado" name="feriado" class="form-select text-dark">
+                    <option>Sim</option>
+                    <option selected>Não</option>
+                </select>
+            </div>
+            
+        </form>
+    </div>
     @include('cadastroCartaoPonto.lista')
-  </div>
+</main>
 
-  <script>
+<script>
 
 
     $('#num__trabalhador').mask('#.##0', {
@@ -366,5 +352,5 @@
       $('#sabado').val(data.cssabados ? data.cssabados : 0.00)
       $('#diasuteis').val(data.csdiasuteis)
     }
-  </script>
+</script>
   @stop

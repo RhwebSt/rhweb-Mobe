@@ -19,7 +19,7 @@ class calculoFolhaController extends Controller
     {
         $user = Auth::user();
         $idfolhas = [];
-        $folhas = $this->folhar->buscaListaFolhar($user->empresa);
+        $folhas = $this->folhar->buscaListaFolhar($user->empresa_id);
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);
         }

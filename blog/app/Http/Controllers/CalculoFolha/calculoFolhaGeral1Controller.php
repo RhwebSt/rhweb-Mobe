@@ -1390,6 +1390,7 @@ class calculoFolhaGeralController extends Controller
     }
     public function imprimirFolhar($id)
     {
+        
        
         $folhas = $this->folhar->buscaLista($id);
         $leis = $this->leis->categorias();

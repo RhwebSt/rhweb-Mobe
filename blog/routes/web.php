@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado'); 
+    Route::get('pesquisa/comisionado','Comisionario\\ComisionarioController@pesquisa')->name('comisionado.pesquisa');
     Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
     

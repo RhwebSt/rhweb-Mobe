@@ -27,6 +27,8 @@
         <link rel="stylesheet" href="{{url('/css/usuario/tomador/tomador.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/cadastroAcesso/cadastroAcesso.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/comissionado/comissionado.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/cartaoPonto/cartaoPonto.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/boletimTabela/boletimTabela.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,9 +37,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
-         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
@@ -47,7 +49,7 @@
     </head>
     
 
-    <body  class="body-content">
+    <body class="body-content">
         
         
         <script>

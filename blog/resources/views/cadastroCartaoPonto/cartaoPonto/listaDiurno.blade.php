@@ -1,12 +1,32 @@
 <div class="modal fade" id="listaDiurno" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1">Lista Diurno <i class="fad fa-sun"></i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header header__modal">
+                <h5 class="modal-title text-black fw-bold" id="staticBackdropLabel1"><i class="fad fa-lg fa-sun"></i> Lista Diurno</h5>
+                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
             </div>
             
             <div class="modal-body">
+                
+                <section class="section__search">
+
+                    <div class="col-md-5">
+                        <form action="" method="GET">
+                            <div class="d-flex">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="pesquisa">
+                                <datalist id="listapesquisa"></datalist>
+                                
+                                <input type="hidden" name="codicao" value="">
+                                
+                                <button type="submit" class="btn botao__search modal-botao">
+                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                </button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                    
+                </section>
                 
                 <section>
                     <div class="d-flex justify-content-end">
@@ -74,13 +94,13 @@
                             @endforeach
                             @else
                                 <tr class="tr__body">
-                                    <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                    <td colspan="12" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
                                 </tr>
                             @endif
                             </tbody>
                         
                             <tfoot>
-                                <tr class=" border-end border-start border-bottom">
+                                <tr class="">
                                     <td colspan="11">
                                     {{ $lista->links() }}
                                     </td>
@@ -93,31 +113,35 @@
                 
             </div>
 
+            <div class="modal-footer">
+            </div>
 
         </div>
     </div>
 </div>
 
 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="" id="formdelete" method="post">
-                @csrf
-                @method('delete')
-                <div class="modal-header modal__delete">
-                    <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body modal-delbody">
-                    <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                </div>
-                <div class="modal-footer modal-delfooter">
-                    <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn__deletar">Deletar</button>
-
-                </div>
-            </form>
+<section class="delete__tabela--tomador">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" id="formdelete" method="post">
+                    @csrf
+                    @method('delete')
+                    <div class="modal-header modal__delete">
+                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-delbody">
+                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    </div>
+                    <div class="modal-footer modal-delfooter">
+                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn__deletar">Deletar</button>
+    
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</section>

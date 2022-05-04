@@ -56,8 +56,8 @@ class RelacaoDia extends Model
     }
     public function buscaImprimir($id)
     {
-        return RelacaoDia::select('rsdia','rivalor','basecalculo','trabalhador_id')
-        ->whereIn('basecalculo',$id)
+        return RelacaoDia::select('rsdia','rivalor','base_calculo_id','trabalhador_id')
+        ->whereIn('base_calculo_id',$id)
         ->get();
     }
     public function buscaImprimirTrabalhador($id)

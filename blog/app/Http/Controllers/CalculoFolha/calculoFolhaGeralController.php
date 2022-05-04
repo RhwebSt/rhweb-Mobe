@@ -21,10 +21,12 @@ use App\Dependente;
 use App\Descontos;
 use App\Empresa;
 use Carbon\Carbon;
+use App\Leis;
+use PDF;
 class calculoFolhaGeralController extends Controller
 {
     private $lancamentotabela,$folhar,$valorrublica,$rublica,$tomador,$trabalhador,$bolcartaoponto,$lancamentorublica,
-    $cartaoponto,$inss,$irrf,$basecalculo,$relacaodia,$valorcalculo,$depedente,$desconto,$empresa;
+    $cartaoponto,$inss,$irrf,$leis,$basecalculo,$relacaodia,$valorcalculo,$depedente,$desconto,$empresa;
     public function __construct()
     {
         $this->valorrublica = new ValoresRublica;
@@ -44,6 +46,7 @@ class calculoFolhaGeralController extends Controller
         $this->depedente = new Dependente;
         $this->desconto = new Descontos;
         $this->empresa = new Empresa;
+        $this->leis = new Leis;
     }
     public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
@@ -53,7 +56,7 @@ class calculoFolhaGeralController extends Controller
         $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
-        $seguros = $this->empresa->buscaSeguro($user->empresa);
+        $seguros = $this->empresa->buscaSeguro($user->empresa_id);
         $tomador = $this->tomador->where('empresa_id',$user->empresa_id)
         ->with(['tabelapreco','cartaoponto','incidefolhar'])->get();
         $tomador_id = [];
@@ -84,138 +87,7 @@ class calculoFolhaGeralController extends Controller
                 'quantidade' => [],
                 'descricao' => []
             ];
-            $boletim = [
-                'horanormal'=>[
-                    'id'=>[],
-                    'codigos'=>[],
-                    'dia' => [],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'diarianormal'=>[
-                    'id'=>[],
-                    'codigos'=>[],
-                    'dia' => [],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'hora50'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'hora100'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'noturno'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'producao'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'gratificacao'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'vt'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>'',
-                    'valor' =>0,
-                    'quantidade' => 0,
-                    'descricao' => ''
-                ],
-                'va'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>'',
-                    'valor' =>0,
-                    'quantidade' => 0,
-                    'descricao' => ''
-                ],
-                'diaria'=>[
-                    'id'=>[],
-                    'dia' => [],
-                    'codigos'=>[],
-                    'valor' =>[],
-                    'quantidade' => [],
-                    'descricao' => []
-                ],
-                'dsr1818'=>[
-                    'valor'=>0,
-                    'codigos'=>'',
-                    'quantidade'=> 0,
-                    'rublicas'=>0,
-                ],
-                'decimo_ter'=>[
-                    'valor'=>0,
-                    'codigos'=>'',
-                    'quantidade'=> 0,
-                    'rublicas'=>0,
-                ],
-                'ferias_decimoter'=>[
-                    'valor'=>0,
-                    'codigos'=>'',
-                    'quantidade'=> 0,
-                    'rublicas'=>0,
-                ],
-                'inss_sobre_ter'=>[
-                    'valor'=>0,
-                    'codigos'=>'',
-                    'quantidade'=> 0,
-                    'rublicas'=>0,
-                ],
-                'inss'=>[
-                    'valor'=>0,
-                    'codigos'=>'',
-                    'quantidade'=> 0,
-                    'rublicas'=>0,
-                ],
-                'servico'=>0,
-                'servicodsr'=>0,
-                'base_inss'=>0,
-                'base_fgts'=>0,
-                'fgts_mes'=>0,
-                'vencimento'=>0,
-                'desconto'=>0,
-                'liquido'=>0,
-                'folhar'=>$folhar['id'],
-                'depedente'=>0,
-                'tomador'=>$tomadores->id,
-                'trabalhador'=>'',
-                'basecalculo'=>''
-                
-            ];
-            $dia = [
-                'dias'=>[],
-                'valor'=>[],
-                'basecalculo'=>'',
-                'trabalhador'=>'',
-            ];
+           
             $lancamentotabela = $this->lancamentotabela
             ->with(['lacamentorublica','bolcartaoponto'])
             ->whereBetween('lsdata',[$datainicio,$datafinal])
@@ -321,142 +193,354 @@ class calculoFolhaGeralController extends Controller
             $trabalhador = $this->trabalhador->whereIn('id',$dados['id'])
             ->with('depedente')->get();
             foreach ($trabalhador as $t => $trabalhadores) {
+                $boletim = [
+                    'horanormal'=>[
+                        'id'=>'',
+                        'codigos'=>'',
+                        'dia' =>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' =>''
+                    ],
+                    'diarianormal'=>[
+                        'id'=>'',
+                        'codigos'=>'',
+                        'dia' => '',
+                        'valor' =>'',
+                        'quantidade' =>'',
+                        'descricao' =>''
+                    ],
+                    'hora50'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' =>''
+                    ],
+                    'hora100'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' =>'',
+                        'descricao' =>''
+                    ],
+                    'noturno'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' => ''
+                    ],
+                    'producao'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' => ''
+                    ],
+                    'gratificacao'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' => ''
+                    ],
+                    'vt'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>0,
+                        'quantidade' => 0,
+                        'descricao' => ''
+                    ],
+                    'va'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>0,
+                        'quantidade' => 0,
+                        'descricao' => ''
+                    ],
+                    'diaria'=>[
+                        'id'=>'',
+                        'dia' => '',
+                        'codigos'=>'',
+                        'valor' =>'',
+                        'quantidade' => '',
+                        'descricao' => ''
+                    ],
+                    'dsr1818'=>[
+                        'valor'=>0,
+                        'codigos'=>'',
+                        'quantidade'=> 0,
+                        'rublicas'=>0,
+                    ],
+                    'decimo_ter'=>[
+                        'valor'=>0,
+                        'codigos'=>'',
+                        'quantidade'=> 0,
+                        'rublicas'=>0,
+                    ],
+                    'ferias_decimoter'=>[
+                        'valor'=>0,
+                        'codigos'=>'',
+                        'quantidade'=> 0,
+                        'rublicas'=>0,
+                    ],
+                    'inss_sobre_ter'=>[
+                        'valor'=>0,
+                        'codigos'=>'',
+                        'quantidade'=> 0,
+                        'rublicas'=>0,
+                    ],
+                    'inss'=>[
+                        'valor'=>0,
+                        'codigos'=>'',
+                        'quantidade'=> 0,
+                        'rublicas'=>0,
+                    ],
+                    'servico'=>0,
+                    'salario'=>0,
+                    'servicodsr'=>0,
+                    'base_inss'=>0,
+                    'base_fgts'=>0,
+                    'base_irrf'=>0,
+                    'fgts_mes'=>0,
+                    'vencimento'=>0,
+                    'desconto'=>0,
+                    'liquido'=>0,
+                    'folhar'=>$folhar['id'],
+                    'depedente'=>0,
+                    'tomador'=>$tomadores->id,
+                    'trabalhador'=>'',
+                    'basecalculo'=>''
+                    
+                ];
+                $dia = [
+                    'dias'=>[],
+                    'valor'=>[],
+                    'basecalculo'=>'',
+                    'trabalhador'=>'',
+                ];
                 $boletim['trabalhador'] = $trabalhadores->id;
                 $dia['trabalhador'] = $trabalhadores->id;
                 foreach ($dados['id'] as $i => $dado) {
                     if ($dado == $trabalhadores->id) {
                         if ($dados['descricao'][$i] == 'hora normal') {
-                            if (!array_key_exists($t,$boletim['horanormal']['descricao'])) {
-                                array_push($boletim['horanormal']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['horanormal']['codigos'],$dados['codigos'][$i]);
-                                
-                                
-                            }
-                            if (!array_key_exists($t,$boletim['horanormal']['valor'])) {
-                                array_push($boletim['horanormal']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['horanormal']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['horanormal']['descricao'] = $dados['descricao'][$i];
+                            $boletim['horanormal']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['horanormal']['valor']) {
+                                $boletim['horanormal']['valor'] = $dados['valor'][$i];
+                                $boletim['horanormal']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['horanormal']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['horanormal']['quantidade'][$t] += $dados['quantidade'][$i];
+                                $boletim['horanormal']['valor'] += $dados['valor'][$i]; 
+                                $boletim['horanormal']['quantidade'] += $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'diaria normal') {
-                            if (!array_key_exists($t,$boletim['diarianormal']['descricao'])) {
-                                array_push($boletim['diarianormal']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['diarianormal']['codigos'],$dados['codigos'][$i]);
-                                
-                                
-                            }
-                            if (!array_key_exists($t,$boletim['diarianormal']['valor'])) {
-                                array_push($boletim['diarianormal']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['diarianormal']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['diarianormal']['descricao'] = $dados['descricao'][$i];
+                            $boletim['diarianormal']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['diarianormal']['valor']) {
+                                $boletim['diarianormal']['valor'] = $dados['valor'][$i];
+                                $boletim['diarianormal']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['diarianormal']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['diarianormal']['quantidade'][$t] += $dados['quantidade'][$i];
+                                $boletim['diarianormal']['valor'] += $dados['valor'][$i]; 
+                                $boletim['diarianormal']['quantidade'] += $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'hora extra 50%') {
-                            if (!array_key_exists($t,$boletim['hora50']['descricao'])) {
-                                array_push($boletim['hora50']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['hora50']['codigos'],$dados['codigos'][$i]);
-                                
-                            }
-                            if (!array_key_exists($t,$boletim['hora50']['valor'])) {
-                                array_push($boletim['hora50']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['hora50']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['hora50']['descricao'] = $dados['descricao'][$i];
+                            $boletim['hora50']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['hora50']['valor']) {
+                                $boletim['hora50']['valor'] = $dados['valor'][$i];
+                                $boletim['hora50']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['hora50']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['hora50']['quantidade'][$t] += $dados['quantidade'][$i];
+                                $boletim['hora50']['valor'] += $dados['valor'][$i]; 
+                                $boletim['hora50']['quantidade'] += $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'hora extra 100%') {
-                            if (!array_key_exists($t,$boletim['hora100']['descricao'])) {
-                                array_push($boletim['hora100']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['hora100']['codigos'],$dados['codigos'][$i]);
-                                
-                            }
-                            if (!array_key_exists($t,$boletim['hora100']['valor'])) {
-                                array_push($boletim['hora100']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['hora100']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['hora100']['descricao'] = $dados['descricao'][$i];
+                            $boletim['hora100']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['hora100']['valor']) {
+                                $boletim['hora100']['valor'] = $dados['valor'][$i];
+                                $boletim['hora100']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['hora100']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['hora100']['quantidade'][$t] += $dados['quantidade'][$i];
+                                $boletim['hora100']['valor'] += $dados['valor'][$i]; 
+                                $boletim['hora100']['quantidade'] += $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'adicional noturno') {
-                            if (!array_key_exists($t,$boletim['noturno']['descricao'])) {
-                                array_push($boletim['noturno']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['noturno']['codigos'],$dados['codigos'][$i]);
-                                
-                            }
-                            if (!array_key_exists($t,$boletim['noturno']['valor'])) {
-                                array_push($boletim['noturno']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['noturno']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['noturno']['descricao'] = $dados['descricao'][$i];
+                            $boletim['noturno']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['noturno']['valor']) {
+                                $boletim['noturno']['valor'] = $dados['valor'][$i];
+                                $boletim['noturno']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['noturno']['valor'][$t] += $dados['valor'][$i];
-                                $boletim['noturno']['quantidade'][$t] += $dados['quantidade'][$i];
-                                $boletim['servico'] += $dados['valor'][$i]; 
+                                $boletim['noturno']['valor'] += $dados['valor'][$i]; 
+                                $boletim['noturno']['quantidade'] += $dados['quantidade'][$i];
+                                $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'produção') {
-                            if (!array_key_exists($t,$boletim['producao']['descricao'])) {
-                                array_push($boletim['producao']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['producao']['codigos'],$dados['codigos'][$i]);
-                            }
-                            if (!array_key_exists($t,$boletim['producao']['valor'])) {
-                                array_push($boletim['producao']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['producao']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['producao']['descricao'] = $dados['descricao'][$i];
+                            $boletim['producao']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['producao']['valor']) {
+                                $boletim['producao']['valor'] = $dados['valor'][$i];
+                                $boletim['producao']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['producao']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['producao']['quantidade'][$t] += $dados['quantidade'][$i];
-                                $boletim['servico'] += $dados['valor'][$i]; 
+                                $boletim['producao']['valor'] += $dados['valor'][$i]; 
+                                $boletim['producao']['quantidade'] += $dados['quantidade'][$i];
+                                $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
                         if ($dados['descricao'][$i] == 'gratificação') {
-                            if (!array_key_exists($t,$boletim['gratificacao']['descricao'])) {
-                                array_push($boletim['gratificacao']['descricao'],$dados['descricao'][$i]);
-                                array_push($boletim['gratificacao']['codigos'],$dados['codigos'][$i]);
-                            }
-                            if (!array_key_exists($t,$boletim['gratificacao']['valor'])) {
-                                array_push($boletim['gratificacao']['valor'],$dados['valor'][$i]);
-                                array_push($boletim['gratificacao']['quantidade'],$dados['quantidade'][$i]);
+                            $boletim['gratificacao']['descricao'] = $dados['descricao'][$i];
+                            $boletim['gratificacao']['codigos'] = $dados['codigos'][$i];
+                            if (!$boletim['gratificacao']['valor']) {
+                                $boletim['gratificacao']['valor'] = $dados['valor'][$i];
+                                $boletim['gratificacao']['quantidade'] = $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }else{
-                                $boletim['gratificacao']['valor'][$t] += $dados['valor'][$i]; 
-                                $boletim['gratificacao']['quantidade'][$t] += $dados['quantidade'][$i]; 
+                                $boletim['gratificacao']['valor'] += $dados['valor'][$i]; 
+                                $boletim['gratificacao']['quantidade'] += $dados['quantidade'][$i];
                                 $boletim['servico'] += $dados['valor'][$i];
                             }
                         }
+                        // if ($dados['descricao'][$i] == 'diaria normal') {
+                        //     if (!array_key_exists($t,$boletim['diarianormal']['descricao'])) {
+                        //         array_push($boletim['diarianormal']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['diarianormal']['codigos'],$dados['codigos'][$i]);
+                                
+                                
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['diarianormal']['valor'])) {
+                        //         array_push($boletim['diarianormal']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['diarianormal']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['diarianormal']['valor'][$t] += $dados['valor'][$i]; 
+                        //         $boletim['diarianormal']['quantidade'][$t] += $dados['quantidade'][$i];
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }
+                        // }
+                        // if ($dados['descricao'][$i] == 'hora extra 50%') {
+                        //     if (!array_key_exists($t,$boletim['hora50']['descricao'])) {
+                        //         array_push($boletim['hora50']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['hora50']['codigos'],$dados['codigos'][$i]);
+                                
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['hora50']['valor'])) {
+                        //         array_push($boletim['hora50']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['hora50']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['hora50']['valor'][$t] += $dados['valor'][$i]; 
+                        //         $boletim['hora50']['quantidade'][$t] += $dados['quantidade'][$i];
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }
+                        // }
+                        // if ($dados['descricao'][$i] == 'hora extra 100%') {
+                        //     if (!array_key_exists($t,$boletim['hora100']['descricao'])) {
+                        //         array_push($boletim['hora100']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['hora100']['codigos'],$dados['codigos'][$i]);
+                                
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['hora100']['valor'])) {
+                        //         array_push($boletim['hora100']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['hora100']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['hora100']['valor'][$t] += $dados['valor'][$i]; 
+                        //         $boletim['hora100']['quantidade'][$t] += $dados['quantidade'][$i];
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }
+                        // }
+                        // if ($dados['descricao'][$i] == 'adicional noturno') {
+                        //     if (!array_key_exists($t,$boletim['noturno']['descricao'])) {
+                        //         array_push($boletim['noturno']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['noturno']['codigos'],$dados['codigos'][$i]);
+                                
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['noturno']['valor'])) {
+                        //         array_push($boletim['noturno']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['noturno']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['noturno']['valor'][$t] += $dados['valor'][$i];
+                        //         $boletim['noturno']['quantidade'][$t] += $dados['quantidade'][$i];
+                        //         $boletim['servico'] += $dados['valor'][$i]; 
+                        //     }
+                        // }
+                        // if ($dados['descricao'][$i] == 'produção') {
+                        //     if (!array_key_exists($t,$boletim['producao']['descricao'])) {
+                        //         array_push($boletim['producao']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['producao']['codigos'],$dados['codigos'][$i]);
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['producao']['valor'])) {
+                        //         array_push($boletim['producao']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['producao']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['producao']['valor'][$t] += $dados['valor'][$i]; 
+                        //         $boletim['producao']['quantidade'][$t] += $dados['quantidade'][$i];
+                        //         $boletim['servico'] += $dados['valor'][$i]; 
+                        //     }
+                        // }
+                        // if ($dados['descricao'][$i] == 'gratificação') {
+                        //     if (!array_key_exists($t,$boletim['gratificacao']['descricao'])) {
+                        //         array_push($boletim['gratificacao']['descricao'],$dados['descricao'][$i]);
+                        //         array_push($boletim['gratificacao']['codigos'],$dados['codigos'][$i]);
+                        //     }
+                        //     if (!array_key_exists($t,$boletim['gratificacao']['valor'])) {
+                        //         array_push($boletim['gratificacao']['valor'],$dados['valor'][$i]);
+                        //         array_push($boletim['gratificacao']['quantidade'],$dados['quantidade'][$i]);
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }else{
+                        //         $boletim['gratificacao']['valor'][$t] += $dados['valor'][$i]; 
+                        //         $boletim['gratificacao']['quantidade'][$t] += $dados['quantidade'][$i]; 
+                        //         $boletim['servico'] += $dados['valor'][$i];
+                        //     }
+                        // }
                         if (!in_array($dados['dia'][$i],$dia['dias'])) {
                             array_push($dia['dias'],$dados['dia'][$i]);
                             array_push($dia['valor'],$dados['valor'][$i]);
+                            $boletim['salario'] = $dados['valor'][$i];
                             
                         }else{
                             $key = array_search($dados['dia'][$i], $dia['dias']);
                             $dia['valor'][$key] += $dados['valor'][$i];
+                            $boletim['salario'] += $dados['valor'][$i];
                         }
                     }
                 }
+               
                 $boletim['vencimento'] = $boletim['servico'];
+                
                 $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
-                if (isset($boletim['horanormal']['valor'][$t])) {
-                    $horasnormais = $boletim['horanormal']['valor'][$t];
+                if (isset($boletim['horanormal']['valor'])) {
+                    $horasnormais = $boletim['horanormal']['valor'];
                 }else{
                     $horasnormais = 0;
                 }
 
-                if (isset($boletim['diarianormal']['valor'][$t])) {
-                    $diariasnormais = $boletim['diarianormal']['valor'][$t];
+                if (isset($boletim['diarianormal']['valor'])) {
+                    $diariasnormais = $boletim['diarianormal']['valor'];
                 }else{
                     $diariasnormais = 0;
                 }
@@ -547,34 +631,40 @@ class calculoFolhaGeralController extends Controller
                 }
                 $boletim['liquido'] = $boletim['vencimento'] - $boletim['desconto'];
                 $boletim['depedente'] = $trabalhadores->depedente->count();
+                $boletim['base_irrf'] = str_replace(',','.',$irrf_lista[0]->irdepedente) * $boletim['depedente'];
+                $boletim['base_irrf'] += $boletim['inss']['valor'] + $boletim['inss_sobre_ter']['valor'];
+                $boletim['base_irrf'] = $boletim['base_fgts'] -  $boletim['base_irrf'];
+
                 $basecalculo = $this->basecalculo->cadastros($boletim);
                 $boletim['basecalculo'] = $basecalculo['id'];
                 $dia['basecalculo'] = $basecalculo['id'];
                 for ($i=0; $i < count($dia['dias']); $i++) { 
                     $this->relacaodia->cadastros($dia,$i);
                 }
-                if (array_key_exists($t,$boletim['horanormal']['valor'])) {
-                    $this->valorcalculo->cadastroHorasnormais($boletim,$t);
+               
+                if ($boletim['horanormal']['valor']) {
+                    $this->valorcalculo->cadastroHorasnormais($boletim);
                 }
                
-                if (array_key_exists($t,$boletim['hora50']['valor'])) {
-                    $this->valorcalculo->cadastroHoras50($boletim,$t);
+                if ($boletim['hora50']['valor']) {
+                    $this->valorcalculo->cadastroHoras50($boletim);
                 }
-                if (array_key_exists($t,$boletim['hora100']['valor'])) {
-                    $this->valorcalculo->cadastroHoras100($boletim,$t);
+                if ($boletim['hora100']['valor']) {
+                    $this->valorcalculo->cadastroHoras100($boletim);
                 }
-                if (array_key_exists($t,$boletim['noturno']['valor'])) {
-                    $this->valorcalculo->cadastroNoturno($boletim,$t);
+                if ($boletim['noturno']['valor']) {
+                    $this->valorcalculo->cadastroNoturno($boletim);
                 }
-                if (array_key_exists($t,$boletim['producao']['valor'])) {
-                    $this->valorcalculo->cadastroProducao($boletim,$t);
+                if ($boletim['producao']['valor']) {
+                    $this->valorcalculo->cadastroProducao($boletim);
                 }
-                if (array_key_exists($t,$boletim['gratificacao']['valor'])) {
-                    $this->valorcalculo->cadastroGratificacao($boletim,$t);
+                if ($boletim['gratificacao']['valor']) {
+                    $this->valorcalculo->cadastroGratificacao($boletim);
                 }
-                if (array_key_exists($t,$boletim['diarianormal']['valor'])) {
-                    $this->valorcalculo->cadastroDiarianormal($boletim,$t);
+                if ($boletim['diarianormal']['valor']) {
+                    $this->valorcalculo->cadastroDiarianormal($boletim);
                 }
+               
                 $this->valorcalculo->cadastroVa($boletim);
                 $this->valorcalculo->cadastroVt($boletim);
                 $this->valorcalculo->cadastrodsr($boletim);
@@ -618,7 +708,8 @@ class calculoFolhaGeralController extends Controller
             $base_irrf = str_replace(',','.',$irrf_lista[0]->irdepedente) * $depedente;
             $codigo = [2001,2002];
             $faxa = "";
-            $folhar = 0;
+            $folha = 0;
+            $totaldias = 0;
             $boletim = [
                 'irrf'=>[
                     'codigos'=>0,
@@ -642,6 +733,13 @@ class calculoFolhaGeralController extends Controller
                     'id'=>0,
                 ],
                 'seguro'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'sindicator'=>[
                     'codigos'=>0,
                     'rublicas'=>0,
                     'quantidade'=>0,
@@ -697,14 +795,14 @@ class calculoFolhaGeralController extends Controller
             if ($quantdias > 15) {
                 $datafinal = explode('-',$datafinal);
                 $datafinal = $datafinal[0].'-'.$datafinal[1].'-15';
-                $folhar = DB::table('folhars') 
+                $folha = DB::table('folhars') 
                 ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
                 ->select('bivalorliquido')
                 ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal])
                 ->where('base_calculos.tomador_id','!=',null)
                 ->where('base_calculos.trabalhador_id',$basecalculos->trabalhador_id)
                 ->first();
-                if ($folhar) {
+                if ($folha) {
                     $basecalculos->bivalorliquido -= $folhar->bivalorliquido;
                     $basecalculos->bivalordesconto += $folhar->bivalorliquido;
                 }
@@ -732,6 +830,29 @@ class calculoFolhaGeralController extends Controller
                     $basecalculos->bivalordesconto += $desconto->valor;
                 }
             }
+            if ($seguros->esseguro) {
+                $seguro = str_replace(',','.',$seguros->esseguro);
+                $seguro = (float) $seguro;
+                $basecalculos->bivalordesconto += $seguro;
+                $basecalculos->bivalorliquido -= $seguro;
+            }
+            if ($seguros->escondicaosindicato) {
+                $sindicato = str_replace(',','.',$seguros->escondicaosindicato);
+                $sindicato = (float) $sindicato;
+                $basecalculos->bivalordesconto += $sindicato;
+                $basecalculos->bivalorliquido -= $sindicato;
+            }
+            $relacaodia =   DB::table('base_calculos') 
+            ->join('relacao_dias', 'base_calculos.id', '=', 'relacao_dias.base_calculo_id')
+            ->selectRaw('SUM(relacao_dias.rivalor) as valor,rsdia')
+            ->where('base_calculos.folhar_id',$folhar['id'])
+            ->where('base_calculos.tomador_id','!=',null)
+            ->where('relacao_dias.trabalhador_id',$basecalculos->trabalhador_id)
+            ->groupBy('rsdia')
+            ->get();
+            foreach ($relacaodia as $key => $relacaodias) {
+                $totaldias += $relacaodias->valor;
+            }
             // dd($base_irrf,$irrf_lista,$boletim,$faxa);
             $base =  $this->basecalculo->create([
                 'biservico'=>$basecalculos->biservico,
@@ -742,14 +863,22 @@ class calculoFolhaGeralController extends Controller
                 'biirrf'=>$base_irrf,
                 'bifaixairrf'=>$faxa,
                 'binumfilhos'=>$depedente,
-                // 'bitotaldiaria'=>$basecalculos['salario']['valor'][$i],
+                'bitotaldiaria'=>$totaldias,
                 'bivalorliquido'=>$basecalculos->bivalorliquido,
                 'bivalorvencimento'=>$basecalculos->bivalorvencimento,
                 'bivalordesconto'=>$basecalculos->bivalordesconto,
                 'trabalhador_id'=>$basecalculos->trabalhador_id,
                 'folhar_id'=>$basecalculos->folhar_id,
             ]);
-            if ($folhar) {
+            foreach ($relacaodia as $key => $relacaodias) {
+                $this->relacaodia->create([
+                    'rsdia'=>$relacaodias->rsdia,
+                    'rivalor'=>$relacaodias->valor,
+                    'base_calculo_id'=>$base['id'],
+                    'trabalhador_id'=>$basecalculos->trabalhador_id
+                ]);
+            }
+            if ($folha) {
                 $adiantamento =  $this->rublica->buscaRublicaUnidade('Adiantamento');
                 $boletim['adiantamento']['codigos'] = $adiantamento->rsrublica;
                 $boletim['adiantamento']['rublicas'] = $adiantamento->rsdescricao;
@@ -768,7 +897,28 @@ class calculoFolhaGeralController extends Controller
                 $boletim['basecalculo'] = $base['id'];
                 $this->valorcalculo->cadastroadesconto($boletim);
             }
+            if ($seguros->esseguro) {
+                $seguros_rublicas =  $this->rublica->buscaRublicaUnidade('Seguro');
+                $boletim['seguro']['codigos'] = $seguros_rublicas->rsrublica;
+                $boletim['seguro']['rublicas'] = $seguros_rublicas->rsdescricao;
+                $boletim['seguro']['quantidade'] = 1;
+                $boletim['seguro']['valor'] = $seguro;
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastroaseguro($boletim);
+            }
+            if ($seguros->escondicaosindicato) {
+                $seguros_rublicas =  $this->rublica->buscaRublicaUnidade('Sindicator');
+                $boletim['sindicator']['codigos'] = $seguros_rublicas->rsrublica;
+                $boletim['sindicator']['rublicas'] = $seguros_rublicas->rsdescricao;
+                $boletim['sindicator']['quantidade'] = 1;
+                $boletim['sindicator']['valor'] = $sindicato;
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastroasindicator($boletim);
+            }
             $valorcalculo =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$sim);
+            
             foreach ($valorcalculo as $key => $valorcalculos) {
                 $this->valorcalculo->create([
                     'vicodigo'=> $valorcalculos->vicodigo,
@@ -779,37 +929,25 @@ class calculoFolhaGeralController extends Controller
                     'trabalhador_id'=>$basecalculos->trabalhador_id,
                 ]);
             }
+            
             $valorcalculo =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$nao);
+            // dd($valorcalculo);
             foreach ($valorcalculo as $key => $valorcalculos) {
                 $this->valorcalculo->create([
                     'vicodigo'=> $valorcalculos->vicodigo,
                     'vsdescricao'=>$valorcalculos->vsdescricao,
                     'vireferencia'=>$valorcalculos->referencia,
                     'vivencimento'=>$valorcalculos->vencimento,
+                    'videscinto'=>$valorcalculos->desconto,
                     'base_calculo_id'=>$base['id'],
                     'trabalhador_id'=>$basecalculos->trabalhador_id,
                 ]);
             }
-            $relacaodia =   DB::table('base_calculos') 
-            ->join('relacao_dias', 'base_calculos.id', '=', 'relacao_dias.base_calculo_id')
-            ->selectRaw('SUM(relacao_dias.rivalor) as valor,rsdia')
-            ->where('base_calculos.folhar_id',$folhar['id'])
-            ->where('base_calculos.tomador_id','!=',null)
-            ->where('relacao_dias.trabalhador_id',$basecalculos->trabalhador_id)
-            ->groupBy('rsdia')
-            ->get();
-            foreach ($relacaodia as $key => $relacaodias) {
-                $this->relacaodia->create([
-                    'rsdia'=>$relacaodias->rsdia,
-                    'rivalor'=>$relacaodias->valor,
-                    'base_calculo_id'=>$base['id'],
-                    'trabalhador_id'=>$basecalculos->trabalhador_id
-                ]);
-            }
+           
        }
       
-       dd($valorcalculo);
        
+       dd($valorcalculo);
     }
     public function calculardia($horas,$valores)
     {
@@ -851,6 +989,24 @@ class calculoFolhaGeralController extends Controller
         $horasex = $valores * $horas;
         }
         return $horasex; 
+    }
+    public function imprimirFolhar($id)
+    {
+        
+       
+        $folhas = $this->folhar->buscaLista($id);
+        $leis = $this->leis->categorias();
+        if (!$folhas) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+        }
+        $basecalculo_id = [];
+        foreach ($folhas as $key => $folhar) {
+            array_push($basecalculo_id,$folhar->id); 
+        }
+        $valorcalculos = $this->valorcalculo->buscaImprimir($basecalculo_id);
+        $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
+        $pdf = PDF::loadView('comprovantegeral',compact('folhas','leis','valorcalculos','relacaodias'));
+        return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
 }
 ?>

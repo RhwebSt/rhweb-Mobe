@@ -166,9 +166,9 @@ function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
         
         //tabela de preço//
         
-    var descricao = validaInputQuantidade("#descricao", 1);
-    var ano = validaInputQuantidade("#ano", 4);
-    var valorTrabalhador = validaInputQuantidade("#valor", 1);
+        var descricao = validaInputQuantidade("#descricao", 1);
+        var ano = validaInputQuantidade("#ano", 4);
+        var valorTrabalhador = validaInputQuantidade("#valor", 1);
     var valorTomador = validaInputQuantidade("#valor__tomador", 1);
     var codigo = validaInputQuantidade("#rubricas", 1)
         //fim da tabela de preço//
@@ -186,3 +186,12 @@ function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
         var nome_tomador = validaInputQuantidade("#nome_tomador",1);
         
         //fim do comissionado//
+        
+        
+        //boletim com tabela//
+        var data = validaInputQuantidade("#data", 8);
+        var nomeTomador =  validaInputQuantidade("#nome__completo", 1);
+        var quantidadeCadastro = validaInputQuantidade ("#num__trabalhador", 1);
+        
+        
+        //fim do boletim com tabela//

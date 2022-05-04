@@ -13,80 +13,80 @@ class ValorCalculo extends Model
     {
         return $this->belongsTo(BaseCalculo::class);
     }
-    public function cadastroHorasnormais($dados,$i)
+    public function cadastroHorasnormais($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> (int)$dados['horanormal']['codigos'][$i],
-            'vsdescricao'=>$dados['horanormal']['descricao'][$i],
-            'vireferencia'=>$dados['horanormal']['quantidade'][$i],
-            'vivencimento'=>$dados['horanormal']['valor'][$i],
+            'vicodigo'=> (int)$dados['horanormal']['codigos'],
+            'vsdescricao'=>$dados['horanormal']['descricao'],
+            'vireferencia'=>$dados['horanormal']['quantidade'],
+            'vivencimento'=>$dados['horanormal']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
-    public function cadastroHoras50($dados,$i)
+    public function cadastroHoras50($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['hora50']['codigos'][$i],
-            'vsdescricao'=>$dados['hora50']['descricao'][$i],
-            'vireferencia'=>$dados['hora50']['quantidade'][$i],
-            'vivencimento'=>$dados['hora50']['valor'][$i],
+            'vicodigo'=> $dados['hora50']['codigos'],
+            'vsdescricao'=>$dados['hora50']['descricao'],
+            'vireferencia'=>$dados['hora50']['quantidade'],
+            'vivencimento'=>$dados['hora50']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
-    public function cadastroHoras100($dados,$i)
+    public function cadastroHoras100($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['hora100']['codigos'][$i],
-            'vsdescricao'=>$dados['hora100']['descricao'][$i],
-            'vireferencia'=>$dados['hora100']['quantidade'][$i],
-            'vivencimento'=>$dados['hora100']['valor'][$i],
+            'vicodigo'=> $dados['hora100']['codigos'],
+            'vsdescricao'=>$dados['hora100']['descricao'],
+            'vireferencia'=>$dados['hora100']['quantidade'],
+            'vivencimento'=>$dados['hora100']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
-    public function cadastroNoturno($dados,$i)
+    public function cadastroNoturno($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['noturno']['codigos'][$i],
-            'vsdescricao'=>$dados['noturno']['descricao'][$i],
-            'vireferencia'=>$dados['noturno']['quantidade'][$i],
-            'vivencimento'=>$dados['noturno']['valor'][$i],
+            'vicodigo'=> $dados['noturno']['codigos'],
+            'vsdescricao'=>$dados['noturno']['descricao'],
+            'vireferencia'=>$dados['noturno']['quantidade'],
+            'vivencimento'=>$dados['noturno']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
-    public function cadastroProducao($dados,$i)
+    public function cadastroProducao($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['producao']['codigos'][$i],
-            'vsdescricao'=>$dados['producao']['descricao'][$i],
-            'vireferencia'=>$dados['producao']['quantidade'][$i],
-            'vivencimento'=>$dados['producao']['valor'][$i],
+            'vicodigo'=> $dados['producao']['codigos'],
+            'vsdescricao'=>$dados['producao']['descricao'],
+            'vireferencia'=>$dados['producao']['quantidade'],
+            'vivencimento'=>$dados['producao']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
 
-    public function cadastroGratificacao($dados,$i)
+    public function cadastroGratificacao($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['gratificacao']['codigos'][$i],
-            'vsdescricao'=>$dados['gratificacao']['descricao'][$i],
-            'vireferencia'=>$dados['gratificacao']['quantidade'][$i],
-            'vivencimento'=>$dados['gratificacao']['valor'][$i],
+            'vicodigo'=> $dados['gratificacao']['codigos'],
+            'vsdescricao'=>$dados['gratificacao']['descricao'],
+            'vireferencia'=>$dados['gratificacao']['quantidade'],
+            'vivencimento'=>$dados['gratificacao']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
-    public function cadastroDiarianormal($dados,$i)
+    public function cadastroDiarianormal($dados)
     {
         return ValorCalculo::create([
-            'vicodigo'=> $dados['diarianormal']['codigos'][$i],
-            'vsdescricao'=>$dados['diarianormal']['descricao'][$i],
-            'vireferencia'=>$dados['diarianormal']['quantidade'][$i],
-            'vivencimento'=>$dados['diarianormal']['valor'][$i],
+            'vicodigo'=> $dados['diarianormal']['codigos'],
+            'vsdescricao'=>$dados['diarianormal']['descricao'],
+            'vireferencia'=>$dados['diarianormal']['quantidade'],
+            'vivencimento'=>$dados['diarianormal']['valor'],
             'base_calculo_id'=>$dados['basecalculo'],
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
@@ -190,6 +190,28 @@ class ValorCalculo extends Model
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
+    public function cadastroaseguro($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['seguro']['codigos'],
+            'vsdescricao'=>$dados['seguro']['rublicas'],
+            'vireferencia'=>$dados['seguro']['quantidade'],
+            'videscinto'=>$dados['seguro']['valor'],
+            'base_calculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
+    public function cadastroasindicator($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['sindicator']['codigos'],
+            'vsdescricao'=>$dados['sindicator']['rublicas'],
+            'vireferencia'=>$dados['sindicator']['quantidade'],
+            'videscinto'=>$dados['sindicator']['valor'],
+            'base_calculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
     public function listaGeral($folhar,$trabalhador,$codigos)
     {
         return DB::table('base_calculos') 
@@ -205,7 +227,7 @@ class ValorCalculo extends Model
             ->groupBy('valor_calculos.trabalhador_id','valor_calculos.vicodigo','valor_calculos.vsdescricao')
             ->where('base_calculos.folhar_id',$folhar)
             ->where('base_calculos.tomador_id','!=',null)
-            ->where('valor_calculos.trabalhador_id',$trabalhador)
+            ->where('base_calculos.trabalhador_id',$trabalhador)
             ->whereIn('valor_calculos.vicodigo',$codigos)
             ->get();
     }
@@ -558,8 +580,8 @@ class ValorCalculo extends Model
     }
     public function buscaImprimir($id)
     {
-        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo_id')
-        ->whereIn('basecalculo_id',$id)
+        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','base_calculo_id')
+        ->whereIn('base_calculo_id',$id)
         ->orderBy('vicodigo', 'asc')
         ->get();
     }
@@ -573,38 +595,38 @@ class ValorCalculo extends Model
     public function buscaImprimirTomador($id,$incide,$naoincide)
     {
         $variavel = DB::table('base_calculos') 
-                    ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo_id')
+                    ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.base_calculo_id')
                     ->selectRaw(
                         'SUM(valor_calculos.vivencimento) as vivencimento,
                         SUM(valor_calculos.videscinto) as videscinto,
                         SUM(valor_calculos.vireferencia) as vireferencia,
                         valor_calculos.vicodigo,
                         valor_calculos.vsdescricao,
-                        valor_calculos.basecalculo_id,
+                        valor_calculos.base_calculo_id,
                         base_calculos.id'
                         
                     )
-                   ->whereIn('valor_calculos.basecalculo_id',$id)
+                   ->whereIn('valor_calculos.base_calculo_id',$id)
                    ->orderBy('vicodigo', 'asc')
                    ->whereIn('valor_calculos.vicodigo',$incide)
-                   ->groupBy('valor_calculos.vicodigo','base_calculos.id','valor_calculos.vsdescricao')
+                   ->groupBy('valor_calculos.vicodigo','valor_calculos.base_calculo_id','base_calculos.id','valor_calculos.vsdescricao')
                    ->get();
             $fixio = DB::table('base_calculos')
-                   ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo_id')
+                   ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.base_calculo_id')
                    ->selectRaw(
                        'SUM(valor_calculos.vivencimento) as vivencimento,
                        SUM(valor_calculos.videscinto) as videscinto,
                        vireferencia,
                        valor_calculos.vicodigo,
                        valor_calculos.vsdescricao,
-                       valor_calculos.basecalculo_id,
+                       valor_calculos.base_calculo_id,
                        base_calculos.id'
                        
                    )
-                  ->whereIn('valor_calculos.basecalculo_id',$id)
+                  ->whereIn('valor_calculos.base_calculo_id',$id)
                   ->orderBy('vicodigo', 'asc')
                   ->whereIn('valor_calculos.vicodigo',$naoincide)
-                  ->groupBy('valor_calculos.vicodigo','valor_calculos.vireferencia','base_calculos.id','valor_calculos.vsdescricao')
+                  ->groupBy('valor_calculos.vicodigo','valor_calculos.base_calculo_id','valor_calculos.vireferencia','base_calculos.id','valor_calculos.vsdescricao')
                   ->get();
         return[$variavel,$fixio];
     }

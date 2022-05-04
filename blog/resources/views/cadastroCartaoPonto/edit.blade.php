@@ -1,9 +1,10 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Editar Cartão Ponto')
 @section('conteine')
-<div class="card-body">
+<main role="main">
+    <div class="container">
       
-         @if(session('success'))
+        @if(session('success'))
             <script>
                      
                 const Toast = Swal.mixin({
@@ -53,105 +54,96 @@
                 })
             </script>
         @enderror
-        
-             
 
-              <h5 class="card-title text-center mt-5 fs-3">Editar Boletim Cartão Ponto <i class="fad fa-alarm-clock"></i></h5>
-              <div class="container">
-                  <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
-                  @csrf
-                  <input type="hidden" id="method" name="_method" value="PUT">
-                  <input type="hidden" name="status" value="D" id="status">
-                    <div class="row">
-                      <div class="btn d-grid gap-1 mt-5 mb-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+        <form class="row g-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
+            @csrf
+            <input type="hidden" id="method" name="_method" value="PUT">
+            <input type="hidden" name="status" value="D" id="status">
+            
+            <section class="section__botoes--cartao--ponto">
+                
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="botao__voltar" href="{{route('cadastrocartaoponto.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
+                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
            
-                            <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                            <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
-                              <i class="fad fa-list-ul"></i> Lista
-                            </a>
-                            <a href="{{route('boletimcartaoponto.create',[base64_encode($dados->id),$dados->csdomingos ? base64_encode($dados->csdomingos):' ',base64_encode($dados->cssabados)?base64_encode($dados->cssabados):' ',base64_encode($dados->csdiasuteis),base64_encode($dados->lsdata),base64_encode($dados->liboletim),base64_encode($dados->tomador),base64_encode($dados->lsferiado)])}}" id="atualizar"  class="btn botao d-none"><i class="fad fa-user-clock"></i> Cartão Ponto</a>
-                            <a class="btn botao" href="{{route('cadastrocartaoponto.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
-                      </div>
-                  </div>
+                    <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
+                    
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                      <i class="fad fa-list-ul"></i> Lista
+                    </a>
+                    
+                </div>
+                
+            </section>
+            
+            <h1 class="title__cartao--ponto">Editar Boletim Cartão Ponto <i class="fad fa-alarm-clock"></i></h1>
 
-                    
-                    
-                  
-                    <div class="col-md-4">
-                        <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
-                        <input type="text"  class="form-control fw-bold @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" value="{{$dados->liboletim}}" id="num__boletim" Readonly>
-                        @error('liboletim')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <datalist id="listaboletim">
-                        </datalist>
-                    </div>
+            <div class="col-md-4">
+                <label for="num__boletim" class="form-label">Nº do Boletim <i class="fas fa-lock"></i></label>
+                <input type="text"  class="form-control @error('liboletim') is-invalid @enderror" list="listaboletim" name="liboletim" value="{{$dados->liboletim}}" id="num__boletim" Readonly>
+                @error('liboletim')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <datalist id="listaboletim">
+                </datalist>
+            </div>
     
-                    <div class="col-md-8 input">
-                      <label for="tomador" class="form-label ">Tomador
-                        <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
-                      </label>
-                      <input type="text" class="form-control fw-bold @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{$dados->tomador->tsnome}}" id="nome__completo">
-                      <datalist id="datalistOptions">
-                      </datalist>
-                      @error('nome__completo')
-                          <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                      @error('tomador')
-                          <span class="text-danger">{{ $message }}</span>
-                      @enderror
-                    </div>
-                      <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador->id}}">
-                      <input type="hidden" id="domingo" name="domingo">
-                      <input type="hidden" name="sabado" id="sabado">
-                      <input type="hidden" name="diasuteis" id="diasuteis">
-
-
-                    <div class="col-md-4">
-                      <label for="data" class="form-label">Data</label>
-                      <input type="date" class="form-control fw-bold @error('data') is-invalid @enderror" name="data" value="{{$dados->lsdata}}" id="data">
-                        @error('data')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-    
-                    <div class="col-md-4">
-                      <label for="num__trabalhador" class="form-label">Quantidade de Cadastros</label>
-                      <input type="text" class="form-control fw-bold @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="{{$dados->lsnumero}}" id="num__trabalhador">
-                      @error('num__trabalhador')
-                          <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <label for="feriado" class="form-label">Feriado</label>
-                        <select id="feriado" name="feriado" class="form-select fw-bold text-dark" >
-                          @if($dados->lsferiado === 'Sim')
-                          <option selected>Sim</option>
-                          <option >Não</option>
-                          @else
-                          <option >Sim</option>
-                          <option selected>Não</option>
-                          @endif
-                        </select>
-                    </div>
-                  </form>
-                  @include('cadastroCartaoPonto.lista')
+            <div class="col-md-8 input">
+                <label for="tomador" class="form-label ">Tomador</label>
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{$dados->tomador->tsnome}}" id="nome__completo">
+                <datalist id="datalistOptions"></datalist>
+                @error('nome__completo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                @error('tomador')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             
-            <script>
-                var botaolimpaCampos = document.querySelector("#refre");
-        
-                botaolimpaCampos.addEventListener('click', function(){
-                    var quantidade = document.querySelector("#num__trabalhador").value='';
-                    var tomador = document.querySelector("#nome__completo").value='';
-                    var data = document.querySelector("#data").value='';
-                })
-                
-                $('#num__trabalhador').mask('#.##0', {reverse: true});
-            </script>
+            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador" value="{{$dados->tomador->id}}">
+            <input type="hidden" id="domingo" name="domingo">
+            <input type="hidden" name="sabado" id="sabado">
+            <input type="hidden" name="diasuteis" id="diasuteis">
+
+
+            <div class="col-md-4">
+                <label for="data" class="form-label">Data</label>
+                <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="{{$dados->lsdata}}" id="data">
+                @error('data')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+    
+            <div class="col-md-4">
+                <label for="num__trabalhador" class="form-label">Quantidade de Cadastros</label>
+                <input type="text" class="form-control @error('num__trabalhador') is-invalid @enderror" name="num__trabalhador" value="{{$dados->lsnumero}}" id="num__trabalhador">
+                @error('num__trabalhador')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                    
+            <div class="col-md-4">
+                <label for="feriado" class="form-label">Feriado</label>
+                <select id="feriado" name="feriado" class="form-select" >
+                    @if($dados->lsferiado === 'Sim')
+                    <option selected>Sim</option>
+                    <option >Não</option>
+                    @else
+                    <option >Sim</option>
+                    <option selected>Não</option>
+                    @endif
+                </select>
+            </div>
             
-            <script>
+        </form>
+    </div>
+    @include('cadastroCartaoPonto.lista')
+</main>
+
+            
+<script>
               $('.modal-botao').click(function() {
                 localStorage.setItem("modal", "enabled");
               })
@@ -334,5 +326,5 @@
               $('#sabado').val(data.cssabados?data.cssabados:0.00)
               $('#diasuteis').val(data.csdiasuteis)
             }
-      </script>
+</script>
 @stop

@@ -1,0 +1,29 @@
+:root{
+    --title-color-boletim-tabela: black;
+}
+
+.darkmode{
+    --title-color-boletim-tabela: white;
+}
+
+
+.section__botoes--boletim-tabela{
+    margin-top: 6%;
+}
+
+.title__boletim-tabela{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-boletim-tabela);
+}
+
+.title__cartao--ponto--secondary{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-boletim-tabela);

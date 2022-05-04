@@ -1,0 +1,30 @@
+:root{
+    --title-color-cartao--ponto: black;
+}
+
+.darkmode{
+    --title-color-cartao--ponto: white;
+}
+
+
+.section__botoes--cartao--ponto{
+    margin-top: 6%;
+}
+
+.title__cartao--ponto{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-cartao--ponto);
+}
+
+.title__cartao--ponto--secondary{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-cartao--ponto);
+}

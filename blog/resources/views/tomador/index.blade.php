@@ -661,7 +661,7 @@
                                     
                                     <section class="row indice__fatura">
                                     
-                                        <div class="col-md-2 mt-2">
+                                        <div class="col-md-6 mt-2">
                                             <label for="alimentacao" class="form-label letter__color"> Alimentação</label>
                                             <input type="text" class="form-control @error('alimentacao') is-invalid @enderror" name="alimentacao" value="{{old('alimentacao')}}" id="alimentacao">
                                             @error('alimentacao')
@@ -669,7 +669,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-2 mt-2">
+                                        <div class="col-md-6 mt-2">
                                             <label for="transporte" class="form-label letter__color">Transporte</label>
                                             <input type="text" class="form-control @error('transporte') is-invalid @enderror" name="transporte" value="{{old('transporte')}}" id="transporte">
                                             @error('transporte')
@@ -677,7 +677,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-5 mt-2">
+                                        <div class="col-md-6 mt-2">
                                             <label for="epi" class="form-label letter__color">EPI % (Sobre(PROD+DSR)Folha)</label>
                                             <input type="text" class="form-control @error('epi') is-invalid @enderror" name="epi" value="{{old('epi')}}" id="epi">
                                             @error('epi')
@@ -685,7 +685,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-3 mt-2">
+                                        <div class="col-md-6 mt-2">
                                             <label for="seguro__trabalhador" class="form-label letter__color">Seguro (Val.Trab)</label>
                                             <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror" name="seguro__trabalhador" value="{{old('seguro__trabalhador')}}" id="seguro__trabalhador">
                                             @error('seguro__trabalhador')
@@ -715,39 +715,22 @@
                                     
                                     <section class="indice__folha row">
                                     
-                                        <div class="col-md-6">
-                                            <label for="folhartransporte" class="form-label letter__color">VT Transporte</label>
+                                        <div class="col-md-6 mt-2">
+                                            <label for="folhartransporte" class="form-label letter__color">Vale Transporte</label>
                                             <input type="text" class="form-control @error('folhartransporte') is-invalid @enderror" name="folhartransporte" value="{{old('folhartransporte')}}" id="folhartransporte">
                                             @error('folhartransporte')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
+
                                         
-                                        <div class="col-md-3 d-none">
-                                            
-                                            <label for="folhartipotrans" class="form-label letter__color">Tipo</label>
-                                            <select class="form-select" id="folhartipotrans" name="folhartipotrans" aria-label="Default select example">
-                                                <option selected>1</option>
-                                                <option >2</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="col-md-6">
-                                            <label for="folharalim" class="form-label letter__color">VA Alimentação</label>
+                                        <div class="col-md-6 mt-2">
+                                            <label for="folharalim" class="form-label letter__color">Vale Alimentação</label>
                                             <input type="text" class="form-control @error('folharalim') is-invalid @enderror" name="folharalim" value="{{old('folharalim')}}" id="folharalim">
                                             @error('folharalim')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
-                                        </div>
-                                        
-                                        <div class="col-md-3 d-none">
-                                            <label for="folhartipoalim" class="form-label letter__color">Tipo</label>
-                                            <select class="form-select" id="folhartipoalim" name="folhartipoalim" aria-label="Default select example">
-                                                <option  selected>1</option>
-                                                <option>2</option>
-                                            </select>
-                                        </div>
-                                        
+
                                     </section>    
                                     
                                 </div>
@@ -771,7 +754,7 @@
                                     
                                     <section class="row cartao__ponto">
                                     
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mt-2">
                                             <label for="dias_uteis" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Dias Úteis</label>
                                             <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror" name="dias_uteis" value="{{old('dias_uteis')}}" id="dias_uteis">
                                             @error('dias_uteis')
@@ -779,7 +762,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mt-2">
                                             <label for="sabados" class="form-label letter__color">Sábados</label>
                                             <input type="time" class="form-control @error('sabados') is-invalid @enderror" name="sabados" value="{{old('sabados')}}" id="sabados">
                                             @error('sabados')
@@ -787,7 +770,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 mt-2">
                                             <label for="domingos" class="form-label letter__color">Domingos</label>
                                             <input type="time" class="form-control @error('domingos') is-invalid @enderror" name="domingos" value="{{old('domingos')}}" id="domingos">
                                             @error('domingos')
@@ -816,7 +799,7 @@
                                     
                                     <section class="dados__bancarios row">
                                     
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 mt-2">
                                             <label for="banco" class="form-label letter__color">Banco</label>
                                             <input type="text" class="form-control @error('banco') is-invalid @enderror"  aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco" placeholder="digite o número do seu banco">
                                             <div id="menssagem-banco" class="valid-feedback">
@@ -827,7 +810,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 mt-2">
                                             <label for="agencia" class="form-label letter__color">Agência</label>
                                             <input type="text" class="form-control @error('agencia') is-invalid @enderror" name="agencia" value="{{old('agencia')}}" id="agencia" placeholder="Ex: 0000">
                                             @error('agencia')
@@ -835,7 +818,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 mt-2">
                                             <label for="operacao" class="form-label letter__color">Operação</label>
                                             <input type="text" class="form-control @error('operacao') is-invalid @enderror" name="operacao" value="{{old('operacao')}}" id="operacao" placeholder="Ex: 000">
                                             @error('aperacao')
@@ -843,7 +826,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 mt-2">
                                             <label for="conta" class="form-label letter__color">Conta</label>
                                             <input type="text" class="form-control @error('conta') is-invalid @enderror" name="conta" value="{{old('conta')}}" id="conta" placeholder="Ex: 00000000-0">
                                             @error('conta')
@@ -851,7 +834,7 @@
                                             @enderror
                                         </div>
                 
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 mt-2">
                                             <label for="pix" class="form-label letter__color">PIX</label>
                                             <input type="text" class="form-control @error('pix') is-invalid @enderror" name="pix" value="{{old('pix')}}" id="pix">
                                             @error('pix')

@@ -672,7 +672,7 @@
                             
                             <div class="accordion-body row">
                             
-                                <div class="col-md-2 mt-2">
+                                <div class="col-md-6 mt-2">
                                     <label for="alimentacao" class="form-label letter__color"> Alimentação</label>
                                     <input type="text" class="form-control @error('alimentacao') is-invalid @enderror" name="alimentacao" value="{{$tomador->indicefatura[0]->isalimentacao}}" id="alimentacao">
                                     @error('alimentacao')
@@ -680,7 +680,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="col-md-2 mt-2">
+                                <div class="col-md-6 mt-2">
                                     <label for="transporte" class="form-label letter__color">Transporte</label>
                                     <input type="text" class="form-control @error('transporte') is-invalid @enderror" name="transporte" value="{{$tomador->indicefatura[0]->istransporte}}" id="transporte">
                                     @error('transporte')
@@ -688,7 +688,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="col-md-5 mt-2">
+                                <div class="col-md-6 mt-2">
                                     <label for="epi" class="form-label letter__color">EPI % (Sobre(PROD+RSR)Folha)</label>
                                     <input type="text" class="form-control @error('epi') is-invalid @enderror" name="epi" value="{{$tomador->indicefatura[0]->isepi}}" id="epi">
                                     @error('epi')
@@ -696,7 +696,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="col-md-3 mt-2">
+                                <div class="col-md-6 mt-2">
                                     <label for="seguro__trabalhador" class="form-label letter__color">Seguro (Val.Trab)</label>
                                     <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror" name="seguro__trabalhador" value="{{$tomador->indicefatura[0]->isseguroportrabalhador}}" id="seguro__trabalhador">
                                     @error('seguro__trabalhador')

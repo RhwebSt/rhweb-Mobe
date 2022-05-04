@@ -26,9 +26,10 @@ class calculoFolhaPorTomadorController extends Controller
 
     public function imprimirTomador($folhar,$tomador)
     {
+        
         $folhar = base64_decode($folhar);
         $tomador = base64_decode($tomador);
-        try {
+        
             $rublicas = $this->rublica->listaGeral();
             $leis = $this->leis->categorias();
             $incide = [];
@@ -42,16 +43,16 @@ class calculoFolhaPorTomadorController extends Controller
                 }
             }
             $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
-            
+            // dd($folhas,$folhar,$tomador);
             $basecalculo_id = [];
             foreach ($folhas as $key => $folhar) {
                 array_push($basecalculo_id,$folhar->id); 
             }
             $valorcalculos = $this->valorcalculo->buscaImprimirTomador($basecalculo_id,$incide,$naoincide);
-            
             $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
             $pdf = PDF::loadView('comprovantetomador',compact('folhas','leis','valorcalculos','relacaodias'));
             return $pdf->setPaper('a4')->stream('CALCULO FOLHA TOMADOR.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

@@ -96,7 +96,7 @@
             </div>
     
             <div class="col-md-3">
-                <label for="rubricas" class="form-label">Código <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inaterável"></i></label>
+                <label for="rubricas" class="form-label">Código <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
                 <input type="text" class="form-control pesquisa @error('rubricas') is-invalid @enderror" name="rubricas" value="{{$tabelaprecos_editar->tsrubrica}}" id="rubricas" readonly>
                 @error('rubricas')
                 <span class="text-danger">{{ $message }}</span>
@@ -106,7 +106,7 @@
             </div>
     
             <div class="col-md-7">
-                <label for="descricao" class="form-label">Descrição <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inaterável"></i></label>
+                <label for="descricao" class="form-label">Descrição <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
                 <input type="text" class="form-control  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{$tabelaprecos_editar->tsdescricao}}" id="descricao" readonly>
                 <datalist id="descricoes"></datalist>
                 @error('descricao')

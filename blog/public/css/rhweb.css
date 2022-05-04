@@ -49,7 +49,7 @@
 
 
 
-body{
+body,html{
     font-family: 'Poppins', sans-serif;
     background-image: var(--body-bg);
     color: var(--body-color);
@@ -61,10 +61,12 @@ body{
     min-height: 100vh;
 }
 
-
-.conteudo{
-    flex: 1 0 auto;
+main{
+    position: relative;
+    overflow-x: hidden;
+    margin-bottom: 150px;
 }
+
 
 .swal2-file{
     background-color:red;
@@ -79,12 +81,14 @@ body{
 }
 
 
-
+/* limita os caracteres na tabela */
 .limitaCarcteres{
     max-width: 30ch !important;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* fim do limitador */
 
 
 .form-check-label{
@@ -110,15 +114,6 @@ body{
     transition: ease-in 800ms;
 }
 
-/*.form-control:focus {*/
-/*    border-color: var(--input-focus-color);*/
-/*    border-radius: 5px;*/
-/*    box-shadow: var(--input-focus-box);*/
-/*    transition: 900ms;*/
-
-/*}*/
-
-
 
 .table-hover:hover{
     background-color: var(--button-hover-color);
@@ -139,17 +134,6 @@ body{
     transition: 600ms;
 }
 
-.btn__deletar{
-    background-color: var(--btn-deletar-bg);
-    color:white;
-    border: 1px solid #EE596F;
-}
-
-.btn__deletar:hover{
-    background-color: #810E1F;
-    color:white;
-    transition: 600ms;
-}
 
 .btn__success{
     background-color: var(--btn-success-bg);

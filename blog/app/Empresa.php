@@ -253,7 +253,7 @@ class Empresa extends Model
     public function buscaSeguro($id)
     {
         return Empresa::where('id', $id)
-            ->select('esseguro')
+            ->select('esseguro','escondicaosindicato')
             ->first();
     }
     public function editar($dados, $id)

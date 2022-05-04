@@ -44,7 +44,20 @@ class Comissionado extends Model
         })
         ->first();
     }
-    public function buscaListaComissionado()
+    public function pesquisas()
+    {
+        return DB::table('comissionados')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'comissionados.trabalhador_id')
+        ->select(
+           'trabalhadors.tsnome', 
+        )
+        ->where(function($query){
+            $user = auth()->user();
+            $query->where('trabalhadors.empresa_id', $user->empresa_id);
+        })
+        ->get();
+    }
+    public function buscaListaComissionado($pesquisa)
     {
         return DB::table('comissionados')
         ->join('tomadors', 'tomadors.id', '=', 'comissionados.tomador_id')
@@ -56,9 +69,25 @@ class Comissionado extends Model
             'comissionados.csindece',
             'comissionados.id',
         )
-        ->where(function($query){
+        ->where(function($query) use($pesquisa){
             $user = auth()->user();
-            $query->where('trabalhadors.empresa_id',$user->empresa);
+            if ($pesquisa) {
+                $query->where([
+                    ['trabalhadors.tsnome','like','%'.$pesquisa.'%'],
+                    ['trabalhadors.empresa_id', $user->empresa_id]
+                ])
+                ->orWhere([
+                    ['trabalhadors.tscpf','like','%'.$pesquisa.'%'],
+                    ['trabalhadors.empresa_id', $user->empresa_id],
+                ])
+                ->orWhere([
+                    ['trabalhadors.tsmatricula','like','%'.$pesquisa.'%'],
+                    ['trabalhadors.empresa_id', $user->empresa_id],
+                ]);
+            }else {
+                $query->where('trabalhadors.empresa_id',$user->empresa_id);
+            }
+           
         })
         ->paginate(10);
     }

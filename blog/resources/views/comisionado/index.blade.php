@@ -67,7 +67,7 @@
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir"  class="btn botao" ><i class="fad fa-save"></i> Incluir</button>
+                    <button type="submit" id="incluir" class="btn botao" ><i class="fad fa-save"></i> Incluir</button>
                     
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                         <i class="fad fa-list-ul"></i> Lista
@@ -80,7 +80,7 @@
 
 
             <div class="col-md-8">
-                <label for="exampleDataList" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome Do Trabalhador</label>
+                <label for="exampleDataList" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Trabalhador</label>
                 
                 <input class="pesquisa form-control @error('nome__trabalhador') is-invalid @enderror" list="listatrabalhador" name="nome__trabalhador" value="{{old('nome__trabalhador')}}" id="nome__trabalhador" placeholder="dê um duplo click para escolher ou digite">
                 
@@ -158,7 +158,20 @@
 <script>
 
         $(document).ready(function(){
-           
+            $('.modal-botao').click(function() {
+                localStorage.setItem("modal", "enabled");
+            })
+
+            function verficarModal() {
+                var valueModal = localStorage.getItem('modal');
+                if (valueModal === "enabled") {
+                $(document).ready(function() {
+                    $("#teste").modal("show");
+                });
+                localStorage.setItem("modal", "disabled");
+                }
+            }
+            verficarModal()
            
             $( "#nome_tomador" ).on('keyup focus',function() {
                 var dados = '0';
@@ -182,14 +195,14 @@
                             });
                             $('#listatomador').html(nome)
                         } 
-                        if(data.length === 1 && dados.length >= 2){
-                            $('#idtomador').val(data[0].tomador)
+                        if(data.length === 1 ){
+                            $('#idtomador').val(data[0].id)
                         }
-                        if (data[0].tomador && $('#idtrabalhador').val() && $('#comissionado').val() || !data[0].tomador) {
-                            $('#incluir').attr('disabled','disabled')
-                        }else{
-                            $('#incluir').removeAttr( "disabled" )
-                        }
+                        // if (data[0].tomador && $('#idtrabalhador').val() && $('#comissionado').val() || !data[0].tomador) {
+                        //     $('#incluir').attr('disabled','disabled')
+                        // }else{
+                        //     $('#incluir').removeAttr( "disabled" )
+                        // }
                     }
                 });
             });
@@ -215,18 +228,34 @@
                             });
                             $('#listatrabalhador').html(nome)
                         } 
-                        if(data.length === 1 && dados.length >= 2){
+                        if(data.length === 1 ){
                             $('#idtrabalhador').val(data[0].id)
                             $('#matricula__trab').val(data[0].tsmatricula)
-                            comissionador(data[0].id)
+                            // comissionador(data[0].id)
                         }
-                        if (data[0].trabalhador && $('#idtomador').val() && $('#comissionado').val() || !data[0].trabalhador) {
-                          $('#incluir').attr('disabled','disabled')
-                        }else{
-                          $('#incluir').removeAttr( "disabled" )
-                        }
+                        // if (data[0].trabalhador && $('#idtomador').val() && $('#comissionado').val() || !data[0].trabalhador) {
+                        //   $('#incluir').attr('disabled','disabled')
+                        // }else{
+                        //   $('#incluir').removeAttr( "disabled" )
+                        // }
                     }
                 });
+            });
+            $.ajax({
+                url: "{{url('pesquisa/comisionado')}}",
+                type: 'get',
+                contentType: 'application/json',
+                success: function(data) {
+                    let nome = ''
+                    if (data.length >= 1) {
+                        data.forEach(element => {
+                        nome += `<option value="${element.tsnome}">`
+                        // nome += `<option value="${element.tsmatricula}">`
+                        // nome += `<option value="${element.tscpf}">`
+                        });
+                        $('#listapesquisa').html(nome)
+                    }  
+                }
             });
             function monta_dados(dados) {
               let novodados = dados.split('  ')

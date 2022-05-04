@@ -99,7 +99,7 @@
 
             <div class="col-md-6">
                   <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome Completo</label>
-                  <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" value="{{old('nome__completo')}}" name="nome__completo" maxlength="40" id="nome__completo" placeholder="digite seu nome completo">
+                  <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" value="{{old('nome__completo')}}" name="nome__completo"  id="nome__completo" placeholder="digite seu nome completo" maxlength="40">
                   @error('nome__completo')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror

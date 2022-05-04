@@ -167,6 +167,13 @@ $(document).on('keydown', function(e) {
         //fim do depedente//
         
         
+        //boletim com tabela//
+        $("#nome__completo").val("");
+        $("#data").val("");
+        $("#num__dependente").val("");
+        //fim do boletim com tabela//
+        
+        
         
 
 	}
