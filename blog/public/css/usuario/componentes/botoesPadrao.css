@@ -43,3 +43,46 @@
     transition: 200ms ease-in-out;
     transform: scale(1.06);
 }
+
+.botao__calcular{
+    background-color: #388334;
+    color: white;
+    font-size: 1rem;
+    transition: 200ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.botao__calcular:hover{
+    background-color: #193A17;
+    color: white;
+    transition: 200ms ease-in-out;
+    transform: scale(1.02);
+}
+
+
+.pill__item{
+    background-color: #525251;
+    color: white;
+    border-radius:3px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border:  1px solid #1F2633;
+    transition: 200ms ease-in-out;
+}
+
+
+.pill__item .nav-link:hover{
+    background-color: #251679;
+    transform: scale(1.03);
+    transition: 200ms ease-in-out;
+}
+
+.pill__item .nav-link.active{
+    background-color: #251679 !important;
+    transform: scale(1.03);
+    transition: 200ms ease-in-out;
+}
+
+
+
+

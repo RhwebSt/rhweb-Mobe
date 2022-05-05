@@ -139,7 +139,9 @@ class TabCadastroController extends Controller
     //    $data = base64_decode($data);
        $user = Auth::user();
        $lista = $this->lancamentorublica->listacadastro(null,$id,'M','asc');
+    
        $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
+       
        return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
     }
 

@@ -404,7 +404,7 @@
                         $('#listapesquisa').html(nome)
                     }
                     if(data.length === 1 && dados.length >= 4){
-                        $('#tomador').val(data[0].tomador)
+                        $('#tomador').val(data[0].id)
                     }           
                   }
               });

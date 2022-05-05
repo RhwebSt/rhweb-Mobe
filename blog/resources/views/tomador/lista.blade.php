@@ -70,7 +70,7 @@
                                 @foreach($tomadors as $tomador)
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:80px;">{{$tomador->tsmatricula}}</td>
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$tomador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$tomador->tsnome}}">
                                         {{$tomador->tsnome}}
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:200px">

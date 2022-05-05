@@ -36,7 +36,7 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            $query->where('faturas.empresa_id', $user->empresa);
+            $query->where('faturas.empresa_id', $user->empresa_id);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('faturas.id','>',0);
             // }else{
@@ -61,7 +61,7 @@ class Fatura extends Model
         )
         ->where(function($query){
             $user = auth()->user();
-            $query->where('faturas.empresa_id', $user->empresa);
+            $query->where('faturas.empresa_id', $user->empresa_id);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('faturas.id','>',0);
             // }else{
@@ -87,7 +87,7 @@ class Fatura extends Model
         ->where(function($query) use($dados){
             $user = auth()->user();
             $query->where([
-                ['faturas.empresa_id', $user->empresa],
+                ['faturas.empresa_id', $user->empresa_id],
                 ['tomadors.tsnome',$dados['pesquisa']]
             ])
             ->whereBetween('faturas.fsfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
@@ -114,7 +114,7 @@ class Fatura extends Model
             $user = auth()->user();
             $query->where([
                 ['faturas.tomador_id',$tomador],
-                ['faturas.empresa_id', $user->empresa]
+                ['faturas.empresa_id', $user->empresa_id]
             ])->whereDate('faturas.fsfinal', $final);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -131,7 +131,7 @@ class Fatura extends Model
     }
     public function verificaFaturas($dados)
     {
-        return Fatura::where('tomador',$dados['tomador'])
+        return Fatura::where('tomador_id',$dados['tomador'])
         ->whereBetween('fsfinal',[$dados['ano_inicial'],$dados['ano_final']])
         ->count();
     }
@@ -142,7 +142,7 @@ class Fatura extends Model
     public function quantidadeFatura()
     {
         return DB::table('faturas')
-        ->join('empresas', 'empresas.id', '=', 'faturas.empresa')
+        ->join('empresas', 'empresas.id', '=', 'faturas.empresa_id')
         ->count();
     }
 }

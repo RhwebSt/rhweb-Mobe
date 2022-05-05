@@ -40,7 +40,8 @@ class FaturaController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        
+        $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
         $faturas = $this->fatura->buscaListaFatura();
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         

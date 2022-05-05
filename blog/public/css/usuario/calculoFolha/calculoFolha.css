@@ -1,0 +1,50 @@
+:root{
+    --title-color-calculo-folha: black;
+}
+
+.darkmode{
+    --title-color-calculo-folha: white;
+}
+
+
+.section__botoes--calculo-folha{
+    margin-top: 8.55%;
+}
+
+.section__calcula--folha--pill{
+    margin-top: 6%;
+}
+
+.title__calculo-folha{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-calculo-folha);
+}
+
+.title__cartao--ponto--secondary{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-calculo-folha);
+}
+
+.div__botao-calcular{
+    margin-top: 3%;
+}
+
+.section__lista--tomador--pill{
+    margin-top: 4%;
+}
+
+.section__lista--geral--pill{
+    margin-top: 4%;
+}
+
+.section__filtro--pill{
+    margin-top: 3%;
+}

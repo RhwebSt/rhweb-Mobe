@@ -168,6 +168,18 @@ class ValorCalculo extends Model
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
+    public function cadastrocomissionador($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['comissionador']['codigos'],
+            'vsdescricao'=>$dados['comissionador']['rublicas'],
+            'vireferencia'=>$dados['comissionador']['quantidade'],
+            'vivencimento'=>$dados['comissionador']['valor_comissionado'],
+            'videscinto'=>$dados['comissionador']['valor'],
+            'base_calculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
     public function cadastroadiantamento($dados)
     {
         return ValorCalculo::create([
@@ -225,6 +237,25 @@ class ValorCalculo extends Model
                 valor_calculos.vsdescricao'
             )
             ->groupBy('valor_calculos.trabalhador_id','valor_calculos.vicodigo','valor_calculos.vsdescricao')
+            ->where('base_calculos.folhar_id',$folhar)
+            ->where('base_calculos.tomador_id','!=',null)
+            ->where('base_calculos.trabalhador_id',$trabalhador)
+            ->whereIn('valor_calculos.vicodigo',$codigos)
+            ->get();
+    }
+    public function listaIntegral($folhar,$trabalhador,$codigos)
+    {
+        return DB::table('base_calculos') 
+            ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.base_calculo_id')
+            ->selectRaw(
+                'SUM(valor_calculos.vivencimento) as vencimento,
+                SUM(valor_calculos.videscinto) as desconto,
+                valor_calculos.vireferencia as referencia,
+                valor_calculos.trabalhador_id,
+                valor_calculos.vicodigo,
+                valor_calculos.vsdescricao'
+            )
+            ->groupBy('valor_calculos.trabalhador_id','valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
             ->where('base_calculos.folhar_id',$folhar)
             ->where('base_calculos.tomador_id','!=',null)
             ->where('base_calculos.trabalhador_id',$trabalhador)

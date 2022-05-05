@@ -66,7 +66,7 @@
                                 @foreach($trabalhadors as $trabalhador)
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:80px">{{$trabalhador->tsmatricula}}</td>
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$trabalhador->tsnome}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$trabalhador->tsnome}}">
                                         {{$trabalhador->tsnome}}
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:120px">
