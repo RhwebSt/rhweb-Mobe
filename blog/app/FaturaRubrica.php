@@ -9,6 +9,10 @@ class FaturaRubrica extends Model
     protected $fillable = [
         'rsitem', 'rsdescricao', 'riunidade', 'ripreco', 'ritotal', 'fatura_id'
     ];
+    public function fatura()
+    {
+        return $this->belongsTo(Fatura::class);
+    }
     public function cadastro($dados)
     {
         // dd($dados);

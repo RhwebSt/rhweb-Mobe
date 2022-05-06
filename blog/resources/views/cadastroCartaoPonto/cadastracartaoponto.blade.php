@@ -97,7 +97,7 @@
              
             <div class="col-md-10">
                 <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Trabalhador</label>
-                <input class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" placeholder="dê um duplo click para pesquisar o trabalhador">
+                <input class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" placeholder="dê um duplo clique para pesquisar">
                 <datalist id="datalistOptions"></datalist>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>

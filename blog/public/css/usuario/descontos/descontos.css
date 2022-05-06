@@ -1,0 +1,34 @@
+:root{
+    --title-color-desconto: black;
+}
+
+.darkmode{
+    --title-color-desconto: white;
+}
+
+
+.section__botoes--desconto{
+    margin-top: 6%;
+}
+
+.title__desconto{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-desconto);
+}
+
+.title__desconto--secondary{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-desconto);
+}
+
+.section__modal--rolDesconto{
+    margin-top: 3%;
+}

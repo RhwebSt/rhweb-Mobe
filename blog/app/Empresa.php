@@ -56,7 +56,7 @@ class Empresa extends Model
     public function buscaUnidadeEmpresa($id)
     {
         return DB::table('empresas')
-            ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
+            ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa_id')
             // ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
             ->select(
                 'empresas.*',
@@ -67,11 +67,11 @@ class Empresa extends Model
                 $user = auth()->user();
                 $query->where([
                     ['empresas.esnome', $id],
-                    ['empresas.id', $user->empresa]
+                    ['empresas.id', $user->empresa_id]
                 ])
                     ->orWhere([
                         ['empresas.escnpj', $id],
-                        ['empresas.id', $user->empresa]
+                        ['empresas.id', $user->empresa_id]
                     ])
                     // ->orWhere([
                     //     ['empresas.escnae','like','%'.$id.'%'],
@@ -83,7 +83,7 @@ class Empresa extends Model
                     // ])
                     ->orWhere([
                         ['empresas.id', $id],
-                        ['empresas.id', $user->empresa]
+                        ['empresas.id', $user->empresa_id]
                     ]);
 
                 // if ($user->hasPermissionTo('admin')) {

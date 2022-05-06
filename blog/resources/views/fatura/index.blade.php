@@ -313,7 +313,7 @@
                                             </td>
                                             
                                             <td class="td__body text-nowrap col" style="width:60px;">
-                                                    <a href="{{route('fatura.relatorio',[$fatura->tomador,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn btn__imprimir" ><i class="icon__color fad fa-print"></i></a>
+                                                    <a href="{{route('fatura.relatorio',[$fatura->id,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn btn__imprimir" ><i class="icon__color fad fa-print"></i></a>
                                             </td> 
                                             
                                             <td class="td__body text-nowrap col" style="width:60px;">

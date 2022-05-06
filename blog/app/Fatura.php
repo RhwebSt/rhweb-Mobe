@@ -9,6 +9,30 @@ class Fatura extends Model
     protected $fillable = [
         'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia', 'tomador_id', 'empresa_id'
     ];
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
+    public function faturadesmostrativa()
+    {
+        return $this->hasMany(FaturaDemostrativa::class);
+    }
+    public function faturaprincipal()
+    {
+        return $this->hasMany(FaturaPrincipal::class);
+    }
+    public function faturarubrica()
+    {
+        return $this->hasMany(FaturaRubrica::class);
+    }
+    public function faturasecundaria()
+    {
+        return $this->hasMany(FaturaSecundaria::class);
+    }
+    public function faturatotal()
+    {
+        return $this->hasMany(FaturaTotal::class);
+    }
     public function cadastro($dados)
     {
         return Fatura::create([

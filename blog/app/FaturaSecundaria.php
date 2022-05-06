@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class FaturaSecundaria extends Model
 {
     protected $fillable = [
-        'fsdescricao', 'fiindece', 'fivalor', 'fatura'
+        'fsdescricao', 'fiindece', 'fivalor', 'fatura_id'
     ];
+    public function fatura()
+    {
+        return $this->belongsTo(Fatura::class);
+    }
     public function cadastro($dados)
     {
         return FaturaSecundaria::create([

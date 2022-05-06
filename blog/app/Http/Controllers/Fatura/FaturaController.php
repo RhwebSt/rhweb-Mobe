@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fatura;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Fatura\Validacao;
 use Carbon\Carbon;
 use PDF;
 use App\Tomador;
@@ -46,21 +47,10 @@ class FaturaController extends Controller
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         
     }
-    public function filtroPesquisa(Request $request)
+    public function filtroPesquisa(Validacao $request)
     {
         $dados = $request->all();
-        $request->validate([
-            'pesquisa' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_inicial1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-        ],
-        [
-            'ano_inicial1.required'=>'O campo não pode estar vazio.',
-            'ano_inicial1.regex'=>'O campo nome social possui um formato inválido.',
-            'ano_final1.required'=>'O campo não pode estar vazio.',
-            'ano_final1.regex'=>'O campo nome social possui um formato inválido.',
-        ]
-        );
+       
         $user = auth()->user();
         $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         $faturas = $this->fatura->filtroPesquisa($dados);
@@ -73,295 +63,486 @@ class FaturaController extends Controller
         $faturas = $this->fatura->buscaListaFaturaOrdem($condicao);
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
     }
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
-        // dd($dados);
         $today = Carbon::today();
+        $user = auth()->user();
+        $dados['empresa'] = $user->empresa_id;
+        $rublica = $this->rublica->get();
+        $sim = [];
+        $nao = [];
+        foreach ($rublica as $key => $rublicas) {
+            if ($rublicas->rsincidencia == 'Sim') {
+                array_push($sim,(int) $rublicas->rsrublica);
+            }else{
+               array_push($nao,(int) $rublicas->rsrublica);
+            }
+        }
+        $tomador = $this->tomador->where('id',$dados['tomador'])->with('taxa')->first();
+        
+        $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
+        $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
+        $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
+        $dadosrublicas =[
+            'item'=>'',
+            'descricao'=>'',
+            'unidade'=>0,
+            'preco'=>0,
+            'total'=>0,
+            'fatura'=>''
+        ];
+        $producao = [
+            'descricao'=>'',
+            'indice'=>'',
+            'valor'=>0,
+            'fatura'=>''
+        ];
+        $subtotalA = 0;
+        $subtotalB = 0;
+        $totalbruto = 0;
+        $valorentencao = 0;
+        $valorbasefolha = 0;
+        $valordemostrativo = 0;
+        $faturas = $this->fatura->cadastro($dados);
+        foreach ($tabelapreco as $key => $tabelaprecos) {
+            foreach ($fatura1 as $key => $fatura_valor) {
+                if (!$tabelaprecos->tsstatus && $tabelaprecos->tsrubrica == $fatura_valor->vicodigo) {
+                    $dadosrublicas['item'] = $tabelaprecos->tsrubrica;
+                    $dadosrublicas['descricao'] = $tabelaprecos->tsdescricao;
+                    $dadosrublicas['unidade'] = $fatura_valor->referencia;
+                    $dadosrublicas['preco'] = $tabelaprecos->tstomvalor;
+                    $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tstomvalor;
+                    $dadosrublicas['fatura'] = $faturas['id'];
+                    $this->faturarublica->cadastro($dadosrublicas);
+                    $producao['valor'] += $fatura_valor->valor;
+                    $subtotalA += $fatura_valor->valor;
+                }
+            }
+        }
+        $producao['descricao'] = 'Produção';
+        $producao['indice'] = 1;
+        $producao['fatura'] = $faturas['id'];
+        $this->faturaprincipal->cadastro($producao);
+        foreach ($fatura2 as $r => $valorublica) {
+            if ($valorublica->vicodigo === 1008) {
+                $producao['descricao'] = 'DSR';
+                $producao['indice'] = $valorublica->vireferencia;
+                $producao['valor'] = ($valorublica->vireferencia / 100) * $producao['valor'];
+                $producao['fatura'] = $faturas['id'];
+                $this->faturaprincipal->cadastro($producao);
+                $subtotalA += $producao['valor'];
+            }
+            if ($valorublica->vicodigo === 1009) {
+                $producao['descricao'] = 'Férias';
+                $producao['indice'] = $valorublica->vireferencia;
+                $producao['valor'] = $valorublica->vencimento;
+                $producao['fatura'] = $faturas['id'];
+                $this->faturaprincipal->cadastro($producao);
+                $valordemostrativo += $valorublica->vencimento;
+                $subtotalB += $valorublica->vencimento;
+            }
+            if ($valorublica->vicodigo === 1010) {
+                $producao['descricao'] = '13° Salário';
+                $producao['indice'] = $valorublica->vireferencia;
+                $producao['valor'] = $valorublica->vencimento;
+                $producao['fatura'] = $faturas['id'];
+                $this->faturaprincipal->cadastro($producao);
+                $subtotalB += $valorublica->vencimento;
+            }
+            if ($valorublica->vicodigo === 2001) {
+                $producao['valor'] = $valorublica->desconto;
+                $valorentencao += $valorublica->desconto;
+                $valorbasefolha += $valorublica->desconto;   
+            }else if ($valorublica->vicodigo == 2002){
+                $producao['descricao'] = 'INSS Trabalhador';
+                $producao['indice'] = 0;
+                $producao['valor'] += $valorublica->desconto;
+                $producao['fatura'] = $faturas['id'];
+                $this->faturasecundario->cadastro($producao);
+                $valorentencao += $valorublica->desconto;
+                $valorbasefolha += $valorublica->desconto;
+            }
+            
+        }
+        
+       
+        $producao['descricao'] = 'Férias Sindicato';
+        $producao['indice'] = 1.00;
+        $producao['valor'] = $subtotalA * (1.00/100);
+        $producao['fatura'] = $faturas['id'];
+        $this->faturaprincipal->cadastro($producao);
+        $totalbruto += $producao['valor'];
+        $producao['descricao'] = '13° Salário Sindicato';
+        $producao['indice'] = 0.66;
+        $producao['valor'] = $subtotalA * (0.66/100);
+        $producao['fatura'] = $faturas['id'];
+        $this->faturaprincipal->cadastro($producao);
+        $totalbruto += $producao['valor'];
+
+        $producao['descricao'] = 'Taxa ADM/Trab.Avulso';
+        $producao['indice'] = $tomador->taxa[0]->tftaxaadm;
+        $producao['valor'] = $subtotalA * ($tomador->taxa[0]->tftaxaadm/100);
+        $producao['fatura'] = $faturas['id'];
+        $this->faturaprincipal->cadastro($producao);
+        $totalbruto += $producao['valor'];
+
+        foreach($fatura1 as $e => $indecefaturas){
+            if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
+                $producao['descricao'] = $indecefaturas->vsdescricao;
+                $producao['indice'] = $indecefaturas->referencia;
+                $producao['valor'] = $indecefaturas->valor;
+                $producao['fatura'] = $faturas['id'];
+                $this->faturasecundario->cadastro($producao);
+                $totalbruto += $indecefaturas->valor;
+            }
+        }
+
+        $producao['descricao'] = 'Federação';
+        $producao['indice'] = 1.99;
+        $producao['valor'] = $subtotalA * (1.99/100);
+        $producao['fatura'] = $faturas['id'];
+        $this->faturaprincipal->cadastro($producao);
+        $totalbruto += $producao['valor'];
+        $producao['descricao'] = 'FGTS';
+        $producao['indice'] = 8;
+        $producao['valor'] = $subtotalA * (8/100);
+        $producao['fatura'] = $faturas['id'];
+        $this->faturasecundario->cadastro($producao);
+        $totalbruto += $producao['valor'];
+        $valorentencao += $subtotalA * (8/100);
+        $producao['descricao'] = 'Retênção';
+        $producao['indice'] = 0;
+        $producao['valor'] = $valorentencao;
+        $producao['fatura'] = $faturas['id'];
+        $this->faturasecundario->cadastro($producao);
+        $producao['descricao'] = $dados['text__adiantamento'];
+        $producao['indice'] = 0;
+        $producao['valor'] = $dados['valor__adiantamento'];
+        $producao['fatura'] = $faturas['id'];
+        $this->faturasecundario->cadastro($producao);
+
+        $producao['descricao'] = $dados['texto__credito'];
+        $producao['indice'] = 0;
+        $producao['valor'] = $dados['valor__creditos'];
+        $producao['fatura'] = $faturas['id'];
+        $this->faturasecundario->cadastro($producao);
+
+        $producao['descricao'] = 'Produção + Dsr 18,18% + Férias';
+        $producao['valor'] = $subtotalA + $valordemostrativo;
+        $producao['fatura'] = $faturas['id'];
+        $this->faturademostrativa->cadastro($producao);
+        $valorbasefolha += $subtotalA + $valordemostrativo;
+        
+        $producao['descricao'] = 'Base Cálculo 13º Salário';
+        $producao['valor'] = $subtotalA;
+        $producao['fatura'] = $faturas['id'];
+        $this->faturademostrativa->cadastro($producao);
+        $valorbasefolha += $subtotalA;
+
+        $producao['descricao'] = 'Base Calculo FGTS';
+        $producao['valor'] = $subtotalB + $subtotalA;
+        $producao['fatura'] = $faturas['id'];
+        $this->faturademostrativa->cadastro($producao);
+        $valorbasefolha += $subtotalA + $subtotalB;
+
+        $producao['descricao'] = 'A-Sub Total';
+        $producao['valor'] = $subtotalA;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+
+        $producao['descricao'] = 'B-SubTotal';
+        $producao['valor'] = $subtotalB + $subtotalA;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+        $totalbruto += $subtotalB + $subtotalA;
+        $producao['descricao'] = 'Total Bruto';
+        $producao['valor'] = $totalbruto;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+        $producao['descricao'] = 'Total Líquido';
+        $producao['valor'] = str_replace(",",".",$dados['valor__creditos'])+($totalbruto-$valorentencao-str_replace(",",".",$dados['valor__adiantamento']));
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+        $producao['descricao'] = 'Folha Base';
+        $producao['valor'] = $valorbasefolha;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+        dd($tabelapreco,$producao);
         // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
         //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
         // }
         // if (strtotime($dados['ano_final']) > strtotime($today)) {
         //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
         // }
-        $request->validate([
-            'tomador'=>'required',
-            'ano_inicial'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_final'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'vencimento'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'text__adiantamento'=>'max:30',
-            'texto__credito'=>'max:30',
-            'valor__creditos'=>'',
-            'valor__adiantamento'=>'',
-            'competencia'=>'required|max:10'
-        ]);
-        $user = auth()->user();
-        $dados['empresa'] = $user->empresa;
-      
-        $subtotalA = 0;
-        $subtotalB = 0;
-        $totalbruto = 0;
-        $valorentencao = 0;
-        $valordemostrativo = 0;
-        $valorbasefolha = 0;
-        $totalproducao = 0;
-        $incide = [];
-        $naoincide = [];
-        $producao = [
-            'descricao'=>'',
-            'indice'=>'',
-            'valor'=>'',
-            'fatura'=>''
-        ];
        
-        $rublicas = $this->rublica->listaGeral();
-        foreach ($rublicas as $key => $rublica) {
-            if ($rublica->rsincidencia === 'Sim') {
-                array_push($incide,$rublica->rsrublica);
-            }
-            if ($rublica->rsincidencia === 'Não') {
-                array_push($naoincide,$rublica->rsrublica);
-            }
-        }
-        $verifica = $this->fatura->verificaFaturas($dados);
-        if ($verifica) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
-        }
-        $tomador = $this->tomador->first($dados['tomador']);
-        $producaofatura = $this->valorcalculor->producaoFatura($dados,$incide);
-        $indecefatura = $this->valorcalculor->producaoFaturaIn($dados,$incide);
         
-        $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
-        $rublicasfaturainss = $this->valorcalculor->rublicasFaturaInss($dados);
-        $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
-        // dd($indecefatura,$tabelaprecos,$rublicasfatura);
-        if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
-        }
+        // $dados['empresa'] = $user->empresa;
+      
+        // $subtotalA = 0;
+        // $subtotalB = 0;
+        // $totalbruto = 0;
+        // $valorentencao = 0;
+        // $valordemostrativo = 0;
+        // $valorbasefolha = 0;
+        // $totalproducao = 0;
+        // $incide = [];
+        // $naoincide = [];
+        // $producao = [
+        //     'descricao'=>'',
+        //     'indice'=>'',
+        //     'valor'=>'',
+        //     'fatura'=>''
+        // ];
+       
+        // $rublicas = $this->rublica->listaGeral();
+        // foreach ($rublicas as $key => $rublica) {
+        //     if ($rublica->rsincidencia === 'Sim') {
+        //         array_push($incide,$rublica->rsrublica);
+        //     }
+        //     if ($rublica->rsincidencia === 'Não') {
+        //         array_push($naoincide,$rublica->rsrublica);
+        //     }
+        // }
+        // $verifica = $this->fatura->verificaFaturas($dados);
+        // if ($verifica) {
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
+        // }
+        // $tomador = $this->tomador->first($dados['tomador']);
+        // $producaofatura = $this->valorcalculor->producaoFatura($dados,$incide);
+        // $indecefatura = $this->valorcalculor->producaoFaturaIn($dados,$incide);
         
-            $faturas = $this->fatura->cadastro($dados);
-            if ($faturas) {
-                $dadosrublicas =[
-                    'item'=>'',
-                    'descricao'=>'',
-                    'unidade'=>0,
-                    'preco'=>0,
-                    'total'=>0,
-                    'fatura'=>''
-                ];
-                $this->valorrublica->editarFatura($dados['numero'],$user->empresa);
-                foreach ($tabelaprecos as $y => $tabelapreco) {
-                    foreach ($indecefatura as $e => $indecefaturas) {
-                        if ($indecefaturas->vicodigo == $tabelapreco->tsrubrica) {
-                            // $dadosrublicas['item'] = $tabelapreco->tsrubrica;
-                            // $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
-                            // $dadosrublicas['unidade'] = $indecefaturas->referencia;
-                            // $dadosrublicas['preco'] = $tabelapreco->tstomvalor;
-                            // $dadosrublicas['total'] = $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                            // $dadosrublicas['fatura'] = $faturas['id'];
-                            // $this->faturarublica->cadastro($dadosrublicas);
-                            // $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                            $dadosrublicas['item'] = $tabelapreco->tsrubrica;
-                            $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
-                            $dadosrublicas['unidade'] = $indecefaturas->referencia;
-                            $dadosrublicas['preco'] = $indecefaturas->valor;
-                            $dadosrublicas['total'] = $indecefaturas->valor;
-                            $dadosrublicas['fatura'] = $faturas['id'];
-                            $this->faturarublica->cadastro($dadosrublicas);
-                            $totalproducao += $indecefaturas->valor;
-                        } 
-                    }
-                }
-                // $dadosrublicas =[
-                //     'item'=>'',
-                //     'descricao'=>'',
-                //     'unidade'=>0,
-                //     'preco'=>0,
-                //     'total'=>0,
-                //     'fatura'=>''
-                // ];
-                // foreach ($indecefatura as $e => $indecefaturas) {
-                //     foreach ($tabelaprecos as $y => $tabelapreco) {
-                //         if($indecefaturas->vsdescricao == $tabelapreco->tsstatus){
-                //             $dadosrublicas['item'] = $indecefaturas->vicodigo;
-                //             $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
-                //             $dadosrublicas['unidade'] += $indecefaturas->referencia;
-                //             $dadosrublicas['total'] += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                //             $dadosrublicas['fatura'] = $faturas['id'];
-                //             $this->faturarublica->cadastro($dadosrublicas);
-                //             $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
-                //             break;
-                //         }
-                //     }
+        // $rublicasfatura = $this->valorcalculor->rublicasFatura($dados);
+        // $rublicasfaturainss = $this->valorcalculor->rublicasFaturaInss($dados);
+        // $tabelaprecos = $this->tabelapreco->listaUnidadeTomador($dados['tomador']);
+        // // dd($indecefatura,$tabelaprecos,$rublicasfatura);
+        // if (count($indecefatura) < 1 || count($rublicasfatura) < 1 || count($tabelaprecos) < 1) {
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
+        // }
+        
+        //     $faturas = $this->fatura->cadastro($dados);
+        //     if ($faturas) {
+        //         $dadosrublicas =[
+        //             'item'=>'',
+        //             'descricao'=>'',
+        //             'unidade'=>0,
+        //             'preco'=>0,
+        //             'total'=>0,
+        //             'fatura'=>''
+        //         ];
+        //         $this->valorrublica->editarFatura($dados['numero'],$user->empresa);
+        //         foreach ($tabelaprecos as $y => $tabelapreco) {
+        //             foreach ($indecefatura as $e => $indecefaturas) {
+        //                 if ($indecefaturas->vicodigo == $tabelapreco->tsrubrica) {
+        //                     // $dadosrublicas['item'] = $tabelapreco->tsrubrica;
+        //                     // $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
+        //                     // $dadosrublicas['unidade'] = $indecefaturas->referencia;
+        //                     // $dadosrublicas['preco'] = $tabelapreco->tstomvalor;
+        //                     // $dadosrublicas['total'] = $indecefaturas->referencia * $tabelapreco->tstomvalor;
+        //                     // $dadosrublicas['fatura'] = $faturas['id'];
+        //                     // $this->faturarublica->cadastro($dadosrublicas);
+        //                     // $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+        //                     $dadosrublicas['item'] = $tabelapreco->tsrubrica;
+        //                     $dadosrublicas['descricao'] = $tabelapreco->tsdescricao;
+        //                     $dadosrublicas['unidade'] = $indecefaturas->referencia;
+        //                     $dadosrublicas['preco'] = $indecefaturas->valor;
+        //                     $dadosrublicas['total'] = $indecefaturas->valor;
+        //                     $dadosrublicas['fatura'] = $faturas['id'];
+        //                     $this->faturarublica->cadastro($dadosrublicas);
+        //                     $totalproducao += $indecefaturas->valor;
+        //                 } 
+        //             }
+        //         }
+        //         // $dadosrublicas =[
+        //         //     'item'=>'',
+        //         //     'descricao'=>'',
+        //         //     'unidade'=>0,
+        //         //     'preco'=>0,
+        //         //     'total'=>0,
+        //         //     'fatura'=>''
+        //         // ];
+        //         // foreach ($indecefatura as $e => $indecefaturas) {
+        //         //     foreach ($tabelaprecos as $y => $tabelapreco) {
+        //         //         if($indecefaturas->vsdescricao == $tabelapreco->tsstatus){
+        //         //             $dadosrublicas['item'] = $indecefaturas->vicodigo;
+        //         //             $dadosrublicas['descricao'] = $indecefaturas->vsdescricao;
+        //         //             $dadosrublicas['unidade'] += $indecefaturas->referencia;
+        //         //             $dadosrublicas['total'] += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+        //         //             $dadosrublicas['fatura'] = $faturas['id'];
+        //         //             $this->faturarublica->cadastro($dadosrublicas);
+        //         //             $totalproducao += $indecefaturas->referencia * $tabelapreco->tstomvalor;
+        //         //             break;
+        //         //         }
+        //         //     }
                     
-                // }
-                // if ($dadosrublicas['fatura']) {
-                //     $this->faturarublica->cadastro($dadosrublicas);
-                // }
+        //         // }
+        //         // if ($dadosrublicas['fatura']) {
+        //         //     $this->faturarublica->cadastro($dadosrublicas);
+        //         // }
                
-                foreach($indecefatura as $e => $indecefaturas){
-                    if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
-                        $producao['descricao'] = $indecefaturas->vsdescricao;
-                        $producao['indice'] = $indecefaturas->referencia;
-                        $producao['valor'] = $indecefaturas->valor;
-                        $producao['fatura'] = $faturas['id'];
-                        $this->faturasecundario->cadastro($producao);
-                        $totalbruto += $indecefaturas->valor;
-                    }
-                }
-                $producao['descricao'] = 'Produção';
-                $producao['indice'] = 1;
-                $producao['valor'] = $totalproducao;
-                $producao['fatura'] = $faturas['id'];
-                $this->faturaprincipal->cadastro($producao);
+        //         foreach($indecefatura as $e => $indecefaturas){
+        //             if ($indecefaturas->vicodigo === 1012 || $indecefaturas->vicodigo === 1013) {
+        //                 $producao['descricao'] = $indecefaturas->vsdescricao;
+        //                 $producao['indice'] = $indecefaturas->referencia;
+        //                 $producao['valor'] = $indecefaturas->valor;
+        //                 $producao['fatura'] = $faturas['id'];
+        //                 $this->faturasecundario->cadastro($producao);
+        //                 $totalbruto += $indecefaturas->valor;
+        //             }
+        //         }
+        //         $producao['descricao'] = 'Produção';
+        //         $producao['indice'] = 1;
+        //         $producao['valor'] = $totalproducao;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturaprincipal->cadastro($producao);
                 
-                $subtotalA += $totalproducao;
+        //         $subtotalA += $totalproducao;
                 
-                foreach ($rublicasfatura as $r => $valorublica) {
-                    if ($valorublica->vicodigo === 1008) {
-                        $producao['descricao'] = 'DSR';
-                        $producao['indice'] = $valorublica->vireferencia;
-                        $producao['valor'] = ($valorublica->vireferencia / 100) * $totalproducao;
-                        $producao['fatura'] = $faturas['id'];
-                        $this->faturaprincipal->cadastro($producao);
-                        $subtotalA += $producao['valor'];
-                    }
-                    if ($valorublica->vicodigo === 1009) {
-                        $producao['descricao'] = 'Férias';
-                        $producao['indice'] = $valorublica->vireferencia;
-                        $producao['valor'] = $valorublica->vencimento;
-                        $producao['fatura'] = $faturas['id'];
-                        $this->faturaprincipal->cadastro($producao);
-                        $valordemostrativo += $valorublica->vencimento;
-                        $subtotalB += $valorublica->vencimento;
-                    }
-                    if ($valorublica->vicodigo === 1010) {
-                        $producao['descricao'] = '13° Salário';
-                        $producao['indice'] = $valorublica->vireferencia;
-                        $producao['valor'] = $valorublica->vencimento;
-                        $producao['fatura'] = $faturas['id'];
-                        $this->faturaprincipal->cadastro($producao);
-                        $subtotalB += $valorublica->vencimento;
-                    }
+        //         foreach ($rublicasfatura as $r => $valorublica) {
+        //             if ($valorublica->vicodigo === 1008) {
+        //                 $producao['descricao'] = 'DSR';
+        //                 $producao['indice'] = $valorublica->vireferencia;
+        //                 $producao['valor'] = ($valorublica->vireferencia / 100) * $totalproducao;
+        //                 $producao['fatura'] = $faturas['id'];
+        //                 $this->faturaprincipal->cadastro($producao);
+        //                 $subtotalA += $producao['valor'];
+        //             }
+        //             if ($valorublica->vicodigo === 1009) {
+        //                 $producao['descricao'] = 'Férias';
+        //                 $producao['indice'] = $valorublica->vireferencia;
+        //                 $producao['valor'] = $valorublica->vencimento;
+        //                 $producao['fatura'] = $faturas['id'];
+        //                 $this->faturaprincipal->cadastro($producao);
+        //                 $valordemostrativo += $valorublica->vencimento;
+        //                 $subtotalB += $valorublica->vencimento;
+        //             }
+        //             if ($valorublica->vicodigo === 1010) {
+        //                 $producao['descricao'] = '13° Salário';
+        //                 $producao['indice'] = $valorublica->vireferencia;
+        //                 $producao['valor'] = $valorublica->vencimento;
+        //                 $producao['fatura'] = $faturas['id'];
+        //                 $this->faturaprincipal->cadastro($producao);
+        //                 $subtotalB += $valorublica->vencimento;
+        //             }
                    
-                }
-                foreach ($rublicasfaturainss as $r => $valorublica) {
-                    if ($valorublica->vicodigo === 2001) {
-                        $producao['valor'] = $valorublica->desconto;
-                        $valorentencao += $valorublica->desconto;
-                        $valorbasefolha += $valorublica->desconto;   
-                    }else if ($valorublica->vicodigo == 2002){
-                        $producao['descricao'] = 'INSS Trabalhador';
-                        $producao['indice'] = 0;
-                        $producao['valor'] += $valorublica->desconto;
-                        $producao['fatura'] = $faturas['id'];
-                        $this->faturasecundario->cadastro($producao);
-                        $valorentencao += $valorublica->desconto;
-                        $valorbasefolha += $valorublica->desconto;
-                    }
-                }
+        //         }
+        //         foreach ($rublicasfaturainss as $r => $valorublica) {
+        //             if ($valorublica->vicodigo === 2001) {
+        //                 $producao['valor'] = $valorublica->desconto;
+        //                 $valorentencao += $valorublica->desconto;
+        //                 $valorbasefolha += $valorublica->desconto;   
+        //             }else if ($valorublica->vicodigo == 2002){
+        //                 $producao['descricao'] = 'INSS Trabalhador';
+        //                 $producao['indice'] = 0;
+        //                 $producao['valor'] += $valorublica->desconto;
+        //                 $producao['fatura'] = $faturas['id'];
+        //                 $this->faturasecundario->cadastro($producao);
+        //                 $valorentencao += $valorublica->desconto;
+        //                 $valorbasefolha += $valorublica->desconto;
+        //             }
+        //         }
             
-                $producao['descricao'] = 'Férias Sindicato';
-                $producao['indice'] = 1.00;
-                $producao['valor'] = $subtotalA * (1.00/100);
-                $producao['fatura'] = $faturas['id'];
-                $this->faturaprincipal->cadastro($producao);
-                $totalbruto += $subtotalA * (1.00/100);
+        //         $producao['descricao'] = 'Férias Sindicato';
+        //         $producao['indice'] = 1.00;
+        //         $producao['valor'] = $subtotalA * (1.00/100);
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturaprincipal->cadastro($producao);
+        //         $totalbruto += $subtotalA * (1.00/100);
 
-                $producao['descricao'] = '13° Salário Sindicato';
-                $producao['indice'] = 0.66;
-                $producao['valor'] = $subtotalA * (0.66/100);
-                $producao['fatura'] = $faturas['id'];
-                $this->faturaprincipal->cadastro($producao);
-                $totalbruto += $subtotalA * (0.66/100);
+        //         $producao['descricao'] = '13° Salário Sindicato';
+        //         $producao['indice'] = 0.66;
+        //         $producao['valor'] = $subtotalA * (0.66/100);
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturaprincipal->cadastro($producao);
+        //         $totalbruto += $subtotalA * (0.66/100);
 
-                $producao['descricao'] = 'Taxa ADM/Trab.Avulso';
-                $producao['indice'] = $tomador->tftaxaadm;
-                $producao['valor'] = $subtotalA * ($tomador->tftaxaadm/100);
-                $producao['fatura'] = $faturas['id'];
-                $this->faturaprincipal->cadastro($producao);
-                $totalbruto += $subtotalA * ($tomador->tftaxaadm/100);
+        //         $producao['descricao'] = 'Taxa ADM/Trab.Avulso';
+        //         $producao['indice'] = $tomador->tftaxaadm;
+        //         $producao['valor'] = $subtotalA * ($tomador->tftaxaadm/100);
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturaprincipal->cadastro($producao);
+        //         $totalbruto += $subtotalA * ($tomador->tftaxaadm/100);
 
-                $producao['descricao'] = 'Federação';
-                $producao['indice'] = 1.99;
-                $producao['valor'] = $subtotalA * (1.99/100);
-                $producao['fatura'] = $faturas['id'];
-                $this->faturaprincipal->cadastro($producao);
-                $totalbruto += $subtotalA * (1.99/100);
+        //         $producao['descricao'] = 'Federação';
+        //         $producao['indice'] = 1.99;
+        //         $producao['valor'] = $subtotalA * (1.99/100);
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturaprincipal->cadastro($producao);
+        //         $totalbruto += $subtotalA * (1.99/100);
 
-                $producao['descricao'] = 'FGTS';
-                $producao['indice'] = 8;
-                $producao['valor'] = $subtotalA * (8/100);
-                $producao['fatura'] = $faturas['id'];
-                $this->faturasecundario->cadastro($producao);
-                $totalbruto += $subtotalA * (8/100);
-                $valorentencao += $subtotalA * (8/100);
+        //         $producao['descricao'] = 'FGTS';
+        //         $producao['indice'] = 8;
+        //         $producao['valor'] = $subtotalA * (8/100);
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturasecundario->cadastro($producao);
+        //         $totalbruto += $subtotalA * (8/100);
+        //         $valorentencao += $subtotalA * (8/100);
 
-                $producao['descricao'] = 'Retênção';
-                $producao['indice'] = 0;
-                $producao['valor'] = $valorentencao;
-                $producao['fatura'] = $faturas['id'];
-                $this->faturasecundario->cadastro($producao);
+        //         $producao['descricao'] = 'Retênção';
+        //         $producao['indice'] = 0;
+        //         $producao['valor'] = $valorentencao;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturasecundario->cadastro($producao);
 
-                $producao['descricao'] = $dados['text__adiantamento'];
-                $producao['indice'] = 0;
-                $producao['valor'] = $dados['valor__adiantamento'];
-                $producao['fatura'] = $faturas['id'];
-                $this->faturasecundario->cadastro($producao);
+        //         $producao['descricao'] = $dados['text__adiantamento'];
+        //         $producao['indice'] = 0;
+        //         $producao['valor'] = $dados['valor__adiantamento'];
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturasecundario->cadastro($producao);
 
-                $producao['descricao'] = $dados['texto__credito'];
-                $producao['indice'] = 0;
-                $producao['valor'] = $dados['valor__creditos'];
-                $producao['fatura'] = $faturas['id'];
-                $this->faturasecundario->cadastro($producao);
+        //         $producao['descricao'] = $dados['texto__credito'];
+        //         $producao['indice'] = 0;
+        //         $producao['valor'] = $dados['valor__creditos'];
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturasecundario->cadastro($producao);
 
-                $producao['descricao'] = 'Produção + Dsr 18,18% + Férias';
-                $producao['valor'] = $subtotalA + $valordemostrativo;
-                $producao['fatura'] = $faturas['id'];
-                $this->faturademostrativa->cadastro($producao);
-                $valorbasefolha += $subtotalA + $valordemostrativo;
+        //         $producao['descricao'] = 'Produção + Dsr 18,18% + Férias';
+        //         $producao['valor'] = $subtotalA + $valordemostrativo;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturademostrativa->cadastro($producao);
+        //         $valorbasefolha += $subtotalA + $valordemostrativo;
 
-                $producao['descricao'] = 'Base Cálculo 13º Salário';
-                $producao['valor'] = $subtotalA;
-                $producao['fatura'] = $faturas['id'];
-                $this->faturademostrativa->cadastro($producao);
-                $valorbasefolha += $subtotalA;
+        //         $producao['descricao'] = 'Base Cálculo 13º Salário';
+        //         $producao['valor'] = $subtotalA;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturademostrativa->cadastro($producao);
+        //         $valorbasefolha += $subtotalA;
 
             
 
-                $producao['descricao'] = 'A-Sub Total';
-                $producao['valor'] = $subtotalA;
-                $producao['fatura'] = $faturas['id'];
-                $faturatotais = $this->faturatotal->cadastro($producao);
+        //         $producao['descricao'] = 'A-Sub Total';
+        //         $producao['valor'] = $subtotalA;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $faturatotais = $this->faturatotal->cadastro($producao);
 
-                $producao['descricao'] = 'B-SubTotal';
-                $producao['valor'] = $subtotalB + $subtotalA;
-                $producao['fatura'] = $faturas['id'];
-                $faturatotais = $this->faturatotal->cadastro($producao);
-                $totalbruto += $subtotalB + $subtotalA;
+        //         $producao['descricao'] = 'B-SubTotal';
+        //         $producao['valor'] = $subtotalB + $subtotalA;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $faturatotais = $this->faturatotal->cadastro($producao);
+        //         $totalbruto += $subtotalB + $subtotalA;
 
-                $producao['descricao'] = 'Base Calculo FGTS';
-                $producao['valor'] = $subtotalB + $subtotalA;
-                $producao['fatura'] = $faturas['id'];
-                $this->faturademostrativa->cadastro($producao);
-                $valorbasefolha += $subtotalA + $subtotalB;
+        //         $producao['descricao'] = 'Base Calculo FGTS';
+        //         $producao['valor'] = $subtotalB + $subtotalA;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $this->faturademostrativa->cadastro($producao);
+        //         $valorbasefolha += $subtotalA + $subtotalB;
 
-                $producao['descricao'] = 'Total Bruto';
-                $producao['valor'] = $totalbruto;
-                $producao['fatura'] = $faturas['id'];
-                $faturatotais = $this->faturatotal->cadastro($producao);
+        //         $producao['descricao'] = 'Total Bruto';
+        //         $producao['valor'] = $totalbruto;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $faturatotais = $this->faturatotal->cadastro($producao);
 
-                $producao['descricao'] = 'Total Líquido';
-                $producao['valor'] = str_replace(",",".",$dados['valor__creditos'])+($totalbruto-$valorentencao-str_replace(",",".",$dados['valor__adiantamento']));
-                $producao['fatura'] = $faturas['id'];
-                $faturatotais = $this->faturatotal->cadastro($producao);
+        //         $producao['descricao'] = 'Total Líquido';
+        //         $producao['valor'] = str_replace(",",".",$dados['valor__creditos'])+($totalbruto-$valorentencao-str_replace(",",".",$dados['valor__adiantamento']));
+        //         $producao['fatura'] = $faturas['id'];
+        //         $faturatotais = $this->faturatotal->cadastro($producao);
 
-                $producao['descricao'] = 'Folha Base';
-                $producao['valor'] = $valorbasefolha;
-                $producao['fatura'] = $faturas['id'];
-                $faturatotais = $this->faturatotal->cadastro($producao);
-                return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-            }
+        //         $producao['descricao'] = 'Folha Base';
+        //         $producao['valor'] = $valorbasefolha;
+        //         $producao['fatura'] = $faturas['id'];
+        //         $faturatotais = $this->faturatotal->cadastro($producao);
+        //         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            // }
         //     try {
         // } catch (\Throwable $th) {
         //     $this->faturaprincipal->deletarFatura($faturas['id']);
@@ -398,18 +579,32 @@ class FaturaController extends Controller
     public function relatorio($id,$inicio,$final)
     {
         
-            $faturas = $this->fatura->buscaRelatorio($id,$inicio,$final);
-            $faturaprincipais = $this->faturaprincipal->buscaRelatorio($faturas->id);
-            $faturarublicas = $this->faturarublica->buscaRelatorio($faturas->id);
-            $faturasecundarios = $this->faturasecundario->buscaRelatorio($faturas->id);
-            $faturavalestrans = $this->faturasecundario->buscaRelatorioValesTrans($faturas->id);
-            $faturavalesalim = $this->faturasecundario->buscaRelatorioValesAlim($faturas->id);
-            $faturademostrativas = $this->faturademostrativa->buscaRelatorio($faturas->id);
-            $faturatotais = $this->faturatotal->buscaRelatorio($faturas->id);
-            $tomadores = $this->tomador->tomadorFatura($id,$inicio,$final);
-            $empresas = $this->empresa->buscaUnidadeEmpresa($tomadores->empresa);
-            // dd($faturasecundarios,$faturavalestrans,$faturavalesalim);
-            $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
+            // $faturas = $this->fatura->buscaRelatorio($id,$inicio,$final);
+            // $faturaprincipais = $this->faturaprincipal->buscaRelatorio($faturas->id);
+            // $faturarublicas = $this->faturarublica->buscaRelatorio($faturas->id);
+            // $faturasecundarios = $this->faturasecundario->buscaRelatorio($faturas->id);
+            // $faturavalestrans = $this->faturasecundario->buscaRelatorioValesTrans($faturas->id);
+            // $faturavalesalim = $this->faturasecundario->buscaRelatorioValesAlim($faturas->id);
+            // $faturademostrativas = $this->faturademostrativa->buscaRelatorio($faturas->id);
+            // $faturatotais = $this->faturatotal->buscaRelatorio($faturas->id);
+            // $tomadores = $this->tomador->tomadorFatura($id,$inicio,$final);
+            // $empresas = $this->empresa->buscaUnidadeEmpresa($tomadores->empresa_id);
+            // // dd($faturasecundarios,$faturavalestrans,$faturavalesalim);
+            // $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
+            $user = auth()->user();
+            $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first();
+            $fatura = $this->fatura->where('id',$id)
+            ->with([
+            'tomador.endereco',
+            'tomador.parametrosefip',
+            'faturadesmostrativa',
+            'faturaprincipal',
+            'faturasecundaria',
+            'faturadesmostrativa',
+            'faturatotal'
+            ])->first();
+            // dd($fatura);
+            $pdf = PDF::loadView('fatura',compact('empresa','fatura'));
             return $pdf->setPaper('a4')->stream('fatura.pdf');
             try {
         } catch (\Throwable $th) {

@@ -136,26 +136,31 @@
 </div>
 
 <section class="delete__tabela--tomador">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="deleteTrabalhador" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <form action="" id="formdelete" method="post">
                     @csrf
                     @method('delete')
-                    <div class="modal-header modal__delete">
-                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header header__modal">
+                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-lg fa-percentage"></i></h5>
+                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
-                    <div class="modal-body modal-delbody">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    
+                    <div class="modal-body body__modal">
+                        
+                            <p class="mb-1 text-start">Deseja realmente excluir?</p>
+      
+                        
                     </div>
-                    <div class="modal-footer modal-delfooter">
-                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn__deletar">Deletar</button>
-    
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
+

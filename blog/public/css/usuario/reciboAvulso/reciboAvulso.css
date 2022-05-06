@@ -1,0 +1,50 @@
+:root{
+    --title-color-recibo-avulso: black;
+}
+
+.darkmode{
+    --title-color-recibo-avulso: white;
+}
+
+
+.section__botoes--recibo-avulso{
+    margin-top: 8.55%;
+}
+
+.section__recibo--avulso--pill{
+    margin-top: 6%;
+}
+
+.title__recibo-avulso{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-recibo-avulso);
+}
+
+.title__cartao--ponto--secondary{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color-recibo-avulso);
+}
+
+.section__items-avulso{
+    margin-top: 4%;
+}
+
+.section__lista--avulso{
+   margin-top: 4%; 
+}
+
+.section__filtro-avulso{
+    margin-top: 3%;
+}
+
+.section__rol--avulso{
+    margin-top: 4%;
+}

@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Lançamento com Tabela de Preço')
+@section('titulo','Rhweb - Editar lançamento Tabela de Preço')
 @section('conteine')
 <main role="main">
     <div class="container">
@@ -78,7 +78,7 @@
             </section>
 
           
-            <h1 class="title__boletim-tabela">Editar Lançamento com Tabela de Preço <i class="fad fa-money-check-alt"></i></h1>
+            <h1 class="title__boletim-tabela">Editar Lançamento com Tabela de Preço <i class="fad fa-sack-dollar"></i></h1>
               
             <input type="hidden" name="lancamento" value="{{$id}}">
             <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
@@ -91,7 +91,7 @@
             
             
             <div class="col-md-10">
-                <label for="nome__completo" class="form-label">Nome do Trabalhador <i class="fas fa-lock"></i></label>
+                <label for="nome__completo" class="form-label">Trabalhador <i class="fas fa-lock" <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
                 <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo" Readonly>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
@@ -103,25 +103,15 @@
             <input type="hidden" name="trabalhador" id="trabalhador" value="{{$lancamentorublicas->trabalhador_id}}">
             
             <div class="col-md-2">
-                <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock"></i></label>
+                <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
                 <input type="text" value="{{$lancamentorublicas->tsmatricula}}" class="form-control @error('matricula') is-invalid @enderror" name="matricula" value="" id="matricula" Readonly>
                 @error('matricula')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-
-            <div class="col-md-2">
-                <label for="codigo" class="form-label">Código <i class="fas fa-lock"></i></label>
-                <input type="text" value="{{$lancamentorublicas->licodigo}}" class="form-control rubrica @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo" Readonly>
-                @error('codigo')
-                      <span class="text-danger">{{ $message }}</span>
-                @enderror
-                <datalist id="codigos"></datalist>
-                <span class="text-danger" id="codigomensagem"></span>
-            </div>
-
-            <div class="col-md-8">
-                <label for="rubrica" class="form-label">Descrição <i class="fas fa-lock"></i></label>
+            
+            <div class="col-md-7 ">
+                <label for="rubrica" class="form-label">Descrição <i class="fas fa-lock" <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
                 <input type="text" value="{{$lancamentorublicas->lshistorico}}" class="form-control @error('rubrica') is-invalid @enderror" list="rublicas" name="rubrica" value="" id="rubrica" Readonly>
                 <datalist id="rublicas"></datalist>
                 @error('rubrica')
@@ -131,7 +121,19 @@
             </div>
 
             <div class="col-md-2">
-                <label for="quantidade" class="form-label">Quantidade/Tonelada</label>
+                <label for="codigo" class="form-label">Código <i class="fas fa-lock" <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
+                <input type="text" value="{{$lancamentorublicas->licodigo}}" class="form-control rubrica @error('codigo') is-invalid @enderror" name="codigo" list="codigos" value="" id="codigo" Readonly>
+                @error('codigo')
+                      <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <datalist id="codigos"></datalist>
+                <span class="text-danger" id="codigomensagem"></span>
+            </div>
+
+            
+
+            <div class="col-md-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
                 <input type="text" value="{{$lancamentorublicas->lsquantidade}}" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="" id="quantidade">
                 @error('quantidade')
                       <span class="text-danger">{{ $message }}</span>

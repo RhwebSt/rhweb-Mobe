@@ -9,6 +9,10 @@ class FaturaTotal extends Model
     protected $fillable = [
         'fstitulo', 'fivalor', 'fatura_id'
     ];
+    public function fatura()
+    {
+        return $this->belongsTo(Fatura::class);
+    }
     public function cadastro($dados)
     {
         return FaturaTotal::create([

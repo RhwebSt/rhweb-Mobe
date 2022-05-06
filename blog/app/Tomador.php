@@ -50,6 +50,10 @@ class Tomador extends Model
     {
         return $this->hasMany(Lancamentotabela::class);
     }
+    public function fatura()
+    {
+        return $this->hasMany(Fatura::class);
+    }
     public function cadastro($dados)
     {
         
@@ -72,7 +76,7 @@ class Tomador extends Model
         $user = auth()->user();
         return Tomador::where([
             ['tscnpj',$dados['cnpj']],
-            ['empresa_id',$user->empresa]
+            ['empresa_id',$user->empresa_id]
         ])
         ->count();
     }
@@ -93,18 +97,18 @@ class Tomador extends Model
             if ($id) {
                 $query->orWhere([
                     ['tomadors.tsnome','like','%'.$id.'%'],
-                    ['tomadors.empresa_id', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                 ])
                 ->orWhere([
                     ['tomadors.tscnpj','like','%'.$id.'%'],
-                    ['tomadors.empresa_id', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                     ])
                 ->orWhere([
                     ['tomadors.tsmatricula','like','%'.$id.'%'],
-                    ['tomadors.empresa_id', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                 ]);
             }else{
-                $query->where('tomadors.empresa_id', $user->empresa);
+                $query->where('tomadors.empresa_id', $user->empresa_id);
             }
 
             // if ($user->hasPermissionTo('admin')) {
@@ -346,7 +350,7 @@ class Tomador extends Model
         return DB::table('enderecos')
         ->join('tomadors', 'tomadors.id', '=', 'enderecos.tomador_id')
         ->join('base_calculos', 'tomadors.id', '=', 'base_calculos.tomador_id')
-        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar')
+        ->join('folhars', 'folhars.id', '=', 'base_calculos.folhar_id')
         ->join('bancarios', 'tomadors.id', '=', 'bancarios.tomador_id')
         ->join('parametrosefips', 'tomadors.id', '=', 'parametrosefips.tomador_id')
         ->select(
@@ -355,7 +359,7 @@ class Tomador extends Model
             'tomadors.tsmatricula',
             'tomadors.tscnpj',
             'tomadors.tstelefone',
-            'tomadors.empresa',
+            'tomadors.empresa_id',
             'enderecos.escep',
             'enderecos.eslogradouro',
             'enderecos.esnum',
@@ -375,7 +379,7 @@ class Tomador extends Model
             'parametrosefips.psratajustados',
             'parametrosefips.psfpasterceiros',
             'parametrosefips.psaliquotaterceiros',
-             DB::raw('count(base_calculos.trabalhador) as trabalhador')
+             DB::raw('count(base_calculos.trabalhador_id) as trabalhador')
         )
         ->groupBy(
             'folhars.fscodigo',
@@ -383,7 +387,7 @@ class Tomador extends Model
             'tomadors.tsmatricula',
             'tomadors.tscnpj',
             'tomadors.tstelefone',
-            'tomadors.empresa',
+            'tomadors.empresa_id',
             'enderecos.escep',
             'enderecos.eslogradouro',
             'enderecos.esnum',

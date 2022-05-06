@@ -45,6 +45,7 @@
 }
 
 .botao__calcular{
+    border-radius: 8px;
     background-color: #388334;
     color: white;
     font-size: 1rem;
@@ -54,6 +55,23 @@
 }
 
 .botao__calcular:hover{
+    background-color: #193A17;
+    color: white;
+    transition: 200ms ease-in-out;
+    transform: scale(1.02);
+}
+
+.botao__enviar{
+    background-color: #388334;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 200ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.botao__enviar:hover{
     background-color: #193A17;
     color: white;
     transition: 200ms ease-in-out;

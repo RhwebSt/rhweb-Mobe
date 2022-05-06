@@ -869,35 +869,38 @@ class ValorCalculo extends Model
         ->get();
     }
 
-    public function producaoFatura($dados,$codigo) 
+    public function producaoFatura($dados,$codigo)  
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
-        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo_id')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.base_calculo_id')
         ->selectRaw(
             'SUM(valor_calculos.vivencimento) as vencimento,
-            valor_calculos.vireferencia'
+            SUM(valor_calculos.videscinto) as desconto,
+            valor_calculos.vireferencia,
+            valor_calculos.vicodigo,
+            valor_calculos.vsdescricao'
         )
-        ->groupBy('valor_calculos.vireferencia')
+        ->groupBy('valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador_id',$dados['tomador'])
         ->whereIn('valor_calculos.vicodigo',$codigo)
-        ->whereDate('base_calculos.created_at', $dados['ano_final'])
+        ->whereBetween('folhars.fsfinal',[$dados['ano_inicial'],$dados['ano_final']])
         ->get();
     }
     public function producaoFaturaIn($dados,$codigo)
     {
         return DB::table('folhars')
         ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
-        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.basecalculo_id')
+        ->join('valor_calculos', 'base_calculos.id', '=', 'valor_calculos.base_calculo_id')
         ->selectRaw(
             'SUM(valor_calculos.vireferencia) as referencia,
             SUM(valor_calculos.vivencimento) as valor,
             valor_calculos.vicodigo,valor_calculos.vsdescricao'
         )
         ->groupBy('valor_calculos.vicodigo','valor_calculos.vsdescricao')
-        ->where('base_calculos.tomador',$dados['tomador'])
+        ->where('base_calculos.tomador_id',$dados['tomador'])
         ->whereIn('valor_calculos.vicodigo',$codigo)
-        ->whereBetween('base_calculos.created_at',[$dados['ano_inicial'],$dados['ano_final']])
+        ->whereBetween('folhars.fsfinal',[$dados['ano_inicial'],$dados['ano_final']])
         ->get();
     }
     public function rublicasFatura($dados)

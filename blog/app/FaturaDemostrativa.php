@@ -9,6 +9,10 @@ class FaturaDemostrativa extends Model
     protected $fillable = [
         'dsdescricao', 'fiindece', 'fivalor', 'fatura_id'
     ];
+    public function fatura()
+    {
+        return $this->belongsTo(Fatura::class);
+    }
     public function cadastro($dados)
     {
         return FaturaDemostrativa::create([

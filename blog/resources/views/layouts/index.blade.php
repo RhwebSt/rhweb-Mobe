@@ -30,6 +30,8 @@
         <link rel="stylesheet" href="{{url('/css/usuario/cartaoPonto/cartaoPonto.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/boletimTabela/boletimTabela.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/calculoFolha/calculoFolha.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/descontos/descontos.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/reciboAvulso/reciboAvulso.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

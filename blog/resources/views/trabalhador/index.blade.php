@@ -708,36 +708,7 @@
             <input type="hidden" name="bancario" id="bancario">
 
         </form>
-        
-        <section class="modal__excluir">
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                          <form action="" id="formdelete" method="post">
-                                @csrf
-                                @method('delete')
-                                <div class="modal-header  header__modal">
-                                      <h5 class="modal-title text-white fs-5" id="staticBackdropLabel"><i class="fad fa-trash"></i> Excluir</h5>
-                                      <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                                </div>
-                                
-                                <div class="modal-body body__modal">
-                                      <p class="mb-2">Obs:( Caso exclua os dados do trabalhador seus depedentes serão excluidos.)</p>
-                                      <p class="mb-1">Deseja realmente excluir?</p>
-                                </div>
-                                
-                                <div class="modal-footer">
-                                      <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                      <button type="submit" class="btn btn__deletar">Deletar</button>
-                                </div>
-                          </form>
-                    </div>
-                  </div>
-            </div>
-        </section>
-        
-        
-        
+
     </div>
 </main>
 
