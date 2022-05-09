@@ -67,7 +67,19 @@ class FaturaController extends Controller
     {
         $dados = $request->all();
         $today = Carbon::today();
+        
         $user = auth()->user();
+        if (strtotime($dados['ano_inicial']) > strtotime($today)) {
+            return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
+        }
+        if (strtotime($dados['ano_final']) > strtotime($today)) {
+            return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
+        }
+        $verifica = $this->fatura->verificaFaturas($dados);
+        if ($verifica) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
+        }
+        try {
         $dados['empresa'] = $user->empresa_id;
         $rublica = $this->rublica->get();
         $sim = [];
@@ -80,10 +92,16 @@ class FaturaController extends Controller
             }
         }
         $tomador = $this->tomador->where('id',$dados['tomador'])->with('taxa')->first();
-        
         $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
         $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
         $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
+        if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
+        }
+        $quantrabalhador = $this->valorcalculor->quantrabalhador($dados);
+        $dados['trabalhador'] = $quantrabalhador[0]->trabalhador;
+        $dados['folhar'] = $fatura1[0]->fscodigo;
+        $dados['folhar'] = $fatura2[0]->fscodigo;
         $dadosrublicas =[
             'item'=>'',
             'descricao'=>'',
@@ -104,12 +122,21 @@ class FaturaController extends Controller
         $valorentencao = 0;
         $valorbasefolha = 0;
         $valordemostrativo = 0;
+        $totalproducao = 0;
         $faturas = $this->fatura->cadastro($dados);
+        $this->valorrublica->where('id', $user->empresa_id)
+        ->chunkById(100, function ($valorrublica) use ($user) {
+            foreach ($valorrublica as $valorrublicas) {
+                $numero = $valorrublicas->vsnrofatura += 1;
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
+                ->update(['vsnrofatura'=>$numero]);
+            }
+        });
         foreach ($tabelapreco as $key => $tabelaprecos) {
             foreach ($fatura1 as $key => $fatura_valor) {
                 if (!$tabelaprecos->tsstatus && $tabelaprecos->tsrubrica == $fatura_valor->vicodigo) {
-                    $dadosrublicas['item'] = $tabelaprecos->tsrubrica;
-                    $dadosrublicas['descricao'] = $tabelaprecos->tsdescricao;
+                    $dadosrublicas['item'] = $fatura_valor->vicodigo;
+                    $dadosrublicas['descricao'] = $fatura_valor->vsdescricao;
                     $dadosrublicas['unidade'] = $fatura_valor->referencia;
                     $dadosrublicas['preco'] = $tabelaprecos->tstomvalor;
                     $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tstomvalor;
@@ -117,7 +144,22 @@ class FaturaController extends Controller
                     $this->faturarublica->cadastro($dadosrublicas);
                     $producao['valor'] += $fatura_valor->valor;
                     $subtotalA += $fatura_valor->valor;
+                    $totalproducao = $subtotalA;
                 }
+            }
+        }
+        foreach ($fatura1 as $key => $fatura_valor) {
+            if ($fatura_valor->vicodigo === 1006 || $fatura_valor->vsdescricao === 'produção') {
+                $dadosrublicas['item'] = $fatura_valor->vicodigo;
+                $dadosrublicas['descricao'] = $fatura_valor->vsdescricao;
+                $dadosrublicas['unidade'] = $fatura_valor->referencia;
+                $dadosrublicas['preco'] = $tabelaprecos->tstomvalor;
+                $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tstomvalor;
+                $dadosrublicas['fatura'] = $faturas['id'];
+                $this->faturarublica->cadastro($dadosrublicas);
+                $producao['valor'] += $fatura_valor->valor;
+                $subtotalA += $fatura_valor->valor;
+                $totalproducao = $subtotalA;
             }
         }
         $producao['descricao'] = 'Produção';
@@ -153,7 +195,8 @@ class FaturaController extends Controller
             if ($valorublica->vicodigo === 2001) {
                 $producao['valor'] = $valorublica->desconto;
                 $valorentencao += $valorublica->desconto;
-                $valorbasefolha += $valorublica->desconto;   
+                $valorbasefolha += $valorublica->desconto;  
+                $totalbruto  += $valorublica->desconto;
             }else if ($valorublica->vicodigo == 2002){
                 $producao['descricao'] = 'INSS Trabalhador';
                 $producao['indice'] = 0;
@@ -162,6 +205,7 @@ class FaturaController extends Controller
                 $this->faturasecundario->cadastro($producao);
                 $valorentencao += $valorublica->desconto;
                 $valorbasefolha += $valorublica->desconto;
+                $totalbruto  += $valorublica->desconto;
             }
             
         }
@@ -268,13 +312,12 @@ class FaturaController extends Controller
         $producao['valor'] = $valorbasefolha;
         $producao['fatura'] = $faturas['id'];
         $faturatotais = $this->faturatotal->cadastro($producao);
-        dd($tabelapreco,$producao);
-        // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
-        //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
-        // }
-        // if (strtotime($dados['ano_final']) > strtotime($today)) {
-        //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
-        // }
+        $producao['descricao'] = 'Total da Produção';
+        $producao['valor'] = $totalproducao;
+        $producao['fatura'] = $faturas['id'];
+        $faturatotais = $this->faturatotal->cadastro($producao);
+        
+       
        
         
         // $dados['empresa'] = $user->empresa;
@@ -543,34 +586,51 @@ class FaturaController extends Controller
         //         $faturatotais = $this->faturatotal->cadastro($producao);
         //         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             // }
-        //     try {
-        // } catch (\Throwable $th) {
-        //     $this->faturaprincipal->deletarFatura($faturas['id']);
-        //     $this->faturasecundario->deletarFatura($faturas['id']);
-        //     $this->faturademostrativa->deletarFatura($faturas['id']);
-        //     $this->faturarublica->deletarFatura($faturas['id']);
-        //     $this->faturatotal->deletarFatura($faturas['id']);
-        //     $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        //     $quantidade = $valorrublica_fatura->vsnrofatura - 1;
-        //     $this->fatura->deletar($faturas['id']);
-        //     $this->valorrublica->editarFatura($quantidade,$user->empresa);
-        //     return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
-        // }
+        
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        } catch (\Throwable $th) {
+            // $this->faturaprincipal->deletarFatura($faturas['id']);
+            // $this->faturasecundario->deletarFatura($faturas['id']);
+            // $this->faturademostrativa->deletarFatura($faturas['id']);
+            // $this->faturarublica->deletarFatura($faturas['id']);
+            // $this->faturatotal->deletarFatura($faturas['id']);
+            // $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            // $quantidade = $valorrublica_fatura->vsnrofatura - 1;
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    $numero = $valorrublicas->vsnrofatura -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrofatura'=>$numero]);
+                }
+            });
+            $this->fatura->deletar($faturas['id']);
+            // $this->valorrublica->editarFatura($quantidade,$user->empresa);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+        }
     }
     public function destroy($id)
     {
         $user = auth()->user();
         try {
-            $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-            $quantidade = $valorrublica_fatura->vsnrofatura - 1;
+            // $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            // $quantidade = $valorrublica_fatura->vsnrofatura - 1;
 
-            $this->faturaprincipal->deletarFatura($id);
-            $this->faturasecundario->deletarFatura($id);
-            $this->faturademostrativa->deletarFatura($id);
-            $this->faturarublica->deletarFatura($id);
-            $this->faturatotal->deletarFatura($id);
+            // $this->faturaprincipal->deletarFatura($id);
+            // $this->faturasecundario->deletarFatura($id);
+            // $this->faturademostrativa->deletarFatura($id);
+            // $this->faturarublica->deletarFatura($id);
+            // $this->faturatotal->deletarFatura($id);
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    $numero = $valorrublicas->vsnrofatura -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrofatura'=>$numero]);
+                }
+            });
             $this->fatura->deletar($id);
-            $this->valorrublica->editarFatura($quantidade,$user->empresa);
+            // $this->valorrublica->editarFatura($quantidade,$user->empresa);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
@@ -591,20 +651,22 @@ class FaturaController extends Controller
             // $empresas = $this->empresa->buscaUnidadeEmpresa($tomadores->empresa_id);
             // // dd($faturasecundarios,$faturavalestrans,$faturavalesalim);
             // $pdf = PDF::loadView('fatura',compact('tomadores','faturavalesalim','faturavalestrans','empresas','faturas','faturarublicas','faturaprincipais','faturasecundarios','faturademostrativas','faturatotais'));
-            $user = auth()->user();
-            $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first();
+          
             $fatura = $this->fatura->where('id',$id)
             ->with([
             'tomador.endereco',
             'tomador.parametrosefip',
+            'tomador.bancario',
             'faturadesmostrativa',
             'faturaprincipal',
             'faturasecundaria',
             'faturadesmostrativa',
-            'faturatotal'
+            'faturarubrica',
+            'faturatotal',
+            'empresa.endereco'
             ])->first();
             // dd($fatura);
-            $pdf = PDF::loadView('fatura',compact('empresa','fatura'));
+            $pdf = PDF::loadView('fatura',compact('fatura'));
             return $pdf->setPaper('a4')->stream('fatura.pdf');
             try {
         } catch (\Throwable $th) {

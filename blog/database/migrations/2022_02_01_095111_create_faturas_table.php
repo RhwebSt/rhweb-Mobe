@@ -16,6 +16,8 @@ class CreateFaturasTable extends Migration
         Schema::create('faturas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fsnumero')->nullable();
+            $table->integer('fsfolhar')->nullable();
+            $table->integer('fstrabalhador')->nullable();
             $table->char('fsinicio', 15)->nullable();
             $table->char('fsfinal', 15)->nullable();
             $table->char('fsvencimento', 15)->nullable();

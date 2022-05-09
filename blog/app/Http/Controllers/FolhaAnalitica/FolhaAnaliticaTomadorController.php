@@ -18,7 +18,7 @@ class FolhaAnaliticaTomadorController extends Controller
         $folhar = new Folhar;
         $tabelhapreco = new TabelaPreco;
         $rublica = new Rublica;
-        try {
+        
         $folhas = $folhar->buscaFolhaAnaliticaTomador($id,$tomador);
       
         $rublicas = $rublica->listaGeral();
@@ -84,7 +84,8 @@ class FolhaAnaliticaTomadorController extends Controller
         
         $pdf = PDF::loadView('folhaAnaliticaTomador',compact('sindicator','seguro','inss','inss_sobre13','irrf','salario13','vt','va','ferias','dsr','adiantamento','vale','producao','folhas'));
         return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA TOMADOR.pdf');
-        } catch (\Throwable $th) { 
+        try {    
+    } catch (\Throwable $th) { 
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a folha.']);
         }
     }

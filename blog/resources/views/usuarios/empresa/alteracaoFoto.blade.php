@@ -51,6 +51,7 @@
                 })
             </script>
         @enderror
+    
             <div class="bg__form1 container mt-5" style="border: 1px solid white; border-radius:12px;">
 
                

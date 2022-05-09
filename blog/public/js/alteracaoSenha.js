@@ -6,13 +6,13 @@ let btnShow = document.querySelector('.show');
         let icon = document.querySelector('.icon');
         if(inputpass.getAttribute('type') == 'password') {
             inputpass.setAttribute('type', 'text');
-            icon.classList.remove('far', 'fa-eye');
-            icon.classList.add('far','fa-eye-slash');
+            icon.classList.remove('fad', 'fa-eye');
+            icon.classList.add('fad','fa-eye-slash');
             
         } else {
             inputpass.setAttribute('type', 'password');
-            icon.classList.remove('far','fa-eye-slash');
-            icon.classList.add('far','fa-eye');
+            icon.classList.remove('fad','fa-eye-slash');
+            icon.classList.add('fad','fa-eye','fa-lg');
         }
 })
 
@@ -24,12 +24,12 @@ let btnShow1 = document.querySelector('.show1');
         let icon = document.querySelector('.icon1');
         if(inputpass1.getAttribute('type') == 'password') {
             inputpass1.setAttribute('type', 'text');
-            icon.classList.remove('far', 'fa-eye');
-            icon.classList.add('far','fa-eye-slash');
+            icon.classList.remove('fad', 'fa-eye');
+            icon.classList.add('fad','fa-eye-slash');
         } else {
             inputpass1.setAttribute('type', 'password');
-            icon.classList.remove('far','fa-eye-slash');
-            icon.classList.add('far','fa-eye');
+            icon.classList.remove('fad','fa-eye-slash');
+            icon.classList.add('fad','fa-eye');
         }
     })
 
@@ -41,13 +41,13 @@ let btnShow1 = document.querySelector('.show1');
         
         if(inputpass2.getAttribute('type') == 'password') {
             inputpass2.setAttribute('type', 'text');
-            icon.classList.remove('far', 'fa-eye');
-            icon.classList.add('far','fa-eye-slash');
+            icon.classList.remove('fad', 'fa-eye');
+            icon.classList.add('fad','fa-eye-slash');
             
         } else {
             inputpass2.setAttribute('type', 'password');
-            icon.classList.remove('far','fa-eye-slash');
-            icon.classList.add('far','fa-eye');
+            icon.classList.remove('fad','fa-eye-slash');
+            icon.classList.add('fad','fa-eye');
         }
     })
 

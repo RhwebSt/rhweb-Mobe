@@ -1,17 +1,9 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Fatura')
 @section('conteine')
-
-    <!--Erro para quando não tiver nenhum calculo da folha cadastrado nesse periodo para o tomador-->
-
-    <!--<script>-->
-    <!--    Swal.fire({-->
-    <!--      icon: 'error',-->
-    <!--      title: 'Algo deu errado!!',-->
-    <!--      text: 'Não possui nenhum valor nesse período.',-->
-    <!--    })-->
-    <!--</script>-->
-    @if(session('success'))
+<main role="main">
+    <div class="container">
+        @if(session('success'))
             <script>
                      
                 const Toast = Swal.mixin({
@@ -60,200 +52,185 @@
                   title: '{{ $message }}'
                 })
             </script>
-        @enderror  
+        @enderror
+        
+        
+         <section class="section__botoes--fatura">
+            
+            <div class="d-flex justify-content-start align-items-start div__voltar">
+                <a class="botao__voltar" href="{{route('home.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+            </div>
+            
+            <div class="d-flex justify-content-center align-items-center mx-auto mt-4" role="button" aria-label="Basic example">
                 
-    <div class="container">
-        <ul class="nav nav-pills mb-5 mt-5" id="pills-tab" role="tablist">
-            <li class="nav-item ms-2 mt-2" role="presentation">
-                <button class="nav-link botao" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
-            </li>
-            <li class="nav-item ms-1 pillstop mt-2" role="presentation">
-                <button class="nav-link botao" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fad fa-list"></i> Lista de Faturas</button>
-            </li>
-        </ul>
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item pill__item ms-1 mt-1 " role="presentation">
+                        <button class="nav-link botao__pill" id="gerar-fatura-tab" data-bs-toggle="pill" data-bs-target="#gerar-fatura" type="button" role="tab" aria-controls="gerar-fatura" aria-selected="true"><i class="fad fa-file-invoice-dollar"></i> Gerar Fatura</button>
+                    </li>
+                    <li class="nav-item pill__item ms-1 mt-1 " role="presentation">
+                        <button class="nav-link botao__pill" id="lista-fatura-tab" data-bs-toggle="pill" data-bs-target="#lista-fatura" type="button" role="tab" aria-controls="lista-fatura" aria-selected="false"><i class="fad fa-list"></i> Lista de Faturas</button>
+                    </li>
+                </ul>
+                
+            </div>
+        </section>
+
 
         <div class="tab-content" id="pills-tabContent">
         
-                <div class="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <form class="row g-3" action="{{route('fatura.gera')}}" method="POST">
-                        <input type="hidden" name="tomador" value="{{old('tomador')}}" class="@error('tomador') is-invalid @enderror" id="tomador">
-                        <div class="" id="quadro1">
-                        @csrf
-                            <div class="container text-start fs-5 fw-bold mt-4">Pesquisar Tomador <i class="fas fa-search"></i></div>
+            <div class="tab-pane fade show" id="gerar-fatura" role="tabpanel" aria-labelledby="gerar-fatura-tab">
+                <h1 class="title__fatura">Gerar Fatura <i class="fad fa-calculator"></i></h1>
+                
+                <section class="section__search">
+                    <div class="col-md-5">
+                        <form action="" method="GET">
+                            
+                            <div class="d-flex">
                                 
-                                    <div class="d-flex justify-content-between mb-3 mt-0">
-                                        <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
-                                            <div class="d-flex">
-                                            <label for="exampleDataList" class="form-label"></label>
-                                            <input class="form-control fw-bold text-dark pesquisa" list="listapesquisa" value="{{old('pesquisa')}}" name="pesquisa" id="pesquisa">
-                                            
-                                            <datalist id="listapesquisa">
-                                            </datalist>
-                                            <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                            <div class="text-center d-none" id="refres">
-                                                <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                    <span class="visually-hidden">Carregando...</span>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            @error('tomador')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        
-                    
-                                    </div>
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" value="{{old('pesquisa')}}" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                <datalist id="listapesquisa"></datalist>
 
-                            <div class="data mt-4">
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
-                                <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="ano_inicial">
-                                    @error('ano_inicial')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <input type="hidden" name="codicao" value="">
                                 
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
-                                <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="ano_final">
-                                    @error('ano_final')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <button type="submit" class="btn botao__search">
+                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                </button>
+
                             </div>
                             
-                            <?php
-                                if ($valorrublica_fatura->vsnrofatura) {
-                                    $fatura = $valorrublica_fatura->vsnrofatura + 1;
-                                }else{
-                                    $fatura = 1;
-                                }
-                            ?>
-                            <input type="hidden" name="numero" value="{{$fatura}}">
-                            <div class="data mt-4">
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
-                                    <label for="text__adiantamento" class="form-label">Texto Adiantamento</label>
-                                    <input type="text" class="form-control @error('text__adiantamento') is-invalid @enderror" name="text__adiantamento" value="{{old('text__adiantamento')}}" id="text__adiantamento"> 
-                                    @error('text__adiantamento')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                 <!--limitar a 35 caracteres-->
-                                
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
-                                    <label for="valor__adiantamento" class="form-label">Valor Adiantamento</label>
-                                    <input type="text" class="form-control @error('valor__adiantamento') is-invalid @enderror" name="valor__adiantamento" value="{{old('valor__adiantamento','0,00')}}" id="valor__adiantamento">
-                                    @error('valor__adiantamento')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            
-                            </div>
-                            
-                            <div class="data mt-4">
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 input">
-                                    <label for="texto__credito" class="form-label">Texto Crédito</label>
-                                    <input type="text" class="form-control @error('texto__credito') is-invalid @enderror" name="texto__credito" value="{{old('texto__credito')}}" id="texto__credito"> 
-                                          @error('texto__credito')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <!--limitar a 35 caracteres-->
-                                
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
-                                    <label for="valor__creditos" class="form-label">Valor Créditos</label>
-                                    <input type="text" class="form-control @error('valor__creditos') is-invalid @enderror" name="valor__creditos" value="{{old('valor__creditos','0,00')}}" id="valor__creditos">
-                                          @error('valor__creditos')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            
-                            </div>
-                            
-                            <div class="data mt-4">
-                            
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
-                                    <label for="vencimento" class="form-label">Data Vencimento</label>
-                                    <input type="date" class="form-control @error('vencimento') is-invalid @enderror" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
-                                    @error('vencimento')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-12 col-sm-6 col-md-3 col-lg-3 mt-3 ms-1 input">
-                                    <label for="competencia" class="form-label">Competência</label>
-                                    <input type="month" value="{{old('competencia')}}" class="form-control @error('competencia') is-invalid @enderror" name="competencia"  id="competencia">
-                                    @error('competencia')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                            </div>
-                            
-                            
-                            
-                            <div class="mt-5">
-                                <button type="submit" class="btn botao" id="campo1">Gerar <i class="fad fa-calculator-alt"></i></button>
-                            </div>
+                        </form>
+                    </div>
+                </section>
+                
+                <form class="row g-3 " action="{{route('fatura.gera')}}" method="POST">
+                    <input type="hidden" name="tomador" value="{{old('tomador')}}" class="@error('tomador') is-invalid @enderror" id="tomador">
+                    @csrf
+
+                    <section class="section__content--fatura row">
+                        
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data Inicial</label>
+                            <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="ano_inicial">
+                            @error('ano_inicial')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                    </form>
+                                
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data Final</label>
+                            <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="ano_final">
+                            @error('ano_final')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+    
+                        <?php
+                            if ($valorrublica_fatura->vsnrofatura) {
+                                $fatura = $valorrublica_fatura->vsnrofatura + 1;
+                            }else{
+                                $fatura = 1;
+                            }
+                        ?>
+                        <input type="hidden" name="numero" value="{{$fatura}}">
+                        
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="text__adiantamento" class="form-label">Texto Adiantamento</label>
+                            <input type="text" class="form-control @error('text__adiantamento') is-invalid @enderror" name="text__adiantamento" value="{{old('text__adiantamento')}}" id="text__adiantamento" placeholder="Ex: Adiatamento de pagamento" maxlength="30"> 
+                            @error('text__adiantamento')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="valor__adiantamento" class="form-label">Valor Adiantamento</label>
+                            <input type="text" class="form-control @error('valor__adiantamento') is-invalid @enderror" name="valor__adiantamento" value="{{old('valor__adiantamento','0,00')}}" id="valor__adiantamento">
+                            @error('valor__adiantamento')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                            
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="texto__credito" class="form-label">Texto Crédito</label>
+                            <input type="text" class="form-control @error('texto__credito') is-invalid @enderror" name="texto__credito" value="{{old('texto__credito')}}" id="texto__credito" placeholder="Ex: Crédito de compra" maxlength="30"> 
+                                  @error('texto__credito')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="valor__creditos" class="form-label">Valor Créditos</label>
+                            <input type="text" class="form-control @error('valor__creditos') is-invalid @enderror" name="valor__creditos" value="{{old('valor__creditos','0,00')}}" id="valor__creditos">
+                                  @error('valor__creditos')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+    
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="vencimento" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i>Vencimento</label>
+                            <input type="date" class="form-control @error('vencimento') is-invalid @enderror" name="vencimento" value="{{old('vencimento')}}" id="vencimento">
+                            @error('vencimento')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                                
+                        <div class="col-12 col-md-6 mt-2">
+                            <label for="competencia" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Competência</label>
+                            <input type="month" value="{{old('competencia')}}" class="form-control @error('competencia') is-invalid @enderror" name="competencia"  id="competencia">
+                            @error('competencia')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+   
+                        <div class="div__botao--gerar--fatura d-flex justify-content-end align-items-end">
+                            <button type="submit" class="btn botao__calcular" id="campo1">Gerar <i class="fad fa-calculator-alt"></i></button>
+                        </div>
+                        
+                    </section>
+                </form>
             </div>
                 
                 
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-                <form class="row g-3" action="{{route('filtro.pesquisa.fatura')}}" method="POST">
-                    @csrf
-                    <div class="container text-start fs-5 fw-bold mt-4">Pesquisar <i class="fas fa-search"></i></div>
-                        
-                            <div class="d-flex justify-content-between mb-3 mt-0">
-                                <div class="col-md-6 col-12 mt-2 p-1 pesquisar ">
-                                    <div class="d-flex">
-                                    <label for="exampleDataList" class="form-label"></label>
-                                    <input class="form-control fw-bold text-dark pesquisa @error('pesquisa') is-invalid @enderror" list="datalistOptions" name="pesquisa" id="pesquisa">
-                                    <datalist id="datalistOptions">
-                                    </datalist>
-                                    <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                    <div class="text-center d-none" id="refres">
-                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                            <span class="visually-hidden">Carregando...</span>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    @error('pesquisa')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                   
-                            </div>
-            
-                            <div class="data mt-4">
-                                    <div class="col-12 col-sm-6 col-md-3 col-lg-3 input">
-                                    <label for="ano" class="form-label">Data Inicial</label>
-                                    <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
-                                    @error('ano_inicial1')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    </div>
-                                    
-                                    <div class="col-12 col-sm-6 col-md-3 col-lg-3  dataFinal input">
-                                    <label for="ano" class="form-label">Data Final</label>
-                                    <input type="date" class="form-control @error('ano_final1') is-invalid @enderror" name="ano_final1" value="" id="tano1">
-                                    @error('ano_inicial1')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    </div>
-                                </div>
-            
-                                <div class="mt-3">
-                                    <button type="submit" class="btn botao filtrar" id="">Filtrar <i class="fas fa-filter"></i></button>
-                                </div>
-
+            <div class="tab-pane fade" id="lista-fatura" role="tabpanel" aria-labelledby="lista-fatura-tab">
+                
+                <h1 class="title__fatura">Lista de Faturas <i class="fad fa-calculator"></i></h1>
+                
+                <section class="section__search">
+                    <div class="col-md-5">
+                        <form action="" method="GET">
+                            
+                            <div class="d-flex">
                                 
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" value="{{old('pesquisa')}}" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                <datalist id="listapesquisa"></datalist>
 
+                                <input type="hidden" name="codicao" value="">
+                                
+                                <button type="submit" class="btn botao__search">
+                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                </button>
+
+                            </div>
+                            
+                        </form>
+                    </div>
+                </section>
+                
+                <section class="section__filtro--fatura row">
+                    <form class="row g-3" action="{{route('filtro.pesquisa.fatura')}}" method="POST">
+                        @csrf
+
+                        <div class="col-12 col-md-3">
+                            <label for="ano" class="form-label">Competência</label>
+                            <input type="month" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
+                        </div>
+
+                        <div class="col-md-2 align-self-center pt-4">
+                            <button type="submit" class="btn botao">Filtrar <i class="fad fa-filter"></i></button>
+                        </div>
+    
+                        
                     </form>
+                </section>
                     
                         <section>
                             <div class="d-flex justify-content-end">
@@ -374,8 +351,7 @@
 
         </div>
     </div>
-        
-        </main>
+</main>
 
 
         <script>
@@ -415,7 +391,7 @@
             }
             
         
-            var Back = document.getElementById('pills-home-tab');
+            var Back = document.getElementById('gerar-fatura-tab');
             Back.addEventListener("click", function(){
                localStorage.setItem('Backft', 'backpill1');
                
@@ -427,14 +403,14 @@
                
         //    })
            
-           var Back2 = document.getElementById('pills-profile-tab');
+           var Back2 = document.getElementById('lista-fatura-tab');
             Back2.addEventListener("click", function(){
                localStorage.setItem('Backft', 'backpill2');
                
            })
            
-           backActive =  document.getElementById("pills-profile");
-           backActive1 =  document.getElementById("pills-home");
+           backActive =  document.getElementById("lista-fatura");
+           backActive1 =  document.getElementById("gerar-fatura");
         //    backActive2 =  document.getElementById("pills-contact");
 
             voltar = localStorage.getItem("Backft");
@@ -445,24 +421,24 @@
                 Back.classList.add("active");
                 backActive1.classList.add("show", "active");
                 backActive.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-home-tab").click();
+                // backActive2.classList.remove("show", "active");
+                document.getElementById("gerar-fatura-tab").click();
             }
 
             if(voltar === "backpill1"){
                 Back.classList.add("active");
                 backActive1.classList.add("show", "active");
                 backActive.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-home-tab").click();
+                // backActive2.classList.remove("show", "active");
+                document.getElementById("gerar-fatura-tab").click();
                 
 
             }else if (voltar === "backpill2"){
                 Back2.classList.add("active");
                 backActive.classList.add("show", "active");
                 backActive1.classList.remove("show", "active");
-                backActive2.classList.remove("show", "active");
-                document.getElementById("pills-profile-tab").click();
+                // backActive2.classList.remove("show", "active");
+                document.getElementById("lista-fatura-tab").click();
 
             }   
             // else if (voltar === "backpill3"){

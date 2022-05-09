@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Fatura extends Model
 {
     protected $fillable = [
-        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia', 'tomador_id', 'empresa_id'
+        'fsnumero', 'fsinicio', 'fsfinal', 'fsvencimento','fscompetencia','fsfolhar','fstrabalhador', 'tomador_id', 'empresa_id'
     ];
     public function tomador()
     {
@@ -33,6 +33,10 @@ class Fatura extends Model
     {
         return $this->hasMany(FaturaTotal::class);
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
     public function cadastro($dados)
     {
         return Fatura::create([
@@ -41,6 +45,8 @@ class Fatura extends Model
             'fsfinal'=>$dados['ano_final'],
             'fsvencimento'=>$dados['vencimento'],
             'fscompetencia'=>$dados['competencia'],
+            'fstrabalhador'=>$dados['trabalhador'],
+            'fsfolhar'=>$dados['folhar'],
             'tomador_id'=>$dados['tomador'],
             'empresa_id'=>$dados['empresa'],
         ]);

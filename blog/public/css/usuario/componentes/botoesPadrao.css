@@ -78,6 +78,23 @@
     transform: scale(1.02);
 }
 
+.botao__alterar{
+    background-color: #388334;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 200ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.botao__alterar:hover{
+    background-color: #193A17;
+    color: white;
+    transition: 200ms ease-in-out;
+    transform: scale(1.06);
+}
+
 
 .pill__item{
     background-color: #525251;

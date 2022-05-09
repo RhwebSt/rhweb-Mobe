@@ -21,7 +21,7 @@ class FolhaAnaliticaController extends Controller
         $folhar = new Folhar;
         $tabelhapreco = new TabelaPreco;
         $rublica = new Rublica;
-        try {
+        
         $folhas = $folhar->buscaFolhaAnalitica($id);
        
         $rublicas = $rublica->listaGeral();
@@ -86,6 +86,7 @@ class FolhaAnaliticaController extends Controller
         
         $pdf = PDF::loadView('folhaAnalitica',compact('sindicator','seguro','inss','inss_sobre13','irrf','salario13','vt','va','ferias','dsr','adiantamento','vale','producao','folhas'));
         return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA.pdf');
+        try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera a folha.']);
         }

@@ -232,7 +232,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center dsr">
                                 @foreach($dsr as $d => $valor_dsr)
-                                    @if($valor_dsr->trabalhador === $valor->trabalhador)
+                                    @if($valor_dsr->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_dsr->vencimento?number_format((float)$valor_dsr->vencimento, 2, ',', '.'):''}}
                                       <?php $resumo_geral['dsr'] += $valor_dsr->vencimento;?>
                                     @endif
@@ -240,7 +240,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
                                 @foreach($ferias as $d => $valor_ferias)
-                                    @if($valor_ferias->trabalhador === $valor->trabalhador)
+                                    @if($valor_ferias->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_ferias->vencimento?number_format((float)$valor_ferias->vencimento, 2, ',', '.'):''}}
                                       <?php $resumo_geral['Férias'] += $valor_ferias->vencimento;?>
                                     @endif
@@ -248,7 +248,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center vt">
                                 @foreach($vt as $d => $valor_vt)
-                                    @if($valor_vt->trabalhador === $valor->trabalhador)
+                                    @if($valor_vt->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_vt->vencimento?number_format((float)$valor_vt->vencimento, 2, ',', '.'):''}}
                                       <?php $resumo_geral['VT'] += $valor_vt->vencimento;?>
                                     @endif
@@ -256,7 +256,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center va">
                                 @foreach($va as $d => $valor_va)
-                                    @if($valor_va->trabalhador === $valor->trabalhador)
+                                    @if($valor_va->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_va->vencimento?number_format((float)$valor_va->vencimento, 2, ',', '.'):''}}
                                       <?php $resumo_geral['VA'] += $valor_va->vencimento;?>
                                     @endif
@@ -264,7 +264,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center decimo">
                                 @foreach($salario13 as $d => $valor_salario13)
-                                    @if($valor_salario13->trabalhador === $valor->trabalhador)
+                                    @if($valor_salario13->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_salario13->vencimento?number_format((float)$valor_salario13->vencimento, 2, ',', '.'):''}}
                                       <?php $resumo_geral['13º Salário'] += $valor_salario13->vencimento;?>
                                     @endif
@@ -293,7 +293,7 @@
                         <tr>
                             <td class="border-bottom  border-left text-bold small__font text-center inss__dec">
                                 @foreach($inss_sobre13 as $d => $valor_inss_sobre13)
-                                    @if($valor_inss_sobre13->trabalhador === $valor->trabalhador)
+                                    @if($valor_inss_sobre13->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_inss_sobre13->desconto?number_format((float)$valor_inss_sobre13->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['INSS 13º Sal'] += $valor_inss_sobre13->desconto;?>
                                     @endif
@@ -301,7 +301,7 @@
                             </td>
                             <td class="border-bottom text-bold border-left small__font text-center producao1">
                                 @foreach($irrf as $d => $valor_irrf)
-                                    @if($valor_irrf->trabalhador === $valor->trabalhador)
+                                    @if($valor_irrf->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_irrf->desconto?number_format((float)$valor_irrf->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['IRRF'] += $valor_irrf->desconto;?>
                                     @endif
@@ -309,7 +309,7 @@
                             </td>
                             <td class="border-bottom text-bold border-left small__font text-center dsr">
                                 @foreach($inss as $d => $valor_inss)
-                                    @if($valor_inss->trabalhador === $valor->trabalhador)
+                                    @if($valor_inss->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_inss->desconto?number_format((float)$valor_inss->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['INSS'] += $valor_inss->desconto;?>
                                     @endif
@@ -317,7 +317,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
                                 @foreach($vale as $valhes)
-                                    @if($valhes->trabalhador === $valor->trabalhador)
+                                    @if($valhes->trabalhador_id === $valor->trabalhador_id)
                                       {{$valhes->desconto?number_format((float)$valhes->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['Vale'] += $valhes->desconto;?>
                                     @endif
@@ -325,7 +325,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center vt">
                                 @foreach($seguro as $d => $valor_seguro)
-                                    @if($valor_seguro->trabalhador === $valor->trabalhador)
+                                    @if($valor_seguro->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_seguro->desconto?number_format((float)$valor_seguro->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['Seguro'] += $valor_seguro->desconto;?>
                                     @endif
@@ -333,7 +333,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center va">
                                 @foreach($sindicator as $d => $valor_sindicator)
-                                    @if($valor_sindicator->trabalhador === $valor->trabalhador)
+                                    @if($valor_sindicator->trabalhador_id === $valor->trabalhador_id)
                                       {{$valor_sindicator->desconto?number_format((float)$valor_sindicator->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['C. Sindical'] += $valor_sindicator->desconto;?>
                                     @endif
@@ -341,7 +341,7 @@
                             </td>
                             <td class="border-top border-bottom border-left text-bold small__font text-center decimo">
                                 @foreach($adiantamento as $adiantamentos)
-                                    @if($adiantamentos->trabalhador === $valor->trabalhador)
+                                    @if($adiantamentos->trabalhador_id === $valor->trabalhador_id)
                                       {{$adiantamentos->desconto?number_format((float)$adiantamentos->desconto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['Adiantamento'] += $adiantamentos->desconto;?>
                                     @endif

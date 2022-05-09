@@ -55,6 +55,7 @@ class calculoFolhaGeralController extends Controller
         $user = auth()->user();
         $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
         $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
+        try {
         $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
@@ -474,14 +475,14 @@ class calculoFolhaGeralController extends Controller
                         }
                     }
                     $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
-                    if (isset($boletim['horanormal']['valor'])) {
-                        $horasnormais = $boletim['horanormal']['valor'];
+                    if (isset($boletim['horanormal']['quantidade'])) {
+                        $horasnormais = $boletim['horanormal']['quantidade'];
                     }else{
                         $horasnormais = 0;
                     }
 
                     if (isset($boletim['diarianormal']['valor'])) {
-                        $diariasnormais = $boletim['diarianormal']['valor'];
+                        $diariasnormais = $boletim['diarianormal']['quantidade'];
                     }else{
                         $diariasnormais = 0;
                     }
@@ -489,13 +490,13 @@ class calculoFolhaGeralController extends Controller
                     $vt =  $this->rublica->buscaRublicaUnidade('Vale transporte');
                     $boletim['vt']['codigos'] = $vt->rsrublica;
                     $boletim['vt']['descricao'] = $vt->rsdescricao;
-                    $boletim['vt']['quantidade'] = $tomador_cartao_ponto_horas;
+                    $boletim['vt']['quantidade'] = ceil($tomador_cartao_ponto_horas);
                     $boletim['vt']['valor'] = $tomadores->incidefolhar[0]->instransporte * ceil($tomador_cartao_ponto_horas);
                     $boletim['vencimento'] +=  $boletim['vt']['valor'];
                     $va =  $this->rublica->buscaRublicaUnidade('Vale alimentação');
                     $boletim['va']['codigos'] = $va->rsrublica;
                     $boletim['va']['descricao'] = $va->rsdescricao;
-                    $boletim['va']['quantidade'] = $tomador_cartao_ponto_horas;
+                    $boletim['va']['quantidade'] = ceil($tomador_cartao_ponto_horas);
                     $boletim['va']['valor'] = $tomadores->incidefolhar[0]->insalimentacao * ceil($tomador_cartao_ponto_horas);
                     // dd($tomador_cartao_ponto_horas);
                     $boletim['vencimento'] +=  $boletim['va']['valor'];
@@ -893,14 +894,14 @@ class calculoFolhaGeralController extends Controller
                    
                     $boletim['vencimento'] = $boletim['servico'];
                     $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
-                    if (isset($boletim['horanormal']['valor'])) {
-                        $horasnormais = $boletim['horanormal']['valor'];
+                    if (isset($boletim['horanormal']['quantidade'])) {
+                        $horasnormais = $boletim['horanormal']['quantidade'];
                     }else{
                         $horasnormais = 0;
                     }
 
-                    if (isset($boletim['diarianormal']['valor'])) {
-                        $diariasnormais = $boletim['diarianormal']['valor'];
+                    if (isset($boletim['diarianormal']['quantidade'])) {
+                        $diariasnormais = $boletim['diarianormal']['quantidade'];
                     }else{
                         $diariasnormais = 0;
                     }
@@ -908,13 +909,13 @@ class calculoFolhaGeralController extends Controller
                     $vt =  $this->rublica->buscaRublicaUnidade('Vale transporte');
                     $boletim['vt']['codigos'] = $vt->rsrublica;
                     $boletim['vt']['descricao'] = $vt->rsdescricao;
-                    $boletim['vt']['quantidade'] = $tomador_cartao_ponto_horas;
+                    $boletim['vt']['quantidade'] = ceil($tomador_cartao_ponto_horas);
                     $boletim['vt']['valor'] = $tomadores->incidefolhar[0]->instransporte * ceil($tomador_cartao_ponto_horas);
                     $boletim['vencimento'] +=  $boletim['vt']['valor'];
                     $va =  $this->rublica->buscaRublicaUnidade('Vale alimentação');
                     $boletim['va']['codigos'] = $va->rsrublica;
                     $boletim['va']['descricao'] = $va->rsdescricao;
-                    $boletim['va']['quantidade'] = $tomador_cartao_ponto_horas;
+                    $boletim['va']['quantidade'] = ceil($tomador_cartao_ponto_horas);
                     $boletim['va']['valor'] = $tomadores->incidefolhar[0]->insalimentacao * ceil($tomador_cartao_ponto_horas);
                     // dd($tomador_cartao_ponto_horas);
                     $boletim['vencimento'] +=  $boletim['va']['valor'];
@@ -1307,7 +1308,7 @@ class calculoFolhaGeralController extends Controller
             }
             
             $valorcalculo =   $this->valorcalculo->listaIntegral($folhar['id'],$basecalculos->trabalhador_id,$nao);
-            // dd($valorcalculo);
+            
             foreach ($valorcalculo as $key => $valorcalculos) {
                 $this->valorcalculo->create([
                     'vicodigo'=> $valorcalculos->vicodigo,
@@ -1322,8 +1323,47 @@ class calculoFolhaGeralController extends Controller
            
        }
       
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+      } catch (\Throwable $th) {
+        $this->valorrublica->where('id', $user->empresa_id)
+        ->chunkById(100, function ($valorrublica) use ($user) {
+            foreach ($valorrublica as $valorrublicas) {
+                $numero = $valorrublicas->vsnrofolha -= 1;
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
+                ->update(['vsnrofolha'=>$numero]);
+            }
+        });
+        $this->folhar->deletar($folhar['id']);
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível cadastra o registro.']);
+      }
        
-       dd($valorcalculo);
+       
+    }
+    public function destroy($id)
+    {
+        try {
+            // $basecalculo_id = $this->basecalculo->buscaId($id);
+            // $base_id = [];
+            // foreach($basecalculo_id as $i=>$basevalor){
+            //     array_push($base_id,$basevalor->id);
+            // }
+            // $this->valorcalculo->deletar($base_id);
+            // $this->relacaodia->deletar($base_id);
+            // $this->basecalculo->deletar($base_id);
+            $user = auth()->user();
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    $numero = $valorrublicas->vsnrofolha -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrofolha'=>$numero]);
+                }
+            });
+            $this->folhar->deletar($id);
+            return redirect()->back()->withSuccess('Deletado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+        }
     }
     public function calculardia($horas,$valores)
     {

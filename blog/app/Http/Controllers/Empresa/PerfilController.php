@@ -120,8 +120,7 @@ class PerfilController extends Controller
     public function indexFoto()
     {
         $user = Auth::user();
-        $empresas = $this->empresa->buscaUnidadeEmpresa($user->empresa);
-        // dd($empresas);
+        $empresas = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
         return view('usuarios.empresa.alteracaoFoto',compact('user','empresas'));
     }
     public function editFoto(Request $request)

@@ -53,6 +53,10 @@ class Empresa extends Model
     {
         return $this->belongsTo(Lancamentotabela::class);
     }
+    public function fatura()
+    {
+        return $this->hasMany(Fatura::class);
+    }
     public function buscaUnidadeEmpresa($id)
     {
         return DB::table('empresas')

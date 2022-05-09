@@ -20,7 +20,6 @@
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/notificacaoUser.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
-        <link href="{{url('/css/alteracaoSenha.css')}}" rel="stylesheet" />
         <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/epi/epi.css')}}">
@@ -32,6 +31,8 @@
         <link rel="stylesheet" href="{{url('/css/usuario/calculoFolha/calculoFolha.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/descontos/descontos.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/reciboAvulso/reciboAvulso.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/usuario/alteraSenha.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/fatura/fatura.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

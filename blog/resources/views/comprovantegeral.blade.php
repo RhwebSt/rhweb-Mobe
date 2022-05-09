@@ -265,10 +265,8 @@
         <tr>
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
             <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:
-                <?php
-                    $data = explode('-',$folhar->fsfinal)
-                ?>
-                {{$data[1]}}/{{$data[0]}}
+               
+                {{date('d/m/Y',strtotime($folhar->fsfinal))}}
             </td>
             <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$folhar->escnpj}}</td>
         </tr>
@@ -821,16 +819,12 @@
         <tr>
             <td class="declaracao fontDeclaracao border-top border-left border-right">Declaro ter recebido a importância líquida neste recibo do periodo 
             <strong>
-                <?php
-                    $data_inicial = explode('-',$folhar->fsinicio);
-                    echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
-                ?>
+               
+                {{date('d/m/Y',strtotime($folhar->fsinicio))}}
             </strong>  a 
             <strong>
-                <?php
-                    $data_final = explode('-',$folhar->fsfinal);
-                    echo($data_final[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
-                ?>
+               
+                 {{date('d/m/Y',strtotime($folhar->fsfinal))}}
             <strong> 
             </td>
         </tr>

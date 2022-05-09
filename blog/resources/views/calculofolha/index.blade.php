@@ -214,7 +214,7 @@
                                     <tr class="tr__body">               
                                         <td class="td__body text-nowrap col" style="width:115px;">
                                             @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar)
+                                                @if($folhar->id === $tomador->folhar_id)
                                                     {{$folhar->fscodigo}}
                                                 @endif
                                             @endforeach
@@ -226,7 +226,7 @@
                                         
                                         <td class="td__body text-nowrap col"style="width:200px">
                                             @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar)
+                                                @if($folhar->id === $tomador->folhar_id)
                                                 <?php
                                                     $data = explode('-',$folhar->fsinicio)
                                                 ?>
@@ -237,7 +237,7 @@
                                         
                                         <td class="td__body text-nowrap col" style="width:200px">
                                             @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar)
+                                                @if($folhar->id === $tomador->folhar_id)
                                                 <?php
                                                     $data = explode('-',$folhar->fsfinal)
                                                 ?>
@@ -261,7 +261,7 @@
                                         <td class="td__body text-nowrap col" style="width:60px;">
                                             
                                             @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar)
+                                                @if($folhar->id === $tomador->folhar_id)
                                                     <a class="btn btn__imprimir" href="{{route('calculo.folha.tomador.imprimir',[base64_encode($folhar->id),base64_encode($tomador->id)])}}"><i class="icon__color fad fa-print"></i></a>
                                                 @endif
                                             @endforeach
@@ -276,7 +276,7 @@
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="tomador_trabalhador{{$t}}" aria-labelledby="offcanvasExampleLabel">
                                             
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar}}">Imprimir <i class="fal fa-print-search"></i></h5>
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar_id}}">Imprimir <i class="fal fa-print-search"></i></h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
@@ -292,7 +292,7 @@
                                                                 <div class="d-flex">
                                                                     <label for="exampleDataList" class="form-label"></label>
                                                                     @foreach($folhas as $folhar)
-                                                                        @if($folhar->id === $tomador->folhar)
+                                                                        @if($folhar->id === $tomador->folhar_id)
                                                                         <input type="hidden" name="folhar" value="{{$folhar->id}}">
                                                                         
                                                                         @endif
@@ -303,7 +303,7 @@
                                                                     <input class="form-control fw-bold text-dark pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador1" id="trabalhador1">
                                                                     <datalist id="listatomador{{$folhar->id}}"> 
                                                                     @foreach($trabalhadores as $trabalhador)
-                                                                        @if($trabalhador->folhar === $folhar->id && $folhar->id === $tomador->folhar)
+                                                                        @if($trabalhador->folhar_id === $folhar->id && $folhar->id === $tomador->folhar_id)
                                                                             <option value="{{$trabalhador->tsnome}}">
                                                                         @endif
                                                                     @endforeach
@@ -333,7 +333,7 @@
                                         <td class="td__body text-nowrap col" style="width:50px;">
                                                
                                                 @foreach($folhas as $folhar)
-                                                    @if($folhar->id === $tomador->folhar)
+                                                    @if($folhar->id === $tomador->folhar_id)
                                                     <a class="btn btn__analitico" href="{{route('tomador.calculo.folha.analitica',[$folhar->id,$tomador->id])}}">
                                                         <i class="icon__color fad fa-analytics"></i>
                                                     </a>
@@ -352,7 +352,7 @@
                                                 }
                                             ?>
                                             @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar)
+                                                @if($folhar->id === $tomador->folhar_id)
                                                     <a href="{{route('gera.txt.sefip',[base64_encode($tomador->id),base64_encode($folhar->id)])}}" class="btn btn__sefip $dias">
                                                         <i class="icon__color fad fa-file-alt"></i>
                                                     </a>
@@ -521,7 +521,7 @@
                                                                 
                                                                     <datalist id="lista{{$folhar->id}}">
                                                                         @foreach($trabalhadores as $trabalhador)
-                                                                            @if($trabalhador->folhar === $folhar->id)
+                                                                            @if($trabalhador->folhar_id === $folhar->id)
                                                                                 <option value="{{$trabalhador->tsnome}}">
                                                                             @endif
                                                                         @endforeach
