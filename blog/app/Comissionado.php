@@ -9,6 +9,10 @@ class Comissionado extends Model
     protected $fillable = [
         'csmatricula','csindece','trabalhador_id','tomador_id'
     ];
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastro($dados)
     {
         

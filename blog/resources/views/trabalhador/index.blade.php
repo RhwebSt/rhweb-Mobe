@@ -899,7 +899,7 @@
       }
       $('#icon').addClass('d-none').next().removeClass('d-none')
       $.ajax({
-        url: "{{url('trabalhador')}}/pesquisa/" + dados,
+        url: "{{url('trabalhador')}}/pesquisa/" + dados, 
         type: 'get',
         contentType: 'application/json',
         success: function(data) {

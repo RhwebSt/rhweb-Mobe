@@ -529,9 +529,9 @@
             <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[7]->dsdescricao}}</td>
                 <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[7]->fiindece?number_format((float)$fatura->faturaprincipal[7]->fiindece, 2, ',', '.'):''}}</td>
                 <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[7]->fivalor?number_format((float)$fatura->faturaprincipal[7]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturatotal[4]->fstitulo}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturatotal[4]->fiindece?number_format((float)$fatura->faturatotal[4]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturatotal[4]->fivalor?number_format((float)$fatura->faturatotal[4]->fivalor, 2, ',', '.'):''}}</td>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold destaque"></td>
+                <td class="small__font border-bottom border-left border-right border-top indice text-center destaque"></td>
+                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold destaque"></td>
             </tr>
         </table>
         

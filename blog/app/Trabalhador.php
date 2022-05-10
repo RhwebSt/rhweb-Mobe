@@ -37,6 +37,10 @@ class Trabalhador extends Model
     {
         return $this->hasMany(Endereco::class);
     }
+    public function comissionado()
+    {
+        return $this->hasMany(Comissionado::class);
+    }
     public function depedente()
     {
         return $this->hasMany(Dependente::class);

@@ -266,7 +266,7 @@
             <td class="border-left title-recibo text-bold border-bottom border-top titlename">RECIBO DE PAGAMENTO DE SALÁRIO</td>
             <td class=" small__font text-bold text-center border-top border-bottom comp">Competência:
                 
-                {{date('d/m/Y',$folhar->fsfinal)}}
+                {{date('d/m/Y',strtotime($folhar->fsfinal))}}
             </td>
             <td class="border-top border-right small__font text-bold cnpj text-center border-bottom cnpj">CNPJ:{{$folhar->escnpj}}</td>
         </tr>

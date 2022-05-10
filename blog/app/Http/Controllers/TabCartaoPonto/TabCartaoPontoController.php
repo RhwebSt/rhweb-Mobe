@@ -126,6 +126,7 @@ class TabCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all(); 
+        // dd($dados);
         $user = auth()->user();
         $today = Carbon::today();
         if (strtotime($dados['data']) > strtotime($today) ) {

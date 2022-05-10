@@ -14,12 +14,12 @@
                             
                             <div class="d-flex">
                                 
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
 
                                 <input type="hidden" name="codicao" value="{{isset($trabalhador->id)?$trabalhador->id:''}}">
                                 
-                                <button type="submit" class="btn botao__search">
+                                <button type="submit" class="btn botao__search modal-botao">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                 </button>
 

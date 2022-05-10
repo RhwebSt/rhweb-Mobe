@@ -57,7 +57,7 @@
         <form class="row g-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="">
-            
+            <input type="hidden" name="feriado">
             <section class="section__botoes--boletim-tabela">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">

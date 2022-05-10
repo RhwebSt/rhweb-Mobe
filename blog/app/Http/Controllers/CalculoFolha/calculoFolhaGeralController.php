@@ -55,7 +55,7 @@ class calculoFolhaGeralController extends Controller
         $user = auth()->user();
         $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
         $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
-        try {
+        
         $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
@@ -202,11 +202,11 @@ class calculoFolhaGeralController extends Controller
             ];
             $comissionador = $this->comissionador
             ->where('tomador_id',$tomadores->id)
-            ->whereIn('trabalhador_id',$dados['id'])
+            // ->whereIn('trabalhador_id',$dados['id'])
             ->get();
             if ($comissionador->count() > 0) {
                 foreach ($comissionador as $key => $comissionados) {
-                    array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
+                    // array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
                     array_push($valor_comissionador['porcentagem'],$comissionados->csindece);
                 }
             }
@@ -454,7 +454,7 @@ class calculoFolhaGeralController extends Controller
                             if (!in_array($dados['dia'][$i],$dia['dias'])) {
                                 array_push($dia['dias'],$dados['dia'][$i]);
                                 array_push($dia['valor'],$dados['valor'][$i]);
-                                $boletim['salario'] = $dados['valor'][$i];
+                                $boletim['salario'] += $dados['valor'][$i];
                                 
                             }else{
                                 $key = array_search($dados['dia'][$i], $dia['dias']);
@@ -469,23 +469,25 @@ class calculoFolhaGeralController extends Controller
                     $indece = 0;
                     if ($comissionador->count() > 0) {
                         foreach ($comissionador as $key => $comissionados) {
-                            $indece += $comissionados->csindece;
+                            $indece = $comissionados->csindece;
                             $novovalor = $boletim['vencimento'] * ($comissionados->csindece/100);
                             array_push($valor_comissionador['valor'],$novovalor);
+                            array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
                         }
                     }
                     $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
-                    if (isset($boletim['horanormal']['quantidade'])) {
+                    if ($boletim['horanormal']['quantidade']) {
                         $horasnormais = $boletim['horanormal']['quantidade'];
                     }else{
                         $horasnormais = 0;
                     }
 
-                    if (isset($boletim['diarianormal']['valor'])) {
+                    if ($boletim['diarianormal']['quantidade']) {
                         $diariasnormais = $boletim['diarianormal']['quantidade'];
                     }else{
                         $diariasnormais = 0;
                     }
+                    // dd($horasnormais,$tomador_cartao_ponto_horas,$diariasnormais);
                     $tomador_cartao_ponto_horas =  $horasnormais / $tomador_cartao_ponto_horas + $diariasnormais;
                     $vt =  $this->rublica->buscaRublicaUnidade('Vale transporte');
                     $boletim['vt']['codigos'] = $vt->rsrublica;
@@ -590,6 +592,7 @@ class calculoFolhaGeralController extends Controller
                     $basecalculo = $this->basecalculo->cadastros($boletim);
                     $boletim['basecalculo'] = $basecalculo['id'];
                     $dia['basecalculo'] = $basecalculo['id'];
+                
                     for ($i=0; $i < count($dia['dias']); $i++) { 
                         $this->relacaodia->cadastros($dia,$i);
                     }
@@ -631,8 +634,14 @@ class calculoFolhaGeralController extends Controller
                     $this->valorcalculo->cadastroinss_decimoter($boletim);
                 }
             }
+            $trabalhador =  $this->comissionador
+            ->where('tomador_id',$tomadores->id)
+            ->with('trabalhador.depedente')
+            // ->whereIn('trabalhador_id',$dados['id'])
+            ->get();
+            // dd($valor_comissionador);
             foreach ($trabalhador as $t => $trabalhadores) {
-                if (in_array($trabalhadores->id,$valor_comissionador['id'])) {
+                
                     $boletim = [
                         'horanormal'=>[
                             'id'=>'',
@@ -774,18 +783,19 @@ class calculoFolhaGeralController extends Controller
                         'basecalculo'=>'',
                         'trabalhador'=>'',
                     ];
-                    $boletim['trabalhador'] = $trabalhadores->id;
-                    $dia['trabalhador'] = $trabalhadores->id;
+                    $boletim['trabalhador'] = $trabalhadores->trabalhador_id;
+                    $dia['trabalhador'] = $trabalhadores->trabalhador_id;
                     $novovalor = 0;
                     $indece = 0;
-                    if (count($valor_comissionador['valor']) > 0) {
-                        $chave =  array_search($trabalhadores->id, $valor_comissionador['id']);
-                        $novovalor = $valor_comissionador['valor'][$chave];
-                        $indece = $valor_comissionador['porcentagem'][$chave];
-                        $boletim['servico'] +=  $novovalor;
+                    foreach ($valor_comissionador['id'] as $chave => $valor_comissionados) {
+                        if ($trabalhadores->trabalhador_id === $valor_comissionados) {
+                            $novovalor += $valor_comissionador['valor'][$chave];
+                        }
                     }
+                    $boletim['servico'] +=  $novovalor;
+                    $indece = $valor_comissionador['porcentagem'][$t];
                     foreach ($dados['id'] as $i => $dado) {
-                        if ($dado == $trabalhadores->id) {
+                        if ($dado == $trabalhadores->trabalhador_id) {
                             if ($dados['descricao'][$i] == 'hora normal') {
                                 $boletim['horanormal']['descricao'] = $dados['descricao'][$i];
                                 $boletim['horanormal']['codigos'] = $dados['codigos'][$i];
@@ -894,13 +904,13 @@ class calculoFolhaGeralController extends Controller
                    
                     $boletim['vencimento'] = $boletim['servico'];
                     $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
-                    if (isset($boletim['horanormal']['quantidade'])) {
+                    if ($boletim['horanormal']['quantidade']) {
                         $horasnormais = $boletim['horanormal']['quantidade'];
                     }else{
                         $horasnormais = 0;
                     }
 
-                    if (isset($boletim['diarianormal']['quantidade'])) {
+                    if ($boletim['diarianormal']['quantidade']) {
                         $diariasnormais = $boletim['diarianormal']['quantidade'];
                     }else{
                         $diariasnormais = 0;
@@ -991,7 +1001,7 @@ class calculoFolhaGeralController extends Controller
                     
                     }
                     
-                    $boletim['depedente'] = $trabalhadores->depedente->count();
+                    $boletim['depedente'] = $trabalhadores->trabalhador->depedente->count();
                     $boletim['base_irrf'] = str_replace(',','.',$irrf_lista[0]->irdepedente) * $boletim['depedente'];
                     $boletim['base_irrf'] += $boletim['inss']['valor'] + $boletim['inss_sobre_ter']['valor'];
                     $boletim['base_irrf'] = $boletim['base_fgts'] -  $boletim['base_irrf'];
@@ -1048,7 +1058,7 @@ class calculoFolhaGeralController extends Controller
                     $this->valorcalculo->cadastroinss($boletim);
                     $this->valorcalculo->cadastrocomissionador($boletim);
                     $this->valorcalculo->cadastroinss_decimoter($boletim);
-                }
+                
             }
            
         }
@@ -1323,7 +1333,8 @@ class calculoFolhaGeralController extends Controller
            
        }
       
-        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        try { 
       } catch (\Throwable $th) {
         $this->valorrublica->where('id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {

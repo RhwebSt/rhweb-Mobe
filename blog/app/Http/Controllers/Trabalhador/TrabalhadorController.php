@@ -75,6 +75,7 @@ class TrabalhadorController extends Controller
             return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
             $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+            
             return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }

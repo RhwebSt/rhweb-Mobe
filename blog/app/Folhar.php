@@ -13,6 +13,10 @@ class Folhar extends Model
     {
         return $this->hasMany(BaseCalculo::class);
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
     public function cadastro($dados,$empresa){
         return Folhar::create([
             'fscodigo'=>$dados['codigo'],
