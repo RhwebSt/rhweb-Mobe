@@ -124,15 +124,15 @@ class Empresa extends Model
     public function EmpresaSefip($id)
     {
         return DB::table('empresas')
-            ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa')
-            ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa')
+            ->join('enderecos', 'empresas.id', '=', 'enderecos.empresa_id')
+            ->join('valores_rublicas', 'empresas.id', '=', 'valores_rublicas.empresa_id')
             ->select(
                 'empresas.*',
                 'enderecos.*',
             )
             ->where(function ($query) use ($id) {
-                $user = auth()->user();
-                $query->where('empresas.id', $user->empresa);
+                
+                $query->where('empresas.id', $id);
                 // if ($user->hasPermissionTo('admin')) {
                 //     $query->where('empresas.id',$id);
                 // }else{

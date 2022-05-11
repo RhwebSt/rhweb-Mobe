@@ -15,6 +15,7 @@ use App\Inss;
 use App\IncideFolhar;
 use App\CartaoPonto;
 use App\Irrf;
+use App\BaseCalculo;
 use App\Folhar;
 use App\ValorCalculo;
 use App\RelacaoDia;
@@ -22,13 +23,15 @@ use App\Leis;
 use PDF;
 class calculoFolhaPorTrabalhadorController extends Controller 
 {
-    private $leis,$folhar,$valorcalculo,$relacaodia;
+    private $leis,$folhar,$valorcalculo,$relacaodia,$basecalculo,$trabalhador;
     public function __construct()
     {
         $this->leis = new Leis;
         $this->folhar = new Folhar;
         $this->valorcalculo = new ValorCalculo;
         $this->relacaodia = new RelacaoDia;
+        $this->basecalculo = new BaseCalculo;
+        $this->trabalhador = new Trabalhador;
     }
 //     public function calculoFolhaPorTrabalhador($trabalhador = null,$tomador = null,$datainicio,$datafinal)
 //     {
@@ -463,19 +466,34 @@ class calculoFolhaPorTrabalhadorController extends Controller
     {
         
         $dados = $request->all();
-        try {
+        $trabalhador = $this->trabalhador->where([
+            ['tsnome',$dados['trabalhador']],
+            ['empresa_id',$dados['empresa']]
+        ])
+        ->first();
+            $recibo = $this->basecalculo->where([
+                ['folhar_id',$dados['folhar']],
+                ['trabalhador_id',$trabalhador->id],
+                ['tomador_id',null]
+            ])
+            ->with(['trabalhador.documento','trabalhador.categoria','trabalhador.bancario','folhar.empresa','valorcalculo','relacaodia'])
+            ->first();
+            
             $leis = $this->leis->categorias();
-            $folhars = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],null);
-            if (!$folhars) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Nenhuma folha foi lançada para esse trabalhador.']);
-            }
-            if ($folhars->bivalorliquido <= 0) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não possui um valor suficiente para gerar.']);
-            }
-            $valorcalculos = $this->valorcalculo->buscaImprimirTrabalhador($folhars->id);
-            $relacaodias = $this->relacaodia->buscaImprimirTrabalhador($folhars->id);
-            $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('folhars','leis','valorcalculos','relacaodias'));
+            // dd($leis);
+            // $folhars = $this->folhar->buscaTrabalhadorUnidade($dados['folhar'],$dados['trabalhador'],null);
+            // if (!$folhars) {
+            //     return redirect()->back()->withInput()->withErrors(['false'=>'Nenhuma folha foi lançada para esse trabalhador.']);
+            // }
+            // if ($folhars->bivalorliquido <= 0) {
+            //     return redirect()->back()->withInput()->withErrors(['false'=>'Não possui um valor suficiente para gerar.']);
+            // }
+            // $valorcalculos = $this->valorcalculo->buscaImprimirTrabalhador($folhars->id);
+            // $relacaodias = $this->relacaodia->buscaImprimirTrabalhador($folhars->id);
+            // 
+            $pdf = PDF::loadView('comprovantePagDiaTrabalhador',compact('recibo','leis'));
             return $pdf->setPaper('a4')->stream('RECIBO PAGAMENTO SALÁRIO.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

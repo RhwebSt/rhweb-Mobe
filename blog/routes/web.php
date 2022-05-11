@@ -18,7 +18,7 @@ Route::resource('login','Login\\LoginController')->names('login');
 Route::resource('administrador/login','Administrador\\Login\\LoginController')->names('login.administrador');
 Route::get('usuario/cadastro','User\\UserController@index');
 Route::resource('cadastro/empresa','Empresa\\EmpresaController')->only(['store'])->names('cadastro.empresa');
-
+Route::resource('user','User\\UserController')->names('user'); 
 // Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
 Route::get('email',function()
 {
@@ -161,7 +161,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('avuso/relatorio/{id}/{inicio}/{final}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
 
-    Route::get('gera/txt/sefip/{tomador}/{folha}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
+    Route::get('gera/txt/sefip/{tomador}/{folha}/{empresa}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
@@ -169,6 +169,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
     Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
     Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
+    Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
@@ -195,14 +196,14 @@ Route::group(['middleware' => 'auth'], function () {
        
     });
     Route::group(['middleware' => ['permission:Super Admin']], function () {
-        Route::resource('user','User\\UserController')->names('user'); 
+        
         Route::resource('inss','Administrador\\Inss\\InssController')->names('inss');
         Route::get('ordem/inss/{ano?}','Administrador\\Inss\\InssController@ordem')->name('inss.ordem');
         Route::resource('irrf','Administrador\\Irrf\\IrrfController')->names('irrf');
         Route::get('ordem/irrf/{ano?}','Administrador\\Irrf\\IrrfController@ordem')->name('irrf.ordem');
         Route::resource('rublica','Administrador\\Rublica\\RublicaController')->names('rublica');
         Route::get('relatorio/rublica','Administrador\\Rublica\\relatorioRublicaController@relatorio')->name('relatorio.rublica');
-        Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
+        
         Route::get('ordem/rublica/{ordem}/{id?}','Administrador\\Rublica\\RublicaController@ordem')->name('ordem.rublica');
         Route::get('administrador/logout','Administrador\\Login\\LoginController@logout')->name('logout.administrador');
         

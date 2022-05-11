@@ -618,8 +618,8 @@ class ValorCalculo extends Model
     }
     public function buscaImprimirTrabalhador($id)
     {
-        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','basecalculo_id')
-        ->where('basecalculo_id',$id)
+        return ValorCalculo::select('vicodigo','vsdescricao','vireferencia','vivencimento','videscinto','base_calculo_id')
+        ->where('base_calculo_id',$id)
         ->orderBy('vicodigo', 'asc')
         ->get();
     }
@@ -664,7 +664,7 @@ class ValorCalculo extends Model
     public function sefipInss($basecalculo,$codigo)
     {
         return ValorCalculo::where([
-            ['basecalculo_id',$basecalculo],
+            ['base_calculo_id',$basecalculo],
             ['vicodigo',$codigo],
         ])
         ->first();

@@ -201,7 +201,7 @@ class Folhar extends Model
                 ['folhars.id',$id],
                 ['trabalhadors.tsnome',$trabalhador],
                 ['base_calculos.tomador_id',$tomador],
-                ['trabalhadors.empresa_id', $user->empresa]
+                ['trabalhadors.empresa_id', $user->empresa_id]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {
@@ -333,7 +333,7 @@ class Folhar extends Model
             $query->where([
                 ['folhars.id',$id],
                 ['bancarios.bsbanco',$banco],
-                ['trabalhadors.empresa_id', $user->empresa]
+                ['trabalhadors.empresa_id', $empresas]
             ]);
 
             // if ($user->hasPermissionTo('admin')) {

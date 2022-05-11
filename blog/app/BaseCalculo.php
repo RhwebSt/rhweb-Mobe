@@ -25,6 +25,7 @@ class BaseCalculo extends Model
     {
         return $this->hasMany(RelacaoDia::class);
     }
+    
     public function cadastros($dados)
     {
         return BaseCalculo::create([

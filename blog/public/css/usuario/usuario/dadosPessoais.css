@@ -1,0 +1,21 @@
+:root{
+    --title-color--dados--pessoais: black;
+}
+
+.darkmode{
+    --title-color--dados--pessoais: white;
+}
+
+.section__botoes--dados--pessoais{
+    margin-top: 6%;
+}
+
+
+.title__dados--pessoais{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--title-color--dados--pessoais);
+}

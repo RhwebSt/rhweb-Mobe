@@ -151,7 +151,6 @@
                     @enderror
                 </div>
  
-
                 <div class="col-md-4">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror fw-bold"  value="{{old('email')}}" name="email" id="email">
@@ -169,6 +168,7 @@
                     @enderror
                 </div>
 
+                
 
             </div>
         </form>

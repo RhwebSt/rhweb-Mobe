@@ -19,8 +19,8 @@ class CreateRelacaoDiasTable extends Migration
             $table->float('rivalor',8,2)->nullable();
             $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
             $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
-            $table->unsignedInteger('basecalculo_id')->unsigned()->nullable();
-            $table->foreign('basecalculo_id')->references('id')->on('base_calculos')->onDelete('cascade');
+            $table->unsignedInteger('base_calculo_id')->unsigned()->nullable();
+            $table->foreign('base_calculo_id')->references('id')->on('base_calculos')->onDelete('cascade');
             $table->timestamps();
         });
     }

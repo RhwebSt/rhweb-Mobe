@@ -1,0 +1,84 @@
+.atalho__body{
+    background-color: lightgray;
+    color: black;
+    border-radius: 8px;
+    padding:10px;
+}
+
+.tecla__shift{
+    position: relative;
+    display: inline-block;
+    width:70px;
+    height: 30px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #282828, #202020);
+    box-shadow: inset -12px 0 12px rgba(0,0,0,0.75),
+    inset 0 -12px 12px rgba(0,0,0,0.25),
+    0 0 0 2px rgba(0,0,0,0.75),
+    2px 5px 6px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+
+
+.tecla__shift i {
+    position: relative;
+    color: #fff;
+    font-style: normal;
+}
+
+.tecla__normal{
+    position: relative;
+    display: inline-block;
+    width:40px;
+    height: 30px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #282828, #202020);
+    box-shadow: inset -12px 0 12px rgba(0,0,0,0.75),
+    inset 0 -12px 12px rgba(0,0,0,0.25),
+    0 0 0 2px rgba(0,0,0,0.75),
+    2px 5px 6px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+
+
+.tecla__normal i {
+    position: relative;
+    color: #fff;
+    font-style: normal;
+}
+
+.tecla__command{
+    position: relative;
+    display: inline-block;
+    width:105px;
+    height: 30px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #282828, #202020);
+    box-shadow: inset -12px 0 12px rgba(0,0,0,0.75),
+    inset 0 -12px 12px rgba(0,0,0,0.25),
+    0 0 0 2px rgba(0,0,0,0.75),
+    2px 5px 6px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+
+
+.tecla__command i {
+    position: relative;
+    color: #fff;
+    font-style: normal;
+}
+
+
+.title__atalhos{
+    text-align: center;
+    font-weight: 700;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    
+}

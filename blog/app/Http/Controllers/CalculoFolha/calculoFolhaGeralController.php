@@ -1141,6 +1141,7 @@ class calculoFolhaGeralController extends Controller
                 $base_irrf += $valorcalculo->desconto;
             }
             $base_irrf = $basecalculos->bifgts - $base_irrf;
+            $faxa = 0;
             foreach ($irrf_lista as $key => $irrf) {
                 $novoirrf = (float) $irrf->irsvalorfinal;
                 if ($base_irrf < $novoirrf && $key === 0) {

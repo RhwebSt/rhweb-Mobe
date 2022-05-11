@@ -20,7 +20,6 @@
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/notificacaoUser.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
-        <link href="{{url('/css/alteracaoFoto.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/epi/epi.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/tomador/tomador.css')}}">
@@ -32,6 +31,10 @@
         <link rel="stylesheet" href="{{url('/css/usuario/descontos/descontos.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/reciboAvulso/reciboAvulso.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/usuario/alteraSenha.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/usuario/atualizarEmpresa.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/usuario/atalhos.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/usuario/contador.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/usuario/dadosPessoais.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/fatura/fatura.css')}}">
 		<link rel="stylesheet" href="{{url('/css/feedback.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,15 +115,12 @@
                                 </a>
                                 
                                 <ul class="dropdown-menu" aria-labelledby="cadastro">
-                                    <li><a class="dropdown-item " href="{{ route('tomador.index') }}">Tomador</a></li>
-                                    <li><a class="dropdown-item" href="{{route('trabalhador.index')}}">Trabalhador</a></li>
-                                    
                                     @can('admin')
-                                    <li><a class="dropdown-item" href="{{route('usuario.create')}}">Cadastro de Acesso</a></li>
-                                    <li><a class="dropdown-item d-none" href="{{route('listaempresa.create')}}">Cadastro de Usuário</a></li>
+                                    <li><a class="dropdown-item" href="{{route('usuario.create')}}"><i class="fad fa-user-plus"></i> Cadastro de Acesso</a></li>
                                     @endcan
-                                    <li><a class="dropdown-item " href="{{route('comisionado.index')}}">Comissionado</a></li>
-                                    
+                                    <li><a class="dropdown-item " href="{{route('comisionado.index')}}"><i class="fad fa-percentage"></i> Comissionado</a></li>
+                                    <li><a class="dropdown-item " href="{{ route('tomador.index') }}"><i class="fad fa-industry"></i> Tomador</a></li>
+                                    <li><a class="dropdown-item" href="{{route('trabalhador.index')}}"><i class="fad fa-user-hard-hat"></i> Trabalhador</a></li>
                                 </ul>
                             </li>
     
@@ -132,16 +132,11 @@
                                 
                                 <ul class="dropdown-menu" aria-labelledby="rotinaMensal">
                                     
-                                    <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.index')}}">Boletim Cartão Ponto</a></li>
-                                    <li><a class="dropdown-item" href="{{route('tabcartaoponto.index')}}">Boletim com Tabela</a></li>
-                                    <li><a class="dropdown-item " href="{{route('calculo.folha.index')}}">Cálculo da Folha</a></li>
-                                    <li><a class="dropdown-item d-none" href="#">Boletim Extra</a></li>
-                                    <li><a class="dropdown-item" href="{{route('descontos.index')}}">Descontos</a></li>
-                                    <li><a class="dropdown-item d-none" href="#">Planilha de Fechamento- Boletins</a></li>
-                                    <li><a class="dropdown-item d-none" href="#">Rol dos Boletins</a></li>
-                                    <li><a class="dropdown-item d-none" href="#">Extrato Cartão Ponto por Trabalhador</a></li>
-                                    <li><a class="dropdown-item d-none" href="#">Recibos da Folha</a></li>
-                                 
+                                    <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.index')}}"><i class="fad fa-alarm-clock"></i> Boletim Cartão Ponto</a></li>
+                                    <li><a class="dropdown-item" href="{{route('tabcartaoponto.index')}}"><i class="fad fa-sack-dollar"></i> Boletim com Tabela</a></li>
+                                    <li><a class="dropdown-item " href="{{route('calculo.folha.index')}}"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</a></li>
+                                    <li><a class="dropdown-item" href="{{route('descontos.index')}}"><i class="fad fa-tags"></i> Descontos</a></li>
+
                                 </ul>
                             </li>
     
@@ -160,8 +155,8 @@
                                 </a>
                                 
                                 <ul class="dropdown-menu" aria-labelledby="relatorios">
-                                    <li><a class="dropdown-item"  href="{{ url('trabalhadorolnome') }}">Rol Trabalhadores - Ordem Nome</a></li>
-                                    <li><a class="dropdown-item"  href="{{route('relatorio.geral.tomador')}}">Rol Tomadores - Ordem Nome</a></li>
+                                    <li><a class="dropdown-item"  href="{{route('relatorio.geral.tomador')}}"><i class="fad fa-file-alt"></i> Rol Tomadores - Ordem Alfabética</a></li>
+                                    <li><a class="dropdown-item"  href="{{ url('trabalhadorolnome') }}"><i class="fad fa-file-alt"></i> Rol Trabalhadores - Ordem Alfabética</a></li>
                                 </ul>
                             </li>
     
@@ -179,13 +174,13 @@
                                 
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                 @can('admin')
-                                    <li><a class="dropdown-item" href="{{route('empresa.perfil.index')}}">Dados Empresa</a></li>
-                                    <li><a class="dropdown-item" href="{{route('altera.index')}}">Alterar Senha</a></li>
-                                    <li><a class="dropdown-item" href="{{route('foto.index')}}">Atualizar os dados Empresa</a></li>
-                                    <li><a class="dropdown-item" href="#">Atalhos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}">Dados Pessoais</a></li>
+                                    <li><a class="dropdown-item" href="{{route('altera.index')}}"><i class="fad fa-key"></i> Alterar Senha</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#atalhos"><i class="fad fa-external-link-square"></i> Atalhos</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#contador"><i class="fad fa-abacus"></i> Contador</a></li>
+                                    <li><a class="dropdown-item" href="{{route('foto.index')}}"><i class="fad fa-landmark"></i> Dados da Empresa</a></li>
+                                    <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
                                  @endcan
-                                    <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()">Sair</a></li>
+                                    <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()"><i class="fad fa-sign-out"></i> Sair</a></li>
                                 </ul>
                             </li>
      
@@ -282,6 +277,9 @@
        @yield('conteine')
     
         </header>
+        
+        @include('usuarios.dadosAnaliticos.contador.listaContador')
+        @include('usuarios.atalhos.atalhos')
     
         <footer>
             <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2021</p>

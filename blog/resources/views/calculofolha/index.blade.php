@@ -284,7 +284,7 @@
                                                     @csrf
                                                         
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
+                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar  <i class="fas fa-search"></i></h1>
                                                         
                                                         <div class="d-flex justify-content-between mb-3">
                                                             
@@ -299,12 +299,13 @@
                                                                     @endforeach
                                                                     <input type="hidden" name="tomador" value="{{$tomador->id}}">
                                                                     
-                                                                    <input type="hidden" name="empresa" value="{{$user->empresa}}">
-                                                                    <input class="form-control fw-bold text-dark pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador1" id="trabalhador1">
+                                                                    <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
+                                                                    <input class="form-control fw-bold text-dark pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador" id="trabalhador1">
                                                                     <datalist id="listatomador{{$folhar->id}}"> 
                                                                     @foreach($trabalhadores as $trabalhador)
                                                                         @if($trabalhador->folhar_id === $folhar->id && $folhar->id === $tomador->folhar_id)
                                                                             <option value="{{$trabalhador->tsnome}}">
+                                                                                
                                                                         @endif
                                                                     @endforeach
                                                                     </datalist>
@@ -353,7 +354,7 @@
                                             ?>
                                             @foreach($folhas as $folhar)
                                                 @if($folhar->id === $tomador->folhar_id)
-                                                    <a href="{{route('gera.txt.sefip',[base64_encode($tomador->id),base64_encode($folhar->id)])}}" class="btn btn__sefip $dias">
+                                                    <a href="{{route('gera.txt.sefip',[base64_encode($tomador->id),base64_encode($folhar->id),base64_encode($user->empresa_id)])}}" class="btn btn__sefip $dias">
                                                         <i class="icon__color fad fa-file-alt"></i>
                                                     </a>
                                                 @endif
@@ -508,7 +509,7 @@
                                                 <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
                                                     @csrf
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar <i class="fas fa-search"></i></h1>
+                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar  <i class="fas fa-search"></i></h1>
                                                         
                                                         <div class="d-flex justify-content-between mb-3">
                                                             
@@ -516,9 +517,9 @@
                                                                 <div class="d-flex">
                                                                     <label for="exampleDataList" class="form-label"></label>
                                                                     <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresa" value="{{$user->empresa}}">
-                                                                    <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"  list="lista{{$folhar->id}}">
-                                                                
+                                                                    <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
+                                                                    <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"   list="lista{{$folhar->id}}">
+                                                                    
                                                                     <datalist id="lista{{$folhar->id}}">
                                                                         @foreach($trabalhadores as $trabalhador)
                                                                             @if($trabalhador->folhar_id === $folhar->id)
@@ -570,7 +571,7 @@
                                                             <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
                                                                 <div class="d-flex">
                                                                     <input type="hidden" name="folharublica" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresarublica" value="{{$user->empresa}}">
+                                                                    <input type="hidden" name="empresarublica" value="{{$user->empresa_id}}">
                                                                     <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
                                                                     <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
                                                                     <label for="exampleDataList" class="form-label"></label>
@@ -621,7 +622,7 @@
                                                             <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
                                                                 <div class="d-flex">
                                                                     <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresabanco" value="{{$user->empresa}}">
+                                                                    <input type="hidden" name="empresabanco" value="{{$user->empresa_id}}">
                                                                     <label for="exampleDataList" class="form-label"></label>
                                                                     <input class="form-control fw-bold text-dark banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa">
                                                                     <datalist id="listabanco{{$folhar->id}}">
@@ -712,98 +713,29 @@
     </div>
 </section>
         
-        
-        
 <script>
-
-    // está função e para gravar o ultimo botao pill que o usuario clicou
-    // para que quando renderizar ele volte no mesmo lugar
-    function activePill(){
-        var Back = document.getElementById('calcula-folha-tab');
-            Back.addEventListener("click", function(){
-            localStorage.setItem('Back', 'backpill1');
-           
-       })
-       
-         var Back1 = document.getElementById('lista-geral-tab');
-            Back1.addEventListener("click", function(){
-            localStorage.setItem('Back', 'backpill3');
-           
-       })
-       
-        var Back2 = document.getElementById('lista-tomador-tab');
-            Back2.addEventListener("click", function(){
-            localStorage.setItem('Back', 'backpill2');
-           
-       })
-       
-       backActive =  document.getElementById("lista-tomador");
-       backActive1 =  document.getElementById("calculaFolha");
-       backActive2 =  document.getElementById("lista-geral");
-    
-        voltar = localStorage.getItem("Back");
-    
-        
-        if(voltar === null){
-            localStorage.setItem('Back', 'backpill1');
-            Back.classList.add("active");
-            backActive1.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("calcula-folha-tab").click();
-        }
-    
-        if(voltar === "backpill1"){
-            Back.classList.add("active");
-            backActive1.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("calcula-folha-tab").click();
-            
-    
-        }else if (voltar === "backpill2"){
-            Back2.classList.add("active");
-            backActive.classList.add("show", "active");
-            backActive1.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("lista-tomador-tab").click();
-    
-            
-        }else if (voltar === "backpill3"){
-            Back1.classList.add("active");
-            backActive2.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive1.classList.remove("show", "active");
-            document.getElementById("lista-geral-tab").click();
-    
-        }
-    }
-    
-    activePill();
-
-</script>
-
-         
-         
-        <script>
             $(document).ready(function(){
-                $('#campo1').click(function() {
-                    $('#quadro1').addClass('d-none')
-                    $('#quadro2').removeClass('d-none')
-                })
-                $('#campo_nao_2').click(function() {
-                    $('#quadro2').addClass('d-none')
-                    $('#quadro1').removeClass('d-none')
-                })
-                $('.banco').on('keyup',function () {
-                    let dados = $(this).val()
+                // $('#campo1').click(function() {
+                //     $('#quadro1').addClass('d-none')
+                //     $('#quadro2').removeClass('d-none')
+                // })
+                // $('#campo_nao_2').click(function() {
+                //     $('#quadro2').addClass('d-none')
+                //     $('#quadro1').removeClass('d-none')
+                // })
+               
+                $('.banco').on('focus keyup',function () {
                     let datalist = $(this).next().attr('id')
                     $.ajax({
-                        url: "https://brasilapi.com.br/api/banks/v1/"+dados,
+                        url: "https://brasilapi.com.br/api/banks/v1",
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
-                            $(`#${datalist}`).html(`<option value="${data.code} - ${data.name}">`)
+                            let nome = ''
+                            data.forEach(element => {
+                                nome += `<option value="${element.code} - ${element.fullName}">`
+                            });
+                            $(`#${datalist}`).html(nome)
                         },
                         error: function(data){
                             // $("#banco").addClass('is-invalid')
@@ -893,4 +825,77 @@
                 })
             })
         </script>
+        
+<script>
+
+    // está função e para gravar o ultimo botao pill que o usuario clicou
+    // para que quando renderizar ele volte no mesmo lugar
+    function activePill(){
+        var Back = document.getElementById('calcula-folha-tab');
+            Back.addEventListener("click", function(){
+            localStorage.setItem('Back', 'backpill1');
+           
+       })
+       
+         var Back1 = document.getElementById('lista-geral-tab');
+            Back1.addEventListener("click", function(){
+            localStorage.setItem('Back', 'backpill3');
+           
+       })
+       
+        var Back2 = document.getElementById('lista-tomador-tab');
+            Back2.addEventListener("click", function(){
+            localStorage.setItem('Back', 'backpill2');
+           
+       })
+       
+       backActive =  document.getElementById("lista-tomador");
+       backActive1 =  document.getElementById("calculaFolha");
+       backActive2 =  document.getElementById("lista-geral");
+    
+        voltar = localStorage.getItem("Back");
+    
+        
+        if(voltar === null){
+            localStorage.setItem('Back', 'backpill1');
+            Back.classList.add("active");
+            backActive1.classList.add("show", "active");
+            backActive.classList.remove("show", "active");
+            backActive2.classList.remove("show", "active");
+            document.getElementById("calcula-folha-tab").click();
+        }
+    
+        if(voltar === "backpill1"){
+            Back.classList.add("active");
+            backActive1.classList.add("show", "active");
+            backActive.classList.remove("show", "active");
+            backActive2.classList.remove("show", "active");
+            document.getElementById("calcula-folha-tab").click();
+            
+    
+        }else if (voltar === "backpill2"){
+            Back2.classList.add("active");
+            backActive.classList.add("show", "active");
+            backActive1.classList.remove("show", "active");
+            backActive2.classList.remove("show", "active");
+            document.getElementById("lista-tomador-tab").click();
+    
+            
+        }else if (voltar === "backpill3"){
+            Back1.classList.add("active");
+            backActive2.classList.add("show", "active");
+            backActive.classList.remove("show", "active");
+            backActive1.classList.remove("show", "active");
+            document.getElementById("lista-geral-tab").click();
+    
+        }
+    }
+    
+    activePill();
+
+</script>
+
+         
+         
+       
         @stop

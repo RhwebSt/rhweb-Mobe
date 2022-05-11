@@ -211,11 +211,33 @@
                                 @endif
                               @endforeach
                             </td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center ferias">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center vt">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center va">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center decimo">999.999.999,99</td>
-                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">999.999.999,99</td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center ferias">
+                            @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 1009)
+                                  {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center vt">@foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 1013)
+                                  {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach</td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center va">
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 1012)
+                                  {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach</td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center decimo">@foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 1010)
+                                  {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach</td>
+                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">
+                             
+                              {{$trabalhador->bivalorvencimento?number_format((float)$trabalhador->bivalorvencimento, 2, ',', '.'):''}}
+                            </td>
                         </tr>
                       </table>
 
@@ -233,14 +255,56 @@
                         </tr>
 
                         <tr>
-                            <td class="border-bottom  border-left text-bold small__font text-center inss__dec">999.999.999,99</td>
-                            <td class="border-bottom text-bold border-left small__font text-center producao1">999.999.999,99</td>
-                            <td class="border-bottom text-bold border-left small__font text-center dsr">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center ferias">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center vt">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center va">999.999.999,99</td>
-                            <td class="border-top border-bottom border-left text-bold small__font text-center decimo">999.999.999,99</td>
-                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total">999.999.999,99</td>
+                            <td class="border-bottom  border-left text-bold small__font text-center inss__dec"> 
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 2002)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-bottom text-bold border-left small__font text-center producao1"> 
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 2004)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-bottom text-bold border-left small__font text-center dsr"> 
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 2001)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center ferias"> 
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 0)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center vt"> 
+                              @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 1011)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center va"> @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 2005)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-bottom border-left text-bold small__font text-center decimo"> @foreach($trabalhador->valorcalculo as $rublica)
+                                @if($rublica->vicodigo == 2003)
+                                  {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                @endif
+                              @endforeach
+                            </td>
+                            <td class="border-top border-right border-bottom border-left text-bold small__font text-center total"> 
+                              {{$trabalhador->bivalorliquido?number_format((float)$trabalhador->bivalorliquido, 2, ',', '.'):''}}
+                            </td>
                         </tr>
 
                       

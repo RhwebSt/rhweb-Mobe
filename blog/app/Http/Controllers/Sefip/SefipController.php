@@ -18,13 +18,13 @@ class SefipController extends Controller
         $this->folhar = new Folhar;
         $this->valorcalculo = new ValorCalculo;
     }
-    public function geraTxt($tomador,$folhar)
+    public function geraTxt($tomador,$folhar,$empresa)
     {
        $user = auth()->user();
        $tomador = base64_decode($tomador);
        $folhar = base64_decode($folhar);
-       try {
-       $empresa = $this->empresa->EmpresaSefip($user->empresa);
+       $empresa = base64_decode($empresa);
+       $empresa = $this->empresa->EmpresaSefip($empresa);
        $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
        $tomador = $this->tomador->first($tomador);
        if (count($folhas) < 1 || !$tomador) {
@@ -358,6 +358,7 @@ class SefipController extends Controller
        echo $cd;
        exit;
        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+       try {
     } catch (\Throwable $th) {
         return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
     }

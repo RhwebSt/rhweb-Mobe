@@ -13,7 +13,6 @@ class relatorioBancoController extends Controller
 
         $dados = $request->all();
         $folhar = new Folhar;
-        try {
             $folhars = $folhar->buscaListaBancos($dados['folharbanco'],$dados['banco'],$dados['empresabanco']);
             if (count($folhars) < 1) {
                 $banco = explode('-',$dados['banco']);
@@ -21,6 +20,7 @@ class relatorioBancoController extends Controller
             }
             $pdf = PDF::loadView('relatorioBanco',compact('folhars'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO BANCÁRIO MENSAL.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

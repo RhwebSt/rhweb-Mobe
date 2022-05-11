@@ -1,9 +1,11 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Atualizar dados da Empresa')
+@section('titulo','Rhweb - Atualizar os Dados')
 @section('conteine')
-@if(session('success'))
+
+<main role="main">
+    <div class="container">
+        @if(session('success'))
             <script>
-                     
                 const Toast = Swal.mixin({
                   toast: true,
                   width: 500,
@@ -51,285 +53,446 @@
                 })
             </script>
         @enderror
-    
-            <div class="bg__form1 container mt-5" style="border: 1px solid white; border-radius:12px;">
-
-               
-                <section class="mt-5">
-                    <div class="container d-flex justify-content-center flex-column align-items-center mt-5 p-2" >
-                        <form class="column g-3 mt-1 mb-3" id="form" action="" enctype="multipart/form-data"  method="Post">
-                            @if($empresas->esfoto)
-                            <img src="{{$empresas->esfoto}}" class="rounded mx-auto d-block back__foto" id="foto" alt="..." style="width: 200px; height: 200px;">
-                            @else
-                            <img src="{{url('/imagem/user1.png')}}" class="rounded mx-auto d-block back__foto" id="foto" alt="..." style="width: 200px; height: 200px;">
-                            @endif
-                            <div class="d-grid gap-2 col-8 col-sm-4 col-md-4 col-lg-2 mx-auto">
-                                
-                              </div>
-                              <div class="alert alert-danger d-none" id="msgfoto" role="alert">
-                                
-                              </div>
-    
-                        </form>
-                    </div>
+        
+        <form class="row g-3 mt-1" id="form" action="{{ route('empresa.perfil.update',$user->empresa) }}" method="POST" action="" >
+            @csrf
+            <input type="hidden" id="empresa" value="{{$user->empresa}}">
+            <input type="hidden" name="foto" id="inputfoto" value="{{$empresas->esfoto}}">
+            <input type="hidden" name="trabalhador">
+            <input type="hidden" name="tomador">
+            <input type="hidden" id="method" name="_method" value="PUT">
+            
+            <section class="section__botoes--atualiza--empresa">
                     
-                    
-                </section>
-                
-                <section class="">
-                    <div class="container">
-                    
-                        <form class="row g-3 mt-1" id="form" action="{{ route('empresa.perfil.update',$user->empresa) }}" method="POST" action="" >
-                                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                                <a class="btn botao__voltar" href="{{route('home.index')}}"><i class="fas fa-arrow-circle-left"></i> Voltar</a>
-                                <button class="btn botao"  type="submit"><i class="fas fa-sync-alt"></i> Atualizar</button>
-                                <button class="btn botao__alterar" type="button" onClick="BotaoAlterafoto()">Alterar foto <i class="fas fa-camera"></i></button>
-                                </div>
-                                <input type="hidden" id="empresa" value="{{$user->empresa}}"> 
-                                <h1 class="container text-center text-white fs-4 fw-bold">Atualizar os dados</h1>
-                                @csrf
-                                <input type="hidden" name="foto" id="inputfoto" value="{{$empresas->esfoto}}">
-                                <input type="hidden" name="trabalhador" >
-                                <input type="hidden" name="tomador">
-                                <input type="hidden" id="method" name="_method" value="PUT">
-                                <div class="col-md-8">
-                                    <label for="nome" class="form-label text-white">Nome</label>
-                                    <input type="text" class="form-control @error('esnome') is-invalid @enderror fw-bold" name="esnome" value="{{$empresas->esnome}}" id="nome">
-                                    @error('esnome')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-
-                                </div>
-
-                
-                                <div class="col-md-4">
-                                    <label for="cnpj_mf" class="form-label text-white ">CNPJ/MF Nº</label>
-                                    <input type="text" class="form-control @error('escnpj') is-invalid @enderror fw-bold" name="escnpj" value="{{$empresas->escnpj}}" id="cnpj_mf">
-                                    @error('escnpj')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-4">
-                                    <label for="nome" class="form-label text-white">Data de Registro</label>
-                                    <input type="date" class="form-control fw-bold @error('dataregistro') is-invalid @enderror" value="{{$empresas->esdataregitro}}" name="dataregistro" id="dataregistro">
-                                    @error('dataregistro')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                
-                                <div class="col-md-2">
-                                    <label for="cep" class="form-label text-white">CEP</label>
-                                    <input type="text" class="form-control @error('cep') is-invalid @enderror fw-bold" name="cep" value="{{$empresas->escep}}" id="cep">
-                                    @error('cep')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <label for="logradouro" class="form-label text-white">Rua</label>
-                                    <input type="text" class="form-control @error('logradouro') is-invalid @enderror fw-bold" name="logradouro" value="{{$empresas->eslogradouro}}" id="logradouro">
-                                    @error('logradouro')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-2">
-                                    <label for="numero" class="form-label text-white">Número</label>
-                                    <input type="text" class="form-control @error('numero') is-invalid @enderror fw-bold" name="numero" id="numero" value="{{$empresas->esnum}}">
-                                    @error('numero')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                
-                                <div class="col-md-4"> 
-                                                <label for="tipoconstrucao" class="form-label text-white">Tipo da construção</label>
-                                                <select name="complemento__endereco" id="complemento__endereco" class="form-select fw-bold">
-                                                <?php
-                                                    $tipo = [
-                                                        'Casa',
-                                                        'Apartamento',
-                                                        'Empresa',
-                                                        'Área',
-                                                        'Acesso',
-                                                        'Acampamento',
-                                                        'Acesso Local',
-                                                        'Área Especial',
-                                                        'Aeroporto',
-                                                        'Aldeia',
-                                                        'Avenida Marginal Direita',
-                                                        'Avenida Marginal Esquerda',
-                                                        'Anel Viário',
-                                                        'Antiga Estrada',
-                                                        'Artéria',
-                                                        'Alto',
-                                                        'Atalho',
-                                                        'Área Verde',
-                                                        'Avenida',
-                                                        'Avenida Contorno',
-                                                        'Avenida Marginal',
-                                                        'Avenida Velha',
-                                                        'Balneário',
-                                                        'Beco',
-                                                        'Buraco',
-                                                        'Bloco',
-                                                        'Chácara',
-                                                        'Conjunto',
-                                                        'Colônia',
-                                                        'Comunidade',
-                                                        'Condomínio',
-                                                        'Distrito',
-                                                        'Estrada Intermunicipal',
-                                                        'Entrada Particular',
-                                                        'Estação',
-                                                        'Estância',
-                                                        'Eixo Industrial',
-                                                        'Favela',
-                                                        'Fazenda',
-                                                        'Núcleo Habitacional',
-                                                        'Jardim',
-                                                        'Loteamento',
-                                                        'Lote',
-                                                        'Morro',
-                                                        'Núcleo Rural',
-                                                        'Parque Residencial',
-                                                        'Quadra',
-                                                        'Rua',
-                                                        'Residencial',
-                                                        'Rodovia',
-                                                        'Trevo',
-                                                        'Outros',
-                                                    ]
-                                                ?>
-                                                @foreach($tipo as $tipos)
-                                                    @if($tipos === $empresas->escomplemento)
-                                                        <option selected >{{$empresas->escomplemento}}</option>
-                                                    @else
-                                                        <option >{{$tipos}}</option>
-                                                    @endif
-                                                @endforeach
-                                               
-                                               
-                                            </select>
-                                        </div>
-                                <div class="col-md-6">
-                                    <label for="bairro" class="form-label text-white">Bairro</label>
-                                    <input type="text" class="form-control @error('bairro') is-invalid @enderror fw-bold" value="{{$empresas->esbairro}}" name="bairro" id="bairro">
-                                    @error('bairro')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                
-                                <div class="col-md-6">
-                                    <label for="localidade" class="form-label text-white">Municipio</label>
-                                    <input type="text" class="form-control @error('localidade') is-invalid @enderror fw-bold" value="{{$empresas->esmunicipio}}" name="localidade" id="localidade">
-                                    @error('localidade')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-2">
-                                    <label for="uf" class="form-label text-white">UF</label>
-                                    <input type="text" class="form-control @error('uf') is-invalid @enderror fw-bold" value="{{$empresas->esuf}}" name="uf" id="uf">
-                                    @error('uf')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                 
-                                <div class="col-md-4">
-                                    <label for="reponsave" class="form-label text-white">Responsável</label>
-                                    <input type="text" class="form-control @error('responsave') is-invalid @enderror fw-bold" value="{{$empresas->esresponsavel}}" name="responsave" id="responsave">
-                                    @error('responsave')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <label for="cnpj__reponsavel" class="form-label text-white">CPF Responsável</label>
-                                    <input type="text" class="form-control  fw-bold" value="" name="cpf" id="cnpj__reponsavel">
-                                    @error('')
-                                      <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-4">
-                                    <label for="email" class="form-label text-white">Email</label>
-                                    <input type="email" class="form-control fw-bold @error('email') is-invalid @enderror fw-bold" value="{{$empresas->esemail}}" name="email" id="email">
-                                    @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="seguro" class="form-label text-white">Seguro</label>
-                                    <input type="text" class="form-control @error('seguro') is-invalid @enderror fw-bold" value="{{$empresas->esseguro}}" name="seguro" id="seguro">
-                                    @error('seguro')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="cnae__codigo" class="form-label text-white">CNAE código</label>
-                                    <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror fw-bold" value="{{$empresas->escnae}}" name="cnae__codigo" id="cnae__codigo">
-                                    @error('cnae__codigo')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-4">
-                                    <label for="cod__municipio" class="form-label text-white">Código Município</label>
-                                    <input type="text" class="form-control @error('cod__municipio') is-invalid @enderror fw-bold" value="{{$empresas->escodigomunicipio}}" name="cod__municipio" id="cod__municipio">
-                                    @error('cod__municipio')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                
-                                <div class="col-md-4">
-                                    <label for="sincalizado" class="form-label text-white">Sindicalizado</label>
-                                    <select id="sincalizado" name="sincalizado"  class="form-select fw-bold">
-                                        @if($empresas->escodigomunicipio === '1-Sim')
-                                        <option selected>1-Sim</option>
-                                        <option>2-Não</option>
-                                        @else
-                                        <option>1-Sim</option>
-                                        <option selected>2-Não</option>
-                                        @endif
-                                    </select>
-                                </div>
-                
-                                <div class="col-md-2 d-none">
-                                    <label for="retem__ferias" class="form-label text-white">Retem Férias</label>
-                                    <select id="retem__ferias" name="retem__ferias" class="form-select fw-bold">
-                                        @if($empresas->esretemferias === '1-Sim')
-                                        <option selected>1-Sim</option>
-                                        <option>2-Não</option>
-                                        @else
-                                        <option>1-Sim</option>
-                                        <option selected>2-Não</option>
-                                        @endif
-                                    </select>
-                                </div>
-                
-                                <div class="col-md-4">
-                                    <label for="contribuicao__sindicato" class="form-label text-white">Contribuição ao Sindicato</label>
-                                    <input type="text" class="form-control @error('contribuicao__sindicato') is-invalid @enderror fw-bold" name="contribuicao__sindicato" value="{{$empresas->escondicaosindicato}}" id="contribuicao__sindicato">
-                                    @error('contribuicao__sindicato')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <label for="telefone" class="form-label text-white">Telefone</label>
-                                    <input type="text" class="form-control @error('telefone') is-invalid @enderror fw-bold" name="telefone" value="{{$empresas->estelefone}}" id="telefone">
-                                    @error('telefone')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                        </form>
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
-                </section>
+                
+                <div class="btn d-grid gap-1 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                    <button class="btn botao"  type="submit"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                    <button class="btn botao" type="button" onClick="BotaoAlterafoto()"><i class="fad fa-camera-retro"></i> Alterar foto</button>
+                </div>
+                
+            </section>
+            
+            <h1 class="title__atualiza--empresa">Atualizar os dados da empresa <i class="fad fa-building"></i></h1>
+    
+            <section class="section__foto--atualizar--empresa">
+                
+                <div class="container d-flex justify-content-center flex-column align-items-center" >
+                        @if($empresas->esfoto)
+                        <img src="{{$empresas->esfoto}}" class="foto__empresa" id="foto" alt="...">
+                        @else
+                        <img src="{{url('imagem/iconFotoTrab.jpg')}}" class="foto__empresa" id="foto" alt="...">
+                        @endif
+                </div>
+    
+            </section>
+           
+            <div class="col-md-8">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control @error('esnome') is-invalid @enderror" name="esnome" value="{{$empresas->esnome}}" id="nome">
+                @error('esnome')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+
             </div>
+
+            <div class="col-md-4">
+                <label for="cnpj_mf" class="form-label ">CNPJ/MF Nº</label>
+                <input type="text" class="form-control @error('escnpj') is-invalid @enderror" name="escnpj" value="{{$empresas->escnpj}}" id="cnpj_mf">
+                @error('escnpj')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                
+            <div class="col-md-4">
+                <label for="nome" class="form-label">Data de Registro</label>
+                <input type="date" class="form-control @error('dataregistro') is-invalid @enderror" value="{{$empresas->esdataregitro}}" name="dataregistro" id="dataregistro">
+                @error('dataregistro')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                
+            <div class="col-md-2">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{$empresas->escep}}" id="cep">
+                @error('cep')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                                
+            <div class="col-md-6">
+                <label for="logradouro" class="form-label">Rua</label>
+                <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{$empresas->eslogradouro}}" id="logradouro">
+                @error('logradouro')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                
+            <div class="col-md-2">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$empresas->esnum}}">
+                @error('numero')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                
+                                
+            <div class="col-md-4"> 
+                <label for="tipoconstrucao" class="form-label">Tipo da construção</label>
+                <select name="complemento__endereco" id="complemento__endereco" class="form-select">
+                <?php
+                    $tipo = [
+                        'A-Área',
+                        'AC-Acesso',
+                        'ACA-Acampamento',
+                        'ACL-Acesso Local',
+                        'AD-Adro',
+                        'AE-Área Especial',
+                        'AER-Aeroporto',
+                        'AL-Alameda',
+                        'AMD-Avenida Marginal Direita',
+                        'AME-Avenida Marginal Esquerda',
+                        'AN-Anel Viário',
+                        'ANT-Antiga Estrada',
+                        'ART-Artéria',
+                        'AT-Alto',
+                        'ATL-Atalho',
+                        'A V-Área Verde',
+                        'AV-Avenida',
+                        'AVC-Avenida Contorno',
+                        'AVM-Avenida Marginal',
+                        'AVV-Avenida Velha',
+                        'BAL-Balneário',
+                        'BC-Beco',
+                        'BCO-Buraco',
+                        'BEL-Belvedere',
+                        'BL-Bloco',
+                        'BLO-Balão',
+                        'BLS-Blocos',
+                        'BLV-Bulevar',
+                        'BSQ-Bosque',
+                        'BVD-Boulevard',
+                        'BX-Baixa',
+                        'C-Cais',
+                        'CAL-Calçada',
+                        'CAM-Caminho',
+                        'CAN-Canal',
+                        'CH-Chácara',
+                        'CHA-Chapadão',
+                        'CIC-Ciclovia',
+                        'CIR-Circular',
+                        'CJ-Conjunto',
+                        'CJM-Conjunto Mutirão',
+                        'CMP-Complexo Viário',
+                        'COL-Colônia',
+                        'COM-Comunidade',
+                        'CON-Condomínio',
+                        'COR-Corredor',
+                        'CPO-Campo',
+                        'CRG-Córrego',
+                        'CTN-Contorno',
+                        'DSC-Descida',
+                        'DSV-Desvio',
+                        'DT-Distrito',
+                        'EB-Entre Bloco',
+                        'EIM-Estrada Intermunicipal',
+                        'ENS-Enseada',
+                        'ENT-Entrada Particular',
+                        'EQ-Entre Quadra',
+                        'ESC-Escada',
+                        'ESD-Escadaria',
+                        'ESE-Estrada Estadual',
+                        'ESI-Estrada Vicinal',
+                        'ESL-Estrada de Ligação',
+                        'ESM-Estrada Municipal',
+                        'ESP-Esplanada',
+                        'ESS-Estrada de Servidão',
+                        'EST-Estrada',
+                        'ESV-Estrada Velha',
+                        'ETA-Estrada Antiga',
+                        'ETC-Estação',
+                        'ETD-Estádio',
+                        'ETN-Estância',
+                        'ETP-Estrada Particular',
+                        'ETT-Estacionamento',
+                        'EVA-Evangélica',
+                        'EVD-Elevada',
+                        'EX-Eixo Industrial',
+                        'FAV-Favela',
+                        'FAZ-Fazenda',
+                        'FER-Ferrovia',
+                        'FNT-Fonte',
+                        'FRA-Feira',
+                        'FTE-Forte',
+                        'GAL-Galeria',
+                        'GJA-Granja',
+                        'HAB-Núcleo Habitacional',
+                        'IA-Ilha',
+                        'IND-Indeterminado',
+                        'IOA-Ilhota',
+                        'JD-Jardim',
+                        'JDE-Jardinete',
+                        'LD-Ladeira',
+                        'LGA-Lagoa',
+                        'LGO-Lago',
+                        'LOT-Loteamento',
+                        'LRG-Largo',
+                        'LT-Lote',
+                        'MER-Mercado',
+                        'MNA-Marina',
+                        'MOD-Modulo',
+                        'MRG-Projeção',
+                        'MRO-Morro',
+                        'MTE-Monte',
+                        'NUC-Núcleo',
+                        'NUR-Núcleo Rural',
+                        'OUT-Outeiro',
+                        'PAR-Paralela',
+                        'PAS-Passeio',
+                        'PAT-Pátio',
+                        'PC-Praça',
+                        'PCE-Praça de Esportes',
+                        'PDA-Parada',
+                        'PDO-Paradouro',
+                        'PNT-Ponta',
+                        'PR-Praia',
+                        'PRL-Prolongamento',
+                        'PRM-Parque Municipal',
+                        'PRQ-Parque',
+                        'PRR-Parque Residencial',
+                        'PSA-Passarela',
+                        'PSG-Passagem',
+                        'PSP-Passagem de Pedestre',
+                        'PSS-Passagem Subterrânea',
+                        'PTE-Ponte',
+                        'PTO-Porto',
+                        'Q-Quadra',
+                        'QTA-Quinta',
+                        'QTS-Quintas',
+                        'R-Rua',
+                        'R I-Rua Integração',
+                        'R L-Rua de Ligação',
+                        'R P-Rua Particular',
+                        'R V-Rua Velha',
+                        'RAM-Ramal',
+                        'RCR-Recreio',
+                        'REC-Recanto',
+                        'RER-Retiro',
+                        'RES-Residencial',
+                        'RET-Reta',
+                        'RLA-Ruela',
+                        'RMP-Rampa',
+                        'ROA-Rodo Anel',
+                        'ROD-Rodovia',
+                        'ROT-Rotula',
+                        'RPE-Rua de Pedestre',
+                        'RPR-Margem',
+                        'RTN-Retorno',
+                        'RTT-Rotatória',
+                        'SEG-Segunda Avenida',
+                        'SIT-Sitio',
+                        'SRV-Servidão',
+                        'ST-Setor',
+                        'SUB-Subida',
+                        'TCH-Trincheira',
+                        'TER-Terminal',
+                        'TR-Trecho',
+                        'TRV-Trevo',
+                        'TUN-Túnel',
+                        'TV-Travessa',
+                        'TVP-Travessa Particular',
+                        'TVV-Travessa Velha',
+                        'UNI-Unidade',
+                        'V-Via',
+                        'V C-Via Coletora',
+                        'V L-Via Local',
+                        'VAC-Via de Acesso',
+                        'VAL-Vala',
+                        'VCO-Via Costeira',
+                        'VD-Viaduto',
+                        'V-E-Via Expressa',
+                        'VER-Vereda',
+                        'VEV-Via Elevado',
+                        'VL-Vila',
+                        'VLA-Viela',
+                        'VLE-Vale',
+                        'VLT-Via Litorânea',
+                        'VPE-Via de Pedestre',
+                        'VRT-Variante',
+                        'ZIG-Zigue-Zague'
+                    ]
+                ?>
+                @foreach($tipo as $tipos)
+                    @if($tipos === $empresas->escomplemento)
+                        <option selected >{{$empresas->escomplemento}}</option>
+                    @else
+                        <option >{{$tipos}}</option>
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{$empresas->esbairro}}" name="bairro" id="bairro">
+                @error('bairro')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                
+            <div class="col-md-8">
+                <label for="localidade" class="form-label">Municipio</label>
+                <input type="text" class="form-control @error('localidade') is-invalid @enderror" value="{{$empresas->esmunicipio}}" name="localidade" id="localidade">
+                @error('localidade')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label for="uf" class="form-label">UF</label>
+                <input type="text" class="form-control @error('uf') is-invalid @enderror" value="{{$empresas->esuf}}" name="uf" id="uf">
+                @error('uf')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+                 
+            <div class="col-md-4">
+                <label for="reponsave" class="form-label">Responsável</label>
+                <input type="text" class="form-control @error('responsave') is-invalid @enderror" value="{{$empresas->esresponsavel}}" name="responsave" id="responsave">
+                @error('responsave')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div class="col-md-4">
+                <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
+                <input type="text" class="form-control " value="" name="cpf" id="cnpj__reponsavel">
+                @error('')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{$empresas->esemail}}" name="email" id="email">
+                @error('email')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                <label for="seguro" class="form-label">Seguro</label>
+                <input type="text" class="form-control @error('seguro') is-invalid @enderror" value="{{$empresas->esseguro}}" name="seguro" id="seguro">
+                @error('seguro')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                <label for="cnae__codigo" class="form-label">CNAE código</label>
+                <input type="text" class="form-control @error('cnae__codigo') is-invalid @enderror" value="{{$empresas->escnae}}" name="cnae__codigo" id="cnae__codigo">
+                @error('cnae__codigo')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label for="cod__municipio" class="form-label">Código Município</label>
+                <input type="text" class="form-control @error('cod__municipio') is-invalid @enderror" value="{{$empresas->escodigomunicipio}}" name="cod__municipio" id="cod__municipio">
+                @error('cod__municipio')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label for="sincalizado" class="form-label">Sindicalizado</label>
+                <select id="sincalizado" name="sincalizado"  class="form-select">
+                    @if($empresas->escodigomunicipio === '1-Sim')
+                    <option selected>1-Sim</option>
+                    <option>2-Não</option>
+                    @else
+                    <option>1-Sim</option>
+                    <option selected>2-Não</option>
+                    @endif
+                </select>
+            </div>
+
+            <div class="col-md-2 d-none">
+                <label for="retem__ferias" class="form-label">Retem Férias</label>
+                <select id="retem__ferias" name="retem__ferias" class="form-select">
+                    @if($empresas->esretemferias === '1-Sim')
+                    <option selected>1-Sim</option>
+                    <option>2-Não</option>
+                    @else
+                    <option>1-Sim</option>
+                    <option selected>2-Não</option>
+                    @endif
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="contribuicao__sindicato" class="form-label">Contribuição ao Sindicato</label>
+                <input type="text" class="form-control @error('contribuicao__sindicato') is-invalid @enderror" name="contribuicao__sindicato" value="{{$empresas->escondicaosindicato}}" id="contribuicao__sindicato">
+                @error('contribuicao__sindicato')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div class="col-md-4">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" value="{{$empresas->estelefone}}" id="telefone">
+                @error('telefone')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <h1 class="title__atualiza--empresa">Contadores <i class="fad fa-abacus"></i></h1>
+            
+            <div class="col-md-3">
+                <label for="nro__fatura" class="form-label">Fatura <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de faturas cadastradas"></i></label>
+                <input type="text" class="form-control" name="nro__fatura" id="nro__fatura"  maxlength="9">
+            </div>
+            
+            <div class="col-md-3">
+                <label for="nro__reciboavulso" class="form-label">Recibo Avulso <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de recibos avulsos cadastrados"></i></label>
+                <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso"  maxlength="9">
+            </div>
+
+            <div class="col-md-3">
+                <label for="nro__boletins" class="form-label">Boletins  <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de boletins cadastrados"></i></label>
+                <input type="text" class="form-control" name="nro__boletins" id="nro__boletins"  maxlength="9">
+            </div>
+            
+            <div class="col-md-3">
+                <label for="nro__folha" class="form-label">Nro Folha  <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de folhas calculadas"></i></label>
+                <input type="text" class="form-control" name="nro__folha" id="nro__folha"  maxlength="9">
+            </div>
+            
+            <div class="col-md-3">
+                <label for="nro__cartaoponto" class="form-label">Cartão Ponto <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de cartões pontos cadastrados"></i></label>
+                <input type="text" class="form-control" name="nro__cartaoponto" id="nro__cartaoponto"  maxlength="9">
+            </div>
+            
+            <div class="col-md-3">
+                <label for="seq__esocial" class="form-label">E-Social <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title=""></i></label>
+                <input type="text" class="form-control" name="seq__esocial" id="seq__esocial"  maxlength="9">
+            </div>
+
+            <div class="col-md-3">
+                <label for="matric__trabalhador" class="form-label">Trabalhador <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de trabalhadores cadastrados"></i></label>
+                <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador" >
+            </div>
+            
+            <div class="col-md-3">
+                <label for="matric__tomador" class="form-label">Tomador <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de tomadores cadastrados"></i></label>
+                <input type="text" class="form-control" name="matric__tomador" id="matric__tomador" >
+            </div>
+        
+            
+        </form>
+    </div>
+</section>
+
 
         <script>
             
