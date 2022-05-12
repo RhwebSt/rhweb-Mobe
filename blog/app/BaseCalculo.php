@@ -13,6 +13,10 @@ class BaseCalculo extends Model
     {
         return $this->belongsTo(Trabalhador::class);
     }
+    public function tomador()
+    {
+        return $this->belongsTo(Tomador::class);
+    }
     public function folhar()
     {
         return $this->belongsTo(Folhar::class);

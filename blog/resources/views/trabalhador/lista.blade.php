@@ -83,12 +83,12 @@
                                                 <i class="icon__color fas fa-file-alt"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('ficha.registro.trabalhador',base64_encode($trabalhador->id))}}" id="imprimir" role="button">Ficha de Registro</a></li>
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('epi.show',base64_encode($trabalhador->id))}}" id="fichaepi" role="button">Ficha de EPI</a></li>
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('declaracao.afastamento.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__afas" role="button">Declaração de Afastamento</a></li>
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('declaracao.admissao.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__adm" role="button">Declaração de Admissão</a></li>
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('cracha.trabalhador',base64_encode($trabalhador->id))}}" id="cracha" role="button">Crachá</a></li>
-                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('devolucao.ctps.trabalhador',base64_encode($trabalhador->id))}}" id="devolucao__ctps" role="button">Devolução da CTPS</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('ficha.registro.trabalhador',base64_encode($trabalhador->id))}}" id="imprimir" role="button"><i class="fad fa-file-alt"></i> Ficha de Registro</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('epi.show',base64_encode($trabalhador->id))}}" id="fichaepi" role="button"><i class="fad fa-file-alt"></i> Ficha de EPI</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('declaracao.afastamento.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__afas" role="button"><i class="fad fa-file-alt"></i> Declaração de Afastamento</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('declaracao.admissao.trabalhador',base64_encode($trabalhador->id))}}" id="declaracao__adm" role="button"><i class="fad fa-file-alt"></i> Declaração de Admissão</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('cracha.trabalhador',base64_encode($trabalhador->id))}}" id="cracha" role="button"><i class="fad fa-file-alt"></i> Crachá</a></li>
+                                                <li class=""><a class="dropdown-item modal-botao" href="{{route('devolucao.ctps.trabalhador',base64_encode($trabalhador->id))}}" id="devolucao__ctps" role="button"><i class="fad fa-file-alt"></i> Devolução da CTPS</a></li>
                                             </ul>
                                         </div>
                                     </td>

@@ -54,6 +54,10 @@ class Tomador extends Model
     {
         return $this->hasMany(Fatura::class);
     }
+    public function basecalculo()
+    {
+        return $this->hasMany(BaseCalculo::class);
+    }
     public function cadastro($dados)
     {
         

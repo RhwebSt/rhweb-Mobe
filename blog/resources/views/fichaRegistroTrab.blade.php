@@ -91,10 +91,10 @@
         }
 
         .logo{
-            margin-top:10px;
-            margin-right: 50px;
+            /*margin-top:10px;*/
+            /*margin-right: 50px;*/
             width: 100px;
-            height: 120px;
+            height: 100px;
         }
 
         .documentos{
@@ -102,19 +102,17 @@
         }
         
         .documento__info{
-            width: 185px;
+            width: 182.6px;
         }
 
         .rua{
-            width:513.5px;
+            width:370px;
         }
 
-        .uf{
-            width:100px;
-        }
+        
 
         .cep{
-            width:132px;
+            width:182px;
         }
 
         .cidade2{
@@ -125,7 +123,7 @@
         }
 
         .afiliacao{
-            width:757px;
+            width:745px;
         }
 
         .nome{
@@ -141,13 +139,13 @@
         }
         
         .bancario2{
-            width:406px;
+            width:393px;
         }
 
 
         
         .semdepe{
-            width:757px;
+            width:745px;
         }
         
         .natural{
@@ -164,7 +162,7 @@
         }
         
         .assinatura{
-        margin-top:50px;
+        margin-top:30px;
         }
 
         .fontDeclaracao{
@@ -172,239 +170,324 @@
         }
 
         .data__ass{
-        width:150px;
+            width:372.5px;
         }
 
         .linhaass{
         width:759px;
         }
 
-        .cidade{
-            width:375px;
-        }
-
         .protco{
             margin-top: 50px;
         }
         
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
 
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .border-top-left-radius{
+            border-top-left-radius: 8px;
+        }
+        
+        .border-top-right-radius{
+            border-top-right-radius: 8px;
+        }
+        
+        .bairro{
+            width: 199px;
+        }
+        
+        .cidade{
+            width: 199px;
+        }
+        
+        .nacionalidade{
+            width: 200px;
+        }
+        
+        .uf{
+            width:100px;
+        }
+        
+        .numero{
+            width:100px;
+        }
+        
+        .numero__endereco{
+            width:182px;
+        }
+        
+        .padding-border{
+            margin-top: 10px;
+        }
+        
+        .nome__depedente{
+            width:507px;
+        }
 
     </style>
 
     <body>
+
         
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
-        <div class="borderT">
-            <table >
+        <div class="borderT margin-top">
+            <table>
                 <tr>
-                <td rowspan="6">
+                    <td rowspan="7">
                         @if($empresas->esfoto)
-                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                            <img class="logo" src="{{$empresas->esfoto}}">
                         @else
                             @include('imagem')
                         @endif
                     </td>
                 </tr>
-    
+                
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
+                    <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$empresas->esnome}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
-                    
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                </tr>
+    
+                <tr>
+
+                    <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
         </div>
 
-
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Ficha de Registro do Trabalhador</td>
-            </tr>
-        </table>
-        <div class="borderT">
+        
+        <div class="margin-top">
             <table>
                 <tr>
-                    <td rowspan="7"><img class="logo" src="{{$trabalhadors->tsfoto}}"></td>
+                    <td class="name__title text-center text-bold">Ficha de Registro do Trabalhador</td>
                 </tr>
-    
+            </table>
+        </div>
+        
+        
+        <div class="borderT margin-top">
+            <table>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="width__padrao uppercase"><strong>{{$trabalhadors->tsnome}}</strong></td>
+                    <td rowspan="7">
+                        @if($trabalhadors->tsfoto)
+                            <img class="logo" src="{{$trabalhadors->tsfoto}}">
+                        @else
+                            @include('imagemTrabalhador')
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="padding-left-foto text-bold">{{$trabalhadors->tsnome}}</td>
                 </tr>
                 
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="width__padrao small__font capitalize"><strong>Matrícula:</strong> {{$trabalhadors->tsmatricula}}</td>
+                    <td class="small__font padding-left-foto">Matrícula:{{$trabalhadors->tsmatricula}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Categoria:</strong> {{$trabalhadors->categoria[0]->cscategoria}}</td>
-                    
+                    <td class="small__font padding-left-foto">Categoria: {{$trabalhadors->categoria[0]->cscategoria}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>CBO: </strong>{{$trabalhadors->categoria[0]->cbo}}</td>
-                    
+                    <td class="small__font padding-left-foto">CBO:{{$trabalhadors->categoria[0]->cbo}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Data de Admissão:</strong> 
-                            {{date('d/m/Y',strtotime($trabalhadors->csadmissao))}}
+                    <td class="small__font padding-left-foto">Data de Admissão: 
+                        {{date('d/m/Y',strtotime($trabalhadors->csadmissao))}}
                     </td>
                 </tr>
     
             </table>
         </div>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Documentos</td>
-            </tr>
-        </table>
+        
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Identificação do Trabalhador</td>
+                </tr>
+            </table>
+        </div>
 
-        <table>
-            <tr>
-                <td class="small__font documentos border-left border-top capitalize border-bottom border-right"><strong>PIS:</strong>  {{$trabalhadors->documento[0]->dspis}}</td>
-                <td class="small__font documentos border-top capitalize border-bottom border-right"><strong>CPF:</strong> {{$trabalhadors->tscpf}}</td>
-                <td class="small__font documentos border-right border-top capitalize border-bottom border-left"><strong>Data Nascimento:</strong> 
-                    {{date('d/m/Y',strtotime($trabalhadors->nsnascimento))}}
-                </td>
-            </tr>
-        </table>
+        <div class="margin-top borderT">
+            <table class="padding-border">
+                <tr>
+                    <td class="small__font documento__info text-center text-bold destaque ">PIS</td>
+                    <td class="small__font documento__info text-center text-bold destaque">CPF</td>
+                    <td class="small__font documento__info text-center text-bold destaque">Data Nascimento</td>
+                    <td class="small__font documento__info text-center text-bold destaque">Telefone</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->documento[0]->dspis}}</td>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->tscpf}}</td>
+                    <td class="small__font documento__info text-center">{{date('d/m/Y',strtotime($trabalhadors->nsnascimento))}}</td>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->tstelefone}}</td>
+                </tr>
+>
+                <tr>
+                    <td class="small__font documento__info text-center text-bold destaque">CTPS</td>
+                    <td class="small__font documento__info text-center text-bold destaque">Série</td>
+                    <td class="small__font documento__info text-center text-bold destaque">Estado Cívil</td>
+                    <td class="small__font documento__info text-center text-bold destaque">Sexo</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->documento[0]->dsctps}}</td>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->documento[0]->dsserie}} - {{$trabalhadors->documento[0]->dsuf}}</td>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->nascimento[0]->nscivil}}</td>
+                    <td class="small__font documento__info text-center">{{$trabalhadors->tssexo}}</td>
+                </tr>
+            </table>
+        
+        </div>
+
+        
+
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Endereço</td>
+                </tr>
+            </table>
+        </div>
+        
+        
+        <div class="margin-top borderT">
             
-        <table>
-            <tr>
-                <td class="small__font documento__info border-left border-bottom capitalize border-right border-top"><strong>CTPS:</strong> {{$trabalhadors->documento[0]->dsctps}}</td>
-                <td class="small__font documento__info uppercase border-bottom border-right  border-top"><strong>Série:</strong> {{$trabalhadors->documento[0]->dsserie}} - {{$trabalhadors->documento[0]->dsuf}}</td>
-                <td class="small__font documento__info  capitalize border-bottom border-right  border-top"><strong>Estado Cívil:</strong> {{$trabalhadors->nascimento[0]->nscivil}}</td>
-                <td class="small__font documento__info border-right capitalize border-bottom border-left border-top"><strong>Sexo:</strong> {{$trabalhadors->tssexo}}</td>
-            </tr>
-        </table>
+            <table class="padding-border">
+                <tr>
+                    <td class="small__font text-center text-bold destaque rua">Rua</td>
+                    <td class="small__font text-center text-bold destaque numero__endereco">Número</td>
+                    <td class="small__font text-center text-bold destaque cep">CEP</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font  text-center rua">{{$trabalhadors->endereco[0]->eslogradouro}}</td>
+                    <td class="small__font numero text-center border-left">{{$trabalhadors->endereco[0]->esnum}}</td>
+                    <td class="small__font  text-center cep ">{{$trabalhadors->endereco[0]->escep}}</td>
+                </tr>
 
+            </table>
+            
+            <table>
+                <tr>
+                    <td class="small__font text-center text-bold destaque documento__info">Bairro</td>
+                    <td class="small__font text-center text-bold destaque documento__info">Cidade</td>
+                    <td class="small__font text-center text-bold destaque documento__info border-left">UF</td>
+                    <td class="small__font text-center text-bold destaque documento__info">Nacionalidade</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font text-center documento__info">{{$trabalhadors->endereco[0]->esbairro}}</td>
+                    <td class="small__font text-center documento__info">{{$trabalhadors->endereco[0]->esmunicipio}}</td>
+                    <td class="small__font text-center documento__info">{{$trabalhadors->endereco[0]->esuf}}</td>
+                    <td class="small__font text-center documento__info">{{$trabalhadors->nascimento[0]->nsnaturalidade}}</td>
+                </tr>
+            </table>
+
+        </div>
         
-
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Endereço</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="small__font border-left rua border-top border-bottom capitalize border-right"><strong>Endereço:</strong>  {{$trabalhadors->endereco[0]->eslogradouro}}, {{$trabalhadors->endereco[0]->esnum}} {{$trabalhadors->endereco[0]->esbairro}}</td>
-                <td class="small__font uf border-top text-center capitalize border-bottom  border-right"><strong>UF:</strong> {{$trabalhadors->endereco[0]->esuf}}</td>
-                <td class="small__font border-right cep text-center border-top border-bottom capitalize  border-left"><strong>CEP:</strong> {{$trabalhadors->endereco[0]->escep}}</td>
-            </tr>
-        </table>
-        <table>    
-            <tr>
-                <td class="small__font cidade2 border-left border-bottom capitalize border-top border-right"><strong>Cidade:</strong> {{$trabalhadors->endereco[0]->esmunicipio}}</td>
-                <td class="small__font natural border-bottom capitalize border-top text-center border-right"><strong>Natural:</strong> {{$trabalhadors->nascimento[0]->nsnaturalidade}}</td>
-                <td class="small__font border-right cep telefone border-bottom capitalize border-top border-left"><strong>Telefone:</strong>{{$trabalhadors->tstelefone}}</td>
-            </tr>
-        </table>
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Filiação</td>
+                </tr>
+            </table>
+        </div>
         
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Filiação</td>
-            </tr>
-        </table>
+        <div class="margin-top borderT">
+            
+            <table class="padding-border">
+                <tr>
+                    <td class="small__font afiliacao text-bold destaque text-center">Nome da Mãe</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font afiliacao text-center border-right border-top border-bottom border-left">{{$trabalhadors->tsmae}}</td>
+                </tr>
+            </table>
+            
+        </div>
 
-        <table>
-            <tr>
-                <td class="small__font afiliacao border-left border-right border-bottom border-top capitalize"><strong>Nome da Mãe:</strong>{{$trabalhadors->tsmae}}</td>
-            </tr>
-        </table>
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Depedentes</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="margin-top borderT">
+            <table>
+                @if(count($trabalhadors->depedente) > 0)
+                        <tr>
+                            <td class="small__font text-center text-bold destaque nome__depedente">Nome</td>
+                            <td class="small__font text-center text-bold destaque data">Data Nascimento</td>
+                        </tr>
+                    @foreach($trabalhadors->depedente as $depedente)
+                        <tr>
+                            <td class="small__font border-top border-left border-bottom nome__depedente text-center">{{$depedente->dsnome}}</td>
+                            <td class="small__font border-right border-top border-bottom border-left data text-center">
+                                <?php
+                                    $data = explode('-',$depedente->dsdata)
+                                ?>
+                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                            </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr>
+                            <td  class="small__font semdepe text-center"><strong>Não há depedentes.</strong></td>
+                        </tr>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Dependentes</td>
-            </tr>
-        </table>
+                @endif
+            </table>
+        </div>
 
-        <table>
-            @if(count($trabalhadors->depedente) > 0)
-                @foreach($trabalhadors->depedente as $depedente)
-                    <tr>
-                        <td class="small__font border-top border-left border-bottom nome capitalize"><strong>Nome: </strong>{{$depedente->dsnome}}</td>
-                        <td class="small__font border-right border-top border-bottom border-left data capitalize"><strong>Data Nascimento: </strong>
-                            <?php
-                                $data = explode('-',$depedente->dsdata)
-                            ?>
-                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                        </td>
-                    </tr>
-                @endforeach
-                @else
-                    <tr>
-                        <td  class="small__font semdepe border-top border-bottom border-left nome text-center border-right"><strong>Não á depedentes.</strong></td>
-                    </tr>
-             @endif
-        </table>
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Informações Bancárias</td>
+                </tr>
+            </table>
+        </div>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Informações Bancárias</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="small__font bancario2 border-top border-bottom border-left border-right text-center capitalize"><strong>Banco:</strong> {{$trabalhadors->bancario[0]->bsbanco}}</td>
-                <td class="small__font bancario text-center border-top border-bottom  border-right capitalize"><strong>Agência:</strong> {{$trabalhadors->bancario[0]->bsagencia}}</td>
-                <td class="small__font bancario text-center border-top border-bottom  border-right  capitalize"><strong>Conta:</strong> {{$trabalhadors->bancario[0]->bsconta}}</td>
-            </tr>
-        </table>
+        <div class="margin-top borderT">
+            <table>
+                <tr>
+                    <td class="small__font bancario2 text-center destaque">Banco</td>
+                    <td class="small__font bancario text-center destaque">Agência</td>
+                    <td class="small__font bancario text-center destaque">Conta</td>
+                </tr>
+                <tr>
+                    <td class="small__font bancario2 border-top border-bottom border-left border-right text-center">{{$trabalhadors->bancario[0]->bsbanco}}</td>
+                    <td class="small__font bancario text-center border-top border-bottom  border-right">{{$trabalhadors->bancario[0]->bsagencia}}</td>
+                    <td class="small__font bancario text-center border-top border-bottom  border-right">{{$trabalhadors->bancario[0]->bsconta}}</td>
+                </tr>
+            </table>
+        </div>
 
         <div class="borderT margin-top">
             <table class="assinatura">
@@ -419,10 +502,11 @@
 
             <table class="margin-top">
                 <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
-                    <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">Data: {{date("d/m/y")}}</td>
                 </tr>
             </table>
         </div>
+        
     </body>
 </html>

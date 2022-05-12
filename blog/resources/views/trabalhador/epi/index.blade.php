@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Epi')
+@section('titulo','Rhweb - Ficha de Epi')
 @section('conteine')
 <main role="main">
     <div class="container">
@@ -130,7 +130,7 @@
                     @else
                         <div class="row mb-3 campo{{$key}}">
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="quantidade{{$key}}" class="form-label">Qtd</label>
+                                <label for="quantidade{{$key}}" class="form-label">Qtd <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Quantidade"></i></label>
                                 <input type="text" class="form-control numero @error('quantidade{{$key}}') is-invalid @enderror numero" name="quantidade{{$key}}" value="{{$valor->eiquantidade}}" maxlength="100" id="quantidade{{$key}}">
                                 @error('quantidade{{$key}}')
                                     <span class="text-danger">{{ $message }}</span>
@@ -146,7 +146,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="tamanho{{$key}}" class="form-label">Tam</label>
+                                <label for="tamanho{{$key}}" class="form-label">Tam <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Tamanho"></i></label>
                                 <input type="text" class="form-control @error('tamanho{{$key}}') is-invalid @enderror"  name="tamanho{{$key}}" value="{{$valor->estm}}" maxlength="100" id="tamanho{{$key}}">
                                 @error('tamanho{{$key}}')
                                     <span class="text-danger">{{ $message }}</span>
@@ -154,7 +154,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="ca{{$key}}" class="form-label">CA</label>
+                                <label for="ca{{$key}}" class="form-label">CA  <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Numero do Certificado de Aprovação"></i></label>
                                 <input type="text" class="form-control numero @error('ca{{$key}}') is-invalid @enderror"  name="ca{{$key}}" value="{{$valor->eica}}" maxlength="100" id="ca{{$key}}">
                                 @error('ca{{$key}}')
                                     <span class="text-danger">{{ $message }}</span>
@@ -162,7 +162,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-2 col-xxl-2 mt-2">
-                                <label for="data__recolhimento{{$key}}" class="form-label">Recolhimento</label>
+                                <label for="data__recolhimento{{$key}}" class="form-label">Recolhimento <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Data de recolhimento"></i></label>
                                 <input type="date" class="form-control @error('data__recolhimento{{$key}}') is-invalid @enderror"  name="data__recolhimento{{$key}}" value="{{$valor->esdatares}}" maxlength="100" id="data__recolhimento{{$key}}">
                                 @error('data__recolhimento{{$key}}')
                                     <span class="text-danger">{{ $message }}</span>
@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-2 col-xxl-2 mt-2">
-                                <label for="data__devolucao{{$key}}" class="form-label">Devolução</label>
+                                <label for="data__devolucao{{$key}}" class="form-label">Devolução <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Data de devolução"></i></label>
                                 <input type="date" class="form-control @error('data__devolucao{{$key}}') is-invalid @enderror"  name="data__devolucao{{$key}}" value="{{$valor->esdatadev}}" maxlength="100" id="data__devolucao{{$key}}">
                                 @error('data__devolucao{{$key}}')
                                     <span class="text-danger">{{ $message }}</span>
@@ -190,7 +190,7 @@
                     @else
                         <div class="row mb-3">
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="quantidade" class="form-label">Qtd</label>
+                                <label for="quantidade" class="form-label">Qtd <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Quantidade"></i></label>
                                 <input type="text" class="form-control numero @error('quantidade0') is-invalid @enderror" name="quantidade0"  maxlength="100" id="quantidade0">
                                 @error('quantidade0')
                                     <span class="text-danger">{{ $message }}</span>
@@ -206,7 +206,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="tamanho0" class="form-label">Tam</label>
+                                <label for="tamanho0" class="form-label">Tam <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Tamanho"></i></label>
                                 <input type="text" class="form-control @error('tamanho0') is-invalid @enderror"  name="tamanho0"  maxlength="100" id="tamanho0">
                                 @error('tamanho0')
                                     <span class="text-danger">{{ $message }}</span>
@@ -214,7 +214,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-1 col-xxl-1 mt-2">
-                                <label for="ca0" class="form-label">CA</label>
+                                <label for="ca0" class="form-label">CA  <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Numero do Certificado de Aprovação"></i></label>
                                 <input type="text" class="form-control numero @error('ca0') is-invalid @enderror"  name="ca0"  maxlength="100" id="ca0">
                                 @error('ca0')
                                     <span class="text-danger">{{ $message }}</span>
@@ -222,7 +222,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-2 col-xxl-2 mt-2">
-                                <label for="data__recolhimento0" class="form-label">Recolhimento</label>
+                                <label for="data__recolhimento0" class="form-label">Recolhimento <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Data de recolhimento"></i></label>
                                 <input type="date" class="form-control @error('data__recolhimento0') is-invalid @enderror"  name="data__recolhimento0"  maxlength="100" id="data__recolhimento0">
                                 @error('data__recolhimento0')
                                     <span class="text-danger">{{ $message }}</span>
@@ -230,7 +230,7 @@
                             </div>
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6  col-xl-2 col-xxl-2 mt-2">
-                                <label for="data__devolucao0" class="form-label">Devolucão</label>
+                                <label for="data__devolucao0" class="form-label">Devolucão <i class="fad fa-question-circle"  data-toggle="tooltip" data-placement="top" title="Data de devolução"></i></label>
                                 <input type="date" class="form-control @error('data__devolucao0') is-invalid @enderror"  name="data__devolucao0"  maxlength="100" id="data__devolucao0">
                                 @error('data__devolucao0')
                                     <span class="text-danger">{{ $message }}</span>
@@ -250,16 +250,6 @@
                     <button type="submit" class="btn botao" id="salvar1"><i class="fad fa-save"></i> Salvar</button>
                 </div>
             </div>
-
-                
-
-            <!--<div class="d-grid d-md-flex justify-content-md-end">-->
-            <!--    <div class="mt-2">-->
-                    
-                    
-            <!--    </div>-->
-            <!--</div>-->
-
 
         </form>
 

@@ -83,8 +83,8 @@
         }
 
         .logo{
-            margin-top:10px;
-            margin-right: 50px;
+            width: 100px;
+            height: 100px;
         }
 
         .name__title{
@@ -101,15 +101,15 @@
         }
 
         .nome__trab{
-            width:656.5px;
+            width:556px;
         }
 
         .matric{
-            width: 95px;
+            width: 182px;
         }
 
         .doc__padrao{
-            width:248.4px;
+            width:182px;
         }
 
         .cbo{
@@ -121,11 +121,11 @@
         }
 
         .descr{
-            width:250px;
+            width:235px;
         }
 
         .assina{
-            width:190px;
+            width:194px;
         }
 
         .data{
@@ -150,7 +150,7 @@
         }
         
         .assinatura{
-        margin-top:50px;
+        margin-top:30px;
         }
 
         .fontDeclaracao{
@@ -158,7 +158,7 @@
         }
 
         .data__ass{
-        width:150px;
+            width:372.5px;
         }
 
         .linhaass{
@@ -176,21 +176,43 @@
         .padding-right{
             padding-right: 10px;
         }
+        
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
+        
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .margin__compromisso{
+            margin-top: 40px;
+        }
+        
+        .padding-border{
+            margin-top: 10px;
+        }
+        
+        .padding-border-bottom{
+            margin-bottom: 10px;
+        }
+        
+        .cpf{
+            width:150px;
+        }
 
     </style>
 
     <body>
-       
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
-        
-        <div class="borderT">
+
+        <div class="borderT margin-top">
             <table >
                 <tr>
-                    <td rowspan="6">
+                    <td rowspan="7">
                         @if($empresas->esfoto)
                             <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
                         @else
@@ -198,223 +220,129 @@
                         @endif
                     </td>
                 </tr>
-    
+                
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
+                    <td class="width__padrao padding-left-foto text-bold margin-bottom--title">{{$empresas->esnome}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
-                    
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
+                    <td class="small__font width__padrao padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
+                    <td class="small__font width__padrao padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao padding-left-foto">Tel: {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
         </div>
-
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Termo de Responsabilidade -  EPI: (Equipamento de Proteção Individual)</td>
-            </tr>
-        </table>
-
-            <h1 class="text-center font text-bold titulo" >Termo de Compromisso</h1>
-        <div class="borderT padding-right">
+        
+        <div class="margin-top">
             <table>
                 <tr>
-                    <td><p>Eu.......................................................................................................................................................... declaro sob minha inteira responsablidade a guarda e conservação dos equipamentos de proteção individual constante nesta ficha-controle e uniforme. Assumo também a responsabilidade de devolvê-los integralmente ou parcialmente, quando solicitado, ou por ocasião de eventual desligamento do quadro de associados. Também estou ciente que, na eventualidade de danificar ou extraviar o equipamento por ato doloso, estarei sujeito a desconto do valor em minha folha de pagamento. Também me comprometo a utilizá-lo de forma correta e de acordo com as intruções de treinamento referentes ao uso correto, guarda, conservação e higienização dos EPI, recebida na presente data, fornecida pela <strong class="uppercase"> {{$empresas->esnome}}</strong>, também estou ciente que a não utilização dos mesmos em minha atividade profissional, é ato faltoso e passível de punições legais e disciplinares.</p></td>
+                    <td class="name__title text-center text-bold">Termo de Responsabilidade -  EPI: (Equipamento de Proteção Individual)</td>
                 </tr>
-               
             </table>
         </div>
 
+        <div class="margin-top">
+            <h1 class="text-center font text-bold margin__compromisso" >Termo de Compromisso</h1>
+            <div class="padding-right">
+                <table>
+                    <tr>
+                        <td><p>Eu................................................................................................................................................................ declaro sob minha inteira responsablidade a guarda e conservação dos equipamentos de proteção individual constante nesta ficha-controle e uniforme. Assumo também a responsabilidade de devolvê-los integralmente ou parcialmente, quando solicitado, ou por ocasião de eventual desligamento do quadro de associados. Também estou ciente que, na eventualidade de danificar ou extraviar o equipamento por ato doloso, estarei sujeito a desconto do valor em minha folha de pagamento. Também me comprometo a utilizá-lo de forma correta e de acordo com as intruções de treinamento referentes ao uso correto, guarda, conservação e higienização dos EPI, recebida na presente data, fornecida pela <strong>{{$empresas->esnome}}</strong>, também estou ciente que a não utilização dos mesmos em minha atividade profissional, é ato faltoso e passível de punições legais e disciplinares.</p></td>
+                    </tr>
+                   
+                </table>
+            </div>
+        </div>
+
+        <div class="margin-top">
             <table>
                 <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Identificação do Trabalhador</td>
+                    <td class="name__title text-center text-bold">Identificação do Trabalhador</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="margin-top borderT">
+            <table class="padding-border">
+                <tr>
+                    <td class="small__font nome__trab text-bold destaque text-center margin-bottom--title"> Nome do Trabalhador</td>
+                    <td class="small__font matric text-center text-bold destaque">Matrícula</td>
+                    
+                </tr>
+    
+                <tr>
+                    <td class="small__font nome__trab text-center">{{$trabalhadors->tsnome}}</td>
+                    <td class="small__font matric text-center"> {{$trabalhadors->tsmatricula}}</td>
+                    
                 </tr>
             </table>
 
             <table>
                 <tr>
-                    <td class="border-left border-top border-bottom small__font nome__trab text-bold capitalize destaque"> Nome do Trabalhador</td>
-                    <td class="border-right border-left border-bottom border-top small__font matric text-center text-bold destaque">Matrícula</td>
+                    <td class="small__font text-center doc__padrao text-bold destaque ">CPF</td>
+                    <td class="small__font text-bold doc__padrao text-center destaque">CBO</td>
+                    <td class="small__font text-bold doc__padrao text-center destaque">PIS</td>
+                    <td class="small__font text-bold doc__padrao text-center destaque">CTPS</td>
                 </tr>
-
+                
                 <tr>
-                    <td class="border-left border-bottom small__font nome__trab capitalize">{{$trabalhadors->tsnome}}</td>
-                    <td class="border-right border-left border-bottom small__font matric text-center"> {{$trabalhadors->tsmatricula}}</td>
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">CPF: {{$trabalhadors->tscpf}}</td>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">PIS:  {{$trabalhadors->documento[0]->dspis}}</td>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold doc__padrao text-center">CTPS:{{$trabalhadors->documento[0]->dsctps}}</td>
+                    <td class="small__font doc__padrao text-center cpf">{{$trabalhadors->tscpf}}</td>
+                    <td class="small__font doc__padrao text-center">{{$trabalhadors->categoria[0]->cbo}}</td>
+                    <td class="small__font doc__padrao text-center">{{$trabalhadors->documento[0]->dspis}}</td>
+                    <td class="small__font doc__padrao text-center">{{$trabalhadors->documento[0]->dsctps}}</td>
                 </tr>
             </table>
 
-            <table>
-                <tr>
-                    <td class="border-left border-top border-right border-bottom small__font text-bold cbo">CBO: {{$trabalhadors->categoria[0]->cbo}}</td>
-                </tr>
-            </table>
+        </div>
+        
+        <div class="margin-top borderT">
 
-            <table>
+            <table class="padding-border padding-border-bottom">
                 <tr>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center quant">Quant.</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center descr capitalize">Descrição</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center tm">TM</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center ca">CA</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center data">Dta.Rec</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center data">Dta.Dev</td>
-                    <td class="small__font text-bold border-top border-bottom border-left text-center border-right assina">Assinatura</td>
+                    <td class="small__font text-bold text-center destaque quant">Quant.</td>
+                    <td class="small__font text-bold text-center destaque descr">Descrição</td>
+                    <td class="small__font text-bold text-center destaque tm">TM</td>
+                    <td class="small__font text-bold text-center destaque ca">CA</td>
+                    <td class="small__font text-bold text-center destaque data">Dta.Rec</td>
+                    <td class="small__font text-bold text-center destaque data">Dta.Dev</td>
+                    <td class="small__font text-bold text-center destaque assina">Assinatura</td>
                 </tr>
                 @foreach($trabalhadors->epi as $epi_valor) 
                     <tr>
-                        <td class="small__font text-bold border-bottom border-left text-center quant">{{$epi_valor->eiquantidade}}</td>
-                        <td class="small__font text-bold border-bottom border-left descr">{{$epi_valor->esdescricao}}</td>
-                        <td class="small__font text-bold border-bottom border-left text-center tm">{{$epi_valor->estm}}</td>
-                        <td class="small__font text-bold border-bottom border-left text-center ca">{{$epi_valor->eica}}</td>
-                        <td class="small__font text-bold border-bottom border-left text-center data">
+                        <td class="small__font text-center border-bottom quant">{{$epi_valor->eiquantidade}}</td>
+                        <td class="small__font text-center border-bottom descr">{{$epi_valor->esdescricao}}</td>
+                        <td class="small__font text-center border-bottom tm">{{$epi_valor->estm}}</td>
+                        <td class="small__font text-center border-bottom ca">{{$epi_valor->eica}}</td>
+                        <td class="small__font text-center border-bottom data">
                             @if($epi_valor->esdatares)
                                
                                 {{date('d/m/Y',strtotime($epi_valor->esdatares))}}
                             @endif
                         </td>
-                        <td class="small__font text-bold border-bottom border-left text-center data">
+                        <td class="small__font text-center border-bottom data">
                             @if($epi_valor->esdatadev)
                                
                                  {{date('d/m/Y',strtotime($epi_valor->esdatadev))}}
                             @endif
                         </td>
-                        <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
+                        <td class="small__font text-center border-bottom assina"></td>
                     </tr>
+                    
+                    
                 @endforeach
-                <!-- <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Calças</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Botina</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Proteção Auricular</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Capacete</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Óculos</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Luvas</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Colete</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Blusa de Frio</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Cinto</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr>
-
-                <tr>
-                    <td class="small__font text-bold border-bottom border-left text-center quant"></td>
-                    <td class="small__font text-bold border-bottom border-left descr">Bermuda</td>
-                    <td class="small__font text-bold border-bottom border-left text-center tm"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center ca"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center data"></td>
-                    <td class="small__font text-bold border-bottom border-left text-center border-right assina"></td>
-                </tr> -->
+               
             </table>
+        </div>
             
             <div class="borderT margin-top">
                 <table class="assinatura">
@@ -429,8 +357,8 @@
     
                 <table class="margin-top">
                     <tr>
-                    <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
-                        <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
+                        <td class="fontDeclaracao data__ass  text-center">Data: {{date("d/m/y")}}</td>
                     </tr>
                 </table>
             </div>

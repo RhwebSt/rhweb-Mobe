@@ -7,16 +7,18 @@ use Illuminate\Http\Request;
 use App\Tomador;
 use App\Empresa;
 use App\Folhar;
+use App\BaseCalculo;
 use App\ValorCalculo;
 class SefipController extends Controller
 {
-    private $tomador,$empresa,$folhar,$valorcalculo;
+    private $tomador,$empresa,$folhar,$valorcalculo,$basecalculo;
     public function __construct()
     {
         $this->tomador = new Tomador;
         $this->empresa = new Empresa;
         $this->folhar = new Folhar;
         $this->valorcalculo = new ValorCalculo;
+        $this->basecalculo = new BaseCalculo;
     }
     public function geraTxt($tomador,$folhar,$empresa)
     {
@@ -24,6 +26,462 @@ class SefipController extends Controller
        $tomador = base64_decode($tomador);
        $folhar = base64_decode($folhar);
        $empresa = base64_decode($empresa);
+       $caracteres_sem_acento = array(
+        'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj',''=>'Z', ''=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
+        'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
+        'Ï'=>'I', 'Ñ'=>'N', 'Ń'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
+        'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
+        'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
+        'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ń'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
+        'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
+        'ă'=>'a', 'î'=>'i', 'â'=>'a', 'ș'=>'s', 'ț'=>'t', 'Ă'=>'A', 'Î'=>'I', 'Â'=>'A', 'Ș'=>'S', 'Ț'=>'T',
+        );
+       $sefip = $this->basecalculo->where([
+           ['folhar_id',$folhar],
+           ['tomador_id',$tomador]
+        ])
+        ->with(['folhar.empresa.endereco','tomador.endereco','tomador.parametrosefip'])
+        ->first(); 
+        $trabalhador =  $this->basecalculo->where([
+            ['folhar_id',$folhar],
+            ['tomador_id',$tomador]
+         ])
+         ->with(['trabalhador.endereco','trabalhador.documento','trabalhador.categoria','trabalhador.nascimento','trabalhador.valorcalculo'])
+         ->get();
+        //  dd($sefip,$trabalhador);
+         $file_name = 'SEFIP.RE';
+         $cd = '00';
+         for ($i=0; $i < 51 ; $i++) { 
+             $cd .= ' ';
+         }
+         $cd .='11';
+         $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cd .= $cnpj;
+         $cnpj = strlen($cnpj);
+         for ($i=0; $i < (14-$cnpj); $i++) { 
+            $cd .= ' ';
+         }
+         $nome = substr($sefip->folhar->empresa->esnome,0,30);
+         $cd .= $nome;
+         $nome = strlen($nome);
+         for ($i=0; $i < (30 - $nome); $i++) { 
+            $cd .= ' ';
+         }
+         $rua = substr($sefip->folhar->empresa->endereco[0]->eslogradouro,0,70);
+         $cd .= $rua;
+         $rua = strlen($rua);
+         
+         for ($i=0; $i < (70 - $rua); $i++) { 
+            $cd .= ' ';
+         }
+         $bairro = substr($sefip->folhar->empresa->endereco[0]->esbairro,0,20);
+         $cd .= $bairro;
+         $bairro = strlen($bairro);
+         for ($i=0; $i < (20 - $bairro); $i++) { 
+            $cd .= ' ';
+         }
+         $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->endereco[0]->escep);
+         $cd .= $cep;
+         $cep = strlen($cep);
+         for ($i=0; $i < (8-$cep); $i++) { 
+            $cd .= ' ';
+         }
+         $cidade = substr($sefip->folhar->empresa->endereco[0]->esmunicipio,0,20);
+         $cd .= $cidade;
+         $cidade = strlen($cidade);
+         for ($i=0; $i < (20 - $cidade); $i++) { 
+            $cd .= ' ';
+         }
+         $uf = substr($sefip->folhar->empresa->endereco[0]->esuf,0,2);
+         $cd .= $uf;
+         $uf = strlen($uf);
+         for ($i=0; $i < (2 - $uf); $i++) { 
+            $cd .= ' ';
+         }
+         $telefone = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->estelefone);
+         $cd .= $telefone;
+         $telefone = strlen($telefone);
+         for ($i=0; $i < (12-$telefone); $i++) { 
+            $cd .= ' ';
+         }
+         $email = substr($sefip->folhar->empresa->esemail,0,60);
+         $cd .= $email;
+         $email = strlen($email);
+         for ($i=0; $i < (60 - $email); $i++) { 
+            $cd .= ' ';
+         }
+         $telefone = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->fscompetencia);
+         $cd .= $telefone;
+         $telefone = strlen($telefone);
+         for ($i=0; $i < (6-$telefone); $i++) { 
+            $cd .= ' ';
+         }
+         $rol = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psresol);
+         $cd .= $rol;
+         $rol = strlen($rol);
+         for ($i=0; $i < (3-$rol); $i++) { 
+            $cd .= ' ';
+         }
+         for ($i=0; $i < 9; $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= '1';
+         for ($i=0; $i < 16; $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= '1';
+         $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cd .= $cnpj;
+         $cnpj = strlen($cnpj);
+         for ($i=0; $i < (14-$cnpj); $i++) { 
+            $cd .= ' ';
+         }
+         for ($i=0; $i < 18; $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= "*"."\r\n";
+         $cd .= '101';
+        //  $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tscnpj);
+        //  $cd .= $cnpj;
+        //  $cnpj = strlen($cnpj);
+        //  for ($i=0; $i < (14-$cnpj); $i++) { 
+        //     $cd .= ' ';
+        //  }
+        $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+        $cd .= $cnpj;
+        $cnpj = strlen($cnpj);
+        for ($i=0; $i < (14-$cnpj); $i++) { 
+           $cd .= ' ';
+        }
+         for ($i=0; $i < 36; $i++) { 
+            $cd .= '0';
+         }
+         $nome = substr($sefip->tomador->tsnome,0,40);
+         $cd .= $nome;
+         $nome = strlen($nome);
+         for ($i=0; $i < (40 - $nome); $i++) { 
+            $cd .= ' ';
+         }
+         $rua = substr($sefip->tomador->endereco[0]->eslogradouro,0,50);
+         $cd .= $rua;
+         $rua = strlen($rua);
+         
+         for ($i=0; $i < (50 - $rua); $i++) { 
+            $cd .= ' ';
+         }
+         $bairro = substr($sefip->tomador->endereco[0]->esbairro,0,20);
+         $cd .= $bairro;
+         $bairro = strlen($bairro);
+         for ($i=0; $i < (20 - $bairro); $i++) { 
+            $cd .= ' ';
+         }
+         $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->endereco[0]->escep);
+         $cd .= $cep;
+         $cep = strlen($cep);
+         for ($i=0; $i < (8-$cep); $i++) { 
+            $cd .= ' ';
+         }
+         $cidade = substr($sefip->tomador->endereco[0]->esmunicipio,0,20);
+         $cd .= $cidade;
+         $cidade = strlen($cidade);
+         for ($i=0; $i < (20 - $cidade); $i++) { 
+            $cd .= ' ';
+         }
+         $uf = substr($sefip->tomador->endereco[0]->esuf,0,2);
+         $cd .= $uf;
+         $uf = strlen($uf);
+         for ($i=0; $i < (2 - $uf); $i++) { 
+            $cd .= ' ';
+         }
+         $telefone = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tstelefone);
+         $cd .= $telefone;
+         $telefone = strlen($telefone);
+         for ($i=0; $i < (12-$telefone); $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= 'N';
+         $cnae = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->pscnae);
+         $cd .= $cnae;
+         $cnae = strlen($cnae);
+         for ($i=0; $i < (7-$cnae); $i++) { 
+            $cd .= ' ';
+         }
+         $cd .="P";
+         $rat = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psconfpas);
+         $cd .= $rat;
+         $rat = strlen($rat);
+         for ($i=0; $i < (2-$rat); $i++) { 
+            $cd .= ' ';
+         }
+         $cd .='1';
+         if ($sefip->tomador->tssimples === 'Sim') {
+            $cd .= "1";
+        }else{
+            $cd.= "0";
+        }
+        $fpas = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psfpas);
+        $cd .= $fpas;
+        $fpas = strlen($fpas);
+        for ($i=0; $i < (3-$fpas); $i++) { 
+           $cd .= ' ';
+        }
+        $pasterceiros = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psfpasterceiros);
+        $cd .= $pasterceiros;
+        $pasterceiros = strlen($pasterceiros);
+        for ($i=0; $i < (4-$pasterceiros); $i++) { 
+           $cd .= ' ';
+        }
+        $gtps = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psgrps);
+        $cd .= $gtps;
+        $gtps = strlen($gtps);
+        for ($i=0; $i < (4-$gtps); $i++) { 
+           $cd .= ' ';
+        }
+        for ($i=0; $i < 5; $i++) { 
+            $cd .= ' ';
+         }
+        for ($i=0; $i < 60; $i++) { 
+            $cd .= '0';
+         }
+         for ($i=0; $i < 15; $i++) { 
+            $cd .= ' ';
+         }
+         for ($i=0; $i < 45; $i++) { 
+            $cd .= '0';
+         }
+         for ($i=0; $i < 4; $i++) { 
+            $cd .= ' ';
+         }
+
+         $cd .= "*"."\r\n";
+         $cd .= '201';
+         $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cd .= $cnpj;
+         $cnpj = strlen($cnpj);
+         for ($i=0; $i < (14-$cnpj); $i++) { 
+            $cd .= ' ';
+         }
+         $cd .='1';
+         $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tscnpj);
+         $cd .= $cnpj;
+         $cnpj = strlen($cnpj);
+         for ($i=0; $i < (14-$cnpj); $i++) { 
+            $cd .= ' ';
+         }
+         for ($i=0; $i < 21; $i++) { 
+            $cd .= '0';
+         }
+         $nome = substr($sefip->tomador->tsnome,0,40);
+         $cd .= $nome;
+         $nome = strlen($nome);
+         for ($i=0; $i < (40 - $nome); $i++) { 
+            $cd .= ' ';
+         }
+         $rua = substr($sefip->tomador->endereco[0]->eslogradouro,0,50);
+         $cd .= $rua;
+         $rua = strlen($rua);
+         
+         for ($i=0; $i < (50 - $rua); $i++) { 
+            $cd .= ' ';
+         }
+         $bairro = substr($sefip->tomador->endereco[0]->esbairro,0,20);
+         $cd .= $bairro;
+         $bairro = strlen($bairro);
+         for ($i=0; $i < (20 - $bairro); $i++) { 
+            $cd .= ' ';
+         }
+         $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->endereco[0]->escep);
+         $cd .= $cep;
+         $cep = strlen($cep);
+         for ($i=0; $i < (8-$cep); $i++) { 
+            $cd .= ' ';
+         }
+         $cidade = substr($sefip->tomador->endereco[0]->esmunicipio,0,20);
+         $cd .= $cidade;
+         $cidade = strlen($cidade);
+         for ($i=0; $i < (20 - $cidade); $i++) { 
+            $cd .= ' ';
+         }
+         $uf = substr($sefip->tomador->endereco[0]->esuf,0,2);
+         $cd .= $uf;
+         $uf = strlen($uf);
+         for ($i=0; $i < (2 - $uf); $i++) { 
+            $cd .= ' ';
+         }
+         $gtps = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psgrps);
+         $cd .= $gtps;
+         $gtps = strlen($gtps);
+        for ($i=0; $i < (4-$gtps); $i++) { 
+        $cd .= ' ';
+        }
+        for ($i=0; $i < 104; $i++) { 
+            $cd .= '0';
+         }
+         for ($i=0; $i < 58; $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= "*"."\r\n";
+         foreach ($trabalhador as $key => $trabalhadores) {
+            $cd .= '301';
+            $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+            $cd .= $cnpj;
+            $cnpj = strlen($cnpj);
+            for ($i=0; $i < (14-$cnpj); $i++) { 
+               $cd .= ' ';
+            }
+            $cd .='1';
+            $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tscnpj);
+            $cd .= $cnpj;
+            $cnpj = strlen($cnpj);
+            for ($i=0; $i < (14-$cnpj); $i++) { 
+               $cd .= ' ';
+            }
+            $pis = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dspis);
+            $cd .= $pis;
+            $pis = strlen($pis);
+            for ($i=0; $i < (11-$pis); $i++) { 
+               $cd .= ' ';
+            }
+            $admissao = date('d-m-Y',strtotime($trabalhadores->trabalhador->categoria[0]->csadmissao));
+            $admissao = str_replace(array(".", ",", "-", "/"), "",$admissao);
+            $cd .= $admissao;
+            $admissao = strlen($admissao);
+            for ($i=0; $i < (8-$admissao); $i++) { 
+               $cd .= ' ';
+            }
+            $categoria = substr($trabalhadores->trabalhador->categoria[0]->cscategoria,0,2);
+            $cd .= $categoria;
+            $categoria = strlen($categoria);
+            for ($i=0; $i < (2-$categoria); $i++) { 
+               $cd .= ' ';
+            }
+            $nome = strtr($trabalhadores->trabalhador->tsnome,$caracteres_sem_acento);
+            $nome = substr($nome,0,70);
+            $cd .= strtoupper($nome);
+            $nome = strlen($nome);
+            for ($i=0; $i < (70 - $nome); $i++) { 
+               $cd .= ' ';
+            }
+            $matricula = substr($trabalhadores->trabalhador->tsmatricula,0,11);
+            $cd .= $matricula;
+            $matricula = strlen($matricula);
+            for ($i=0; $i < (11 - $matricula); $i++) { 
+               $cd .= ' ';
+            }
+            $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsctps);
+            $cd .= $ctps;
+            $ctps = strlen($ctps);
+            for ($i=0; $i < (7-$ctps); $i++) { 
+               $cd .= ' ';
+            }
+            $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsserie);
+            $cd .= $ctps;
+            $ctps = strlen($ctps);
+            for ($i=0; $i < (5-$ctps); $i++) { 
+               $cd .= ' ';
+            }
+            $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->categoria[0]->csafastamento);
+            $cd .= $afastamento;
+            $afastamento = strlen($afastamento);
+            for ($i=0; $i < (8-$afastamento); $i++) { 
+               $cd .= ' ';
+            }
+            $nascimento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->nascimento[0]->nsnascimento);
+            $cd .= $nascimento;
+            $nascimento = strlen($nascimento);
+            for ($i=0; $i < (8-$nascimento); $i++) { 
+               $cd .= ' ';
+            }
+            $cbo = substr($trabalhadores->trabalhador->categoria[0]->cbo,0,5);
+            $cbo = str_replace(array(".", ",", "-", "/"), "",$cbo);
+            $cd .= $cbo;
+            $cbo = strlen($cbo);
+            for ($i=0; $i < (5-$cbo); $i++) { 
+               $cd .= ' ';
+            }
+            $soma = 0;
+            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+                if ($valorcalculo->vicodigo == 1009) {
+                    $soma = $valorcalculo->vivencimento + $trabalhadores->biservicodsr;
+                }
+            }
+            
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
+            $cd .= $soma;
+            $soma = strlen($soma);
+            for ($i=0; $i < (13-$soma); $i++) { 
+               $cd .= ' ';
+            }
+            $soma = 0;
+            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+                if ($valorcalculo->vicodigo == 1010) {
+                    $soma = $valorcalculo->vivencimento;
+                }
+            }
+            
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
+            $cd .= $soma;
+            $soma = strlen($soma);
+            for ($i=0; $i < (13-$soma); $i++) { 
+               $cd .= ' ';
+            }
+            for ($i=0; $i < 4; $i++) { 
+                $cd .= '0';
+             }
+             $soma = 0;
+            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+                if ($valorcalculo->vicodigo == 2001) {
+                    $soma = $valorcalculo->videscinto;
+                }
+            }
+            
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
+            $cd .= $soma;
+            $soma = strlen($soma);
+            for ($i=0; $i < (13-$soma); $i++) { 
+               $cd .= ' ';
+            }
+            for ($i=0; $i < 19; $i++) { 
+                $cd .= '0';
+             }
+            $soma = 0;
+            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+                if ($valorcalculo->vicodigo == 1010) {
+                    $soma = $valorcalculo->vivencimento;
+                }
+            }
+            
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
+            $cd .= $soma;
+            $soma = strlen($soma);
+            for ($i=0; $i < (13-$soma); $i++) { 
+               $cd .= ' ';
+            }
+            for ($i=0; $i < 19; $i++) { 
+                $cd .= '0';
+             }
+            for ($i=0; $i < 98; $i++) { 
+                $cd .= ' ';
+             }
+            $cd .= "*"."\r\n";
+         }
+         $cd .= '90999999999999999999999999999999999999999999999999999';
+         for ($i=0; $i < 306; $i++) { 
+            $cd .= ' ';
+         }
+         $cd .= "*";
+         $file = fopen( $file_name, "w" );
+         fwrite($file, $cd);
+         fclose($file);
+         header("Content-Type: application/save");
+         header("Content-Length:".filesize($file_name));
+         header('Content-Disposition: attachment; filename="' . $file_name . '"');
+         header("Content-Transfer-Encoding: binary");
+         header('Expires: 0');
+         header('Pragma: no-cache');
+         echo $cd;
+         exit;
+        dd($sefip,$trabalhador);
        $empresa = $this->empresa->EmpresaSefip($empresa);
        $folhas = $this->folhar->buscaTrabalhadorLista($folhar,$tomador);
        $tomador = $this->tomador->first($tomador);

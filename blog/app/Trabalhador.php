@@ -61,6 +61,10 @@ class Trabalhador extends Model
     {
         return $this->hasMany(Lancamentorublica::class);
     }
+    public function valorcalculo()
+    {
+        return $this->hasMany(ValorCalculo::class);
+    }
     public function cadastro($dados)
     {
         

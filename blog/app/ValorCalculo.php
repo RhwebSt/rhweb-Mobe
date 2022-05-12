@@ -13,6 +13,10 @@ class ValorCalculo extends Model
     {
         return $this->belongsTo(BaseCalculo::class);
     }
+    public function trabalhador()
+    {
+        return $this->belongsTo(Trabalhador::class);
+    }
     public function cadastroHorasnormais($dados)
     {
         return ValorCalculo::create([
