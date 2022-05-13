@@ -469,10 +469,11 @@ class calculoFolhaGeralController extends Controller
                     $indece = 0;
                     if ($comissionador->count() > 0) {
                         foreach ($comissionador as $key => $comissionados) {
-                            $indece = $comissionados->csindece;
                             $novovalor = $boletim['vencimento'] * ($comissionados->csindece/100);
                             array_push($valor_comissionador['valor'],$novovalor);
                             array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
+                            $indece += $comissionados->csindece;
+                            $novovalor += $boletim['vencimento'] * ($comissionados->csindece/100);
                         }
                     }
                     $tomador_cartao_ponto_horas = self::calculardia($tomadores->cartaoponto[0]->csdiasuteis,null);
@@ -1090,6 +1091,7 @@ class calculoFolhaGeralController extends Controller
            trabalhador_id'
         )
        ->groupBy('trabalhador_id','folhar_id')->get();
+       
        foreach ($basecalculo as $key => $basecalculos) {
             $depedente = $this->depedente->where('trabalhador_id',$basecalculos->trabalhador_id)->count();
             $base_irrf = str_replace(',','.',$irrf_lista[0]->irdepedente) * $depedente;
@@ -1136,12 +1138,14 @@ class calculoFolhaGeralController extends Controller
                 'trabalhador'=>'',
                 'basecalculo'=>''
             ];
+          
             $valorcalculos =   $this->valorcalculo->listaGeral($folhar['id'],$basecalculos->trabalhador_id,$codigo);
             foreach ($valorcalculos as $key => $valorcalculo) {
                 $base_irrf += $valorcalculo->desconto;
             }
             $base_irrf = $basecalculos->bifgts - $base_irrf;
             $faxa = 0;
+            $liquido = 0;
             foreach ($irrf_lista as $key => $irrf) {
                 $novoirrf = (float) $irrf->irsvalorfinal;
                 if ($base_irrf < $novoirrf && $key === 0) {
@@ -1181,24 +1185,35 @@ class calculoFolhaGeralController extends Controller
                 }
             }
             if ($quantdias > 15) {
-                $datafinal = explode('-',$datafinal);
-                $datafinal = $datafinal[0].'-'.$datafinal[1].'-15';
-                $folha = DB::table('folhars') 
-                ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
-                ->select('bivalorliquido')
-                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal])
-                ->where('base_calculos.tomador_id','!=',null)
-                ->where('base_calculos.trabalhador_id',$basecalculos->trabalhador_id)
-                ->first();
-                if ($folha) {
-                    $basecalculos->bivalorliquido -= $folhar->bivalorliquido;
-                    $basecalculos->bivalordesconto += $folhar->bivalorliquido;
+                $quant = $this->relacaodia->where([
+                    ['trabalhador_id',$basecalculos->trabalhador_id],
+                    ['rsdia','>',15],
+                ])->count();
+                
+                //dd($quant,$datafinal,$basecalculos->trabalhador_id,$datainicio,$basecalculos->bivalorliquido);
+                if ($quant) {
+                    $datafinal = explode('-',$datafinal);
+                    $datafinal = $datafinal[0].'-'.$datafinal[1].'-15';
+                    $folha = DB::table('folhars') 
+                    ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+                    ->select('base_calculos.bivalorliquido','base_calculos.trabalhador_id')
+                    ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal])
+                    ->where('base_calculos.tomador_id',null)
+                    ->where('base_calculos.trabalhador_id',$basecalculos->trabalhador_id)
+                    ->first();
+                    if ($folha) {
+                       $basecalculos->bivalorliquido -= $folha->bivalorliquido;
+                       $basecalculos->bivalordesconto += $folha->bivalorliquido;
+                    }
                 }
+               
+               
+               
                
             }
             $desconto = $this->desconto
             ->where('trabalhador_id',$basecalculos->trabalhador_id)
-            ->whereBetween('dscompetencia',[substr($datainicio, 0, 7),substr($datafinal, 0, 7)])
+            ->whereBetween('dscompetencia',[date('Y-m',strtotime($datainicio)),date('Y-m',strtotime($datafinal))])
             ->selectRaw(
                 'dsquinzena,
                 dsdescricao,
@@ -1207,15 +1222,17 @@ class calculoFolhaGeralController extends Controller
                 SUM(dfvalor) as valor'
             )
             ->groupBy('dscompetencia','dsquinzena','dsdescricao')
-            ->first();
-            if ($desconto) {
-                if ($quantdias <= 15 && $desconto->dsquinzena === '1 - Primeira') {
-                    $basecalculos->bivalorliquido -= $desconto->valor;
-                    $basecalculos->bivalordesconto += $desconto->valor;
-                }
-                if ($quantdias > 15 && $desconto->dsquinzena === '2 - Segunda') {
-                    $basecalculos->bivalorliquido -= $desconto->valor;
-                    $basecalculos->bivalordesconto += $desconto->valor;
+            ->get();
+            if ($desconto->count() > 0) {
+                foreach ($desconto as $key => $descontos) {
+                    if ($quantdias <= 15 && $descontos->dsquinzena === '1 - Primeira') {
+                        $basecalculos->bivalorliquido -= $descontos->valor;
+                        $basecalculos->bivalordesconto += $descontos->valor;
+                    }
+                    if ($quantdias > 15 && $descontos->dsquinzena === '2 - Segunda') {
+                        $basecalculos->bivalorliquido -= $descontos->valor;
+                        $basecalculos->bivalordesconto += $descontos->valor;
+                    }
                 }
             }
             if ($seguros->esseguro) {
@@ -1267,23 +1284,37 @@ class calculoFolhaGeralController extends Controller
                 ]);
             }
             if ($folha) {
+               
                 $adiantamento =  $this->rublica->buscaRublicaUnidade('Adiantamento');
                 $boletim['adiantamento']['codigos'] = $adiantamento->rsrublica;
                 $boletim['adiantamento']['rublicas'] = $adiantamento->rsdescricao;
                 $boletim['adiantamento']['quantidade'] = 1;
-                $boletim['adiantamento']['valor'] = $folhar->bivalorliquido;
+                $boletim['adiantamento']['valor'] = $folha->bivalorliquido;
                 $boletim['trabalhador'] = $basecalculos->trabalhador_id;
                 $boletim['basecalculo'] = $base['id'];
                 $this->valorcalculo->cadastroadiantamento($boletim);
             }
-            if ($desconto) {
-                $boletim['descontos']['codigos'] = 0;
-                $boletim['descontos']['rublicas'] = $desconto->rsdescricao;
-                $boletim['descontos']['quantidade'] = $desconto->quantidade;;
-                $boletim['descontos']['valor'] = $desconto->valor;
-                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
-                $boletim['basecalculo'] = $base['id'];
-                $this->valorcalculo->cadastroadesconto($boletim);
+            if ($desconto->count() > 0) {
+                foreach ($desconto as $key => $descontos) {
+                    if ($quantdias <= 15 && $descontos->dsquinzena === '1 - Primeira') {
+                        $boletim['descontos']['codigos'] = 0;
+                        $boletim['descontos']['rublicas'] = $descontos->dsdescricao;
+                        $boletim['descontos']['quantidade'] = $descontos->quantidade;;
+                        $boletim['descontos']['valor'] = $descontos->valor;
+                        $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                        $boletim['basecalculo'] = $base['id'];
+                        $this->valorcalculo->cadastroadesconto($boletim);
+                    }
+                    if ($quantdias > 15 && $descontos->dsquinzena === '2 - Segunda') {
+                        $boletim['descontos']['codigos'] = 0;
+                        $boletim['descontos']['rublicas'] = $descontos->dsdescricao;
+                        $boletim['descontos']['quantidade'] = $descontos->quantidade;;
+                        $boletim['descontos']['valor'] = $descontos->valor;
+                        $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                        $boletim['basecalculo'] = $base['id'];
+                        $this->valorcalculo->cadastroadesconto($boletim);
+                    }
+                }
             }
             if ($seguros->esseguro) {
                 $seguros_rublicas =  $this->rublica->buscaRublicaUnidade('Seguro');
@@ -1421,19 +1452,27 @@ class calculoFolhaGeralController extends Controller
     public function imprimirFolhar($id)
     {
         
-       
-        $folhas = $this->folhar->buscaLista($id);
+        $folhar = $this->basecalculo->where([
+            ['folhar_id',$id],
+            ['tomador_id',null]
+        ])
+        ->with(['trabalhador.documento','trabalhador.categoria','trabalhador.bancario','folhar.empresa','valorcalculo','relacaodia'])
+
+        ->get();
         $leis = $this->leis->categorias();
-        if (!$folhas) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
-        }
-        $basecalculo_id = [];
-        foreach ($folhas as $key => $folhar) {
-            array_push($basecalculo_id,$folhar->id); 
-        }
-        $valorcalculos = $this->valorcalculo->buscaImprimir($basecalculo_id);
-        $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
-        $pdf = PDF::loadView('comprovantegeral',compact('folhas','leis','valorcalculos','relacaodias'));
+        // dd($folhar);
+        // $folhas = $this->folhar->buscaLista($id);
+        
+        // if (!$folhas) {
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+        // }
+        // $basecalculo_id = [];
+        // foreach ($folhas as $key => $folhar) {
+        //     array_push($basecalculo_id,$folhar->id); 
+        // }
+        // $valorcalculos = $this->valorcalculo->buscaImprimir($basecalculo_id);
+        // $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
+        $pdf = PDF::loadView('comprovantegeral',compact('folhar','leis'));
         return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
     }
 }

@@ -1,5 +1,4 @@
 
-  
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -11,12 +10,12 @@
 
     <style>
          @page { 
-                  margin-top: 206px; 
+                  margin-top: 185px; 
                   margin-bottom: 30px;
                   margin-left: 10px;
                   margin-right: 10px;
                 }
-              #header { position: fixed; left: 0px; top: -206px; right: 0px; height: 206px;  text-align: center; }
+              #header { position: fixed; left: 0px; top: -185px; right: 0px; height: 185px;  text-align: center; }
               #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 50px; text-align: end; }
               #footer .page:after { content: counter(page, upper); }
         
@@ -89,72 +88,84 @@
         .padding-footer{
             padding: 2px;
         }
+        
+        .logo{
+            width: 100px;
+            height: 100px;
+        }
+        
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
+
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .border-top-left-radius{
+            border-top-left-radius: 8px;
+        }
+        
+        .border-top-right-radius{
+            border-top-right-radius: 8px;
+        }
+
+        .nome__trab{
+            width: 745px;
+        }
     </style>
     
     
     <body>
-    <div id="header">
+        <div id="header">
             
-            <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
-        
-        
-        <div class="borderT margin-top">
-            <table >
-                <tr>
-                <td rowspan="6">
-                        @if($empresas->esfoto)
-                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
-                        @else
-                            @include('imagem')
-                        @endif
-                    </td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+            <div class="borderT margin-top">
+                <table>
+                    <tr>
+                    <td rowspan="7" style="padding-left: 15px">
+                            @if($empresas->esfoto)
+                                <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
+                            @else
+                                @include('imagem')
+                            @endif
+                        </td>
+                    </tr>
                     
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
-                </tr>
-    
-            </table>
-        </div>
-            <table class="margin-top">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Tomador: {{$tomador[0]->tsnome}}</td>
-                </tr>
-            </table>
+                    <tr>
+                        <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
+                    </tr>
+        
+                </table>
+            </div>
+            
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">{{$tomador[0]->tsnome}}</td>
+                    </tr>
+                </table>
+            </div>
+
 
             <table class="margin-top">
                 <tr>
@@ -169,7 +180,7 @@
         </div>
         
         <div id="footer">
-          <p class="page destaque borderT padding-footer">Página:  </p>
+          <p class="page padding-footer" style="text-align: right">Página:  </p>
         </div>
         
         <div id="content">

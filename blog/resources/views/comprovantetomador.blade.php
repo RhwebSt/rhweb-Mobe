@@ -730,13 +730,13 @@
         </tr>
     </table>
     
-    <div id="footer">
-              <p class="page destaque borderT padding-footer">Página:  {{$f+1}}</p>
-            </div>
     
+    
+    @if($f < count($folhas) - 1)
     <div class="footer">
         <h1 style="page-break-after: always;"></h1>
     </div>
+    @endif
     
     @endforeach
 </body>

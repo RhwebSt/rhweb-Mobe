@@ -170,16 +170,38 @@
         .margin-top{
             margin-top: 10px;
         }
+        
+        .margin-top2{
+            margin-top: 20px;
+        }
 
         .padding-footer{
             padding: 2px;
         }
         
         .logo{
-            margin-top:10px;
-            margin-right: 50px;
             width: 100px;
-            height: 120px;
+            height: 100px;
+        }
+        
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
+
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .border-top-left-radius{
+            border-top-left-radius: 8px;
+        }
+        
+        .border-top-right-radius{
+            border-top-right-radius: 8px;
         }
 
 
@@ -188,85 +210,80 @@
     <body>
         <div id="header">
             
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
+            <div class="borderT margin-top">
+                <table >
+                    <tr>
+                    <td rowspan="7" style="padding-left: 15px">
+                            @if($empresas->esfoto)
+                                <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
+                            @else
+                                @include('imagem')
+                            @endif
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
+                    </tr>
         
-        <div class="borderT margin-top">
-            <table>
-                <tr>
-               
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresas->escnpj}}</td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}}  - {{$empresas->endereco[0]->escep}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
-                </tr>
-    
-            </table>
-        </div>
+                    <tr>
+                        <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
+                    </tr>
+        
+                </table>
+            </div>
             
-            <table class="margin-top">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark uppercase">Relatório do Boletim com Tabela</td>
-                </tr>
-            </table>
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="small__font firtprad text-center"><b>Boletim Nº:</b> {{$lancamentotabelas->liboletim}}</td>
+                        <td class="small__font firtprad text-center"><b>Data do Boletim:</b>
+                           
+                            {{date('d/m/Y',strtotime($lancamentotabelas->lsdata))}}
+                        </td>
+                        <td class="small__font firtprad text-center"><b>Ano Referência:</b> {{date('Y',strtotime($lancamentotabelas->lsdata))}}</td>
+                        
+                    </tr>
+                </table>
+            </div>
             
-            <table>
-                <tr>
-                    <td class="small__font  border-top border-bottom border-right firtprad text-center border-left text-bold">Boletim Nº: {{$lancamentotabelas->liboletim}}</td>
-                    <td class="small__font border-top border-bottom border-right firtprad text-center text-bold">Data do Boletim:
-                       
-                        {{date('d/m/Y',strtotime($lancamentotabelas->lsdata))}}
-                    </td>
-                    <td class="small__font border-top border-bottom border-right firtprad text-center2 text-bold text-center">Ano Referência: {{date('Y',strtotime($lancamentotabelas->lsdata))}}</td>
-                    
-                </tr>
-            </table>
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">Relatório Boletim com Tabela</td>
+                    </tr>
+                </table>
+            </div>
 
-        
-            <table class="tomador">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque uppercase">Tomador: {{$lancamentotabelas->tomador->tsnome}}</td>
-                </tr>
-            </table>
+            
+            
+            <div class="margin-top2">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">{{$lancamentotabelas->tomador->tsnome}}</td>
+                    </tr>
+                </table>
+            </div>
+
         
         </div>
         
         <div id="footer">
-          <p class="page destaque borderT padding-footer">Página:  </p>
+          <p class="page" style="text-align: right">Página:  </p>
         </div>
+        
         <?php
              function calculovalores($horas,$valores)
              {
@@ -301,58 +318,64 @@
                 ?>
                 <table class="margin-top">
                     <tr>
-                        <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center destaque2">{{$trabalhador->tsmatricula}}</td>
-                        <td class="border-left border-right border-top border-bottom small__font text-bold  text-center nome destaque2 uppercase">{{$trabalhador->tsnome}}</td>
+                        <td class="border-left border-right border-top border-bottom small__font text-bold nome text-center destaque">Nome</td>
+                        <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center destaque">Matrícula</td>
+                        
+                    </tr>
+                    
+                    <tr>
+                        <td class="border-left border-right border-top border-bottom small__font text-bold  text-center nome">{{$trabalhador->tsnome}}</td>
+                        <td class="border-left border-right border-top border-bottom small__font text-bold matric text-center">{{$trabalhador->tsmatricula}}</td>
+                        
                     </tr>
                 </table>
                  
-                        <table>
-                            <tr>
-                                <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
-                                <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
-                                <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
-                                <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
-                            </tr>
-                            @foreach($lancamentotabelas->lacamentorublica as $lancamentotabela)
-                            @if($lancamentotabela->trabalhador_id === $trabalhador->id)
-                            <tr>
-                                <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font text-center desc uppercase">{{$lancamentotabela->lshistorico}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font text-center quant">
-                                    @if(str_contains($lancamentotabela->lsquantidade,':'))
-                                        {{$lancamentotabela->lsquantidade}}
-                                    @else
-                                        {{number_format((float)$lancamentotabela->lsquantidade, 2, ',', '.')}}
-                                    @endif
-                                </td>
-                                <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor), 2, ',', '.')}}</td>
-                            </tr>
-                            <?php
-                                $valor += calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor);
-                            ?>
+                <table>
+                    <tr>
+                        <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
+                        <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center desc">Descrição</td>
+                        <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
+                        <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
+                    </tr>
+                    @foreach($lancamentotabelas->lacamentorublica as $lancamentotabela)
+                    @if($lancamentotabela->trabalhador_id === $trabalhador->id)
+                    <tr>
+                        <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
+                        <td class="border-left border-right border-top border-bottom small__font text-center desc uppercase">{{$lancamentotabela->lshistorico}}</td>
+                        <td class="border-left border-right border-top border-bottom small__font text-center quant">
+                            @if(str_contains($lancamentotabela->lsquantidade,':'))
+                                {{$lancamentotabela->lsquantidade}}
+                            @else
+                                {{number_format((float)$lancamentotabela->lsquantidade, 2, ',', '.')}}
                             @endif
-                            @endforeach
-                        </table>
+                        </td>
+                        <td class="border-left border-right border-top border-bottom small__font text-center valor__total">R$ {{number_format((float)calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor), 2, ',', '.')}}</td>
+                    </tr>
+                    <?php
+                        $valor += calculovalores($lancamentotabela->lsquantidade , $lancamentotabela->lfvalor);
+                    ?>
+                    @endif
+                    @endforeach
+                </table>
                        
-                        <table class="">
-                            <tr>
-                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__receber font__receber padding-left">Total</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ {{number_format((float)$valor, 2, ',', '.')}}
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        
-                      
-                      
-                   
+                <table class="">
+                    <tr>
+                        <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__receber font__receber text-center padding-left">Total</td>
+                        <td class="border-left border-right border-top border-bottom small__font destaque text-bold valor__receber text-center font__receber">R$ {{number_format((float)$valor, 2, ',', '.')}}
+                        </td>
+                    </tr>
+                </table>
                 @endforeach
-                <table class="margin-tp">
-                            <tr>
-                                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">Resumo do Boletim</td>
-                            </tr>
-                        </table>
-                        
+                
+                <div class="margin-top">
+                    <table>
+                        <tr>
+                            <td class="name__title text-center text-bold">Resumo do Boletim</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="margin-top">       
                         <table>
                              <tr>
                                 <td class="border-left border-right border-top border-bottom destaque small__font text-bold matric text-center">Código</td>
@@ -406,9 +429,9 @@
                         
                         <table>
                             <tr>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold empregados small__font padding-left ">Numero de Empregados: {{$trabalhadores->count()}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
-                                <td class="border-left border-right border-top border-bottom small__font destaqueDark text-bold total__geral text-center small__font">R$ {{number_format((float)$totaltomador, 2, ',', '.')}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold empregados small__font padding-left ">Numero de Empregados: {{$trabalhadores->count()}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__geral text-center small__font">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
+                                <td class="border-left border-right border-top border-bottom small__font destaque text-bold total__geral text-center small__font">R$ {{number_format((float)$totaltomador, 2, ',', '.')}}</td>
                             </tr>
                         </table>
                         @else
@@ -420,5 +443,7 @@
                         </table>
                     @endif
                 </div>
+                
+            </div>
             
     </body>    

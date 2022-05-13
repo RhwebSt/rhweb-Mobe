@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -100,8 +100,9 @@
         }
 
         .foto2{
-            padding-left: 235px; 
-            padding-right: 35.3px;
+            width:55px; 
+            height: 55px;
+            border-radius: 5px;
         }
 
         .margin__top{
@@ -130,7 +131,6 @@
 
         .fontnome1{
             font-size: 12px;
-            padding-right: 12px;
         }
 
         .nome{
@@ -159,7 +159,8 @@
         }
 
         .foto1{
-            padding-right: 30px;
+            width:55px; 
+            height: 55px;
         }
 
         .name__title__trab{
@@ -177,6 +178,10 @@
         .width2{
              width: 382px;
         }
+        
+        .padding-left-foto{
+            padding-left: 15px;
+        }
 
     </style>
 
@@ -186,43 +191,55 @@
 
                 <div class="border-right border-bottom border-left border-top radius">
                     <table class="tomador">
-                        <thead>
-                            <tr>
-                                <td class="border" rowspan="3"><img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:55px; height: 55px; padding:2px"></td>
-                                
-                            </tr>
+                        <tr>
+                            <td class="border" rowspan="3">
+                                @if($empresas->esfoto)
+                                    <img class="foto1" src="{{$empresas->esfoto}}" alt="" srcset="">
+                                @else
+                                    @include('imagemCrachaTomador')
+                                @endif
+                            </td>
+                            
+                        </tr>
 
-                            <tr>
-                                <td class="fontnome1 text-center text-bold">{{$empresas->esnome}}</td>
-                            </tr>
-                        </thead>
-                        
+                        <tr>
+                            <td class="fontnome1 text-bold">{{$empresas->esnome}}</td>
+                        </tr>
+
                     </table>
                 </div>
 
-                <div class="border-right border-bottom border-left border-top radius">
-                <table>
-                    <tr>
-                        <td class="uppercase name__title2 font__trab text-bold text-center nome destaque">{{$trabalhadors->tsnome}} </td>
-                    </tr>
-                </table>
+                <div class="">
+                    
+                    <table>
+                        <tr>
+                            <td class="name__title2 font__trab text-center nome destaque">{{$trabalhadors->tsnome}} </td>
+                        </tr>
+                    </table>
 
                 
                     <table>
                         <tr>
-                            <td class="foto1" rowspan="5"><img class="logo" src="{{$trabalhadors->tsfoto}}" alt="" srcset="" style="width:55px; height: 55px; padding:5px"></td>
+                            <td class="foto1" rowspan="5">
+                                @if($empresas->esfoto)
+                                    <img class="foto2" src="{{$trabalhadors->tsfoto}}" alt="" srcset="">
+                                @else
+                                    @include('imagemCrachaTrabalhador')
+                                @endif
+                                <!--<img class="logo" src="" alt="" srcset="" style="width:55px; height: 55px; padding:5px">-->
+                            </td>
                         </tr>
 
                         <tr>
-                            <td class=" uppercase name__title__trab font__trab pad"><strong>Matrícula:</strong>{{$trabalhadors->tsmatricula}}</td>
+                            <td class="name__title__trab font__trab pad padding-left-foto">Matrícula:{{$trabalhadors->tsmatricula}}</td>
                         </tr>
 
                         <tr>
-                            <td class=" uppercase name__title__trab font__trab pad"><strong>CTPS:</strong> {{$trabalhadors->documento[0]->dsctps}}  <strong>UF:</strong> {{$trabalhadors->documento[0]->dsuf}}  <strong>Série:</strong> {{$trabalhadors->documento[0]->dsserie}}</td>
+                            <td class="name__title__trab font__trab pad padding-left-foto">CTPS: {{$trabalhadors->documento[0]->dsctps}}  UF: {{$trabalhadors->documento[0]->dsuf}}  Série: {{$trabalhadors->documento[0]->dsserie}}</td>
                         </tr>
 
                         <tr>
-                            <td class=" uppercase name__title__trab font__trab pad margin__bottom"><strong>Data de Nascimento:</strong>
+                            <td class="name__title__trab font__trab pad margin__bottom padding-left-foto">Data de Nascimento:
                                 
                                 {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
                             </td>

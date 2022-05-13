@@ -80,7 +80,7 @@
 
         <form class="row g-3" id="form" method="POST" action="{{route('descontos.store')}}">
             @csrf
-            <input type="hidden" name="empresa" value="{{$user->empresa}}">
+            <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
             <input type="hidden" name="trabalhador" id="trabalhador">
             
             <section class="section__botoes--desconto">

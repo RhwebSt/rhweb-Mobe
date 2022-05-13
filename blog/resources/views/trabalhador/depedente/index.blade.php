@@ -149,7 +149,7 @@
                         @endforeach
                         @else
                             <tr class="tr__body">
-                                <td colspan="11" class="no__register--table">N«ªo h«¡ nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
+                                <td colspan="11" class="no__register--table">NÃ£o hÃ¡ nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
                             </tr>
                         @endif
                         </tbody>

@@ -88,8 +88,8 @@
         }
 
         .logo{
-            margin-top:10px;
-            margin-right: 50px;
+            width: 100px;
+            height: 100px;
         }
 
         .name__title{
@@ -97,8 +97,6 @@
         }
 
         .name__title2{
-            width: 97%;
-            font-size: 16px;
             text-align: justify;
         }
 
@@ -112,7 +110,7 @@
         }
 
         .margin-top{
-            margin-top:20px;
+            margin-top:8px;
         }
 
         .marginTerm{
@@ -121,23 +119,23 @@
         }
 
         .indentificacao{
-            width: 184.7px;
+            width: 182.3px;
         }
 
         .assinatura{
-        margin-top:50px;
+            margin-top:30px;
         }
 
         .fontDeclaracao{
-        font-size: 14px;
+            font-size: 14px;
         }
 
         .data__ass{
-        width:150px;
+            width:372.5px;
         }
 
         .linhaass{
-        width:759px;
+            width:759px;
         }
 
         .cidade{
@@ -147,73 +145,80 @@
         .protco{
             margin-top: 50px;
         }
+        
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
 
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .border-top-left-radius{
+            border-top-left-radius: 8px;
+        }
+        
+        .border-top-right-radius{
+            border-top-right-radius: 8px;
+        }
+
+        .nome__trab{
+            width: 745px;
+        }
     </style>
 
     <body>
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
-        
-        <div class="borderT">
+
+        <div class="borderT margin-top">
             <table >
                 <tr>
-                <td rowspan="6">
+                <td rowspan="7">
                         @if($empresas->esfoto)
-                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
                         @else
                             @include('imagem')
                         @endif
                     </td>
                 </tr>
-    
+                
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
+                    <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
-                    
+                    <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
+                    <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
+                    <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
                 </tr>
     
             </table>
         </div>
+        
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Declaração de Afastamento por iniciativa do Trabalhador</td>
+                </tr>
+            </table>
+        </div>
 
-        <table class=" protco">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Declaração de Afastamento por iniciativa do Trabalhador</td>
-            </tr>
-        </table>
 
-        <div class="marginTerm border-top border-left border-bottom border-right">
-            <p class=" text name__title2">Declaro para todos os fins de direito, principalmente trabalhistas e previdênciários que irei me Afastar da<b>
+        <div class="marginTerm">
+            <p class="name__title2">Declaro para todos os fins de direito, principalmente trabalhistas e previdênciários que irei me Afastar da<b>
                 {{substr($trabalhadors->categoria[0]->cbo, 5, 40)}}
             </b>, sob a responsabilidade do <b>{{$empresas->esnome}}</b> na condição de <b>
               
@@ -223,63 +228,75 @@
             <p class="text name__title2 text-bold">Pelo que estou ciente, firmo a presente, em duas vias do mesmo teor e forma.</p>
            
         </div>
+        
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">Identificação do Trabalhador</td>
+                </tr>
+            </table>
+        </div>
 
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Identificação do Trabalhador</td>
-            </tr>
-        </table>
-
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold">{{$trabalhadors->tsnome}}</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="small__font border-right border-left border-top indentificacao text-center destaque text-bold">PIS/PASEP</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">CPF</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">RG</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">Data Nascimento</td>
-            </tr>
-
-            <tr>
-                <td class="small__font border-right border-left border-top border-bottom indentificacao text-center">{{$trabalhadors->documento[0]->dspis}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->tscpf}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">0000-000</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">
-                   
-                    {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
-                </td>
+        <div class="margin-top borderT">
+            <table class="">
+                <tr>
+                    <td class="small__font nome__trab text-center text-bold destaque">Nome</td>
+                </tr>
                 
-            </tr>
-        </table>
+                <tr>
+                    <td class="small__font nome__trab text-center">{{$trabalhadors->tsnome}}</td>
+                </tr>
+            </table>
+        
 
-        <table>
-            <tr>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">Data Admissão</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">Num CTPS</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">Série CTPS</td>
-                <td class="small__font border-right border-left border-top text-center indentificacao destaque text-bold">UF CTPS</td>
-            </tr>
-
-            <tr>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">
+            <table>
+                <tr>
+                    <td class="small__font text-center indentificacao destaque text-bold">PIS/PASEP</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">CPF</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">RG</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">Data Nascimento</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->documento[0]->dspis}}</td>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->tscpf}}</td>
+                    <td class="small__font text-center indentificacao">0000-000</td>
+                    <td class="small__font text-center indentificacao">
+                        {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
+                    </td>
                     
-                   {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->csadmissao))}}
-                </td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsctps}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsserie}}</td>
-                <td class="small__font border-right border-left border-top border-bottom text-center indentificacao">{{$trabalhadors->documento[0]->dsuf}}</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom small__font name__title text-bold">Nome da Mãe: {{$trabalhadors->tsmae}}</td>
-            </tr>
-        </table>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td class="small__font text-center indentificacao destaque text-bold">Data Admissão</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">Num CTPS</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">Série CTPS</td>
+                    <td class="small__font text-center indentificacao destaque text-bold">UF CTPS</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font text-center indentificacao">
+                        
+                       {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->csadmissao))}}
+                    </td>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->documento[0]->dsctps}}</td>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->documento[0]->dsserie}}</td>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->documento[0]->dsuf}}</td>
+                </tr>
+            </table>
+    
+            <table>
+                <tr>
+                    <td class="small__font nome__trab text-center text-bold destaque">Nome da Mãe</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font nome__trab text-center">{{$trabalhadors->tsmae}}</td>
+                </tr>
+            </table>
+        </div>
 
         <div class="borderT margin-top">
             <table class="assinatura">
@@ -294,8 +311,8 @@
 
             <table class="margin-top">
                 <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
-                    <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>
+                <td class="fontDeclaracao data__ass  text-center">{{$empresas->endereco[0]->esmunicipio}} - {{$empresas->endereco[0]->esuf}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">Data: {{date("d/m/y")}}</td>
                 </tr>
             </table>
         </div>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Descontos extends Model
 {
     protected $fillable = [
-        'dsdescricao','dsquinzena','dscompetencia','dfvalor','trabalhador','empresa'
+        'dsdescricao','dsquinzena','dscompetencia','dfvalor','trabalhador_id','empresa_id'
     ];
     public function cadastro($dados)
     {

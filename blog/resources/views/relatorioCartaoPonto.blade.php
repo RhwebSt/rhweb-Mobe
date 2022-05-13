@@ -10,12 +10,12 @@
     <style>
 
         @page { 
-          margin-top: 312px; 
+          margin-top: 300px; 
           margin-bottom: 50px;
           margin-left: 10px;
           margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -312px; right: 0px; height: 312px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -300px; right: 0px; height: 300px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -50px; right: 0px; height: 60px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
 
@@ -70,6 +70,8 @@
 
         .destaque{
             background-color: rgb(214, 213, 213);
+            /*border-top-left-radius: 3px;*/
+            /*border-top-right-radius: 3px;*/
         }
 
         .destaqueDark{
@@ -81,8 +83,8 @@
         }
 
         .logo{
-            margin-top:10px;
-            margin-right: 50px;
+            width: 100px;
+            height: 100px;
         }
 
         .name__title{
@@ -111,7 +113,7 @@
         }
 
         .valor__padrao{
-            width: 181.2px;
+            width: 179px;
         }
 
         .nome{
@@ -166,11 +168,7 @@
         .qtnd__trab{
             width:357px;
         }
-        
-        .margin-top{
-            margin-top: 10px;
-        }
-        
+
         .margin-bottom{
             margin-bottom: 10px;
         }
@@ -184,6 +182,26 @@
             border: 1px solid black;
             border-radius: 3px;
         }
+        
+        .padding-left-foto{
+            padding-left: 20px;
+        }
+        
+        .margin-top{
+            margin-top: 8px;
+        }
+
+        .margin-bottom--title{
+            margin-bottom: 4px;
+        }
+        
+        .border-top-left-radius{
+            border-top-left-radius: 8px;
+        }
+        
+        .border-top-right-radius{
+            border-top-right-radius: 8px;
+        }
 
 
 
@@ -191,169 +209,153 @@
 
         <body>
             <div id="header">
-                
-                <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$empresas->esnome}}</td>
-            </tr>
-        </table>
-        
-        <div class="borderT margin-top">
-        <table >
-                <tr>
-                    <td rowspan="6">
-                        @if($empresas->esfoto)
-                            <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
-                        @else
-                            @include('imagem')
-                        @endif
-                    </td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : {{$empresas->escnpj}}</strong></td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Tel:</strong> {{$empresas->estelefone}}</td>
-                </tr>
-    
-            </table>
-        </div>
+            
+                <div class="borderT margin-top">
+                    <table>
+                        <tr>
+                            <td rowspan="7" style="padding-left: 15px">
+                                @if($empresas->esfoto)
+                                    <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
+                                @else
+                                    @include('imagem')
+                                @endif
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
+                        </tr>
+            
+                    </table>
+                </div>
 
                 <table class="margin-top">
                     <tr>
-                        <td class="small__font planilha text-bold border-top border-bottom border-left border-right text-center destaque uppercase">Planilha do Cartão Ponto</td>
-                        <td class="small__font boletim text-center border-top border-bottom border-left border-right  text-bold">Boletim N° {{$lancamentotabelas->liboletim}}</td>
-                        <td class="small__font text-center data__ref border-top border-bottom border-left border-right text-bold">Data Referência:
+                        <td class="small__font planilha text-bold text-center uppercase">Planilha do Cartão Ponto</td>
+                        <td class="small__font boletim text-center  text-bold">Boletim N° {{$lancamentotabelas->liboletim}}</td>
+                        <td class="small__font text-center data__ref text-bold">Data Referência:
                        
                          {{date('d/m/Y',strtotime($lancamentotabelas->lsdata))}}
                         </td>
                     </tr>
                 </table>
-    
-                <table class="margin-top">
-                    <tr>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao destaque">Valor</td>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao  destaque">Diária</td>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao  destaque">Hora</td>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao  destaque">Hora Extra 50%</td>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao  destaque">Hora Extra 100%</td>
-                        <td class="small__font border-top border-left border-bottom text-center text-bold valor__padrao border-right  destaque">Adicional Noturno</td>
-                    </tr>
-    
-                    <tr>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">Base Empresa</td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1000)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1002)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1003)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1004)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1005)
-                                    {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-    
-                    <tr>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">Base Folha</td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1000)
-                                    {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1002)
-                                    {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1003)
-                                    {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1004)
-                                    {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
-                                @endif
-                            @endforeach
-                        </td>
-                        <td class="small__font border-left border-bottom text-center valor__padrao border-right">R$ 
-                            @foreach($tomador->tabelapreco as $tabelapreco)
-                                @if($tabelapreco->tsrubrica == 1005)
-                                    {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                </table>
-    
-                <table class="margin-bottom">
-                    <tr>
-                        <td class="name__title border-right border-left border-bottom border-top destaque text-center text-bold">Boletim Cartão Ponto - Diário</td>
-                    </tr>
-                </table>
                 
-                <table>
+                <div class="borderT margin-top">
+                    <table class="margin-top" style="padding-left: 5px; padding-bottom: 5px;">
+                        <tr>
+                            <td class="small__font text-center text-bold valor__padrao destaque">Valor</td>
+                            <td class="small__font text-center text-bold valor__padrao  destaque">Diária</td>
+                            <td class="small__font text-center text-bold valor__padrao  destaque">Hora</td>
+                            <td class="small__font text-center text-bold valor__padrao  destaque">Hora Extra 50%</td>
+                            <td class="small__font text-center text-bold valor__padrao  destaque">Hora Extra 100%</td>
+                            <td class="small__font text-center text-bold valor__padrao  destaque">Adicional Noturno</td>
+                        </tr>
+        
+                        <tr>
+                            <td class="small__font text-center border-bottom valor__padrao">Base Empresa</td>
+                            <td class="small__font text-center border-bottom valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1000)
+                                        {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center border-bottom valor__padrao">R$
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1002)
+                                        {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center border-bottom valor__padrao">R$
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1003)
+                                        {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center border-bottom valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1004)
+                                        {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center border-bottom valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1005)
+                                        {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+        
+                        <tr>
+                            <td class="small__font text-center valor__padrao">Base Folha</td>
+                            <td class="small__font text-center valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1000)
+                                        {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center valor__padrao">R$
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1002)
+                                        {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1003)
+                                        {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1004)
+                                        {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="small__font text-center valor__padrao">R$ 
+                                @foreach($tomador->tabelapreco as $tabelapreco)
+                                    @if($tabelapreco->tsrubrica == 1005)
+                                        {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="margin-top">
+                    <table>
+                        <tr>
+                            <td class="name__title text-center text-bold">Boletim Cartão Ponto - Diário</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <table class="margin-top">
                     <tr>
                         <td class=" small__font vazio white">.</td>
                         <td class=" small__font border-top border-left border-right diurno text-center text-bold fontex">Diurno</td>
@@ -364,29 +366,30 @@
                 
                 <table>
                     <tr>
-                    <td class="small__font border-top border-bottom border-left text-center text-bold destaque nome2">Nome</td>
-                    <td class="small__font border-top border-bottom border-left ent text-center text-bold destaque">Ent</td>
-                    <td class="small__font border-top border-bottom border-left pad text-center text-bold destaque">Saída</td>
-                    <td class="small__font border-top border-bottom border-left ent text-center text-bold destaque">Ent</td>
-                    <td class="small__font border-top border-bottom border-left pad text-center text-bold destaque">Saída</td>
-                    <td class="small__font border-top border-bottom border-left text-center ent text-bold destaque">Ent</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">Saída</td>
-                    <td class="small__font border-top border-bottom border-left text-center ent text-bold destaque">Ent</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">Saída</td>
-                    <td class="small__font border-top border-bottom border-left text-center normais text-bold destaque">Normais</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">50%</td>
-                    <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">100%</td>
-                    <td class="small__font border-top border-bottom border-left text-center adcnot text-bold destaque">Adc.Not</td>
-                    <td class="small__font border-top border-bottom border-left text-center valor text-bold destaque">Valor Folha</td>
-                    <td class="small__font border-top border-bottom border-left border-right text-center valor text-bold destaque">Valor Total</td>
-                </tr>
+                        <td class="small__font border-top border-bottom border-left text-center text-bold destaque nome2">Nome</td>
+                        <td class="small__font border-top border-bottom border-left ent text-center text-bold destaque">Ent</td>
+                        <td class="small__font border-top border-bottom border-left pad text-center text-bold destaque">Saída</td>
+                        <td class="small__font border-top border-bottom border-left ent text-center text-bold destaque">Ent</td>
+                        <td class="small__font border-top border-bottom border-left pad text-center text-bold destaque">Saída</td>
+                        <td class="small__font border-top border-bottom border-left text-center ent text-bold destaque">Ent</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">Saída</td>
+                        <td class="small__font border-top border-bottom border-left text-center ent text-bold destaque">Ent</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">Saída</td>
+                        <td class="small__font border-top border-bottom border-left text-center normais text-bold destaque">Normais</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">50%</td>
+                        <td class="small__font border-top border-bottom border-left text-center pad text-bold destaque">100%</td>
+                        <td class="small__font border-top border-bottom border-left text-center adcnot text-bold destaque">Adc.Not</td>
+                        <td class="small__font border-top border-bottom border-left text-center valor text-bold destaque">Valor Folha</td>
+                        <td class="small__font border-top border-bottom border-left border-right text-center valor text-bold destaque">Valor Total</td>
+                    </tr>
                 </table>
                 
             </div>
             
             <div id="footer">
-              <p class="page destaque borderT padding-footer">Página:  </p>
+              <p class="page padding-footer" style="text-align: right">Página:  </p>
             </div>
+            
             <?php
                         $totalfolhar = 0;
                         $totaltomador = 0;
@@ -470,9 +473,9 @@
                  ?>
                 <table>
                     <tr>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left qtnd__trab">Quantidades de Trabalhadores:{{$bolcartaoponto->count()}}</td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left totalizacao">Totalizações</td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left normais">
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left qtnd__trab">Quantidades de Trabalhadores:{{$bolcartaoponto->count()}}</td>
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left totalizacao">Totalizações</td>
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left normais">
                             <?php
                                 $horasnormal = 0;
                                 foreach ($bolcartaoponto as $key => $value) {
@@ -484,7 +487,7 @@
                                 echo segundo_em_horas($horasnormal);
                             ?>
                         </td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left pad">
                             <?php
                                 $horasex = 0;
                                 foreach ($bolcartaoponto as $key => $value) {
@@ -496,7 +499,7 @@
                                 echo segundo_em_horas($horasex);
                             ?>
                         </td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left pad">
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left pad">
                             <?php
                                 $horascem = 0;
                                 foreach ($bolcartaoponto as $key => $value) {
@@ -508,7 +511,7 @@
                                 echo segundo_em_horas($horascem);
                             ?>
                         </td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left adcnot">
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left adcnot">
                             <?php
                                 $noturno = 0;
                                 foreach ($bolcartaoponto as $key => $value) {
@@ -520,8 +523,8 @@
                                 echo segundo_em_horas($noturno);
                             ?>
                         </td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left valor">R$ {{number_format((float)$totalfolhar, 2, ',', '')}}</td>
-                        <td class="small__font border-top border-bottom text-center text-bold destaqueDark border-left border-right valor">R$ {{number_format((float)$totaltomador, 2, ',', '')}}</td>
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left valor">R$ {{number_format((float)$totalfolhar, 2, ',', '')}}</td>
+                        <td class="small__font border-top border-bottom text-center text-bold destaque border-left border-right valor">R$ {{number_format((float)$totaltomador, 2, ',', '')}}</td>
                     </tr>
                 </table>
             </div>

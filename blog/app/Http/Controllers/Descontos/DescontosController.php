@@ -40,7 +40,7 @@ class DescontosController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-
+        
         $request->validate([
             'competencia' => 'required|max:20',
             'matricula' => 'required',
@@ -71,6 +71,7 @@ class DescontosController extends Controller
         try {
             $descontos = $desconto->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }

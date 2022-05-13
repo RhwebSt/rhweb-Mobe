@@ -151,10 +151,7 @@
         .natural{
             width: 180px;
         }
-        
-        .margin-top{
-            margin-top:20px;
-        }
+
         
         .borderT{
             border: 1px solid black;
@@ -385,7 +382,7 @@
                 
                 <tr>
                     <td class="small__font  text-center rua">{{$trabalhadors->endereco[0]->eslogradouro}}</td>
-                    <td class="small__font numero text-center border-left">{{$trabalhadors->endereco[0]->esnum}}</td>
+                    <td class="small__font numero text-center">{{$trabalhadors->endereco[0]->esnum}}</td>
                     <td class="small__font  text-center cep ">{{$trabalhadors->endereco[0]->escep}}</td>
                 </tr>
 
@@ -395,7 +392,7 @@
                 <tr>
                     <td class="small__font text-center text-bold destaque documento__info">Bairro</td>
                     <td class="small__font text-center text-bold destaque documento__info">Cidade</td>
-                    <td class="small__font text-center text-bold destaque documento__info border-left">UF</td>
+                    <td class="small__font text-center text-bold destaque documento__info ">UF</td>
                     <td class="small__font text-center text-bold destaque documento__info">Nacionalidade</td>
                 </tr>
                 
