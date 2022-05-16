@@ -96,7 +96,7 @@ class EmpresaController extends Controller
             'esnome.unique'=>'Esta empresa já está cadastrada!',
             'escnpj.unique'=>'Este CNPJ já está cadastrado!'
         ]);
-        try {
+        
             $empresas = $this->empresa->cadastro($dados);
             if ($empresas) {
                 $dados['empresa'] = $empresas['id'];
@@ -105,12 +105,12 @@ class EmpresaController extends Controller
                 $this->user->editusuarioprecadastro($dados['usuario'],$empresas['id']);
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
             }
-            
+            try {  
         } catch (\Throwable $th) {
             // $exenderecos = $this->endereco->deletarEmpresa($empresas['id']);
             // $valoresrublicas = $this->valoresrublica->deletar($empresas['id']); 
-            // $this->empresa->deletar($empresas['id']);
-            // return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
+            $this->empresa->deletar($empresas['id']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível efetuar o cadastro.']);
         }
        
     }
@@ -143,7 +143,6 @@ class EmpresaController extends Controller
         $search = request('search');
         $empresas = $this->empresa->buscaListaEmpresaPaginate($search,'asc');
         $empresa = $this->empresa->buscaUnidadeEmpresa($id);
-        // dd($empresa);
         return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
     }
 
@@ -207,13 +206,13 @@ class EmpresaController extends Controller
     public function destroy($id)
     {
        
-        $campo = 'empresa';
+       
         try {
-        $users = $this->user->deleteempresa($id);
-        $enderecos = $this->endereco->first($id,$campo);
-        $exenderecos = $this->endereco->deletar($enderecos->eiid);
-        $valoresrublicas = $this->valoresrublica->deletar($enderecos->empresa); 
-        $empresas = $this->empresa->deletar($enderecos->empresa);
+        // $users = $this->user->deleteempresa($id);
+        // $enderecos = $this->endereco->first($id,$campo);
+        // $exenderecos = $this->endereco->deletar($enderecos->eiid);
+        // $valoresrublicas = $this->valoresrublica->deletar($enderecos->empresa); 
+        $empresas = $this->empresa->deletar($id);
         return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);

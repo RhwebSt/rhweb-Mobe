@@ -221,11 +221,11 @@
             
                         <section class="section__search">
                             <div class="col-md-12">
-                                <form action="{{route('tomador.index')}}" method="GET">
+                                
                                     
                                     <div class="d-flex">
                                         
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="pesquisa" id="nome__trab">
                                         <datalist id="listapesquisa"></datalist>
         
                                         <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
@@ -236,7 +236,7 @@
         
                                     </div>
                                     
-                                </form>
+                                
                             </div>
                         </section>
             

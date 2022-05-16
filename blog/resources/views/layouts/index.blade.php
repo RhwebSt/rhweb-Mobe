@@ -177,7 +177,7 @@
                                     <li><a class="dropdown-item" href="{{route('altera.index')}}"><i class="fad fa-key"></i> Alterar Senha</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#atalhos"><i class="fad fa-external-link-square"></i> Atalhos</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#contador"><i class="fad fa-abacus"></i> Contador</a></li>
-                                    <li><a class="dropdown-item" href="{{route('foto.index')}}"><i class="fad fa-landmark"></i> Dados da Empresa</a></li>
+                                    <li><a class="dropdown-item" href="{{route('empresa.perfil.edit',$user->empresa_id)}}"><i class="fad fa-landmark"></i> Dados da Empresa</a></li>
                                     <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
                                  @endcan
                                     <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()"><i class="fad fa-sign-out"></i> Sair</a></li>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ValoresRublica extends Model
 {
     protected $fillable = [
-    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnroflha','vscbo','vimatricular','vitomador','empresa_id'
+    'vsnrofatura','vsreciboavulso','vsmatricula','vsnrorequisicao','vsnroboletins','vsnrocartaoponto','vsnroequesocial','vsnrofolha','vscbo','vimatricular','vitomador','empresa_id'
     ];
     public function empresa()
     {
@@ -24,7 +24,7 @@ class ValoresRublica extends Model
             'vscbo'=>isset($dados['cbo'])?$dados['cbo']:null,
             'vsnrocartaoponto'=>isset($dados['nro__cartaoponto'])?$dados['nro__cartaoponto']:null,
             'vsnroequesocial'=>isset($dados['seq__esocial'])?$dados['seq__esocial']:null,
-            'vsnroflha'=>isset($dados['nro__folha'])?$dados['nro__folha']:null,
+            'vsnrofolha'=>isset($dados['nro__folha'])?$dados['nro__folha']:null,
             'vimatricular'=>isset($dados['matricular'])?$dados['matricular']:null,
             'vimatriculartomador'=>isset($dados['matriculartomador'])?$dados['matriculartomador']:null,
             'empresa_id'=>$dados['empresa'],
@@ -43,7 +43,7 @@ class ValoresRublica extends Model
             'vscbo'=>$dados['cbo'],
             'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
             'vsnroequesocial'=>$dados['seq__esocial'],
-            'vsnroflha'=>$dados['nro__folha'],
+            'vsnrofolha'=>$dados['nro__folha'],
             'vimatricular'=>$dados['matricular'],
             'vimatriculartomador'=>$dados['matriculartomador'],
         ]);
@@ -90,7 +90,7 @@ class ValoresRublica extends Model
     public function editarUnidadeNuFolhar($empresa,$numerofolhar)
     {
         return ValoresRublica::where('empresa_id', $empresa)
-        ->update(['vsnroflha'=>$numerofolhar]);
+        ->update(['vsnrofolha'=>$numerofolhar]);
     }
     public function editarUnidadeNuCartaoPonto($empresa,$dados)
     {

@@ -18,6 +18,6 @@ class Autenticacao
         if (!auth()->check()){
             return redirect()->route('login.index');
         }
-        return $next($request);
+        return $next($request); 
     }
 }

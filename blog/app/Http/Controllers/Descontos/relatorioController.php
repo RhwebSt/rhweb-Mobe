@@ -14,6 +14,7 @@ class relatorioController extends Controller
     public function __construct()
     {
         $this->empresa = new Empresa;
+        $this->desconto = new Descontos;
     }
     public function index($inicio,$final)
     {
@@ -22,8 +23,8 @@ class relatorioController extends Controller
         $final = base64_decode($final);
         $user = Auth::user();
         try {
-            $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
-            $descontos = $desconto->buscaRelatorio($user->empresa,$inicio,$final);
+            $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
+            $descontos = $this->desconto->buscaRelatorio($user->empresa_id,$inicio,$final);
             if (count($descontos) < 1) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não a dados cadatrados!']);
             }
@@ -37,16 +38,17 @@ class relatorioController extends Controller
     public function reltatorioTrabalhador(Request $request)
     {
         $dados = $request->all();
-        $desconto = new Descontos;
+        // dd($dados);
         $user = Auth::user();
-        try {
-            $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
-            $descontos = $desconto->relatorioTrabalhador($user->empresa,$dados);
+        
+            $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
+            $descontos = $this->desconto->relatorioTrabalhador($user->empresa_id,$dados);
             if (count($descontos) < 1) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não a dados cadatrados!']);
             }
             $pdf = PDF::loadView('rolDescontoTrab',compact('descontos','empresa','dados'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO DESCONTOS TRABALHADOR '.$dados['pesquisa'].'.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o relatório.']);
         }

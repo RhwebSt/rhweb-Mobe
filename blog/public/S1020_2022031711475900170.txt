@@ -1,0 +1,15 @@
+INCLUIRS1020
+tpAmb_4=1
+procEmi_5=1
+verProc_6=1.0.0
+tpInsc_8=1
+nrInsc_9=33440491
+codLotacao_13=000024
+iniValid_14=202203
+fimValid_15=
+tpLotacao_17=09
+tpInsc_18=1
+nrInsc_19=33440491000140
+fpas_21=111
+codTercs_22=1111
+SALVARS1020

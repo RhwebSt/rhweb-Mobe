@@ -84,7 +84,7 @@ class TomadorController extends Controller
             $tomador = $this->tomador->first($condicao);
             return view('tomador.edit',compact('user','tomador','tomadors'));
         }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
             return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
         }
     }
@@ -96,7 +96,8 @@ class TomadorController extends Controller
             $tomador = $this->tomador->first($id);
             return view('tomador.edit',compact('user','tomador','tomadors'));
         }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
+            
             return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
         }
     }
@@ -169,8 +170,15 @@ class TomadorController extends Controller
                 $parametrosefips = $this->parametrosefip->cadastro($dados);
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
                 $indicefaturas = $this->indicefatura->cadastro($dados);
-                $this->valorrublica->editarMatricularTomador($dados,$user->empresa_id);
-
+                // $this->valorrublica->editarMatricularTomador($dados,$user->empresa_id);
+                $this->valorrublica->where('id', $user->empresa_id)
+                ->chunkById(100, function ($valorrublica) use ($user) {
+                    foreach ($valorrublica as $valorrublicas) {
+                        $numero = $valorrublicas->vimatriculartomador += 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnrofolha'=>$numero]);
+                    }
+                });
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             }
             try {
@@ -320,11 +328,19 @@ class TomadorController extends Controller
      */
     public function destroy($id)
     {
-        
+        $user = auth()->user();
         $tomador = $this->basecalculo->where('tomador_id',$id)->count();
         if ($tomador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletador.']);
         }
+        $this->valorrublica->where('id', $user->empresa_id)
+        ->chunkById(100, function ($valorrublica) use ($user) {
+            foreach ($valorrublica as $valorrublicas) {
+                $numero = $valorrublicas->vimatriculartomador -= 1;
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
+                ->update(['vsnrofolha'=>$numero]);
+            }
+        });
         $tomadors = $this->tomador->deletar($id); 
         // $dados = ['matricula'=>''];
         // $lancamentotabelas = $this->lancamentotabela->buscaTomador($id);

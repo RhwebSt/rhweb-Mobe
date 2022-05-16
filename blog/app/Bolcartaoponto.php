@@ -221,7 +221,7 @@ class Bolcartaoponto extends Model
     public function verifica($dados)
     {
         return Bolcartaoponto::where([
-            ['lancamento_id', $dados['lancamento']],
+            ['lancamentotabela_id', $dados['lancamento']],
             ['trabalhador_id', $dados['trabalhador']],
         ])
         ->whereDate('created_at', $dados['data'])
@@ -249,7 +249,7 @@ class Bolcartaoponto extends Model
     }
     public function editarBoletim($dados,$id)
     {
-        return Bolcartaoponto::where('lancamento_id', $id)
+        return Bolcartaoponto::where('lancamentotabela_id', $id)
         ->update([
             'created_at'=>$dados['data'],
         ]);
@@ -260,7 +260,7 @@ class Bolcartaoponto extends Model
     }
     public function deletarLancamentoTabela($id)
     {
-        return Bolcartaoponto::where('lancamento_id', $id)->delete();
+        return Bolcartaoponto::where('lancamentotabela_id', $id)->delete();
     }
     public function deletarTrabalador($id)
     {
@@ -271,7 +271,7 @@ class Bolcartaoponto extends Model
         return Bolcartaoponto::select(
             'bolcartaopontos.*'
         )
-        ->whereIn('lancamento_id', $id)
+        ->whereIn('lancamentotabela_id', $id)
         ->get();
     }
     public function boletimCartaoPonto($id,$ano_inicio,$ano_final) 

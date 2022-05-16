@@ -63,7 +63,11 @@ class PerfilController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        // $empresas = $this->empresa->buscaUnidadeEmpresa($id);
+        $empresas = $this->empresa->where('id',$id)->with('valoresrublica')->first();
+        dd($empresas);
+        return view('usuarios.empresa.perfil',compact('user','empresas'));
     }
 
     /**
@@ -117,12 +121,7 @@ class PerfilController extends Controller
     {
         //
     }
-    public function indexFoto()
-    {
-        $user = Auth::user();
-        $empresas = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
-        return view('usuarios.empresa.alteracaoFoto',compact('user','empresas'));
-    }
+   
     public function editFoto(Request $request)
     {
         $dados = $request->all();

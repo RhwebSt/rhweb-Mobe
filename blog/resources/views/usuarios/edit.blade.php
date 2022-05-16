@@ -78,7 +78,7 @@
                     <form class="row g-3 mt-1" id="form" action="{{ route('cadastro.empresa.store') }}" method="POST">
 
                         @csrf
-                        <input type="hidden" name="usuario" value="{{base64_decode($id)}}">
+                        <input type="hidden" name="usuario" value="{{$id}}">
                         <div>
                             <div>
                                 <div class="mb-4 col-md-4 inputfoto">

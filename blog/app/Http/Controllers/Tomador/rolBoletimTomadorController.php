@@ -25,7 +25,7 @@ class rolBoletimTomadorController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $user = auth()->user();
         $b = [];
-        $empresa = $empresa->buscaUnidadeEmpresa($user->empresa);
+        $empresa = $empresa->buscaUnidadeEmpresa($user->empresa_id);
         
             $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);
             if (count($tabelaprecos) < 1) {

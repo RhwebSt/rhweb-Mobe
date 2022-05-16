@@ -59,6 +59,12 @@ class calculoFolhaGeralController extends Controller
         $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
+        if (count($inss_lista) < 1) {
+            return redirect()->back()->withErrors(['false'=>'O inss '.date('Y',strtotime($datafinal)).' não está cadastrado. Entre em contato com suporte.']);
+        }
+        if (count($irrf_lista) < 1) {
+            return redirect()->back()->withErrors(['false'=>'O irrf '.date('Y',strtotime($datafinal)).' não está cadastrado. Entre em contato com suporte.']);
+        }
         $seguros = $this->empresa->buscaSeguro($user->empresa_id);
         $tomador = $this->tomador->where('empresa_id',$user->empresa_id)
         ->with(['tabelapreco','cartaoponto','incidefolhar'])->get();
@@ -193,6 +199,7 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
+            dd($dados);
             $trabalhador = $this->trabalhador->whereIn('id',$dados['id'])
             ->with('depedente')->get();
             $valor_comissionador = [

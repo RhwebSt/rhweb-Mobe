@@ -237,7 +237,11 @@
         <div class="borderT margin-top">
             <table>
                 <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:0px"></td>
+                @if($empresa->esfoto)
+                        <img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                    @else
+                        @include('imagem')
+                    @endif
                 </tr>
     
                 <tr>
@@ -293,18 +297,19 @@
                         $datafinal = 0;
                         foreach ($descontos as $key => $desconto) {
                             if ($desconto->dscompetencia == substr($inicio,0,7)) {
-                                $datainicio = explode('-',$desconto->dscompetencia);
+                                $datainicio =  date('m/Y',strtotime($desconto->dscompetencia));
                             }
                             if ($desconto->dscompetencia == substr($final,0,7)) {
-                                $datafinal = explode('-',$desconto->dscompetencia);
+                                $datafinal =  date('m/Y',strtotime($desconto->dscompetencia));
                             }
                         }
                     ?>
                     @if($datainicio != $datafinal)
-                        {{$datainicio[1]}}/{{$datainicio[0]}} a {{$datafinal[1]}}/{{$datafinal[0]}}
+                        {{datainicio}} a {{datafinal}}
                     @else
-                        {{$datafinal[1]}}/{{$datafinal[0]}}
+                     {{$datafinal}}
                     @endif
+                    
                 </td>
                 <td class="border-left border-right border-top border-bottom uppercase text-center small__font text-bold">Data de Emissão: {{date("d/m/y")}}</td>
             </tr>
