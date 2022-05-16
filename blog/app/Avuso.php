@@ -9,6 +9,10 @@ class Avuso extends Model
     protected $fillable = [
      'asinicial', 'asfinal','aicodigo','ailiquido', 'asnome', 'ascpf','empresa_id'
     ];
+    public function avusodescricao()
+    {
+        return $this->hasMany(AvusoDescricao::class);
+    }
     public function cadastro($dados)
     {
         return Avuso::create([
@@ -25,7 +29,7 @@ class Avuso extends Model
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            $query->where('avusos.empresa_id', $user->empresa);
+            $query->where('avusos.empresa_id', $user->empresa_id);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('avusos.id','>',0);
             // }else{
@@ -38,7 +42,7 @@ class Avuso extends Model
     {
         return Avuso::where(function($query){
             $user = auth()->user();
-            $query->where('avusos.empresa_id', $user->empresa);
+            $query->where('avusos.empresa_id', $user->empresa_id);
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where('avusos.id','>',0);
             // }else{
@@ -54,15 +58,15 @@ class Avuso extends Model
             $user = auth()->user();
                 $query->where([
                     ['avusos.aicodigo',$dados['pesquisa']],
-                    ['avusos.empresa_id',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa_id]
                 ])
                 ->orWhere([
                     ['avusos.asnome',$dados['pesquisa']],
-                    ['avusos.empresa_id',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa_id]
                 ])
                 ->orWhere([
                     ['avusos.ascpf',$dados['pesquisa']],
-                    ['avusos.empresa_id',$user->empresa]
+                    ['avusos.empresa_id',$user->empresa_id]
                 ])
                 ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
 
@@ -107,16 +111,16 @@ class Avuso extends Model
             if ($id) {
                 $query->where([
                     ['asnome','like','%'.$id.'%'],
-                    ['empresa_id', $user->empresa]
+                    ['empresa_id', $user->empresa_id]
                 ])
                 ->orWhere([
                     ['ascpf','like','%'.$id.'%'],
-                    ['empresa_id', $user->empresa],
+                    ['empresa_id', $user->empresa_id],
                 ]);
             }else{
                 $query->where([
                     ['id','>',$id],
-                    ['empresa_id', $user->empresa]
+                    ['empresa_id', $user->empresa_id]
                 ]);
             }
 
@@ -181,7 +185,7 @@ class Avuso extends Model
             $user = auth()->user();
             $query->where([
                 ['avusos.id',$trabalhador],
-                ['empresas.id', $user->empresa],
+                ['empresas.id', $user->empresa_id],
             ])
             ->whereBetween('avusos.asfinal',[$inicio,$final]);
             // if ($user->hasPermissionTo('admin')) {

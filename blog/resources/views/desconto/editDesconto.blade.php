@@ -90,7 +90,9 @@
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn botao"><i class="fad fa-sync-alt"></i> Atualizar</button>
-                    
+                    <ul class="dropdown-menu" aria-labelledby="rolDescontos">
+                            <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button">Rol dos Descontos</a></li>
+                        </ul>
                     <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
@@ -137,16 +139,16 @@
                         <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-
             <div class="col-md-7">
+                <label for="nome__trab" class="form-label">Nome do Trabalhador <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
+                <input type="text" class="form-control " name="nome__trab" value="{{$dadosdescontos->tsnome}}" id="nome__trab" Readonly>
+            </div>
+            <div class="col-md-2">
                 <label for="matricula" class="form-label">Matrícula  <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
                 <input type="text" class="form-control " name="matricula" value="{{$dadosdescontos->tsmatricula}}" id="matricula" Readonly>
             </div>
 
-            <div class="col-md-2">
-                <label for="nome__trab" class="form-label">Nome do Trabalhador <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control " name="nome__trab" value="{{$dadosdescontos->tsnome}}" id="nome__trab" Readonly>
-            </div>
+           
 
             <div class="col-md-6">
                 <label for="descricao" class="form-label">Descrição</label>
@@ -180,5 +182,61 @@
         </form>
     </div>
     @include('desconto.lista')
+    <script>
+         $('.modal-botao').click(function() {
+                    localStorage.setItem("modal", "enabled");
+                })
+
+                function verficarModal() {
+                    var valueModal = localStorage.getItem('modal');
+                    if (valueModal === "enabled") {
+                    $(document).ready(function() {
+                        $("#teste").modal("show");
+                    });
+                    localStorage.setItem("modal", "disabled");
+                    }
+                }
+                verficarModal()
+         $( "#nome__trab,#pesquisa" ).on('keyup focus',function() {  
+                let  dados = '0'
+                if ($(this).val()) {
+                  dados = $(this).val()
+                  if (dados.indexOf('  ') !== -1) {
+                    dados = monta_dados(dados);
+                  }
+                }
+                $.ajax({
+                    url: "{{url('trabalhador/pesquisa')}}/"+dados,
+                    type: 'get',
+                    contentType: 'application/json',
+                    success: function(data) {
+                      $('#nomemensagem').text(' ')
+                      $('#matricula').val(' ')
+                      let nome = ''
+                      if (data.length >= 1) {
+                        data.forEach(element => {
+                          nome += `<option value="${element.tsnome}">`
+                          // nome += `<option value="${element.tsmatricula}">`
+                          nome += `<option value="${element.tscpf}">`
+                        });
+                        $('#listatrabalhador').html(nome);
+                        $('#listapesquisa').html(nome);
+                      }
+                      if(data.length === 1 && dados.length > 4){
+                        $('#nome__trab').html(nome)
+                        $('#trabalhador').val(data[0].id)
+                        $('#idtrabalhador').val(data[0].id)
+                        $('#matricula').val(data[0].tsmatricula)
+                      }else if(!data.length && dados.length > 4){
+                        $('#nomemensagem').text('Este trabalhador não ta cadastrador!')
+                      }              
+                    }
+                });
+            });
+            function monta_dados(dados) {
+              let novodados = dados.split('  ')
+              return novodados[1];
+            }
+    </script>
 </main>
 @stop

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Avuso;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Avuso\Validacao;
 use App\Avuso;
 use App\AvusoDescricao;
 use App\ValoresRublica;
@@ -26,7 +27,7 @@ class AvusoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
         $lista = $this->avuso->buscaListaRecibos();
         
         return view('avuso.index',compact('user','valorrublica_avuso','lista'));
@@ -78,36 +79,14 @@ class AvusoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
-        $user = Auth::user();
+        $user = Auth::user(); 
         $dados = $request->all();
         $verifica = $this->avuso->verifica($dados['codigo']);
         if ($verifica) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Já existe um recibo com este codigo.']);
         }
-        $request->validate([
-            'nome' => 'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
-            'cpf' => 'required|max:15|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_inicial'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_final'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'descricao0'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'valor0'=>'required',
-        ],[
-            'descricao0.required'=>'Campo não pode esta vazio.',
-            'descricao0.max'=>'Campo não ter mais de 60 caracteres.',
-            'descricao0.regex'=>'O campo nome social tem um formato inválido.',
-
-            'ano_inicial.required'=>'Campo não pode esta vazio.',
-            'ano_inicial.max'=>'Campo não ter mais de 60 caracteres.',
-            'ano_inicial.regex'=>'O campo nome social tem um formato inválido.',
-
-            'ano_final.required'=>'Campo não pode esta vazio.',
-            'ano_final.max'=>'Campo não ter mais de 60 caracteres.',
-            'ano_final.regex'=>'O campo nome social tem um formato inválido.',
-
-            'valor0.required'=>'Campo não pode esta vazio.',
-        ]);
         $credito = 0;
         $desconto = 0;
         $total = 0;
@@ -121,17 +100,18 @@ class AvusoController extends Controller
         
         $total = $credito - $desconto;
         $dados['liquido'] = $total;
-        try {
+        
             $avuso = $this->avuso->cadastro($dados);
             if ($avuso['id']) {
                 $dados['avuso'] = $avuso['id'];
                 for ($i=0; $i < $dados['quantidade']; $i++) { 
                     $this->descricao->cadastro($dados,$i);
                 }
-                $this->valorrublica->editarAvuso($dados,$user->empresa);
+                $this->valorrublica->editarAvuso($dados,$dados['empresa']);
             }
             
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+            try {
         } catch (\Throwable $th) {
             $this->avuso->deletar_store($dados);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);

@@ -8,7 +8,7 @@
         <style>
             @page { 
                 margin-top: 289px; 
-                margin-bottom: 30px;
+                margin-bottom: 60px;
                 margin-left: 10px;
                 margin-right: 10px;
             }
@@ -85,8 +85,8 @@
             }
 
             .logo{
-                margin-top:10px;
-                margin-right: 50px;
+                width: 100px;
+                height: 100px;
             }
 
             .name__title{
@@ -115,7 +115,7 @@
             }
 
             .date{
-                width: 186.8px;
+                width: 251px;
             }
 
             .padding-tomador{
@@ -159,6 +159,26 @@
             .margin-big{
                 margin-top: 25px;
             }
+            
+            .padding-left-foto{
+            padding-left: 20px;
+            }
+            
+            .margin-top{
+                margin-top: 8px;
+            }
+    
+            .margin-bottom--title{
+                margin-bottom: 4px;
+            }
+            
+            .border-top-left-radius{
+                border-top-left-radius: 8px;
+            }
+            
+            .border-top-right-radius{
+                border-top-right-radius: 8px;
+            }
 
         </style>
     </head>
@@ -166,82 +186,78 @@
     <body>
         <div id="header">
             
-            <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$tomadors->esnome}}</td>
-            </tr>
-        </table>
+            <div class="borderT margin-top">
+                <table>
+                    <tr>
+                        <td rowspan="7">
+                            @if($empresa->esfoto)
+                                <img class="logo" src="{{$empresa->esfoto}}">
+                            @else
+                                @include('imagem')
+                            @endif
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$tomadors->esnome}}</td>
+                    </tr>
         
-        <div class="borderT margin-top">
-            <table>
-                <tr>
-                    <td rowspan="6"><img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:5px;"></td>
-                </tr>
+                    <tr>
+                        <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$empresa->escnpj}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
+                    </tr>
+        
+                    <tr>
+                        <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
+                    </tr>
+        
+                    <tr>
     
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$empresa->escnpj}}</td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}}, {{$empresa->esnum}}  - {{$empresa->escep}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
-                    
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong> {{$empresa->estelefone}}</td>
-                </tr>
-    
-            </table>
-        </div>
-
+                        <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$empresa->estelefone}}</td>
+                    </tr>
+        
+                </table>
+            </div>
 
             <table class="margin-top">
                 <tr>
-                    <td class="border-left border-top border-bottom small__font text-center date text-bold destaque">Rol dos Boletins</td>
-                    <td class="border-top border-bottom small__font border-left text-center date text-bold">Data Inicial: 
+                    <td class="small__font text-center date text-bold">Data Inicial: 
                         <?php
                             $data = explode('-',$inicio)
                         ?>
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                     </td>
-                    <td class="border-top border-bottom small__font border-left text-center date text-bold">Data Final: 
+                    <td class="small__font text-center date text-bold">Data Final: 
                         <?php
                             $data = explode('-',$final)
                         ?>
                         {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
                     </td>
-                    <td class="border-top border-bottom border-right small__font border-left text-center date text-bold">Data de Emissão: {{date("d/m/y")}}</td>
+                    <td class="small__font text-center date text-bold">Data de Emissão: {{date("d/m/y")}}</td>
                 </tr>
             </table>
+            
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">Rol dos Boletins</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="margin-big">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">{{$tomadors->tsnome}}</td>
+                    </tr>
+                </table>
+            </div>
 
-
-            <table class="margin-big">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque padding">Tomador: {{$tomadors->tsnome}}</td>
-                </tr>
-            </table>
-
+            
+            
             <table class="padding-tomador">
                 <tr>
                     <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaqueDark padding">Boletim com Tabela</td>
@@ -260,7 +276,7 @@
 
 
         <div id="footer">
-            <p class="page destaque borderT padding-footer">Página:  </p>
+          <p class="page padding-footer" style="text-align: right">Página:  </p>
         </div>
 
         <div id="content">

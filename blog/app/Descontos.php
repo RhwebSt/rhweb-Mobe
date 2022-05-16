@@ -30,7 +30,7 @@ class Descontos extends Model
             'dfvalor'=>str_replace(",",".",str_replace(".","",$dados['valor']))
         ]);
     }
-    public function lista($empresa)
+    public function lista($empresa,$id,$ordem)
     {
         return DB::table('trabalhadors')
         ->join('descontos', 'trabalhadors.id', '=', 'descontos.trabalhador_id')
@@ -39,7 +39,19 @@ class Descontos extends Model
             'trabalhadors.tsmatricula',
             'descontos.*'
         )
-        ->where('descontos.empresa_id',$empresa)
+        ->where([
+            ['trabalhadors.tsnome','like','%'.$id.'%'],
+            ['trabalhadors.empresa_id', $empresa]
+        ])
+        ->orWhere([
+            ['trabalhadors.tscpf','like','%'.$id.'%'],
+            ['trabalhadors.empresa_id', $empresa],
+        ])
+        ->orWhere([
+            ['trabalhadors.tsmatricula','like','%'.$id.'%'],
+            ['trabalhadors.empresa_id', $empresa], 
+        ])
+        ->orderBy('trabalhadors.tsnome', $ordem)
         ->paginate(10);
     }
 

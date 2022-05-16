@@ -10,16 +10,16 @@
                 
                 <section class="section__search">
                     <div class="col-md-5">
-                        <form action="" method="GET">
+                        <form action="{{route('descontos.index')}}" method="GET">
                             
                             <div class="d-flex">
                                 
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="nome__trab">
                                 <datalist id="listapesquisa"></datalist>
 
-                                <input type="hidden" name="codicao" value="">
+                                <input type="hidden" name="codicao" value="{{isset($dadosdescontos->id)?$dadosdescontos->id:''}}">
                                 
-                                <button type="submit" class="btn botao__search">
+                                <button type="submit" class="btn botao__search modal-botao">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                 </button>
 
@@ -38,8 +38,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('desconto.ordem',['asc',isset($dadosdescontos->id)?$dadosdescontos->id:null])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('desconto.ordem',['desc',isset($dadosdescontos->id)?$dadosdescontos->id:null])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
@@ -64,7 +64,7 @@
                                   
                             <tbody class="table__body">
                               @if(count($descontos) > 0)
-                                @foreach($descontos as $desconto)
+                                @foreach($descontos as $key => $desconto)
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:80px;">{{$desconto->tsmatricula}}</td>
                                     
@@ -94,9 +94,70 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li class=""><a class="dropdown-item text-decoration-none ps-2 text-capitalize" onclick ="botaoModal()"  id="imprimir" role="button">Rol dos Descontos <i class="fas fa-file"></i></a></li>
-                                                <li class=""><a class="dropdown-item text-decoration-none ps-2 text-capitalize"  id="imprimir" data-bs-toggle="modal" data-bs-target="#exampleModal" role="button">Rol dos Descontos - Por trabalhador <i class="fas fa-file"></i></a></li>
+                                                <li class=""><a class="dropdown-item text-decoration-none ps-2 text-capitalize"  id="imprimir" data-bs-toggle="modal" data-bs-target="#rolDescontoTrab{{$key}}" role="button">Rol dos Descontos - Por trabalhador <i class="fas fa-file"></i></a></li>
                                             </ul>
                                         </div>
+                                        <section class="modal__rol-descontos-trab">      
+                                            <div class="modal fade" id="rolDescontoTrab{{$key}}" tabindex="-1" aria-labelledby="rolDescontoTrabLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered col-6">
+                                                    <div class="modal-content">
+                                                        <form action="{{route('descontos.relatorio.trabalhador')}}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="idtrabalhador" id="idtrabalhador" value="{{$desconto->trabalhador_id}}">
+                                                            
+                                                            <div class="modal-header header__modal">
+                                                                <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-lg fa-percentage"></i> Rol dos Descontos - Por trabalhador</h5>
+                                                                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                            </div>
+                                                                
+                                                            <div class="modal-body body__modal">
+                                                    
+                                                                <section class="section__search">
+                                                                    <div class="col-md-12">
+                                                                        
+                                                                            
+                                                                            <div class="d-flex">
+                                                                                
+                                                                                <input placeholder="" class="form-control" value="{{$desconto->tsnome}}" name="pesquisa" id="nome__trab">
+                                                                               
+                                                
+                                                
+                                                                                
+                                                                                <!-- <button type="submit" class="btn botao__search">
+                                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                                                                </button> -->
+                                                
+                                                                            </div>
+                                                                            
+                                                                        
+                                                                    </div>
+                                                                </section>
+                                                    
+                                                                <section class="section__modal--rolDesconto row">
+                                                                    <div class="col-12 col-md-6 mt-2">
+                                                                    <label for="ano" class="form-label">Data Inicial</label>
+                                                                    <input type="date" class="form-control " name="ano_inicial" value="" id="dataInicialDesconto">
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-12 col-md-6 mt-2">
+                                                                    <label for="ano" class="form-label">Data Final</label>
+                                                                    <input type="date" class="form-control " name="ano_final" value="" id="dataFinalDesconto">
+                                                                    </div>
+                                                                </section>
+                                                
+                                                    
+                                                            </div>
+                                                                
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn botao" data-bs-dismiss="modal" >Fechar</button>
+                                                                <button type="submit" class="btn botao__enviar" id="imprimir"><i class="fas fa-print"></i> Imprimir</button>
+                                                            </div>
+                                            
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section> 
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">

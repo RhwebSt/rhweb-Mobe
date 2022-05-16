@@ -5,19 +5,29 @@ namespace App\Http\Controllers\Descontos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Desconto\Validacao;
+use Illuminate\Support\Facades\DB;
 use App\Descontos;
+use App\Folhar;
 class DescontosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $folhar;
+    public function __construct()
+    {
+        $this->folhar = new Folhar;
+    }
     public function index()
     {
         $user = Auth::user();
         $desconto = new Descontos;
-        $descontos = $desconto->lista($user->empresa);
+        $search = request('search');
+        $condicao = request('codicao');
+        $descontos = $desconto->lista($user->empresa_id,$search,'asc');
+        if ($condicao) {
+            $dadosdescontos = $desconto->buscaUnidadeDesconto($condicao);
+            return view('desconto.editDesconto',compact('user','descontos','dadosdescontos'));
+        }
+        
         return view('desconto.descontos',compact('user','descontos'));
     }
 
@@ -31,42 +41,54 @@ class DescontosController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function ordem($ordem,$id = null)
+    {
+       
+        $user = Auth::user();
+        $desconto = new Descontos;
+        $descontos = $desconto->lista($user->empresa_id,null,$ordem);
+        if ($id) {
+            $dadosdescontos = $desconto->buscaUnidadeDesconto($id);
+            return view('desconto.editDesconto',compact('user','descontos','dadosdescontos'));
+        }
+        
+        return view('desconto.descontos',compact('user','descontos'));
+    }
+    public function store(Validacao $request)
     {
         $dados = $request->all();
-        
-        $request->validate([
-            'competencia' => 'required|max:20',
-            'matricula' => 'required',
-            'nome__trab'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'descricao'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'quinzena'=>'required|max:17|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'valor'=>'required',
-        ],
-        [
-            'competencia.required'=>'O campo não pode estar vazio.',
-            'competencia.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'matricula.required'=>'O campo não pode estar vazio.',
-
-            'nome__trab.required'=>'O campo não pode estar vazio.',
-            'nome__trab.regex'=>'O campo nome social tem um formato inválido.',
-        
-            'descricao.required'=>'O campo não pode estar vazio.',
-            'descricao.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'descricao.regex'=>'O campo possui um formato inválido.',
-
-            'quinzena.required'=>'O campo não pode estar vazio.',
-            'quinzena.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'quinzena.regex'=>'O campo possui um formato inválido.',
-            'valor.required'=>'O campo não pode estar vazio.',
-        ]
-        );
+        $folhar = $this->folhar
+        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
+        ->select('folhars.id')
+        ->where(function($query) use ($dados){
+            if ($dados['quinzena'] === '2 - Segunda') {
+                $datainicio = $dados['competencia'].'-16';
+                $datafinal = $dados['competencia'].'-31';
+                // dd($datainicio,$dados['quinzena']);
+                $query->where([
+                    ['folhars.empresa_id', $dados['empresa']],
+                    ['base_calculos.trabalhador_id',$dados['trabalhador']],
+                    ['base_calculos.tomador_id',null]
+                ])
+                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal]);
+                // ->where('folhars.fsinicio','>',$datainicio)
+                // ->where('folhars.fsfinal','<=',$datafinal);
+               
+            }else{
+                $datainicio = $dados['competencia'].'-01';
+                $datafinal = $dados['competencia'].'-15';
+                $query->where([
+                    ['folhars.empresa_id', $dados['empresa']],
+                    ['base_calculos.trabalhador_id',$dados['trabalhador']],
+                    ['base_calculos.tomador_id',null]
+                ])
+                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal]);
+            }
+        })->first();
+    
+        if ($folhar) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'A folhar já foi calculada nesta quizena.']);
+        }
         $desconto = new Descontos;
         try {
             $descontos = $desconto->cadastro($dados);
@@ -99,7 +121,7 @@ class DescontosController extends Controller
         $id = base64_decode($id);
         $user = Auth::user();
         $desconto = new Descontos;
-        $descontos = $desconto->lista($user->empresa);
+        $descontos = $desconto->lista($user->empresa_id,null,'asc');
         $dadosdescontos = $desconto->buscaUnidadeDesconto($id);
         return view('desconto.editDesconto',compact('user','descontos','dadosdescontos'));
     }
@@ -111,30 +133,30 @@ class DescontosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         $dados = $request->all();
         
-        $request->validate([
-            'competencia' => 'required|max:20',
-            'descricao'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'quinzena'=>'required|max:17|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'valor'=>'required',
-        ],
-        [
-            'competencia.required'=>'O campo não pode estar vazio.',
-            'competencia.max'=>'O campo não ter mais de 100 caracteres.',
+        // $request->validate([
+        //     'competencia' => 'required|max:20',
+        //     'descricao'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        //     'quinzena'=>'required|max:17|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        //     'valor'=>'required',
+        // ],
+        // [
+        //     'competencia.required'=>'O campo não pode estar vazio.',
+        //     'competencia.max'=>'O campo não ter mais de 100 caracteres.',
         
-            'descricao.required'=>'O campo não pode estar vazio.',
-            'descricao.max'=>'O campo não ter mais de 100 caracteres.',
-            'descricao.regex'=>'O campo possui um formato inválido.',
+        //     'descricao.required'=>'O campo não pode estar vazio.',
+        //     'descricao.max'=>'O campo não ter mais de 100 caracteres.',
+        //     'descricao.regex'=>'O campo possui um formato inválido.',
 
-            'quinzena.required'=>'O campo não pode estar vazio.',
-            'quinzena.max'=>'O campo não ter mais de 100 caracteres.',
-            'quinzena.regex'=>'O campo possui um formato inválido.',
-            'valor.required'=>'O campo não pode estar vazio.',
-        ]
-        );
+        //     'quinzena.required'=>'O campo não pode estar vazio.',
+        //     'quinzena.max'=>'O campo não ter mais de 100 caracteres.',
+        //     'quinzena.regex'=>'O campo possui um formato inválido.',
+        //     'valor.required'=>'O campo não pode estar vazio.',
+        // ]
+        // );
         $desconto = new Descontos;
         try {
             $descontos = $desconto->editar($dados,$id);

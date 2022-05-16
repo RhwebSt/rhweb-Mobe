@@ -151,6 +151,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
 
     Route::resource('descontos','Descontos\\DescontosController')->names('descontos');
+    Route::get('descontos/ordem/{ordem}/{id?}','Descontos\\DescontosController@ordem')->name('desconto.ordem');
     Route::get('relatorio/descontos/{inicio}/{final}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
 

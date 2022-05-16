@@ -9,6 +9,10 @@ class AvusoDescricao extends Model
     protected $fillable = [
         'asdescricao', 'aivalor', 'asstatus', 'avuso_id'
     ];
+    public function avuso()
+    {
+        return $this->belongsTo(Avuso::class);
+    }
        public function cadastro($dados,$i)
        {
            
@@ -16,7 +20,7 @@ class AvusoDescricao extends Model
                'asdescricao'=>$dados['descricao'.$i],
                'aivalor'=>str_replace(",",".",str_replace(".","",$dados['valor'.$i])),
                'asstatus'=>$dados['cd'.$i],
-               'avuso'=>$dados['avuso']
+               'avuso_id'=>$dados['avuso']
            ]);
        }
        public function listaRecibo($avuso)
@@ -29,7 +33,7 @@ class AvusoDescricao extends Model
            return DB::table('avusos')
            ->rightJoin('avuso_descricaos', 'avusos.id', '=', 'avuso_descricaos.avuso_id')
            ->select('avusos.aicodigo','avuso_descricaos.asstatus','avusos.created_at','avuso_descricaos.aivalor')
-           ->where('avuso',$avuso)
+           ->where('avuso_id',$avuso)
            ->get();
        }
        public function deletarAvuso($id)

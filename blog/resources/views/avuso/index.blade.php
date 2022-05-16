@@ -84,7 +84,7 @@
                 <section class="section__recibo--avulso--pill">
                     <form class="row g-3" action="{{route('avuso.store')}}" method="POST">
                         @csrf
-                        <input type="hidden" name="empresa" value="{{$user->empresa}}">
+                        <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
         
                         <div class="col-12 col-md-8">
                             <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome Completo</label>
@@ -133,7 +133,7 @@
                         </div>
 
                         <section class="section__items-avulso">
-                                <div class="row mb-3">
+                                <div class="row mb-3" id="conteiner">
                                     
                                     <div class="col-12 col-md-5 mt-2">
                                         <label for="descricao" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Descrição</label>
@@ -366,22 +366,22 @@
                         
                         <section class="section__search">
                             <div class="col-md-5">
-                                <form action="" method="GET">
+                               
                                     
                                     <div class="d-flex">
                                         
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatrabalhador01" name="search" id="search">
+                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatrabalhador01" name="search" id="pesquisatrabalhador01">
                                         <datalist id="listatrabalhador01"></datalist>
         
-                                        <input type="hidden" name="trabalhador01" class="@error('trabalhador01') is-invalid @enderror" id="idlistatrabalhador01">
+                                        <input type="hidden" name="trabalhador01" class="@error('trabalhador01') is-invalid @enderror" id="trabalhador01">
                                         
-                                        <button type="submit" class="btn botao__search">
+                                        <button  class="btn botao__search">
                                             <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                         </button>
         
                                     </div>
                                     
-                                </form>
+                                
                             </div>
                         </section>
                         
@@ -428,6 +428,93 @@
 
 <script>
 
+function remove(i, status) {
+        
+        if (status === 'v') {
+            $('#conteiner .row').eq(i).remove()
+        } else {
+            $('#conteiner .row').eq(i - 1).remove()
+        }
+    }
+
+    let index = 0;
+
+    function conteiner(index) {
+        let conteiner = '';
+        conteiner += `<div class="row d-flex">
+                    <div class="col-12 col-md-5">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" value="" name="descricao${index}" maxlength="100" id="descricao${index}">
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label for="valor" class="form-label">Valor</label>
+                        <input type="text" class="form-control numero " value="" name="valor${index}" maxlength="100" id="valor${index}">
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label for="cd${index}" class="form-label">Crédito/Desconto</label>
+                        <select id="cd${index}" name="cd${index}" class="form-select" >
+                        <option selected>Crédito</option>
+                        <option>Desconto</option>
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="col-md-1 align-self-center mt-4">
+                        <i class="fas fa-lg fa-times"></i>
+                    </div>
+                    
+                    </div>`
+        return conteiner;
+
+    }
+    $('.numero').mask('000.000.000.000.000,00', {reverse: true});
+    $('#adicinar').click(function() {
+        if ($('#quantidade').val() <= 20) {
+            // index += 1;
+            let quantidade = parseInt($('#quantidade').val());
+    
+            $('#conteiner').append(conteiner(quantidade));
+            quantidade += 1;
+            $('#quantidade').val(quantidade)
+            $('.numero').mask('000.000.000.000.000,00', {reverse: true});
+        } else {
+            alerta()
+            $(this).addClass('disabled')
+        }
+    })
+    $("#pesquisatrabalhador01").on('keyup focus', function() {
+        let dados = '0'
+        if ($(this).val()) {
+            dados = $(this).val()
+            if (dados.indexOf('  ') !== -1) {
+                dados = monta_dados(dados);
+            }
+        }
+        $('#icon').addClass('d-none').next().removeClass('d-none')
+        $.ajax({
+            url: "{{url('avuso')}}/pesquisa/" + dados,
+            type: 'get',
+            contentType: 'application/json',
+            success: function(data) {
+                $('#trabfoto').removeAttr('src')
+                $('#refres').addClass('d-none').prev().removeClass('d-none')
+                let nome = ''
+                if (data.length >= 1) {
+                    data.forEach(element => {
+                        nome += `<option value="${element.ascpf}  ${element.asnome}">`
+                        // nome += `<option value="${element.tsmatricula}">`
+                        //   nome += `<option value="${element.tscpf}">`
+                    });
+                    $('#listatrabalhador01').html(nome)
+                }
+                if (data.length > 0) {
+                    $('#trabalhador01').val(data[0].id)
+                }
+            }
+        });
+    });
     function voltaPill(){
         var Back = document.getElementById('info-avulso-tab');
         Back.addEventListener("click", function() {
@@ -519,62 +606,6 @@
 
 
 
-    function remove(i, status) {
-        console.log(i, status);
-        if (status === 'v') {
-            $('#conteiner .row').eq(i).remove()
-        } else {
-            $('#conteiner .row').eq(i - 1).remove()
-        }
-    }
-
-    let index = 0;
-
-    function conteiner(index) {
-        let conteiner = '';
-        conteiner += `<div class="row d-flex">
-                    <div class="col-12 col-md-5">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" value="" name="descricao${index}" maxlength="100" id="descricao${index}">
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <label for="valor" class="form-label">Valor</label>
-                        <input type="text" class="form-control numero " value="" name="valor${index}" maxlength="100" id="valor${index}">
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <label for="cd${index}" class="form-label">Crédito/Desconto</label>
-                        <select id="cd${index}" name="cd${index}" class="form-select" >
-                        <option selected>Crédito</option>
-                        <option>Desconto</option>
-                        </select>
-                    </div>
-                    
-                    
-                    <div class="col-md-1 align-self-center mt-4">
-                        <i class="fas fa-lg fa-times"></i>
-                    </div>
-                    
-                    </div>`
-        return conteiner;
-
-    }
-    $('.numero').mask('000.000.000.000.000,00', {reverse: true});
-    $('#adicinar').click(function() {
-        if ($('#quantidade').val() <= 20) {
-            // index += 1;
-            let quantidade = parseInt($('#quantidade').val());
-            console.log(quantidade);
-            $('#conteiner').append(conteiner(quantidade));
-            quantidade += 1;
-            $('#quantidade').val(quantidade)
-            $('.numero').mask('000.000.000.000.000,00', {reverse: true});
-        } else {
-            alerta()
-            $(this).addClass('disabled')
-        }
-    })
     $('#pesquisatomador').on('keyup focus', function() {
         var dados = '0';
         if ($(this).val()) {
@@ -636,37 +667,7 @@
             }
         });
     });
-    $("#pesquisatrabalhador01").on('keyup focus', function() {
-        let dados = '0'
-        if ($(this).val()) {
-            dados = $(this).val()
-            if (dados.indexOf('  ') !== -1) {
-                dados = monta_dados(dados);
-            }
-        }
-        $('#icon').addClass('d-none').next().removeClass('d-none')
-        $.ajax({
-            url: "{{url('avuso')}}/pesquisa/" + dados,
-            type: 'get',
-            contentType: 'application/json',
-            success: function(data) {
-                $('#trabfoto').removeAttr('src')
-                $('#refres').addClass('d-none').prev().removeClass('d-none')
-                let nome = ''
-                if (data.length >= 1) {
-                    data.forEach(element => {
-                        nome += `<option value="${element.ascpf}  ${element.asnome}">`
-                        // nome += `<option value="${element.tsmatricula}">`
-                        //   nome += `<option value="${element.tscpf}">`
-                    });
-                    $('#listatrabalhador01').html(nome)
-                }
-                if (data.length === 1 && dados.length >= 4) {
-                    $('#idlistatrabalhador01').val(data[0].id)
-                }
-            }
-        });
-    });
+    
 
     function alerta() {
         const Toast = Swal.mixin({

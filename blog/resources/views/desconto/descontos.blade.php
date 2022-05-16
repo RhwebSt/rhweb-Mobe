@@ -81,7 +81,7 @@
         <form class="row g-3" id="form" method="POST" action="{{route('descontos.store')}}">
             @csrf
             <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
-            <input type="hidden" name="trabalhador" id="trabalhador">
+            <input type="hidden" class=" @error('trabalhador') is-invalid @enderror" name="trabalhador" id="trabalhador" value="{{old('trabalhador')}}">
             
             <section class="section__botoes--desconto">
                     
@@ -97,11 +97,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="rolDescontos">
                             <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button">Rol dos Descontos</a></li>
-                            <li class="">
-                                <button type="button" class="btn dropdown-item text-decoration-none ps-2" data-bs-toggle="modal" data-bs-target="#rolDescontoTrab">
-                                    Rol dos Descontos - Por trabalhador
-                                </button>
-                            </li>
+                           
                         </ul>
                         
                         <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
@@ -204,70 +200,24 @@
 </main>
 
 
-<section class="modal__rol-descontos-trab">      
-    <div class="modal fade" id="rolDescontoTrab" tabindex="-1" aria-labelledby="rolDescontoTrabLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <form action="{{route('descontos.relatorio.trabalhador')}}" method="POST">
-                    @csrf
-                    <input type="hidden" name="idtrabalhador" id="idtrabalhador">
-                    
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-lg fa-percentage"></i> Rol dos Descontos - Por trabalhador</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                        
-                    <div class="modal-body body__modal">
-            
-                        <section class="section__search">
-                            <div class="col-md-12">
-                                
-                                    
-                                    <div class="d-flex">
-                                        
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="pesquisa" id="nome__trab">
-                                        <datalist id="listapesquisa"></datalist>
-        
-                                        <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
-                                        
-                                        <button type="submit" class="btn botao__search">
-                                            <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                        </button>
-        
-                                    </div>
-                                    
-                                
-                            </div>
-                        </section>
-            
-                        <section class="section__modal--rolDesconto row">
-                            <div class="col-12 col-md-6 mt-2">
-                              <label for="ano" class="form-label">Data Inicial</label>
-                              <input type="date" class="form-control " name="ano_inicial" value="" id="dataInicialDesconto">
-                            </div>
-                            
-                            <div class="col-12 col-md-6 mt-2">
-                              <label for="ano" class="form-label">Data Final</label>
-                              <input type="date" class="form-control " name="ano_final" value="" id="dataFinalDesconto">
-                            </div>
-                        </section>
-        
-            
-                    </div>
-                        
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao" data-bs-dismiss="modal" >Fechar</button>
-                        <button type="submit" class="btn botao__enviar" id="imprimir"><i class="fas fa-print"></i> Imprimir</button>
-                    </div>
-    
-                </form>
-            </div>
-        </div>
-    </div>
-</section> 
+
   
  
         <script>
+              $('.modal-botao').click(function() {
+                    localStorage.setItem("modal", "enabled");
+                })
+
+                function verficarModal() {
+                    var valueModal = localStorage.getItem('modal');
+                    if (valueModal === "enabled") {
+                    $(document).ready(function() {
+                        $("#teste").modal("show");
+                    });
+                    localStorage.setItem("modal", "disabled");
+                    }
+                }
+                verficarModal()
                 var botaolimpaCampos = document.querySelector("#refre");
         
                 botaolimpaCampos.addEventListener('click', function(){
@@ -282,7 +232,7 @@
         
         
         <script>
-             $( "#nome__trab,#pesquisa" ).on('keyup focus',function() { 
+             $( "#nome__trab,#pesquisa" ).on('keyup focus',function() {  
                 let  dados = '0'
                 if ($(this).val()) {
                   dados = $(this).val()
@@ -300,7 +250,7 @@
                       let nome = ''
                       if (data.length >= 1) {
                         data.forEach(element => {
-                          nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
+                          nome += `<option value="${element.tsnome}">`
                           // nome += `<option value="${element.tsmatricula}">`
                           nome += `<option value="${element.tscpf}">`
                         });

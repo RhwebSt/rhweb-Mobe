@@ -29,6 +29,10 @@ class Empresa extends Model
 
         ]);
     }
+    public function avuso()
+    {
+        return $this->hasMany(Avuso::class);
+    }
     public function user()
     {
         return $this->hasMany(User::class);
