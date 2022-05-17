@@ -116,7 +116,7 @@
                 
             <div class="col-md-2">
                 <label for="cep" class="form-label">CEP</label>
-                <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{$empresas->escep}}" id="cep">
+                <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{$empresas->endereco[0]->escep}}" id="cep">
                 @error('cep')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -124,7 +124,7 @@
                                 
             <div class="col-md-6">
                 <label for="logradouro" class="form-label">Rua</label>
-                <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{$empresas->eslogradouro}}" id="logradouro">
+                <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{$empresas->endereco[0]->eslogradouro}}" id="logradouro">
                 @error('logradouro')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -132,7 +132,7 @@
                 
             <div class="col-md-2">
                 <label for="numero" class="form-label">Número</label>
-                <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$empresas->esnum}}">
+                <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$empresas->endereco[0]->esnum}}">
                 @error('numero')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -325,8 +325,8 @@
                     ]
                 ?>
                 @foreach($tipo as $tipos)
-                    @if($tipos === $empresas->escomplemento)
-                        <option selected >{{$empresas->escomplemento}}</option>
+                    @if($tipos === $empresas->endereco[0]->escomplemento)
+                        <option selected >{{$empresas->endereco[0]->escomplemento}}</option>
                     @else
                         <option >{{$tipos}}</option>
                     @endif
@@ -336,7 +336,7 @@
             
             <div class="col-md-6">
                 <label for="bairro" class="form-label">Bairro</label>
-                <input type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{$empresas->esbairro}}" name="bairro" id="bairro">
+                <input type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{$empresas->endereco[0]->esbairro}}" name="bairro" id="bairro">
                 @error('bairro')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -344,7 +344,7 @@
                 
             <div class="col-md-8">
                 <label for="localidade" class="form-label">Municipio</label>
-                <input type="text" class="form-control @error('localidade') is-invalid @enderror" value="{{$empresas->esmunicipio}}" name="localidade" id="localidade">
+                <input type="text" class="form-control @error('localidade') is-invalid @enderror" value="{{$empresas->endereco[0]->esmunicipio}}" name="localidade" id="localidade">
                 @error('localidade')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -352,7 +352,7 @@
 
             <div class="col-md-4">
                 <label for="uf" class="form-label">UF</label>
-                <input type="text" class="form-control @error('uf') is-invalid @enderror" value="{{$empresas->esuf}}" name="uf" id="uf">
+                <input type="text" class="form-control @error('uf') is-invalid @enderror" value="{{$empresas->endereco[0]->esuf}}" name="uf" id="uf">
                 @error('uf')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -368,7 +368,7 @@
             
             <div class="col-md-4">
                 <label for="cnpj__reponsavel" class="form-label">CPF Responsável</label>
-                <input type="text" class="form-control " value="" name="cpf" id="cnpj__reponsavel">
+                <input type="text" class="form-control " value="{{$empresas->escpf}}" name="cpf" id="cnpj__reponsavel">
                 @error('')
                   <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -450,7 +450,7 @@
             
             <div class="col-md-3">
                 <label for="nro__fatura" class="form-label">Fatura <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de faturas cadastradas"></i></label>
-                <input type="text" class="form-control @error('nro__fatura') is-invalid @enderror" name="nro__fatura" id="nro__fatura" value="{{$empresas->valoresrublica->estelefone}}"  maxlength="9">
+                <input type="text" class="form-control @error('nro__fatura') is-invalid @enderror" name="nro__fatura" id="nro__fatura" value="{{$empresas->valoresrublica[0]->vsnrofatura}}"  maxlength="9">
                 @error('nro__fatura')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -458,37 +458,37 @@
             
             <div class="col-md-3">
                 <label for="nro__reciboavulso" class="form-label">Recibo Avulso <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de recibos avulsos cadastrados"></i></label>
-                <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso"  maxlength="9">
+                <input type="text" class="form-control" name="nro__reciboavulso" id="nro__reciboavulso" value="{{$empresas->valoresrublica[0]->vsreciboavulso}}"  maxlength="9">
             </div>
 
             <div class="col-md-3">
                 <label for="nro__boletins" class="form-label">Boletins  <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de boletins cadastrados"></i></label>
-                <input type="text" class="form-control" name="nro__boletins" id="nro__boletins"  maxlength="9">
+                <input type="text" class="form-control" name="nro__boletins" id="nro__boletins" value="{{$empresas->valoresrublica[0]->vsnroboletins}}" maxlength="9">
             </div>
             
             <div class="col-md-3">
                 <label for="nro__folha" class="form-label">Nro Folha  <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de folhas calculadas"></i></label>
-                <input type="text" class="form-control" name="nro__folha" id="nro__folha"  maxlength="9">
+                <input type="text" class="form-control" name="nro__folha" id="nro__folha" value="{{$empresas->valoresrublica[0]->vsnrofolha}}" maxlength="9">
             </div>
             
             <div class="col-md-3">
                 <label for="nro__cartaoponto" class="form-label">Cartão Ponto <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de cartões pontos cadastrados"></i></label>
-                <input type="text" class="form-control" name="nro__cartaoponto" id="nro__cartaoponto"  maxlength="9">
+                <input type="text" class="form-control" name="nro__cartaoponto" id="nro__cartaoponto" value="{{$empresas->valoresrublica[0]->vsnrocartaoponto}}"  maxlength="9">
             </div>
             
             <div class="col-md-3">
                 <label for="seq__esocial" class="form-label">E-Social <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title=""></i></label>
-                <input type="text" class="form-control" name="seq__esocial" id="seq__esocial"  maxlength="9">
+                <input type="text" class="form-control" name="seq__esocial" id="seq__esocial" value="{{$empresas->valoresrublica[0]->vsnroequesocial}}"  maxlength="9">
             </div>
 
             <div class="col-md-3">
                 <label for="matric__trabalhador" class="form-label">Trabalhador <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de trabalhadores cadastrados"></i></label>
-                <input type="text" class="form-control" name="matric__trabalhador" id="matric__trabalhador" >
+                <input type="text" class="form-control" name="matric__trabalhador" value="{{$empresas->valoresrublica[0]->vimatricular}}" id="matric__trabalhador" >
             </div>
             
             <div class="col-md-3">
                 <label for="matric__tomador" class="form-label">Tomador <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de tomadores cadastrados"></i></label>
-                <input type="text" class="form-control" name="matric__tomador" id="matric__tomador" >
+                <input type="text" class="form-control" name="matric__tomador" value="{{$empresas->valoresrublica[0]->vimatriculartomador}}" id="matric__tomador" >
             </div>
         
             

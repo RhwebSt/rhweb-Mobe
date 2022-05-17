@@ -19,8 +19,8 @@ class ReceboTrabalhadorController extends Controller
     {
         $dados = $request->all();
         $cpf = explode(' ',$dados['search']);
-        $avuso = $this->avuso->where('ascpf',$cpf[0])->with(['empresa:id,esnome,escnpj','empresa.endereco',])->first();
-        dd($avuso);
+        $avuso = $this->avuso->where('ascpf',$cpf[0])->with(['empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco','avusodescricao'])->get();
+        // dd($dados);
         // $request->validate([
         //     'trabalhador01' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
         //     'ano_inicial1'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
@@ -38,14 +38,15 @@ class ReceboTrabalhadorController extends Controller
         //     'ano_final1.max'=>'Campo não ter mais de 10 caracteres.',
         //     'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
         // ]);
-        try {
+        
             // $avusos = $this->avuso->buscaTrabalhador($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
             // $listaavuso = $this->avuso->buscaTrabalhadorRecibo($dados['trabalhador01'],$dados['ano_inicial1'],$dados['ano_final1']);
             // if (!$avusos && count($listaavuso) < 1) {
             //     return redirect()->back()->withInput()->withErrors(['false'=>'Não à registro cadastrado.']);
             // }
-            $pdf = PDF::loadView('rolReciboAvulso');
+            $pdf = PDF::loadView('rolReciboAvulso',compact('avuso','dados'));
             return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera o relatório.']);
         }

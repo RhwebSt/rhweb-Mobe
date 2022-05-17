@@ -33,19 +33,19 @@ class ValoresRublica extends Model
     public function editar($dados,$id)
     {
         return ValoresRublica::where('id', $id)
-        ->orWhere('empresa', $id)
+        ->orWhere('empresa_id', $id)
         ->update([
             'vsnrofatura'=>$dados['nro__fatura'],
             'vsreciboavulso'=>$dados['nro__reciboavulso'],
             'vsmatricula'=>$dados['matric__trabalhador'],
-            'vsnrorequisicao'=>$dados['nro__requisicao'],
+            // 'vsnrorequisicao'=>$dados['nro__requisicao'],
             'vsnroboletins'=>$dados['nro__boletins'],
-            'vscbo'=>$dados['cbo'],
+            // 'vscbo'=>$dados['cbo'],
             'vsnrocartaoponto'=>$dados['nro__cartaoponto'],
             'vsnroequesocial'=>$dados['seq__esocial'],
             'vsnrofolha'=>$dados['nro__folha'],
-            'vimatricular'=>$dados['matricular'],
-            'vimatriculartomador'=>$dados['matriculartomador'],
+            'vimatricular'=>$dados['matric__trabalhador'],
+            'vimatriculartomador'=>$dados['matric__tomador'],
         ]);
     }
     public function editarMatricular($dados,$empresa)

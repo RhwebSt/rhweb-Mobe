@@ -5,18 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="/css/reset.css">
-        <title>RHWeb - Relatório por Rúbrica</title>
+        <title>RHWEB - Relatório por Rúbrica</title>
     </head>
 
     <style>
 
         @page { 
-            margin-top: 100px; 
+            margin-top: 170px; 
             margin-bottom: 30px;
             margin-left: 10px;
             margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -100px; right: 0px; height: 100px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -170px; right: 0px; height: 170px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
 
@@ -42,7 +42,6 @@
         }
 
         table{
-        text-transform: capitalize;
         border-collapse: collapse;
         }
 
@@ -70,10 +69,7 @@
         th{
         font-weight: bold;
         }
-        
-        footer{
-        float: right;
-        }
+
         
         figure{
             vertical-align: middle;
@@ -136,9 +132,6 @@
             background-color: rgb(168, 168, 168);
         }
 
-        .uppercase{
-            text-transform: uppercase;
-        }
 
         .name__title{
             width: 768px;
@@ -148,7 +141,7 @@
         .borderT{
             border: 1px solid black;
             border-radius: 3px;
-            width: 758px;
+            width:773.5px;
         }
         
         .margin-top{
@@ -202,46 +195,70 @@
         .totalGeral{
             width: 337px;
         }
+        
+        .margin-bottom{
+            margin-bottom: 10px;
+        }
+        
+        .margin-left{
+            margin-left: 5px;
+        }
 
-
+        .name__title--tomador {
+            width: 753px;
+        }
     </style>
 
     <body>
         <div id="header">
+            
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">Relátorio por Rúbrica</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="margin-top borderT">
+                <table class="margin-top margin-bottom margin-left">
+                    <tr>
+                        <td class="name__title--tomador text-center text-bold destaque">{{$folhas[0]->esnome}}</td>
+                    </tr>
+                </table>
+    
+                <table class="margin-bottom margin-top">
+                    <tr>
+                        <td class="small__font text-center data"><b>Competência </b>
+                        <strong>
+                            <?php
+                                $data_inicial = explode('-',$folhas[0]->fsinicio);
+                                echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
+                            ?>
+                        </strong>  a 
+                        <strong>
+                            <?php
+                                $data_final = explode('-',$folhas[0]->fsfinal);
+                                echo($data_final[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
+                            ?>
+                        <strong> 
+                        </td>
+                        <td class="small__font text-center data"><b>Data de Emissão:</b> {{date("d/m/y")}}</td>
+                        <td class="small__font text-center data"><b>código da Folha:</b> {{$folhas[0]->fscodigo}}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="margin-top">
+                <table>
+                    <tr>
+                        <td class="name__title text-center text-bold">{{$folhas[0]->vicodigo}} - {{$folhas[0]->vsdescricao}}</td>
+                    </tr>
+                </table>
+            </div>
+
+
             <table class="margin-top">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$folhas[0]->esnome}}</td>
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <td class="small__font border-top border-bottom border-right border-left text-center text-bold data">Competência 
-                    <strong>
-                        <?php
-                            $data_inicial = explode('-',$folhas[0]->fsinicio);
-                            echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
-                        ?>
-                    </strong>  a 
-                    <strong>
-                        <?php
-                            $data_final = explode('-',$folhas[0]->fsfinal);
-                            echo($data_final[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
-                        ?>
-                    <strong> 
-                    </td>
-                    <td class="small__font border-top border-bottom border-right border-left text-center text-bold data">Data de Emissão {{date("d/m/y")}}</td>
-                    <td class="small__font border-top border-bottom border-right border-left text-center text-bold data">código da Folha: {{$folhas[0]->fscodigo}}</td>
-                </tr>
-            </table>
-
-            <table class="margin-top">
-                <tr>
-                    <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaqueDark">{{$folhas[0]->vicodigo}} - {{$folhas[0]->vsdescricao}}</td>
-                </tr>
-            </table>
-
-            <table>
                 <tr>
                     <td class="small__font border-top border-bottom border-right border-left text-center text-bold destaque matric">Matrícula</td>
                     <td class="small__font border-top border-bottom border-right border-left text-center text-bold destaque nome">Nome</td>
@@ -252,7 +269,7 @@
         </div>
 
         <div id="footer">
-            <p class="page destaque borderT padding-footer">Página:  </p>
+            <p class="page" style="text-align: right">Página:  </p>
         </div>
 
         <div id="content">

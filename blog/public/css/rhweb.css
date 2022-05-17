@@ -209,31 +209,12 @@ main{
 
 
 
-
-/*.nav-pills .nav-link:hover{*/
-/*    background-color: #182D63 !important;*/
-/*    transform: scale(1.03);*/
-/*}*/
-
-/*.nav-pills .nav-link.active{*/
-/*    background-color: #182D63 !important;*/
-/*    transform: scale(1.01);*/
-/*}*/
-
-
-
-
 .box__principal{
-    /*width: 400px;*/
-    /*background-color: rgba(18, 18, 43, .9);*/
-    /*border-radius: 10px;*/
-    /*padding: 20px;*/
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    /*box-shadow: 4px 10px 10px rgba(0, 0, 0, .5);*/
 
 }
 

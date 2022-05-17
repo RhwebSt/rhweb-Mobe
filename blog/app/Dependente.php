@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Dependente extends Model
 {
     protected $fillable = [
-        'dsnome','dstipo','dsdata','dscpf','dsirrf','dssexo','dssf','trabalhador'
+        'dsnome','dstipo','dsdata','dscpf','dsirrf','dssexo','dssf','trabalhador_id'
     ];
     public function trabalhador()
     {

@@ -89,7 +89,7 @@ class Endereco extends Model
     }
     public function editarEmpresa($dados,$id)
     {
-        return Endereco::where('empresa', $id)
+        return Endereco::where('empresa_id', $id)
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],
@@ -103,7 +103,7 @@ class Endereco extends Model
 
     public function editarUsuario($dados)
     {
-        return Endereco::where('pessoais', $dados['pessoal'])
+        return Endereco::where('pessoais_id', $dados['pessoal'])
         ->update([
             'eslogradouro'=>$dados['logradouro'],
             'esbairro'=>$dados['bairro'],

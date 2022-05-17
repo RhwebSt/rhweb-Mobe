@@ -182,16 +182,21 @@
                 margin-left: 5px;
             }
             
+            .name__title--tomador {
+                width: 753px;
+            }
+            
         </style>
     </head>
 
     <body>
         <div id="header">
             
+            
             <div class="margin-top borderT">
-                <table class="margin-top">
+                <table class="margin-top margin-left">
                     <tr>
-                        <td class="name__title text-center text-bold">Folha de Pagamento Analítica Geral Nº {{$folhar->fscodigo}}</td>
+                        <td class="name__title--tomador text-center text-bold destaque">Folha de Pagamento Analítica Geral Nº {{$folhar->fscodigo}}</td>
                     </tr>
                 </table>
                 

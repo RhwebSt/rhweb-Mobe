@@ -16,14 +16,18 @@
 
 .offcanvas-header{
     color:white;
-    background-color: #2C188B;
+    background-color: #1F1F1F;
 }
 
 .offcanvas-end{
-    background-color: #1250d6;
+    background-color: #EBEBEB;
 }
 
 .off__canvas--body{
-    background-color: #08295E;
+    background-color: #EBEBEB;
+}
+
+.botao__search--off--canvas{
+    background-color: red;
 }
 

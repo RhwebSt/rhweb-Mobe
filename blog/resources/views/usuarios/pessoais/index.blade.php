@@ -146,183 +146,196 @@
             <div class="col-md-3"> 
                 <label for="tipoconstrucao" class="form-label">Tipo</label>
                 <select name="complemento__endereco" id="complemento__endereco" class="form-select">
-                    <option >A-Área</option>
-                    <option >AC-Acesso</option>
-                    <option >ACA-Acampamento</option>
-                    <option >ACL-Acesso Local</option>
-                    <option >AE-Área Especial</option>
-                    <option >AER-Aeroporto</option>
-                    <option >AL-Alameda</option>
-                    <option >ALD-Aldeia</option>
-                    <option >AMD-Avenida Marginal Direita</option>
-                    <option >AME-Avenida Marginal Esquerda</option>
-                    <option >AN-Anel Viário</option>
-                    <option >ANT-Antiga Estrada</option>
-                    <option >ART-Artéria</option>
-                    <option >AT-Alto</option>
-                    <option >ATL-Atalho</option>
-                    <option >A V-Área Verde</option>
-                    <option >AV-Avenida</option>
-                    <option >AVC-Avenida Contorno</option>
-                    <option >AVM-Avenida Marginal</option>
-                    <option >AVV-Avenida Velha</option>
-                    <option >BAL-Balneário</option>
-                    <option >BC-Beco</option>
-                    <option >BCO-Buraco</option>
-                    <option >BL-Bloco</option>
-                    <option >BLO-Balão</option>
-                    <option >BLV-Bulevar</option>
-                    <option >BSQ-Bosque</option>
-                    <option >BVD-Boulevard</option>
-                    <option >BX-Baixa</option>
-                    <option >C-Cais</option>
-                    <option >CAL-Calçada</option>
-                    <option >CAM-Caminho</option>
-                    <option >CAN-Canal</option>
-                    <option >CH-Chácara</option>
-                    <option >CHA-Chapadão</option>
-                    <option >CIC-Ciclovia</option>
-                    <option >CIR-Circular</option>
-                    <option >CJ-Conjunto</option>
-                    <option >COL-Colônia</option>
-                    <option >COM-Comunidade</option>
-                    <option >CON-Condomínio</option>
-                    <option >COR-Corredor</option>
-                    <option >CPO-Campo</option>
-                    <option >CGR-Córrego</option>
-                    <option >CTN-Contorno</option>
-                    <option >DSC-Descida</option>
-                    <option >DSV-Desvio</option>
-                    <option >DT-Distrito</option>
-                    <option >EB-Entre Bloco</option>
-                    <option >EIM-Estrada Intermunicipal</option>
-                    <option >ENS-Enseada</option>
-                    <option >ENT-Entrada Particular</option>
-                    <option >EQ-Entre Quadra</option>
-                    <option >ESC-Escada</option>
-                    <option >ESD-Escadaria</option>
-                    <option >ESE-Estrada Estadual</option>
-                    <option >ESI-Estrada Vicinal</option>
-                    <option >ESL-Estrada de Ligação</option>
-                    <option >ESM-Estrada Municipal</option>
-                    <option >ESP-Esplanada</option>
-                    <option >ESS-Estrada de Servidão</option>
-                    <option >EST-Estrada</option>
-                    <option >ESV-Estrada Velha</option>
-                    <option >ETA-Estrada Antiga</option>
-                    <option >ETC-Estação</option>
-                    <option >ETC-Estádio</option>
-                    <option >ETN-Estância</option>
-                    <option >ETP-Estrada Particular</option>
-                    <option >ETT-Estacionamento</option>
-                    <option >EVA-Evangélica</option>
-                    <option >EVD-Elevada</option>
-                    <option >EX-Eixo Industrial</option>
-                    <option >FAV-Favela</option>
-                    <option >FAZ-Fazenda</option>
-                    <option >FER-Ferrovia</option>
-                    <option >FNT-Fonte</option>
-                    <option >FRA-Feira</option>
-                    <option >FTE-Forte</option>
-                    <option >GAL-Galeria</option>
-                    <option >GJA-Granja</option>
-                    <option >HAB-Núcleo Habitacional</option>
-                    <option >IA-Ilha</option>
-                    <option >IGP-Igarapé</option>
-                    <option >IND-Indeterminado</option>
-                    <option >IOA-Ilhota</option>
-                    <option >JD-Jardim</option>
-                    <option >JDE-Jardinete</option>
-                    <option >LD-Ladeira</option>
-                    <option >LGA-Lagoa</option>
-                    <option >LGO-Lago</option>
-                    <option >LOT-Loteamento</option>
-                    <option >LRG-	Largo</option>
-                    <option >LT-Lote</option>
-                    <option >MER-Mercado</option>
-                    <option >MNA-Marina</option>
-                    <option >MOD-Modulo</option>
-                    <option >MRG-Projeção</option>
-                    <option >MRO-Morro</option>
-                    <option >MTE-Monte</option>
-                    <option >NUC-Núcleo</option>
-                    <option >NUR-Núcleo Rural</option>
-                    <option >O-Outros</option>
-                    <option >OUT-Outeiro</option>
-                    <option >PAR-Paralela</option>
-                    <option >PAS-Passeio</option>
-                    <option >PAT-Pátio</option>
-                    <option >PC-Praça</option>
-                    <option >PCE-Praça de Esportes</option>
-                    <option >PDA-Parada</option>
-                    <option >PDO-Paradouro</option>
-                    <option >PNT-Ponta</option>
-                    <option >PR-Praia</option>
-                    <option >PRL-Prolongamento</option>
-                    <option >PRM-Parque Municipal</option>
-                    <option >PRQ-Parque</option>
-                    <option >PRR-Parque Residencial</option>
-                    <option >PSA-Passarela</option>
-                    <option >PSG-Passagem</option>
-                    <option >PSP-	Passagem de Pedestre</option>
-                    <option >PSS-Passagem Subterrânea</option>
-                    <option >PTE-Ponte</option>
-                    <option >PTO-Porto</option>
-                    <option >Q-Quadra</option>
-                    <option >QTA-Quinta</option>
-                    <option >QTS-Quintas</option>
-                    <option >R-Rua</option>
-                    <option >R I-Rua Integração</option>
-                    <option >R L-Rua de Ligação</option>
-                    <option >R P-Rua Particular</option>
-                    <option >R V-Rua Velha</option>
-                    <option >RAM-Ramal</option>
-                    <option >RCR-Recreio</option>
-                    <option >REC-Recanto</option>
-                    <option >RER-Retiro</option>
-                    <option >RES-Residencial</option>
-                    <option >RET-Reta</option>
-                    <option >RLA-Ruela</option>
-                    <option >RMP-Rampa</option>
-                    <option >ROA-Rodo Anel</option>
-                    <option >ROD-Rodovia</option>
-                    <option >ROT-Rotula</option>
-                    <option >RPE-Rua de Pedestre</option>
-                    <option >RPR-Margem</option>
-                    <option >RTN-Retorno</option>
-                    <option >RTT-Rotatória</option>
-                    <option >SEG-Segunda Avenida</option>
-                    <option >SIT-Sitio</option>
-                    <option >SRV-Servidão</option>
-                    <option >ST-Setor</option>
-                    <option >SUB-Subida</option>
-                    <option >TCH-Trincheira</option>
-                    <option >TER-Terminal</option>
-                    <option >TR-Trecho</option>
-                    <option >TRV-Trevo</option>
-                    <option >TUN-Túnel</option>
-                    <option >TV-Travessa</option>
-                    <option >TVP-Travessa Particular</option>
-                    <option >TVV-Travessa Velha</option>
-                    <option >UNI-Unidade</option>
-                    <option >V-Via</option>
-                    <option >V C-Via Coletora</option>
-                    <option >V L-Via Local</option>
-                    <option >VAC-Via de Acesso</option>
-                    <option >VAL-Vala</option>
-                    <option >VCO-Via Costeira</option>
-                    <option >VD-Viaduto</option>
-                    <option >V-E-Via Expressa</option>
-                    <option >VER-Vereda</option>
-                    <option >VEV-Via Elevado</option>
-                    <option >VL-Vila</option>
-                    <option >VLA-Viela</option>
-                    <option >VLE-	Vale</option>
-                    <option >VLT-Via Litorânea</option>
-                    <option >VPE-Via de Pedestre</option>
-                    <option >VRT-Variante</option>
-                    <option >ZIG-	Zigue-Zague</option>
-                </select>
+                <?php
+                    $tipo = [
+                        'A-Área',
+                        'AC-Acesso',
+                        'ACA-Acampamento',
+                        'ACL-Acesso Local',
+                        'AD-Adro',
+                        'AE-Área Especial',
+                        'AER-Aeroporto',
+                        'AL-Alameda',
+                        'AMD-Avenida Marginal Direita',
+                        'AME-Avenida Marginal Esquerda',
+                        'AN-Anel Viário',
+                        'ANT-Antiga Estrada',
+                        'ART-Artéria',
+                        'AT-Alto',
+                        'ATL-Atalho',
+                        'A V-Área Verde',
+                        'AV-Avenida',
+                        'AVC-Avenida Contorno',
+                        'AVM-Avenida Marginal',
+                        'AVV-Avenida Velha',
+                        'BAL-Balneário',
+                        'BC-Beco',
+                        'BCO-Buraco',
+                        'BEL-Belvedere',
+                        'BL-Bloco',
+                        'BLO-Balão',
+                        'BLS-Blocos',
+                        'BLV-Bulevar',
+                        'BSQ-Bosque',
+                        'BVD-Boulevard',
+                        'BX-Baixa',
+                        'C-Cais',
+                        'CAL-Calçada',
+                        'CAM-Caminho',
+                        'CAN-Canal',
+                        'CH-Chácara',
+                        'CHA-Chapadão',
+                        'CIC-Ciclovia',
+                        'CIR-Circular',
+                        'CJ-Conjunto',
+                        'CJM-Conjunto Mutirão',
+                        'CMP-Complexo Viário',
+                        'COL-Colônia',
+                        'COM-Comunidade',
+                        'CON-Condomínio',
+                        'COR-Corredor',
+                        'CPO-Campo',
+                        'CRG-Córrego',
+                        'CTN-Contorno',
+                        'DSC-Descida',
+                        'DSV-Desvio',
+                        'DT-Distrito',
+                        'EB-Entre Bloco',
+                        'EIM-Estrada Intermunicipal',
+                        'ENS-Enseada',
+                        'ENT-Entrada Particular',
+                        'EQ-Entre Quadra',
+                        'ESC-Escada',
+                        'ESD-Escadaria',
+                        'ESE-Estrada Estadual',
+                        'ESI-Estrada Vicinal',
+                        'ESL-Estrada de Ligação',
+                        'ESM-Estrada Municipal',
+                        'ESP-Esplanada',
+                        'ESS-Estrada de Servidão',
+                        'EST-Estrada',
+                        'ESV-Estrada Velha',
+                        'ETA-Estrada Antiga',
+                        'ETC-Estação',
+                        'ETD-Estádio',
+                        'ETN-Estância',
+                        'ETP-Estrada Particular',
+                        'ETT-Estacionamento',
+                        'EVA-Evangélica',
+                        'EVD-Elevada',
+                        'EX-Eixo Industrial',
+                        'FAV-Favela',
+                        'FAZ-Fazenda',
+                        'FER-Ferrovia',
+                        'FNT-Fonte',
+                        'FRA-Feira',
+                        'FTE-Forte',
+                        'GAL-Galeria',
+                        'GJA-Granja',
+                        'HAB-Núcleo Habitacional',
+                        'IA-Ilha',
+                        'IND-Indeterminado',
+                        'IOA-Ilhota',
+                        'JD-Jardim',
+                        'JDE-Jardinete',
+                        'LD-Ladeira',
+                        'LGA-Lagoa',
+                        'LGO-Lago',
+                        'LOT-Loteamento',
+                        'LRG-Largo',
+                        'LT-Lote',
+                        'MER-Mercado',
+                        'MNA-Marina',
+                        'MOD-Modulo',
+                        'MRG-Projeção',
+                        'MRO-Morro',
+                        'MTE-Monte',
+                        'NUC-Núcleo',
+                        'NUR-Núcleo Rural',
+                        'OUT-Outeiro',
+                        'PAR-Paralela',
+                        'PAS-Passeio',
+                        'PAT-Pátio',
+                        'PC-Praça',
+                        'PCE-Praça de Esportes',
+                        'PDA-Parada',
+                        'PDO-Paradouro',
+                        'PNT-Ponta',
+                        'PR-Praia',
+                        'PRL-Prolongamento',
+                        'PRM-Parque Municipal',
+                        'PRQ-Parque',
+                        'PRR-Parque Residencial',
+                        'PSA-Passarela',
+                        'PSG-Passagem',
+                        'PSP-Passagem de Pedestre',
+                        'PSS-Passagem Subterrânea',
+                        'PTE-Ponte',
+                        'PTO-Porto',
+                        'Q-Quadra',
+                        'QTA-Quinta',
+                        'QTS-Quintas',
+                        'R-Rua',
+                        'R I-Rua Integração',
+                        'R L-Rua de Ligação',
+                        'R P-Rua Particular',
+                        'R V-Rua Velha',
+                        'RAM-Ramal',
+                        'RCR-Recreio',
+                        'REC-Recanto',
+                        'RER-Retiro',
+                        'RES-Residencial',
+                        'RET-Reta',
+                        'RLA-Ruela',
+                        'RMP-Rampa',
+                        'ROA-Rodo Anel',
+                        'ROD-Rodovia',
+                        'ROT-Rotula',
+                        'RPE-Rua de Pedestre',
+                        'RPR-Margem',
+                        'RTN-Retorno',
+                        'RTT-Rotatória',
+                        'SEG-Segunda Avenida',
+                        'SIT-Sitio',
+                        'SRV-Servidão',
+                        'ST-Setor',
+                        'SUB-Subida',
+                        'TCH-Trincheira',
+                        'TER-Terminal',
+                        'TR-Trecho',
+                        'TRV-Trevo',
+                        'TUN-Túnel',
+                        'TV-Travessa',
+                        'TVP-Travessa Particular',
+                        'TVV-Travessa Velha',
+                        'UNI-Unidade',
+                        'V-Via',
+                        'V C-Via Coletora',
+                        'V L-Via Local',
+                        'VAC-Via de Acesso',
+                        'VAL-Vala',
+                        'VCO-Via Costeira',
+                        'VD-Viaduto',
+                        'V-E-Via Expressa',
+                        'VER-Vereda',
+                        'VEV-Via Elevado',
+                        'VL-Vila',
+                        'VLA-Viela',
+                        'VLE-Vale',
+                        'VLT-Via Litorânea',
+                        'VPE-Via de Pedestre',
+                        'VRT-Variante',
+                        'ZIG-Zigue-Zague'
+                    ]
+                ?>
+                @foreach($tipo as $tipos)
+                    @if($tipos === $pessoais->escomplemento)
+                        <option selected >{{$pessoais->escomplemento}}</option>
+                    @else
+                        <option >{{$tipos}}</option>
+                    @endif
+                @endforeach
+                </select> 
             </div>
                     
             <div class="col-md-5">

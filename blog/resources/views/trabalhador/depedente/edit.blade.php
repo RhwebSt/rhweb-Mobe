@@ -58,7 +58,7 @@
             <section class="section__botoes--trabalhador">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{ route('depedente.mostrar.index',base64_encode($depedentes->trabalhador)) }}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{ route('depedente.mostrar.index',base64_encode($depedentes->trabalhador_id)) }}"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                         
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap">

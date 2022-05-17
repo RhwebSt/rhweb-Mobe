@@ -196,29 +196,29 @@
                         @csrf
                         <section class="section__search">
                             <div class="col-md-5">
-                                <form action="{{route('trabalhador.index')}}" method="GET">
+                                
                                     
                                     <div class="d-flex">
                                         
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
-                                        <datalist id="listapesquisa"></datalist>
+                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatrabalhador" name="pesquisa" id="pesquisatrabalhador">
+                                        <datalist id="listatrabalhador"></datalist>
         
                                         <input type="hidden" name="codicao" value="{{isset($trabalhador->id)?$trabalhador->id:''}}">
                                         
-                                        <button type="submit" class="btn botao__search">
+                                        <button class="btn botao__search">
                                             <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                         </button>
         
                                     </div>
                                     
-                                </form>
+                                
                             </div>
                         </section>
         
                         <section class="row section__filtro-avulso">
                             <div class="col-12 col-md-3">
                                 <label for="ano" class="form-label">Competência</label>
-                                <input type="month" class="form-control " value="" id="tano1Final">
+                                <input type="month" class="form-control " name="competencia" value="" id="tano1Final">
                             </div>
 
                             <div class="col-md-2 align-self-center pt-4">
@@ -428,20 +428,16 @@
 
 <script>
 
-function remove(i, status) {
-        
-        if (status === 'v') {
-            $('#conteiner .row').eq(i).remove()
-        } else {
-            $('#conteiner .row').eq(i - 1).remove()
-        }
-    }
+function remove(index) {
+    console.log(index);
+        $(`.campo${index}`).remove();
+}
 
     let index = 0;
 
     function conteiner(index) {
         let conteiner = '';
-        conteiner += `<div class="row d-flex">
+        conteiner += `<div class="row d-flex campo${index}">
                     <div class="col-12 col-md-5">
                         <label for="descricao" class="form-label">Descrição</label>
                         <input type="text" class="form-control" value="" name="descricao${index}" maxlength="100" id="descricao${index}">
@@ -462,7 +458,9 @@ function remove(i, status) {
                     
                     
                     <div class="col-md-1 align-self-center mt-4">
-                        <i class="fas fa-lg fa-times"></i>
+                        <a onclick="remove(${index})">  
+                            <i class="fas fa-lg fa-times"></i>
+                        </a>
                     </div>
                     
                     </div>`
@@ -484,7 +482,7 @@ function remove(i, status) {
             $(this).addClass('disabled')
         }
     })
-    $("#pesquisatrabalhador01").on('keyup focus', function() {
+    $("#pesquisatrabalhador01,#pesquisatrabalhador").on('keyup focus', function() {
         let dados = '0'
         if ($(this).val()) {
             dados = $(this).val()
@@ -503,11 +501,11 @@ function remove(i, status) {
                 let nome = ''
                 if (data.length >= 1) {
                     data.forEach(element => {
-                        nome += `<option value="${element.ascpf}  ${element.asnome}">`
+                        nome += `<option value="${element.asnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
-                        //   nome += `<option value="${element.tscpf}">`
+                          nome += `<option value="${element.ascpf}">`
                     });
-                    $('#listatrabalhador01').html(nome)
+                    $('#listatrabalhador01,#listatrabalhador').html(nome)
                 }
                 if (data.length > 0) {
                     $('#trabalhador01').val(data[0].id)
@@ -515,6 +513,37 @@ function remove(i, status) {
             }
         });
     });
+    // $("#pesquisatrabalhador").on('keyup focus', function() {
+    //     let dados = '0'
+    //     if ($(this).val()) {
+    //         dados = $(this).val()
+    //         if (dados.indexOf('  ') !== -1) {
+    //             dados = monta_dados(dados);
+    //         }
+    //     }
+    //     $('#icon').addClass('d-none').next().removeClass('d-none')
+    //     $.ajax({
+    //         url: "{{url('trabalhador')}}/pesquisa/" + dados,
+    //         type: 'get',
+    //         contentType: 'application/json',
+    //         success: function(data) {
+    //             $('#trabfoto').removeAttr('src')
+    //             $('#refres').addClass('d-none').prev().removeClass('d-none')
+    //             let nome = ''
+    //             if (data.length >= 1) {
+    //                 data.forEach(element => {
+    //                     nome += `<option value="${element.tsnome}">`
+    //                     // nome += `<option value="${element.tsmatricula}">`
+    //                     nome += `<option value="${element.tscpf}">`
+    //                 });
+    //                 $('#listatrabalhador').html(nome)
+    //             }
+    //             if (data.length >= 1) {
+    //                 $('#trabalhador').val(data[0].id)
+    //             }
+    //         }
+    //     });
+    // });
     function voltaPill(){
         var Back = document.getElementById('info-avulso-tab');
         Back.addEventListener("click", function() {
@@ -636,37 +665,7 @@ function remove(i, status) {
             }
         });
     })
-    $("#pesquisatrabalhador").on('keyup focus', function() {
-        let dados = '0'
-        if ($(this).val()) {
-            dados = $(this).val()
-            if (dados.indexOf('  ') !== -1) {
-                dados = monta_dados(dados);
-            }
-        }
-        $('#icon').addClass('d-none').next().removeClass('d-none')
-        $.ajax({
-            url: "{{url('trabalhador')}}/pesquisa/" + dados,
-            type: 'get',
-            contentType: 'application/json',
-            success: function(data) {
-                $('#trabfoto').removeAttr('src')
-                $('#refres').addClass('d-none').prev().removeClass('d-none')
-                let nome = ''
-                if (data.length >= 1) {
-                    data.forEach(element => {
-                        nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
-                        // nome += `<option value="${element.tsmatricula}">`
-                        nome += `<option value="${element.tscpf}">`
-                    });
-                    $('#listatrabalhador').html(nome)
-                }
-                if (data.length === 1 && dados.length >= 4) {
-                    $('#trabalhador').val(data[0].id)
-                }
-            }
-        });
-    });
+    
     
 
     function alerta() {

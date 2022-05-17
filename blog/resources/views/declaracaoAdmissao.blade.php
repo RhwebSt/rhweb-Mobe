@@ -220,10 +220,10 @@
         <div class="marginTerm">
             <p class=" text name__title2">Declaro para todos os fíns de direito, principalmente trabalhistas e previdênciárias, que irei exercer a atividade de <b>
                 
-                {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->cbo))}},
+                {{$trabalhadors->categoria[0]->cbo}},
             </b> na condição de <b>
                
-                 {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->cscategoria))}}
+                 {{$trabalhadors->categoria[0]->cscategoria}}
             </b> sob a representação do <b>{{$empresas->esnome}}</b> (sem vínculo empregatício), com a remuneração por tarefa e anotações em carteria a teor do artigo VI do decreto 611 de 21/07/1992.</p>
             <p class="text name__title2">Outrosim, declaro que tenho pleno conhecimento do sistema de pagamento  da minha <b>Remuneração</b> e dos adicionais, cujo indices são os seguintes:<i>Férias 11,12% incidente sobre 18,18% repouso remunerado sobre a produção (LEI 5.085/66, já acrescida de 1/3 , CF/88, valores pagos e discriminados nos recibos.) 13º Salário 8,34% incidente sobre 18,18% repouso remunerado sobre a produção, (LEI 5.080/68, regulamentada pelo Decreto 63.912/68) Valores pagos e discriminados nos recibos.</i></p>
             <p class="text name__title2"><i>FGTS (LEI 8.036//90, deposito mensal em conta na Caixa, (produção + repouso(18,18%)) + férias + 13º salário) incidência de 8%.</i></b></p>

@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Empresa\Validacao;
 use App\Empresa;
 use App\Endereco;
+use App\ValoresRublica;
 class PerfilController extends Controller
 {
-    private $endereco,$empresa;
+    private $endereco,$empresa,$valoresrublica;
     public function __construct()
     {
         $this->endereco = new Endereco;
         $this->empresa = new Empresa;
+        $this->valoresrublica = new ValoresRublica;
     }
     public function index()
     {
@@ -65,8 +68,7 @@ class PerfilController extends Controller
     {
         $user = Auth::user();
         // $empresas = $this->empresa->buscaUnidadeEmpresa($id);
-        $empresas = $this->empresa->where('id',$id)->with('valoresrublica')->first();
-        dd($empresas);
+        $empresas = $this->empresa->where('id',$id)->with(['valoresrublica','endereco'])->first();
         return view('usuarios.empresa.perfil',compact('user','empresas'));
     }
 
@@ -77,34 +79,16 @@ class PerfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Validacao $request, $id)
     {
         
         $dados = $request->all();
-        $request->validate([
-            'esnome'=>'required|max:100',
-            'escnpj'=>'required|max:100',
-            'dataregistro'=>'required|max:30',
-            'responsave'=>'required|max:30',
-            'email'=>'required|max:100|email',
-            'cnae__codigo'=>'required|max:10',
-            'contribuicao__sindicato'=>'required|max:30',
-            'telefone'=>'required|max:20',
-            'cod__municipio'=>'required|max:10',
-            'cep'=>'required|max:16',
-            'logradouro'=>'required|max:50',
-            'numero'=>'required|max:10',
-            'bairro'=>'required:max:40',
-            'localidade'=>'required|max:30',
-            'uf'=>'required|max:2|uf',
-        ]);
-        
-       
-        try {
+        // dd($dados);
             $empresas = $this->empresa->editar($dados,$id);
             $endereco = $this->endereco->editarEmpresa($dados,$id);
+            $this->valoresrublica->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
-            
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
         }

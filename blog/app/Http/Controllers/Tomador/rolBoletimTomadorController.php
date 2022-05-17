@@ -13,6 +13,12 @@ use App\Lancamentotabela;
 use PDF;
 class rolBoletimTomadorController extends Controller
 {
+    private $tomador,$lancamentotabela;
+    public function __construct()
+    {
+        $this->tomador = new Tomador;
+        $this->lancamentotabela = new Lancamentotabela;
+    }
 
     public function rolBoletim($id,$inicio,$final)
     {
@@ -25,6 +31,9 @@ class rolBoletimTomadorController extends Controller
         $lancamentotabela = new Lancamentotabela;
         $user = auth()->user();
         $b = [];
+        $boletim = $this->lancamentotabela
+        ->where('tomador_id',$id)
+        ->whereBetween('lsdata',[$inicio, $final])->get();
         $empresa = $empresa->buscaUnidadeEmpresa($user->empresa_id);
         
             $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);

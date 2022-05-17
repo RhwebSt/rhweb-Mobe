@@ -55,6 +55,63 @@ class BoletimCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all(); 
+        $result = substr($dados['entrada1'], 0, 2);
+        // dd($dados,(int)$result);
+        if ($result) {
+            if ((int)$result < 5 || (int)$result >= 12) {
+                return redirect()->back()->withErrors(['entrada1'=>'Este campo só pode receber valores entres 05 à 12 horas']);
+            }
+        }
+        $result = substr($dados['saida'], 0, 2);
+        if ($result) {
+            if ((int)$result < 5 || (int)$result >= 15) {
+                return redirect()->back()->withErrors(['saida'=>'Este campo só pode receber valores entres 05 à 15 horas']);
+            }
+        }
+        
+        $result = substr($dados['entrada2'], 0, 2);
+        if ($result) {
+            if ((int)$result < 12 && (int)$result >= 22) {
+                return redirect()->back()->withErrors(['entrada2'=>'Este campo só pode receber valores entres 12 à 22 horas']);
+            }
+        }
+        $result = substr($dados['saida2'], 0, 2);
+        if ($result) {
+            if ((int)$result < 12 || (int)$result >= 22) {
+                return redirect()->back()->withErrors(['saida2'=>'Este campo só pode receber valores entres 12 à 22 horas']);
+            }
+        }
+        $result = substr($dados['entrada3'], 0, 2);
+        if ($result) {
+            if ((int)$result < 22 || (int)$result > 3) {
+                return redirect()->back()->withErrors(['entrada3'=>'Este campo só pode receber valores entres 22 à 03 horas']);
+            }
+        }
+        $result = substr($dados['saida3'], 0, 2);
+        if ($result) {
+            if ((int)$result < 3 || (int)$result > 5) {
+                return redirect()->back()->withErrors(['saida3'=>'Este campo só pode receber valores entres 03 à 05 horas']);
+            }
+        }
+      
+        $result = substr($dados['entrada4'], 0, 2);
+        if ($result) {
+            if ((int)$result >= 0 && (int)$result <= 5) {
+           
+            }else{
+                return redirect()->back()->withErrors(['entrada4'=>'Este campo só pode receber valores entres 00 à 05 horas']);
+            }
+        }
+       
+        $result = substr($dados['saida4'], 0, 2);
+        if ($result) {
+            if ((int)$result >= 0 && (int)$result <= 5) {
+           
+            }else{
+                return redirect()->back()->withErrors(['saida4'=>'Este campo só pode receber valores entres 00 à 05 horas']);
+            }
+        }
+        
         $today = Carbon::today();
         try {
         // $bolcartaopontos = $bolcartaoponto->verifica($dados);

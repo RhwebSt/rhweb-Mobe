@@ -35,23 +35,25 @@ class AvusoController extends Controller
     public function filtroPesquisa(Request $request)
     {
         $dados = $request->all();
-        $request->validate([
-            'pesquisa' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_inicial1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-            'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-        ],
-        [
-            'ano_inicial1.required'=>'Campo não pode esta vazio.',
-            'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
-            'ano_final1.required'=>'Campo não pode esta vazio.',
-            'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
-        ]
-        );
+        // dd($dados);
+        // $request->validate([
+        //     'pesquisa' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        //     'ano_inicial1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        //     'ano_final1'=>'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
+        // ],
+        // [
+        //     'ano_inicial1.required'=>'Campo não pode esta vazio.',
+        //     'ano_inicial1.regex'=>'O campo nome social tem um formato inválido.',
+        //     'ano_final1.required'=>'Campo não pode esta vazio.',
+        //     'ano_final1.regex'=>'O campo nome social tem um formato inválido.',
+        // ]
+        // );
         $user = auth()->user();
-        try {
-            $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        
+            $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
             $lista = $this->avuso->filtraPesquisa($dados);
             return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a pesquisa.']);
         }
@@ -91,13 +93,17 @@ class AvusoController extends Controller
         $desconto = 0;
         $total = 0;
         for ($i = 0; $i < $dados['quantidade']; $i++) { 
-            if ($dados['cd'.$i] === 'Crédito') {
-                $credito += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
-            }else{
-                $desconto += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
+            if (isset($dados['cd'.$i])) {
+                if ($dados['cd'.$i] === 'Crédito') {
+                    $credito += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
+                }else{
+                    $desconto += str_replace(",",".",str_replace(".","",$dados['valor'.$i]));
+                }
             }
         }
-        
+        if ($credito < $desconto) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Desconto não pode ser maior que o crédito.']);
+        }
         $total = $credito - $desconto;
         $dados['liquido'] = $total;
         
@@ -105,9 +111,19 @@ class AvusoController extends Controller
             if ($avuso['id']) {
                 $dados['avuso'] = $avuso['id'];
                 for ($i=0; $i < $dados['quantidade']; $i++) { 
-                    $this->descricao->cadastro($dados,$i);
+                    if (isset($dados['cd'.$i])) {
+                        $this->descricao->cadastro($dados,$i);
+                    }
                 }
-                $this->valorrublica->editarAvuso($dados,$dados['empresa']);
+                // $this->valorrublica->editarAvuso($dados,$dados['empresa']);
+                $this->valorrublica->where('id', $dados['empresa'])
+                ->chunkById(100, function ($valorrublica) use ($dados) {
+                    foreach ($valorrublica as $valorrublicas) {
+                        $numero = $valorrublicas->vsreciboavulso += 1;
+                        $this->valorrublica->where('empresa_id', $dados['empresa'])
+                        ->update(['vsreciboavulso'=>$numero]);
+                    }
+                });
             }
             
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
@@ -165,10 +181,20 @@ class AvusoController extends Controller
      */
     public function destroy($id)
     {
-        
+        $user = auth()->user();
         try {
-            $this->descricao->deletarAvuso($id);
+            // $this->descricao->deletarAvuso($id);
             $this->avuso->deletar($id);
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vsreciboavulso > 0) {
+                        $numero = $valorrublicas->vsreciboavulso -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsreciboavulso'=>$numero]);
+                    }
+                }
+            });
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);

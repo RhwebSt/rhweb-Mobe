@@ -276,7 +276,7 @@
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="tomador_trabalhador{{$t}}" aria-labelledby="offcanvasExampleLabel">
                                             
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar_id}}">Imprimir <i class="fal fa-print-search"></i></h5>
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar_id}}"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
@@ -284,47 +284,36 @@
                                                     @csrf
                                                         
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar  <i class="fas fa-search"></i></h1>
                                                         
-                                                        <div class="d-flex justify-content-between mb-3">
-                                                            
-                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                                <div class="d-flex">
-                                                                    <label for="exampleDataList" class="form-label"></label>
-                                                                    @foreach($folhas as $folhar)
-                                                                        @if($folhar->id === $tomador->folhar_id)
-                                                                        <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                                        
-                                                                        @endif
-                                                                    @endforeach
-                                                                    <input type="hidden" name="tomador" value="{{$tomador->id}}">
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                @foreach($folhas as $folhar)
+                                                                    @if($folhar->id === $tomador->folhar_id)
+                                                                    <input type="hidden" name="folhar" value="{{$folhar->id}}">
                                                                     
-                                                                    <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
-                                                                    <input class="form-control fw-bold text-dark pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador" id="trabalhador1">
-                                                                    <datalist id="listatomador{{$folhar->id}}"> 
-                                                                    @foreach($trabalhadores as $trabalhador)
-                                                                        @if($trabalhador->folhar_id === $folhar->id && $folhar->id === $tomador->folhar_id)
-                                                                            <option value="{{$trabalhador->tsnome}}">
-                                                                                
-                                                                        @endif
-                                                                    @endforeach
-                                                                    </datalist>
-                                                                    
-                                                                    <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
-                                                                                <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                                    </button>
-                                                                    
-                                                                    <div class="text-center d-none" id="refres" >
-                                                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                            <span class="visually-hidden">Carregando...</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                <input type="hidden" name="tomador" value="{{$tomador->id}}">
+                                                                
+                                                                <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
+                                                                <input class="form-control pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador" id="trabalhador1" placeholder="duplo clique para pesquisar">
+                                                                <datalist id="listatomador{{$folhar->id}}"> 
+                                                                @foreach($trabalhadores as $trabalhador)
+                                                                    @if($trabalhador->folhar_id === $folhar->id && $folhar->id === $tomador->folhar_id)
+                                                                        <option value="{{$trabalhador->tsnome}}">
+                                                                            
+                                                                    @endif
+                                                                @endforeach
+                                                                </datalist>
+                                                                
+                                                                <button type="submit" class="btn botao__search" id="butao_trabalhador">
+                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                                                </button>
+
                                                             </div>
-                                        
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -502,45 +491,36 @@
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel1">
                                                 
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-print-search"></i></h5>
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
                                                 <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
                                                     @csrf
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar  <i class="fas fa-search"></i></h1>
                                                         
-                                                        <div class="d-flex justify-content-between mb-3">
-                                                            
-                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                                <div class="d-flex">
-                                                                    <label for="exampleDataList" class="form-label"></label>
-                                                                    <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
-                                                                    <input type="text" class="form-control fw-bold text-dark trabalhador" name="trabalhador"   list="lista{{$folhar->id}}">
-                                                                    
-                                                                    <datalist id="lista{{$folhar->id}}">
-                                                                        @foreach($trabalhadores as $trabalhador)
-                                                                            @if($trabalhador->folhar_id === $folhar->id)
-                                                                                <option value="{{$trabalhador->tsnome}}">
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </datalist>
-                                                                    <button type="submit" class="btn botaoPesquisa" id="butao_trabalhador">
-                                                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                                    </button>
-                                                                    
-                                                                    <div class="text-center d-none" id="refres" >
-                                                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                            <span class="visually-hidden">Carregando...</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input type="hidden" name="folhar" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
+                                                                <input type="text" class="form-control trabalhador" name="trabalhador"   list="lista{{$folhar->id}}" placeholder="duplo clique para pesquisar">
+                                                                
+                                                                <datalist id="lista{{$folhar->id}}">
+                                                                    @foreach($trabalhadores as $trabalhador)
+                                                                        @if($trabalhador->folhar_id === $folhar->id)
+                                                                            <option value="{{$trabalhador->tsnome}}">
+                                                                        @endif
+                                                                    @endforeach
+                                                                </datalist>
+                                                                
+                                                                <button type="submit" class="btn botao__search" id="butao_trabalhador">
+                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                                                </button>
+
                                                             </div>
-                                        
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -557,42 +537,31 @@
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="rublica{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Rúbrica <i class="fas fa-file-signature"></i></h5>
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-edit"></i> Rúbricas</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
                                                 <form action="{{route('calculo.folha.rublica.imprimir')}}" method="post">
                                                     @csrf
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Rúbrica <i class="fas fa-search"></i></h1>
-                                                        
-                                                        <div class="d-flex justify-content-between mb-3">
-                                                            
-                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                                <div class="d-flex">
-                                                                    <input type="hidden" name="folharublica" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresarublica" value="{{$user->empresa_id}}">
-                                                                    <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
-                                                                    <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
-                                                                    <label for="exampleDataList" class="form-label"></label>
-                                                                    <input class="form-control fw-bold text-dark pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="">
-                                                                    <datalist id="listarublica{{$folhar->fscodigo}}">
-                                                                       
-                                                                    </datalist>
-                                                                    <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
-                                                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                                    </button>
-                                                                    
-                                                                    <div class="text-center d-none" id="refres" >
-                                                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                            <span class="visually-hidden">Carregando...</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <input type="hidden" name="folharublica" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresarublica" value="{{$user->empresa_id}}">
+                                                                <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
+                                                                <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="" placeholder="duplo clique para pesquisar">
+                                                                <datalist id="listarublica{{$folhar->fscodigo}}"></datalist>
+                                                                
+                                                                <button type="submit" class="btn botao__search">
+                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                                                </button>
+
                                                             </div>
-                                        
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -608,39 +577,29 @@
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="banco{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
                                                 
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1">Imprimir <i class="fal fa-file-invoice-dollar"></i></h5>
+                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-invoice-dollar"></i> Depósito por Banco</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
                                                 <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
                                                     @csrf
                                                     <div class="offcanvas-body off__canvas--body">
-                                                        <h1 class="text-white mt-2 mb-4 fs-5">Pesquisar Banco <i class="fas fa-search"></i></h1>
-                                                        
-                                                        <div class="d-flex justify-content-between mb-3">
-                                                            
-                                                            <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                                <div class="d-flex">
-                                                                    <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
-                                                                    <input type="hidden" name="empresabanco" value="{{$user->empresa_id}}">
-                                                                    <label for="exampleDataList" class="form-label"></label>
-                                                                    <input class="form-control fw-bold text-dark banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa">
-                                                                    <datalist id="listabanco{{$folhar->id}}">
-                                                                       
-                                                                    </datalist>
-                                                                    <button type="submit" id="butao_trabalhador" class="btn botaoPesquisa">
-                                                                        <i class="fas fa-search fa-md iconsear" id="icon"></i>
-                                                                    </button>
-                                                                    <div class="text-center d-none" id="refres" >
-                                                                        <div class="spinner-border" role="status" style="color:#FDFDFF; background-color: black;">
-                                                                            <span class="visually-hidden">Carregando...</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+
+                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
+                                                            <div class="d-flex">
+                                                                <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
+                                                                <input type="hidden" name="empresabanco" value="{{$user->empresa_id}}">
+                                                                <label for="exampleDataList" class="form-label"></label>
+                                                                <input class="form-control banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa" placeholder="duplo clique para pesquisar">
+                                                                <datalist id="listabanco{{$folhar->id}}"></datalist>
+                                                                
+                                                                <button type="submit" class="btn botao__search">
+                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                                                </button>
+
                                                             </div>
-                                        
                                                         </div>
-                                                        
+                     
                                                     </div>
                                                 </form>
                                             </div>

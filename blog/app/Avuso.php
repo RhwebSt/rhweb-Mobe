@@ -13,6 +13,10 @@ class Avuso extends Model
     {
         return $this->hasMany(AvusoDescricao::class);
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
     public function cadastro($dados)
     {
         return Avuso::create([
@@ -57,18 +61,19 @@ class Avuso extends Model
         return Avuso::where(function($query) use($dados){
             $user = auth()->user();
                 $query->where([
-                    ['avusos.aicodigo',$dados['pesquisa']],
+                    ['avusos.aicodigo','like','%'.$dados['pesquisa']],
                     ['avusos.empresa_id',$user->empresa_id]
                 ])
                 ->orWhere([
-                    ['avusos.asnome',$dados['pesquisa']],
+                    ['avusos.asnome','like','%'.$dados['pesquisa']],
                     ['avusos.empresa_id',$user->empresa_id]
                 ])
                 ->orWhere([
-                    ['avusos.ascpf',$dados['pesquisa']],
+                    ['avusos.ascpf','like','%'.$dados['pesquisa']],
                     ['avusos.empresa_id',$user->empresa_id]
                 ])
-                ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+                // ->whereBetween('avusos.asfinal',[$dados['ano_inicial1'], $dados['ano_final1']]);
+                ->whereYear('avusos.asfinal',$dados['competencia']);
 
             // if ($user->hasPermissionTo('admin')) {
             //     $query->where([

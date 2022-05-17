@@ -298,14 +298,20 @@
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Nome do USUÁRIO</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avuso[0]->empresa->esnome}}</td>
             </tr>
         </table>
    
         <div class="borderT margin-top__md">
             <table>
                     <tr>
-                        <td rowspan="6"><img class="logo" src="https://img1.gratispng.com/20180202/jtw/kisspng-astronaut-outer-space-computer-file-astronauts-from-space-5a7433930a6c97.5428240515175648190427.jpg" title="foto" alt="" style="width:80px; height: 80px; padding:4px;"></td>
+                        <td rowspan="6">
+                        @if($avuso[0]->empresa->esfoto)
+                        <img class="logo" src="{{$avuso[0]->empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        @else
+                            @include('imagem')
+                        @endif
+                        </td>
                     </tr>
 
                     <tr>
@@ -313,7 +319,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>00000000/00</td>
+                        <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$avuso[0]->empresa->escnpj}}</td>
                     </tr>
 
                     <tr>
@@ -321,7 +327,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="small__font width__padrao"><strong>Rua:</strong>tal, 033 - 88133-330</td>
+                        <td class="small__font width__padrao"><strong>Rua:</strong>{{$avuso[0]->empresa->endereco[0]->eslogradouro}}, {{$avuso[0]->empresa->endereco[0]->esnum}} - {{$avuso[0]->empresa->endereco[0]->escep}}</td>
                         
                     </tr>
 
@@ -330,7 +336,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="small__font width__padrao"><strong>Bairro:</strong>Tal - SC</td>
+                        <td class="small__font width__padrao"><strong>Bairro:</strong>{{$avuso[0]->empresa->endereco[0]->esbairro}} - {{$avuso[0]->empresa->endereco[0]->esuf}}</td>
                         
                     </tr>
 
@@ -339,7 +345,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="small__font width__padrao"><strong>Tel:</strong> (00) 00000-0000</td>
+                        <td class="small__font width__padrao"><strong>Tel:</strong> {{$avuso[0]->empresa->estelefone}}</td>
                     </tr>
             </table>
         </div>
@@ -352,14 +358,14 @@
 
         <table>
             <tr>
-                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Data de Emissão: 00/00/0000</td>
-                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Período: 00/00/0000 a 00/00/0000</td>
+                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Data de Emissão: {{date('d/m/Y')}}</td>
+                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Período: {{date('d/m/Y',strtotime($dados['ano_inicial1']))}} a {{date('d/m/Y',strtotime($dados['ano_final1']))}}</td>
             </tr>
         </table>
         
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Matrícula - Nome do Trabalhador</td>
+                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avuso[0]->asnome}}</td>
             </tr>
         </table>
 
@@ -378,10 +384,12 @@
 
     <div id="content">
         <table>
+            @foreach($avuso as $avusos)
             <tr>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">000500</td>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">07/02/2022</td>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">R$ 999.999.999,99</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">{{$avusos->aicodigo}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">{{date('d/m/Y',strtotime($avusos->asinicial))}} a {{date('d/m/Y',strtotime($avusos->asfinal))}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">R$ {{number_format((float)$avusos->ailiquido, 2, ',', '')}}</td>
             </tr>
+            @endforeach
         </table>
     </div>
