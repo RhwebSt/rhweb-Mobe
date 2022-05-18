@@ -33,7 +33,9 @@ class rolBoletimTomadorController extends Controller
         $b = [];
         $boletim = $this->lancamentotabela
         ->where('tomador_id',$id)
-        ->whereBetween('lsdata',[$inicio, $final])->get();
+        ->whereBetween('lsdata',[$inicio, $final])
+        ->get();
+        
         $empresa = $empresa->buscaUnidadeEmpresa($user->empresa_id);
         
             $tabelaprecos = $tabelapreco->listaUnidadeTomador($id);

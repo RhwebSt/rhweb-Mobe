@@ -135,43 +135,43 @@
             <div class="tab-pane fade" id="lista-tomador" role="tabpanel" aria-labelledby="lista-tomador-tab">
                 
                 <h1 class="title__calculo-folha">Lista por Tomador <i class="fad fa-industry"></i></h1>
-                
+                <form class="row g-3" action="{{route('calculo.folha.tomador.filtro')}}" method="POST">
                 <section class="section__lista--tomador--pill">
                     
                     <section class="section__search">
                         <div class="col-md-5">
-                            <form action="" method="GET">
+                            
                                 
                                 <div class="d-flex">
                                     
-                                    <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
-                                    <datalist id="listapesquisa"></datalist>
+                                    <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatomador" name="pesquisa" id="pesquisatomador">
+                                    <datalist id="listatomador"></datalist>
     
                                     <input type="hidden" name="codicao" value="">
                                     
-                                    <button type="submit" class="btn botao__search">
+                                    <button  class="btn botao__search">
                                         <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                     </button>
     
                                 </div>
                                 
-                            </form>
+                            
                         </div>
                     </section>
                     
-                    <section class="section__filtro--pill">
-                        <form class="row g-3" action="{{route('calculo.folha.tomador.filtro')}}" method="POST">
+                    <section class="section__filtro--pill row">
+                       
                             @csrf
                                 <div class="col-12 col-md-3">
                                     <label for="ano" class="form-label">Competência</label>
-                                    <input type="month" class="form-control " value="" id="tano1Final">
+                                    <input type="month" class="form-control " name="competencia" id="tano1Final">
                                 </div>
     
                                 <div class="col-md-2 align-self-center pt-4">
                                     <button type="submit" class="btn botao">Filtrar <i class="fad fa-filter"></i></button>
                                 </div>
 
-                        </form>
+                        
                     </section>
                     
                     <section>

@@ -195,6 +195,17 @@ class ValorCalculo extends Model
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
+    public function cadastrofamilia($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['familia']['codigos'],
+            'vsdescricao'=>$dados['familia']['rublicas'],
+            'vireferencia'=>$dados['familia']['quantidade'],
+            'vivencimento'=>$dados['familia']['valor'],
+            'base_calculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
     public function cadastroadesconto($dados)
     {
         return ValorCalculo::create([

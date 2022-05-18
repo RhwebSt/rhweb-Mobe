@@ -44,9 +44,9 @@ class calculoFolhaController extends Controller
         $user = Auth::user();
         $idfolhas = [];
         $dados = $request->all();
-        
-        $folhas = $this->folhar->filtraListaTomador($dados,$user->empresa);
-    
+        $dados['inicio'] = $dados['competencia'].'-01';
+        $dados['final'] = $dados['competencia'].'-31';
+        $folhas = $this->folhar->filtraListaTomador($dados,$user->empresa_id);
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);
         }
@@ -77,7 +77,7 @@ class calculoFolhaController extends Controller
     {
         $user = Auth::user();
         $idfolhas = [];
-        $folhas = $this->folhar->buscaListaOrdem($user->empresa,$condicao);
+        $folhas = $this->folhar->buscaListaOrdem($user->empresa_id,$condicao);
         
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);

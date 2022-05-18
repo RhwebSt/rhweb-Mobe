@@ -69,14 +69,25 @@ class calculoFolhaGeralController extends Controller
         $tomador = $this->tomador->where('empresa_id',$user->empresa_id)
         ->with(['tabelapreco','cartaoponto','incidefolhar'])->get();
         $tomador_id = [];
+       
+        // if (!$valorrublica->vsnrofolha) {
+        //     $valorrublica->vsnrofolha = 1;
+        // }else{
+        //     $valorrublica->vsnrofolha += 1;
+        // }
+        // $this->valorrublica->where('empresa_id', $user->empresa_id)
+        // ->update(['vsnrofolha'=>$valorrublica->vsnrofolha]);
+        $this->valorrublica->where('id', $user->empresa_id)
+        ->chunkById(100, function ($valorrublica) use ($user) {
+            foreach ($valorrublica as $valorrublicas) {
+                if ($valorrublicas->vsnrofolha >= 0) {
+                    $numero = $valorrublicas->vsnrofolha += 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrofolha'=>$numero]);
+                }
+            }
+        });
         $valorrublica = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
-        if (!$valorrublica->vsnrofolha) {
-            $valorrublica->vsnrofolha = 1;
-        }else{
-            $valorrublica->vsnrofolha += 1;
-        }
-        $this->valorrublica->where('empresa_id', $user->empresa_id)
-        ->update(['vsnrofolha'=>$valorrublica->vsnrofolha]);
         $folhar = [
             'codigo'=>$valorrublica->vsnrofolha,
             'inicio'=>$datainicio,
@@ -199,7 +210,7 @@ class calculoFolhaGeralController extends Controller
                     }
                 }
             }
-            dd($dados);
+            
             $trabalhador = $this->trabalhador->whereIn('id',$dados['id'])
             ->with('depedente')->get();
             $valor_comissionador = [
@@ -1100,7 +1111,11 @@ class calculoFolhaGeralController extends Controller
        ->groupBy('trabalhador_id','folhar_id')->get();
        
        foreach ($basecalculo as $key => $basecalculos) {
-            $depedente = $this->depedente->where('trabalhador_id',$basecalculos->trabalhador_id)->count();
+            $depedente = $this->depedente->where([
+                ['trabalhador_id',$basecalculos->trabalhador_id],
+                ['dsirrf','Sim']
+            ])->count();
+          
             $base_irrf = str_replace(',','.',$irrf_lista[0]->irdepedente) * $depedente;
             $codigo = [2001,2002];
             $faxa = "";
@@ -1115,6 +1130,13 @@ class calculoFolhaGeralController extends Controller
                     'id'=>0,
                 ],
                 'adiantamento'=>[
+                    'codigos'=>0,
+                    'rublicas'=>0,
+                    'quantidade'=>0,
+                    'valor'=> 0,
+                    'id'=>0,
+                ],
+                'familia'=>[
                     'codigos'=>0,
                     'rublicas'=>0,
                     'quantidade'=>0,
@@ -1153,6 +1175,7 @@ class calculoFolhaGeralController extends Controller
             $base_irrf = $basecalculos->bifgts - $base_irrf;
             $faxa = 0;
             $liquido = 0;
+
             foreach ($irrf_lista as $key => $irrf) {
                 $novoirrf = (float) $irrf->irsvalorfinal;
                 if ($base_irrf < $novoirrf && $key === 0) {
@@ -1265,7 +1288,21 @@ class calculoFolhaGeralController extends Controller
             foreach ($relacaodia as $key => $relacaodias) {
                 $totaldias += $relacaodias->valor;
             }
-            // dd($base_irrf,$irrf_lista,$boletim,$faxa);
+            $salario_familia = $this->depedente->where([
+                ['trabalhador_id',$basecalculos->trabalhador_id],
+                ['dssf','Sim']
+            ])->get();
+            $quantfamilia = 0;
+            $valorfamilia = 0;
+            foreach ($salario_familia as $key => $familia) {
+                if (self::verificaidade($familia->dsdata)) {
+                    $quantfamilia += 1;
+                    $depedente += 1;
+                }
+            }
+            $valorfamilia = $quantfamilia * 56.47;
+            $basecalculos->bivalorvencimento += $valorfamilia;
+            $basecalculos->bivalorliquido += $valorfamilia;
             $base =  $this->basecalculo->create([
                 'biservico'=>$basecalculos->biservico,
                 'biservicodsr'=>$basecalculos->biservicodsr,
@@ -1289,6 +1326,16 @@ class calculoFolhaGeralController extends Controller
                     'base_calculo_id'=>$base['id'],
                     'trabalhador_id'=>$basecalculos->trabalhador_id
                 ]);
+            }
+            if ($quantfamilia) {
+                $familia =  $this->rublica->buscaRublicaUnidade('Salário Família');
+                $boletim['familia']['codigos'] = $familia->rsrublica;
+                $boletim['familia']['rublicas'] = $familia->rsdescricao;
+                $boletim['familia']['quantidade'] = $quantfamilia;
+                $boletim['familia']['valor'] = $valorfamilia;
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastrofamilia($boletim);
             }
             if ($folha) {
                
@@ -1378,9 +1425,11 @@ class calculoFolhaGeralController extends Controller
         $this->valorrublica->where('id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
-                $numero = $valorrublicas->vsnrofolha -= 1;
-                $this->valorrublica->where('empresa_id', $user->empresa_id)
-                ->update(['vsnrofolha'=>$numero]);
+                if ($valorrublicas->vsnrofolha > 0) {
+                    $numero = $valorrublicas->vsnrofolha -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrofolha'=>$numero]);
+                }
             }
         });
         $this->folhar->deletar($folhar['id']);
@@ -1404,9 +1453,11 @@ class calculoFolhaGeralController extends Controller
             $this->valorrublica->where('id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
-                    $numero = $valorrublicas->vsnrofolha -= 1;
-                    $this->valorrublica->where('empresa_id', $user->empresa_id)
-                    ->update(['vsnrofolha'=>$numero]);
+                    if ($valorrublicas->vsnrofolha > 0) {
+                        $numero = $valorrublicas->vsnrofolha -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnrofolha'=>$numero]);
+                    }
                 }
             });
             $this->folhar->deletar($id);
@@ -1455,6 +1506,22 @@ class calculoFolhaGeralController extends Controller
         $horasex = $valores * $horas;
         }
         return $horasex; 
+    }
+    public function verificaidade($data)
+    {
+        list($ano, $mes, $dia) = explode('-', $data);
+        // data atual
+        $hoje = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        // Descobre a unix timestamp da data de nascimento do fulano
+        $nascimento = mktime( 0, 0, 0, $mes, $dia, $ano);
+
+        // cálculo
+        $idade = floor((((($hoje - $nascimento) / 60) / 60) / 24) / 365.25);
+        if ($idade <= 12) {
+            return true;
+        }else{
+            return false;
+        }
     }
     public function imprimirFolhar($id)
     {

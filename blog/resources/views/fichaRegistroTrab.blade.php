@@ -311,7 +311,7 @@
     
                 <tr>
                     <td class="small__font padding-left-foto">Data de Admissão: 
-                        {{date('d/m/Y',strtotime($trabalhadors->csadmissao))}}
+                        {{date('d/m/Y',strtotime($trabalhadors->categoria[0]->csadmissao))}}
                     </td>
                 </tr>
     

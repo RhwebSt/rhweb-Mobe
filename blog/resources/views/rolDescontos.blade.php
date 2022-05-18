@@ -42,14 +42,7 @@
     }
 
     table{
-     
-      width:100%;
-      margin: 0;
-      padding: 0;
-      text-transform: capitalize;
-       border-collapse: collapse;
-    
-      
+        border-collapse: collapse;
     }
 
     p{
@@ -73,25 +66,16 @@
     footer{
       float: right;
     }
-    
-    figure{
-        vertical-align: middle;
-        font-size:16px;
-        font-weight:bold;
-        margin-top:10px;
-        
-    }
+
     
     .container{
         display:block;
     }
     
     .logo{
-            margin-top:10px;
-            margin-right: 50px;
-            width: 100px;
-            height: 120px;
-        }
+        width: 100px;
+        height: 100px;
+    }
 
 
     .page {
@@ -120,11 +104,11 @@
     }
 
     .small__font{
-        font-size:12px
+        font-size:12.5px
     }
 
     .little__font{
-        font-size:11px;
+        font-size:12.5px;
     }
 
     .text-bold{
@@ -146,17 +130,20 @@
     .name__title{
         width: 758px;
     }
+    
+    .name__title--tomador{
+        width: 753px;
+    }
 
 
     .borderT{
         border: 1px solid black;
         border-radius: 3px;
-        width: 772px;
     }
     
     .width__padrao{
-            width:576px;
-        }
+        width:576px;
+    }
 
     
     .margin-top{
@@ -187,7 +174,7 @@
     }
 
     .matric{
-        width:55px;
+        width:50px;
     }
 
     .trabalhador{
@@ -195,15 +182,15 @@
     }
 
     .descri{
-        width: 240px;
+        width: 235px;
     }
 
     .quinze{
-        width:70px;
+        width:76px;
     }
 
     .valor{
-        width: 90px;
+        width: 95px;
     }
 
     .valor2{
@@ -222,106 +209,131 @@
     .totalGeral{
         width: 230px;
     }
+    
+    .padding-left-foto{
+        padding-left: 20px;
+    }
+    
+    .margin-top{
+        margin-top: 8px;
+    }
+
+    .margin-bottom--title{
+        margin-bottom: 4px;
+    }
+    
+    .border-top-left-radius{
+        border-top-left-radius: 8px;
+    }
+    
+    .border-top-right-radius{
+        border-top-right-radius: 8px;
+    }
+    
+    .dados__padrao{
+        width: 365px;
+    }
+    
+    .margin-left{
+        margin-left: 5px;
+    }
+    
+    .margin-bottom{
+        margin-bottom: 5px;
+    }
+    
+    .qtd__trab{
+        width: 339px;
+    }
+    
+    .total__title{
+        width:318px;
+    }
 
 </style>
 
 <body class="">
     
-    <div id="header" class="margin-top">
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->esnome}}</td>
-            </tr>
-        </table>
+    <div id="header">
         
         <div class="borderT margin-top">
             <table>
                 <tr>
-                @if($empresa->esfoto)
-                        <img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
-                    @else
-                        @include('imagem')
-                    @endif
+                    <td rowspan="7">
+                        @if($empresa->esfoto)
+                            <img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$descontos[0]->esnome}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>CNPJ/MF Nroº :</strong>{{$empresa->escnpj}}</td>
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$empresa->escnpj}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Rua:</strong> {{$empresa->eslogradouro}},{{$empresa->esnum}} - {{$empresa->escep}}</td>
-                    
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$empresa->eslogradouro}},{{$empresa->esnum}} - {{$empresa->escep}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao capitalize"><strong>Bairro:</strong> {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
-                    
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
                 </tr>
     
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="small__font width__padrao"><strong>Tel:</strong>{{$empresa->estelefone}}</td>
+
+                    <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$empresa->estelefone}}</td>
                 </tr>
     
             </table>
         </div>
         
-        
+        <div class="borderT margin-top">
+            <table class="margin-top margin-left margin-bottom">
+                <tr>
+                    <td class="name__title--tomador text-center text-bold destaque">Rol dos Descontos</td>
+                </tr>
+            </table>
+    
+            <table class="margin-bottom">
+                <tr>
+                    <td class="text-center small__font text-bold dados__padrao">Competência: 
+                        <?php
+                            // $data = explode('-',$descontos[0]->dscompetencia);
+                            $datainicio = 0;
+                            $datafinal = 0;
+                            foreach ($descontos as $key => $desconto) {
+                                if ($desconto->dscompetencia == substr($inicio,0,7)) {
+                                    $datainicio =  date('m/Y',strtotime($desconto->dscompetencia));
+                                }
+                                if ($desconto->dscompetencia == substr($final,0,7)) {
+                                    $datafinal =  date('m/Y',strtotime($desconto->dscompetencia));
+                                }
+                            }
+                        ?>
+                        @if($datainicio != $datafinal)
+                            {{datainicio}} a {{datafinal}}
+                        @else
+                         {{$datafinal}}
+                        @endif
+                        
+                    </td>
+                    <td class="text-center small__font text-bold dados__padrao">Data de Emissão: {{date("d/m/y")}}</td>
+                </tr>
+            </table>
+        </div>
+
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Rol dos Descontos</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase text-center small__font text-bold">Competência: 
-                    <?php
-                        // $data = explode('-',$descontos[0]->dscompetencia);
-                        $datainicio = 0;
-                        $datafinal = 0;
-                        foreach ($descontos as $key => $desconto) {
-                            if ($desconto->dscompetencia == substr($inicio,0,7)) {
-                                $datainicio =  date('m/Y',strtotime($desconto->dscompetencia));
-                            }
-                            if ($desconto->dscompetencia == substr($final,0,7)) {
-                                $datafinal =  date('m/Y',strtotime($desconto->dscompetencia));
-                            }
-                        }
-                    ?>
-                    @if($datainicio != $datafinal)
-                        {{datainicio}} a {{datafinal}}
-                    @else
-                     {{$datafinal}}
-                    @endif
-                    
-                </td>
-                <td class="border-left border-right border-top border-bottom uppercase text-center small__font text-bold">Data de Emissão: {{date("d/m/y")}}</td>
-            </tr>
-        </table>
-
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font matric">Matrícula</td>
+                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font matric">Matric</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font trabalhador">Trabalhador</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font descri">Descrição</td>
                 <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font quinze">Quinzena</td>
-                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font valor">Valor R$</td>
+                <td class="border-left border-right border-top border-bottom text-center text-bold destaque small__font valor">Valor</td>
             </tr>
         </table>
     </div>
@@ -335,11 +347,11 @@
         <table>
             @foreach($descontos as $desconto)
                 <tr>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font matric">{{$desconto->tsmatricula}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font trabalhador">{{$desconto->tsnome}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font descri">{{$desconto->dsdescricao}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font quinze">{{$desconto->dsquinzena}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font valor">R$ {{number_format((float)$desconto->dfvalor, 2, ',', '.')}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font matric">{{$desconto->tsmatricula}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font trabalhador">{{$desconto->tsnome}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font descri">{{$desconto->dsdescricao}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font quinze">{{$desconto->dsquinzena}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font valor">R$ {{number_format((float)$desconto->dfvalor, 2, ',', '.')}}</td>
                 </tr>
                 <?php
                     $total += $desconto->dfvalor;
@@ -351,15 +363,17 @@
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom text-center small__font destaque font text-bold matric">Quantidade trabalhador: {{count($descontos)}}</td>
-                <td class="border-left border-top border-bottom text-center small__font destaque font text-bold descri quinze"> Total ============></td>
-                <td class="border-right border-top border-bottom text-center small__font destaque font text-bold valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
+                <td class="border-left border-right border-top border-bottom text-center destaque text-bold small__font qtd__trab">Quantidade trabalhador: {{count($descontos)}}</td>
+                <td class="border-left border-top border-bottom text-center text-bold small__font total__title destaque"> Total ============></td>
+                <td class="border-right border-top border-bottom text-center destaque text-bold small__font valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
             </tr>
         </table>
         
-        <div id="footer">
-          <p class="page destaque borderT padding-footer">Página:  </p>
-        </div>
+        
+    </div>
+    
+    <div id="footer">
+        <p class="page padding-footer" style="text-align: right">Página:  </p>
     </div>
 </body>
 </html>

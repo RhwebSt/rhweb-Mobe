@@ -96,8 +96,7 @@
                             <i class="fad fa-file-alt"></i> Relatórios
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="rolDescontos">
-                            <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button">Rol dos Descontos</a></li>
-                           
+                            <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button"><i class="fad fa-file-alt"></i> Rol dos Descontos</a></li>
                         </ul>
                         
                         <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">

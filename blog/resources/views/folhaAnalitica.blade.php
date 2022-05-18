@@ -90,7 +90,7 @@
             }
     
             .name__title{
-                width: 768px;
+                width: 1100px;
             }
     
             .borderT{
@@ -107,56 +107,17 @@
             }
 
             .dataEmissao{
-              width: 381px;
+              width: 540px;
             }
 
             .periodo{
               width: 250px;
             }
 
-            .folhaAnalitica{
-              width: 280px;
-            }
-
-            .inss__dec{
-              width: 85px;
-            }
-
             .producao{
-              width: 85px;
-            }
-            
-            .comissionado{
-               width: 85px
+              width: 236px;
             }
 
-            .producao1{
-              width: 85px;
-            }
-
-            .dsr{
-              width: 90px;
-            }
-
-            .ferias{
-              width: 90px;
-            }
-
-            .vt{
-              width: 90px;
-            }
-            
-            .va{
-              width: 90px;
-            }
-
-            .decimo{
-              width: 90px;
-            }
-
-            .total{
-              width: 93px;
-            }
             
             .margin-bottom--title{
                 margin-bottom: 4px;
@@ -183,12 +144,35 @@
             }
             
             .name__title--tomador {
-                width: 753px;
+                width: 1080px;
+            }
+            
+            .field__padrao{
+                width:115px;
             }
             
         </style>
     </head>
-
+    <?php
+            $resumo_geral=[
+                'produção'=> 0,
+                'COMISSIONADO'=>0,
+                'dsr'=>0,
+                'Férias'=>0,
+                'VT'=>0,
+                'VA'=>0,
+                '13º Salário'=>0,
+                'INSS 13º Sal'=>0,
+                'IRRF'=>0,
+                'INSS'=>0,
+                'Vale'=>0,
+                'Seguro'=>0,
+                'C. Sindical'=>0,
+                'Adiantamento'=>0,
+                'Total'=>0,
+                'Total Líquido'=>0
+            ];
+        ?>
     <body>
         <div id="header">
             
@@ -229,7 +213,14 @@
                     <div class="margin-top borderT">
                         <table class="margin-top">
                             <tr>
-                                <td class="name__title text-center text-bold">{{$trabalhador->trabalhador->tsmatricula}} - {{$trabalhador->trabalhador->tsnome}}</td>
+                                <td class="name__title text-center text-bold">{{$trabalhador->trabalhador->tsmatricula}} - {{$trabalhador->trabalhador->tsnome}}
+                                  @foreach($trabalhador->valorcalculo as $rublica)
+                                    @if($rublica->vivencimento && mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'COMISSIONADO') !== false)
+                                      {{'(COMISSIONADO)'}}
+                                      <?php $resumo_geral['COMISSIONADO'] += $rublica->vivencimento;?>
+                                    @endif
+                                  @endforeach
+                                </td>
                             </tr>
                         </table>
     
@@ -237,118 +228,150 @@
                         <table class="margin-left margin-top">
                             <tr>
                                 <td class="text-bold small__font destaque text-center producao">Produção</td>
-                                <td class="text-bold small__font destaque text-center comissionado">Comissionado</td>
-                                <td class="text-bold small__font destaque text-center dsr">Dsr</td>
-                                <td class="text-bold small__font destaque text-center ferias">Férias</td>
-                                <td class="text-bold small__font destaque text-center vt">VT</td>
-                                <td class="text-bold small__font destaque text-center va">VA</td>
-                                <td class="text-bold small__font destaque text-center decimo">13º Salário</td>
-                                <td class="text-bold small__font destaque text-center total">Total</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Comissionado</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Dsr</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Férias</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">VT</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">VA</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">13º Salário</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Total</td>
                             </tr>
         
                             <tr>
         
-                                <td class="small__font text-center producao">{{$trabalhador->biservico?number_format((float)$trabalhador->biservico, 2, ',', '.'):''}}</td>
-                                <td class="small__font text-center comissionado">99999</td>
-                                <td class="small__font text-center dsr">
+                                <td class="small__font text-center producao">
+                                  {{$trabalhador->biservico?number_format((float)$trabalhador->biservico, 2, ',', '.'):''}}
+                                  <?php $resumo_geral['produção'] += $trabalhador->biservico;?>
+                                </td>
+                                <td class="small__font text-center field__padrao">
+                               
+                                </td>
+                                <td class="small__font text-center field__padrao">
                                   @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1008)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'DSR') !== false)
                                       {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['dsr'] += $rublica->vivencimento;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center ferias">
+                                <td class="small__font text-center field__padrao">
                                 @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1009)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'FERIAS') !== false)
                                       {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['Férias'] += $rublica->vivencimento;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center vt">@foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1013)
+                                <td class="small__font text-center field__padrao">@foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'TRANSPORTE') !== false)
                                       {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['VT'] += $rublica->vivencimento;?>
                                     @endif
                                   @endforeach</td>
-                                <td class="small__font text-center va">
+                                <td class="small__font text-center field__padrao">
                                   @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1012)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'ALIMENTAÇÃO') !== false)
                                       {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['VA'] += $rublica->vivencimento;?>
                                     @endif
                                   @endforeach</td>
-                                <td class="small__font text-center decimo">@foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1010)
+                                <td class="small__font text-center field__padrao">@foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), '13º SALÁRIO') !== false)
                                       {{$rublica->vivencimento?number_format((float)$rublica->vivencimento, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['13º Salário'] += $rublica->vivencimento;?>
                                     @endif
                                   @endforeach</td>
-                                <td class="small__font text-center total">
+                                <td class="small__font text-center field__padrao">
                                  
                                   {{$trabalhador->bivalorvencimento?number_format((float)$trabalhador->bivalorvencimento, 2, ',', '.'):''}}
+                                  <?php $resumo_geral['Total'] += $trabalhador->bivalorvencimento;?>
                                 </td>
                             </tr>
                         </table>
     
                         <table class="margin-left margin-top margin-bottom">
                             <tr>
-                                <td class="text-bold small__font text-center destaque inss__dec">INSS 13º Sal</td>
-                                <td class="text-bold destaque small__font text-center producao1">IRRF</td>
-                                <td class="text-bold destaque small__font text-center dsr">INSS</td>
-                                <td class="text-bold small__font destaque text-center ferias">Vale</td>
-                                <td class="text-bold small__font destaque text-center vt">Seguro</td>
-                                <td class="text-bold small__font destaque text-center va">C. Sindical</td>
-                                <td class="text-bold small__font destaque text-center decimo">Adiantamento</td>
-                                <td class="text-bold small__font destaque text-center total">Total Líquido</td>
+                                <td class="text-bold small__font text-center destaque field__padrao">INSS 13º Sal</td>
+                                <td class="text-bold destaque small__font text-center field__padrao">IRRF</td>
+                                <td class="text-bold destaque small__font text-center field__padrao">Comissionado</td>
+                                <td class="text-bold destaque small__font text-center field__padrao">INSS</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Vale</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Seguro</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">C. Sindical</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Adiantamento</td>
+                                <td class="text-bold small__font destaque text-center field__padrao">Total Líquido</td>
                             </tr>
         
                             <tr>
-                                <td class="small__font text-center inss__dec"> 
+                                <td class="small__font text-center field__padrao"> 
                                   @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 2002)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'INSS SOBRE 13º SALÁRIO') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['INSS 13º Sal'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center producao1"> 
+                                <td class="small__font text-center field__padrao"> 
                                   @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 2004)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'IRRF') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['IRRF'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center dsr"> 
-                                  @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 2001)
+                                
+                                <td class="small__font text-center field__padrao">
+                                @foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'COMISSIONADO') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center ferias"> 
+                                
+                                <td class="small__font text-center field__padrao"> 
+                                  @foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strtoupper($rublica->vsdescricao,'UTF-8') === "INSS")
+                                      {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      
+                                      <?php $resumo_geral['INSS'] += $rublica->videscinto;?>
+                                    @endif
+                                  @endforeach
+                                </td>
+                                <td class="small__font text-center field__padrao"> 
                                   @foreach($trabalhador->valorcalculo as $rublica)
                                     @if($rublica->vicodigo == 0)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      
+                                      <?php $resumo_geral['Vale'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center vt"> 
+                                <td class="small__font text-center field__padrao"> 
                                   @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 1011)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'SEGURO') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['Seguro'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center va"> @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 2005)
+                                <td class="small__font text-center field__padrao"> @foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'SINDICATOR') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['C. Sindical'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center decimo"> @foreach($trabalhador->valorcalculo as $rublica)
-                                    @if($rublica->vicodigo == 2003)
+                                <td class="small__font text-center field__padrao"> @foreach($trabalhador->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'ADIANTAMENTO') !== false)
                                       {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      <?php $resumo_geral['Adiantamento'] += $rublica->videscinto;?>
                                     @endif
                                   @endforeach
                                 </td>
-                                <td class="small__font text-center total"> 
+                                <td class="small__font text-center field__padrao"> 
                                   {{$trabalhador->bivalorliquido?number_format((float)$trabalhador->bivalorliquido, 2, ',', '.'):''}}
+                                  <?php $resumo_geral['Total Líquido'] += $trabalhador->bivalorliquido;?>
                                 </td>
                             </tr>
     
@@ -368,49 +391,51 @@
                 <table class="margin-left margin-top">
                     <tr>
                         <td class="text-bold small__font destaque text-center producao">Produção</td>
-                        <td class="text-bold small__font destaque text-center comissionado">Comissionado</td>
-                        <td class="text-bold small__font destaque text-center dsr">Dsr</td>
-                        <td class="text-bold small__font destaque text-center ferias">Férias</td>
-                        <td class="text-bold small__font destaque text-center vt">VT</td>
-                        <td class="text-bold small__font destaque text-center va">VA</td>
-                        <td class="text-bold small__font destaque text-center decimo">13º Salário</td>
-                        <td class="text-bold small__font destaque text-center total">Total</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Comissionado</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Dsr</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Férias</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">VT</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">VA</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">13º Salário</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Total</td>
                     </tr>
     
                     <tr>
-                        <td class="small__font text-center producao">999999</td>
-                        <td class="small__font text-center comissionado">9999</td>
-                        <td class="small__font text-center dsr">9999</td>
-                        <td class="small__font text-center ferias">9999</td>
-                        <td class="small__font text-center vt">9999</td>
-                        <td class="small__font text-center va">999</td>
-                        <td class="small__font text-center decimo">9999</td>
-                        <td class="small__font text-center total"></td>
+                        <td class="small__font text-center producao">{{$resumo_geral['produção']?number_format((float)$resumo_geral['produção'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao"></td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['dsr']?number_format((float)$resumo_geral['dsr'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Férias']?number_format((float)$resumo_geral['Férias'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['VT']?number_format((float)$resumo_geral['VT'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['VA']?number_format((float)$resumo_geral['VA'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['13º Salário']?number_format((float)$resumo_geral['13º Salário'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Total']?number_format((float)$resumo_geral['Total'], 2, ',', '.'):''}}</td>
                     </tr>
                 </table>
 
                 <table class="margin-left margin-top margin-bottom">
 
                     <tr>
-                        <td class="text-bold small__font text-center destaque inss__dec">INSS 13º Sal</td>
-                        <td class="text-bold destaque small__font text-center producao1">IRRF</td>
-                        <td class="text-bold destaque small__font text-center dsr">INSS</td>
-                        <td class="text-bold small__font destaque text-center ferias">Vale</td>
-                        <td class="text-bold small__font destaque text-center vt">Seguro</td>
-                        <td class="text-bold small__font destaque text-center va">C. Sindical</td>
-                        <td class="text-bold small__font destaque text-center decimo">Adiantamento</td>
-                        <td class="text-bold small__font destaque text-center total">Total Líquido</td>
+                        <td class="text-bold small__font text-center destaque field__padrao">INSS 13º Sal</td>
+                        <td class="text-bold destaque small__font text-center field__padrao">IRRF</td>
+                        <td class="text-bold destaque small__font text-center field__padrao">Comissionado</td>
+                        <td class="text-bold destaque small__font text-center field__padrao">INSS</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Vale</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Seguro</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">C. Sindical</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Adiantamento</td>
+                        <td class="text-bold small__font destaque text-center field__padrao">Total Líquido</td>
                     </tr>
     
                     <tr>
-                        <td class="small__font text-center inss__dec">999</td>
-                        <td class="small__font text-center producao1">999</td>
-                        <td class="small__font text-center dsr">999</td>
-                        <td class="small__font text-center ferias">999</td>
-                        <td class="small__font text-center vt">999</td>
-                        <td class="small__font text-center va">999</td>
-                        <td class="small__font text-center decimo">999</td>
-                        <td class="small__font text-center total">99999</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['INSS 13º Sal']?number_format((float)$resumo_geral['INSS 13º Sal'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['IRRF']?number_format((float)$resumo_geral['IRRF'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['COMISSIONADO']?number_format((float)$resumo_geral['COMISSIONADO'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['INSS']?number_format((float)$resumo_geral['INSS'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Vale']?number_format((float)$resumo_geral['Vale'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Seguro']?number_format((float)$resumo_geral['Seguro'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['C. Sindical']?number_format((float)$resumo_geral['C. Sindical'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Adiantamento']?number_format((float)$resumo_geral['Adiantamento'], 2, ',', '.'):''}}</td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['Total Líquido']?number_format((float)$resumo_geral['Total Líquido'], 2, ',', '.'):''}}</td>
                     </tr>
 
               

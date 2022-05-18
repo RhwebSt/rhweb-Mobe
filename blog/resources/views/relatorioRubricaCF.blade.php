@@ -235,7 +235,7 @@
                                 $data_inicial = explode('-',$folhas[0]->fsinicio);
                                 echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
                             ?>
-                        </strong>  a 
+                        </strong>  á 
                         <strong>
                             <?php
                                 $data_final = explode('-',$folhas[0]->fsfinal);
@@ -244,7 +244,7 @@
                         <strong> 
                         </td>
                         <td class="small__font text-center data"><b>Data de Emissão:</b> {{date("d/m/y")}}</td>
-                        <td class="small__font text-center data"><b>código da Folha:</b> {{$folhas[0]->fscodigo}}</td>
+                        <td class="small__font text-center data"><b>Código da Folha:</b> {{$folhas[0]->fscodigo}}</td>
                     </tr>
                 </table>
             </div>
@@ -280,10 +280,10 @@
             <table>
                 @foreach($folhas as $folha)
                     <tr>
-                        <td class="small__font border-top border-bottom border-right border-left text-center text-bold matric">{{$folha->tsmatricula}}</td>
-                        <td class="small__font border-top border-bottom border-right border-left text-center text-bold nome">{{$folha->tsnome}}</td>
-                        <td class="small__font border-top border-bottom border-right border-left text-center text-bold quantidade">{{number_format((float)$folha->vireferencia, 2, ',', '.')}}</td>
-                        <td class="small__font border-top border-bottom border-right border-left text-center text-bold valor">R$ {{number_format((float)$folha->vivencimento, 2, ',', '.')}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-center matric">{{$folha->tsmatricula}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-center nome">{{$folha->tsnome}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-center quantidade">{{number_format((float)$folha->vireferencia, 2, ',', '.')}}</td>
+                        <td class="small__font border-top border-bottom border-right border-left text-center valor">R$ {{number_format((float)$folha->vivencimento, 2, ',', '.')}}</td>
                     </tr>
                     <?php
                         $quantidade += $folha->vireferencia;

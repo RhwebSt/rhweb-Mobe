@@ -11,13 +11,13 @@
 <style>
 
     @page { 
-          margin-top: 100px; 
-          margin-bottom: 30px;
+          margin-top: 275.5px; 
+          margin-bottom: 60px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -100px; right: 0px; height: 100px; background-color:; text-align: center; }
-    #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
+    #header { position: fixed; left: 0px; top: -275.5px; right: 0px; height: 275.5px; background-color:; text-align: center; }
+    #footer { position: fixed; left: 0px; bottom: -60px; right: 0px; height: 60px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
 
 
@@ -42,22 +42,9 @@
     }
 
     table{
-     
-      width:100%;
-      margin: 0;
-      padding: 0;
-      text-transform: capitalize;
-       border-collapse: collapse;
-    
-      
+        border-collapse:collapse;
     }
 
-    p{
-      font-weight: bolder;
-      font-size: 12px;
-      margin-bottom:10px;
-      float:right;
-    }
 
     
     thead{
@@ -69,31 +56,12 @@
     th{
       font-weight: bold;
     }
-    
-    footer{
-      float: right;
-    }
-    
-    figure{
-        vertical-align: middle;
-        font-size:16px;
-        font-weight:bold;
-        margin-top:10px;
-        
-    }
+
     
     .container{
         display:block;
     }
 
-
-    .page {
-        position:absolute;
-        bottom:0;
-        width:100%;
-        font-size: 16px;
-        font-weight: bold;
-     }
   
     .border-left{
             border-left: 1px solid;
@@ -116,11 +84,11 @@
     }
 
     .small__font{
-        font-size:12px
+        font-size:12.5px
     }
 
     .little__font{
-        font-size:11px;
+        font-size:12.5px;
     }
 
     .text-bold{
@@ -142,12 +110,15 @@
     .name__title{
         width: 758px;
     }
+    
+    .name__title--tomador{
+        width: 753px;
+    }
 
 
     .borderT{
         border: 1px solid black;
         border-radius: 3px;
-        width: 758px;
     }
     
     .margin-top{
@@ -158,12 +129,7 @@
         padding: 2px;
         width:770px;
     }
-    
-    .widthHeader{
-        width:773px;
-        margin-bottom: 10px;
-    }
-    
+
     .margin-bottom{
         margin-bottom: 10px;
     }
@@ -182,15 +148,15 @@
     }
 
     .descri{
-        width: 240px;
+        width: 500px;
     }
 
     .quinze{
-        width:70px;
+        width:102px;
     }
 
     .valor{
-        width: 90px;
+        width: 150px;
     }
 
     .valor2{
@@ -207,7 +173,52 @@
     }
 
     .totalGeral{
-        width: 315px;
+        width: 610px;
+    }
+    
+    .padding-left-foto{
+        padding-left: 20px;
+    }
+    
+    .margin-top{
+        margin-top: 10px;
+    }
+
+    .margin-bottom--title{
+        margin-bottom: 4px;
+    }
+    
+    .border-top-left-radius{
+        border-top-left-radius: 8px;
+    }
+    
+    .border-top-right-radius{
+        border-top-right-radius: 8px;
+    }
+    
+    .dados__padrao{
+        width: 365px;
+    }
+    
+    .margin-left{
+        margin-left: 5px;
+    }
+    
+    .margin-bottom{
+        margin-bottom: 5px;
+    }
+    
+    .qtd__trab{
+        width: 339px;
+    }
+    
+    .total__title{
+        width:318px;
+    }
+    
+    .logo{
+        width: 100px;
+        height: 100px;
     }
 
 </style>
@@ -215,41 +226,81 @@
 <body class="">
     
     <div id="header" class="margin-top">
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">Rol dos Descontos - Por trabalhador</td>
-            </tr>
-        </table>
+        
+        <div class="borderT margin-top">
+            <table>
+                <tr>
+                    <td rowspan="7">
+                        @if($empresa->esfoto)
+                            <img class="logo" src="{{$empresa->esfoto}}" alt="" srcset="">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$descontos[0]->esnome}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$empresa->escnpj}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$empresa->eslogradouro}},{{$empresa->esnum}} - {{$empresa->escep}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$empresa->esbairro}} - {{$empresa->esuf}}</td>
+                </tr>
+    
+                <tr>
 
-        <table>
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase text-center small__font text-bold">Competência: 
-                    <?php
-                        // $data = explode('-',$descontos[0]->dscompetencia);
-                        $datainicio = 0;
-                        $datafinal = 0;
-                        foreach ($descontos as $key => $desconto) {
-                            if ($desconto->dscompetencia == substr($dados['ano_inicial'],0,7)) {
-                                $datainicio = explode('-',$desconto->dscompetencia);
+                    <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$empresa->estelefone}}</td>
+                </tr>
+    
+            </table>
+        </div>
+        
+        <div class="borderT margin-top">
+            <table class="margin-top margin-left margin-bottom">
+                <tr>
+                    <td class="name__title--tomador text-center text-bold destaque">Rol dos Descontos - por Trabalhador</td>
+                </tr>
+            </table>
+    
+            <table class="margin-bottom">
+                <tr>
+                    <td class="text-center small__font text-bold dados__padrao">Competência: 
+                        <?php
+                            // $data = explode('-',$descontos[0]->dscompetencia);
+                            $datainicio = 0;
+                            $datafinal = 0;
+                            foreach ($descontos as $key => $desconto) {
+                                if ($desconto->dscompetencia == substr($dados['ano_inicial'],0,7)) {
+                                    $datainicio = explode('-',$desconto->dscompetencia);
+                                }
+                                if ($desconto->dscompetencia == substr($dados['ano_final'],0,7)) {
+                                    $datafinal = explode('-',$desconto->dscompetencia);
+                                }
                             }
-                            if ($desconto->dscompetencia == substr($dados['ano_final'],0,7)) {
-                                $datafinal = explode('-',$desconto->dscompetencia);
-                            }
-                        }
-                    ?>
-                    @if($datainicio != $datafinal)
-                        {{$datainicio[1]}}/{{$datainicio[0]}} a {{$datafinal[1]}}/{{$datafinal[0]}}
-                    @else
-                        {{$datafinal[1]}}/{{$datafinal[0]}}
-                    @endif
-                </td>
-                <td class="border-left border-right border-top border-bottom uppercase text-center small__font text-bold">Data de Emissão: {{date("d/m/y")}}</td>
-            </tr>
-        </table>
+                        ?>
+                        @if($datainicio != $datafinal)
+                            {{$datainicio[1]}}/{{$datainicio[0]}} a {{$datafinal[1]}}/{{$datafinal[0]}}
+                        @else
+                            {{$datafinal[1]}}/{{$datafinal[0]}}
+                        @endif
+                    </td>
+                    <td class="text-center small__font text-bold dados__padrao">Data de Emissão: {{date("d/m/y")}}</td>
+                </tr>
+            </table>
+        </div>
 
-        <table>
+
+        <table class="margin-top">
             <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title text-center text-bold destaque">{{$descontos[0]->tsnome}}</td>
+                <td class="name__title text-center text-bold">{{$descontos[0]->tsnome}}</td>
             </tr>
         </table>
 
@@ -263,7 +314,7 @@
     </div>
 
     <div id="footer">
-        <p class="page destaque borderT padding-footer">Página:  </p>
+        <p class="page padding-footer" style="text-align: right">Página:  </p>
     </div>
 
     <div id="content">
@@ -274,9 +325,9 @@
             @foreach($descontos as $desconto)
                 <tr>
                     
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font descri">{{$desconto->dsdescricao}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font quinze">{{$desconto->dsquinzena}}</td>
-                    <td class="border-left border-right border-top border-bottom text-center uppercase small__font font valor">R$ {{number_format((float)$desconto->dfvalor, 2, ',', '.')}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font descri">{{$desconto->dsdescricao}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font quinze">{{$desconto->dsquinzena}}</td>
+                    <td class="border-left border-right border-top border-bottom text-center small__font valor">R$ {{number_format((float)$desconto->dfvalor, 2, ',', '.')}}</td>
                 </tr>
                 <?php
                     $total += $desconto->dfvalor;
@@ -286,8 +337,8 @@
 
         <table class="margin-top">
             <tr>
-                <td class="border-left border-top border-bottom text-center small__font destaque font text-bold descri totalGeral"> Total ============></td>
-                <td class="border-right border-top border-bottom text-center small__font destaque font text-bold valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
+                <td class="border-left border-top border-bottom text-center small__font destaque text-bold descri totalGeral"> Total ============></td>
+                <td class="border-right border-top border-bottom text-center small__font destaque text-bold valor">R$ {{number_format((float)$total, 2, ',', '.')}}</td>
             </tr>
         </table>
     </div>

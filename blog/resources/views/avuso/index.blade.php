@@ -437,18 +437,21 @@ function remove(index) {
 
     function conteiner(index) {
         let conteiner = '';
-        conteiner += `<div class="row d-flex campo${index}">
-                    <div class="col-12 col-md-5">
+        conteiner += `
+            <section>
+                <div class="row campo${index}">
+        
+                    <div class="col-12 col-md-5 mt-2">
                         <label for="descricao" class="form-label">Descrição</label>
                         <input type="text" class="form-control" value="" name="descricao${index}" maxlength="100" id="descricao${index}">
                     </div>
 
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-3 mt-2">
                         <label for="valor" class="form-label">Valor</label>
                         <input type="text" class="form-control numero " value="" name="valor${index}" maxlength="100" id="valor${index}">
                     </div>
 
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-3 mt-2">
                         <label for="cd${index}" class="form-label">Crédito/Desconto</label>
                         <select id="cd${index}" name="cd${index}" class="form-select" >
                         <option selected>Crédito</option>
@@ -457,16 +460,18 @@ function remove(index) {
                     </div>
                     
                     
-                    <div class="col-md-1 align-self-center mt-4">
+                    <div class="col-md-1 align-self-center" style="margin-top:32px;">
                         <a onclick="remove(${index})">  
-                            <i class="fas fa-lg fa-times"></i>
+                            <i class="fas fa-2x fa-times" style="color:red;"></i>
                         </a>
                     </div>
                     
-                    </div>`
+                </div>
+            </section>`
         return conteiner;
 
     }
+    
     $('.numero').mask('000.000.000.000.000,00', {reverse: true});
     $('#adicinar').click(function() {
         if ($('#quantidade').val() <= 20) {

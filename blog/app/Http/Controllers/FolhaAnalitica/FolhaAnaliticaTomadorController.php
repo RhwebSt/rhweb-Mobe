@@ -28,6 +28,7 @@ class FolhaAnaliticaTomadorController extends Controller
         ])
         ->with(['valorcalculo','tomador:id,tsnome','trabalhador:id,tsnome,tsmatricula','folhar.empresa:id,esnome'])
         ->get();
+        // dd($folhar);
         // $folhas = $folhar->buscaFolhaAnaliticaTomador($id,$tomador);
       
         // $rublicas = $rublica->listaGeral();
@@ -92,7 +93,7 @@ class FolhaAnaliticaTomadorController extends Controller
         // $vale = $valorcalculo->calculoFolhaAnaliticaDesconto($id,$sim,$tomador);
         
         $pdf = PDF::loadView('folhaAnaliticaTomador',compact('folhar'));
-        return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA TOMADOR.pdf');
+        return $pdf->setPaper('a4','landscape')->stream('CALCULO DA FOLHA ANALITICA TOMADOR.pdf');
         try {    
     } catch (\Throwable $th) { 
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a folha.']);

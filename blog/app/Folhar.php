@@ -54,13 +54,13 @@ class Folhar extends Model
     }
     public function buscaListaFolhar($empresa)
     {
-        return Folhar::where('empresa_id',$empresa)->get();
+        return Folhar::where('empresa_id',$empresa)->orderBy('fscodigo', 'asc')->get();
     }
     public function buscaListaOrdem($empresa,$condicao)
     {
         return Folhar::where('empresa_id',$empresa)
         ->orderBy('fscodigo', $condicao)
-        ->orderBy('fsfinal', $condicao)
+        // ->orderBy('fsfinal', $condicao)
         ->get();
     }
     public function filtraListaTomador($dados,$empresa)
@@ -71,6 +71,10 @@ class Folhar extends Model
         ->select('folhars.id','folhars.fscodigo','folhars.fsinicio','folhars.fsfinal')
         ->where([
             ['tomadors.tsnome','like','%'.$dados['pesquisa'].'%'],
+            ['empresas.id',$empresa]
+        ])
+        ->orWhere([
+            ['folhars.fscodigo','like','%'.$dados['pesquisa'].'%'],
             ['empresas.id',$empresa]
         ])
         ->whereBetween('folhars.fsfinal',[$dados['inicio'],$dados['final']])

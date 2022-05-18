@@ -92,9 +92,10 @@ class FolhaAnaliticaController extends Controller
         $folhar = $this->folhar->where('id',$id)
         ->with(['basecalculo.valorcalculo','basecalculo.trabalhador','empresa'])
         ->first();
+        // dd($folhar);
         // dd($folhar->basecalculo[9]->valorcalculo);
         $pdf = PDF::loadView('folhaAnalitica',compact('folhar'));
-        return $pdf->setPaper('a4')->stream('CALCULO DA FOLHA ANALITICA.pdf');
+        return $pdf->setPaper('a4','landscape')->stream('CALCULO DA FOLHA ANALITICA.pdf');
         try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera a folha.']);

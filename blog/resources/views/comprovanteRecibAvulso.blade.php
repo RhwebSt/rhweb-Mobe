@@ -9,12 +9,12 @@
 
 <style>
     @page { 
-          margin-top: 253px; 
+          margin-top: 257px; 
           margin-bottom: 110px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -253px; right: 0px; height: 253px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -257px; right: 0px; height: 257px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -110px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
     
@@ -114,7 +114,7 @@
     }
 
     .descricao{
-        width:508.3px;
+        width:506px;
     }
 
     .referencia{
@@ -130,11 +130,11 @@
     }
 
     .tipoTrab{
-        width: 508px;
+        width: 506px;
     }
 
     .tipoTrab1{
-        width: 508.3px;
+        width: 506px;
     }
 
     .total__vencimentos{
@@ -222,6 +222,10 @@
         width: 768px;
     }
     
+    .name__title--recibo{
+        width: 755px;
+    }
+    
      .comp{
         width: 250px;
     }
@@ -238,7 +242,6 @@
     {
         border: 1px solid black;
         border-radius: 3px;
-        width:773.5px;
     }
 
     .margin-top{
@@ -255,7 +258,7 @@
     }
 
     .assinatura{
-    margin-top:20px;
+        margin-top:10px;
     }
 
     .fontDeclaracao{
@@ -293,93 +296,124 @@
     .margin-top__xl{
         margin-top: 10px;
     }
+    
+    .padding-left-foto{
+        padding-left: 20px;
+    }
+    
+    .margin-top{
+        margin-top: 10px;
+    }
+
+    .margin-bottom--title{
+        margin-bottom: 4px;
+    }
+    
+    .border-top-left-radius{
+        border-top-left-radius: 8px;
+    }
+    
+    .border-top-right-radius{
+        border-top-right-radius: 8px;
+    }
+    
+    .logo{
+        width: 100px;
+        height: 100px;
+        }
+        
+    .margin-left{
+        margin-left: 5px;
+    }
+    
+    .margin-bottom{
+        margin-bottom: 5px;
+    }
+    
+    .font__valor{
+      font-size: 13.5px;  
+    }
 </style>
 
 <body>
 
     <div id="header">
-
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->esnome}}</td>
-            </tr>
-        </table>
-   
-        <div class="borderT margin-top__md">
+        
+        <div class="borderT margin-top">
             <table>
-                    <tr>
-                        <td rowspan="6"><img class="logo" src="{{$avusos->esfoto}}" title="foto" alt="" style="width:80px; height: 80px; padding:4px;"></td>
-                    </tr>
+                <tr>
+                    <td rowspan="7">
+                        @if($avusos->esfoto)
+                            <img class="logo" src="{{$avusos->esfoto}}">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$avusos->esnome}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$avusos->escnpj}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$avusos->eslogradouro}}, {{$avusos->esnum}} - {{$avusos->escep}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$avusos->esbairro}} - {{$avusos->esuf}}</td>
+                </tr>
+    
+                <tr>
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$avusos->escnpj}}</td>
-                    </tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$avusos->estelefone}}</td>
+                </tr>
+    
+            </table>
+        </div>
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Rua:</strong>{{$avusos->eslogradouro}}, {{$avusos->esnum}} - {{$avusos->escep}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Bairro:</strong>{{$avusos->esbairro}} - {{$avusos->esuf}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Tel:</strong>{{$avusos->estelefone}}</td>
-                    </tr>
+        
+        <div class="margin-top borderT">
+            <table class="margin-top margin-left margin-bottom">
+                <tr>
+                    <td class="name__title--recibo text-center text-bold destaque">Recibo Avulso</td>
+                </tr>
+            </table>
+            
+    
+            <table class="margin-bottom">
+                <tr>
+                    <td class="small__font data-top text-center"><b>Data de Emissão:</b> {{date('d/m/y')}}</td>
+                    <td class="small__font data-top text-center"><b>Periodo:</b> 
+                
+                        <?php
+                            $data_inicial = explode('-',$avusos->asinicial);
+                            echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
+                        ?>
+                      á 
+                
+                        <?php
+                            $data_final = explode('-',$avusos->asfinal);
+                            echo($data_final[2].'/'.$data_final[1].'/'.$data_final[0]);
+                        ?>
+                    
+                    </td>
+                    <td class="small__font data-top text-center"><b>Nº do Recibo:</b> {{$avusos->aicodigo}}</td>
+                </tr>
             </table>
         </div>
         
-        <table class="margin-top__md">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">RECIBO Avulso</td>
-            </tr>
-        </table>
-        
+        <div class="margin-top">
+            <table>
+                <tr>
+                    <td class="name__title text-center text-bold">{{$avusos->ascpf}} - {{$avusos->asnome}}</td>
+                </tr>
+            </table>
+        </div>
 
-        <table>
-            <tr>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Data de Emissão: {{date('d/m/y')}}</td>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Periodo: 
-            
-                    <?php
-                        $data_inicial = explode('-',$avusos->asinicial);
-                        echo($data_inicial[2].'/'.$data_inicial[1].'/'.$data_inicial[0]);
-                    ?>
-                  a 
-            
-                    <?php
-                        $data_final = explode('-',$avusos->asfinal);
-                        echo($data_final[2].'/'.$data_final[1].'/'.$data_final[0]);
-                    ?>
-                
-                </td>
-                <td class="small__font border-right border-left border-top border-bottom data-top text-center">Nº do Recibo: {{$avusos->aicodigo}}</td>
-            </tr>
-        </table>
-
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avusos->ascpf}} - {{$avusos->asnome}}</td>
-            </tr>
-        </table>
 
         <table class="margin-top__md">
             <tr>
@@ -391,7 +425,7 @@
     </div>
 
     <div id="footer">
-        <p class="page destaque borderT padding-footer">Página:  </p>
+        <p class="page padding-footer" style="text-align: right">Página:  </p>
     </div>
 
     <div id="content">
@@ -402,7 +436,7 @@
         <table>
             @foreach($descricoes as $descricao)
             <tr>
-                <td class="small__font border-left descricao border-bottom uppercase">{{$descricao->asdescricao}}</td>
+                <td class="small__font border-left descricao border-bottom">{{$descricao->asdescricao}}</td>
                 <td class="small__font border-left text-center vencimentos text-bold border-bottom">
                     @if($descricao->asstatus === 'Crédito')
                         {{number_format((float)$descricao->aivalor, 2, ',', '.')}}
@@ -428,26 +462,26 @@
 
         <table>
             <tr>
-                <td class="small__font border-left border-top tipoTrab text-bold">Declaro ter recebido o Valor Líquido dando pluma e total quitação.</td>
+                <td class="small__font border-left tipoTrab text-bold">Declaro ter recebido o Valor Líquido dando pluma e total quitação.</td>
                 <td class="small__font border-left text-bold border-top total__vencimentos1 text-center destaque border-bottom border-right">Total Créditos</td>
                 <td class="small__font border-left text-bold border-right border-top total__descontos text-center destaque border-bottom">Total Desconto</td>
             </tr>
 
             <tr>
-                <td class="small__font border-left tipoTrab1"> . </td>
-                <td class="small__font border-left text-bold total__vencimentos1 text-center destaque border-bottom border-right">{{number_format((float)$credito, 2, ',', '.')}}</td>
-                <td class="small__font border-left text-bold border-right total__descontos text-center destaque border-bottom">{{number_format((float)$desconto, 2, ',', '.')}}</td>
+                <td class="small__font border-left tipoTrab1"> </td>
+                <td class="small__font border-left text-bold total__vencimentos1 text-center border-bottom border-right">{{number_format((float)$credito, 2, ',', '.')}}</td>
+                <td class="small__font border-left text-bold border-right total__descontos text-center border-bottom">{{number_format((float)$desconto, 2, ',', '.')}}</td>
             </tr>
 
             <tr>
                 <td class="small__font border-left tipoTrab1 border-bottom"></td>
-                <td class="small__font border-left text-bold total__vencimentos1 text-center destaqueDark border-top border-bottom">Valor Líquido</td>
-                <td class="small__font text-bold border-right total__descontos text-center destaqueDark border-top border-bottom">{{number_format((float)$credito - $desconto, 2, ',', '.')}}</td>
+                <td class="small__font border-left text-bold total__vencimentos1 text-center destaque border-top border-bottom font__valor">Valor Líquido</td>
+                <td class="small__font text-bold border-right total__descontos text-center destaque border-top border-bottom font__valor">{{number_format((float)$credito - $desconto, 2, ',', '.')}}</td>
             </tr>
         </table>
 
         
-        <div class="borderT margin-top__md">
+        <div class="borderT margin-top">
             <table class="assinatura">
                 <tr>
                     <td class="fontDeclaracao linhaass text-center">__________________________________________________</td>
@@ -458,7 +492,7 @@
                 </tr>
             </table>
 
-            <table class="margin-top">
+            <table class="margin-top margin-bottom">
                 <tr>
                 <td class="fontDeclaracao data__ass  text-center cidade">{{$avusos->esmunicipio}} - {{$avusos->esuf}}</td>
                     <td class="fontDeclaracao data__ass  text-center cidade">Data: {{date("d/m/y")}}</td>

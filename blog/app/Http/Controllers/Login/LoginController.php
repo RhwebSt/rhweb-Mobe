@@ -48,7 +48,8 @@ class LoginController extends Controller
         $dados = $request->all();
         // $user = $this->user->verificausuario($dados['user']);
         $user = $this->user->where('name', $dados['user'])->with('empresa.user')->first();
-        if (!$user->empresa) {
+        
+        if (!$user->empresa_id) {
             return redirect()->back()->withInput()->withErrors(['mensagem'=>'Você precissa informa e sua empresa.']);
         }
         $request->validate([
