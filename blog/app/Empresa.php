@@ -55,7 +55,7 @@ class Empresa extends Model
     }
     public function lancamentotabela()
     {
-        return $this->belongsTo(Lancamentotabela::class);
+        return $this->hasMany(Lancamentotabela::class);
     }
     public function fatura()
     {

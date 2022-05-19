@@ -60,8 +60,9 @@ class calculoFolhaController extends Controller
         $user = Auth::user();
         $idfolhas = [];
         $dados = $request->all();
-        
-        $folhas = $this->folhar->filtraListaGeral($dados,$user->empresa);
+        $dados['inicio'] = $dados['competencia'].'-01';
+        $dados['final'] = $dados['competencia'].'-31';
+        $folhas = $this->folhar->filtraListaGeral($dados,$user->empresa_id);
         
         foreach ($folhas as $key => $folha) {
             array_push($idfolhas,$folha->id);

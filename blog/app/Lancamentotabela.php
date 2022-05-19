@@ -11,7 +11,7 @@ class Lancamentotabela extends Model
     ]; 
     public function empresa()
     {
-        return $this->hasMany(Empresa::class);
+        return $this->belongsTo(Empresa::class);
     }
     public function tomador()
     {
@@ -21,7 +21,7 @@ class Lancamentotabela extends Model
     {
         return $this->hasMany(Bolcartaoponto::class);
     }
-    public function lacamentorublica()
+    public function lancamentorublica()
     {
         return $this->hasMany(Lancamentorublica::class);
     }

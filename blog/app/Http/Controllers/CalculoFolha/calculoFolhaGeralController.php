@@ -519,7 +519,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim['va']['descricao'] = $va->rsdescricao;
                     $boletim['va']['quantidade'] = ceil($tomador_cartao_ponto_horas);
                     $boletim['va']['valor'] = $tomadores->incidefolhar[0]->insalimentacao * ceil($tomador_cartao_ponto_horas);
-                    // dd($tomador_cartao_ponto_horas);
+                    
                     $boletim['vencimento'] +=  $boletim['va']['valor'];
                     $dsr =  $this->rublica->buscaRublicaUnidade('DSR 18,18%');
                     $boletim['dsr1818']['codigos'] = $dsr->rsrublica;

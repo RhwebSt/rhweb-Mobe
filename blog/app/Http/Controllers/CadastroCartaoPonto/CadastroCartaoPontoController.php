@@ -173,8 +173,18 @@ class CadastroCartaoPontoController extends Controller
             $lancamentotabelas = $this->lancamentotabela->cadastro($dados); 
             if ($lancamentotabelas) {
                 // $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
-                $this->valorrublica->where('empresa_id', $user->empresa_id)
-                ->update(['vsnrocartaoponto'=>$dados['liboletim']]);
+                // $this->valorrublica->where('empresa_id', $user->empresa_id)
+                // ->update(['vsnrocartaoponto'=>$dados['liboletim']]); 
+                $this->valorrublica->where('id', $user->empresa_id)
+                ->chunkById(100, function ($valorrublica) use ($user) {
+                    foreach ($valorrublica as $valorrublicas) {
+                        if ($valorrublicas->vsnrocartaoponto >= 0) {
+                            $numero = $valorrublicas->vsnrocartaoponto += 1;
+                            $this->valorrublica->where('empresa_id', $user->empresa_id)
+                            ->update(['vsnrocartaoponto'=>$numero]);
+                        }
+                    }
+                });
             }
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
@@ -282,9 +292,11 @@ class CadastroCartaoPontoController extends Controller
         $this->valorrublica->where('id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
-                $numero = $valorrublicas->vsnrocartaoponto -= 1;
-                $this->valorrublica->where('empresa_id', $user->empresa_id)
-                ->update(['vsnrocartaoponto'=>$numero]);
+                if ($valorrublicas->vsnrocartaoponto >= 0) {
+                    $numero = $valorrublicas->vsnrocartaoponto -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vsnrocartaoponto'=>$numero]);
+                }
             }
         });
         try {

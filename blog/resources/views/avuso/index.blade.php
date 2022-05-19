@@ -68,7 +68,7 @@
                         <button class="nav-link botao__pill" id="lista-avulso-tab" data-bs-toggle="pill" data-bs-target="#lista-avulso" type="button" role="tab" aria-controls="lista-avulso" aria-selected="false"><i class="fad fa-th-list"></i> Lista Recibos Avulsos</button>
                     </li>
                     <li class="nav-item pill__item ms-1 mt-1" role="presentation">
-                        <button class="nav-link botao__pill" id="rol-avulso-tab" data-bs-toggle="pill" data-bs-target="#rol-avulso" type="button" role="tab" aria-controls="rol-avulso" aria-selected="false"><i class="fad fa-th-list"></i> Rol dos Boletins</button>
+                        <button class="nav-link botao__pill" id="rol-avulso-tab" data-bs-toggle="pill" data-bs-target="#rol-avulso" type="button" role="tab" aria-controls="rol-avulso" aria-selected="false"><i class="fad fa-th-list"></i> Rol dos Recibos Avulsos</button>
                     </li>
                 </ul>
             </div>
@@ -86,7 +86,7 @@
                         @csrf
                         <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
         
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-6">
                             <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome Completo</label>
                             <input type="text" class="form-control @error('nome') is-invalid @enderror" value="{{old('nome')}}" name="nome" maxlength="40" id="nome">
                             @error('nome')
@@ -94,7 +94,7 @@
                             @enderror
                         </div>
         
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-6">
                             <label for="cpf" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CPF/CNPJ</label>
                             <input type="text" class="form-control @error('cpf') is-invalid @enderror" value="{{old('cpf')}}" name="cpf" maxlength="15" id="cpf">
                             @error('cpf')
@@ -387,7 +387,7 @@
                         
                         
         
-                        <div class="row mt-4">
+
                             <div class="col-12 col-sm-6">
                                 <label for="ano" class="form-label">Data Inicial</label>
                                 <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
@@ -407,8 +407,7 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-        
+
                         <div class="d-flex justify-content-end align-items-end mt-3">
                             <button type="submit" class="btn botao__enviar" id="">Imprimir <i class="fad fa-print"></i></button>
                         </div>
@@ -462,7 +461,7 @@ function remove(index) {
                     
                     <div class="col-md-1 align-self-center" style="margin-top:32px;">
                         <a onclick="remove(${index})">  
-                            <i class="fas fa-2x fa-times" style="color:red;"></i>
+                            <i class="fas fa-2x fa-times icon__exit--recibo--avulso"></i>
                         </a>
                     </div>
                     

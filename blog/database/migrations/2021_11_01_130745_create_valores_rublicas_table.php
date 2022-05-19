@@ -22,7 +22,7 @@ class CreateValoresRublicasTable extends Migration
             $table->char('vsmatricula', 15)->nullable();
             $table->char('vsnrorequisicao', 15)->nullable();
             $table->char('vsnroboletins', 15)->nullable();
-            $table->char('vsnroflha', 15)->nullable();
+            $table->char('vsnrofolha', 15)->nullable();
             $table->char('vsnrocartaoponto', 15)->nullable();
             $table->char('vsnroequesocial', 15)->nullable();
             $table->char('vscbo', 15)->nullable();

@@ -9,12 +9,12 @@
 
 <style>
     @page { 
-          margin-top: 252.5px; 
+          margin-top: 261.5px; 
           margin-bottom: 110px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -252.5px; right: 0px; height: 252.5px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -261.5px; right: 0px; height: 261.5px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -110px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
     
@@ -238,7 +238,6 @@
     {
         border: 1px solid black;
         border-radius: 3px;
-        width:773.5px;
     }
 
     .margin-top{
@@ -290,86 +289,108 @@
         padding: 2px;
         width:770px;
     }
+    
+    .padding-left-foto{
+        padding-left: 20px;
+    }
+    
+    .margin-top{
+        margin-top: 10px;
+    }
+
+    .margin-bottom--title{
+        margin-bottom: 4px;
+    }
+    
+    .border-top-left-radius{
+        border-top-left-radius: 8px;
+    }
+    
+    .border-top-right-radius{
+        border-top-right-radius: 8px;
+    }
+    
+    .logo{
+        width: 100px;
+        height: 100px;
+        }
+        
+    .margin-left{
+        margin-left: 5px;
+    }
+    
+    .margin-bottom{
+        margin-bottom: 5px;
+    }
+    
+    .name__title--recibo{
+        width: 755px;
+    }
 </style>
 
 <body>
 
     <div id="header">
-
-        <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avuso[0]->empresa->esnome}}</td>
-            </tr>
-        </table>
-   
-        <div class="borderT margin-top__md">
+        
+        <div class="borderT margin-top">
             <table>
-                    <tr>
-                        <td rowspan="6">
+                <tr>
+                    <td rowspan="7">
                         @if($avuso[0]->empresa->esfoto)
-                        <img class="logo" src="{{$avuso[0]->empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
+                        <img class="logo" src="{{$avuso[0]->empresa->esfoto}}" alt="" srcset="">
                         @else
                             @include('imagem')
                         @endif
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class=" width__padrao padding-left-foto text-bold margin-bottom--title">{{$avuso[0]->empresa->esnome}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$avuso[0]->empresa->escnpj}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$avuso[0]->empresa->endereco[0]->eslogradouro}}, {{$avuso[0]->empresa->endereco[0]->esnum}} - {{$avuso[0]->empresa->endereco[0]->escep}}</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$avuso[0]->empresa->endereco[0]->esbairro}} - {{$avuso[0]->empresa->endereco[0]->esuf}}</td>
+                </tr>
+    
+                <tr>
 
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>CNPJ/MF Nroº : </strong>{{$avuso[0]->empresa->escnpj}}</td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Rua:</strong>{{$avuso[0]->empresa->endereco[0]->eslogradouro}}, {{$avuso[0]->empresa->endereco[0]->esnum}} - {{$avuso[0]->empresa->endereco[0]->escep}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Bairro:</strong>{{$avuso[0]->empresa->endereco[0]->esbairro}} - {{$avuso[0]->empresa->endereco[0]->esuf}}</td>
-                        
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td class="small__font width__padrao"><strong>Tel:</strong> {{$avuso[0]->empresa->estelefone}}</td>
-                    </tr>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Tel: {{$avuso[0]->empresa->estelefone}}</td>
+                </tr>
+    
             </table>
         </div>
 
-        <table class="margin-top__md">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">Rol dos Recibos Avulsos</td>
-            </tr>
-        </table>
+        <div class="margin-top borderT">
+            <table class="margin-top margin-left margin-bottom">
+                <tr>
+                    <td class="name__title--recibo text-center text-bold destaque">Rol dos Recibos Avulsos</td>
+                </tr>
+            </table>
+    
+            <table class="margin-bottom">
+                <tr>
+                    <td class="small__font text-center text-bold padrao1">Data de Emissão: {{date('d/m/Y')}}</td>
+                    <td class="small__font text-center text-bold padrao1">Período: {{date('d/m/Y',strtotime($dados['ano_inicial1']))}} a {{date('d/m/Y',strtotime($dados['ano_final1']))}}</td>
+                </tr>
+            </table>
 
-        <table>
+        </div>
+        
+        <table class="margin-top">
             <tr>
-                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Data de Emissão: {{date('d/m/Y')}}</td>
-                <td class="border-right border-left border-bottom border-top small__font text-center text-bold padrao1">Período: {{date('d/m/Y',strtotime($dados['ano_inicial1']))}} a {{date('d/m/Y',strtotime($dados['ano_final1']))}}</td>
+                <td class="name__title text-center text-bold">{{$avuso[0]->asnome}}</td>
             </tr>
         </table>
         
         <table class="margin-top">
-            <tr>
-                <td class="border-left border-right border-top border-bottom uppercase name__title font__trab text-center text-bold destaque">{{$avuso[0]->asnome}}</td>
-            </tr>
-        </table>
-
-        <table class="margin-top__md">
             <tr>
                 <td class="border-right border-left border-bottom border-top small__font destaque padrao text-center text-bold">Nº do Recibo</td>
                 <td class="border-right border-left border-bottom border-top small__font destaque padrao text-center text-bold">Data de Emissão</td>
@@ -378,17 +399,17 @@
         </table>
     </div>
 
-    <div id="footer padding-footer">
-        <p class="page destaque borderT padding-footer">Página:  </p>
+    <div id="footer">
+        <p class="page padding-footer" style="text-align: right">Página:  </p>
     </div>
 
     <div id="content">
         <table>
             @foreach($avuso as $avusos)
             <tr>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">{{$avusos->aicodigo}}</td>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">{{date('d/m/Y',strtotime($avusos->asinicial))}} a {{date('d/m/Y',strtotime($avusos->asfinal))}}</td>
-                <td class="border-right border-left border-bottom border-top small__font padrao text-center text-bold">R$ {{number_format((float)$avusos->ailiquido, 2, ',', '')}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center">{{$avusos->aicodigo}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center">{{date('d/m/Y',strtotime($avusos->asinicial))}} a {{date('d/m/Y',strtotime($avusos->asfinal))}}</td>
+                <td class="border-right border-left border-bottom border-top small__font padrao text-center">R$ {{number_format((float)$avusos->ailiquido, 2, ',', '')}}</td>
             </tr>
             @endforeach
         </table>

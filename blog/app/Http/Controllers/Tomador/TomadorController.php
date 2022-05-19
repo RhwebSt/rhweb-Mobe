@@ -144,7 +144,9 @@ class TomadorController extends Controller
         }
        
         $rublicas = $this->rublica->listaRublicaTabelaPreco(); 
-        
+        if (!$rublicas) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem uma rublica contate o suporte.']);
+        }
             $tomadors = $this->tomador->cadastro($dados);
             if ($tomadors) {
                 $dados['tomador'] = $tomadors['id'];

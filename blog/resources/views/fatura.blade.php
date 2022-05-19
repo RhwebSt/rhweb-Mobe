@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/reset.css">
-    <title>Document</title>
+    <title>RHWEB - Fatura</title>
 </head>
 
 <style>
 
     @page { 
-        margin-top: 603px; 
+        margin-top: 320px; 
         margin-bottom: 30px;
         margin-left: 10px;
         margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -603px; right: 0px; height: 603px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -320px; right: 0px; height: 320px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 50px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
 
@@ -38,8 +37,6 @@
     .nome__empresa{
         width:1100px;
         font-size: 16px;
-        text-transform: uppercase;
-
     }
 
     .fatura{
@@ -79,7 +76,7 @@
     }
 
     .small__font{
-        font-size:11px;
+        font-size:12px;
     }
 
     .text-bold{
@@ -111,7 +108,7 @@
     }
 
     .small__block{
-        width:93.9px;
+        width:102.5px;
     }
 
     .item{
@@ -191,7 +188,7 @@
     }
 
     .padr{
-        width:250.3px;
+        width:247px;
     }
 
     .cep{
@@ -199,7 +196,7 @@
     }
 
     .footer{
-        width:251px;
+        width:248px;
     }
 
     .margin-top{
@@ -217,7 +214,6 @@
     .borderT{
         border: 1px solid black;
         border-radius: 3px;
-        width: 771px;
     }
     
     .margin-top{
@@ -225,7 +221,7 @@
     }
 
     .assinatura{
-        margin-top:50px;
+        margin-top:10px;
     }
 
     .fontDeclaracao{
@@ -233,7 +229,7 @@
     }
 
     .data__ass{
-        width:150px;
+        width:372.5px;
     }
 
     .linhaass{
@@ -265,7 +261,7 @@
     }
 
     .vlr{
-        width: 125px;
+        width: 125.5px;
     }
 
     .sefip{
@@ -276,304 +272,322 @@
         padding: 2px;
         width:770px;
     }
+    
+    .padding-left-foto{
+        padding-left: 20px;
+    }
+    
+    .margin-top{
+        margin-top: 10px;
+    }
+
+    .margin-bottom--title{
+        margin-bottom: 4px;
+    }
+    
+    .border-top-left-radius{
+        border-top-left-radius: 8px;
+    }
+    
+    .border-top-right-radius{
+        border-top-right-radius: 8px;
+    }
+    
+    .margin-left{
+        margin-left: 5px;
+    }
+    
+    .margin-bottom{
+        margin-bottom: 5px;
+    }
+    
+    .name__title--fatura{
+        width: 752px;
+    }
 </style>
 
 <body>
 
     <div id="header">
-        <table class="margin-top">
-            <tr>
-                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">{{$fatura->empresa->esnome}}</td>
-            </tr>
-        </table>
 
         <div class="borderT margin-top margin-bottom">
-        <table >
-            <tr>
-                <td rowspan="10">
-                    @if($fatura->empresa->esfoto)
-                        <img class="logo" src="{{$fatura->empresa->esfoto}}" alt="" srcset="" style="width:80px; height: 80px; padding:10px">
-                    @else
-                        @include('imagem')
-                    @endif
-                </td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao border-right margin-left"></td>
-                <td class="small__font border-top text-center border-left border-right text-bold last">Fatura N° {{$fatura->fsnumero}}</td>
-            </tr>
-
-            <tr class="teste">
-                <td></td>
-                <td></td>
-                <td> </td>
-                <td class="small__font width__padrao border-right"><strong>CNPJ/MF Nroº : {{$fatura->empresa->escnpj}}</strong></td>
-                <td class="small__font border-top text-center border-left border-right font__destak text-bold last destaque">Valor a Pagar</td>
-            </tr>
-
-            <tr  class="teste">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Rua:</strong> {{$fatura->empresa->endereco[0]->eslogradouro}}, {{$fatura->empresa->endereco[0]->esnum}} </td>
-                <td class="small__font border-bottom text-center border-left border-right font__destak text-bold last destaque">R$ {{number_format((float)$fatura->faturatotal[3]->fivalor, 2, ',', '.')}}</td>
-                
-            </tr>
-
-            <tr  class="teste">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Bairro:</strong> {{$fatura->empresa->endereco[0]->esbairro}}</td>
-                <td class="small__font text-center text-bold border-right border-left last">Período</td>
-                
-            </tr>
-
-            <tr class="teste">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Tel:</strong> {{$fatura->empresa->estelefone}}</td>
-                <td class="small__font  border-right border-left border-bottom text-center last">{{date('d/m/Y',strtotime($fatura->fsinicio))}} a {{date('d/m/Y',strtotime($fatura->fsfinal))}}</td>
-            </tr>
-
-            <tr class="teste">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao  border-right"><strong>CEP:</strong>  {{$fatura->empresa->endereco[0]->escep}} - {{$fatura->empresa->endereco[0]->esuf}}</td>
-                <td class="small__font  border-right border-left border-bottom text-center text-bold last">Vencimento {{date('d/m/Y',strtotime($fatura->fsvencimento))}}</td>
-            </tr>
-
-            <tr class="teste">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="small__font width__padrao  border-right"><strong>Email:</strong>{{$fatura->empresa->esemail}}</td>
-                <td class="small__font border-right border-left border-bottom text-center text-bold last">Nº Folha pgto: {{$fatura->fsfolhar}}</td>
-            </tr>
-
-        </table>    
-
-    </div>
-
-        <table>
-            <tr>
-                <td class="empresa border-top border-left border-right border-bottom destaque text-center text-bold">{{$fatura->tomador->tsnome}}</td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Matrícula:</strong> {{$fatura->tomador->tsmatricula}}</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>CNPJ:</strong> {{$fatura->tomador->tsmatricula}}</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Telefone: </strong>{{$fatura->tomador->tstelefone}}</td>
-            </tr>
-
-            <tr>
-                <td class="border-bottom border-right border-left border-top small__font cep"><strong>CEP:</strong> {{$fatura->tomador->endereco[0]->escep}}</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>Cidade:</strong>{{$fatura->tomador->endereco[0]->esmunicipio}}</td>
-                <td class="border-bottom border-right border-left border-top small__font padr"><strong>UF: </strong>{{$fatura->tomador->endereco[0]->esuf}}</td>
-            </tr>
-        </table>
-
-
-        <table>
-            <tr>
-                <td class="border-top border-right border-bottom small__font border-left empresa"><strong>Endereço: </strong>{{$fatura->tomador->endereco[0]->eslogradouro}}, {{$fatura->tomador->endereco[0]->esnum}}</td>
-            </tr>
-        </table>
-        
-        <table class="margin-top">
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[0]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[0]->fiindece?number_format((float)$fatura->faturaprincipal[0]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[0]->fivalor?number_format((float)$fatura->faturaprincipal[0]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[0]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[0]->fiindece?number_format((float)$fatura->faturasecundaria[0]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[0]->fivalor?number_format((float)$fatura->faturasecundaria[0]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[1]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[1]->fiindece?number_format((float)$fatura->faturaprincipal[1]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[1]->fivalor?number_format((float)$fatura->faturaprincipal[1]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[3]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[3]->fiindece?number_format((float)$fatura->faturasecundaria[3]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[3]->fivalor?number_format((float)$fatura->faturasecundaria[3]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturatotal[0]->fstitulo}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturatotal[0]->fiindece?number_format((float)$fatura->faturatotal[0]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturatotal[0]->fivalor?number_format((float)$fatura->faturatotal[0]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturatotal[2]->fstitulo}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturatotal[2]->fiindece?number_format((float)$fatura->faturatotal[2]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturatotal[2]->fivalor?number_format((float)$fatura->faturatotal[2]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[3]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[3]->fiindece?number_format((float)$fatura->faturaprincipal[3]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[3]->fivalor?number_format((float)$fatura->faturaprincipal[3]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[4]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[4]->fiindece?number_format((float)$fatura->faturasecundaria[4]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[4]->fivalor?number_format((float)$fatura->faturasecundaria[4]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[2]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[2]->fiindece?number_format((float)$fatura->faturaprincipal[2]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[2]->fivalor?number_format((float)$fatura->faturaprincipal[2]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[5]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[5]->fiindece?number_format((float)$fatura->faturasecundaria[5]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[5]->fivalor?number_format((float)$fatura->faturasecundaria[5]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturatotal[1]->fstitulo}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturatotal[1]->fiindece?number_format((float)$fatura->faturatotal[1]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturatotal[1]->fivalor?number_format((float)$fatura->faturatotal[1]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[6]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[6]->fiindece?number_format((float)$fatura->faturasecundaria[6]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[6]->fivalor?number_format((float)$fatura->faturasecundaria[6]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[4]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[4]->fiindece?number_format((float)$fatura->faturaprincipal[4]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[4]->fivalor?number_format((float)$fatura->faturaprincipal[4]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturatotal[3]->fstitulo}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturatotal[3]->fiindece?number_format((float)$fatura->faturatotal[3]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturatotal[3]->fivalor?number_format((float)$fatura->faturatotal[3]->fivalor, 2, ',', '.'):''}}</td>
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[5]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[5]->fiindece?number_format((float)$fatura->faturaprincipal[5]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[5]->fivalor?number_format((float)$fatura->faturaprincipal[5]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-top text-bold dsr destaqueDark"></td>
-                <td class="small__font border-bottom border-top indice  text-center destaqueDark"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaqueDark"></td>
-                
-            </tr>
-
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[6]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[6]->fiindece?number_format((float)$fatura->faturaprincipal[6]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[6]->fivalor?number_format((float)$fatura->faturaprincipal[6]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-top text-bold dsr destaqueDark"></td>
-                <td class="small__font border-bottom border-top indice  text-center destaqueDark"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaqueDark"></td>
-            </tr>
-
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[1]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[1]->fiindece?number_format((float)$fatura->faturasecundaria[1]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[1]->fivalor?number_format((float)$fatura->faturasecundaria[1]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left  border-top text-bold dsr text-center">Demonstrativo Evento S - 1270</td>
-                <td class="small__font border-bottom  border-top indice  text-center"></td>
-                <td class="small__font border-bottom border-right border-top vlr text-center text-bold"></td>
-                
-                
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[2]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$fatura->faturasecundaria[2]->fiindece, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{number_format((float)$fatura->faturasecundaria[2]->fivalor, 2, ',', '.')}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[0]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[0]->fiindece?number_format((float)$fatura->faturadesmostrativa[0]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturadesmostrativa[0]->fivalor?number_format((float)$fatura->faturadesmostrativa[0]->fivalor, 2, ',', '.'):''}}</td>
-                
-                
-                
-            </tr>
-
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[1]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[1]->fiindece?number_format((float)$fatura->faturadesmostrativa[1]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturadesmostrativa[1]->fivalor?number_format((float)$fatura->faturadesmostrativa[1]->fivalor, 2, ',', '.'):''}}</td>
-                
-                
-            </tr>
-
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[2]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[2]->fiindece?number_format((float)$fatura->faturadesmostrativa[2]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturadesmostrativa[2]->fivalor?number_format((float)$fatura->faturadesmostrativa[2]->fivalor, 2, ',', '.'):''}}</td>
-                
-            </tr>
-
-            <tr>
-                <td class="small__font border-bottom border-left border-right border-top text-bold dsr"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice  text-center"></td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold"></td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[0]->fsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[0]->fiindece?number_format((float)$fatura->faturasecundaria[0]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturasecundaria[0]->fivalor?number_format((float)$fatura->faturasecundaria[0]->fivalor, 2, ',', '.'):''}}</td>
-                
-            </tr>
-
-            <tr>
-            <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[7]->dsdescricao}}</td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[7]->fiindece?number_format((float)$fatura->faturaprincipal[7]->fiindece, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{$fatura->faturaprincipal[7]->fivalor?number_format((float)$fatura->faturaprincipal[7]->fivalor, 2, ',', '.'):''}}</td>
-                <td class="small__font border-bottom border-left border-right border-top producao text-bold destaque"></td>
-                <td class="small__font border-bottom border-left border-right border-top indice text-center destaque"></td>
-                <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold destaque"></td>
-            </tr>
-        </table>
-        
-
-        <table class="margin-top">
-            <tr>
-                <td class="text-bold small__font destaque border-top border-left border-bottom border-right text-center sefip">SEFIP</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FPAS:</strong> {{$fatura->tomador->parametrosefip[0]->psfpas}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Terceiros:</strong> {{$fatura->tomador->parametrosefip[0]->psfpasterceiros}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>CNAE:</strong> {{$fatura->tomador->parametrosefip[0]->pscnae}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>FAP:</strong> {{number_format((float)$fatura->tomador->parametrosefip[0]->psfapaliquota, 3, ',', '.')}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>RAT:</strong> {{number_format((float)$fatura->tomador->parametrosefip[0]->psconfpas, 1, ',', '.')}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Ajustado:</strong> {{number_format((float)$fatura->tomador->parametrosefip[0]->psratajustados, 2, ',', '.')}}</td>
-                <td class="text-center small__font border-top border-left border-bottom border-right small__block"><strong>Trabalhadores:</strong>{{$fatura->fstrabalhador}}</td>
-            </tr>
-        </table>
+            <table >
+                <tr>
+                    <td rowspan="9">
+                        @if($fatura->empresa->esfoto)
+                            <img class="logo" src="{{$fatura->empresa->esfoto}}">
+                        @else
+                            @include('imagem')
+                        @endif
+                    </td>
+                </tr>
     
-        <table class="margin-top">
-            <tr>
-                <td class="border-right border-left border-bottom border-top item text-center small__font destaque text-bold">Item</td>
-                <td class="border-right border-left border-bottom border-top descricao text-center small__font destaque text-bold">Descrição</td>
-                <td class="border-right border-left border-bottom border-top unidades text-center small__font destaque text-bold">Unidades</td>
-                <td class="border-right border-left border-bottom border-top text-center preco small__font destaque text-bold">Preço Unitário</td>
-                <td class="border-right border-left border-bottom border-top text-center total small__font destaque text-bold">Total</td>
-            </tr>
-        </table>
-    </div>
+                <tr>
+                    <td class="text-bold width__padrao border-right margin-left ">{{$fatura->empresa->esnome}}</td>
+                    <td class="small__font border-top text-center border-left border-right last "><b>Fatura N°</b> {{$fatura->fsnumero}}</td>
+                </tr>
+    
+                <tr class="teste">
+                    <td class="small__font width__padrao border-right "><strong>CNPJ/MF Nroº : {{$fatura->empresa->escnpj}}</strong></td>
+                    <td class="small__font border-top text-center border-left border-right font__destak text-bold last destaque ">Valor a Pagar</td>
+                </tr>
+    
+                <tr  class="teste">
+                    <td class="small__font width__padrao  border-right "><strong>Rua:</strong> {{$fatura->empresa->endereco[0]->eslogradouro}}, {{$fatura->empresa->endereco[0]->esnum}} </td>
+                    <td class="small__font border-bottom text-center border-left border-right font__destak text-bold last destaque ">R$ {{number_format((float)$fatura->faturatotal[3]->fivalor, 2, ',', '.')}}</td>
+                    
+                </tr>
+    
+                <tr  class="teste">
+                    <td class="small__font width__padrao  border-right"><strong>Bairro:</strong> {{$fatura->empresa->endereco[0]->esbairro}}</td>
+                    <td class="small__font text-center text-bold border-right border-left last">Período</td>
+                    
+                </tr>
+    
+                <tr class="teste">
+                    <td class="small__font width__padrao  border-right"><strong>Tel:</strong> {{$fatura->empresa->estelefone}}</td>
+                    <td class="small__font  border-right border-left border-bottom text-center last">{{date('d/m/Y',strtotime($fatura->fsinicio))}} a {{date('d/m/Y',strtotime($fatura->fsfinal))}}</td>
+                </tr>
+    
+                <tr class="teste">
+                    <td class="small__font width__padrao  border-right"><strong>CEP:</strong>  {{$fatura->empresa->endereco[0]->escep}} - {{$fatura->empresa->endereco[0]->esuf}}</td>
+                    <td class="small__font  border-right border-left border-bottom text-center last"><b>Vencimento</b> {{date('d/m/Y',strtotime($fatura->fsvencimento))}}</td>
+                </tr>
+    
+                <tr class="teste">
+                    <td class="small__font width__padrao  border-right"><strong>Email:</strong>{{$fatura->empresa->esemail}}</td>
+                    <td class="small__font border-right border-left border-bottom text-center last"><b>Nº Folha pgto:</b> {{$fatura->fsfolhar}}</td>
+                </tr>
+    
+            </table>    
 
-    <div id="footer">
-        <p class="page destaque borderT padding-footer">Página:  </p>
+        </div>
+        
+        
+        <div class="borderT margin-top">
+                
+            <table class="margin-top margin-left margin-bottom">
+                <tr>
+                    <td class="name__title--fatura text-center text-bold">{{$fatura->tomador->tsnome}}</td>
+                </tr>
+            </table>
+    
+            <table class="margin-left">
+                <tr>
+                    <td class="small__font padr destaque text-center text-bold">Matrícula</td>
+                    <td class="small__font padr destaque text-center text-bold">CNPJ</td>
+                    <td class="small__font padr destaque text-center text-bold">Telefone</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font padr text-center">{{$fatura->tomador->tsmatricula}}</td>
+                    <td class="small__font padr text-center">{{$fatura->tomador->tsmatricula}}</td>
+                    <td class="small__font padr text-center">{{$fatura->tomador->tstelefone}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font padr destaque text-center text-bold">CEP</td>
+                    <td class="small__font padr destaque text-center text-bold">Cidade</td>
+                    <td class="small__font padr destaque text-center text-bold">UF</td>
+                </tr>
+    
+                <tr>
+                    <td class="small__font padr text-center">{{$fatura->tomador->endereco[0]->escep}}</td>
+                    <td class="small__font padr text-center">{{$fatura->tomador->endereco[0]->esmunicipio}}</td>
+                    <td class="small__font padr text-center">{{$fatura->tomador->endereco[0]->esuf}}</td>
+                </tr>
+            </table>
+    
+    
+            <table class="margin-bottom margin-left">
+                <tr>
+                    <td class="small__font name__title--fatura text-center text-bold destaque">Endereço</td>
+                </tr>
+                
+                <tr>
+                    <td class=" small__font name__title--fatura text-center">{{$fatura->tomador->endereco[0]->eslogradouro}}, {{$fatura->tomador->endereco[0]->esnum}} - {{$fatura->tomador->endereco[0]->esbairro}}</td>
+                </tr>
+            </table>
+            
+        </div>
     </div>
+    
+    <div class="content">
+        
+            <table class="margin-top">
+                <tr>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[0]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[0]->fiindece?number_format((float)$fatura->faturaprincipal[0]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[0]->fivalor?number_format((float)$fatura->faturaprincipal[0]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[0]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[0]->fiindece?number_format((float)$fatura->faturasecundaria[0]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[0]->fivalor?number_format((float)$fatura->faturasecundaria[0]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[1]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[1]->fiindece?number_format((float)$fatura->faturaprincipal[1]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[1]->fivalor?number_format((float)$fatura->faturaprincipal[1]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[3]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[3]->fiindece?number_format((float)$fatura->faturasecundaria[3]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[3]->fivalor?number_format((float)$fatura->faturasecundaria[3]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-top producao text-bold destaque">{{$fatura->faturatotal[0]->fstitulo}}</td>
+                    <td class="small__font border-bottom border-top indice text-center destaque">{{$fatura->faturatotal[0]->fiindece?number_format((float)$fatura->faturatotal[0]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-right border-top vlr text-center destaque text-bold">R$ {{$fatura->faturatotal[0]->fivalor?number_format((float)$fatura->faturatotal[0]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-top producao text-bold destaque">{{$fatura->faturatotal[2]->fstitulo}}</td>
+                    <td class="small__font border-bottom border-top indice text-center destaque">{{$fatura->faturatotal[2]->fiindece?number_format((float)$fatura->faturatotal[2]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{$fatura->faturatotal[2]->fivalor?number_format((float)$fatura->faturatotal[2]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[3]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[3]->fiindece?number_format((float)$fatura->faturaprincipal[3]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[3]->fivalor?number_format((float)$fatura->faturaprincipal[3]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[4]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[4]->fiindece?number_format((float)$fatura->faturasecundaria[4]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[4]->fivalor?number_format((float)$fatura->faturasecundaria[4]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[2]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{isset($fatura->faturaprincipal[2]->fiindece)?number_format((float)$fatura->faturaprincipal[2]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{isset($fatura->faturaprincipal[2]->fivalor)?number_format((float)$fatura->faturaprincipal[2]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{isset($fatura->faturasecundaria[5]->fsdescricao)?$fatura->faturasecundaria[5]->fsdescricao:"Adiantamento"}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{isset($fatura->faturasecundaria[5]->fiindece)?number_format((float)$fatura->faturasecundaria[5]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{isset($fatura->faturasecundaria[5]->fivalor)?number_format((float)$fatura->faturasecundaria[5]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-top producao text-bold destaque">{{$fatura->faturatotal[1]->fstitulo}}</td>
+                    <td class="small__font border-bottom border-top indice text-center destaque">{{$fatura->faturatotal[1]->fiindece?number_format((float)$fatura->faturatotal[1]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{$fatura->faturatotal[1]->fivalor?number_format((float)$fatura->faturatotal[1]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{isset($fatura->faturasecundaria[6]->fsdescricao)?$fatura->faturasecundaria[6]->fsdescricao:"Crédito"}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{isset($fatura->faturasecundaria[6]->fiindece)?number_format((float)$fatura->faturasecundaria[6]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center text-bold">R$ {{isset($fatura->faturasecundaria[6]->fivalor)?number_format((float)$fatura->faturasecundaria[6]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[4]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[4]->fiindece?number_format((float)$fatura->faturaprincipal[4]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[4]->fivalor?number_format((float)$fatura->faturaprincipal[4]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-top producao text-bold destaque">{{$fatura->faturatotal[3]->fstitulo}}</td>
+                    <td class="small__font border-bottom border-top indice text-center destaque">{{$fatura->faturatotal[3]->fiindece?number_format((float)$fatura->faturatotal[3]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-right border-top vlr text-center text-bold destaque">R$ {{$fatura->faturatotal[3]->fivalor?number_format((float)$fatura->faturatotal[3]->fivalor, 2, ',', '.'):''}}</td>
+                </tr>
+    
+                <tr>
+                <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[5]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[5]->fiindece?number_format((float)$fatura->faturaprincipal[5]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[5]->fivalor?number_format((float)$fatura->faturaprincipal[5]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left  border-top text-bold dsr destaque">Demonstrativo Evento S - 1270</td>
+                    <td class="small__font indice  text-center destaque border-bottom  border-top"></td>
+                    <td class="small__font vlr text-center text-bold destaque border-bottom border-right border-top"></td>
+                    
+                </tr>
+    
+                <tr>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[6]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[6]->fiindece?number_format((float)$fatura->faturaprincipal[6]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[6]->fivalor?number_format((float)$fatura->faturaprincipal[6]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[0]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[0]->fiindece?number_format((float)$fatura->faturadesmostrativa[0]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturadesmostrativa[0]->fivalor?number_format((float)$fatura->faturadesmostrativa[0]->fivalor, 2, ',', '.'):''}}</td>
+                    
+                </tr>
+    
+                <tr>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[1]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[1]->fiindece?number_format((float)$fatura->faturasecundaria[1]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[1]->fivalor?number_format((float)$fatura->faturasecundaria[1]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[1]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[1]->fiindece?number_format((float)$fatura->faturadesmostrativa[1]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturadesmostrativa[1]->fivalor?number_format((float)$fatura->faturadesmostrativa[1]->fivalor, 2, ',', '.'):''}}</td>
+                    
+                    
+                    
+                </tr>
+    
+                <tr>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[2]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$fatura->faturasecundaria[2]->fiindece, 2, ',', '.')}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{number_format((float)$fatura->faturasecundaria[2]->fivalor, 2, ',', '.')}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[2]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[2]->fiindece?number_format((float)$fatura->faturadesmostrativa[2]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturadesmostrativa[2]->fivalor?number_format((float)$fatura->faturadesmostrativa[2]->fivalor, 2, ',', '.'):''}}</td>
+  
+                </tr>
+                
+                <tr>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturaprincipal[7]->dsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturaprincipal[7]->fiindece?number_format((float)$fatura->faturaprincipal[7]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturaprincipal[7]->fivalor?number_format((float)$fatura->faturaprincipal[7]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[0]->fsdescricao}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[0]->fiindece?number_format((float)$fatura->faturasecundaria[0]->fiindece, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[0]->fivalor?number_format((float)$fatura->faturasecundaria[0]->fivalor, 2, ',', '.'):''}}</td>
+                    
+                </tr>
+    
+                
+            </table>
 
-    <div id="content">
+            <div class="borderT margin-top">
+                
+                <table class="margin-left">
+                    <tr>
+                        <td class="name__title--fatura text-center text-bold">Sefip</td>
+                    </tr>
+                </table>
+    
+                <table class="margin-left margin-bottom">
+                    <tr>
+                        <td class="text-center small__font small__block destaque">FPAS</td>
+                        <td class="text-center small__font small__block destaque">Terceiros</td>
+                        <td class="text-center small__font small__block destaque">CNAE</td>
+                        <td class="text-center small__font small__block destaque">FAP</td>
+                        <td class="text-center small__font small__block destaque">RAT</td>
+                        <td class="text-center small__font small__block destaque">Ajustado</td>
+                        <td class="text-center small__font small__block destaque">Trabalhadores</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="text-center small__font small__block">{{$fatura->tomador->parametrosefip[0]->psfpas}}</td>
+                        <td class="text-center small__font small__block">{{$fatura->tomador->parametrosefip[0]->psfpasterceiros}}</td>
+                        <td class="text-center small__font small__block">{{$fatura->tomador->parametrosefip[0]->pscnae}}</td>
+                        <td class="text-center small__font small__block">{{number_format((float)$fatura->tomador->parametrosefip[0]->psfapaliquota, 3, ',', '.')}}</td>
+                        <td class="text-center small__font small__block">{{number_format((float)$fatura->tomador->parametrosefip[0]->psconfpas, 1, ',', '.')}}</td>
+                        <td class="text-center small__font small__block">{{number_format((float)$fatura->tomador->parametrosefip[0]->psratajustados, 2, ',', '.')}}</td>
+                        <td class="text-center small__font small__block">{{$fatura->fstrabalhador}}</td>
+                    </tr>
+                </table>
+            </div>
+        
+            <table class="margin-top">
+                <tr>
+                    <td class="border-right border-left border-bottom border-top item text-center small__font destaque text-bold">Item</td>
+                    <td class="border-right border-left border-bottom border-top descricao text-center small__font destaque text-bold">Descrição</td>
+                    <td class="border-right border-left border-bottom border-top unidades text-center small__font destaque text-bold">Unidades</td>
+                    <td class="border-right border-left border-bottom border-top text-center preco small__font destaque text-bold">Preço Unitário</td>
+                    <td class="border-right border-left border-bottom border-top text-center total small__font destaque text-bold">Total</td>
+                </tr>
+            </table>
+        
+    
+        <div id="footer">
+            <p class="page padding-footer" style="text-align: right">Página:  </p>
+        </div>
+
         <table>
 
             @foreach($fatura->faturarubrica as $rublicas)
             <tr>
-                <td class="text-center border-right border-left small__font item">{{$rublicas->rsitem}}</td>
-                <td class="descricao2 small__font">{{$rublicas->rsdescricao}}</td>
-                <td class="unidades text-center border-right border-left small__font">{{$rublicas->riunidade?number_format((float)$rublicas->riunidade, 2, ',', '.'):''}}</td>
-                <td class="text-center preco small__font border-right border-left">{{$rublicas->ripreco?number_format((float)$rublicas->ripreco, 2, ',', '.'):''}}</td>
-                <td class="text-center total small__font border-right border-left">{{$rublicas->ritotal?number_format((float)$rublicas->ritotal, 2, ',', '.'):''}}</td>
+                <td class="text-center border-right border-left small__font item border-bottom">{{$rublicas->rsitem}}</td>
+                <td class="descricao2 small__font border-bottom">{{$rublicas->rsdescricao}}</td>
+                <td class="unidades text-center border-right border-left small__font border-bottom">{{$rublicas->riunidade?number_format((float)$rublicas->riunidade, 2, ',', '.'):''}}</td>
+                <td class="text-center preco small__font border-right border-left border-bottom">{{$rublicas->ripreco?number_format((float)$rublicas->ripreco, 2, ',', '.'):''}}</td>
+                <td class="text-center total small__font border-right border-left border-bottom">{{$rublicas->ritotal?number_format((float)$rublicas->ritotal, 2, ',', '.'):''}}</td>
             </tr>
             @endforeach
 
@@ -588,14 +602,22 @@
             
             
         </table>
-
-        <table class="margin-top">
-            <tr>
-                <td class="small__font text-center footer"><strong>Banco:</strong> {{$fatura->tomador->bancario[0]->bsbanco}}</td>
-                <td class="small__font text-center footer"><strong>Agência:</strong> {{$fatura->tomador->bancario[0]->bsagencia}}</td>
-                <td class="small__font text-center footer"><strong>Conta:</strong> {{$fatura->tomador->bancario[0]->bsconta}}</td>
-            </tr>
-        </table>
+        
+        <div class="borderT margin-top margin-bottom">
+            <table class=" margin-bottom margin-top margin-left">
+                <tr>
+                    <td class="small__font text-center footer destaque">Banco</td>
+                    <td class="small__font text-center footer destaque">Agência</td>
+                    <td class="small__font text-center footer destaque">Conta</td>
+                </tr>
+                
+                <tr>
+                    <td class="small__font text-center footer">{{$fatura->tomador->bancario[0]->bsbanco}}</td>
+                    <td class="small__font text-center footer">{{$fatura->tomador->bancario[0]->bsagencia}}</td>
+                    <td class="small__font text-center footer">{{$fatura->tomador->bancario[0]->bsconta}}</td>
+                </tr>
+            </table>
+        </div>
 
         <div class="borderT margin-top">
             <table class="assinatura">
@@ -608,10 +630,10 @@
                 </tr>
             </table>
 
-            <table class="margin-top">
+            <table class="">
                 <tr>
-                <td class="fontDeclaracao data__ass  text-center cidade">{{date('d/m/Y')}}</td>
-                    <td class="fontDeclaracao data__ass  text-center cidade">{{$fatura->empresa->endereco[0]->esmunicipio}} - {{$fatura->empresa->endereco[0]->esuf}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">{{date('d/m/Y')}}</td>
+                    <td class="fontDeclaracao data__ass  text-center">{{$fatura->empresa->endereco[0]->esmunicipio}} - {{$fatura->empresa->endereco[0]->esuf}}</td>
                 </tr>
             </table>
         </div>

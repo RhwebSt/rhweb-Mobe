@@ -69,17 +69,17 @@ class FaturaController extends Controller
         $today = Carbon::today();
         
         $user = auth()->user();
-        if (strtotime($dados['ano_inicial']) > strtotime($today)) {
-            return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
-        }
-        if (strtotime($dados['ano_final']) > strtotime($today)) {
-            return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
-        }
+        // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
+        // }
+        // if (strtotime($dados['ano_final']) > strtotime($today)) {
+        //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
+        // }
         $verifica = $this->fatura->verificaFaturas($dados);
         if ($verifica) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
         }
-        try {
+        
         $dados['empresa'] = $user->empresa_id;
         $rublica = $this->rublica->get();
         $sim = [];
@@ -95,6 +95,7 @@ class FaturaController extends Controller
         $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
         $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
         $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
+        // dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
         if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
@@ -586,7 +587,7 @@ class FaturaController extends Controller
         //         $faturatotais = $this->faturatotal->cadastro($producao);
         //         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             // }
-        
+            try {
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
             // $this->faturaprincipal->deletarFatura($faturas['id']);
