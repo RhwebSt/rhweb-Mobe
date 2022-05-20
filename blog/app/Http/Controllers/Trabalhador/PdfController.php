@@ -22,12 +22,16 @@ class PdfController extends Controller
             // $trabalhadors = $trabalhador->roltrabalhado();  
             // $empresas = $empresa->buscaUnidadeEmpresa($user->empresa);
             $user = auth()->user();
-        try {
+            try {
+            
             $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
             $trabalhadors = $this->trabalhador->where('empresa_id',$user->empresa_id)
-            ->with(['documento','endereco','categoria','nascimento','bancario','depedente'])->get();
+            ->with(['documento:trabalhador_id,dspis','categoria:trabalhador_id,csadmissao,cssituacao','nascimento:trabalhador_id,nsnascimento','empresa:id,esnome,esfoto,escnpj','empresa.endereco'])
+            ->get();
+        
             $pdf = PDF::loadView('pdf',compact('trabalhadors','empresas'));
             return $pdf->setPaper('a4')->stream('relatoria.pdf');
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha de registro do trabalhador.']);
         }

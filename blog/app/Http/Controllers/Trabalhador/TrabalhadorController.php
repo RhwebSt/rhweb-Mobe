@@ -179,7 +179,17 @@ class TrabalhadorController extends Controller
             $nascimentos = $this->nascimento->cadastro($dados);
             $categorias = $this->categoria->cadastro($dados);
             $documentos = $this->documento->cadastro($dados);
-            $this->valorrublica->editarMatricular($dados,$user->empresa_id);
+            // $this->valorrublica->editarMatricular($dados,$user->empresa_id); 
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatricular >= 0) {
+                        $numero = $valorrublicas->vimatricular += 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vimatricular'=>$numero]);
+                    }
+                }
+            });
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         } catch (\Throwable $th) {
             // $this->nascimento->deletar($dados['trabalhador']);
@@ -187,6 +197,16 @@ class TrabalhadorController extends Controller
             // $this->documento->deletar($dados['trabalhador']);
             // $this->endereco->deletarTrabalhador($dados['trabalhador']);
             // $this->bancario->deletarTrabalhador($dados['trabalhador']);
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatricular > 0) {
+                        $numero = $valorrublicas->vimatricular -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vimatricular'=>$numero]);
+                    }
+                }
+            });
             $this->trabalhador->deletar($dados['trabalhador']);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
@@ -291,11 +311,22 @@ class TrabalhadorController extends Controller
      */
     public function destroy($id)
     {
+        $user = auth()->user();
         $trabalhador = $this->basecalculo->where('trabalhador_id',$id)->count();
         // $trabalhador = $this->basecalculo->verificaTrabalhador($id);
         if ($trabalhador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletador.']);
         }
+        $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatricular > 0) {
+                        $numero = $valorrublicas->vimatricular -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vimatricular'=>$numero]);
+                    }
+                }
+            });
         $this->trabalhador->deletar($id);
         // $campoendereco = 'trabalhador';
         // $campobacario = 'trabalhador';

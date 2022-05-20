@@ -22,8 +22,8 @@ class relatorioBoletimTabelaController extends Controller
     {
        $id = base64_decode($id);
        $user = auth()->user();
-       $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
-       $lancamentotabelas = $this->lancamentotabela->where('id',$id)->with(['lacamentorublica','tomador'])->first();
+    //    $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
+       $lancamentotabelas = $this->lancamentotabela->where('id',$id)->with(['lancamentorublica','tomador','empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco'])->first(); 
        
        $trabalhadores = DB::table('trabalhadors')
        ->join('lancamentorublicas', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador_id')
@@ -43,7 +43,7 @@ class relatorioBoletimTabelaController extends Controller
         //         array_push($dados,$value->trabalhador);
         //     }
         //     $trabalhadors = $this->trabalhador->relatorioBoletimTabela($dados);
-            $pdf = PDF::loadView('relatorioBoletimTabela',compact('lancamentotabelas','empresas','trabalhadores'));
+            $pdf = PDF::loadView('relatorioBoletimTabela',compact('lancamentotabelas','trabalhadores'));
             return $pdf->setPaper('a4')->stream('boletim_n°'.$id.'.pdf');
         //     try {
         // } catch (\Exception $e) {

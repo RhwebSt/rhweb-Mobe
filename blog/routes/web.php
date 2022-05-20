@@ -81,7 +81,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
     Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
     Route::get('relatorio/geral/tomador','Tomador\\relatorioTomadorController@relatorioGeral')->name('relatorio.geral.tomador');
-
+    Route::get('folhar/tomador/evento/1270/{tomador}/{folhar}','CalculoFolha\\Evento1270Controller@index')->name('folhar.tomador.evento.1270');
+    Route::get('folhar/tomador/resumo/pagamento/{tomador}/{folhar}','CalculoFolha\\FolhaPagamentoController@index')->name('folhar.tomador.resumo.pagamento');
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
     Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');

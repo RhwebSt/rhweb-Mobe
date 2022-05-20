@@ -98,7 +98,7 @@ class SefipController extends Controller
          for ($i=0; $i < (2 - $uf); $i++) { 
             $cd .= ' ';
          }
-         $telefone = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->estelefone);
+         $telefone = str_replace(array(".", ",", "-", "/","(",")"," "), "",$sefip->folhar->empresa->estelefone);
          $cd .= $telefone;
          $telefone = strlen($telefone);
          for ($i=0; $i < (12-$telefone); $i++) { 

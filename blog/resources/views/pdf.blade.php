@@ -11,12 +11,12 @@
     <style>
     
         @page { 
-              margin-top: 230px; 
+              margin-top: 250px; 
               margin-bottom: 30px;
               margin-left: 10px;
               margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: -230px; right: 0px; height: 230px; background-color:; text-align: center; }
+        #header { position: fixed; left: 0px; top: -250px; right: 0px; height: 250px; background-color:; text-align: center; }
         #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
     

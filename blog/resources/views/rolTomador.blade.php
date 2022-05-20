@@ -10,13 +10,13 @@
     <style>
     
         @page { 
-              margin-top: 230px; 
-              margin-bottom: 60px;
+              margin-top: 250px; 
+              margin-bottom: 30px;
               margin-left: 10px;
               margin-right: 10px;
         }
-        #header { position: fixed; left: 0px; top: 230px; right: 0px; height: 230px; background-color:; text-align: center; }
-        #footer { position: fixed; left: 0px; bottom: -60px; right: 0px; height: 60px; text-align: end; }
+        #header { position: fixed; left: 0px; top: -250px; right: 0px; height: 250px; background-color:; text-align: center; }
+        #footer { position: fixed; left: 0px; bottom: -30px; right: 0px; height: 55px; text-align: end; }
         #footer .page:after { content: counter(page, upper); }
     
     
@@ -27,7 +27,7 @@
         body{
             font-family:sans-serif;
         }
-        
+
         td{
             padding-left:5px;
         }
@@ -39,18 +39,9 @@
           margin-bottom: 10px;
           text-transform: uppercase;
         }
-    
-        table{
-          margin: 0;
-          padding: 0;
-          text-transform: capitalize;
-           border-collapse: collapse;
-        
-          
-        }
-    
+
         .matricula{
-          width:24px;
+          width:50px;
         }
     
         .matricula2{
@@ -58,7 +49,7 @@
         }
     
         .nome{
-          width:500px;
+          width:474px;
         }
     
         .nome2{
@@ -169,7 +160,7 @@
         }
     
         .small__font{
-            font-size:11.5px
+            font-size:12.5px
         }
     
         .little__font{
@@ -277,7 +268,7 @@
                     </tr>
                     
                     <tr>
-                        <td class="padding-left-foto text-bold">{{$empresa->esnome}}</td>
+                        <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
                     </tr>
         
                     <tr>
@@ -317,18 +308,23 @@
     
         </div>
         
-        <div id="footer">
-            <p class="page" style="text-align: right">Página:  </p>
-        </div>
+        
         
         <div id="content">
             <div class="">
     
                 <table>
-                    @foreach($tomadores as $tomador)
+                    <tr class="bottom">
+                        <td class="matricula small__font border-right border-top text-center border-left border-bottom destaque text-bold">Matríc</td>
+                        <td class="nome small__font border-right border-left border-bottom border-top destaque text-center text-bold">Nome</td>
+                        <td class="cnpj small__font border-right border-left border-bottom text-center border-top destaque text-bold">Cnpj</td>
+                        <td class="telefone small__font border-right border-left border-bottom text-center border-top destaque text-bold">Telefone</td>
+                    </tr>
+                    
+                   @foreach($empresas->tomador as $tomador)
                     <tr class="bottom">
                         <td class="matricula small__font border-right border-top text-center border-left border-bottom uppercase">{{$tomador->tsmatricula}}</td>
-                        <td class="nome small__font border-right border-left border-bottom border-top  uppercase">{{$tomador->tsnome}}</td>
+                        <td class="nome small__font border-right border-left border-bottom border-top  uppercase text-center">{{$tomador->tsnome}}</td>
                         <td class="cnpj small__font border-right border-left border-bottom text-center border-top  uppercase">{{$tomador->tscnpj}}</td>
                         <td class="telefone small__font border-right border-left border-bottom text-center border-top  uppercase">{{$tomador->tstelefone}}</td>
                     </tr>
@@ -336,6 +332,10 @@
                 </table>
         
             </div>
+        </div>
+        
+        <div id="footer">
+            <p class="page" style="text-align: right">Página:  </p>
         </div>
     </body>
 </html>

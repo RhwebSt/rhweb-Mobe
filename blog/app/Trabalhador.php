@@ -11,7 +11,7 @@ class Trabalhador extends Model
     ];
     public function empresa()
     {
-        return $this->hasMany(Empresa::class);
+        return $this->belongsTo(Empresa::class);
     }
     public function esocial()
     {

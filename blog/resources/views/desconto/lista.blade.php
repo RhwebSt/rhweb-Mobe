@@ -165,11 +165,11 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <form action="{{route('descontos.destroy',$desconto->id)}}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                            <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
-                                        </form>
+                                        <!--<form action="{{route('descontos.destroy',$desconto->id)}}" method="post">-->
+                                        <!--@csrf-->
+                                        <!--@method('delete')-->
+                                            <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteDescontos"><i class="icon__color fad fa-trash"></i></button>
+                                        <!--</form>-->
                                     </td>
                                     
                                 </tr>
@@ -202,25 +202,32 @@
     </div>
 </div>
 
-<section class="delete__descontos">
+<section class="delete__tabela--descontos">
     <div class="modal fade" id="deleteDescontos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-dialog-centered col-8">
             <div class="modal-content">
                 <form action="" id="formdelete" method="post">
                     @csrf
                     @method('delete')
                     <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-lg fa-percentage"></i></h5>
+                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                         <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
                     
-                    <div class="modal-body body__modal">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    <div class="modal-body body__modal ">
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                            
+                                <p class="content--deletar">Deseja realmente excluir?</p>
+                                
+                                <p class="content--deletar2">Obs: A exclusão pode afetar em outros cálculos.</p>
+                                
+                            </div>
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn__deletar">Deletar</button>
+                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

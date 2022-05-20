@@ -252,8 +252,8 @@
                                                     <i class="icon__color fas fa-file-alt"></i>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item modal-botao" href="#"><i class="fas fa-file"></i> Resumo Folha de Pagamento</a></li>
-                                                    <li><a class="dropdown-item modal-botao" href="#"><i class="fad fa-file-invoice"></i> Resumo Evento s-1270</a></li>
+                                                    <li><a class="dropdown-item modal-botao" href="{{route('folhar.tomador.resumo.pagamento',[base64_encode($tomador->id),base64_encode($folhar->id)])}}"><i class="fas fa-file"></i> Resumo Folha de Pagamento</a></li>
+                                                    <li><a class="dropdown-item modal-botao" href="{{route('folhar.tomador.evento.1270',[base64_encode($tomador->id),base64_encode($folhar->id)])}}"><i class="fad fa-file-invoice"></i> Resumo Evento s-1270</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -613,8 +613,8 @@
                                         </td>
                                                 
                                         <td class="td__body text-nowrap col" style="width:60px;">
-                                        
-                                            <a href="{{route('calculo.folha.deletar',$folhar->id)}}" class="btn button__excluir"><i class="icon__color fad fa-trash"></i></a>
+                                            <!--{{route('calculo.folha.deletar',$folhar->id)}}-->
+                                            <a href="" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCalculoFolha"><i class="icon__color fad fa-trash"></i></a>
                                      
                                         </td>
                                             
@@ -647,24 +647,32 @@
 </main>
 
         
-<section class="delete__tabela--tomador">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+<section class="delete__tabela--calculoFolha">
+    <div class="modal fade" id="deleteCalculoFolha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered col-8">
             <div class="modal-content">
                 <form action="" id="formdelete" method="post">
                     @csrf
                     @method('delete')
-                    <div class="modal-header modal__delete">
-                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header header__modal">
+                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
-                    <div class="modal-body modal-delbody">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    
+                    <div class="modal-body body__modal ">
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                            
+                                <p class="content--deletar">Deseja realmente excluir?</p>
+                                
+                                <p class="content--deletar2">Obs: A exclusão pode afetar em outros cálculos.</p>
+                                
+                            </div>
                     </div>
-                    <div class="modal-footer modal-delfooter">
-                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn__deletar">Deletar</button>
-    
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

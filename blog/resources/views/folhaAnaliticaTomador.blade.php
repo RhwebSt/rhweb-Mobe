@@ -231,6 +231,7 @@
         <?php
             $resumo_geral=[
                 'produção'=> 0,
+                'COMISSIONADO'=>0,
                 'dsr'=>0,
                 'Férias'=>0,
                 'VT'=>0,
@@ -253,7 +254,14 @@
                 <div class="margin-top borderT">
                     <table class="margin-top">
                         <tr>
-                            <td class="name__title text-center text-bold">{{$valor->trabalhador->tsmatricula}} - {{$valor->trabalhador->tsnome}}</td>
+                            <td class="name__title text-center text-bold">{{$valor->trabalhador->tsmatricula}} - {{$valor->trabalhador->tsnome}}
+                            @foreach($valor->valorcalculo as $rublica)
+                                    @if($rublica->vivencimento && mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'COMISSIONADO') !== false)
+                                      {{'(COMISSIONADO)'}}
+                                      <?php $resumo_geral['COMISSIONADO'] += $rublica->vivencimento;?>
+                                    @endif
+                                  @endforeach
+                            </td>
                         </tr>
                     </table>
                     
@@ -363,13 +371,18 @@
                             </td>
                             
                             <td class="small__font text-center field__padrao">
-                                
+                            @foreach($valor->valorcalculo as $rublica)
+                                    @if(mb_strpos(mb_strtoupper($rublica->vsdescricao,'UTF-8'), 'COMISSIONADO') !== false)
+                                      {{$rublica->videscinto?number_format((float)$rublica->videscinto, 2, ',', '.'):''}}
+                                      
+                                    @endif
+                                  @endforeach
                             </td>
                             
                             <td class="small__font text-center field__padrao">
                                 @foreach($valor->valorcalculo as $d => $valor_inss)
                                     @if(mb_strtoupper($valor_inss->vsdescricao,'UTF-8') === "INSS")
-                                    {{$valor_inss->vsdescricao}}
+                                
                                       {{$valor_inss->videscinto?number_format((float)$valor_inss->videscinto, 2, ',', '.'):''}}
                                       <?php $resumo_geral['INSS'] += $valor_inss->videscinto;?>
                                     @endif
@@ -467,7 +480,7 @@
                     <tr>
                         <td class="small__font text-center field__padrao">{{$resumo_geral['INSS 13º Sal']?number_format((float)$resumo_geral['INSS 13º Sal'], 2, ',', '.'):''}}</td>
                         <td class="small__font text-center field__padrao">{{$resumo_geral['IRRF']?number_format((float)$resumo_geral['IRRF'], 2, ',', '.'):''}}</td>
-                        <td class="small__font text-center field__padrao"></td>
+                        <td class="small__font text-center field__padrao">{{$resumo_geral['COMISSIONADO']?number_format((float)$resumo_geral['COMISSIONADO'], 2, ',', '.'):''}}</td>
                         <td class="small__font text-center field__padrao">{{$resumo_geral['INSS']?number_format((float)$resumo_geral['INSS'], 2, ',', '.'):''}}</td>
                         <td class="small__font text-center field__padrao">{{$resumo_geral['Vale']?number_format((float)$resumo_geral['Vale'], 2, ',', '.'):''}}</td>
                         <td class="small__font text-center field__padrao">{{$resumo_geral['Seguro']?number_format((float)$resumo_geral['Seguro'], 2, ',', '.'):''}}</td>

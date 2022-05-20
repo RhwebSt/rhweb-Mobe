@@ -210,12 +210,12 @@
         <body>
             <div id="header">
             
-                <div class="borderT margin-top">
+                <div class="borderT margin-top"> 
                     <table>
                         <tr>
                             <td rowspan="7" style="padding-left: 15px">
-                                @if($empresas->esfoto)
-                                    <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
+                                @if($lancamentotabelas->empresa->esfoto)
+                                    <img class="logo" src="{{$lancamentotabelas->empresa->esfoto}}" alt="" srcset="">
                                 @else
                                     @include('imagem')
                                 @endif
@@ -223,23 +223,23 @@
                         </tr>
                         
                         <tr>
-                            <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
+                            <td class="padding-left-foto text-bold">{{$lancamentotabelas->empresa->esnome}}</td>
                         </tr>
             
                         <tr>
-                            <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
+                            <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$lancamentotabelas->empresa->escnpj}}</td>
                         </tr>
             
                         <tr>
-                            <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                            <td class="small__font padding-left-foto">Rua: {{$lancamentotabelas->empresa->endereco[0]->eslogradouro}}, {{$lancamentotabelas->empresa->endereco[0]->esnum}} - {{$lancamentotabelas->empresa->endereco[0]->escep}}</td>
                         </tr>
             
                         <tr>
-                            <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                            <td class="small__font padding-left-foto">Bairro: {{$lancamentotabelas->empresa->endereco[0]->esbairro}} - {{$lancamentotabelas->empresa->endereco[0]->esuf}}</td>
                         </tr>
             
                         <tr>
-                            <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
+                            <td class="small__font padding-left-foto">Tel: {{$lancamentotabelas->empresa->estelefone}}</td>
                         </tr>
             
                     </table>

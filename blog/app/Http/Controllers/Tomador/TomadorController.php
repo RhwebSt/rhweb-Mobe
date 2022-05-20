@@ -176,9 +176,11 @@ class TomadorController extends Controller
                 $this->valorrublica->where('id', $user->empresa_id)
                 ->chunkById(100, function ($valorrublica) use ($user) {
                     foreach ($valorrublica as $valorrublicas) {
-                        $numero = $valorrublicas->vimatriculartomador += 1;
-                        $this->valorrublica->where('empresa_id', $user->empresa_id)
-                        ->update(['vsnrofolha'=>$numero]);
+                        if ($valorrublicas->vimatriculartomador >= 0) {
+                            $numero = $valorrublicas->vimatriculartomador += 1;
+                            $this->valorrublica->where('empresa_id', $user->empresa_id)
+                            ->update(['vimatriculartomador'=>$numero]);
+                        }
                     }
                 });
                 return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
@@ -193,6 +195,16 @@ class TomadorController extends Controller
             // $this->endereco->deletarTomador($dados['tomador']);
             // $this->bancario->deletarTomador($dados['tomador']);
             // $this->tabelapreco->deletatomador($dados['tomador']);
+            $this->valorrublica->where('id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatriculartomador > 0) {
+                        $numero = $valorrublicas->vimatriculartomador -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vimatriculartomador'=>$numero]);
+                    }
+                }
+            });
             $this->tomador->deletar($dados['tomador']); 
             return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
@@ -338,9 +350,11 @@ class TomadorController extends Controller
         $this->valorrublica->where('id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
-                $numero = $valorrublicas->vimatriculartomador -= 1;
-                $this->valorrublica->where('empresa_id', $user->empresa_id)
-                ->update(['vsnrofolha'=>$numero]);
+                if ($valorrublicas->vimatriculartomador > 0) {
+                    $numero = $valorrublicas->vimatriculartomador -= 1;
+                    $this->valorrublica->where('empresa_id', $user->empresa_id)
+                    ->update(['vimatriculartomador'=>$numero]);
+                }
             }
         });
         $tomadors = $this->tomador->deletar($id); 

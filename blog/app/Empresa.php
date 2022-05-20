@@ -39,11 +39,11 @@ class Empresa extends Model
     }
     public function trabalhador()
     {
-        return $this->belongsTo(Trabalhador::class);
+        return $this->hasMany(Trabalhador::class);
     }
     public function tomador()
     {
-        return $this->belongsTo(Tomador::class);
+        return $this->hasMany(Tomador::class);
     }
     public function endereco()
     {

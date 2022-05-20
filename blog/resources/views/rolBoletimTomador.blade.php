@@ -416,8 +416,7 @@
                 ?>
             <table>
             <?php
-                $valortotal = 0;
-                $valortomador = 0;
+               
                  $rublica = [
                     'numero'=>[],
                     'data'=>[],
@@ -426,6 +425,8 @@
                 ];
                 foreach ($boletim as $i => $bolcartaoponto) {
                     if ($bolcartaoponto->lsstatus === 'D') {
+                        $valortotal = 0;
+                        $valortomador = 0;
                         if (!in_array($bolcartaoponto->liboletim,$rublica['numero'])) {
                             array_push($rublica['numero'],$bolcartaoponto->liboletim);
                             array_push($rublica['data'],$bolcartaoponto->lsdata);
@@ -561,7 +562,10 @@
                     <td class="border-left border-top border-bottom border-right small__font text-center destaque text-bold pad2">Valor Item</td>
                     <td class="border-left border-top border-bottom border-right small__font text-center destaque text-bold pad2">Valor Total</td>
                 </tr>
-                
+                <?php
+                    $valortotal = 0;
+                    $valordiaria = 0;
+                ?>
                 @foreach ($boletim[0]->tomador->tabelapreco as $key => $tabelapreco) {
                     @foreach($listarublica['codigo'] as $e => $listarublicas)
                         @if($listarublicas == $tabelapreco->tsrubrica)
@@ -569,24 +573,35 @@
                                 <td class="border-left border-top border-bottom border-right small__font text-center cod">{{$listarublicas}}</td>
                                 <td class="border-left border-top border-bottom border-right small__font text-center desc">{{$tabelapreco->tsdescricao}}</td>
                                 <td class="border-left border-top border-bottom border-right small__font text-center pad2">{{number_format((float)$listarublica['quantidade'][$e], 2, ',', '.')}}</td>
-                                <td class="border-left border-top border-bottom border-right small__font text-center pad2">999.999.999,99</td>
-                                <td class="border-left border-top border-bottom border-right small__font text-center pad2">999.999.999,99</td>
+                                <td class="border-left border-top border-bottom border-right small__font text-center pad2">{{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}</td>
+                                <td class="border-left border-top border-bottom border-right small__font text-center pad2">{{number_format((float)$listarublica['quantidade'][$e] * $tabelapreco->tstomvalor, 2, ',', '.')}}</td>
                             </tr>
+                            <?php 
+                                $valortotal += $listarublica['quantidade'][$e] * $tabelapreco->tstomvalor; 
+                            ?>
                         @endif
                     @endforeach
                 @endforeach
-                
+                <?php
+                    foreach ($boletim[0]->tomador->tabelapreco as $key => $tabela) {
+                        foreach($listarublica['codigo'] as $e => $listarublicas){
+                            if ($tabela->tsrubrica == 1000 && $listarublicas == $tabela->tsrubrica) {
+                                $valordiaria = $valortotal / $tabela->tstomvalor;
+                            }
+                        }
+                    }
+                ?>
             </table>
 
             <table>
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center total__bol">Total dos Boletins</td>
-                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3"></td>
+                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">{{number_format((float)$valortotal, 2, ',', '.')}}</td>
                 </tr>
 
                 <tr>
                     <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center total__bol">Total de Diárias</td>
-                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3"></td>
+                    <td class="border-left border-top border-bottom border-right small__font destaque text-bold text-center pad3">{{number_format((float)$valordiaria, 2, ',', '.')}}</td>
                 </tr>
             </table>
         </div>

@@ -64,7 +64,7 @@
                                 @if(count($lista) > 0)
                                 @foreach($lista as $listas)
                                     <tr class="tr__body">
-                                        <td class="td__body text-nowrap col limitaCarcteres text-black" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
+                                        <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
                                         <td class="td__body text-nowrap col" style="width:70px">{{$listas->licodigo}}</td>
                                         <td class="td__body text-nowrap col  limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->lshistorico}}">{{$listas->lshistorico}}</td>
                                         <td class="td__body text-nowrap col" style="width:100px">
@@ -82,11 +82,11 @@
                                         </td>
                                         <td class="td__body text-nowrap col" style="width:70px">
                                             
-                                            <form action="{{route('boletim.tabela.destroy',$listas->id)}}"  method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn button__excluir modal-botao"><i class="icon__color fad fa-trash"></i></button>
-                                            </form> 
+                                            <!--<form action="{{route('boletim.tabela.destroy',$listas->id)}}"  method="post">-->
+                                            <!--    @csrf-->
+                                            <!--    @method('delete')-->
+                                                <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteBoletimTabPrecoInside"><i class="icon__color fad fa-trash"></i></button>
+                                            <!--</form> -->
                                             
                                         </td>
                                     </tr>
@@ -126,24 +126,32 @@
     </div>
 </div>
               
-<section class="delete__tabela--tomador">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+<section class="delete__tabela--boletim">
+    <div class="modal fade" id="deleteBoletimTabPrecoInside" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered col-8">
             <div class="modal-content">
                 <form action="" id="formdelete" method="post">
                     @csrf
                     @method('delete')
-                    <div class="modal-header modal__delete">
-                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header header__modal">
+                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
-                    <div class="modal-body modal-delbody">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    
+                    <div class="modal-body body__modal ">
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                            
+                                <p class="content--deletar">Deseja realmente excluir?</p>
+                                
+                                <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos</p>
+                                
+                            </div>
                     </div>
-                    <div class="modal-footer modal-delfooter">
-                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn__deletar">Deletar</button>
-    
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

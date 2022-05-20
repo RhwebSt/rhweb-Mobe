@@ -214,7 +214,7 @@
                 <table >
                     <tr>
                     <td rowspan="7" style="padding-left: 15px">
-                            @if($empresas->esfoto)
+                            @if($lancamentotabelas->empresa->esfoto)
                                 <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
                             @else
                                 @include('imagem')
@@ -223,23 +223,23 @@
                     </tr>
                     
                     <tr>
-                        <td class="padding-left-foto text-bold">{{$empresas->esnome}}</td>
+                        <td class="padding-left-foto text-bold">{{$lancamentotabelas->empresa->esnome}}</td>
                     </tr>
         
                     <tr>
-                        <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$empresas->escnpj}}</td>
+                        <td class="small__font padding-left-foto">CNPJ/MF Nroº : {{$lancamentotabelas->empresa->escnpj}}</td>
                     </tr>
         
                     <tr>
-                        <td class="small__font padding-left-foto">Rua: {{$empresas->endereco[0]->eslogradouro}}, {{$empresas->endereco[0]->esnum}} - {{$empresas->endereco[0]->escep}}</td>
+                        <td class="small__font padding-left-foto">Rua: {{$lancamentotabelas->empresa->endereco[0]->eslogradouro}}, {{$lancamentotabelas->empresa->endereco[0]->esnum}} - {{$lancamentotabelas->empresa->endereco[0]->escep}}</td>
                     </tr>
         
                     <tr>
-                        <td class="small__font padding-left-foto">Bairro: {{$empresas->endereco[0]->esbairro}} - {{$empresas->endereco[0]->esuf}}</td>
+                        <td class="small__font padding-left-foto">Bairro: {{$lancamentotabelas->empresa->endereco[0]->esbairro}} - {{$lancamentotabelas->empresa->endereco[0]->esuf}}</td>
                     </tr>
         
                     <tr>
-                        <td class="small__font padding-left-foto">Tel: {{$empresas->estelefone}}</td>
+                        <td class="small__font padding-left-foto">Tel: {{$lancamentotabelas->empresa->estelefone}}</td>
                     </tr>
         
                 </table>
@@ -337,7 +337,7 @@
                         <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center quant">Quantidade</td>
                         <td class="border-left border-right border-top border-bottom destaque small__font text-bold  text-center valor__total">Valor Total</td>
                     </tr>
-                    @foreach($lancamentotabelas->lacamentorublica as $lancamentotabela)
+                    @foreach($lancamentotabelas->lancamentorublica as $lancamentotabela)
                     @if($lancamentotabela->trabalhador_id === $trabalhador->id)
                     <tr>
                         <td class="border-left border-right border-top border-bottom small__font matric text-center">{{$lancamentotabela->licodigo}}</td>
@@ -388,7 +388,7 @@
                                 $dados = [];
                                 $total = 0;
                                 $totaltomador = 0;
-                                foreach ($lancamentotabelas->lacamentorublica as $key => $value) {
+                                foreach ($lancamentotabelas->lancamentorublica as $key => $value) {
                                     if (!in_array($value->licodigo, $dados)) {
                                         array_push($dados,$value->licodigo.':'.$value->lshistorico);
                                     }
@@ -399,7 +399,7 @@
                                     $quantidade = 0;
                                     $valor = 0;
                                     $valor2 = 0;
-                                    foreach ($lancamentotabelas->lacamentorublica as $key => $value) {
+                                    foreach ($lancamentotabelas->lancamentorublica as $key => $value) {
                                         if ($value->licodigo == $codigo[0]) {
                                             $quantidade +=  quantidade($value->lsquantidade);
                                             $valor +=  calculovalores($value->lsquantidade,$value->lfvalor);
