@@ -381,7 +381,7 @@
                 
                 <tr>
                     <td class="small__font padr text-center">{{$fatura->tomador->tsmatricula}}</td>
-                    <td class="small__font padr text-center">{{$fatura->tomador->tsmatricula}}</td>
+                    <td class="small__font padr text-center">{{$fatura->tomador->tscnpj}}</td>
                     <td class="small__font padr text-center">{{$fatura->tomador->tstelefone}}</td>
                 </tr>
                 
@@ -500,8 +500,8 @@
     
                 <tr>
                     <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[1]->fsdescricao}}</td>
-                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[1]->fiindece?number_format((float)$fatura->faturasecundaria[1]->fiindece, 2, ',', '.'):''}}</td>
-                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[1]->fivalor?number_format((float)$fatura->faturasecundaria[1]->fivalor, 2, ',', '.'):''}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[1]->fivalor?number_format((float)$fatura->faturasecundaria[1]->fiindece, 2, ',', '.'):'0,00'}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[1]->fivalor?number_format((float)$fatura->faturasecundaria[1]->fivalor, 2, ',', '.'):'0,00'}}</td>
                     <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[1]->dsdescricao}}</td>
                     <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[1]->fiindece?number_format((float)$fatura->faturadesmostrativa[1]->fiindece, 2, ',', '.'):''}}</td>
                     <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturadesmostrativa[1]->fivalor?number_format((float)$fatura->faturadesmostrativa[1]->fivalor, 2, ',', '.'):''}}</td>
@@ -512,8 +512,8 @@
     
                 <tr>
                     <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturasecundaria[2]->fsdescricao}}</td>
-                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{number_format((float)$fatura->faturasecundaria[2]->fiindece, 2, ',', '.')}}</td>
-                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{number_format((float)$fatura->faturasecundaria[2]->fivalor, 2, ',', '.')}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturasecundaria[2]->fivalor?number_format((float)$fatura->faturasecundaria[2]->fiindece, 2, ',', '.'):'0,00'}}</td>
+                    <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturasecundaria[2]->fivalor?number_format((float)$fatura->faturasecundaria[2]->fivalor, 2, ',', '.'):'0,00'}}</td>
                     <td class="small__font border-bottom border-left border-right border-top producao text-bold">{{$fatura->faturadesmostrativa[2]->dsdescricao}}</td>
                     <td class="small__font border-bottom border-left border-right border-top indice text-center">{{$fatura->faturadesmostrativa[2]->fiindece?number_format((float)$fatura->faturadesmostrativa[2]->fiindece, 2, ',', '.'):''}}</td>
                     <td class="small__font border-bottom border-left border-right border-top vlr text-center">R$ {{$fatura->faturadesmostrativa[2]->fivalor?number_format((float)$fatura->faturadesmostrativa[2]->fivalor, 2, ',', '.'):''}}</td>

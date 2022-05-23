@@ -226,6 +226,7 @@ class TomadorController extends Controller
     public function pesquisa($id)
     {
         // $tomadors = $this->tomador->pesquisa($id);
+        
         $tomadors = $this->tomador->where(function($query) use ($id){
             $user = auth()->user();
             if ($id) {

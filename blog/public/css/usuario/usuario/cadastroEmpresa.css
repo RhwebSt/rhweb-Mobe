@@ -1,0 +1,68 @@
+body{
+    background-color: #1C2021;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+main{
+    position: relative;
+    margin-bottom: 150px;
+}
+
+input, select{
+    background-color: #546063 !important;
+    color: white !important;
+}
+
+footer{
+    text-align:center;
+    font-size: 14px;
+    padding:15px;
+    background-color:rgb(33,37,41);
+}
+
+.text__welcome{
+    font-size: 60px;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.foto__empresa{
+    margin-top: 20px;
+    width:150px;
+    height:150px;
+}
+
+.title__principal{
+    margin-top: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size:1.5rem;
+}
+
+.required{
+    color:red;
+}
+
+.botao__cadastrar{
+    margin-top: 15px;
+    background-color: #07875A;
+    color: white;
+    border-radius:8px;
+    transition: 300ms ease-in-out;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.botao__cadastrar:hover{
+    transform: scale(1.06);
+    background-color: #044E34;
+    color: white;
+    transition: 300ms ease-in-out;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}

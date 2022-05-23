@@ -77,7 +77,7 @@ class calculoFolhaGeralController extends Controller
         // }
         // $this->valorrublica->where('empresa_id', $user->empresa_id)
         // ->update(['vsnrofolha'=>$valorrublica->vsnrofolha]);
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
                 if ($valorrublicas->vsnrofolha >= 0) {
@@ -85,6 +85,7 @@ class calculoFolhaGeralController extends Controller
                     $this->valorrublica->where('empresa_id', $user->empresa_id)
                     ->update(['vsnrofolha'=>$numero]);
                 }
+               
             }
         });
         $valorrublica = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
@@ -109,7 +110,7 @@ class calculoFolhaGeralController extends Controller
             ];
            
             $lancamentotabela = $this->lancamentotabela
-            ->with(['lacamentorublica','bolcartaoponto'])
+            ->with(['lancamentorublica','bolcartaoponto'])
             ->whereBetween('lsdata',[$datainicio,$datafinal])
             ->where('tomador_id',$tomadores->id)
             ->get();
@@ -154,7 +155,7 @@ class calculoFolhaGeralController extends Controller
                       
                     }
                 }
-                foreach ($lancamentotabelas->lacamentorublica as $key => $lancamentorublicas) {
+                foreach ($lancamentotabelas->lancamentorublica as $key => $lancamentorublicas) {
                     if ($lancamentorublicas->lsdescricao == 'hora normal') {
                         array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                         array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
@@ -212,6 +213,7 @@ class calculoFolhaGeralController extends Controller
             }
             
             $trabalhador = $this->trabalhador->whereIn('id',$dados['id'])
+            // ->select('')
             ->with('depedente')->get();
             $valor_comissionador = [
                 'id'=>[],
@@ -639,12 +641,14 @@ class calculoFolhaGeralController extends Controller
                         $this->valorcalculo->cadastroDiarianormal($boletim);
                     }
                 
-                    if ($boletim['va']['valor']) {
-                        $this->valorcalculo->cadastroVa($boletim);
-                    }
-                    if ($boletim['vt']['valor']) {
-                        $this->valorcalculo->cadastroVt($boletim);
-                    }
+                    // if ($boletim['va']['valor']) {
+                    //     
+                    // }
+                    // if ($boletim['vt']['valor']) {
+                    //     
+                    // }
+                    $this->valorcalculo->cadastroVa($boletim);
+                    $this->valorcalculo->cadastroVt($boletim);
                     $this->valorcalculo->cadastrodsr($boletim);
                     $this->valorcalculo->cadastrodecimo_ter($boletim);
                     $this->valorcalculo->cadastroferias_decimoter($boletim);
@@ -1064,13 +1068,14 @@ class calculoFolhaGeralController extends Controller
                     if ($boletim['diarianormal']['valor']) {
                         $this->valorcalculo->cadastroDiarianormal($boletim);
                     }
-                    if ($boletim['va']['valor']) {
-                        $this->valorcalculo->cadastroVa($boletim);
-                    }
-                    if ($boletim['vt']['valor']) {
-                        $this->valorcalculo->cadastroVt($boletim);
-                    }
-                   
+                    // if ($boletim['va']['valor']) {
+                        
+                    // }
+                    // if ($boletim['vt']['valor']) {
+                       
+                    // }
+                    $this->valorcalculo->cadastroVt($boletim);
+                    $this->valorcalculo->cadastroVa($boletim);
                     $this->valorcalculo->cadastrodsr($boletim);
                     $this->valorcalculo->cadastrodecimo_ter($boletim);
                     $this->valorcalculo->cadastroferias_decimoter($boletim);
@@ -1422,7 +1427,7 @@ class calculoFolhaGeralController extends Controller
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         try { 
       } catch (\Throwable $th) {
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
                 if ($valorrublicas->vsnrofolha > 0) {
@@ -1450,7 +1455,7 @@ class calculoFolhaGeralController extends Controller
             // $this->relacaodia->deletar($base_id);
             // $this->basecalculo->deletar($base_id);
             $user = auth()->user();
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vsnrofolha > 0) {

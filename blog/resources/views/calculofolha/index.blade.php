@@ -614,7 +614,39 @@
                                                 
                                         <td class="td__body text-nowrap col" style="width:60px;">
                                             <!--{{route('calculo.folha.deletar',$folhar->id)}}-->
-                                            <a href="" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCalculoFolha"><i class="icon__color fad fa-trash"></i></a>
+                                            
+                                            <a href="" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCalculoFolha{{$folhar->id}}"><i class="icon__color fad fa-trash"></i></a>
+                                            <section class="delete__tabela--calculoFolha">
+                                                <div class="modal fade" id="deleteCalculoFolha{{$folhar->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered col-8">
+                                                        <div class="modal-content">
+                                                            <form action="{{route('calculo.folha.deletar',$folhar->id)}}" id="formdelete" method="get">
+                                                                
+                                                                <div class="modal-header header__modal">
+                                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                                </div>
+                                                                
+                                                                <div class="modal-body body__modal ">
+                                                                        <div class="d-flex align-items-center justify-content-center flex-column">
+                                                                            <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                        
+                                                                            <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                            
+                                                                            <p class="content--deletar2">Obs: A exclusão pode afetar em outros cálculos.</p>
+                                                                            
+                                                                        </div>
+                                                                </div>
+                                                                
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                                    <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
                                      
                                         </td>
                                             
@@ -647,38 +679,7 @@
 </main>
 
         
-<section class="delete__tabela--calculoFolha">
-    <div class="modal fade" id="deleteCalculoFolha" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-8">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                    
-                    <div class="modal-body body__modal ">
-                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
-                            
-                                <p class="content--deletar">Deseja realmente excluir?</p>
-                                
-                                <p class="content--deletar2">Obs: A exclusão pode afetar em outros cálculos.</p>
-                                
-                            </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+
         
 <script>
             $(document).ready(function(){
@@ -784,7 +785,7 @@
                                 });
                                 $('#listatomador').html(nome)
                             } 
-                            if(data.length === 1 && dados.length >= 2){
+                            if(data.length === 1){
                                 $('#tomador').val(data[0].tomador)
                             }
                         }

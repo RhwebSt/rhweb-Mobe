@@ -345,18 +345,17 @@
                 <td class="small__font border-left border-right text-center descontos text-bold border-bottom border-top destaque">Descontos</td>
             </tr>
             @foreach($folhas->valorcalculo as $v => $valorcalculo)
-                    
-            <tr>
-                <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
-                <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
-                <td class="small__font border-left text-center referencia border-bottom">
-                    {{ $valorcalculo->vireferencia?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
-                </td>
-                <td class="small__font border-left text-center vencimentos border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
-                <td class="small__font border-left border-right text-center descontos border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}</td>
-            </tr>
-                    
-                   
+                @if($valorcalculo->vivencimento || $valorcalculo->videscinto)
+                    <tr>
+                        <td class="small__font border-left cod text-center border-bottom">{{$valorcalculo->vicodigo}}</td>
+                        <td class="small__font border-left descricao border-bottom">{{$valorcalculo->vsdescricao}}</td>
+                        <td class="small__font border-left text-center referencia border-bottom">
+                            {{ $valorcalculo->vivencimento?number_format((float)$valorcalculo->vireferencia, 2, ',', '.'):''}}
+                        </td>
+                        <td class="small__font border-left text-center vencimentos border-bottom">{{$valorcalculo->vivencimento?number_format((float)$valorcalculo->vivencimento, 2, ',', '.'):''}}</td>
+                        <td class="small__font border-left border-right text-center descontos border-bottom">{{$valorcalculo->videscinto?number_format((float)$valorcalculo->videscinto, 2, ',', '.'):''}}</td>
+                    </tr>
+                @endif
             @endforeach
     
         </table>

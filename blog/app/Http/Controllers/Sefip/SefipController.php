@@ -61,21 +61,25 @@ class SefipController extends Controller
          for ($i=0; $i < (14-$cnpj); $i++) { 
             $cd .= ' ';
          }
-         $nome = substr($sefip->folhar->empresa->esnome,0,30);
-         $cd .= $nome;
+         $nome = strtr($sefip->folhar->empresa->esnome,$caracteres_sem_acento);
+         $nome = substr($nome,0,30);
+         $cd .= strtoupper($nome);
          $nome = strlen($nome);
          for ($i=0; $i < (30 - $nome); $i++) { 
             $cd .= ' ';
          }
-         $rua = substr($sefip->folhar->empresa->endereco[0]->eslogradouro,0,70);
-         $cd .= $rua;
+         $rua = strtr($sefip->folhar->empresa->endereco[0]->eslogradouro,$caracteres_sem_acento);
+         $rua = substr($rua,0,70);
+         $cd .= strtoupper($rua);
          $rua = strlen($rua);
          
          for ($i=0; $i < (70 - $rua); $i++) { 
             $cd .= ' ';
          }
-         $bairro = substr($sefip->folhar->empresa->endereco[0]->esbairro,0,20);
-         $cd .= $bairro;
+
+         $bairro = strtr($sefip->folhar->empresa->endereco[0]->esbairro,$caracteres_sem_acento);
+         $bairro = substr($bairro,0,20);
+         $cd .= strtoupper($bairro);
          $bairro = strlen($bairro);
          for ($i=0; $i < (20 - $bairro); $i++) { 
             $cd .= ' ';
@@ -92,8 +96,9 @@ class SefipController extends Controller
          for ($i=0; $i < (20 - $cidade); $i++) { 
             $cd .= ' ';
          }
-         $uf = substr($sefip->folhar->empresa->endereco[0]->esuf,0,2);
-         $cd .= $uf;
+         $uf = strtr($sefip->folhar->empresa->endereco[0]->esuf,$caracteres_sem_acento);
+         $uf = substr($uf,0,2);
+         $cd .= strtoupper($uf);
          $uf = strlen($uf);
          for ($i=0; $i < (2 - $uf); $i++) { 
             $cd .= ' ';
@@ -110,10 +115,10 @@ class SefipController extends Controller
          for ($i=0; $i < (60 - $email); $i++) { 
             $cd .= ' ';
          }
-         $telefone = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->fscompetencia);
-         $cd .= $telefone;
-         $telefone = strlen($telefone);
-         for ($i=0; $i < (6-$telefone); $i++) { 
+         $competencia = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->fscompetencia);
+         $cd .= $competencia;
+         $competencia = strlen($competencia);
+         for ($i=0; $i < (6-$competencia); $i++) { 
             $cd .= ' ';
          }
          $rol = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psresol);
@@ -156,21 +161,25 @@ class SefipController extends Controller
          for ($i=0; $i < 36; $i++) { 
             $cd .= '0';
          }
-         $nome = substr($sefip->tomador->tsnome,0,40);
-         $cd .= $nome;
+         $nome = strtr($sefip->tomador->tsnome,$caracteres_sem_acento);
+        
+         $nome = substr($nome,0,40);
+         $cd .= strtoupper($nome);
          $nome = strlen($nome);
          for ($i=0; $i < (40 - $nome); $i++) { 
             $cd .= ' ';
          }
-         $rua = substr($sefip->tomador->endereco[0]->eslogradouro,0,50);
-         $cd .= $rua;
+         $rua = strtr($sefip->tomador->endereco[0]->eslogradouro,$caracteres_sem_acento);
+         $rua = substr($rua,0,50);
+         $cd .= strtoupper($rua);
          $rua = strlen($rua);
          
          for ($i=0; $i < (50 - $rua); $i++) { 
             $cd .= ' ';
          }
-         $bairro = substr($sefip->tomador->endereco[0]->esbairro,0,20);
-         $cd .= $bairro;
+         $bairro = strtr($sefip->tomador->endereco[0]->esbairro,$caracteres_sem_acento);
+         $bairro = substr($bairro,0,20);
+         $cd .= strtoupper($bairro);
          $bairro = strlen($bairro);
          for ($i=0; $i < (20 - $bairro); $i++) { 
             $cd .= ' ';
@@ -181,13 +190,15 @@ class SefipController extends Controller
          for ($i=0; $i < (8-$cep); $i++) { 
             $cd .= ' ';
          }
-         $cidade = substr($sefip->tomador->endereco[0]->esmunicipio,0,20);
-         $cd .= $cidade;
+         $cidade = strtr($sefip->tomador->endereco[0]->esmunicipio,$caracteres_sem_acento);
+         $cidade = substr($cidade,0,20);
+         $cd .= strtoupper($cidade);
          $cidade = strlen($cidade);
          for ($i=0; $i < (20 - $cidade); $i++) { 
             $cd .= ' ';
          }
-         $uf = substr($sefip->tomador->endereco[0]->esuf,0,2);
+         $uf = strtr($sefip->tomador->endereco[0]->esuf,$caracteres_sem_acento);
+         $uf = substr($uf,0,2);
          $cd .= $uf;
          $uf = strlen($uf);
          for ($i=0; $i < (2 - $uf); $i++) { 
@@ -271,39 +282,47 @@ class SefipController extends Controller
          for ($i=0; $i < 21; $i++) { 
             $cd .= '0';
          }
-         $nome = substr($sefip->tomador->tsnome,0,40);
-         $cd .= $nome;
+         $nome = strtr($sefip->tomador->tsnome,$caracteres_sem_acento);
+        
+         $nome = substr($nome,0,40);
+         $cd .= strtoupper($nome);
          $nome = strlen($nome);
          for ($i=0; $i < (40 - $nome); $i++) { 
             $cd .= ' ';
          }
-         $rua = substr($sefip->tomador->endereco[0]->eslogradouro,0,50);
-         $cd .= $rua;
+         $rua = strtr($sefip->tomador->endereco[0]->eslogradouro,$caracteres_sem_acento);
+         $rua = substr($rua,0,50);
+         $cd .= strtoupper($rua);
          $rua = strlen($rua);
          
          for ($i=0; $i < (50 - $rua); $i++) { 
             $cd .= ' ';
          }
-         $bairro = substr($sefip->tomador->endereco[0]->esbairro,0,20);
-         $cd .= $bairro;
+         $bairro = strtr($sefip->tomador->endereco[0]->esbairro,$caracteres_sem_acento);
+         $bairro = substr($bairro,0,20);
+         $cd .= strtoupper($bairro);
          $bairro = strlen($bairro);
          for ($i=0; $i < (20 - $bairro); $i++) { 
             $cd .= ' ';
          }
+         
+         
          $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->endereco[0]->escep);
          $cd .= $cep;
          $cep = strlen($cep);
          for ($i=0; $i < (8-$cep); $i++) { 
             $cd .= ' ';
          }
-         $cidade = substr($sefip->tomador->endereco[0]->esmunicipio,0,20);
-         $cd .= $cidade;
+         $cidade = strtr($sefip->tomador->endereco[0]->esmunicipio,$caracteres_sem_acento);
+         $cidade = substr($cidade,0,20);
+         $cd .= strtoupper($cidade);
          $cidade = strlen($cidade);
          for ($i=0; $i < (20 - $cidade); $i++) { 
             $cd .= ' ';
          }
-         $uf = substr($sefip->tomador->endereco[0]->esuf,0,2);
-         $cd .= $uf;
+         $uf = strtr($sefip->tomador->endereco[0]->esuf,$caracteres_sem_acento);
+         $uf = substr($uf,0,2);
+         $cd .= strtoupper($uf);
          $uf = strlen($uf);
          for ($i=0; $i < (2 - $uf); $i++) { 
             $cd .= ' ';

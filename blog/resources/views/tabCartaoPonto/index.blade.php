@@ -265,11 +265,11 @@
                 data.forEach(element => {
                   nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
                   // nome += `<option value="${element.tsmatricula}">`
-                  nome += `<option value="${element.tscnpj}">`
+                  // nome += `<option value="${element.tscnpj}">`
                 });
                 $('#datalistOptions').html(nome)
               }
-              if(data.length === 1 && dados.length >= 4){
+              if(data.length === 1){
                 tomador(data[0])
                 // let tabela = tabelaPreco(data[0].tomador);
                 // if (tabela) {
@@ -283,7 +283,7 @@
     });
     function monta_dados(dados) {
       let novodados = dados.split('  ')
-      return novodados[1];
+      return novodados[0];
     }
     function monta_dados_pesquisa(dados) {
       let novodados = dados.split('  ')

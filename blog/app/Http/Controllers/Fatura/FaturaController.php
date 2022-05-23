@@ -44,6 +44,7 @@ class FaturaController extends Controller
         
         $valorrublica_fatura = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
         $faturas = $this->fatura->buscaListaFatura();
+        // dd($faturas);
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         
     }
@@ -75,6 +76,9 @@ class FaturaController extends Controller
         // if (strtotime($dados['ano_final']) > strtotime($today)) {
         //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
         // }
+        if (!$dados['tomador']) {
+            return redirect()->back()->withInput()->withErrors(['pesquisa'=>'Tomador não encontrador.']);
+        }
         $verifica = $this->fatura->verificaFaturas($dados);
         if ($verifica) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
@@ -139,8 +143,8 @@ class FaturaController extends Controller
                     $dadosrublicas['item'] = $fatura_valor->vicodigo;
                     $dadosrublicas['descricao'] = $fatura_valor->vsdescricao;
                     $dadosrublicas['unidade'] = $fatura_valor->referencia;
-                    $dadosrublicas['preco'] = $tabelaprecos->tstomvalor;
-                    $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tstomvalor;
+                    $dadosrublicas['preco'] = $tabelaprecos->tsvalor;
+                    $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tsvalor;
                     $dadosrublicas['fatura'] = $faturas['id'];
                     $this->faturarublica->cadastro($dadosrublicas);
                     $producao['valor'] += $fatura_valor->valor;
@@ -154,8 +158,8 @@ class FaturaController extends Controller
                 $dadosrublicas['item'] = $fatura_valor->vicodigo;
                 $dadosrublicas['descricao'] = $fatura_valor->vsdescricao;
                 $dadosrublicas['unidade'] = $fatura_valor->referencia;
-                $dadosrublicas['preco'] = $tabelaprecos->tstomvalor;
-                $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tstomvalor;
+                $dadosrublicas['preco'] = $tabelaprecos->tsvalor;
+                $dadosrublicas['total'] = $fatura_valor->referencia * $tabelaprecos->tsvalor;
                 $dadosrublicas['fatura'] = $faturas['id'];
                 $this->faturarublica->cadastro($dadosrublicas);
                 $producao['valor'] += $fatura_valor->valor;
@@ -175,8 +179,7 @@ class FaturaController extends Controller
                 $producao['fatura'] = $faturas['id'];
                 $this->faturaprincipal->cadastro($producao);
                 $subtotalA += $producao['valor'];
-            }
-            if ($valorublica->vicodigo === 1009) {
+            }elseif ($valorublica->vicodigo === 1009) {
                 $producao['descricao'] = 'Férias';
                 $producao['indice'] = $valorublica->vireferencia;
                 $producao['valor'] = $valorublica->vencimento;
@@ -184,16 +187,14 @@ class FaturaController extends Controller
                 $this->faturaprincipal->cadastro($producao);
                 $valordemostrativo += $valorublica->vencimento;
                 $subtotalB += $valorublica->vencimento;
-            }
-            if ($valorublica->vicodigo === 1010) {
+            }elseif ($valorublica->vicodigo === 1010) {
                 $producao['descricao'] = '13° Salário';
                 $producao['indice'] = $valorublica->vireferencia;
                 $producao['valor'] = $valorublica->vencimento;
                 $producao['fatura'] = $faturas['id'];
                 $this->faturaprincipal->cadastro($producao);
                 $subtotalB += $valorublica->vencimento;
-            }
-            if ($valorublica->vicodigo === 2001) {
+            }elseif ($valorublica->vicodigo === 2001) {
                 $producao['valor'] = $valorublica->desconto;
                 $valorentencao += $valorublica->desconto;
                 $valorbasefolha += $valorublica->desconto;  

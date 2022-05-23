@@ -901,6 +901,7 @@ class ValorCalculo extends Model
         ->groupBy('valor_calculos.vireferencia','folhars.fscodigo','valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador_id',$dados['tomador'])
         ->whereIn('valor_calculos.vicodigo',$codigo)
+        ->orderBy('valor_calculos.vicodigo','asc')
         ->whereBetween('folhars.fsfinal',[$dados['ano_inicial'],$dados['ano_final']])
         ->get();
     }

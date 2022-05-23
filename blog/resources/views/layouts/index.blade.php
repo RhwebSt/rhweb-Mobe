@@ -282,7 +282,7 @@
         @include('usuarios.atalhos.atalhos')
     
         <footer>
-            <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2021</p>
+            <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2022</p>
         </footer>
         
         <script src="{{url('/js/alteracaoSenha.js')}}"></script>

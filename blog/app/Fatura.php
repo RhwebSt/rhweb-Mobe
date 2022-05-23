@@ -15,23 +15,23 @@ class Fatura extends Model
     }
     public function faturadesmostrativa()
     {
-        return $this->hasMany(FaturaDemostrativa::class);
+        return $this->hasMany(FaturaDemostrativa::class)->orderBy('id');
     }
     public function faturaprincipal()
     {
-        return $this->hasMany(FaturaPrincipal::class);
+        return $this->hasMany(FaturaPrincipal::class)->orderBy('id','ASC');
     }
     public function faturarubrica()
     {
-        return $this->hasMany(FaturaRubrica::class);
+        return $this->hasMany(FaturaRubrica::class)->orderBy('id');
     }
     public function faturasecundaria()
     {
-        return $this->hasMany(FaturaSecundaria::class);
+        return $this->hasMany(FaturaSecundaria::class)->orderBy('id');
     }
     public function faturatotal()
     {
-        return $this->hasMany(FaturaTotal::class);
+        return $this->hasMany(FaturaTotal::class)->orderBy('id');
     }
     public function empresa()
     {

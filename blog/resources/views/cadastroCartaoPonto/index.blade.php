@@ -282,7 +282,7 @@
             });
             $('#datalistOptions').html(nome)
           }
-          if (data.length === 1 && dados.length >= 4) {
+          if (data.length === 1 ) {
             let tabela = tabelaPreco(data[0].id);
             if (tabela) {
               tomador(data[0])
