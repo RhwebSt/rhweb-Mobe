@@ -6,52 +6,28 @@
         
         @if(session('success'))
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{ session("success") }}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
         @endif
         @error('false')
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{ $message }}'
-                })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         
@@ -76,11 +52,11 @@
 
                     <button type="submit" id="incluir" class="btn botao"><i class="fas fa-save"></i> Incluir</button>
     
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#listaDiurno">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#listaDiurno">
                         <i class="fad fa-sun"></i> Lista Diurno
                     </a>
                     
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#listaNoturno">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#listaNoturno">
                         <i class="fad fa-moon"></i> Lista Noturno
                     </a>
                 </div>
@@ -229,36 +205,12 @@
     @include('cadastroCartaoPonto.cartaoPonto.listaNoturno')
 </main>
         
-<section class="delete__tabela--tomador">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header modal__delete">
-                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body modal-delbody">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                    </div>
-                    <div class="modal-footer modal-delfooter">
-                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn__deletar">Deletar</button>
-    
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
 
 
 <script>
      var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
     $('.horas').keyup(function() {
+        
         index()
     });
     function index() {

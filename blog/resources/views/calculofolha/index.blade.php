@@ -5,53 +5,29 @@
     <div class="container">
         
         @if(session('success'))
-                <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+            <script>
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{session("success")}}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
         @endif
         @error('false')
-                <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{ $message }}'
-                })
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         
@@ -95,7 +71,7 @@
                         @csrf
 
 
-                        <div class="col-4">
+                        <div class="col-12 col-md-4">
                               <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data Inicial</label>
                               <input type="date" class="form-control @error('ano_inicial') is-invalid @enderror" name="ano_inicial" value="{{old('ano_inicial')}}" id="tano">
                               @error('ano_inicial')
@@ -103,7 +79,7 @@
                               @enderror
                         </div>
                                 
-                        <div class="col-4">
+                        <div class="col-12 col-md-4">
                               <label for="ano" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data Final</label>
                               <input type="date" class="form-control @error('ano_final') is-invalid @enderror" name="ano_final" value="{{old('ano_final')}}" id="tanoFinal">
                               @error('ano_final')
@@ -111,7 +87,7 @@
                               @enderror
                         </div>
                             
-                        <div class="col-4">
+                        <div class="col-12 col-md-4">
                               <label for="competencia" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Competência</label>
                               <input type="month" class="form-control @error('competencia') is-invalid @enderror" name="competencia" value="" id="competencia">
                               @error('competencia')

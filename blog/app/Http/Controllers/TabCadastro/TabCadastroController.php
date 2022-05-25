@@ -138,7 +138,10 @@ class TabCadastroController extends Controller
        $trabalhador = base64_decode($trabalhador);
     //    $data = base64_decode($data);
        $user = Auth::user();
-       $lista = $this->lancamentorublica->listacadastro(null,$id,'M','asc');
+       $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
+       ->with('trabalhador')->paginate(10);
+    //    $lista = $this->lancamentorublica->listacadastro(null,$id,'M','asc');
+      
     
        $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
        

@@ -116,12 +116,15 @@ class AvusoController extends Controller
                     }
                 }
                 // $this->valorrublica->editarAvuso($dados,$dados['empresa']);
-                $this->valorrublica->where('id', $dados['empresa'])
+                $this->valorrublica->where('empresa_id', $dados['empresa'])
                 ->chunkById(100, function ($valorrublica) use ($dados) {
                     foreach ($valorrublica as $valorrublicas) {
-                        $numero = $valorrublicas->vsreciboavulso += 1;
-                        $this->valorrublica->where('empresa_id', $dados['empresa'])
-                        ->update(['vsreciboavulso'=>$numero]);
+                        if ($valorrublicas->vsreciboavulso >= 0) {
+                            $numero = $valorrublicas->vsreciboavulso += 1;
+                            $this->valorrublica->where('empresa_id', $dados['empresa'])
+                            ->update(['vsreciboavulso'=>$numero]);
+                        }
+                       
                     }
                 });
             }
@@ -130,6 +133,17 @@ class AvusoController extends Controller
             try {
         } catch (\Throwable $th) {
             $this->avuso->deletar_store($dados);
+            $this->valorrublica->where('empresa_id', $dados['empresa'])
+            ->chunkById(100, function ($valorrublica) use ($dados) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vsreciboavulso > 0) {
+                        $numero = $valorrublicas->vsreciboavulso -= 1;
+                        $this->valorrublica->where('empresa_id', $dados['empresa'])
+                        ->update(['vsreciboavulso'=>$numero]);
+                    }
+                   
+                }
+            });
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
     }
@@ -185,7 +199,7 @@ class AvusoController extends Controller
         try {
             // $this->descricao->deletarAvuso($id);
             $this->avuso->deletar($id);
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vsreciboavulso > 0) {

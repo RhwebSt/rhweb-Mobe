@@ -9,12 +9,12 @@
 
 <style>
     @page { 
-          margin-top: 261.5px; 
+          margin-top: 281.5px; 
           margin-bottom: 110px;
           margin-left: 10px;
           margin-right: 10px;
     }
-    #header { position: fixed; left: 0px; top: -261.5px; right: 0px; height: 261.5px; background-color:; text-align: center; }
+    #header { position: fixed; left: 0px; top: -281.5px; right: 0px; height: 281.5px; background-color:; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -110px; right: 0px; height: 55px; text-align: end; }
     #footer .page:after { content: counter(page, upper); }
     

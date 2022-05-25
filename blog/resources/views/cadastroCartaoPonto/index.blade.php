@@ -5,52 +5,30 @@
     <div class="container">
 
         @if(session('success'))
-        <script>
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#5AA300',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
         
-            Toast.fire({
-              icon: 'success',
-              title: '{{ session("success") }}'
-            })
-        </script>
-        @endif
-        @error('false')
-        <script>
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#C53230',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
+                });
+            </script>
+            @endif
+            @error('false')
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
         
-            Toast.fire({
-              icon: 'error',
-              title: '{{ $message }}'
-            })
-        </script>
+                });
+            </script>
         @enderror
 
         <form class="row g-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
@@ -69,7 +47,7 @@
 
                   <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
                   
-                  <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                  <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCartaoPonto">
                     <i class="fad fa-list-ul"></i> lista
                   </a>
 
@@ -109,7 +87,7 @@
                 @enderror
             </div>
             
-            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" id="tomador">
+            <input type="hidden" name="tomador" class="@error('tomador') is-invalid @enderror" value="{{old('tomador')}}" id="tomador">
             <input type="hidden" id="domingo" name="domingo">
             <input type="hidden" name="sabado" id="sabado">
             <input type="hidden" name="diasuteis" id="diasuteis">
@@ -117,7 +95,7 @@
 
             <div class="col-md-4">
                 <label for="data" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data</label>
-                <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="" id="data">
+                <input type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="{{old('data')}}" id="data">
                 @error('data')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -133,10 +111,14 @@
 
             <div class="col-md-4">
                 <label for="feriado" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Feriado</label>
-                <select id="feriado" name="feriado" class="form-select text-dark">
+                <select id="feriado" name="feriado" class="form-select text-dark @error('feriado') is-invalid @enderror">
                     <option>Sim</option>
                     <option selected>Não</option>
                 </select>
+                @error('feriado')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                <input type="hidden" name="feriadostatus" id="feriadostatus">
             </div>
             
         </form>
@@ -153,20 +135,50 @@
   </script>
 
   <script>
-    $('.modal-botao').click(function() {
-      localStorage.setItem("modal", "enabled");
-    })
-
-    function verficarModal() {
-      var valueModal = localStorage.getItem('modal');
-      if (valueModal === "enabled") {
-        $(document).ready(function() {
-          $("#teste").modal("show");
-        });
-        localStorage.setItem("modal", "disabled");
-      }
+     var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+     $('#data').on('keyup focus click change',function () {
+       verificardata($(this).val(),0)
+     })
+     function verificardata(Y,valor) {
+        var data = Y
+        var dias = '';
+        data = data.split('-')
+        dias = new Date(`${data[0]}-${data[1]}-${ parseInt(data[2]) + valor} 08:24:30`);
+        dias = dias.getDay();
+        semana.forEach((element,index) => {
+            if (dias == index) {
+                if (element === 'Domingo') {
+                  $('#feriadostatus').val(true)
+                }else if (element === 'Sábado') {
+                  $('#feriadostatus').val(true)
+                }
+                let novadata = `${data[0]}-${data[1]}-${ parseInt(data[2]) + valor}`
+                if (feriador_nacionais(novadata)) {
+                  $('#feriadostatus').val(true)
+                }else if (element !== 'Domingo' && element !== 'Sábado') {
+                  $('#feriadostatus').val(null)
+                }
+            }
+        })
     }
-    verficarModal()
+    function feriador_nacionais(dados) {
+        var verifica = false;
+        $.ajax({
+            url: "https://brasilapi.com.br/api/feriados/v1/2021",
+            type: 'get',
+            contentType: 'application/json',
+            async: false,
+            success:(data) => {
+                data.forEach(element => {
+                    if (element.date === dados) {
+                        verifica = true;
+                    }
+                });
+            }  
+        })
+        return verifica;
+    }
+
     $("#pesquisa").on('keyup focus', function() {
       var dados = '0';
       if ($(this).val()) {

@@ -1,4 +1,4 @@
-<div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="modalComissionado" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header header__modal">
@@ -39,8 +39,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
@@ -63,30 +63,60 @@
                             
                             <tbody class="table__body">
                                 @if(count($comissionados) > 0)
-                                @foreach($comissionados as $comissionado)
+                                @foreach($comissionados as $key => $comissionado)
                                 <tr class="tr__body">               
                                     <td class="td__body text-nowrap col" style="width:115px;">{{$comissionado->tsmatricula}}</td>
                                     
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->trabalhador}}">
                                             <a>{{$comissionado->trabalhador}}</a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col"style="width:200px">{{$comissionado->csindece}}</td>
                                     
-                                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$comissionado->tomador}}">
                                             <a>{{$comissionado->tomador}}</a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         
-                                            <a class="button__editar btn modal-botao" href="{{route('comisionado.edit',$comissionado->id)}}"><i class="icon__color fas fa-pen"></i></a>
+                                            <a class="button__editar btn" href="{{route('comisionado.edit',$comissionado->id)}}"><i class="icon__color fas fa-pen"></i></a>
                                         
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <!--<form action="{{route('comisionado.destroy',$comissionado->id)}}"  method="post">-->
-                                        <!--    @csrf-->
-                                        <!--    @method('delete')-->
-                                            <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteComissionado"><i class="icon__color fad fa-trash"></i></button>
-                                        <!--</form> -->
+                                      
+                                            <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteComissionado{{$key}}"><i class="icon__color fad fa-trash"></i></button>
+                                        
+                                        <section class="delete__tabela--comissionado">
+                                            <div class="modal fade" id="deleteComissionado{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered col-8">
+                                                    <div class="modal-content">
+                                                        <form action="{{route('comisionado.destroy',$comissionado->id)}}" id="formdelete" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <div class="modal-header header__modal">
+                                                                <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                            </div>
+                                                            
+                                                            <div class="modal-body body__modal ">
+                                                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                                                        <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                    
+                                                                        <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                        
+                                                                        <p class="content--deletar2">Obs: Será excluído tudo o que há vinculado á este comissionado.</p>
+                                                                        
+                                                                    </div>
+                                                            </div>
+                                                            
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                                <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -101,11 +131,7 @@
                                 <tr class="">
                                     <td colspan="11">
                                         <nav aria-label="Page navigation example">
-                                            <ul class="pagination pagination__table pagination-sm">
-                                                    <li class="">
-                                                        <a class="page-link modal-botao" href=""></a>
-                                                    </li>
-                                            </ul>
+                                            {{$comissionados->links()}}
                                         </nav>
                                     </td>
                                 </tr>
@@ -122,35 +148,4 @@
     </div>
 </div>
 
-<section class="delete__tabela--comissionado">
-    <div class="modal fade" id="deleteComissionado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-8">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                    
-                    <div class="modal-body body__modal ">
-                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
-                            
-                                <p class="content--deletar">Deseja realmente excluir?</p>
-                                
-                                <p class="content--deletar2">Obs: Será excluído tudo o que há vinculado á este comissionado.</p>
-                                
-                            </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+

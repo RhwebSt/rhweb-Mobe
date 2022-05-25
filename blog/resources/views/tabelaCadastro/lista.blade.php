@@ -1,4 +1,4 @@
-<div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="modalBoletimTabela" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             
@@ -20,7 +20,7 @@
 
                                 <input type="hidden" name="codicao" value="{{isset($trabalhador)?$trabalhador:null}}">
                                 
-                                <button type="submit" class="btn botao__search">
+                                <button type="submit" class="btn botao__search  modal-botao">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                 </button>
 
@@ -38,8 +38,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item dropdown__links--filter" id="ordemCres" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
-                                    <li><a class="dropdown-item dropdown__links--filter" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                    <li><a class="dropdown-item dropdown__links--filter  modal-botao" id="ordemCres" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'asc'])}}"><i class="fad fa-sort-amount-up-alt"></i> Ordem Crescente</a></li>
+                                    <li><a class="dropdown-item dropdown__links--filter  modal-botao" href="{{route('boletim.tabela.ordem',[$quantidade,$boletim,$tomador,base64_encode($id),isset($trabalhador)?base64_encode($trabalhador):' ',$data,'desc'])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
@@ -62,7 +62,7 @@
                             </thead>
                             <tbody class="table__body">
                                 @if(count($lista) > 0)
-                                @foreach($lista as $listas)
+                                @foreach($lista as $key=> $listas)
                                     <tr class="tr__body">
                                         <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
                                         <td class="td__body text-nowrap col" style="width:70px">{{$listas->licodigo}}</td>
@@ -85,8 +85,40 @@
                                             <!--<form action="{{route('boletim.tabela.destroy',$listas->id)}}"  method="post">-->
                                             <!--    @csrf-->
                                             <!--    @method('delete')-->
-                                                <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteBoletimTabPrecoInside"><i class="icon__color fad fa-trash"></i></button>
+                                               <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteBoletimTabPrecoInside{{$key}}"><i class="icon__color fad fa-trash"></i></button>
                                             <!--</form> -->
+                                            <section class="delete__tabela--boletim">
+                                                <div class="modal fade" id="deleteBoletimTabPrecoInside{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered col-8">
+                                                        <div class="modal-content">
+                                                            <form action="{{route('boletim.tabela.destroy',$listas->id)}}" id="" method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <div class="modal-header header__modal">
+                                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                                </div>
+                                                                
+                                                                <div class="modal-body body__modal ">
+                                                                        <div class="d-flex align-items-center justify-content-center flex-column">
+                                                                            <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                        
+                                                                            <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                            
+                                                                            <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos</p>
+                                                                            
+                                                                        </div>
+                                                                </div>
+                                                                
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                                    <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
                                             
                                         </td>
                                     </tr>
@@ -126,35 +158,3 @@
     </div>
 </div>
               
-<section class="delete__tabela--boletim">
-    <div class="modal fade" id="deleteBoletimTabPrecoInside" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-8">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                    
-                    <div class="modal-body body__modal ">
-                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
-                            
-                                <p class="content--deletar">Deseja realmente excluir?</p>
-                                
-                                <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos</p>
-                                
-                            </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>

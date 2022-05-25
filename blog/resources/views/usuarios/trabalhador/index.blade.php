@@ -6,54 +6,30 @@
     <div class="container">
               
         @if(session('success'))
-        <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#5AA300',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
-              icon: 'success',
-              title: '{{session("success")}}'
-            })
-        </script>
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
+            </script>
         @endif
         @error('false')
-        <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#C53230',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
-              icon: 'error',
-              title: '{{$message}}'
-            })
-        </script>
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
+            </script>
         @enderror    
 
         <form class="row g-3" id="form" method="POST" action="{{route('usuario.store')}}">
@@ -69,7 +45,7 @@
                     <button type="submit" id="incluir" class="btn botao">
                         <i class="fad fa-save"></i> Incluir
                     </button>
-                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCadAcesso">
                         <i class="fad fa-list"></i> Lista
                     </a>
                         
@@ -124,23 +100,6 @@
 </main>
             
 <script>
-            $('.modal-botao').click(function() {
-              localStorage.setItem("modal", "enabled");
-          })
-
-          function verficarModal() {
-              var valueModal = localStorage.getItem('modal');
-              if (valueModal === "enabled") {
-                  $(document).ready(function() {
-                      $("#teste").modal("show");
-                  });
-                  localStorage.setItem("modal", "disabled");
-              }
-          }
-          verficarModal()
-           
-        
-
         $(document).ready(function(){
             $.ajax({
               url: "{{route('usuario.pesquisa.admin')}}", 

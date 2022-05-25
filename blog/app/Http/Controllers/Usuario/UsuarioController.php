@@ -49,13 +49,14 @@ class UsuarioController extends Controller
                 } else {
                     $query->where([
                         ['id', '>', 0],
-                        ['empresa_id',$user->empresa_id]
+                        ['empresa_id',$user->empresa_id],
+                        ['cargo','!=','admin']
                     ]);
                 }
             })
         ->orderBy('name', 'asc')
         ->paginate(10);
-        $permissions = Permission::get();
+        $permissions = Permission::get(); 
         if ($codicao) {
             $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
             return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
@@ -72,7 +73,8 @@ class UsuarioController extends Controller
                 $user = auth()->user();
                 $query->where([
                     ['id', '>', 0],
-                    ['empresa_id',$user->empresa_id]
+                    ['empresa_id',$user->empresa_id],
+                    ['cargo','!=','admin']
                 ]);
             })
         ->orderBy('name', $ordem)
@@ -165,7 +167,8 @@ class UsuarioController extends Controller
                 } else {
                     $query->where([
                         ['id', '>', 0],
-                        ['empresa_id',$user->empresa_id]
+                        ['empresa_id',$user->empresa_id],
+                        ['cargo','!=','admin']
                     ]);
                 }
             })

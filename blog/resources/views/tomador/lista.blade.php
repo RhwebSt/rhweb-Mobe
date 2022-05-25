@@ -1,4 +1,4 @@
-<div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="modalTomador" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header header__modal">
@@ -39,8 +39,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['asc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href="{{route('ordem.tomador',['desc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('ordem.tomador',['asc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href="{{route('ordem.tomador',['desc',isset($tomador->id)?$tomador->id:''])}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
@@ -78,17 +78,17 @@
                                     </td>
         
                                     <td class="td__body text-nowrap col" style="width:80px">
-                                        <a class="btn btn__tabela--preco modal-botao" href="{{route('tabelapreco.index',[' ',base64_encode($tomador->id)])}}" class=""><i class="icon__color fas fa-dollar-sign"></i></a>
+                                        <a class="btn btn__tabela--preco" href="{{route('tabelapreco.index',[' ',base64_encode($tomador->id)])}}" class=""><i class="icon__color fas fa-dollar-sign"></i></a>
                                     </td>
         
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         <div class="dropdown">
-                                            <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button class="btn btn__relatorio dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="icon__color fas fa-file-alt"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item modal-botao" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
-                                                <li><a class="dropdown-item modal-botao" href="{{route('tabela.preco.relatorio',base64_encode($tomador->id))}}"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="botaoModal ('{{$tomador->id}}')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
+                                                <li><a class="dropdown-item" href="{{route('tabela.preco.relatorio',base64_encode($tomador->id))}}"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -97,7 +97,7 @@
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         
-                                        <a class="button__editar btn modal-botao" href="{{route('tomador.edit',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('tomador.edit',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
                                         
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
@@ -159,7 +159,7 @@
                     
                     <div class="modal-footer">
                         <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
+                        <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

@@ -5,52 +5,31 @@
     <div class="container">
         @if(session('success'))
         <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#5AA300',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              html: '<p class="modal__aviso">{{session("success")}}</p>',
+              background: '#45484A',
+              showConfirmButton: true,
+              timer: 2500,
     
-        Toast.fire({
-          icon: 'success',
-          title: "{{session('success')}}"
-        })
+            });
         </script>
         @endif
         @error('false')
         <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#C53230',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                html: '<p class="modal__aviso">{{ $message }}</p>',
+                background: '#45484A',
+                showConfirmButton: true,
+                timer: 5000,
     
-        Toast.fire({
-          icon: 'error',
-          title: '{{$message}}'
-        })
+            });
         </script>
         @enderror
+        
         <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
             
             <section class="section__botoes--trabalhador">
@@ -61,8 +40,8 @@
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
                     <button type="submit" id="atualizar" class="btn botao btn-primary"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
-                      <i class="fad fa-list-ul"></i> Lista
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#modalTrabalhador">
+                        <i class="fad fa-list-ul"></i> Lista
                     </a>
                 </div>
             </section>

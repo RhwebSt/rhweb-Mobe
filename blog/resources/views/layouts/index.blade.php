@@ -293,6 +293,7 @@
         <script src="{{url('/js/masck.js')}}"></script>
         <script src="{{url('/js/ferramentas/limpaCampos.js')}}"></script>
         <script src="{{url('/js/ferramentas/validaInput.js')}}"></script>
+        <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
         <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>

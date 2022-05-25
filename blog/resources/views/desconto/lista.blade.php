@@ -1,4 +1,4 @@
-<div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="modalDesconto" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header header__modal">
@@ -89,7 +89,7 @@
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         <div class="dropdown">
-                                            <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button class="btn btn__relatorio dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="icon__color fas fa-file-alt"></i>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -161,14 +161,14 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="button__editar btn" href="{{route('descontos.edit',base64_encode($desconto->id))}}" class=""><i style="color:white" class="fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('descontos.edit',base64_encode($desconto->id))}}" class=""><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         <!--<form action="{{route('descontos.destroy',$desconto->id)}}" method="post">-->
                                         <!--@csrf-->
                                         <!--@method('delete')-->
-                                            <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteDescontos"><i class="icon__color fad fa-trash"></i></button>
+                                            <button type="submit" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteDescontos"><i class="icon__color fad fa-trash"></i></button>
                                         <!--</form>-->
                                     </td>
                                     
@@ -227,7 +227,7 @@
                     
                     <div class="modal-footer">
                         <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
+                        <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

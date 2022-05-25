@@ -6,51 +6,28 @@
     <div class="container">
         @if(session('success'))
             <script>
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{session("success")}}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
         @endif
         @error('false')
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{ $message }}'
-                })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         

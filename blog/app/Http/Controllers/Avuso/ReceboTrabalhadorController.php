@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PDF;
 use App\Avuso;
+use App\Http\Requests\Avuso\Recibo\Validacao;
 use App\AvusoDescricao;
 class ReceboTrabalhadorController extends Controller
 {
@@ -15,12 +16,18 @@ class ReceboTrabalhadorController extends Controller
         $this->avuso = new Avuso;
         $this->descricao = new AvusoDescricao; 
     }
-    public function relatorio(Request $request)
+    public function relatorio(Validacao $request)
     {
         $dados = $request->all();
-        $cpf = explode(' ',$dados['search']);
-        $avuso = $this->avuso->where('ascpf',$cpf[0])->with(['empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco','avusodescricao'])->get();
-        // dd($dados);
+        $cpf = explode('  ',$dados['search']);
+        try {
+        $avuso = $this->avuso->where([
+            ['ascpf',$cpf[0]],
+            ['asinicial','>=',$dados['ano_inicial1']],
+            ['asfinal','<=',$dados['ano_final1']]
+        ])->with(['empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco','avusodescricao'])->get();
+        
+        // dd($avuso);
         // $request->validate([
         //     'trabalhador01' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõûùúüÿñæœ 0-9_\-().]*$/',
         //     'ano_inicial1'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
@@ -46,7 +53,7 @@ class ReceboTrabalhadorController extends Controller
             // }
             $pdf = PDF::loadView('rolReciboAvulso',compact('avuso','dados'));
             return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
-            try {
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera o relatório.']);
         }

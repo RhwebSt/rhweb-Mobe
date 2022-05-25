@@ -5,52 +5,28 @@
     <div class="container">
         @if(session('success'))
         <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#5AA300',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
+            Swal.fire({
+              position: 'center',
               icon: 'success',
-              title: '{{session("success")}}'
-            })
+              html: '<p class="modal__aviso">{{session("success")}}</p>',
+              background: '#45484A',
+              showConfirmButton: true,
+              timer: 2500,
+    
+            });
         </script>
         @endif
         @error('false')
         <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#C53230',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
-              icon: 'error',
-              title: '{{$message}}'
-            })
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                html: '<p class="modal__aviso">{{ $message }}</p>',
+                background: '#45484A',
+                showConfirmButton: true,
+                timer: 5000,
+    
+            });
         </script>
         @enderror
         
@@ -140,31 +116,6 @@
 
         </form>
         
-        <section class="modal__excluir">
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="" id="formdelete" method="post">
-                            @csrf
-                            @method('delete')
-                            <div class="modal-header  header__modal">
-                                <h5 class="modal-title text-white fs-5" id="staticBackdropLabel"><i class="fad fa-trash"></i> Excluir</h5>
-                                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                            </div>
-                            
-                            <div class="modal-body body__modal">
-                                <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                            </div>
-                            
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn__deletar">Deletar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
         
     </div>         
 </main>

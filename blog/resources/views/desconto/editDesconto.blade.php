@@ -5,76 +5,64 @@
     <div class="container">
         @if(session('success'))
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{session("success")}}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
-        @endif
-        @error('false')
+            @endif
+            @error('false')
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{$message}}'
-                })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         @error('tabelavazia')
             <script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Tabela de preço vazia',
-                  text: '{{ $message }}',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  allowEnterKey: true,
-                })
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        html: '<p class="modal__aviso--title">Tabela de preço vazia</p>'+ '<p class="modal__aviso">{{ $message }}</p>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: true,
+                        background: '#45484A',
+                        showConfirmButton: true,
+                        timer: 5000,
+                        customClass: {
+                          title: 'modal__aviso',
+                        }
+                    })
             </script>
         @enderror
         @error('dadosvazia')
             <script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Algo deu errado!',
-                  text: '{{ $message }}',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  allowEnterKey: true,
-                })
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        html: '<p class="modal__aviso--title">Algo deu errado!</p>'+ '<p class="modal__aviso">{{ $message }}</p>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: true,
+                        background: '#45484A',
+                        showConfirmButton: true,
+                        timer: 5000,
+                        customClass: {
+                          title: 'modal__aviso',
+                        }
+                    })
             </script>
         @enderror
         
@@ -93,7 +81,7 @@
                     <ul class="dropdown-menu" aria-labelledby="rolDescontos">
                             <li class=""><a class="dropdown-item text-decoration-none ps-2" onclick ="botaoModal ()"  id="imprimir" role="button">Rol dos Descontos</a></li>
                         </ul>
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#modalDesconto">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
                 </div>

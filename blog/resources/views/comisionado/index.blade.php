@@ -5,52 +5,28 @@
     <div class="container">    
         @if(session('success'))
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{ session("success") }}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
         @endif
         @error('false')
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{ $message }}'
-                })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         
@@ -69,7 +45,7 @@
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn botao" ><i class="fad fa-save"></i> Incluir</button>
                     
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalComissionado">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
                 </div>
@@ -158,21 +134,7 @@
 <script>
 
         $(document).ready(function(){
-            $('.modal-botao').click(function() {
-                localStorage.setItem("modal", "enabled");
-            })
 
-            function verficarModal() {
-                var valueModal = localStorage.getItem('modal');
-                if (valueModal === "enabled") {
-                $(document).ready(function() {
-                    $("#teste").modal("show");
-                });
-                localStorage.setItem("modal", "disabled");
-                }
-            }
-            verficarModal()
-           
             $( "#nome_tomador" ).on('keyup focus',function() {
                 var dados = '0';
                 if ($(this).val()) {

@@ -98,33 +98,38 @@ class Trabalhador extends Model
     }
     public function buscaListaTrabalhador($id)
     {
-        
-        return Trabalhador::select(
-            'tsnome',
-            'id',
-            'tscpf',
-            'tsmatricula',
-            'created_at'
+        return DB::table('trabalhadors')
+        ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
+        ->select(
+            'trabalhadors.tsnome',
+            'trabalhadors.id',
+            'trabalhadors.tscpf',
+            'trabalhadors.tsmatricula',
+            'trabalhadors.created_at'
         ) 
         ->where(function($query) use ($id){
             $user = auth()->user();
             if ($id) {
                 $query->where([
                     ['trabalhadors.tsnome','like','%'.$id.'%'],
-                    ['trabalhadors.empresa_id', $user->empresa_id]
+                    ['trabalhadors.empresa_id', $user->empresa_id],
+                    ['categorias.cssituacao','Ativo']
                 ])
                 ->orWhere([
                     ['trabalhadors.tscpf','like','%'.$id.'%'],
                     ['trabalhadors.empresa_id', $user->empresa_id],
+                    ['categorias.cssituacao','Ativo']
                 ])
                 ->orWhere([
                     ['trabalhadors.tsmatricula','like','%'.$id.'%'],
                     ['trabalhadors.empresa_id', $user->empresa_id],
+                    ['categorias.cssituacao','Ativo']
                 ]);
             }else{
                 $query->where([
                     ['trabalhadors.id','>',$id],
-                    ['trabalhadors.empresa_id', $user->empresa_id]
+                    ['trabalhadors.empresa_id', $user->empresa_id],
+                    ['categorias.cssituacao','Ativo']
                 ]);
             }
             // if ($user->hasPermissionTo('admin')) {

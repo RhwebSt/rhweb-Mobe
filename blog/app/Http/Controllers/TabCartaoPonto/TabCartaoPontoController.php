@@ -156,11 +156,32 @@ class TabCartaoPontoController extends Controller
         
             $lancamentotabelas = $this->lancamentotabela->cadastro($dados);
             // $this->valorrublica->editarBoletimTabela($dados,$user->empresa);
+            // $this->valorrublica->where('empresa_id', $user->empresa_id)
+            // ->update(['vsnroboletins'=>$dados['liboletim']]);
             $this->valorrublica->where('empresa_id', $user->empresa_id)
-            ->update(['vsnroboletins'=>$dados['liboletim']]);
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vsnroboletins >= 0) {
+                        $numero = $valorrublicas->vsnroboletins += 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnroboletins'=>$numero]);
+                    }
+                }
+            });
         return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         try {
         } catch (\Throwable $th) {
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
+            ->chunkById(100, function ($valorrublica) use ($user) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vsnroboletins > 0) {
+                        $numero = $valorrublicas->vsnroboletins -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnroboletins'=>$numero]);
+                    }
+                }
+            });
+            $this->lancamentotabela->deletar($lancamentotabelas['id']);
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
@@ -280,12 +301,14 @@ class TabCartaoPontoController extends Controller
         try {
             // $this->lancamentorublica->deletar($id);
             $user = Auth::user();
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
-                    $numero = $valorrublicas->vsnroboletins -= 1;
-                    $this->valorrublica->where('empresa_id', $user->empresa_id)
-                    ->update(['vsnroboletins'=>$numero]);
+                    if ($valorrublicas->vsnroboletins > 0) {
+                        $numero = $valorrublicas->vsnroboletins -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnroboletins'=>$numero]);
+                    }
                 }
             });
             $this->lancamentotabela->deletar($id);

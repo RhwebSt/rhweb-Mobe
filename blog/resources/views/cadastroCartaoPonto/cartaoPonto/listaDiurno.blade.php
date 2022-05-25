@@ -36,8 +36,8 @@
                                     <i class="fad fa-sort"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                  <li><a class="dropdown-item dropdown__links--filter" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href=""><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
+                                  <li><a class="dropdown-item dropdown__links--filter modal-botao" href=""><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
                                 </ul>
                               </div>
                         </div>
@@ -81,11 +81,11 @@
                                     <td class="td__body text-nowrap col" style="width:80px;">{{$listas->horas_normais}}</td>
                                     <td class="td__body text-nowrap col" style="width:80px;">{{$listas->bstotal}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="button__editar btn modal-botao" href=""><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href=""><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                            <button class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteListaDiurno"><i class="icon__color fad fa-trash"></i></button>
+                                            <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteListaDiurno"><i class="icon__color fad fa-trash"></i></button>
                                     </td>
                                 </tr>
                                @endif
@@ -144,7 +144,7 @@
                     
                     <div class="modal-footer">
                         <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
+                        <button type="submit" class="btn botao__deletar--modal modal-botao"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

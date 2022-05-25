@@ -6,52 +6,31 @@
     <div class="container">
         @if(session('success'))
         <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#5AA300',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              html: '<p class="modal__aviso">{{session("success")}}</p>',
+              background: '#45484A',
+              showConfirmButton: true,
+              timer: 2500,
     
-        Toast.fire({
-          icon: 'success',
-          title: "{{session('success')}}"
-        })
+            });
         </script>
         @endif
         @error('false')
         <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#C53230',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: '{{ $message }}'
-        })
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                html: '<p class="modal__aviso">{{ $message }}</p>',
+                background: '#45484A',
+                showConfirmButton: true,
+                timer: 5000,
+    
+            });
         </script>
         @enderror
+
 
         <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data" method="POST">
             
@@ -65,7 +44,7 @@
                     
                     <button type="submit" id="incluir" class="btn botao"><i class="fad fa-save"></i> Incluir</button>
 
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalTrabalhador">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
 
@@ -84,7 +63,7 @@
             
             <section class="foto__trabalhador">
 
-                <img class="trabfoto" id="trabfoto" src="imagem/iconFotoTrab.jpg" alt="foto do trabalhador">
+                <img class="trabfoto" id="trabfoto" src="{{url('imagem/iconFotoTrab.jpg')}}" alt="foto do trabalhador">
 
                 <div class="col-md-4 div__input--foto">
                     <label for="formFileSm " class="form-label"><i class="fad fa-lg fa-camera-alt"></i> Foto do Trabalhador</label>
@@ -107,7 +86,7 @@
 
             <div class="col-md-6">
                   <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" data-toggle="tooltip" data-placement="top" title="Deseja tornar esse nome como padrão? clique" /> Nome Social (Opcional) </label>
-                  <input type="text" class="form-control @error('nome__social') is-invalid @enderror" value="{{ old('nome__social')}}" maxlength="40" name="nome__social" id="nome__social" placeholder="digite seu nome social">
+                  <input type="text" class="form-control @error('nome__social') is-invalid @enderror" value="{{ old('nome__social')}}" maxlength="40" name="nome__social" id="nome__social" placeholder="digite seu nome social" maxlength="40">
                   @error('nome__social')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -242,7 +221,7 @@
     
             <div class="col-md-6">
                   <label for="pais__nascimento" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> País de Nascimento</label>
-                  <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" value="{{old('pais__nascimento')}}" maxlength="20" name="pais__nascimento" id="pais__nascimento" placeholder="clique e escolha o país de nascimento">
+                  <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" value="{{old('pais__nascimento')}}" maxlength="30" name="pais__nascimento" id="pais__nascimento" placeholder="clique e escolha o país de nascimento">
                   @error('pais__nascimento')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -252,7 +231,7 @@
     
             <div class="col-md-6">
                   <label for="pais__nacionalidade" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> País de Nacionalidade</label>
-                  <input type="text" list="pais_nacionalidade_list" class="form-control @error('pais__nacionalidade') is-invalid @enderror" value="{{old('pais__nacionalidade')}}" maxlength="20" name="pais__nacionalidade" id="pais__nacionalidade" placeholder="clique e escolha o país de nacionalidade">
+                  <input type="text" list="pais_nacionalidade_list" class="form-control @error('pais__nacionalidade') is-invalid @enderror" value="{{old('pais__nacionalidade')}}" maxlength="30" name="pais__nacionalidade" id="pais__nacionalidade" placeholder="clique e escolha o país de nacionalidade">
                   @error('pais__nacionalidade')
                   <span class="text-danger">{{ $message }}</span>
                   @enderror
@@ -564,7 +543,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="categoria" class="form-label letter__color">Categoria</label>
-                                          <input type="text" list="categoria_list" class="form-control @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}" maxlength="100" name="categoria__contrato" id="categoria" placeholder="clique ou digite para selecionar a categoria">
+                                          <input type="text" list="categoria_list" class="form-control @error('categoria__contrato') is-invalid @enderror" value="{{old('categoria__contrato')}}" maxlength="50" name="categoria__contrato" id="categoria" placeholder="clique ou digite para selecionar a categoria">
                                           @error('categoria__contrato')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -574,7 +553,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="cbo" class="form-label letter__color">CBO</label>
-                                          <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" value="{{old('cbo')}}" name="cbo" id="cbo" value="" placeholder="clique ou digite para selecionar o cbo">
+                                          <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" value="{{old('cbo')}}" name="cbo" id="cbo" value="" maxlength="50" placeholder="clique ou digite para selecionar o cbo">
                                           @error('cbo')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -586,7 +565,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="ctps" class="form-label letter__color">CTPS</label>
-                                          <input type="text" class="form-control @error('ctps') is-invalid @enderror" maxlength="20" value="{{old('ctps')}}" name="ctps" id="ctps" placeholder="Ex: 0000000">
+                                          <input type="text" class="form-control @error('ctps') is-invalid @enderror" maxlength="10" value="{{old('ctps')}}" name="ctps" id="ctps" placeholder="Ex: 0000000">
                                           @error('ctps')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -594,7 +573,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="serie__ctps" class="form-label letter__color">Série</label>
-                                          <input type="text" class="form-control @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps" placeholder="Ex:00000">
+                                          <input type="text" class="form-control @error('serie__ctps') is-invalid @enderror" value="{{old('serie__ctps')}}" name="serie__ctps" id="serie__ctps" placeholder="Ex:00000" maxlength="4">
                                           @error('serie__ctps')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -620,7 +599,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="data__afastamento" class="form-label letter__color">Data de Afastamento</label>
-                                          <input type="date" class="form-control @error('data__afastamento') is-invalid @enderror" value="{{old('data__afastamento')}}" name="data__afastamento" id="data__afastamento">
+                                          <input type="date" class="form-control @error('data__afastamento') is-invalid @enderror" value="{{old('data__afastamento')}}" name="data__afastamento" id="data__afastamento" maxlength="10">
                                           @error('data__afastamento')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -651,7 +630,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                           <label for="banco" class="form-label letter__color">Banco</label>
-                                          <input type="text" class="form-control @error('banco') is-invalid @enderror" aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" id="banco" placeholder="digite o número do seu banco">
+                                          <input type="text" class="form-control @error('banco') is-invalid @enderror" aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" maxlength="30" id="banco" placeholder="digite o número do seu banco">
                                           <div id="menssagem-banco" class="valid-feedback">
                                     
                                           </div>
@@ -662,7 +641,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                           <label for="agencia" class="form-label letter__color">Agência</label>
-                                          <input type="text" class="form-control @error('agencia') is-invalid @enderror" name="agencia" value="{{old('agencia')}}" id="agencia" placeholder="Ex: 0000">
+                                          <input type="text" class="form-control @error('agencia') is-invalid @enderror" name="agencia" value="{{old('agencia')}}" id="agencia" placeholder="Ex: 0000"  maxlength="10">
                                           @error('agencia')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -670,7 +649,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                           <label for="operacao" class="form-label letter__color">Operação</label>
-                                          <input type="text" class="form-control @error('operacao') is-invalid @enderror" name="operacao" value="{{old('operacao')}}" id="operacao" placeholder="Ex: 000">
+                                          <input type="text" class="form-control @error('operacao') is-invalid @enderror" name="operacao" value="{{old('operacao')}}" id="operacao" placeholder="Ex: 000"  maxlength="3">
                                           @error('aperacao')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -678,7 +657,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                           <label for="conta" class="form-label letter__color">Conta</label>
-                                          <input type="text" class="form-control @error('conta') is-invalid @enderror" name="conta" value="{{old('conta')}}" id="conta" placeholder="Ex: 00000000-0">
+                                          <input type="text" class="form-control @error('conta') is-invalid @enderror" name="conta" value="{{old('conta')}}" id="conta" placeholder="Ex: 00000000-0"  maxlength="10">
                                           @error('conta')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -686,7 +665,7 @@
                                 
                                     <div id="divpix" class="col-md-4 mt-2">
                                           <label for="pix" class="form-label letter__color">PIX</label>
-                                          <input type="text" class="form-control @error('pix') is-invalid @enderror" name="pix" value="{{old('pix')}}" id="pix">
+                                          <input type="text" class="form-control @error('pix') is-invalid @enderror" name="pix" value="{{old('pix')}}" id="pix"  maxlength="100">
                                           @error('pix')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror
@@ -765,21 +744,22 @@
 
     
 
+//     // verifica se o usuario clickou em algum botao que necessite abrir o modal de novo
+//   $('.modal-botao').click(function() {
+//     localStorage.setItem("modal", "enabled");
+//   })
 
-  $('.modal-botao').click(function() {
-    localStorage.setItem("modal", "enabled");
-  })
-
-  function verficarModal() {
-    var valueModal = localStorage.getItem('modal');
-    if (valueModal === "enabled") {
-      $(document).ready(function() {
-        $("#teste").modal("show");
-      });
-      localStorage.setItem("modal", "disabled");
-    }
-  }
-  verficarModal()
+//   function verficarModal() {
+//     var valueModal = localStorage.getItem('modal');
+//     if (valueModal === "enabled") {
+//       $(document).ready(function() {
+//         $("#modalTrabalhador").modal("show");
+//       });
+//       localStorage.setItem("modal", "disabled");
+//     }
+//   }
+//   verficarModal();
+  //fim da verificação//
 
   
 

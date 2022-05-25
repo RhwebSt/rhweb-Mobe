@@ -173,7 +173,7 @@ class TomadorController extends Controller
                 // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
                 $indicefaturas = $this->indicefatura->cadastro($dados);
                 // $this->valorrublica->editarMatricularTomador($dados,$user->empresa_id);
-                $this->valorrublica->where('id', $user->empresa_id)
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
                 ->chunkById(100, function ($valorrublica) use ($user) {
                     foreach ($valorrublica as $valorrublicas) {
                         if ($valorrublicas->vimatriculartomador >= 0) {
@@ -195,7 +195,7 @@ class TomadorController extends Controller
             // $this->endereco->deletarTomador($dados['tomador']);
             // $this->bancario->deletarTomador($dados['tomador']);
             // $this->tabelapreco->deletatomador($dados['tomador']);
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vimatriculartomador > 0) {
@@ -348,7 +348,7 @@ class TomadorController extends Controller
         if ($tomador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletador.']);
         }
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
                 if ($valorrublicas->vimatriculartomador > 0) {

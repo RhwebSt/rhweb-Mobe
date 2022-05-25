@@ -5,54 +5,32 @@
     <div class="container">
         @if(session('success'))
         <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#5AA300',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
+            Swal.fire({
+              position: 'center',
               icon: 'success',
-              title: '{{session("success")}}'
-            })
+              html: '<p class="modal__aviso">{{session("success")}}</p>',
+              background: '#45484A',
+              showConfirmButton: true,
+              timer: 2500,
+    
+            });
         </script>
         @endif
         @error('false')
         <script>
-                 
-            const Toast = Swal.mixin({
-              toast: true,
-              width: 500,
-              color: '#ffffff',
-              background: '#C53230',
-              position: 'top-end',
-              showCloseButton: true,
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-            })
-            
-            Toast.fire({
-              icon: 'error',
-              title: 'Não foi possível gerar a ficha de EPI'
-            })
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                html: '<p class="modal__aviso">Não foi possível gerar a ficha de EPI</p>',
+                background: '#45484A',
+                showConfirmButton: true,
+                timer: 5000,
+    
+            });
         </script>
-        @enderror  
+        @enderror
+        
+          
 
         <form class="row g-3" action="{{route('epi.store')}}" method="POST">
         @csrf
@@ -325,26 +303,17 @@
             }
 
             function alerta() {
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
                 
-                Toast.fire({
-                  icon: 'error',
-                  title: 'Não pode ser cadastrado mais de 20!'
-                })
+                Swal.fire({
+                  position: 'error',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">Não pode ser cadastrado mais de 20!</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
+
             }
 
             $(document).ready(function(){

@@ -88,7 +88,8 @@ class calculoFolhaGeralController extends Controller
                
             }
         });
-        $valorrublica = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        $valorrublica = $this->valorrublica->where('empresa_id',$user->empresa_id)->first();
+        
         $folhar = [
             'codigo'=>$valorrublica->vsnrofolha,
             'inicio'=>$datainicio,
@@ -553,6 +554,7 @@ class calculoFolhaGeralController extends Controller
                     $boletim['inss_sobre_ter']['valor'] =  $boletim['decimo_ter']['valor'] * 0.075;
                     $boletim['desconto'] +=  $boletim['inss_sobre_ter']['valor'];
                     $inss_rublica =  $this->rublica->buscaRublicaUnidade('INSS');
+                    
                     foreach ($inss_lista as $in => $valor_inss) {
                         $novoinss =  str_replace(".","",$valor_inss->isvalorfinal);
                         $novoinss =  str_replace(',','.',$novoinss);
@@ -564,7 +566,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ($inss > str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
+                            // dd('1');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[0]->isreducao));
@@ -573,7 +576,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ($inss > str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
+                            // dd('2');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[1]->isreducao));
@@ -582,7 +586,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ( $inss >= $novoinss && $in == 3) {
+                            // dd('3');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal))  && $inss <= $novoinss && $in == 3 || $inss > $novoinss && $in == 3) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[2]->isreducao));
@@ -591,6 +596,7 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
+                            // dd('4');
                         }
                     
                     }
@@ -601,11 +607,11 @@ class calculoFolhaGeralController extends Controller
                     $boletim['base_irrf'] = $boletim['base_fgts'] -  $boletim['base_irrf'];
                     
                     $boletim['desconto'] += $novovalor;
-                    $inss_rublica =  $this->rublica->buscaRublicaUnidade('Comissionador');
+                    $comissionado_rublica =  $this->rublica->buscaRublicaUnidade('Comissionador');
                     $boletim['comissionador']['valor'] = $novovalor;
-                    $boletim['comissionador']['rublicas'] = $inss_rublica->rsdescricao;
+                    $boletim['comissionador']['rublicas'] = $comissionado_rublica->rsdescricao;
                     $boletim['comissionador']['quantidade'] = $indece;
-                    $boletim['comissionador']['codigos'] = $inss_rublica->rsrublica;
+                    $boletim['comissionador']['codigos'] = $comissionado_rublica->rsrublica;
 
                     $boletim['liquido'] = $boletim['vencimento'] - $boletim['desconto'];
 
@@ -647,12 +653,19 @@ class calculoFolhaGeralController extends Controller
                     // if ($boletim['vt']['valor']) {
                     //     
                     // }
+                    
                     $this->valorcalculo->cadastroVa($boletim);
+                    
                     $this->valorcalculo->cadastroVt($boletim);
+                    
                     $this->valorcalculo->cadastrodsr($boletim);
+                    
                     $this->valorcalculo->cadastrodecimo_ter($boletim);
+                    
                     $this->valorcalculo->cadastroferias_decimoter($boletim);
+                    // dd($boletim,$inss);
                     $this->valorcalculo->cadastroinss($boletim);
+                    
                     $this->valorcalculo->cadastrocomissionador($boletim);
                     $this->valorcalculo->cadastroinss_decimoter($boletim);
                 }
@@ -993,7 +1006,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ($inss > str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
+                            // dd('1');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[0]->isreducao));
@@ -1002,7 +1016,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ($inss > str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
+                            // dd('2');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[1]->isreducao));
@@ -1011,7 +1026,8 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
-                        }elseif ( $inss >= $novoinss && $in == 3) {
+                            // dd('3');
+                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal))  && $inss <= $novoinss && $in == 3) {
                             $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal));
                             $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
                             $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[2]->isreducao));
@@ -1020,6 +1036,7 @@ class calculoFolhaGeralController extends Controller
                             $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
                             $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
                             $boletim['desconto'] += $resultado;
+                            // dd('4');
                         }
                     
                     }

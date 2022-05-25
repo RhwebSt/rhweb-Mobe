@@ -4,65 +4,49 @@
 
 <main role="main">
     <div class="container">
-        @if(session('success'))
-        <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#5AA300',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-    
-        Toast.fire({
-          icon: 'success',
-          title: '{{session("success")}}',
-        })
-        </script>
+       @if(session('success'))
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
+            </script>
         @endif
         @error('false')
-        <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#C53230',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-    
-        Toast.fire({
-          icon: 'error',
-          title: 'Não foi possível realizar o cadastro!'
-        })
-        </script>
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
+            </script>
         @enderror
         @error('tabelavazia')
-        <script>
-        Swal.fire({
-          icon: 'error',
-          title: 'Relatório vazio',
-          text: '{{ $message }}',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: true,
-        })
-        </script>
+            <script>
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        html: '<p class="modal__aviso--title">Relatório vazio</p>'+ '<p class="modal__aviso">{{ $message }}</p>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: true,
+                        background: '#45484A',
+                        showConfirmButton: true,
+                        timer: 5000,
+                        customClass: {
+                          title: 'modal__aviso',
+                        }
+                    })
+            </script>
         @enderror
         
         <form class="row g-3" id="form" method="POST" action="{{ route('tabelapreco.store') }}">
@@ -76,7 +60,7 @@
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" class="btn botao " id="incluir"><i class="fad fa-save"></i> Incluir </button>
 
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalTabPreco">
                       <i class="fad fa-list-ul"></i> Lista
                     </a>
               </div>
@@ -150,20 +134,7 @@
 
 
 <script>
-  $('.modal-botao').click(function() {
-    localStorage.setItem("modal", "enabled");
-  })
 
-  function verficarModal() {
-    var valueModal = localStorage.getItem('modal');
-    if (valueModal === "enabled") {
-      $(document).ready(function() {
-        $("#teste").modal("show");
-      });
-      localStorage.setItem("modal", "disabled");
-    }
-  }
-  verficarModal()
 
  
   $(document).ready(function() {

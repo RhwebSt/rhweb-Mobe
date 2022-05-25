@@ -6,80 +6,67 @@
     <div class="container ">    
         @if(session('success'))
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#5AA300',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
+                Swal.fire({
+                  position: 'center',
                   icon: 'success',
-                  title: '{{session("success")}}'
-                })
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
             </script>
-        @endif
-        @error('false')
+            @endif
+            @error('false')
             <script>
-                     
-                const Toast = Swal.mixin({
-                  toast: true,
-                  width: 500,
-                  color: '#ffffff',
-                  background: '#C53230',
-                  position: 'top-end',
-                  showCloseButton: true,
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                  }
-                })
-                
-                Toast.fire({
-                  icon: 'error',
-                  title: '{{$message}}'
-                })
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
             </script>
         @enderror
         @error('tabelavazia')
             <script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Tabela de preço vazia',
-                  text: '{{ $message }}',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  allowEnterKey: true,
-                })
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        html: '<p class="modal__aviso--title">Tabela de preço vazia</p>'+ '<p class="modal__aviso">{{ $message }}</p>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: true,
+                        background: '#45484A',
+                        showConfirmButton: true,
+                        timer: 5000,
+                        customClass: {
+                          title: 'modal__aviso',
+                        }
+                    })
             </script>
         @enderror
         @error('dadosvazia')
             <script>
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Algo deu errado!',
-                  text: '{{ $message }}',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  allowEnterKey: true,
-                })
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        html: '<p class="modal__aviso--title">Algo deu errado!</p>'+ '<p class="modal__aviso">{{ $message }}</p>',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: true,
+                        background: '#45484A',
+                        showConfirmButton: true,
+                        timer: 5000,
+                        customClass: {
+                          title: 'modal__aviso',
+                        }
+                    })
             </script>
         @enderror
-       
-        
+
             <form class="row g-3" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
                 
                 <input type="hidden" name="tomador" id="tomador">
@@ -94,7 +81,7 @@
                     <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                         <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir </button>
                         
-                         <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                         <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalTomador">
                             <i class="fad fa-list-ul"></i> Lista
                          </a>
                     </div>
@@ -903,35 +890,7 @@
             
             verificaCampoObrigatorioAccordion();
             // fim da verificação do accordion//
-            
-             $('.modal-botao, .pag-item',).click(function() {
-                    localStorage.setItem("modal", "enabled");
-                })
-               function verficarModal(){
-                  var valueModal = localStorage.getItem('modal');
-                  if(valueModal === "enabled"){
-                      $(document).ready(function(){
-                          $("#teste").modal("show");
-                      });
-                      localStorage.setItem("modal","disabled");
-                  }
-                }
-                verficarModal()
-            
-             function validaInputQuantidade(idCampo,QuantidadeCarcteres){
-                var telefone = document.querySelector(idCampo);
 
-                telefone.addEventListener('input', function(){
-                    var telefone = document.querySelector(idCampo);
-                    var result = telefone.value;
-                    if(result > " " && result.length >= QuantidadeCarcteres){
-                      telefone.classList.add('is-valid');  
-                    }else{
-                        telefone.classList.remove('is-valid');
-                    }
-                     
-                });
-            }
             
         $(document).ready(function(){
            

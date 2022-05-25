@@ -43,6 +43,7 @@
     margin-bottom: 15px;
     font-size:18px;
     font-weight: 600;
+    color: black;
 }
 
 .content--deletar2{
@@ -51,6 +52,7 @@
     margin-bottom: 10px;
     font-size:14px;
     font-weight: 400;
+    color: black;
 }
 
 
@@ -87,4 +89,18 @@
     -webkit-box-shadow: 100px 0 0 #008F0E inset;
 
 }
+
+
+.modal__aviso{
+    font-size:22px;
+    text-align: center;
+    color:white;
+}
+
+.modal__aviso--title{
+    font-size:26px;
+    text-align: center;
+    color:white;
+}
+
 

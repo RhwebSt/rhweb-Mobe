@@ -143,9 +143,11 @@ class CadastroCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all();
-        
         $user = Auth::user();
         $today = Carbon::today();
+        if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
+            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado o campo tem que ser sim!']);
+        }
         if (strtotime($dados['data']) > strtotime($today) ) {
             return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
         }
@@ -175,7 +177,7 @@ class CadastroCartaoPontoController extends Controller
                 // $this->valorrublica->editarUnidadeNuCartaoPonto($user->empresa,$dados);
                 // $this->valorrublica->where('empresa_id', $user->empresa_id)
                 // ->update(['vsnrocartaoponto'=>$dados['liboletim']]); 
-                $this->valorrublica->where('id', $user->empresa_id)
+                $this->valorrublica->where('empresa_id', $user->empresa_id)
                 ->chunkById(100, function ($valorrublica) use ($user) {
                     foreach ($valorrublica as $valorrublicas) {
                         if ($valorrublicas->vsnrocartaoponto >= 0) {
@@ -289,10 +291,10 @@ class CadastroCartaoPontoController extends Controller
     {
        
         $user = Auth::user();
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
-                if ($valorrublicas->vsnrocartaoponto >= 0) {
+                if ($valorrublicas->vsnrocartaoponto > 0) {
                     $numero = $valorrublicas->vsnrocartaoponto -= 1;
                     $this->valorrublica->where('empresa_id', $user->empresa_id)
                     ->update(['vsnrocartaoponto'=>$numero]);

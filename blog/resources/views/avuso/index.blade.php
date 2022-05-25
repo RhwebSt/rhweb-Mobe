@@ -5,52 +5,30 @@
 <main role="main">
     <div class="container">
         @if(session('success'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                width: 500,
-                color: '#ffffff',
-                background: '#5AA300',
-                position: 'top-end',
-                showCloseButton: true,
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
         
-            Toast.fire({
-                icon: 'success',
-                title: '{{session("success")}}'
-            })
-        </script>
-        @endif
-        @error('false')
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                width: 500,
-                color: '#ffffff',
-                background: '#C53230',
-                position: 'top-end',
-                showCloseButton: true,
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+                });
+            </script>
+            @endif
+            @error('false')
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
         
-            Toast.fire({
-                icon: 'error',
-                title: '{{ $message }}'
-            })
-        </script>
+                });
+            </script>
         @enderror
         
         <section class="section__botoes--recibo-avulso">
@@ -378,16 +356,19 @@
                                     
                                     <div class="d-flex">
                                         
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatrabalhador01" name="search" id="pesquisatrabalhador01">
+                                        <input placeholder="clique ou digite para pesquisar" class="form-control @error('search') is-invalid @enderror" list="listatrabalhador01" name="search" id="pesquisatrabalhador01">
                                         <datalist id="listatrabalhador01"></datalist>
         
                                         <input type="hidden" name="trabalhador01" class="@error('trabalhador01') is-invalid @enderror" id="trabalhador01">
-                                        
+                                      
                                         <button  class="btn botao__search">
                                             <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                         </button>
         
                                     </div>
+                                    @error('search')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     
                                 
                             </div>
@@ -513,9 +494,9 @@ function remove(index) {
                 let nome = ''
                 if (data.length >= 1) {
                     data.forEach(element => {
-                        nome += `<option value="${element.asnome}">`
+                        nome += `<option value="${element.ascpf}  ${element.asnome}">`
                         // nome += `<option value="${element.tsmatricula}">`
-                          nome += `<option value="${element.ascpf}">`
+                        //   nome += `<option value="${element.ascpf}">`
                     });
                     $('#listatrabalhador01,#listatrabalhador').html(nome)
                 }

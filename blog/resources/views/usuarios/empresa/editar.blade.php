@@ -3,53 +3,31 @@
 @section('conteine')
 <div class="container">
     @if(session('success'))
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            width: 500,
-            color: '#ffffff',
-            background: '#5AA300',
-            position: 'top-end',
-            showCloseButton: true,
-            showConfirmButton: false,
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-
-        Toast.fire({
-            icon: 'success',
-            title: '{{session("success")}}'
-        })
-    </script>
-    @endif
-    @error('false')
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            width: 500,
-            color: '#ffffff',
-            background: '#C53230',
-            position: 'top-end',
-            showCloseButton: true,
-            showConfirmButton: false,
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-
-        Toast.fire({
-            icon: 'error',
-            title: '{{ $message }}'
-        })
-    </script>
-    @enderror
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">{{session("success")}}</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
+            </script>
+            @endif
+            @error('false')
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">{{ $message }}</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
+            </script>
+        @enderror
     <form class="row g-3 mt-1 mb-3" id="form" action="{{ route('empresa.update',$empresa->id) }}" method="POST" action="">
 
 

@@ -68,8 +68,18 @@ class FaturaController extends Controller
     {
         $dados = $request->all();
         $today = Carbon::today();
-        
+       
         $user = auth()->user();
+        if (date('m',strtotime($dados['ano_inicial'])) !== date('m',strtotime($dados['ano_final']))) {
+            return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'O valor inicial e o valor final tem que ser do mesmo mês!','ano_final'=>'O valor inicial e o valor final tem que ser do mesmo mês!']);
+        }else if ((int)date('m',strtotime($dados['vencimento'])) !== date('m',strtotime($dados['ano_inicial']))) {
+            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao periodo!']);
+        }else if ((int)date('m',strtotime($dados['vencimento'])) !== date('m',strtotime($dados['ano_final']))){
+            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao periodo!']);
+        }else if ((int)date('m',strtotime($dados['vencimento'])) !== date('m',strtotime($dados['competencia']))){
+            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao competência!']);
+        }
+        dd(date('m',strtotime($dados['ano_inicial'])),$dados);
         // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
         //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);
         // }

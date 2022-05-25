@@ -1,4 +1,4 @@
-<div class="modal fade" id="teste" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="modalCadAcesso" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header modalHeader">
@@ -107,34 +107,12 @@
     
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                            <a class="button__editar btn modal-botao" href="{{route('usuario.edit', base64_encode($valoruser->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                            <a class="button__editar btn" href="{{route('usuario.edit', base64_encode($valoruser->id))}}"><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <button class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$key}}">
+                                        <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCadAcesso">
                                             <i class="icon__color fad fa-trash"></i>
                                         </button>
-                                        <div class="modal fade" id="staticBackdrop{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                          <div class="modal-dialog">
-                                          <div class="modal-content">
-                                              <form action="{{route('usuario.destroy',$valoruser->id)}}"  method="post">
-                                                  @csrf
-                                                  @method('delete')
-                                                  <div class="modal-header modal__delete">
-                                                  <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                                                  <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                  </div>
-                                                  <div class="modal-body modal-delbody">
-                                                      <p class="mb-1 text-start">Deseja realmente excluir?</p>
-                                                  </div>
-                                                  <div class="modal-footer modal-delfooter">
-                                                  <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                                                  <button type="submit" class="btn btn__deletar">Deletar</button>
-    
-                                                  </div>
-                                              </form>
-                                          </div>
-                                          </div>
-                                      </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -167,24 +145,32 @@
 </div>
 
               
-<section class="delete__tabela--tomador">
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+<section class="delete__tabela--Acesso">
+    <div class="modal fade" id="deleteCadAcesso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered col-8">
             <div class="modal-content">
-                <form action="" id="formdelete" method="post">
+                <form action="{{route('usuario.destroy',$valoruser->id)}}" id="formdelete" method="post">
                     @csrf
                     @method('delete')
-                    <div class="modal-header modal__delete">
-                        <h5 class="modal-title text-white fs-5" id="staticBackdropLabel">Excluir</h5>
-                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header header__modal">
+                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
-                    <div class="modal-body modal-delbody">
-                        <p class="mb-1 text-start">Deseja realmente excluir?</p>
+                    
+                    <div class="modal-body body__modal ">
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                            
+                                <p class="content--deletar">Deseja realmente excluir?</p>
+                                
+                                <p class="content--deletar2">Obs: Ao excluir esse usuário perderá todo o acesso ao sistema.</p>
+                                
+                            </div>
                     </div>
-                    <div class="modal-footer modal-delfooter">
-                        <button type="button" class="btn btn__fechar" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn__deletar">Deletar</button>
-    
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                        <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
                     </div>
                 </form>
             </div>

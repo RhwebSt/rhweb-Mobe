@@ -70,7 +70,7 @@
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="atualizar"  class="btn btn botao "><i class="fad fa-sync-alt"></i> Atualizar</button>
-                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCadAcesso">
                         <i class="fad fa-list"></i> Lista
                     </a>
                 </div>
@@ -97,7 +97,7 @@
                 
             <div class="col-md-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control  fw-bold" name="email" value="{{$editar->email}}" id="email">
+                <input type="text" class="form-control " name="email" value="{{$editar->email}}" id="email">
             </div>
 
             <div class="col-md-3">

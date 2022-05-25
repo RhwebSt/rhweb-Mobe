@@ -180,7 +180,7 @@ class TrabalhadorController extends Controller
             $categorias = $this->categoria->cadastro($dados);
             $documentos = $this->documento->cadastro($dados);
             // $this->valorrublica->editarMatricular($dados,$user->empresa_id); 
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vimatricular >= 0) {
@@ -317,7 +317,7 @@ class TrabalhadorController extends Controller
         if ($trabalhador) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletador.']);
         }
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vimatricular > 0) {

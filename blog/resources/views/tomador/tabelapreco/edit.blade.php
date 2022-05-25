@@ -5,53 +5,32 @@
 <main role="main">
     <div class="container">
         @if(session('success'))
-        <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#5AA300',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-    
-        Toast.fire({
-          icon: 'success',
-          title: 'Cadastro realizado com Sucesso'
-        })
-        </script>
-        @endif
-        @error('false')
-        <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          width: 500,
-          color: '#ffffff',
-          background: '#C53230',
-          position: 'top-end',
-          showCloseButton: true,
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-    
-        Toast.fire({
-          icon: 'error',
-          title: 'Não foi possível realizar o cadastro!'
-        })
-        </script>
+            <script>
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  html: '<p class="modal__aviso">Cadastro realizado com Sucesso</p>',
+                  background: '#45484A',
+                  showConfirmButton: true,
+                  timer: 2500,
+        
+                });
+            </script>
+            @endif
+            @error('false')
+            <script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html: '<p class="modal__aviso">Não foi possível realizar o cadastro!</p>',
+                    background: '#45484A',
+                    showConfirmButton: true,
+                    timer: 5000,
+        
+                });
+            </script>
         @enderror
+
     
         <form class="row g-3" id="form" method="POST" action="{{ route('tabelapreco.update',$id) }}">
             
@@ -65,7 +44,7 @@
     
                 <button type="submit" class="btn botao " id="atualizar"><i class="fad fa-sync-alt"></i> Atualizar </button>
                 
-                <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#modalTabPreco">
                     <i class="fad fa-list-ul"></i> Lista
                 </a>
 
