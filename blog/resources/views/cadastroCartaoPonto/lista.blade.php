@@ -91,6 +91,7 @@
                                         <a class="btn btn__vizualizar" href="{{route('boletimcartaoponto.create',[base64_encode($lancamentotabela->id),base64_encode($lancamentotabela->csdomingos)?$lancamentotabela->tomador->cartaoponto[0]->csdomingos:' ',$lancamentotabela->tomador->cartaoponto[0]->cssabados?base64_encode($lancamentotabela->tomador->cartaoponto[0]->cssabados):' ',$lancamentotabela->tomador->cartaoponto[0]->csdiasuteis?base64_encode($lancamentotabela->tomador->cartaoponto[0]->csdiasuteis):' ',base64_encode($lancamentotabela->lsdata),base64_encode($lancamentotabela->liboletim),base64_encode($lancamentotabela->tomador->id),base64_encode($lancamentotabela->lsferiado)])}}"><i class="icon__color fad fa-eye"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
+                                    
                                         <a class="button__editar btn" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}"><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">

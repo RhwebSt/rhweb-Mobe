@@ -82,3 +82,12 @@
 .required{
     color:red;
 }
+
+.div__switch{
+    margin-left: 5px;
+}
+
+.title__switch{
+    margin-top: 5px;
+    color:white;
+}

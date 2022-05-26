@@ -28,7 +28,7 @@ class Bolcartaoponto extends Model
             'bssaidanoite'=>$dados['saida3'],
             'bsentradamadrugada'=>$dados['entrada4'],
             'bssaidamadrugada'=>$dados['saida4'],
-            'created_at'=>$dados['data'],
+            // 'created_at'=>$dados['data'],
             'bstotal'=>str_replace(",",".",$dados['total']),
             'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),
@@ -84,7 +84,7 @@ class Bolcartaoponto extends Model
                 ['bolcartaopontos.lancamentotabela_id',$boletim],
                 ['trabalhadors.empresa_id', $user->empresa_id]
             ])
-            ->whereDate('bolcartaopontos.created_at', $data);
+            ->whereDate('lancamentotabelas.lsdata', $data);
         })
         ->first();
     }
@@ -231,7 +231,7 @@ class Bolcartaoponto extends Model
     {
         return Bolcartaoponto::where('id', $id)
         ->update([
-           'bsentradamanhao'=>$dados['entrada1'],
+            'bsentradamanhao'=>$dados['entrada1'],
             'bssaidamanhao'=>$dados['saida'],
             'bsentradatarde'=>$dados['entrada2'],
             'bssaidatarde'=>$dados['saida2'],
@@ -239,7 +239,7 @@ class Bolcartaoponto extends Model
             'bssaidanoite'=>$dados['saida3'],
             'bsentradamadrugada'=>$dados['entrada4'],
             'bssaidamadrugada'=>$dados['saida4'],
-            'created_at'=>$dados['data'],
+            // 'created_at'=>$dados['data'],
             'bstotal'=>str_replace(",",".",$dados['total']),
             'horas_normais'=>str_replace(",",".",$dados['horas_normais']),
             'bshoraex'=>str_replace(",",".",$dados['hora__extra']),

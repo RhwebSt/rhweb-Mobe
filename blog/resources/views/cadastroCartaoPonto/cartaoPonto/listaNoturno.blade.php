@@ -65,9 +65,10 @@
                             
                             <tbody class="table__body">
                             @if(count($lista) > 0)
-                                @foreach($lista as $listas)
+                                @foreach($lista as $key => $listas)
                                 @if($listas->bsentradanoite && $listas->bsentradanoite ||
                                 $listas->bsentradamadrugada && $listas->bssaidamadrugada)
+                                
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->trabalhador->tsmatricula}}</td>
                                     <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->trabalhador->tsnome}}">{{$listas->trabalhador->tsnome}}</td>
@@ -80,11 +81,43 @@
                                     <td class="td__body text-nowrap col" style="width:60px;">{{$listas->bsadinortuno}}</td>
                                     <td class="td__body text-nowrap col" style="width:90px;">{{$listas->bstotal}}</td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="button__editar btn" href=""><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('boletim.cartaoponto.edit',[base64_encode($listas->id),base64_encode($id),base64_encode($domingo)?$domingo:' ',$sabado?base64_encode($sabado):' ',$diasuteis?base64_encode($diasuteis):' ',base64_encode($data),base64_encode($boletim),base64_encode($tomador),base64_encode($feriado)])}}"><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                            <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteListaNoturno"><i class="icon__color fad fa-trash"></i></button>
+                                            <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteListaNoturno{{$key}}"><i class="icon__color fad fa-trash"></i></button>
+                                            <section class="delete__tabela--cartaoPonto">
+                                                <div class="modal fade" id="deleteListaNoturno{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered col-8">
+                                                        <div class="modal-content">
+                                                            <form action="{{route('boletimcartaoponto.destroy',$listas->id)}}" id="" method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <div class="modal-header header__modal">
+                                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                                </div>
+                                                                
+                                                                <div class="modal-body body__modal ">
+                                                                        <div class="d-flex align-items-center justify-content-center flex-column">
+                                                                            <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                        
+                                                                            <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                            
+                                                                            <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos.</p>
+                                                                            
+                                                                        </div>
+                                                                </div>
+                                                                
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                                    <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
                                     </td>
                                 </tr>
                                @endif
@@ -119,35 +152,4 @@
 </div>
 
 
-<section class="delete__tabela--cartaoPonto">
-    <div class="modal fade" id="deleteListaNoturno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-8">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                    
-                    <div class="modal-body body__modal ">
-                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
-                            
-                                <p class="content--deletar">Deseja realmente excluir?</p>
-                                
-                                <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos.</p>
-                                
-                            </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+

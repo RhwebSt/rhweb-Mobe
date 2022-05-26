@@ -408,7 +408,7 @@
                     
                   
                     @foreach($bolcartaoponto as $bolcartaopontos)
-                    
+                
                     <tr>
                         
                         <td class="small__font border-top border-bottom border-left nome spacing uppercase">{{$bolcartaopontos->trabalhador->tsnome}}</td>

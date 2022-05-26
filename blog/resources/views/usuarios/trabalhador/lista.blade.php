@@ -52,6 +52,7 @@
                                 <th class="th__header text-nowrap">Email</th>
                                 <th class="th__header text-nowrap" style="width:120px;">Cargo</th>
                                 <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
+                                <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Editar</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
                             </thead>
@@ -104,7 +105,9 @@
                                           </ul>
                                         </div>
                                     </td>
-    
+                                    <td class="td__body text-nowrap col" style="width:60px;">
+                                            <a class="btn btn__permissao" data-bs-toggle="modal" data-bs-target="#modalPermissao"><i class="fad fa-user-lock"></i></a>
+                                    </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                             <a class="button__editar btn" href="{{route('usuario.edit', base64_encode($valoruser->id))}}"><i class="icon__color fas fa-pen"></i></a>
@@ -144,6 +147,7 @@
     </div>
 </div>
 
+@include('usuarios.trabalhador.modalPermissao');
               
 <section class="delete__tabela--Acesso">
     <div class="modal fade" id="deleteCadAcesso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

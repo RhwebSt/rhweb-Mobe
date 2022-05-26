@@ -24,18 +24,18 @@ class Validacao extends FormRequest
     public function rules()
     {
         return [
-            'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
-            'trabalhador'=>'required',
-            'matricula'=>'required|max:4',
-            'entrada1'=>'max:5',
-            'saida'=>'max:5',
-            'entrada2'=>'max:5',
-            'saida2'=>'max:5',
-            'entrada3'=>'max:5',
-            'saida3'=>'max:5',
-            'entrada4'=>'max:5',
-            'saida4'=>'max:5',
-            'total'=>'max:5|required'
+            // 'nome__completo' => 'required|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
+            // 'trabalhador'=>'required',
+            // 'matricula'=>'required|max:4',
+            // 'entrada1'=>'max:5',
+            // 'saida'=>'max:5',
+            // 'entrada2'=>'max:5',
+            // 'saida2'=>'max:5',
+            // 'entrada3'=>'max:5',
+            // 'saida3'=>'max:5',
+            // 'entrada4'=>'max:5',
+            // 'saida4'=>'max:5',
+            // 'total'=>'max:5|required'
         ];
     }
     public function messages()

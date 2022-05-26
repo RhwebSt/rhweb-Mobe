@@ -24,11 +24,11 @@ class Validacao extends FormRequest
     public function rules()
     {
         return [
-            'nome__completo' => 'required',
-            'tomador'=>'required',
-            'liboletim'=>'required|numeric',
-            'num__trabalhador'=>'required',
-            'data'=>'required'
+            // 'nome__completo' => 'required',
+            // 'tomador'=>'required',
+            // 'liboletim'=>'required|numeric',
+            // 'num__trabalhador'=>'required',
+            // 'data'=>'required'
         ];
     }
     public function messages()

@@ -38,7 +38,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('relatorio/boletim/tabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
-    
+    Route::get('boletim/cartaoponto/editar/{id}/{idboletim}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@edit')->name('boletim.cartaoponto.edit');
     Route::get('boletim/cartao/ponto/{boletim}/{trabalhador}/{data}','BoletimCartaoPonto\\BoletimCartaoPontoController@show');
     
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
