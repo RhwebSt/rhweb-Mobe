@@ -1,7 +1,5 @@
 
-
 var daily = document.querySelector("#daily");
-console.log(daily);
 
 daily.addEventListener("click", function(){
 

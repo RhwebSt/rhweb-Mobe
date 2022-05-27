@@ -285,26 +285,24 @@
             <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2022</p>
         </footer>
         
-        <script src="{{url('/js/alteracaoSenha.js')}}"></script>
-        <script src="{{url('/js/darkmode.js')}}"></script>
-        <script src="{{url('/js/notificacaoUser.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="{{url('/js/masck.js')}}"></script>
+        <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
+        <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
+        <script src="{{url('/js/user/usuario/notificacaoUser.js')}}"></script>
+        <script src="{{url('/js/ferramentas/masck.js')}}"></script>
         <script src="{{url('/js/ferramentas/limpaCampos.js')}}"></script>
         <script src="{{url('/js/ferramentas/validaInput.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/cep.js')}}" ></script>
-        <script type="text/javascript" src="{{url('/js/pdf.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/banco.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/paisnascimento.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/categoriatrabalhador.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/criptografa.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/cep.js')}}" ></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/pdf.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/banco.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/paisnascimento.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/categoriatrabalhador.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/ferramentas/criptografa.js')}}"></script>
         <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
-        <script src="{{url('/js/esocial/index.js')}}">
-        </script>
-        <script src="{{url('/js/tabelapreco/atualizar.js')}}">
-        </script>
+        <script src="{{url('/js/esocial/index.js')}}"></script>
+        <script src="{{url('/js/user/tabelapreco/atualizar.js')}}"></script>
    
   </body>
 </html>

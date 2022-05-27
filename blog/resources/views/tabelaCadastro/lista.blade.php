@@ -157,4 +157,17 @@
         </div>
     </div>
 </div>
-              
+<?php
+        function calculovalores($horas,$valores)
+        {
+            if(strpos($horas,':')){
+               list($horas,$minitos) = explode(':',$horas);
+               $horasex = $horas * 3600 + $minitos * 60;
+               $horasex = $horasex/60;
+               $horasex = $valores * ($horasex/60);
+            }else{
+               $horasex = $valores * $horas;
+            }
+            return $horasex; 
+       }
+    ?>   

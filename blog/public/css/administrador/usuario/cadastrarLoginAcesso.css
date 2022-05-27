@@ -56,3 +56,8 @@
     transform: scale(1.06);
     box-shadow: none !important;
 }
+
+
+.section__botao--voltar--acesso{
+    margin-top: 6%;
+}

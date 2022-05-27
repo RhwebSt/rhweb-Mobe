@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Editar Novo Usuario')
+@section('titulo','Rhweb - Editar Usuario')
 @section('conteine')
 
         @if(session('success'))
@@ -55,23 +55,32 @@
 
 
         <div class="container">
+            
+            
 
-
-            <section class="form__cadastro--acesso">
+            <section class="">
                 <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('administrador.usuarios.update',$editar->id)}}">
                     @csrf
                     @method('PATCH')
-                    <h5 class="text__title">Editar login <i class="fad fa-user-edit"></i></h5>
+                    
                     <!-- <input type="hidden" id="method" name="_method" value=""> -->
                     <input type="hidden" name="empresa" id="idempresa" value="">
-                    <div class="row">
-                        <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
+                    
+                    <section class="section__botao--voltar--acesso">
+            
+                        <div class="d-flex justify-content-start align-items-start div__voltar">
+                            <a class="btn botao__voltar" href="{{route('administrador.usuarios.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                        </div>
+                        
+                        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
                             <button type="submit" id="atualizar" class="btn button__atualizar">
                                 <i class="fad fa-sync"></i> Atualizar
                             </button>
-                            <a class="btn button__sair" href="{{route('administrador.usuarios.index')}}" role="button" ><i class="fad fa-sign-out-alt"></i> Sair</a>
                         </div>
-                    </div>
+                    </section>
+        
+                    <h5 class="text__title">Editar login <i class="fad fa-user-edit"></i></h5>
+
 
                     <div class="col-md-3">
                         <label for="empresa" class="form-label">Empresa</label>

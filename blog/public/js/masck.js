@@ -96,6 +96,6 @@ $('#creditos').mask('000.000.000,00',{reverse:true});
 
 $('#num__trabalhador').mask('000.000.000.000.000.00', {reverse: true});
 $('#quantidade').mask('000.000.000.000.000.00', {reverse: true});
-
+$('.quant').mask('000.000.000.000.000.00', {reverse: true});
 $('#num__trabalhador').mask('#.##0', {reverse: true});
 

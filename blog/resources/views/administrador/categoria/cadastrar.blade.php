@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Categórias')
+@section('titulo','Rhweb - Categorias')
 @section('conteine')
         <div class="container">
 
@@ -52,29 +52,29 @@
     </script>
     @enderror
 
-            {{-- Inicio botoes principais --}}
-            
-            {{-- fim dos botoes principais --}}
 
 
-            <section class="section__title--categoria">
-                <div>
-                    <h1 class="title__categoria">Cadastrar Categoria <i class="fad fa-comment-alt-plus"></i></h1>
-                </div>
-            </section>
-
-
-            <section class="conteudo__categoria">
+            <section class="">
 
                 <form class=" row g-3" action="{{route('administrador.categoria.store')}}" method="POST">
-                <section class="section__botao--voltar--categoria">
-                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <a href="{{route('administrador.categoria.index')}}" class="btn button__voltar--categoria"><i class="fad fa-long-arrow-left"></i> Voltar</a>
-                    <button type="submit" class="button__incluir--categoria btn"><i class="fad fa-save"></i> Incluir</button>
-                </div>
-                <input type="hidden" name="user" value="{{$user->empresa}}">
-                @csrf
-            </section>
+                    <input type="hidden" name="user" value="{{$user->empresa}}">
+                    @csrf 
+                    
+                    <section class="section__botao--voltar--categoria">
+        
+                        <div class="d-flex justify-content-start align-items-start div__voltar">
+                            <a class="btn botao__voltar" href="{{route('administrador.categoria.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                        </div>
+                        
+                        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                            <button type="submit" class="button__incluir--categoria btn"><i class="fad fa-save"></i> Incluir</button>
+                        </div>
+                    </section>
+                
+                    <h1 class="title__categoria">Cadastrar Categoria <i class="fad fa-comment-alt-plus"></i></h1>
+
+                
+
                     <div class="d-flex justify-content-center flex-column align-items-center div__form--categoria">
 
                         <div class="mb-3 col-12 col-md-6">

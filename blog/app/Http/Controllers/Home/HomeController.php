@@ -18,7 +18,8 @@ class HomeController extends Controller
     }
     public function index()
     {
-        // dd(Hash::make('123456'));
+        // dd(Hash::make('mbcpc15555738'),Hash::make('mbcpd15555738'),Hash::make('mbcpe15555738'),Hash::make('mbcpl15555738'),Hash::make('mbcpr15555738'));
+       
         if (auth()->check()){
             $user = Auth::user();   
             if ($user->hasPermissionTo('Super Admin')) {

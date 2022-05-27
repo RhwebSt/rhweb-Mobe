@@ -6,19 +6,21 @@
 
     {{-- Inicio botoes principais --}}
     <section class="section__botao--voltar--categoria">
+        
+        <div class="d-flex justify-content-start align-items-start div__voltar">
+            <a class="btn botao__voltar" href="{{route('administrador')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+        </div>
+        
         <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-            <a href="{{route('administrador')}}" class="btn button__voltar--categoria"><i class="fad fa-long-arrow-left"></i> Voltar</a>
             <a href="{{route('administrador.categoria.create')}}" class="button__new--categoria btn">Novo <i class="fad fa-user-plus"></i></a>
         </div>
     </section>
     {{-- fim dos botoes principais --}}
 
 
-    <section class="section__title--categoria">
-        <div>
-            <h1 class="title__categoria">Categoria Automática <i class="fad fa-magic"></i></h1>
-        </div>
-    </section>
+
+    <h1 class="title__categoria">Categoria Automática <i class="fad fa-magic"></i></h1>
+
 
 
 
@@ -71,7 +73,8 @@
                         <th class="th__header text-nowrap" style="max-width: 20ch">Descrição</th>
                         <th class="th__header text-nowrap" style="max-width: 20ch">Texto1</th>
                         <th class="th__header text-nowrap" style="max-width: 20ch">Texto2</th>
-                        <th class="th__header text-nowrap" style="width:80px">Editar</th>
+                        <th class="th__header text-nowrap" style="width:60px">Editar</th>
+                        <th class="th__header text-nowrap" style="width:60px">Excluir</th>
                     </tr>
 
                 </thead>
@@ -92,12 +95,17 @@
                         <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->descricao2}}" style="max-width: 20ch !important; overflow: hidden; text-overflow: ellipsis;">{{$listas->descricao2}}</td>
 
                         {{-- inicio do botao de editar --}}
-                        <td class="td__body text-nowrap" style="width:80px">
+                        <td class="td__body text-nowrap" style="width:60px">
 
                             <a href="{{route('administrador.categoria.edit',$listas->id)}}" class="btn button__editar"><i class="fad fa-pen"></i></a>
 
                         </td>
                         {{-- fim do botao de editar --}}
+                        
+                        <td class="td__body text-nowrap"  style="width:60px">
+                            <a href="" class="btn button__excluir"><i class="fad fa-trash"></i></a>
+                        </td>
+                        
                     </tr>
                     @endforeach
                     @else
@@ -116,20 +124,7 @@
                 <tfoot>
                     <tr class="">
                         <td colspan="6" class="teste" style="border: none !important">
-                            <nav aria-label="Page navigation example">
-                                @if ($lista->lastPage() > 1)
-                                <ul class="pagination pagination__table pagination-sm">
-
-                                    @for ($i = 1; $i <= $lista->lastPage(); $i++)
-                                        <li class="page-item {{ ($lista->currentPage() == $i) ? ' active' : ''     }}">
-                                            <a class="page-link modal-botao" href="{{ $lista->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                        @endfor
-
-
-                                </ul>
-                                @endif
-                            </nav>
+                            {{$lista->links()}}
                         </td>
                     </tr>
                 </tfoot>

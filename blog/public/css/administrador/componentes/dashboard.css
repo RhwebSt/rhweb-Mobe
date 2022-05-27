@@ -9,17 +9,13 @@ body{
     min-height: 100vh;
 }
 
-h1, h2 ,h3 , h4, h5{
+h1, h2, h3, h4, h5, label{
     color:white;
-}
-
-label{
-    color: white;
 }
 
 main{
     position: relative;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
 }
 
 /* limita os caracteres na tabela */

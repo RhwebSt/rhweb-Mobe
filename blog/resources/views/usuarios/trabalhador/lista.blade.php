@@ -106,7 +106,8 @@
                                         </div>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                            <a class="btn btn__permissao" data-bs-toggle="modal" data-bs-target="#modalPermissao"><i class="fad fa-user-lock"></i></a>
+                                            <a class="btn btn__permissao" data-bs-toggle="modal" data-bs-target="#modalPermissao{{$key}}"><i class="fad fa-user-lock"></i></a>
+                                            @include('usuarios.trabalhador.modalPermissao')
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
@@ -147,7 +148,7 @@
     </div>
 </div>
 
-@include('usuarios.trabalhador.modalPermissao');
+
               
 <section class="delete__tabela--Acesso">
     <div class="modal fade" id="deleteCadAcesso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

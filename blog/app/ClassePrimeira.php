@@ -12,9 +12,9 @@ class ClassePrimeira extends Model
     public function cadastro($dados)
     {
        return ClassePrimeira::create([
-            // 'cscodigo'=>$dados['codigo__cbo'],
+            'cscodigo'=>$dados['codigo__cbo'],
             'csdescricao'=>$dados['texto1'],
-            'classes'=>$dados['classes']
+            'classes_id'=>$dados['classes']
         ]);
     }
     public function atualizar($dados, $id)

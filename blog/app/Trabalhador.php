@@ -98,6 +98,7 @@ class Trabalhador extends Model
     }
     public function buscaListaTrabalhador($id)
     {
+        
         return DB::table('trabalhadors')
         ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
         ->select(
@@ -110,6 +111,7 @@ class Trabalhador extends Model
         ->where(function($query) use ($id){
             $user = auth()->user();
             if ($id) {
+                dd($id);
                 $query->where([
                     ['trabalhadors.tsnome','like','%'.$id.'%'],
                     ['trabalhadors.empresa_id', $user->empresa_id],
@@ -126,41 +128,14 @@ class Trabalhador extends Model
                     ['categorias.cssituacao','Ativo']
                 ]);
             }else{
+                
                 $query->where([
                     ['trabalhadors.id','>',$id],
                     ['trabalhadors.empresa_id', $user->empresa_id],
                     ['categorias.cssituacao','Ativo']
                 ]);
             }
-            // if ($user->hasPermissionTo('admin')) {
-            //     if ($id) {
-            //         $query->where('tsnome','like','%'.$id.'%') 
-            //         ->orWhere('tscpf','like','%'.$id.'%')
-            //         ->orWhere('tsmatricula','like','%'.$id.'%');
-            //     }else{
-            //         $query->where('id','>',$id);
-            //     }
-            // }else{
-            //     if ($id) {
-            //         $query->where([
-            //             ['trabalhadors.tsnome','like','%'.$id.'%'],
-            //             ['trabalhadors.empresa', $user->empresa]
-            //         ])
-            //         ->orWhere([
-            //             ['trabalhadors.tscpf','like','%'.$id.'%'],
-            //             ['trabalhadors.empresa', $user->empresa],
-            //         ])
-            //         ->orWhere([
-            //             ['trabalhadors.tsmatricula','like','%'.$id.'%'],
-            //             ['trabalhadors.empresa', $user->empresa],
-            //         ]);
-            //     }else{
-            //         $query->where([
-            //             ['trabalhadors.id','>',$id],
-            //             ['trabalhadors.empresa', $user->empresa]
-            //         ]);
-            //     }
-            // }
+            
             
         })
         ->orderBy('created_at','desc')

@@ -48,18 +48,19 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $request->validate([
-            'codigo__categoria'=>'required|max:11',
-            'descricao__categoria'=>'required|max:255',
-            // 'texto1'=>'required|max:255',
-            // 'texto2'=>'required|max:255',
-        ],[
-            // 'codigo__cbo.required'=>'O campo não pode estar vazio.',
-            // 'codigo__cbo.max'=>'O campo não pode conter mais de 11 caracteres.',
-            // 'descricao__cbo.required'=>'O campo não pode estar vazio.',
-            // 'descricao__cbo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            // 'descricao__cbo.regex'=>'O campo possui um formato inválido.',
-        ]);
+        // dd($dados);
+        // $request->validate([
+        //     'codigo__categoria'=>'required|max:11',
+        //     'descricao__categoria'=>'required|max:255',
+        //     // 'texto1'=>'required|max:255',
+        //     // 'texto2'=>'required|max:255',
+        // ],[
+        //     // 'codigo__cbo.required'=>'O campo não pode estar vazio.',
+        //     // 'codigo__cbo.max'=>'O campo não pode conter mais de 11 caracteres.',
+        //     // 'descricao__cbo.required'=>'O campo não pode estar vazio.',
+        //     // 'descricao__cbo.max'=>'O campo não pode conter mais de 100 caracteres.',
+        //     // 'descricao__cbo.regex'=>'O campo possui um formato inválido.',
+        // ]);
         try{
             $classe = $this->classe->cadastro($dados);
             $dados['classes'] = $classe['id'];

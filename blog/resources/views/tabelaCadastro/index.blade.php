@@ -139,7 +139,7 @@
 
             <div class="col-md-3">
                 <label for="quantidade" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Quantidade</label>
-                <input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">
+                <input type="text" class="form-control quant @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quant">
                 @error('quantidade')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -151,24 +151,10 @@
     @include('tabelaCadastro.lista')
 </main>
 
-    <?php
-        function calculovalores($horas,$valores)
-        {
-            if(strpos($horas,':')){
-               list($horas,$minitos) = explode(':',$horas);
-               $horasex = $horas * 3600 + $minitos * 60;
-               $horasex = $horasex/60;
-               $horasex = $valores * ($horasex/60);
-            }else{
-               $horasex = $valores * $horas;
-            }
-            return $horasex; 
-       }
-    ?>
+    
         
         
-
-     
+ 
 <script>
 
     let rublicas = ['1002','1003','1004','1005']
@@ -191,7 +177,8 @@
                 $('#codigo').val(' ')
                 $('#valor').val(' ')
                 $('#lftomador').val(' ')
-                $('#quantidade').attr('type','text')
+                $('#quant').attr('type','text')
+                $('#quant').addClass('quant')
                 let nome = ''
                 if (data.length >= 1) {
                     data.forEach(element => {
@@ -206,12 +193,14 @@
                     $('#codigo').val(data[0].tsrubrica)
                     $('#descricao').val(data[0].tsdescricao)
                     if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
-                        $('#quantidade').attr('type','time')
+                        $('#quant').attr('type','time')
+                        $('#quant').removeClass('quant')
                     }
                 }else if(dados.length > 3 && !data.length){
                     $('#valor').val(' ')
                     $('#lftomador').val(' ')
                     $('#quantidade').attr('type','text')
+                    $('#quant').addClass('quant')
                 }
             }
         });

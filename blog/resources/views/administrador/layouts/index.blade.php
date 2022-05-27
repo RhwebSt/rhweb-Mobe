@@ -8,10 +8,12 @@
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{url('/css/dashboard.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/componentes/dashboard.css')}}">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <!-- <link rel="stylesheet" href="{{url('/css/cadastroLoginUsuario.css')}}"> -->
+        <link rel="stylesheet" href="{{url('/css/administrador/componentes/botoesPadraoAdmin.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/componentes/footer.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/inss/inss.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/irrf/irrf.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/componentes/tableAdmin.css')}}">
@@ -216,12 +218,16 @@
         @yield('conteine')
         </div>
 </main>
-<!-- <script src="{{asset('js/app.js')}}"></script> -->
-<!--<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
-<!--<script src="{{url('/js/inss.js')}}"></script> -->
-<script src="{{url('/js/banco/index.js')}}"></script>
-<!--<script src="{{url('/js/irrf.js')}}"></script>-->
-<script src="{{url('js/administrador/usuario/tableUsuario.js')}}"></script>
+
+        <footer>
+            <p class="text-nowrap">&copy;Copyright RHWEB Sistemas Inteligentes - 2022</p>
+        </footer>
+        <!-- <script src="{{asset('js/app.js')}}"></script> -->
+        <!--<script src="{{url('/js/cadastroUsuarioLogin.js')}}"></script> -->
+        <!--<script src="{{url('/js/inss.js')}}"></script> -->
+        <script src="{{url('/js/banco/index.js')}}"></script>
+        <!--<script src="{{url('/js/irrf.js')}}"></script>-->
+        <script src="{{url('js/administrador/usuario/tableUsuario.js')}}"></script>
 
 
     <script src="{{url('/js/dashboard.js')}}"></script>

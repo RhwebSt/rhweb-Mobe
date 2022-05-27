@@ -12,9 +12,9 @@ class ClasseSegunda extends Model
     public function cadastro($dados)
     {
        return ClasseSegunda::create([
-            // 'cscodigo'=>$dados['codigo__cbo2'],
+            'cscodigo'=>$dados['codigo__cbo2'],
             'csdescricao'=>$dados['texto2'],
-            'classes'=>$dados['classes']
+            'classes_id'=>$dados['classes']
         ]);
     }
     public function atualizar($dados, $id)

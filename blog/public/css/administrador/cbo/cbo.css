@@ -17,22 +17,6 @@
     transition: 300ms ease-in-out;
 }
 
-.button__voltar--cbo:hover{
-    background-color: #002641;
-    color: #fff;
-    border: 1px solid #6ebff8;
-    transition: 300ms ease-in-out;
-    transform: scale(1.06);
-}
-
-.button__voltar--cbo:focus{
-    background-color: #002641;
-    color: #fff;
-    border: 1px solid #6ebff8;
-    transition: 300ms ease-in-out;
-    transform: scale(1.06);
-    box-shadow: none !important;
-}
 
 .title__cbo{
     text-align: center;
@@ -115,9 +99,13 @@
 }
 
 
-.conteudo__cbo{
-    margin-top: 5%;
+/*.conteudo__cbo{*/
+/*    margin-top: 5%;*/
     
+/*}*/
+
+.section__botao--voltar--cbo{
+    margin-top: 6%;
 }
 
 

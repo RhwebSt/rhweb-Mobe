@@ -129,25 +129,48 @@ let segundoTextoCategoria = [
 "903-Dispõe sobre a atividade da categoria 903",
 "904-Dispõe sobre a atividade da categoria 904"]
 
-categoriatrabalhador.forEach(element => {
-  
-});
+// categoriatrabalhador.forEach((element,index) => {
+//     let categoriatrabalhador = element.split('-');
+//     let primeira = '';
+//     let segunda = '';
+//     primeiroTextoCategoria.forEach(p => {
+//         if (p.indexOf(categoriatrabalhador[0]) !== -1) {
+//             primeira = p.split('-')
+//         }
+//     });
+//     segundoTextoCategoria.forEach(s => {
+//         if (s.indexOf(categoriatrabalhador[0]) !== -1) {
+//             segunda = s.split('-')
+//         }
+//     });
+   
+//     $.ajax({
+//         url: "http://127.0.0.1:8000/administrador/categoria",
+//         type: 'POST',
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         data:{
+//             'codigo__categoria':categoriatrabalhador[0],
+//             'descricao__categoria':categoriatrabalhador[1],
+//             'texto1':primeira[1],
+//             'codigo__cbo':primeira[0],
+//             'codigo__cbo2':segunda[0],
+//             'texto2':segunda[1],
+//             'classes':'',
+//             'user':''
+//         },
+//         // contentType: 'application/json',
+//         success: function(data) {
+//             // let nome = ''
+//             // data.forEach(element => {
+//             //     nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
+//             //     // nome += `<option value="${element.csdescricao}">`
+//             // });
+//             // $('#cbo_list').html(nome)
+//         }
+//     })
+// });
 
-// $.ajax({
-//     url: "http://127.0.0.1:8000/administrador/categoria",
-//     type: 'POST',
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     },
-//     data:categoriatrabalhador,
-//     // contentType: 'application/json',
-//     success: function(data) {
-//         // let nome = ''
-//         // data.forEach(element => {
-//         //     nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
-//         //     // nome += `<option value="${element.csdescricao}">`
-//         // });
-//         // $('#cbo_list').html(nome)
-//     }
-// })
+
 
