@@ -1,0 +1,47 @@
+
+.naoGostou{
+    color: #690500;
+}
+
+.naoGostouHover:hover{
+    color: #690500;
+}
+
+.mediano{
+    color:#FFA733;
+}
+
+.medianoHover:hover{
+    color:#FFA733;
+}
+
+.gostouMuito{
+    color: #134611;
+}
+
+.gostouMuitoHover:hover{
+    color: #134611;
+}
+
+.feliz{
+    color: #3DA35D;
+}
+
+.felizHover:hover{
+    color: #3DA35D;
+}
+
+
+.feedback{
+     background-color:green;
+     color: white;
+     padding: 20px;
+     margin: 0px;
+     border-top-left-radius: 10px;
+     border-bottom-left-radius: 10px; 
+     transition: 400ms;
+}
+
+.feedback:hover{
+    background-color:#134611;
+}

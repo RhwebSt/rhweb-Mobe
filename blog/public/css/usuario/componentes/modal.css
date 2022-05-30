@@ -1,3 +1,15 @@
+:root{
+    --modal-content-bg-color:white;
+    --modal-title-color: black;
+    --body-modal-color: white;
+}
+
+.darkmode{
+    --modal-content-bg-color:#333333;
+    --modal-title-color:white;
+    --body-modal-color: #333333;
+}
+
 .icon__exit--modal{
     color: red;
     transition: 200ms ease;
@@ -16,17 +28,18 @@
 
 
 .modal-content{
+    background-color:var(--modal-content-bg-color) ;
     border-radius: 15px;
     box-shadow: 4px 4px 15px 2px rgba(0, 0, 0, 0.5);
 }
 
 .modal-title{
-    color: black;
+    color: var(--modal-title-color);
     font-weight: 500;
 }
 
 .body__modal{
-    background-color: #fff;
+    background-color: var(--body-modal-color);
 }
 
 .header__modal{
@@ -43,7 +56,7 @@
     margin-bottom: 15px;
     font-size:18px;
     font-weight: 600;
-    color: black;
+    color: var(--modal-title-color);;
 }
 
 .content--deletar2{
@@ -52,7 +65,7 @@
     margin-bottom: 10px;
     font-size:14px;
     font-weight: 400;
-    color: black;
+    color: var(--modal-title-color);;
 }
 
 

@@ -1,3 +1,15 @@
+:root{
+    --tr-body-color: rgb(14, 13, 13);
+    --table-body-bg-color: white;
+    --table-body-bg-color-hover: #333333;
+}
+
+.darkmode{
+    --tr-body-color: white;
+    --table-body-bg-color: #1F1F1F;
+    --table-body-bg-color-hover: #5C5C5C;
+}
+
 .table{
     margin-top: 1%;
     border-radius: 12px;
@@ -17,11 +29,11 @@
 }
 
 .table__body{
-    background-color: rgb(241, 248, 255) !important;
+    background-color: var(--table-body-bg-color) !important;
 }
 
 .tr__body{
-    color: rgb(14, 13, 13);
+    color: var(--tr-body-color);
     font-weight: 100 !important;
     border-top: 1px solid #020141 !important;
     transition: 300ms ease-in-out;
@@ -30,7 +42,7 @@
 }
 
 .tr__body:hover{
-    background-color: #6767d4 !important;
+    background-color: var(--table-body-bg-color-hover) !important;
     color: white;
     transition: 300ms ease-in-out;
 }
