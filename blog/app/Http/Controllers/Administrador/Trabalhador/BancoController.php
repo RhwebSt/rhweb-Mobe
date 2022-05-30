@@ -41,6 +41,7 @@ class BancoController extends Controller
     public function cadastroTxt(Request $request)
     {
         $file = $request->file('file');
+        
         $dados = file($file);
         foreach ($dados as $key => $linha) {
             $trabalhador = [
@@ -117,7 +118,7 @@ class BancoController extends Controller
                 $trabalhador['estado__civil'] = '5-Viúvo';
             }
             $trabalhador['nome__mae'] = str_replace("  ", "",substr(utf8_encode($linha), 226, 40));
-            
+            dd($trabalhador);
             $trabalhadors = $this->trabalhador->cadastro($trabalhador);
             if ($trabalhadors) {
                 $trabalhador['trabalhador'] = $trabalhadors['id'];

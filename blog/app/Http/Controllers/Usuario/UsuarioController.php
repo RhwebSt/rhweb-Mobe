@@ -56,6 +56,7 @@ class UsuarioController extends Controller
             })
         ->orderBy('name', 'asc')
         ->paginate(10);
+        // dd($lista);
         $permissions = Permission::get(); 
         
         if ($codicao) {
@@ -115,8 +116,19 @@ class UsuarioController extends Controller
             // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
         ]);
 
+        
+            $p = [];
+            $permissions = Permission::get();
+            foreach ($permissions as $key => $permissao) {
+                if ($permissao->name === 'Super Admin' || $permissao->name === 'admin') {
+                   
+                }else{
+                    array_push($p,$permissao->name);
+                }
+            }
         try {
-            $users = $this->user->cadastro($dados);
+            $users = $this->user->cadastro($dados,$p);
+           
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             
         } catch (\Throwable $th) {

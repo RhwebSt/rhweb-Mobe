@@ -923,22 +923,7 @@
         let elCoordenadas = el.getBoundingClientRect();
         // verificar as propriedades com as coord
         console.log(elCoordenadas.y);
-    
-    
-        $('.modal-botao').click(function() {
-            localStorage.setItem("modal", "enabled");
-        })
-    
-        function verficarModal() {
-            var valueModal = localStorage.getItem('modal');
-            if (valueModal === "enabled") {
-                $(document).ready(function() {
-                    $("#teste").modal("show");
-                });
-                localStorage.setItem("modal", "disabled");
-            }
-        }
-        verficarModal()
+
         var nomeFantasia = document.querySelector('#nome__fantasia');
     
         nomeFantasia.addEventListener('input', function() {

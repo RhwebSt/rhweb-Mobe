@@ -871,9 +871,8 @@
             @include('tomador.lista')
     </div>       
 </main>
-                 
-            
-            <script>
+
+<script>
 
             // faz com que quando algum campo que está dentro do accordion não for preenchido
             // ele abra e não deixe enviar o formulário até que tudo esteje preenchido.

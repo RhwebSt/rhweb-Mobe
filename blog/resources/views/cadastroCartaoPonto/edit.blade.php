@@ -152,20 +152,6 @@
 
             
 <script>
-              $('.modal-botao').click(function() {
-                localStorage.setItem("modal", "enabled");
-              })
-
-              function verficarModal() {
-                var valueModal = localStorage.getItem('modal');
-                if (valueModal === "enabled") {
-                  $(document).ready(function() {
-                    $("#teste").modal("show");
-                  });
-                  localStorage.setItem("modal", "disabled");
-                }
-              }
-              verficarModal()
               var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
      $('#data').on('keyup focus click change',function () {
        verificardata($(this).val(),0)

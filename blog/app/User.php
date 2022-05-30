@@ -56,7 +56,7 @@ class User extends Authenticatable
             ->distinct()
             ->get();
     }
-    public function cadastro($dados)
+    public function cadastro($dados,$p)
     {
         return User::create([
             'name' => $dados['name'],
@@ -66,8 +66,8 @@ class User extends Authenticatable
             'cargo' => $dados['cargo'],
             'empresa_id' => $dados['empresa'],
             // 'remember_token'=>$dados['_token'],
-        ]);
-        // ->givePermissionTo('cadastro', 'editar', 'deleta', 'rotinamensal', 'fatura', 'recibo', 'relatorio');
+        ])
+        ->givePermissionTo($p);
     }
     public function precadastro($dados)
     {

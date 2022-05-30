@@ -141,7 +141,7 @@
 
             <div class="col-md-4">
                 <label for="feriado" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Feriado</label>
-                <select id="feriado" name="feriado" class="form-select text-dark @error('feriado') is-invalid @enderror">
+                <select id="feriado" name="feriado" class="form-select @error('feriado') is-invalid @enderror">
                     <option>Sim</option>
                     <option selected>Não</option>
                 </select>
@@ -165,20 +165,7 @@
   </script>
 
   <script>
-        $('.modal-botao').click(function() {
-        localStorage.setItem("modal", "enabled");
-      })
 
-      function verficarModal() {
-        var valueModal = localStorage.getItem('modal');
-        if (valueModal === "enabled") {
-          $(document).ready(function() {
-            $("#modalTrabalhador").modal("show");
-          });
-          localStorage.setItem("modal", "disabled");
-        }
-      }
-      verficarModal();
      var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
      $('#data').on('keyup focus click change',function () {
        verificardata($(this).val(),0)

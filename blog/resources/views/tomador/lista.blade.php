@@ -19,7 +19,7 @@
 
                                 <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
                                 
-                                <button type="submit" class="btn botao__search">
+                                <button type="submit" class="btn botao__search modal-botao">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
                                     <i class="icon__search fad fa-spinner-third fa-spin fa-lg d-none" id="refres"></i>
                                 </button>
