@@ -49,7 +49,7 @@ class TabCartaoPontoController extends Controller
             $query->where([
                 ['lancamentotabelas.lsstatus','M'],
                 ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['lancamentotabelas.liboletim','like','%'.$search.'%'] 
+                ['lancamentotabelas.liboletim',$search] 
             ])
             ->orWhere([
                 ['lancamentotabelas.lsstatus','M'],
@@ -59,7 +59,7 @@ class TabCartaoPontoController extends Controller
             ->orWhere([
                 ['lancamentotabelas.lsstatus','M'],
                 ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['tomadors.tscnpj','like','%'.$search.'%']
+                ['tomadors.tscnpj',$search]
             ]);
            }else{
             $query->where([

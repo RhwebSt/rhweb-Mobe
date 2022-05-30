@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Boletim\CartaoPonto\Lanca\Validacao;
+use Spatie\Permission\Models\Permission;
 use App\Bolcartaoponto;
 use App\CartaoPonto;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class BoletimCartaoPontoController extends Controller
     public function index()
     {
         $user = Auth::user();
+       
         return view('cadastroCartaoPonto.cadastracartaoponto',compact('user'));
     }
 
@@ -39,6 +41,10 @@ class BoletimCartaoPontoController extends Controller
         $tomador = base64_decode($tomador);
         $feriado = base64_decode($feriado);
         $user = Auth::user();
+        $permissions = Permission::where('name','like','%'.'mbcpl'.'%')->first(); 
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         // $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
         $lista = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(5);

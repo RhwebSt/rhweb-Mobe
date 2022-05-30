@@ -14,13 +14,14 @@
                             
                             <div class="d-flex">
                                 
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="duplo clique para pesquisar" class="form-control" list="listapesquisa" name="search" id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
 
                                 <input type="hidden" name="codicao" value="{{isset($tomador->id)?$tomador->id:''}}">
                                 
                                 <button type="submit" class="btn botao__search">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                    <i class="icon__search fad fa-spinner-third fa-spin fa-lg d-none" id="refres"></i>
                                 </button>
 
                             </div>

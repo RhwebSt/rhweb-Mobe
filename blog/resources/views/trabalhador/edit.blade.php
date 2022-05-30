@@ -797,17 +797,19 @@
     reader.readAsDataURL(file);
   }
   
-  $("#pesquisa").on('keyup focus', function() {
-      let dados = '0'
-      if ($(this).val()) {
-        dados = $(this).val()
-        if (dados.indexOf('  ') !== -1) {
-          dados = monta_dados(dados);
-        }
-      }
-      $('#icon').addClass('d-none').next().removeClass('d-none')
-      $.ajax({
-        url: "{{url('trabalhador')}}/pesquisa/" + dados,
+  // $("#pesquisa").on('keyup focus', function() {
+  //     let dados = '0'
+  //     if ($(this).val()) {
+  //       dados = $(this).val()
+  //       if (dados.indexOf('  ') !== -1) {
+  //         dados = monta_dados(dados);
+  //       }
+  //     }
+  //     $('#icon').addClass('d-none').next().removeClass('d-none')
+      
+  //   });
+    $.ajax({
+        url: "{{url('trabalhador')}}/pesquisa/" + 0,
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
@@ -829,7 +831,6 @@
           // }              
         }
       });
-    });
     $('#pais__nacionalidade,#pais__nascimento').on('keyup focus', function() {
       if (!$(this).val()) {
         paisnascimento = ''

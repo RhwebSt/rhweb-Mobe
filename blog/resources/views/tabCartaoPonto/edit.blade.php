@@ -161,33 +161,38 @@
     }
     verficarModal()
     localStorage.setItem('boletim','{{$boletim}}')
-    $( "#pesquisa" ).on('keyup focus',function() {
-        var dados = '0';
-        if ($(this).val()) {
-          dados = $(this).val();
+    $("#pesquisa").on('keyup focus', function() {
+      var dados = '0';
+      if ($(this).val()) {
+        dados = $(this).val();
+        if (dados.indexOf('  ') !== -1) {
+          dados = monta_dados_pesquisa(dados);
         }
-        var status = $('#status').val();
-        $.ajax({
-          url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
-          type: 'get',
-          contentType: 'application/json',
-          success: function(data) {
-            let nome = ''
-            if (data.length >= 1) {
-              data.forEach(element => {
-                nome += `<option value="${element.tsnome}">`
-                // nome += `<option value="${element.tsmatricula}">`
-                nome += `<option value="${element.tscnpj}">`
-              });
-              $('#listapesquisa').html(nome)
-            }
-            if(data.length === 1 && dados.length >= 1){
-              // lancamentoTab(dados,status,data[0].lsdata)
-            }else{
-              limpaCamposTab()
-            }
+      }
+      var status = $('#status').val(); 
+      $.ajax({
+        url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+          let nome = ''
+          if (data.length >= 1) {
+            data.forEach(element => {
+              nome += `<option value="${element.liboletim}  ${element.tsnome}">`
+              // nome += `<option value="${element.tsmatricula}">`
+              // nome += `<option value="${element.tscnpj}">`
+            });
+            $('#listapesquisa').html(nome)
           }
-        });
+          if (data.length === 1) {
+            $('#search').val(data[0].liboletim)
+            // lancamentoTab(dados, status, data[0].lsdata)
+          } 
+          // else {
+          //   // limpaCamposTab()
+          // }
+        }
+      });
     });
     function lancamentoTab(dados,status,data) {
       $('#carregamento').removeClass('d-none')

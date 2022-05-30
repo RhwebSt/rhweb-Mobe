@@ -13,9 +13,9 @@
                     <div class="col-md-5">
                         <form action="{{  route('cadastrocartaoponto.index')}}" method="GET">
                             <div class="d-flex">
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa"  id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
-                                
+                                <input type="hidden" name="search" id="search">
                                 <input type="hidden" name="codicao" value="{{isset($dados->id)?$dados->id:null}}">
                                 
                                 <button type="submit" class="btn botao__search modal-botao">
@@ -71,10 +71,9 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:200px">
-                                        <?php
-                                        $data = explode('-', $lancamentotabela->lsdata)
-                                        ?>
-                                        {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
+                                       
+                                        {{date('d/m/Y',strtotime($lancamentotabela->lsdata))}}
+                                        
                                     </td>
     
                                     <td class="td__body text-nowrap col" style="width:200px">

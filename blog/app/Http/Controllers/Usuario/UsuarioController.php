@@ -57,6 +57,7 @@ class UsuarioController extends Controller
         ->orderBy('name', 'asc')
         ->paginate(10);
         $permissions = Permission::get(); 
+        
         if ($codicao) {
             $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
             return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
@@ -80,6 +81,7 @@ class UsuarioController extends Controller
         ->orderBy('name', $ordem)
         ->paginate(10);
         $permissions = Permission::get();
+        
         if ($codicao) {
             $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
             return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));

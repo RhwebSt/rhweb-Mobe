@@ -20,6 +20,7 @@
                                 
                                 <button type="submit" class="btn botao__search">
                                     <i class="icon__search fas fa-search fa-md" id="icon"></i>
+                                    <i class="icon__search fad fa-spinner-third fa-spin fa-lg d-none" id="refres"></i>
                                 </button>
 
                             </div>

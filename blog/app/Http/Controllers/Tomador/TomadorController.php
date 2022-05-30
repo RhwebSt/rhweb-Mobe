@@ -61,15 +61,15 @@ class TomadorController extends Controller
             if ($search) {
                 $query->orWhere([
                     ['tomadors.tsnome','like','%'.$search.'%'],
-                    ['tomadors.empresa_search', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                 ])
                 ->orWhere([
                     ['tomadors.tscnpj','like','%'.$search.'%'],
-                    ['tomadors.empresa_search', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                     ])
                 ->orWhere([
                     ['tomadors.tsmatricula','like','%'.$search.'%'],
-                    ['tomadors.empresa_id', $user->empresa]
+                    ['tomadors.empresa_id', $user->empresa_id]
                 ]);
             }else{
                 $query->where('empresa_id', $user->empresa_id);

@@ -773,20 +773,20 @@
     
 
 //     // verifica se o usuario clickou em algum botao que necessite abrir o modal de novo
-//   $('.modal-botao').click(function() {
-//     localStorage.setItem("modal", "enabled");
-//   })
+  $('.modal-botao').click(function() {
+    localStorage.setItem("modal", "enabled");
+  })
 
-//   function verficarModal() {
-//     var valueModal = localStorage.getItem('modal');
-//     if (valueModal === "enabled") {
-//       $(document).ready(function() {
-//         $("#modalTrabalhador").modal("show");
-//       });
-//       localStorage.setItem("modal", "disabled");
-//     }
-//   }
-//   verficarModal();
+  function verficarModal() {
+    var valueModal = localStorage.getItem('modal');
+    if (valueModal === "enabled") {
+      $(document).ready(function() {
+        $("#modalTrabalhador").modal("show");
+      });
+      localStorage.setItem("modal", "disabled");
+    }
+  }
+  verficarModal();
   //fim da verificação//
 
   
@@ -897,17 +897,19 @@
     //   $('#categoria_list').html(categorialist);
     // }
     // listacategoria(categoriatrabalhador)
-    $("#pesquisa").on('keyup focus', function() {
-      let dados = '0'
-      if ($(this).val()) {
-        dados = $(this).val()
-        if (dados.indexOf('  ') !== -1) {
-          dados = monta_dados(dados);
-        }
-      }
-      $('#icon').addClass('d-none').next().removeClass('d-none')
-      $.ajax({
-        url: "{{url('trabalhador')}}/pesquisa/" + dados, 
+    // $("#pesquisa").on('keyup focus', function() {
+    //   let dados = '0'
+    //   if ($(this).val()) {
+    //     dados = $(this).val()
+    //     if (dados.indexOf('  ') !== -1) {
+    //       dados = monta_dados(dados);
+    //     }
+    //   }
+    //   $('#icon').addClass('d-none').next().removeClass('d-none')
+      
+    // });
+    $.ajax({
+        url: "{{url('trabalhador')}}/pesquisa/"+0, 
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
@@ -929,7 +931,6 @@
           // }              
         }
       });
-    });
 
     function monta_dados(dados) {
       let novodados = dados.split('  ')

@@ -1,69 +1,77 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Novo Usuario')
+@section('titulo','Rhweb - Gerador de Acesso')
 @section('conteine')
-
-@if(session('success'))
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        width: 500,
-        color: '#ffffff',
-        background: '#5AA300',
-        position: 'top-end',
-        showCloseButton: true,
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
-
-    Toast.fire({
-        icon: 'success',
-        title: '{{session("success")}}'
-    })
-</script>
-@endif
-@error('false')
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        width: 500,
-        color: '#ffffff',
-        background: '#C53230',
-        position: 'top-end',
-        showCloseButton: true,
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
-
-    Toast.fire({
-        icon: 'error',
-        title: '{{$message}}'
-    })
-</script>
-@enderror
-
-        <section class="section__gerador">
+<main role="main">
+    <div class="container">
+        @if(session('success'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                width: 500,
+                color: '#ffffff',
+                background: '#5AA300',
+                position: 'top-end',
+                showCloseButton: true,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        
+            Toast.fire({
+                icon: 'success',
+                title: '{{session("success")}}'
+            })
+        </script>
+        @endif
+        @error('false')
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                width: 500,
+                color: '#ffffff',
+                background: '#C53230',
+                position: 'top-end',
+                showCloseButton: true,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        
+            Toast.fire({
+                icon: 'error',
+                title: '{{$message}}'
+            })
+        </script>
+        @enderror
+    
+        <section class="">
         
                 <form class="row g-3 form__bg" id="form" action="{{route('user.store')}}" enctype="multipart/form-data" method="Post">
                     @csrf
-                    <div class="d-flex justify-content-center align-items-center flex-column div__form--gerador">
-                        
-                        <div class="col-md-8 mt-3 d-flex justify-content-start mb-3">
-                            <a href="{{route('administrador')}}" class="btn btn__voltar-gerador align-self-start mt-2 mb-2"><i class="fad fa-arrow-left"></i> Voltar</a>
-                            <a href="{{route('administrador')}}" class="btn btn__voltar-gerador align-self-start mt-2 mb-2"><i class="fad fa-arrow-left"></i> Lista</a>
+                    
+                    <section class="section__botao--voltar--acesso">
+            
+                        <div class="d-flex justify-content-start align-items-start div__voltar">
+                            <a class="btn botao__voltar" href="{{route('administrador')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                         </div>
                         
-                        <h1 class="text-center fs-5 text-white mt-2 mb-2" style="font-size:14px">Gerador de Acesso <i class="fad fa-door-open"></i></h1>
-        
+                        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                            <a href="{{route('administrador')}}" class="btn botao"><i class="fad fa-list"></i> Lista</a>
+                        </div>
+                    </section>
+                
+                    <h5 class="text__title">Gerador de Acesso <i class="fad fa-door-open"></i></h5>
+                    
+                    <div class="d-flex justify-content-center align-items-center flex-column div__form--gerador">
+
                         <div class="col-12 col-md-8">
                             <label for="usuario" class="form-label text-white">Usuário <i class="fas fa-lock"></i></label>
                             <input type="text" class="form-control input fw-bold text-dark @error('name') is-invalid @enderror" name="name" value="{{ Session::get('usuario')  ?? old('name') }}" id="usuario" readonly>
@@ -107,8 +115,8 @@
                 </form>
         
         </section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </div>
+</main>
 
 <script>
 

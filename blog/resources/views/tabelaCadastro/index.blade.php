@@ -139,7 +139,10 @@
 
             <div class="col-md-3">
                 <label for="quantidade" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Quantidade</label>
-                <input type="text" class="form-control quant @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quant">
+                <span id="conteinarquant">
+                <input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">
+                </span>
+                
                 @error('quantidade')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -151,10 +154,24 @@
     @include('tabelaCadastro.lista')
 </main>
 
-    
+    <?php
+        function calculovalores($horas,$valores)
+        {
+            if(strpos($horas,':')){
+               list($horas,$minitos) = explode(':',$horas);
+               $horasex = $horas * 3600 + $minitos * 60;
+               $horasex = $horasex/60;
+               $horasex = $valores * ($horasex/60);
+            }else{
+               $horasex = $valores * $horas;
+            }
+            return $horasex; 
+       }
+    ?>
         
         
- 
+
+     
 <script>
 
     let rublicas = ['1002','1003','1004','1005']
@@ -177,8 +194,9 @@
                 $('#codigo').val(' ')
                 $('#valor').val(' ')
                 $('#lftomador').val(' ')
-                $('#quant').attr('type','text')
-                $('#quant').addClass('quant')
+                // $('#quantidade').attr('type','text')
+                $('#conteinarquant').html(`<input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">`)
+                $('#quantidade').mask('000.000.000.000.000.00', {reverse: true});
                 let nome = ''
                 if (data.length >= 1) {
                     data.forEach(element => {
@@ -193,28 +211,31 @@
                     $('#codigo').val(data[0].tsrubrica)
                     $('#descricao').val(data[0].tsdescricao)
                     if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
-                        $('#quant').attr('type','time')
-                        $('#quant').removeClass('quant')
+                        // $('#quantidade').attr('type','time')
+                        $('#conteinarquant').html(`<input type="time" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="">`)
                     }
                 }else if(dados.length > 3 && !data.length){
                     $('#valor').val(' ')
                     $('#lftomador').val(' ')
-                    $('#quantidade').attr('type','text')
-                    $('#quant').addClass('quant')
+                    $('#conteinarquant').html(`<input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">`)
+                    $('#quantidade').mask('000.000.000.000.000.00', {reverse: true});
+                    // $('#quantidade').attr('type','text')
                 }
             }
         });
     });
-    $( "#pesquisa" ).on('keyup focus',function() { 
-        let  dados = '0'
-        if ($(this).val()) {
-          dados = $(this).val()
-          if (dados.indexOf('  ') !== -1) {
-            dados = monta_dados(dados);
-          }
-        }
-        $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+dados,
+    // $( "#pesquisa" ).on('keyup focus',function() { 
+    //     let  dados = '0'
+    //     if ($(this).val()) {
+    //       dados = $(this).val()
+    //       if (dados.indexOf('  ') !== -1) {
+    //         dados = monta_dados(dados);
+    //       }
+    //     }
+      
+    // });
+    $.ajax({
+            url: "{{url('trabalhador/pesquisa')}}/"+0,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -229,7 +250,6 @@
               }            
             }
         });
-    });
     $( "#nome__completo" ).on('keyup focus',function() { 
         let  dados = '0'
         if ($(this).val()) {

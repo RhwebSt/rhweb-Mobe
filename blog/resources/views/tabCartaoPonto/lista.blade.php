@@ -13,9 +13,9 @@
                     <div class="col-md-5">
                         <form action="{{route('tabcartaoponto.index')}}" method="GET">
                             <div class="d-flex">
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa"  id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
-                                
+                                <input type="hidden" name="search" id="search">
                                 <input type="hidden" name="codicao" value="{{isset($dados->id)?$dados->id:null}}">
                                 
                                 <button type="submit" class="btn botao__search modal-botao">

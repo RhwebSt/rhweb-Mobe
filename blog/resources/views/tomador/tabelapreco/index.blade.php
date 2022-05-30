@@ -201,7 +201,7 @@
       var tomador = $('#tomador').val();
       $('#icon').addClass('d-none').next().removeClass('d-none')
       $.ajax({
-        url: "{{url('tabelapreco')}}/pesquisa/" + dados + '/' + tomador,
+        url: "{{url('tabelapreco')}}/pesquisa/"+dados+'/'+tomador,
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
@@ -222,6 +222,7 @@
         }
       })
     });
+   
 
     function monta_dados(dados) {
       let novodados = dados.split('  ')

@@ -7,14 +7,6 @@
     align-items: center;
 }
 
-.div__form--gerador{
-    width:70%;
-    padding: 15px;
-    border-radius:12px;
-    background-color: #313335;
-    box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.3);
-    border: 1px solid #1E1F20;
-}
 
 .section__gerador{
     margin-top: 10%;

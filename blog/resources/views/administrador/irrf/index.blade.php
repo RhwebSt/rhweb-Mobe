@@ -1,14 +1,20 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Irrf')
+@section('titulo','Rhweb - IRRF')
 @section('conteine')
 
 <div class="container">
     {{-- inicio do botão novo --}}
-    <section class="section__btn--new--irrf">
-        <div class="">
-            <a href="{{route('irrf.create')}}" class="button__new--irrf btn">Novo <i class="fad fa-user-plus"></i></a>
+    <section class="section__botao--voltar--acesso">
+            
+        <div class="d-flex justify-content-start align-items-start div__voltar">
+            <a class="btn botao__voltar" href="{{route('administrador')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+        </div>
+        
+        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+            <a href="{{route('irrf.create')}}" class="botao btn">Novo <i class="fad fa-user-plus"></i></a>
         </div>
     </section>
+
     {{-- final do botao novo --}}
 
     {{-- incio da pesquisa --}}

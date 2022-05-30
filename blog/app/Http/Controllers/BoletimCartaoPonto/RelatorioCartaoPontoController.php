@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BoletimCartaoPonto;
 
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
@@ -32,7 +33,11 @@ class RelatorioCartaoPontoController extends Controller
         $boletim = base64_decode($boletim);
         $tomador = base64_decode($tomador);
         $ano = explode('-',$data);
-        $user = auth()->user();
+        $user = auth()->user(); 
+        $permissions = Permission::where('name','like','%'.'mbcpr'.'%')->first(); 
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $lancamentotabelas = $this->lancamento->where('id',$id)
         ->with(['empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco'])->first();
         // dd($lancamentotabelas);

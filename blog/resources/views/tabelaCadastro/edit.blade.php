@@ -108,7 +108,12 @@
 
             <div class="col-md-3">
                 <label for="quantidade" class="form-label">Quantidade</label>
-                <input type="text" value="{{$lancamentorublicas->lsquantidade}}" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="" id="quantidade">
+                    @if(strpos($lancamentorublicas->lsquantidade,':'))
+                      <input type="time" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{$lancamentorublicas->lsquantidade}}" id="">
+                    @else
+                      <input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{$lancamentorublicas->lsquantidade}}" id="quantidade">
+                    @endif
+                
                 @error('quantidade')
                       <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -151,6 +156,7 @@
       }
     }
     verficarModal()
+    
     // $( "#rubrica" ).on('keyup focus',function() {
     //     var dados = '0';
     //     if ($(this).val()) {
@@ -193,16 +199,18 @@
     //         }
     //     });
     // });
-    $( "#pesquisa" ).on('keyup focus',function() { 
-        let  dados = '0'
-        if ($(this).val()) {
-          dados = $(this).val()
-          if (dados.indexOf('  ') !== -1) {
-            dados = monta_dados(dados);
-          }
-        }
-        $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+dados,
+    // $( "#pesquisa" ).on('keyup focus',function() { 
+    //     let  dados = '0'
+    //     if ($(this).val()) {
+    //       dados = $(this).val()
+    //       if (dados.indexOf('  ') !== -1) {
+    //         dados = monta_dados(dados);
+    //       }
+    //     }
+        
+    // });
+    $.ajax({
+            url: "{{url('trabalhador/pesquisa')}}/"+0,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -217,7 +225,6 @@
               }            
             }
         });
-    });
     $( "#nome__completo" ).on('keyup focus',function() { 
         let  dados = '0'
         if ($(this).val()) {

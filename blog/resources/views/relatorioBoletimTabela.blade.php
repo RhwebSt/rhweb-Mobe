@@ -215,7 +215,7 @@
                     <tr>
                     <td rowspan="7" style="padding-left: 15px">
                             @if($lancamentotabelas->empresa->esfoto)
-                                <img class="logo" src="{{$empresas->esfoto}}" alt="" srcset="">
+                                <img class="logo" src="{{$lancamentotabelas->empresa->esfoto}}" alt="" srcset="">
                             @else
                                 @include('imagem')
                             @endif

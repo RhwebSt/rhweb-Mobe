@@ -1200,17 +1200,19 @@
     
         $(document).ready(function() {
     
-            $('#pesquisa').on('keyup focus', function() {
-                var dados = '0';
-                if ($(this).val()) {
-                    dados = $(this).val();
-                    if (dados.indexOf('  ') !== -1) {
-                        dados = monta_dados(dados);
-                    }
-                }
-                $('#icon').addClass('d-none').next().removeClass('d-none')
-                $.ajax({
-                    url: "{{url('tomador')}}/pesquisa/" + dados,
+            // $('#pesquisa').on('keyup focus', function() {
+            //     var dados = '0';
+            //     if ($(this).val()) {
+            //         dados = $(this).val();
+            //         if (dados.indexOf('  ') !== -1) {
+            //             dados = monta_dados(dados);
+            //         }
+            //     }
+            //     $('#icon').addClass('d-none').next().removeClass('d-none')
+                
+            // })
+            $.ajax({
+                    url: "{{url('tomador')}}/pesquisa/" + 0,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {
@@ -1233,7 +1235,6 @@
                         // }
                     }
                 });
-            })
             $('#cnpj').on('change', function() {
                 let dados = $(this).val();
                 dados = dados.replace(/\D/g, '');

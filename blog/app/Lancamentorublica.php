@@ -244,15 +244,15 @@ class Lancamentorublica extends Model
     {
         return Lancamentorublica::where('id', $id)
         ->update([
-            'lshistorico'=>$dados['rubrica'],
+            // 'lshistorico'=>$dados['rubrica'],
             'lsquantidade'=>$dados['quantidade'],
-            'licodigo'=>$dados['codigo'],
-            'lsdescricao'=>$dados['descricao'],
-            'trabalhador'=>$dados['trabalhador'],
-            'lancamento'=>$dados['lancamento'],
-            'created_at'=>$dados['data'],
-            'lfvalor'=>str_replace(",",".",$dados['valor']),
-            'lftomador'=>str_replace(",",".",$dados['lftomador'])
+            // 'licodigo'=>$dados['codigo'],
+            // 'lsdescricao'=>$dados['descricao'],
+            // 'trabalhador_id'=>$dados['trabalhador'],
+            // 'lancamentotabela_id'=>$dados['lancamento'],
+            // 'created_at'=>$dados['data'],
+            // 'lfvalor'=>str_replace(",",".",$dados['valor']),
+            // 'lftomador'=>str_replace(",",".",$dados['lftomador'])
         ]);
     }
     public function editarBoletim($dados,$id)

@@ -33,6 +33,7 @@
                                     <div class="form-check form-switch div__switch">
                                      
                                           @foreach($valoruser->permissions as $permissao)
+                                        
                                                 @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbcpc') !== false)
                                                 <input class="form-check-input" type="checkbox" role="switch" id="cadastrarCartaoPonto" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
                                                 

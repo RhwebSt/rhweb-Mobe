@@ -15,7 +15,7 @@
                             
                             <div class="d-flex">
                                 
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="search">
+                                <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa" name="search" id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
 
                                 <input type="hidden" name="codicao" value="{{$id?$id:''}}">

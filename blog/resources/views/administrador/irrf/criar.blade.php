@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Irrf')
+@section('titulo','Rhweb - Cadastrar Tabela IRRF')
 @section('conteine')
 <div class="container">
     @if(session('success'))
@@ -51,131 +51,73 @@
     </script>
     @enderror
     <form class="row g-3 mt-1 mb-3" id="form" method="POST" action="{{route('irrf.store')}}">
-
-        <h1 class="container text-center mt-4 mb-2 fs-4 fw-bold">Faixa de Cálculos - IRRF</h1>
-
-        <div class="row">
-            <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                <button type="submit" id="incluir" class="btn botao">
-                    <i class="fad fa-save"></i> Incluir
-                </button>
-
-                <a class="btn botao" href="{{route('irrf.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
-            </div>
-        </div>
-
         <input type="hidden" name="user" value="">
         @csrf
         <input type="hidden" id="method" name="_method" value="">
-        <div class="container block">
-            <div class="col-md-3">
-                <label for="ano" class="form-label">Ano
-                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
-                </label>
-                <input type="text" class="form-control @error('irsano') is-invalid @enderror" name="irsano" value="  {{ old('ano')}}" id="ano">
-                @error('irsano')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
+        
+        <section class="section__botao--voltar--acesso">
+            
+            <div class="d-flex justify-content-start align-items-start div__voltar">
+                <a class="btn botao__voltar" href="{{route('irrf.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
             </div>
+            
+            <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                <button type="submit" id="incluir" class="btn botao">
+                    <i class="fad fa-save"></i> Incluir
+                </button>
+            </div>
+        </section>
+        
+
+        <h1 class="text__title">Cadastrar Tabela - IRRF</h1>
+
+
+        
+
+        <div class="col-12 col-md-6 mt-1">
+            <label for="ano" class="form-label">Ano</label>
+            <input type="text" class="form-control @error('irsano') is-invalid @enderror" name="irsano" value="  {{ old('ano')}}" id="ano">
+            @error('irsano')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
-        <div class="container block">
-            <div class="col-md-3">
-                <label for="ded__dependente" class="form-label">Dedução por Dependente</label>
-                <input type="text" class="form-control padrao" name="ded__dependente" id="ded__dependente">
-            </div>
+
+        <div class="col-12 col-md-6 mt-1">
+            <label for="ded__dependente" class="form-label">Valor de Dedução (dependente)</label>
+            <input type="text" class="form-control padrao" name="ded__dependente" id="ded__dependente">
         </div>
 
 
-        <div id="container" class="row">
-            <div class="col-md-4">
+
+        <div id="container" class="row m-0 p-0">
+            <div class=" col-12 col-md-4 mt-2">
                 <label for="valor__final" class="form-label">Valor Final</label>
                 <input type="text" class="form-control padrao" name="valor__final01" id="valor__final01">
             </div>
 
-            <div class="col-md-4 ">
+            <div class="col-12 col-md-3 mt-2">
                 <label for="indice" class="form-label">Indíce %</label>
                 <input type="text" class="form-control padrao resultado" name="indice01" id="indice01">
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4 mt-2">
                 <label for="fator__reducao" class="form-label">Fator de Redução</label>
                 <input type="text" class="form-control padrao" name="fator__reducao01" id="fator__reducao01">
+            </div>
+            <div class="col-md-1 mt-3">
+                <a>  
+                    <i class="fad fa-lg fa-lock btn" style="color:white; margin-top:25px"></i>
+                </a>
             </div>
         </div>
 
 
-        <!-- <div class="col-md-4">
-                    <label for="valor__final" class="form-label">Valor Final</label>
-                    <input type="text" class="form-control " name="valor__final02" id="valor__final02">
-                </div>
-
-                <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control resultado" name="indice02" id="indice02">
-                </div>
-                
-                <div class="col-md-4">
-                    <label for="fator__reducao" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator__reducao02" id="fator__reducao02">
-                </div>
-
-
-
-                <div class="col-md-4">
-                    <label for="valor__final" class="form-label">Valor Final</label>
-                    <input type="text" class="form-control " name="valor__final03" id="valor__final03">
-                </div>
-
-                <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control resultado" name="indice03" id="indice03">
-                </div>
-                
-                <div class="col-md-4">
-                    <label for="fator__reducao" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator__reducao03" id="fator__reducao03">
-                </div>
-
-
-
-                <div class="col-md-4">
-                    <label for="valor__final" class="form-label">Valor Final</label>
-                    <input type="text" class="form-control " name="valor__final04" id="valor__final04">
-                </div>
-
-                <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control resultado" name="indice04" id="indice04">
-                </div>
-                
-                <div class="col-md-4">
-                    <label for="fator__reducao" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator__reducao04" id="fator__reducao04">
-                </div>
-
-
-                <div class="col-md-4">
-                    <label for="valor__final" class="form-label">Valor Final</label>
-                    <input type="text" class="form-control " name="valor__final05" id="valor__final05">
-                </div>
-
-                <div class="col-md-4 ">
-                    <label for="indice" class="form-label">Indíce %</label>
-                    <input type="text" class="form-control resultado" name="indice05" id="indice05">
-                </div>
-                
-                <div class="col-md-4">
-                    <label for="fator__reducao" class="form-label">Fator de Redução</label>
-                    <input type="text" class="form-control" name="fator__reducao05" id="fator__reducao05">
-                </div> -->
-
-
-
+        
         <input type="hidden" id="quantidade" name="quantidade" value="1">
     </form>
-    <button id="adicionar" class="btn">
-        <i class="fad fa-save"></i> Adicionar
+    <button id="adicionar" class="btn botao">
+        <i class="fad fa-plus"></i> Adicionar
     </button>
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -217,24 +159,24 @@
             let quantidade = parseInt($('#quantidade').val());
             if (quantidade <= 4) {
                 let campos = `
-                <div class="col-md-4 campo${quantidade + 1}">
+                    <div class="col-md-4 mt-3 campo${quantidade + 1}">
                         <label for="valor__final" class="form-label">Valor Final</label>
                         <input type="text" class="form-control padrao" name="valor__final0${quantidade + 1}" id="valor__final0${quantidade + 1}">
                     </div>
 
-                    <div class="col-md-4 campo${quantidade + 1}">
+                    <div class="col-md-3 mt-3 campo${quantidade + 1}">
                         <label for="indice" class="form-label">Indíce %</label>
                         <input type="text" class="form-control padrao resultado" name="indice0${quantidade + 1}" id="indice0${quantidade + 1}">
                     </div>
 
-                    <div class="col-md-4 campo${quantidade + 1}">
+                    <div class="col-md-4 mt-3 campo${quantidade + 1}">
                         <label for="indice" class="form-label">Fator de Redução <i class="fa-solid fa-lock"></i></label>
                         <input type="text" class="form-control padrao" name="fator0${quantidade + 1}" id="fator0${quantidade + 1}" >
                     </div>
-                    <div class="col-md-1 campo${quantidade + 1}">
-                    <a onclick="remove(${quantidade + 1})">  
-                            <i class="fas fa-times btn" style="color:white; background-color:Darkred; padding-top: 8px; padding-bottom: 8px; padding-left:10px; padding-right:10px; border-radius: 30%; border: 1px solid red;"></i>
-                    </a>
+                    <div class="col-md-1 mt-3 campo${quantidade + 1}">
+                        <a onclick="remove(${quantidade + 1})">  
+                            <i class="fas fa-times btn" style="color:white; background-color:Darkred; margin-top:35px"></i>
+                        </a>
                     </div>`
                 $('#quantidade').val(quantidade + 1);
                 $('#container').append(campos)

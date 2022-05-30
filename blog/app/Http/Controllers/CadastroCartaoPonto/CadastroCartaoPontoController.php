@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Boletim\CartaoPonto\Validacao;
+use Spatie\Permission\Models\Permission;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
 use App\Trabalhador;
@@ -31,6 +32,7 @@ class CadastroCartaoPontoController extends Controller
     public function index()
     {
         $search = request('search');
+        // dd($search);
         $condicao = request('codicao'); 
         $today = Carbon::today();
         $user = auth()->user(); 
@@ -42,7 +44,7 @@ class CadastroCartaoPontoController extends Controller
             $query->where([
                 ['lancamentotabelas.lsstatus','D'],
                 ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['lancamentotabelas.liboletim','like','%'.$search.'%'] 
+                ['lancamentotabelas.liboletim',$search] 
             ])
             ->orWhere([
                 ['lancamentotabelas.lsstatus','D'],
@@ -52,7 +54,7 @@ class CadastroCartaoPontoController extends Controller
             ->orWhere([
                 ['lancamentotabelas.lsstatus','D'],
                 ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['tomadors.tscnpj','like','%'.$search.'%']
+                ['tomadors.tscnpj',$search]
             ]);
            }else{
             $query->where([
@@ -143,10 +145,18 @@ class CadastroCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all();
+        $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
+        
         $user = Auth::user();
+        // dd($permissions->name,$user->hasPermissionTo($permissions->name));
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
+       
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
-            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado o campo tem que ser sim!']);
+            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado ou final de semana o campo tem que ser sim!']);
         }
         if (strtotime($dados['data']) > strtotime($today) ) {
             return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
@@ -272,6 +282,18 @@ class CadastroCartaoPontoController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
+        $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
+        $user = Auth::user();
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
+        $today = Carbon::today();
+        if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
+            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado ou final de semana o campo tem que ser sim!']);
+        }
+        if (strtotime($dados['data']) > strtotime($today) ) {
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+        }
         try {
             $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
             // $lista = $this->bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
@@ -291,6 +313,10 @@ class CadastroCartaoPontoController extends Controller
     {
        
         $user = Auth::user();
+        $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {

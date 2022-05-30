@@ -30,8 +30,7 @@
                 });
             </script>
         @enderror
-        
-        @can(auth()->user()->can('mbcpc15555738'))
+        @error('permissaonegada')
  
         <!-- Modal de Acesso não permitido-->
         <script>
@@ -46,7 +45,7 @@
               showConfirmButton: false,
             });
         </script>
-        @endcan
+         @enderror
         <!--Fim do modal de Acesso não permitido-->
 
         <!--Modal de não permitido para o Editar, relatorio, excluir e outros botoes-->
@@ -166,6 +165,20 @@
   </script>
 
   <script>
+        $('.modal-botao').click(function() {
+        localStorage.setItem("modal", "enabled");
+      })
+
+      function verficarModal() {
+        var valueModal = localStorage.getItem('modal');
+        if (valueModal === "enabled") {
+          $(document).ready(function() {
+            $("#modalTrabalhador").modal("show");
+          });
+          localStorage.setItem("modal", "disabled");
+        }
+      }
+      verficarModal();
      var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
      $('#data').on('keyup focus click change',function () {
        verificardata($(this).val(),0)
@@ -227,16 +240,18 @@
           let nome = ''
           if (data.length >= 1) {
             data.forEach(element => {
-              nome += `<option value="${element.tsnome}">`
+              nome += `<option value="${element.liboletim}  ${element.tsnome}">`
               // nome += `<option value="${element.tsmatricula}">`
-              nome += `<option value="${element.tscnpj}">`
+              // nome += `<option value="${element.tscnpj}">`
             });
             $('#listapesquisa').html(nome)
           }
-          // if (data.length === 1 && dados.length > 0) {
-          //   lancamentoTab(dados, status, data[0].lsdata)
-          // } else {
-          //   limpaCamposTab()
+          if (data.length === 1 ) {
+            $('#search').val(data[0].liboletim)
+            // lancamentoTab(dados, status, data[0].lsdata)
+          } 
+          // else {
+          //   // limpaCamposTab()
           // }
         }
       });
@@ -344,6 +359,7 @@
 
     function monta_dados_pesquisa(dados) {
       let novodados = dados.split('  ')
+      console.log(novodados);
       return novodados[0];
     }
 

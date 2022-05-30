@@ -30,20 +30,21 @@
                 });
             </script>
         @enderror
-        
+        @error('permissaonegada')
         <!--Modal de Acesso não permitido-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--      icon: 'error',-->
-        <!--      allowOutsideClick: false,-->
-        <!--      allowEscapeKey: false,-->
-        <!--      allowEnterKey: true,-->
-        <!--      html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+-->
-        <!--      '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+-->
-        <!--      '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',-->
-        <!--      showConfirmButton: false,-->
-        <!--    });-->
-        <!--</script>-->
+        <script>
+            Swal.fire({
+              icon: 'error',
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: true,
+              html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+
+              '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+
+              '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',
+              showConfirmButton: false,
+            });
+        </script>
+        @enderror
         <!--Fim do modal de Acesso não permitido-->
 
         <!--Modal de não permitido para o Editar, relatorio, excluir e outros botoes-->
@@ -139,8 +140,11 @@
                     <option selected>Não</option>
                     @endif
                 </select>
+                @error('feriado')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
-            
+            <input type="hidden" name="feriadostatus" id="feriadostatus">
         </form>
     </div>
     @include('cadastroCartaoPonto.lista')
@@ -162,35 +166,85 @@
                 }
               }
               verficarModal()
-            $( "#pesquisa" ).on('keyup focus',function() {
-                var dados = '0';
-                if ($(this).val()) {
-                  dados = $(this).val();
+              var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+     $('#data').on('keyup focus click change',function () {
+       verificardata($(this).val(),0)
+     })
+
+     function verificardata(Y,valor) {
+        var data = Y
+        var dias = '';
+        data = data.split('-')
+        dias = new Date(`${data[0]}-${data[1]}-${ parseInt(data[2]) + valor} 08:24:30`);
+        dias = dias.getDay();
+        semana.forEach((element,index) => {
+            if (dias == index) {
+                if (element === 'Domingo') {
+                  $('#feriadostatus').val(true)
+                }else if (element === 'Sábado') {
+                  $('#feriadostatus').val(true)
                 }
-                var status = $('#status').val();
-                $.ajax({
-                  url: "{{url('tabela/cartao/ponto/pesquisa')}}/"+dados+'/'+status,
-                  type: 'get',
-                  contentType: 'application/json',
-                  success: function(data) {
-                    console.log(data)
-                    let nome = ''
-                    if (data.length >= 1) {
-                      data.forEach(element => {
-                        nome += `<option value="${element.tsnome}">`
-                        // nome += `<option value="${element.tsmatricula}">`
-                        nome += `<option value="${element.tscnpj}">`
-                      });
-                      $('#listapesquisa').html(nome)
+                let novadata = `${data[0]}-${data[1]}-${ parseInt(data[2]) + valor}`
+                if (feriador_nacionais(novadata)) {
+                  $('#feriadostatus').val(true)
+                }else if (element !== 'Domingo' && element !== 'Sábado') {
+                  $('#feriadostatus').val(null)
+                }
+            }
+        })
+    }
+    verificardata('{{$dados->lsdata}}',0)
+    function feriador_nacionais(dados) {
+        var verifica = false;
+        $.ajax({
+            url: "https://brasilapi.com.br/api/feriados/v1/2021",
+            type: 'get',
+            contentType: 'application/json',
+            async: false,
+            success:(data) => {
+                data.forEach(element => {
+                    if (element.date === dados) {
+                        verifica = true;
                     }
-                    // if(data.length === 1 && dados.length > 0){
-                    //   lancamentoTab(dados,status,data[0].lsdata)
-                    // }else{
-                    //   limpaCamposTab()
-                    // }
-                  }
                 });
+            }  
+        })
+        return verifica;
+    }
+
+    $("#pesquisa").on('keyup focus', function() {
+      var dados = '0';
+      if ($(this).val()) {
+        dados = $(this).val();
+        if (dados.indexOf('  ') !== -1) {
+          dados = monta_dados_pesquisa(dados);
+        }
+      }
+      var status = $('#status').val(); 
+      $.ajax({
+        url: "{{url('tabela/cartao/ponto/pesquisa')}}/" + dados + '/' + status,
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+          let nome = ''
+          if (data.length >= 1) {
+            data.forEach(element => {
+              nome += `<option value="${element.liboletim}  ${element.tsnome}">`
+              // nome += `<option value="${element.tsmatricula}">`
+              // nome += `<option value="${element.tscnpj}">`
             });
+            $('#listapesquisa').html(nome)
+          }
+          if (data.length === 1 ) {
+            $('#search').val(data[0].liboletim)
+            // lancamentoTab(dados, status, data[0].lsdata)
+          } 
+          // else {
+          //   // limpaCamposTab()
+          // }
+        }
+      });
+    });
             function lancamentoTab(dados,status,data) {
               $('#carregamento').removeClass('d-none')
               $.ajax({
@@ -285,6 +339,12 @@
               let novodados = dados.split('  ')
               return novodados[1];
             }
+            function monta_dados_pesquisa(dados) {
+              let novodados = dados.split('  ')
+              console.log(novodados);
+              return novodados[0];
+            }
+
             function Alerta(tomador) {
                 Swal.fire({
                 title: '<strong>Algo deu Errado!</strong>',

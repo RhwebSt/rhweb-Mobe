@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Cadastra rública')
+@section('titulo','Rhweb - Cadastrar rúbrica')
 @section('conteine')
 <div class="container">
     @if(session('success'))
@@ -52,14 +52,20 @@
     @enderror
 
     
-    <section class="section__form-rubrica">
+    <section class="">
         <form class="row g-3 mt-1 mb-3 mt-5" id="form" method="POST" action="{{route('rublica.store')}}">
             <input type="hidden" name="empresa" value="">
             <input type="hidden" id="method" name="_method" value="">
             @csrf
-            <div class="row">
-                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-                    <button type="submit" id="incluir" class="btn button__incluir--rubrica" value="Validar!"><i class="fad fa-save"></i> Incluir</button>
+            
+            <section class="section__botao--voltar--acesso">
+            
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao__voltar" href="{{route('rublica.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                </div>
+                
+                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                    <button type="submit" id="incluir" class="btn botao" value="Validar!"><i class="fad fa-save"></i> Incluir</button>
                     
                     <button class="btn botao dropdown-toggle" type="button" id="relatoriotrabalhador" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fad fa-file-alt"></i> Relatórios
@@ -67,11 +73,10 @@
                     <ul class="dropdown-menu" aria-labelledby="relatoriotrabalhador">
                         <li class=""><a href="{{route('relatorio.rublica')}}" class="dropdown-item text-decoration-none ps-2" id="imprimir" role="button">Rol das Rúbricas</a></li>
                     </ul>
-                    
-                    <a class="btn button__sair--rubrica" href="{{route('rublica.index')}}" role="button"><i class="fad fa-sign-out-alt"></i> Sair</a>
                 </div>
-            </div>
-            <h1 class="container text-center mt-4 mb-2 fs-3 fw-bold">Rúbricas</h1>
+            </section>
+
+            <h1 class="text__title">Cadastar Rúbricas</h1>
     
             <div class="col-md-2">
                 <label for="rubricas" class="form-label">Rúbricas

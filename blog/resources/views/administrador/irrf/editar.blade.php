@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Irrf')
+@section('titulo','Rhweb - Editar IRRF')
 @section('conteine')
 @if(session('success'))
             <script>
@@ -55,31 +55,39 @@
 
    
 
-    <section class="section__form--irrf">
+    <section class="">
 
         <form class="row g-3" action="{{route('irrf.update',$id)}}" method="POST">
-        <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
-            <button type="submit" id="atualizar" class="btn button__atualizar--irrf"><i class="fad fa-save"></i> Atualizar</button>
-            <a href="{{route('irrf.index')}}" class="btn button__sair--irrf"><i class="fad fa-sign-out"></i> Sair</a>
-        </div>
-        @csrf
-        <input type="hidden" id="method" name="_method" value="PUT">
-            <div class="container block">
-                <div class="col-md-1">
-                    <label for="ano" class="form-label">Ano
-                        <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
-                    </label>
-                    <input type="text" class="form-control fw-bold" name="irsano" value="{{$irrf[0]->irsano}}" id="ano">
-                    <span class="text-danger"></span>
+            @csrf
+            <input type="hidden" id="method" name="_method" value="PUT">
+            
+            <section class="section__botao--voltar--acesso">
+            
+                <div class="d-flex justify-content-start align-items-start div__voltar">
+                    <a class="btn botao__voltar" href="{{route('irrf.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
+                
+                <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
+                    <button type="submit" id="atualizar" class="btn botao"><i class="fad fa-save"></i> Atualizar</button>
+                </div>
+            </section>
+
+        
+
+            <div class="col-md-6">
+                <label for="ano" class="form-label">Ano
+                    <span id="refre" data-bs-toggle="tooltip" data-bs-placement="top" title="Limpar todos os campos" style="background-color:#A71113; padding: 0.6px 4px; border: 1px solid #DF1619; border-radius: 20px;"><i class="fad fa-sync-alt " style="color: #fff"></i></span>
+                </label>
+                <input type="text" class="form-control fw-bold" name="irsano" value="{{$irrf[0]->irsano}}" id="ano">
+                <span class="text-danger"></span>
             </div>
 
-            <div class="container block">
-                <div class="col-md-3">
-                    <label for="ded__dependente" class="form-label">Dedução por Dependente</label>
-                    <input type="text" class="form-control" name="ded__dependente" id="ded__dependente" value="{{number_format((float)$irrf[0]->irdepedente, 2, ',', '')}}">
-                </div>
+
+            <div class="col-md-6">
+                <label for="ded__dependente" class="form-label">Dedução por Dependente</label>
+                <input type="text" class="form-control" name="ded__dependente" id="ded__dependente" value="{{number_format((float)$irrf[0]->irdepedente, 2, ',', '')}}">
             </div>
+
             @foreach($irrf as $key=>$irrfs)
                 <div class="col-md-4">
                     <label for="valor__final" class="form-label">Valor Final</label>
