@@ -1,9 +1,11 @@
 :root{
     --title-color: black;
+    --eye-icon-color: black;
 }
 
 .darkmode{
     --title-color: white;
+    --eye-icon-color: white;
 }
 
 .section__altera--senha{
@@ -27,6 +29,7 @@
     margin-top: 22px;
     border-radius: 20%;
     padding: 5px;
+    color:var(--eye-icon-color);
 }
 
 .div__botao--alterar{

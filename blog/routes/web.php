@@ -221,7 +221,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
         
         Route::get('administrador/ordem/categoria/{ordem}/{id?}','Administrador\\Categoria\\CategoriaController@ordem')->name('administrador.categoria.ordem');
 
-        Route::post('administrador/cadastro/texto','Administrador\\Tomador\\BancoController@cadastroTxt');
+        Route::post('administrador/cadastro/texto/tomador','Administrador\\Tomador\\BancoController@cadastroTxt');
         
         Route::post('administrador/cadastro/texto/trabalhador','Administrador\\Trabalhador\\BancoController@cadastroTxt');
     });

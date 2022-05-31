@@ -1,24 +1,32 @@
-.navb__burger--button{
-    background-color: #716E72;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    transition: 300ms ease-in-out;
+:root{
+    --bg-navbar: linear-gradient(120deg, #08295E, #2C188B, #2B188C);
 }
 
-.navb__burger--button:hover{
-    background-color: #484649;
-    transform: scale(1.06);
+.darkmode{
+    --bg-navbar: linear-gradient(120deg, rgba(11,11,11,1) 0%, rgba(37,37,37,1) 100%);;
+}
+
+.navb__burger--button{
+    border-radius: 10px;
+    background-color: #1F1F1F;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
     transition: 300ms ease-in-out;
+    border: 1px solid #8F8F8F;
+
 }
 
 .navb__burger--button:focus{
-    background-color: #484649;
-    transform: scale(1.06);
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
     transition: 300ms ease-in-out;
+    
+}
+
+.navbar-toggler {
+    font-size:none;
 }
 
 .nav__bar{
-    background-image: linear-gradient(260deg, #08295E, #2C188B);
+    background-image: var(--bg-navbar);
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 

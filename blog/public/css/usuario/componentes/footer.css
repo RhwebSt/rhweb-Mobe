@@ -1,5 +1,13 @@
+:root{
+    --bg-footer: linear-gradient(120deg, #08295E, #2C188B, #2B188C);
+}
+
+.darkmode{
+    --bg-footer: linear-gradient(120deg, rgba(11,11,11,1) 0%, rgba(37,37,37,1) 100%);;
+}
+
 footer{
-    background-image: linear-gradient(260deg, #08295E, #2C188B);
+    background-image: var(--bg-footer);
     position: absolute;
     color: #FFF;
     width: 100%;

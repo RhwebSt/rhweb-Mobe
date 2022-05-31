@@ -21,8 +21,19 @@ $("#txtTomador").click(function(){
         allowOutsideClick: false,
         allowEscapeKey: false,
         preConfirm: (event) => {
-
-         }
+          if (event) {
+            var ext = ['text']
+            var type = event.type.split('/')
+            if (ext.indexOf(type[0]) !== -1) {
+                // $('#msg').text('Evento sendo enviado para SEFAZ.')
+                
+                var myFormData = new FormData();
+                myFormData.append('file', event);
+                tomador_txt(myFormData)
+            }  
+          }
+          return false;
+        }
     })
     
 });
@@ -50,9 +61,60 @@ $("#txtTrabalhador").click(function(){
         allowOutsideClick: false,
         allowEscapeKey: false,
         preConfirm: (event) => {
-
-         }
+          if (event) {
+            var ext = ['text']
+            var type = event.type.split('/')
+            if (ext.indexOf(type[0]) !== -1) {
+                // $('#msg').text('Evento sendo enviado para SEFAZ.')
+                
+                var myFormData = new FormData();
+                myFormData.append('file', event);
+                trabalhador_txt(myFormData)
+            }  
+          }
+          return false;
+        }
     })
     
 });
+function trabalhador_txt(dados) {
+  $('#progress').text('50%').css({"width": "50%"});
+  $.ajax({
+      url: `${window.location.protocol}//${window.location.host}/administrador/cadastro/texto/trabalhador`,
+      type: "POST",
+      data: dados,
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }, 
+      async:false,
+      // cache: false,
+      success: function(retorno){
+          $('#msg').text('Backup realizado com Sucesso.')
+          $('#progress').text('100%').css({"width": "100%"});
+      }
+   });
+}
+function tomador_txt(dados) {
+  $('#progress').text('50%').css({"width": "50%"});
+  $.ajax({
+      url: `${window.location.protocol}//${window.location.host}/administrador/cadastro/texto/tomador`,
+      type: "POST",
+      data: dados,
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }, 
+      async:false,
+      // cache: false,
+      success: function(retorno){
+          $('#msg').text('Backup realizado com Sucesso.')
+          $('#progress').text('100%').css({"width": "100%"});
+      }
+   });
+}
 

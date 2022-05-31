@@ -101,9 +101,7 @@
                     
                     <a class="logo__clickavel" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
                     
-                    <button class="navbar-toggler navb__burger--button" type="button" data-bs-toggle="collapse" data-bs-target="#burgerButton" aria-controls="burgerButton" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="icon__color fad fa-bars"></i>
-                    </button>
+                    
                     
                     <div class="collapse navbar-collapse" id="burgerButton">
                         
@@ -186,30 +184,36 @@
      
                         </ul>
                     </div>
-                </div>
                 
-                <?php
-                  $quantidade = 0;
-                  $naolida = 0;
-                  if (isset($esocialtrabalhador) && count($esocialtrabalhador) > 0) {
-                    $quantidade += 1;
-                    $naolida = count($esocialtrabalhador);
-                  }
-                ?>
                 
-                <div class="d-flex justify-content-end flex-row">
-                    <div class="ms-1">
-                        <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                            <i id="bell__notification" class="fad fa-bell bell__notification"></i>
-                            <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                              {{$quantidade}} 
-                            </span>
+                    <?php
+                      $quantidade = 0;
+                      $naolida = 0;
+                      if (isset($esocialtrabalhador) && count($esocialtrabalhador) > 0) {
+                        $quantidade += 1;
+                        $naolida = count($esocialtrabalhador);
+                      }
+                    ?>
+                    
+                    <div class="d-flex justify-content-end flex-row div__botoes--nav">
+                        <div class="ms-1">
+                            <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                                <i id="bell__notification" class="fad fa-bell bell__notification"></i>
+                                <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  {{$quantidade}} 
+                                </span>
+                            </button>
+                        </div>
+        
+        
+                        <div class="ms-2 me-2">
+                            <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i class="fas fa-adjust iconbtn"></i></button>
+                        </div>
+                        
+                        <button class="navbar-toggler navb__burger--button btn" type="button" data-bs-toggle="collapse" data-bs-target="#burgerButton" aria-controls="burgerButton" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="icon__color fad fa-bars"></i>
                         </button>
-                    </div>
-    
-    
-                    <div class="ms-2 me-2">
-                        <button class="botao__dark" id = "flexSwitchCheckDefault"><i class="fas fa-adjust iconbtn"></i></button>
+                        
                     </div>
                 </div>
                 
@@ -288,7 +292,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
-        <!--<script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>-->
+        <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
         <!--<script src="{{url('/js/user/usuario/notificacaoUser.js')}}"></script>-->
         <script src="{{url('/js/ferramentas/masck.js')}}"></script>

@@ -152,6 +152,25 @@
                 }
               })
             </script>
+            
+            <div class="col-md-4">
+                    <label for="rg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> RG</label>
+                    <input type="text" class="form-control" value="" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    <span class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-4">
+                  <label for="ufRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> UF <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="UF referente ao RG"></i></label>
+                  <input type="text" class="form-control" value="" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
+                    <span class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-4">
+                  <label for="dataEmissaoRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data de Emissão <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Data de emissão do RG"></i></label>
+                  <input type="date" class="form-control" value="" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
+                    <span class="text-danger"></span>
+            </div>
+            
 
             <div class="col-md-3">
                   <label for="cpf" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> CPF</label>

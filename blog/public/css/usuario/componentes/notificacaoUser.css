@@ -4,6 +4,7 @@
     color: white;
     border: 1px solid rgb(142, 152, 238);
     transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .button__notification--no--message:hover{
@@ -13,6 +14,7 @@
     border: 1px solid rgb(142, 152, 238);
     transform: scale(1.05);
     transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .button__notification--no--message:focus{
@@ -23,6 +25,7 @@
     transform: scale(1.06);
     transition: 300ms ease-in-out;
     box-shadow: none !important;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -32,6 +35,7 @@
     color: white;
     border: 1px solid #e97581;
     transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .button__notification--with--message:hover{
@@ -41,6 +45,7 @@
     border: 1px solid #e97581;
     transform: scale(1.05);
     transition: 300ms ease-in-out;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .button__notification--with--message:focus{
@@ -51,6 +56,7 @@
     transform: scale(1.06);
     transition: 300ms ease-in-out;
     box-shadow: none !important;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .bell__notification{

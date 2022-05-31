@@ -3,7 +3,7 @@
         <div class="modal-content">
             
             <div class="modal-header header__modal">
-                <h5 class="modal-title text-black" id="staticBackdropLabel1"><i class="fad fa-lg fa-sack-dollar"></i> Lançamentos cadastrados</h5>
+                <h5 class="modal-title" id="staticBackdropLabel1"><i class="fad fa-lg fa-sack-dollar"></i> Lançamentos cadastrados</h5>
                 <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
             </div>
             

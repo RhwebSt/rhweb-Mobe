@@ -52,8 +52,188 @@ class BancoController extends Controller
     {
         $file = $request->file('file');
         $dados = file($file);
+        $matricula = [];
+        $idtomador = [];
         $rublicas = $this->rublica->listaRublicaTabelaPreco();
-        $id = '';
+        $complemento = [
+            'A-Área',
+            'AC-Acesso',
+            'ACA-Acampamento',
+            'ACL-Acesso Local',
+            'AE-Área Especial',
+            'AER-Aeroporto',
+            'AL-Alameda',
+            'ALD-Aldeia',
+            'AMD-Avenida Marginal Direita',
+            'AME-Avenida Marginal Esquerda',
+            'AN-Anel Viário',
+            'ANT-Antiga Estrada',
+            'ART-Artéria',
+            'AT-Alto',
+            'ATL-Atalho',
+            'A V-Área Verde',
+            'AV-Avenida',
+            'AVC-Avenida Contorno',
+            'AVM-Avenida Marginal',
+            'AVV-Avenida Velha',
+            'BAL-Balneário',
+            'BC-Beco',
+            'BCO-Buraco',
+            'BL-Bloco',
+            'BLO-Balão',
+            'BLV-Bulevar',
+            'BSQ-Bosque',
+            'BVD-Boulevard',
+            'BX-Baixa',
+            'C-Cais',
+            'CAL-Calçada',
+            'CAM-Caminho',
+            'CAN-Canal',
+            'CH-Chácara',
+            'CHA-Chapadão',
+            'CIC-Ciclovia',
+            'CIR-Circular',
+            'CJ-Conjunto',
+            'COL-Colônia',
+            'COM-Comunidade',
+            'CON-Condomínio',
+            'COR-Corredor',
+            'CPO-Campo',
+            'CGR-Córrego',
+            'CTN-Contorno',
+            'DSC-Descida',
+            'DSV-Desvio',
+            'DT-Distrito',
+            'EB-Entre Bloco',
+            'EIM-Estrada Intermunicipal',
+            'ENS-Enseada',
+            'ENT-Entrada Particular',
+            'EQ-Entre Quadra',
+            'ESC-Escada',
+            'ESD-Escadaria',
+            'ESE-Estrada Estadual',
+            'ESI-Estrada Vicinal',
+            'ESL-Estrada de Ligação',
+            'ESM-Estrada Municipal',
+            'ESP-Esplanada',
+            'ESS-Estrada de Servidão',
+            'EST-Estrada',
+            'ESV-Estrada Velha',
+            'ETA-Estrada Antiga',
+            'ETC-Estação',
+            'ETC-Estádio',
+            'ETN-Estância',
+            'ETP-Estrada Particular',
+            'ETT-Estacionamento',
+            'EVA-Evangélica',
+            'EVD-Elevada',
+            'EX-Eixo Industrial',
+            'FAV-Favela',
+            'FAZ-Fazenda',
+            'FER-Ferrovia',
+            'FNT-Fonte',
+            'FRA-Feira',
+            'FTE-Forte',
+            'GAL-Galeria',
+            'GJA-Granja',
+            'HAB-Núcleo Habitacional',
+            'IA-Ilha',
+            'IGP-Igarapé',
+            'IND-Indeterminado',
+            'IOA-Ilhota',
+            'JD-Jardim',
+            'JDE-Jardinete',
+            'LD-Ladeira',
+            'LGA-Lagoa',
+            'LGO-Lago',
+            'LOT-Loteamento',
+            'LRG- Largo',
+            'LT-Lote',
+            'MER-Mercado',
+            'MNA-Marina',
+            'MOD-Modulo',
+            'MRG-Projeção',
+            'MRO-Morro',
+            'MTE-Monte',
+            'NUC-Núcleo',
+            'NUR-Núcleo Rural',
+            'O-Outros',
+            'OUT-Outeiro',
+            'PAR-Paralela',
+            'PAS-Passeio',
+            'PAT-Pátio',
+            'PC-Praça',
+            'PCE-Praça de Esportes',
+            'PDA-Parada',
+            'PDO-Paradouro',
+            'PNT-Ponta',
+            'PR-Praia',
+            'PRL-Prolongamento',
+            'PRM-Parque Municipal',
+            'PRQ-Parque',
+            'PRR-Parque Residencial',
+            'PSA-Passarela',
+            'PSG-Passagem',
+            'PSP- Passagem de Pedestre',
+            'PSS-Passagem Subterrânea',
+            'PTE-Ponte',
+            'PTO-Porto',
+            'Q-Quadra',
+            'QTA-Quinta',
+            'QTS-Quintas',
+            'R-Rua',
+            'R I-Rua Integração',
+            'R L-Rua de Ligação',
+            'R P-Rua Particular',
+            'R V-Rua Velha',
+            'RAM-Ramal',
+            'RCR-Recreio',
+            'REC-Recanto',
+            'RER-Retiro',
+            'RES-Residencial',
+            'RET-Reta',
+            'RLA-Ruela',
+            'RMP-Rampa',
+            'ROA-Rodo Anel',
+            'ROD-Rodovia',
+            'ROT-Rotula',
+            'RPE-Rua de Pedestre',
+            'RPR-Margem',
+            'RTN-Retorno',
+            'RTT-Rotatória',
+            'SEG-Segunda Avenida',
+            'SIT-Sitio',
+            'SRV-Servidão',
+            'ST-Setor',
+            'SUB-Subida',
+            'TCH-Trincheira',
+            'TER-Terminal',
+            'TR-Trecho',
+            'TRV-Trevo',
+            'TUN-Túnel',
+            'TV-Travessa',
+            'TVP-Travessa Particular',
+            'TVV-Travessa Velha',
+            'UNI-Unidade',
+            'V-Via',
+            'V C-Via Coletora',
+            'V L-Via Local',
+            'VAC-Via de Acesso',
+            'VAL-Vala',
+            'VCO-Via Costeira',
+            'VD-Viaduto',
+            'V-E-Via Expressa',
+            'VER-Vereda',
+            'VEV-Via Elevado',
+            'VL-Vila',
+            'VLA-Viela',
+            'VLE- Vale',
+            'VLT-Via Litorânea',
+            'VPE-Via de Pedestre',
+            'VRT-Variante',
+            'ZIG- Zigue-Zague',
+        ];
+        // $id = '';
         foreach ($dados as $i => $linha) {
             if ($linha) {
                 $tomador = [
@@ -64,6 +244,7 @@ class BancoController extends Controller
                     'matricula' => '',
                     'simples' => '',
                     'telefone' => '',
+                    'complemento__endereco'=>'',
                     'cep' => '',
                     'logradouro' => '',
                     'numero' => '',
@@ -99,12 +280,28 @@ class BancoController extends Controller
                     'operacao' => '',
                     'conta' => '',
                     'pix' => '',
-                    'empresa' => 15,
+                    'empresa' => 1,
                     'trabalhador' => null,
                 ];
                 $tomador['matricula'] = str_replace("  ", "",substr(utf8_encode($linha), 0, 6));
+                if ($tomador['matricula']) {
+                    array_push($matricula,(int)$tomador['matricula']);
+                }
                 $tomador['nome__completo'] = str_replace("  ", "",substr(utf8_encode($linha), 6, 40));
-                $tomador['logradouro'] = str_replace("  ", "",substr(utf8_encode($linha), 40, 40));
+                $tipo = substr(utf8_encode($linha), 46, 3);
+             
+                if (mb_strpos($tipo, ' ') !== false) {
+                    $tipo = explode(' ',$tipo);
+                  
+                    foreach ($complemento as $key => $comvalor) {
+                        $valor = explode('-',$comvalor);
+                        if ($valor[0] === str_replace("  ", "",$tipo[0])) {
+                            $tomador['complemento__endereco'] = $comvalor;
+                        }
+                    }
+                }
+              
+                $tomador['logradouro'] = str_replace("  ", "",substr(utf8_encode($linha), 47, 40));
                 $tomador['numero'] = str_replace("  ", "",substr(utf8_encode($linha), 86, 5));
                 $tomador['bairro'] = str_replace("  ", "",substr(utf8_encode($linha), 91, 30));
                 $tomador['localidade'] = str_replace("  ", "",substr(utf8_encode($linha), 121, 30));
@@ -113,11 +310,11 @@ class BancoController extends Controller
                 $tomador['telefone'] = str_replace("  ", "",substr(utf8_encode($linha), 161, 12));
                 $tomador['tipo'] = substr($linha, 173, 1) == 1 ? str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CNPJ' : str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CPF';
                 $tomador['cnpj'] = str_replace("  ", "",substr(utf8_encode($linha), 174, 14));
-                // dd($tomador);
+               
                 $tomadors = $this->tomador->cadastro($tomador);
                 if ($tomadors) {
                     $tomador['tomador'] = $tomadors['id'];
-                    $id = $tomador['id'];
+                    array_push($idtomador,$tomadors['id']);
                     foreach ($rublicas as $key => $rublica) {
                         $dadostabelapreco = [
                             'ano' => date('Y'),
@@ -126,7 +323,7 @@ class BancoController extends Controller
                             'status' => '',
                             'valor' => 0,
                             'valor__tomador' => 0,
-                            'empresa' => 15,
+                            'empresa' => 1,
                             'tomador' => $tomadors['id']
                         ];
                         $this->tabelapreco->cadastro($dadostabelapreco);
@@ -143,19 +340,22 @@ class BancoController extends Controller
                 }
             }
         }
+         // $matricula = max($matricula);
+            // $this->valorrublica->where('empresa_id', $user->empresa_id)
+            // ->chunkById(100, function ($valorrublica) use ($matricula,$empresa) {
+            //     foreach ($valorrublica as $valorrublicas) {
+            //         if ($valorrublicas->vimatricular >= 0) {
+            //             $this->valorrublica->where('empresa_id', $user->empresa_id)
+            //             ->update(['vimatricular'=>$matricula]);
+            //         }
+            //     }
+            // });
         return response()->json(['result' => true], 200);
-        // try {
-        // } catch (\Throwable $th) {
-        //     $cartaoponto = $this->cartaoponto->deletar($dados['tomador']);
-        //     $parametrosefips = $this->parametrosefip->deletar($dados['tomador']);
-        //     $indicefaturas = $this->indicefatura->deletar($dados['tomador']);
-        //     $taxas = $this->taxa->deletar($dados['tomador']);
-        //     $incidefolhars = $this->incidefolhar->deletar($dados['tomador']);
-        //     $this->endereco->deletarTomador($dados['tomador']);
-        //     $this->bancario->deletarTomador($dados['tomador']);
-        //     $this->tabelapreco->deletatomador($dados['tomador']);
-        //     $this->tomador->deletar($dados['tomador']);
-        //     // return redirect()->route('tomador.index')->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
-        // }
+        try {
+        } catch (\Throwable $th) {
+            $this->tomador->whereIn('id',$idtomador)->delete();
+            return response()->json(['result' => true], 500);
+           
+        }
     }
 }

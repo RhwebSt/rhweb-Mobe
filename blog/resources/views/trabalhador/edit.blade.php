@@ -67,8 +67,8 @@
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
-                    <button type="submit" id="atualizar" class="btn botao btn-primary"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#modalTrabalhador">
+                    <button type="submit" id="atualizar" class="btn botao"><i id="animacaoAtualizar" class="fad fa-sync-alt"></i> Atualizar</button>
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalTrabalhador">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
                 </div>
@@ -147,6 +147,24 @@
                 }
               })
             </script>
+            
+            <div class="col-md-4">
+                    <label for="rg" class="form-label">RG</label>
+                    <input type="text" class="form-control" value="" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    <span class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-4">
+                  <label for="ufRg" class="form-label">UF <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="UF referente ao RG"></i></label>
+                  <input type="text" class="form-control" value="" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
+                    <span class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-4">
+                  <label for="dataEmissaoRg" class="form-label">Data de Emissão <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Data de emissão do RG"></i></label>
+                  <input type="date" class="form-control" value="" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
+                    <span class="text-danger"></span>
+            </div>
             
             
             <div class="col-md-3">

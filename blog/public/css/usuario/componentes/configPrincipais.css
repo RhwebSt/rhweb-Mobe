@@ -1,6 +1,6 @@
 
 :root{
-    --body-bg: linear-gradient(195deg, rgba(251,251,251,1) 0%, rgba(228,225,225,1) 52%, rgba(255,255,255,1) 100%);
+    --body-bg: linear-gradient(195deg, rgba(251,251,251,1) 0%, rgba(217,217,217,1) 52%, rgba(238,236,236,1) 100%);
     --body-color: black;
     
     --input-hover:1px 0.5px rgb(5, 133, 252), 0 0 1px rgba(0, 89, 255, 0.986);
@@ -22,6 +22,7 @@
     --color-bg-svg-home: rgb(237,237,241,1);
     --input-bg-color: #FAFAFA;
     --select-icon-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath fill='black' stroke='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") ;
+    --date-icon-color:
 }
 
 .darkmode{
@@ -49,6 +50,7 @@
     --color-bg-svg-home:rgba(73,71,71,1);
     --input-bg-color: #1F1F1F;
     --select-icon-color:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath fill='white' stroke='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") ;
+    --date-icon-color
 }
 
 
@@ -82,6 +84,15 @@ select{
     border:none !important;
 }
 
+input[type=date]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    color: red;
+    border-radius: 3px;
+    padding:2px;
+    background-color:white;
+}
+
+
 .form-control{
     background-color:var(--input-bg-color) !important;
     color:var(--body-color) !important;
@@ -98,6 +109,11 @@ input::placeholder{
 input:focus, select:focus{
     box-shadow: 0px 2px #3F5DF2 !important;
 }
+
+input, select{
+    border-radius: 6px !important;
+}
+
 
 
 .swal2-file{
@@ -132,11 +148,11 @@ input:focus, select:focus{
 
 
 .botao__dark{
-    width:40px;
-    height:40px;
-    border-radius: 100%;
+    border-radius: 10px;
+    border: 1px solid #8F8F8F;
     background-color: var(--botao-dark-mode-color);
     color: var(--botao-dark-mode-icon-color);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .botao__dark:hover{
@@ -307,6 +323,9 @@ input:focus, select:focus{
     animation: teste1 ease-in-out 600ms forwards 2.3s;
 }
 
+
+
+
 @keyframes teste1{
     to{
       fill: var(--color-bg-svg-home);
@@ -318,6 +337,8 @@ input:focus, select:focus{
       fill: var(--color-teste);
     }
 }
+
+
 
 
 
@@ -354,6 +375,10 @@ input:focus, select:focus{
     .quadro__header{
         font-size: 16px;
     }
+    
+    .div__botoes--nav{
+      margin-top: 10px;
+    }
 }
 
 @media only screen and (max-width: 392px) {
@@ -363,6 +388,10 @@ input:focus, select:focus{
     
     .title__quadro{
         font-size:10px;
+    }
+    
+    .div__botoes--nav{
+      margin-top: 5px;
     }
 }
 
@@ -374,6 +403,10 @@ input:focus, select:focus{
     .title__quadro{
         font-size:10px;
     }
+    
+    .div__botoes--nav{
+      margin-top: 5px;
+    }
 }
 
 @media only screen and (max-width: 414px) {
@@ -384,6 +417,10 @@ input:focus, select:focus{
     .box__principal{
         width:250px;
     }
+    
+    .div__botoes--nav{
+      margin-top: 5px;
+    }
 }
 
 @media only screen and (max-width: 572px) {
@@ -391,6 +428,9 @@ input:focus, select:focus{
         width: 90%;
     }
 
+    .div__botoes--nav{
+      margin-top: 5px;
+    }
 }
 
 
@@ -399,16 +439,10 @@ input:focus, select:focus{
     font-size:11px;
   }
   
-  .botao__dark{
-      width:32px;
-      height: 32px;
-      margin-top: 10px;
-  }
-  
-  .iconbtn{
-      width:8px;
-      padding-right: 40px;
-  }
+  .div__botoes--nav{
+      margin-top: 5px;
+    }
+
   
   .userwidth{
       margin-top:8px;
@@ -441,13 +475,16 @@ input:focus, select:focus{
     .quadro{
         width: 80%;
     }
+    
+    .div__botoes--nav{
+      margin-top: 5px;
+    }
 }
 
 @media only screen and (max-width: 1057px) {
-    .botao__dark{
-      width:32px;
-      height: 32px;
-  }
+    .div__botoes--nav{
+      margin-top: 5px;
+    }
 
 
 }
@@ -458,10 +495,7 @@ input:focus, select:focus{
     }
     
     
-    .botao__dark{
-      width:32px;
-      height: 32px;
-  }
+    
 
   .fonttop {
       font-size: 14px;
