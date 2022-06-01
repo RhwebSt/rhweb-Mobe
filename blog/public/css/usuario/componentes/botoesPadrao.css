@@ -10,22 +10,27 @@
 
 
 .botao{
-    border-radius: 10px;
+
+    border-radius: 7px;
     background-color:  #2A795B;
-    /*border: 1px solid #477EFF;*/
     color: white;
     transition: 300ms ease-in-out;
-    box-shadow: 0px 2px 2px 1px rgba(19, 42, 38, 0.8); 
+    box-shadow: 0px 4px 2px 1px rgba(19, 42, 38, 0.8);
+    padding: 6px;
 }
 
 .botao:hover{
+    border-radius: 10px;
     background-color:  #205B44;
     /*border: 1px solid #6567F6;*/
     color: white;
-    transform: scale(1.06);
+    /*transform: scale(1.06);*/
     transition: 300ms ease-in-out;
-    box-shadow: 0px 2px 2px 1px rgba(19, 42, 38, 0.5); 
+    box-shadow: 0px 4px 2px 1px rgba(19, 42, 38, 0.6);
+    transform: translateY(-3px);
 }
+
+
 
 .div__voltar{
     margin-bottom: 40px;

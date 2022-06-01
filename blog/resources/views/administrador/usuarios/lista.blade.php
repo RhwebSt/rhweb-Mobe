@@ -61,10 +61,11 @@
                 <thead class="table__header">
 
                     <tr class="tr__header">
-                        <th class="th__header text-nowrap" style="width:300px">Empresa</th>
-                        <th class="th__header text-nowrap" style="width:300px">Usuario</th>
-                        <th class="th__header text-nowrap" style="width:320px">Email</th>
-                        <th class="th__header text-nowrap" style="width:300px">Cargo</th>
+                        <th class="th__header text-nowrap">Empresa</th>
+                        <th class="th__header text-nowrap">CNPJ</th>
+                        <th class="th__header text-nowrap">Usuario</th>
+                        <th class="th__header text-nowrap">Email</th>
+                        <th class="th__header text-nowrap">Telefone</th>
                         <th class="th__header text-nowrap" style="width:80px">Permissão</th>
                         <th class="th__header text-nowrap" style="width:80px">Backup</th>
                         <th class="th__header text-nowrap" style="width:80px">Editar</th>
@@ -79,10 +80,12 @@
                     @if(count($lista) > 0)
                     @foreach($lista as $key=>$listas)
                     <tr class="tr__body">
-                    <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->empresa->esnome}}</td>
+                        <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->esnome}}" style="max-width: 40ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->empresa->esnome}}</td>
+                        <td class="td__body text-nowrap col" style="width:300px">{{$listas->empresa->escnpj}}</td>
                         <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->name}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->name}}</td>
                         <td class="td__body text-nowrap col"  data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->email}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->email}}</td>
-                        <td class="td__body text-nowrap col" style="width:300px">{{$listas->cargo}}</td>
+                        <td class="td__body text-nowrap col"  data-bs-toggle="tooltip" data-bs-placement="top" title="{{$listas->empresa->estelefone}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$listas->empresa->estelefone}}</td>
+                        
                         {{-- inicio do botao de permissao --}}
                         <td class="td__body text-nowrap col" style="width:80px">
 
@@ -114,14 +117,14 @@
                         {{-- fim do botao de permissao --}}
                         
                         <td class="td__body text-nowrap col" style="width:80px">
-
+                            <input type="hidden" name="empresa" value="{{$listas->empresa_id}}" id="empresa{{$key}}">
                             <div class="dropdown">
-                                <button class="btn button__upload dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn button__upload dropdown-toggle" type="button" id="dropdownMenuButton{{$key}}" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fad fa-upload"></i>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" id="txtTrabalhador">Txt Trabalhador</a></li>
-                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" id="txtTomador">Txt Tomador</a></li>
+                                <ul class="dropdown-menu dropdown-menu--filter" aria-labelledby="dropdownMenuButton{{$key}}">
+                                    <li><a class="dropdown-item dropdown-item--filter botao-modal txtTrabalhador" id="" onclick="trabalhador('{{$listas->empresa_id}}')"><i class="fad fa-file-alt"></i> Backup Dados Trabalhador</a></li>
+                                    <li><a class="dropdown-item dropdown-item--filter botao-modal txtTomador" id="" onclick="tomador('{{$listas->empresa_id}}')"><i class="fad fa-file-alt"></i> Backup Dados Tomador</a></li>
                                 </ul>
                             </div>
 

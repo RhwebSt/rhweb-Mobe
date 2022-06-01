@@ -22,7 +22,7 @@ class CrachaTrabalhadorController extends Controller
         $user = auth()->user();
         $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
         $trabalhadors = $this->trabalhador->where('id',$id)
-        ->with(['documento','endereco','categoria','nascimento','bancario','depedente'])->first();
+        ->with(['documento','endereco','categoria','nascimento','bancario','depedente','arquivo'])->first();
         
             
             // $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);

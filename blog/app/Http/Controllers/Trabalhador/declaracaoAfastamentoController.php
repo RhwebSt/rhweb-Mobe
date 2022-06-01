@@ -21,7 +21,7 @@ class declaracaoAfastamentoController extends Controller
         $user = auth()->user();
         $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
         $trabalhadors = $this->trabalhador->where('id',$id)
-        ->with(['documento','endereco','categoria','nascimento','bancario','depedente'])->first();
+        ->with(['documento','arquivo','endereco','categoria','nascimento','bancario','depedente'])->first();
         // dd($trabalhadors);
             // $trabalhadors = $trabalhador->buscaUnidadeTrabalhador($id);
             if ($trabalhadors) {

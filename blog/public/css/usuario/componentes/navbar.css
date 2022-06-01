@@ -41,11 +41,11 @@
 
 
 .dropdown-menu{
-    background-color:#474747;
-    color:black ;
-    margin-top: 10px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(17, 25, 40, 0.75);
     border-radius: 12px;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 

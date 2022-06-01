@@ -272,7 +272,7 @@
                         </tr>
 
                         <tr>
-                            <td class="font__trab  name__title2 pad2"><strong>RG:</strong> 0000-000</td>
+                            <td class="font__trab  name__title2 pad2"><strong>RG:</strong> {{$trabalhadors->arquivo[0]->dsnumero}}</td>
                         </tr>
 
                         <tr>

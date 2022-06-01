@@ -172,6 +172,17 @@ class ValorCalculo extends Model
             'trabalhador_id'=>$dados['trabalhador'],
         ]);
     }
+    public function cadastroirrf($dados)
+    {
+        return ValorCalculo::create([
+            'vicodigo'=> $dados['irrf']['codigos'],
+            'vsdescricao'=>$dados['irrf']['rublicas'],
+            'vireferencia'=>$dados['irrf']['quantidade'],
+            'videscinto'=>$dados['irrf']['valor'],
+            'base_calculo_id'=>$dados['basecalculo'],
+            'trabalhador_id'=>$dados['trabalhador'],
+        ]);
+    }
     public function cadastrocomissionador($dados)
     {
         return ValorCalculo::create([

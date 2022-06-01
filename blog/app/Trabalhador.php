@@ -21,6 +21,10 @@ class Trabalhador extends Model
     {
         return $this->hasMany(Documento::class);
     }
+    public function arquivo()
+    {
+        return $this->hasMany(Arquivo::class);
+    }
     public function categoria()
     {
         return $this->hasMany(Categoria::class);

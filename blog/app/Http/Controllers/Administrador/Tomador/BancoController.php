@@ -51,6 +51,7 @@ class BancoController extends Controller
     public function cadastroTxt(Request $request)
     {
         $file = $request->file('file');
+        $empresa = $request->all('empresa');
         $dados = file($file);
         $matricula = [];
         $idtomador = [];
@@ -234,6 +235,7 @@ class BancoController extends Controller
             'ZIG- Zigue-Zague',
         ];
         // $id = '';
+        $matual = $this->valorrublica->where('empresa_id',$empresa['empresa'])->first();
         foreach ($dados as $i => $linha) {
             if ($linha) {
                 $tomador = [
@@ -280,7 +282,7 @@ class BancoController extends Controller
                     'operacao' => '',
                     'conta' => '',
                     'pix' => '',
-                    'empresa' => 1,
+                    'empresa' => $empresa['empresa'],
                     'trabalhador' => null,
                 ];
                 $tomador['matricula'] = str_replace("  ", "",substr(utf8_encode($linha), 0, 6));
@@ -310,49 +312,63 @@ class BancoController extends Controller
                 $tomador['telefone'] = str_replace("  ", "",substr(utf8_encode($linha), 161, 12));
                 $tomador['tipo'] = substr($linha, 173, 1) == 1 ? str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CNPJ' : str_replace("  ", "",substr(utf8_encode($linha), 173, 1)) . '-CPF';
                 $tomador['cnpj'] = str_replace("  ", "",substr(utf8_encode($linha), 174, 14));
-               
-                $tomadors = $this->tomador->cadastro($tomador);
-                if ($tomadors) {
-                    $tomador['tomador'] = $tomadors['id'];
-                    array_push($idtomador,$tomadors['id']);
-                    foreach ($rublicas as $key => $rublica) {
-                        $dadostabelapreco = [
-                            'ano' => date('Y'),
-                            'rubricas' => $rublica->rsrublica,
-                            'descricao' => $rublica->rsdescricao,
-                            'status' => '',
-                            'valor' => 0,
-                            'valor__tomador' => 0,
-                            'empresa' => 1,
-                            'tomador' => $tomadors['id']
-                        ];
-                        $this->tabelapreco->cadastro($dadostabelapreco);
+                $verificar = $this->tomador->where([
+                    ['tscnpj',$tomador['cnpj']],
+                    ['empresa_id',$empresa['empresa']]
+                ])->count();
+                if (!$verificar) {
+                    $tomadors = $this->tomador->cadastro($tomador);
+                    if ($tomadors) {
+                        $tomador['tomador'] = $tomadors['id'];
+                        array_push($idtomador,$tomadors['id']);
+                        foreach ($rublicas as $key => $rublica) {
+                            $dadostabelapreco = [
+                                'ano' => date('Y'),
+                                'rubricas' => $rublica->rsrublica,
+                                'descricao' => $rublica->rsdescricao,
+                                'status' => '',
+                                'valor' => 0,
+                                'valor__tomador' => 0,
+                                'empresa' => 1,
+                                'tomador' => $tomadors['id']
+                            ];
+                            $this->tabelapreco->cadastro($dadostabelapreco);
+                        }
+                        $incidefolhars = $this->incidefolhar->cadastro($tomador);
+                        $enderecos = $this->endereco->cadastro($tomador);
+                        $taxas = $this->taxa->cadastro($tomador);
+                        $bancarios = $this->bancario->cadastro($tomador);
+                        // $retencaofaturas = $retencaofatura->cadastro($dados);
+                        $cartaoponto = $this->cartaoponto->cadastro($tomador);
+                        $parametrosefips = $this->parametrosefip->cadastro($tomador);
+                        // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
+                        $indicefaturas = $this->indicefatura->cadastro($tomador);
                     }
-                    $incidefolhars = $this->incidefolhar->cadastro($tomador);
-                    $enderecos = $this->endereco->cadastro($tomador);
-                    $taxas = $this->taxa->cadastro($tomador);
-                    $bancarios = $this->bancario->cadastro($tomador);
-                    // $retencaofaturas = $retencaofatura->cadastro($dados);
-                    $cartaoponto = $this->cartaoponto->cadastro($tomador);
-                    $parametrosefips = $this->parametrosefip->cadastro($tomador);
-                    // $taxatrabalhador = $taxatrabalhador->cadastro($dados);
-                    $indicefaturas = $this->indicefatura->cadastro($tomador);
                 }
             }
         }
-         // $matricula = max($matricula);
-            // $this->valorrublica->where('empresa_id', $user->empresa_id)
-            // ->chunkById(100, function ($valorrublica) use ($matricula,$empresa) {
-            //     foreach ($valorrublica as $valorrublicas) {
-            //         if ($valorrublicas->vimatricular >= 0) {
-            //             $this->valorrublica->where('empresa_id', $user->empresa_id)
-            //             ->update(['vimatricular'=>$matricula]);
-            //         }
-            //     }
-            // });
+        $matricula = max($matricula);
+        $this->valorrublica->where('empresa_id', $empresa['empresa'])
+        ->chunkById(100, function ($valorrublica) use ($matricula,$empresa,$matual) {
+            foreach ($valorrublica as $valorrublicas) {
+                if ($valorrublicas->vimatriculartomador >= 0 && $matricula > $matual->vimatriculartomador) {
+                    $this->valorrublica->where('empresa_id', $empresa['empresa'])
+                    ->update(['vimatriculartomador'=>$matricula]);
+                }
+            }
+        });
         return response()->json(['result' => true], 200);
         try {
         } catch (\Throwable $th) {
+            $this->valorrublica->where('empresa_id', $empresa['empresa'])
+            ->chunkById(100, function ($valorrublica) use ($matual,$empresa) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatriculartomador >= 0) {
+                        $this->valorrublica->where('empresa_id', $empresa['empresa'])
+                        ->update(['vimatriculartomador'=>$matual->vimatriculartomador]);
+                    }
+                }
+            });
             $this->tomador->whereIn('id',$idtomador)->delete();
             return response()->json(['result' => true], 500);
            

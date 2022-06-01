@@ -20,11 +20,12 @@ use App\ValoresRublica;
 use App\BaseCalculo;
 use App\Esocial;
 use App\Empresa;
+use App\Arquivo;
 class TrabalhadorController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
     $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo,
-    $esocial,$empresa;
+    $esocial,$empresa,$arquivo;
     public function __construct()
     {
         $this->trabalhador = new Trabalhador;
@@ -41,6 +42,7 @@ class TrabalhadorController extends Controller
         $this->basecalculo = new BaseCalculo;  
         $this->esocial = new Esocial; 
         $this->empresa = new Empresa;
+        $this->arquivo = new Arquivo;
     }
     public function index()
     {
@@ -102,7 +104,7 @@ class TrabalhadorController extends Controller
                 $query->where('empresa_id', $user->empresa_id);
             }
     }) 
-    ->orderBy('tsnome', $ordem)
+    ->orderBy('tsnome', $ordem) 
     ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         if ($id) {
@@ -179,6 +181,8 @@ class TrabalhadorController extends Controller
             $nascimentos = $this->nascimento->cadastro($dados);
             $categorias = $this->categoria->cadastro($dados);
             $documentos = $this->documento->cadastro($dados);
+            $this->arquivo->cadastrorg($dados);
+
             // $this->valorrublica->editarMatricular($dados,$user->empresa_id); 
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
@@ -241,7 +245,7 @@ class TrabalhadorController extends Controller
         $user = Auth::user();
         $search = request('search');
         $trabalhador = $this->trabalhador->where('id',$id)
-        ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
+        ->with(['documento','endereco','categoria','nascimento','bancario','arquivo'])->first();
        
         $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
             if ($search) {
@@ -297,6 +301,7 @@ class TrabalhadorController extends Controller
             $nascimentos = $this->nascimento->editar($dados,$id);
             $categorias = $this->categoria->editar($dados,$id);
             $documentos = $this->documento->editar($dados,$id);
+            $this->arquivo->editarg($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);

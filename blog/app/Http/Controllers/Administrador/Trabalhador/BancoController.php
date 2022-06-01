@@ -17,11 +17,12 @@ use App\Comissionado;
 use App\ValoresRublica;
 use App\BaseCalculo;
 use App\Esocial;
+use App\Arquivo;
 class BancoController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
     $documento,$dependente,$bolcartaoponto,$lancamentorublica,$comissionado,$basecalculo,
-    $esocial;
+    $esocial,$arquivo;
     public function __construct()
     {
         $this->trabalhador = new Trabalhador;
@@ -37,14 +38,16 @@ class BancoController extends Controller
         $this->comissionado = new Comissionado;
         $this->basecalculo = new BaseCalculo;  
         $this->esocial = new Esocial; 
+        $this->arquivo = new Arquivo;
     }
     public function cadastroTxt(Request $request)
     {
         $file = $request->file('file');
-        
+        $empresa = $request->all('empresa');
         $dados = file($file);
         $matricula = [];
         $idtrabalhador = [];
+        $matual = $this->valorrublica->where('empresa_id',$empresa['empresa'])->first();
         try {
             foreach ($dados as $key => $linha) {
                 $trabalhador = [
@@ -55,9 +58,12 @@ class BancoController extends Controller
                     'raca'=>'',
                     'cpf' => '',
                     'pis'=>'',
+                    'rg'=>'',
+                    'dataEmissaoRg'=>'',
+                    'ufRg'=>'',
                     'data_nascimento'=>'',
                     'pais__nascimento'=>'',
-                    'pais__nacionalidade'=>'',
+                    'pais__nacionalidade'=>'', 
                     'nome__mae'=>'',
                     'sexo'=>'',
                     'estado__civil'=>'',
@@ -81,7 +87,7 @@ class BancoController extends Controller
                     'conta'=>'',
                     'pix'=>'',
                     'situacao__contrato'=>'',
-                    'empresa'=>1,
+                    'empresa'=>$empresa['empresa'],
                     'tomador'=>null
                 ];
                 $trabalhador['matricula'] = str_replace("  ", "",substr(utf8_encode($linha), 0, 6));
@@ -125,7 +131,18 @@ class BancoController extends Controller
                     $trabalhador['estado__civil'] = '5-Viúvo';
                 }
                 $trabalhador['nome__mae'] = str_replace("  ", "",substr(utf8_encode($linha), 227, 40));
+
                 $trabalhador['conta'] = str_replace("  ", "",substr(utf8_encode($linha), 278, 13));
+                $trabalhador['ufRg'] = str_replace("  ", "",substr(utf8_encode($linha), 330, 2));
+                $trabalhador['rg'] = str_replace("  ", "",substr(utf8_encode($linha), 306, 15));
+                $dataemissao = str_replace("  ", "",substr($linha, 321, 8));
+                $dia = substr($dataemissao, 0, 2);
+                $mes = substr($dataemissao, 2,2);
+                $ano = substr($dataemissao, 4,4);
+                $dataemissao = $ano.'-'.$mes.'-'.$dia;
+                $trabalhador['dataEmissaoRg'] = $dataemissao;
+            
+                
                 $trabalhador['cpf'] = str_replace("  ", "",substr(utf8_encode($linha), 387, 11));
                 $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 402, 11));
                 if (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '1') {
@@ -141,11 +158,14 @@ class BancoController extends Controller
                 }else{
                     $trabalhador['raca'] = '6-Não informado';
                 }
-                $dataafastamento = str_replace("  ", "",substr($linha, 477, 8));
+                $dataafastamento = str_replace("  ", "",substr($linha, 476, 8));
                 $dia = substr($dataafastamento, 0, 2);
                 $mes = substr($dataafastamento, 2,2);
                 $ano = substr($dataafastamento, 4,4);
                 $dataafastamento = $ano.'-'.$mes.'-'.$dia;
+                if ($dataafastamento === '0000-00-00') {
+                    $trabalhador['situacao__contrato'] = 'ATIVO';
+                }
                 $trabalhador['data__afastamento'] = $dataafastamento;
                 $trabalhador['categoria__contrato'] = str_replace("  ", "",substr(utf8_encode($linha), 485, 3));
                 $dataadimissao = str_replace("  ", "",substr($linha, 726, 8));
@@ -158,29 +178,47 @@ class BancoController extends Controller
                 $trabalhador['agencia'] = str_replace("  ", "",substr(utf8_encode($linha), 738, 5));
                 $trabalhador['operacao'] = str_replace("  ", "",substr(utf8_encode($linha), 743, 4));
                 // dd($trabalhador);
-                $trabalhadors = $this->trabalhador->cadastro($trabalhador);
-                if ($trabalhadors) {
-                    array_push($idtrabalhador,$trabalhadors['id']);
-                    $trabalhador['trabalhador'] = $trabalhadors['id'];
-                    $enderecos = $this->endereco->cadastro($trabalhador); 
-                    $bancarios = $this->bancario->cadastro($trabalhador);
-                    $nascimentos = $this->nascimento->cadastro($trabalhador);
-                    $categorias = $this->categoria->cadastro($trabalhador);
-                    $documentos = $this->documento->cadastro($trabalhador);
+                $verifica = $this->trabalhador->where([
+                    ['tscpf', $trabalhador['cpf']],
+                    ['empresa_id',$empresa['empresa']]
+                ])->count();
+                if (!$verifica) {
+                    $trabalhadors = $this->trabalhador->cadastro($trabalhador);
+                    if ($trabalhadors) {
+                        array_push($idtrabalhador,$trabalhadors['id']);
+                        $trabalhador['trabalhador'] = $trabalhadors['id'];
+                        $enderecos = $this->endereco->cadastro($trabalhador); 
+                        $bancarios = $this->bancario->cadastro($trabalhador);
+                        $nascimentos = $this->nascimento->cadastro($trabalhador);
+                        $categorias = $this->categoria->cadastro($trabalhador);
+                        $documentos = $this->documento->cadastro($trabalhador);
+                        $this->arquivo->cadastrorg($trabalhador);
+                    }
                 }
+              
             }
-            // $matricula = max($matricula);
-            // $this->valorrublica->where('empresa_id', $user->empresa_id)
-            // ->chunkById(100, function ($valorrublica) use ($matricula,$empresa) {
-            //     foreach ($valorrublica as $valorrublicas) {
-            //         if ($valorrublicas->vimatricular >= 0) {
-            //             $this->valorrublica->where('empresa_id', $user->empresa_id)
-            //             ->update(['vimatricular'=>$matricula]);
-            //         }
-            //     }
-            // });
+            $matricula = max($matricula);
+            $this->valorrublica->where('empresa_id', $empresa['empresa'])
+            ->chunkById(100, function ($valorrublica) use ($matricula, $empresa,$matual) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatricular >= 0 && $matricula > $matual->vimatricular) {
+                        $this->valorrublica->where('empresa_id',$empresa['empresa'])
+                        ->update(['vimatricular'=>$matricula]);
+                    }
+                }
+            });
             return response()->json(['result' => true], 200);
+            
         } catch (\Throwable $th) {
+            $this->valorrublica->where('empresa_id', $empresa['empresa'])
+            ->chunkById(100, function ($valorrublica) use ($matual, $empresa) {
+                foreach ($valorrublica as $valorrublicas) {
+                    if ($valorrublicas->vimatricular >= 0) {
+                        $this->valorrublica->where('empresa_id',$empresa['empresa'])
+                        ->update(['vimatricular'=>$matual->vimatricular]);
+                    }
+                }
+            });
             $this->trabalhador->whereIn('id',$idtrabalhador)->delete();
             return response()->json(['result' => true], 500);
         }

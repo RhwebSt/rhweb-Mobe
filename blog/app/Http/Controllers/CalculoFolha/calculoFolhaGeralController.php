@@ -1197,43 +1197,44 @@ class calculoFolhaGeralController extends Controller
             $base_irrf = $basecalculos->bifgts - $base_irrf;
             $faxa = 0;
             $liquido = 0;
-
-            foreach ($irrf_lista as $key => $irrf) {
-                $novoirrf = (float) $irrf->irsvalorfinal;
-                if ($base_irrf < $novoirrf && $key === 0) {
-                    $faxa = 0;
-                    $resultadoinss = 0;
-                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
-                    $boletim['irrf']['valor'] = 0;
-                    $boletim['irrf']['quantidade'] = 0;
-                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
-                }elseif ($base_irrf > (float)$irrf_lista[0]->irsvalorfinal && $base_irrf < $novoirrf && $key === 1) {
-                    $faxa = $irrf->irsindece;
-                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
-                    $boletim['irrf']['valor'] = $resultado;
-                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
-                    $basecalculos->bivalorliquido -= $resultado;
-                    $basecalculos->bivalordesconto += $resultado;
-                }elseif ($base_irrf > (float)$irrf_lista[1]->irsvalorfinal && $base_irrf < $novoirrf && $key === 2) {
-                    $faxa = $irrf->irsindece;
-                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
-                    $boletim['irrf']['valor'] = $resultado;
-                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
-                    $basecalculos->bivalorliquido -= $resultado;
-                    $basecalculos->bivalordesconto += $resultado;
-                }elseif ($base_irrf > (float)$irrf_lista[2]->irsvalorfinal && $base_irrf < $novoirrf && $key === 3) {
-                    $faxa = $irrf->irsindece;
-                    $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
-                    $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
-                    $boletim['irrf']['valor'] = $resultado;
-                    $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
-                    $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
-                    $basecalculos->bivalorliquido -= $resultado;
-                    $basecalculos->bivalordesconto += $resultado;
+            if ($depedente) {
+                foreach ($irrf_lista as $key => $irrf) {
+                    $novoirrf = (float) $irrf->irsvalorfinal;
+                    if ($base_irrf < $novoirrf && $key === 0) {
+                        $faxa = 0;
+                        $resultadoinss = 0;
+                        $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                        $boletim['irrf']['valor'] = 0;
+                        $boletim['irrf']['quantidade'] = 0;
+                        $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                    }elseif ($base_irrf > (float)$irrf_lista[0]->irsvalorfinal && $base_irrf < $novoirrf && $key === 1) {
+                        $faxa = $irrf->irsindece;
+                        $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                        $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                        $boletim['irrf']['valor'] = $resultado;
+                        $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                        $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                        $basecalculos->bivalorliquido -= $resultado;
+                        $basecalculos->bivalordesconto += $resultado;
+                    }elseif ($base_irrf > (float)$irrf_lista[1]->irsvalorfinal && $base_irrf < $novoirrf && $key === 2) {
+                        $faxa = $irrf->irsindece;
+                        $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                        $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                        $boletim['irrf']['valor'] = $resultado;
+                        $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                        $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                        $basecalculos->bivalorliquido -= $resultado;
+                        $basecalculos->bivalordesconto += $resultado;
+                    }elseif ($base_irrf > (float)$irrf_lista[2]->irsvalorfinal && $base_irrf < $novoirrf && $key === 3) {
+                        $faxa = $irrf->irsindece;
+                        $resultado = $base_irrf * ((float)str_replace(',','.',$irrf->irsindece)/100);
+                        $boletim['irrf']['rublicas'] = $irrf_rublica->rsdescricao;
+                        $boletim['irrf']['valor'] = $resultado;
+                        $boletim['irrf']['quantidade'] = str_replace(',','.',$irrf->irsindece);
+                        $boletim['irrf']['codigos'] = $irrf_rublica->rsrublica;
+                        $basecalculos->bivalorliquido -= $resultado;
+                        $basecalculos->bivalordesconto += $resultado;
+                    }
                 }
             }
             if ($quantdias > 15) {
@@ -1348,6 +1349,11 @@ class calculoFolhaGeralController extends Controller
                     'base_calculo_id'=>$base['id'],
                     'trabalhador_id'=>$basecalculos->trabalhador_id
                 ]);
+            }
+            if ($depedente) {
+                $boletim['trabalhador'] = $basecalculos->trabalhador_id;
+                $boletim['basecalculo'] = $base['id'];
+                $this->valorcalculo->cadastroirrf($boletim);
             }
             if ($quantfamilia) {
                 $familia =  $this->rublica->buscaRublicaUnidade('Salário Família');

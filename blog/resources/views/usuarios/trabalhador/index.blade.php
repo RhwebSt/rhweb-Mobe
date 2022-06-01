@@ -58,7 +58,7 @@
                 
                 <div class="btn d-grid gap-1 mt-1 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit" id="incluir" class="btn botao">
-                        <i class="fad fa-save"></i> Incluir
+                        <i id="inclurIcone" class="fad fa-save"></i> Incluir
                     </button>
                     <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCadAcesso">
                         <i class="fad fa-list"></i> Lista
@@ -115,7 +115,48 @@
 </main>
             
 <script>
+
+        $('#incluir').click(function(event){
+            event.preventDefault();
+            console.log("executou");
+            $('#inclurIcone').removeClass('fa-save');
+            $('#inclurIcone').addClass('fa-spinner-third');
+            $('#inclurIcone').addClass('fa-spin');
+            console.log($('#inclurIcone'));
+            var teste = setTimeout(function () {
+                
+                $('#form').submit();
+                console.log("dentro da funcão");
+            }, 3000);
+            
+
+            
+        })
+        
+        // $('#incluir').mouseover(function(){
+        //     $('#inclurIcone').addClass('fa-check');
+        //     $('#inclurIcone').removeClass('fad');
+        //     $('#inclurIcone').removeClass('fa-save');
+        //     $('#inclurIcone').addClass('fad');
+        // })
+        
+        // $('#incluir').mouseout(function(){
+        //     $('#inclurIcone').removeClass('fad');
+        //     $('#inclurIcone').removeClass('fa-check');
+        //     $('#inclurIcone').addClass('fad');
+        //     $('#inclurIcone').addClass('fa-save');
+            
+        // })
+
+
+
+        $('#usuario').val(" ");
+        $('#senha').val(" ");
+
         $(document).ready(function(){
+            
+            
+            
             $.ajax({
               url: "{{route('usuario.pesquisa.admin')}}", 
               type: 'get',

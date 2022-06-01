@@ -149,23 +149,28 @@
             </script>
             
             <div class="col-md-4">
-                    <label for="rg" class="form-label">RG</label>
-                    <input type="text" class="form-control" value="" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
-                    <span class="text-danger"></span>
+                    <label for="rg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> RG</label>
+                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsnumero:''}}" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    @error('rg')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
             </div>
             
             <div class="col-md-4">
-                  <label for="ufRg" class="form-label">UF <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="UF referente ao RG"></i></label>
-                  <input type="text" class="form-control" value="" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
-                    <span class="text-danger"></span>
+                  <label for="ufRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> UF <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="UF referente ao RG"></i></label>
+                  <input type="text" class="form-control @error('ufRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsuf:''}}" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
+                  @error('ufRg')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
             </div>
             
             <div class="col-md-4">
-                  <label for="dataEmissaoRg" class="form-label">Data de Emissão <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Data de emissão do RG"></i></label>
-                  <input type="date" class="form-control" value="" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
-                    <span class="text-danger"></span>
+                  <label for="dataEmissaoRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data de Emissão <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Data de emissão do RG"></i></label>
+                  <input type="date" class="form-control @error('dataEmissaoRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsemissao:''}}" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
+                  @error('dataEmissaoRg')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
             </div>
-            
             
             <div class="col-md-3">
                 <label for="cpf" class="form-label">CPF</label>

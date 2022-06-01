@@ -260,7 +260,7 @@
                 <tr>
                     <td class="small__font text-center indentificacao">{{$trabalhadors->documento[0]->dspis}}</td>
                     <td class="small__font text-center indentificacao">{{$trabalhadors->tscpf}}</td>
-                    <td class="small__font text-center indentificacao">0000-000</td>
+                    <td class="small__font text-center indentificacao">{{$trabalhadors->arquivo[0]->dsnumero}}</td>
                     <td class="small__font text-center indentificacao">
                         {{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}
                     </td>

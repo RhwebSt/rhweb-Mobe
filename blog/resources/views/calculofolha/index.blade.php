@@ -482,7 +482,7 @@
                                         </td>
                                         
                                         <td class="td__body text-nowrap col" style="width:50px;">
-                                            <a class="btn btn__evento" href=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                            <a class="btn btn__evento" href="{{route('gera.evento.1200',[$folhar->id,$folhar->empresa_id])}}"><i class="icon__color fas fa-file-invoice"></i></a>
                                         </td>
                                                 
                                         <td class="td__body text-nowrap col" style="width:60px;">

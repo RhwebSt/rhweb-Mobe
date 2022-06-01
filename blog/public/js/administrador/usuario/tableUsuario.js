@@ -1,12 +1,13 @@
-$("#txtTomador").click(function(){
+function tomador(empresa){
 
+console.log(empresa);
     Swal.fire({
         // title: '<strong>Importando Dados</strong>',
         // icon: 'success',
         html: '<div class="progress mt-5 mb-3" style="height: 12px;">' +
         '<div class="progress-bar bg-success" role="progressbar" id="progress" style="width: 0;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>' +
         '</div>' +
-        '<p id="msg">Em processamento...</p>',
+        '<p id="msg">Em processamento...</p>', 
         input: 'file',
         inputAttributes: {
             'accept': 'text/*',
@@ -29,6 +30,7 @@ $("#txtTomador").click(function(){
                 
                 var myFormData = new FormData();
                 myFormData.append('file', event);
+                myFormData.append('empresa',empresa)
                 tomador_txt(myFormData)
             }  
           }
@@ -36,9 +38,9 @@ $("#txtTomador").click(function(){
         }
     })
     
-});
+};
 
-$("#txtTrabalhador").click(function(){
+function trabalhador(empresa){
 
     Swal.fire({
         // title: '<strong>Importando Dados</strong>',
@@ -66,9 +68,10 @@ $("#txtTrabalhador").click(function(){
             var type = event.type.split('/')
             if (ext.indexOf(type[0]) !== -1) {
                 // $('#msg').text('Evento sendo enviado para SEFAZ.')
-                
+                $('#progress').text('50%').css({"width": "50%"});
                 var myFormData = new FormData();
                 myFormData.append('file', event);
+                myFormData.append('empresa',empresa)
                 trabalhador_txt(myFormData)
             }  
           }
@@ -76,7 +79,7 @@ $("#txtTrabalhador").click(function(){
         }
     })
     
-});
+};
 function trabalhador_txt(dados) {
   $('#progress').text('50%').css({"width": "50%"});
   $.ajax({

@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/configPrincipais.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/animacoes/animacaoSlides.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/navbar.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/footer.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/offCanvas.css')}}">
@@ -207,7 +208,7 @@
         
         
                         <div class="ms-2 me-2">
-                            <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i class="fas fa-adjust iconbtn"></i></button>
+                            <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i id="iconDarkMode" class="fad fa-moon fa-lg iconbtn"></i></button>
                         </div>
                         
                         <button class="navbar-toggler navb__burger--button btn" type="button" data-bs-toggle="collapse" data-bs-target="#burgerButton" aria-controls="burgerButton" aria-expanded="false" aria-label="Toggle navigation">
