@@ -107,6 +107,7 @@ class TabelaPrecoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all();
+        // dd($dados);
         if ($dados['ano'] > $this->dt->year) {
             return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
         }

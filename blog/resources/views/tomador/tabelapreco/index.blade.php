@@ -95,8 +95,8 @@
 
             <div class="col-md-7">
                 <label for="descricao" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Descrição</label>
-                <input type="text" class="form-control  @error('descricao') is-invalid @enderror" list="descricoes" value="{{old('descricao')}}" id="descricao">
-                <input type="hidden" name="descricao" value="{{old('descricao')}}">
+                <input type="text" class="form-control  @error('descricao') is-invalid @enderror" list="descricoes" name="descricao" value="{{old('descricao')}}" id="descricao">
+                <input type="hidden"  value="{{old('descricao')}}">
                 <datalist id="descricoes"></datalist>
                 @error('descricao')
                 <span class="text-danger">{{ $message }}</span>
@@ -108,8 +108,8 @@
             
             <div class="col-md-3">
                 <label for="rubricas" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Código</label>
-                <input type="text" class="form-control  pesquisa @error('rubricas') is-invalid @enderror" value="{{old('rubricas')}}" id="rubricas">
-                <input type="hidden" name="rubricas" value="{{old('descricao')}}">
+                <input type="text" name="rubricas" class="form-control  pesquisa @error('rubricas') is-invalid @enderror" value="{{old('rubricas')}}" id="rubricas">
+                <input type="hidden"  value="{{old('descricao')}}">
                 @error('rubricas')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -160,36 +160,37 @@
     $('#rubricas').on('keyup', function() {
       $('input[name="rubricas"]').val($(this).val());
     })
-    $('#descricao').on('focus keyup', function() {
-      let dados = '0'
-      if ($(this).val()) {
-        dados = $(this).val()
-        if (dados.indexOf('  ') !== -1) {
-          dados = monta_dados(dados);
-        }
-      }
-      $('input[name="descricao"]').val(dados)
-      $.ajax({
-        url: "{{url('rublica/pesquisa')}}/" + dados,
-        type: 'get',
-        contentType: 'application/json',
-        success: function(data) {
-          let nome = ''
-          let rublica = ['1000', '1002', '1003', '1004', '1005', '1006', '1007']
-          if (data.length >= 1) {
-            data.forEach(element => {
-              if (rublica.indexOf(element.rsrublica) !== -1) {
-                nome += `<option value="${element.rsrublica}  ${element.rsdescricao}">`
-              }
-            });
-            $('#descricoes').html(nome)
-          }
-          if (data.length === 1 && dados.length >= 4) {
-            buscaItemRublica(dados)
-          }
-        }
-      })
-    })
+    // $('#descricao').on('focus keyup', function() {
+    //   let dados = '0'
+    //   if ($(this).val()) {
+    //     dados = $(this).val()
+    //     if (dados.indexOf('  ') !== -1) {
+    //       dados = monta_dados(dados);
+    //       $('input[name="descricao"]').val(dados[1])
+    //     }
+    //   }
+      
+    //   $.ajax({
+    //     url: "{{url('rublica/pesquisa')}}/" + dados[0],
+    //     type: 'get',
+    //     contentType: 'application/json',
+    //     success: function(data) {
+    //       let nome = ''
+    //       let rublica = ['1000', '1002', '1003', '1004', '1005', '1006', '1007']
+    //       if (data.length >= 1) {
+    //         data.forEach(element => {
+    //           if (rublica.indexOf(element.rsrublica) !== -1) {
+    //             nome += `<option value="${element.rsrublica}  ${element.rsdescricao}">`
+    //           }
+    //         });
+    //         $('#descricoes').html(nome)
+    //       }
+    //       if (data.length === 1 && dados.length >= 4) {
+    //         buscaItemRublica(dados)
+    //       }
+    //     }
+    //   })
+    // })
     // $("#pesquisa").on('keyup focus', function() {
     //   let dados = '0'
     //   if ($(this).val()) {
@@ -226,7 +227,7 @@
 
     function monta_dados(dados) {
       let novodados = dados.split('  ')
-      return novodados[0];
+      return novodados;
     }
 
     function buscaItemRublica(dados) {

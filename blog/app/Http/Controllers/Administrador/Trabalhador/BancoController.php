@@ -48,7 +48,7 @@ class BancoController extends Controller
         $matricula = [];
         $idtrabalhador = [];
         $matual = $this->valorrublica->where('empresa_id',$empresa['empresa'])->first();
-        try {
+        
             foreach ($dados as $key => $linha) {
                 $trabalhador = [
                     'nome__completo' => '',
@@ -208,7 +208,7 @@ class BancoController extends Controller
                 }
             });
             return response()->json(['result' => true], 200);
-            
+            try {  
         } catch (\Throwable $th) {
             $this->valorrublica->where('empresa_id', $empresa['empresa'])
             ->chunkById(100, function ($valorrublica) use ($matual, $empresa) {

@@ -17,7 +17,7 @@ class CreateArquivosTable extends Migration
             $table->increments('id');
             $table->char('dstipo', 20)->nullable();
             $table->char('dsnumero',20)->nullable();
-            $table->char('data', 15)->nullable();
+            $table->char('dsemissao', 15)->nullable();
             $table->char('dsserie', 20)->nullable();
             $table->char('dsuf', 2)->nullable();
             $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();

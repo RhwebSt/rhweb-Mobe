@@ -89,7 +89,7 @@
                                             <!--</form> -->
                                             <section class="delete__tabela--boletim">
                                                 <div class="modal fade" id="deleteBoletimTabPrecoInside{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered col-8">
+                                                    <div class="modal-dialog modal-dialog-centered col-8"> 
                                                         <div class="modal-content">
                                                             <form action="{{route('boletim.tabela.destroy',$listas->id)}}" id="" method="post">
                                                                 @csrf

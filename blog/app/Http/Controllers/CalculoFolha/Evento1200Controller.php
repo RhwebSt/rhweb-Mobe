@@ -13,7 +13,7 @@ use App\Trabalhador;
 use ZipArchive;
 class Evento1200Controller extends Controller
 {
-    private $empresa,$folhar,$basecalculo,$tranalhador,$zip;
+    private $empresa,$folhar,$basecalculo,$trabalhador,$zip;
     function __construct()
     {
         $this->folhar = new Folhar;
@@ -36,8 +36,14 @@ class Evento1200Controller extends Controller
         foreach ($tranalhadores as $key => $trabalahdorid) {
             array_push($trabalhadorarray,$trabalahdorid->trabalhador_id);
         }
-        $novotrabalhadores = array_chunk($trabalhadorarray, 2, true);
-        foreach ($novotrabalhadores as $key => $novoval) {
+        $novotrabalhadores = array_chunk($trabalhadorarray, 3, true);
+        // dd($novotrabalhadores);
+        $novapasta = rand(1000, 100000);
+        
+        if (count($novotrabalhadores) > 1) {
+            mkdir('storage/'.$novapasta);
+        }
+        foreach ($novotrabalhadores as $i => $novoval) {
             $trabalhador = $this->trabalhador->whereIn('id',$novoval)
             ->with('categoria:trabalhador_id,cscategoria')
             ->get();
@@ -47,9 +53,13 @@ class Evento1200Controller extends Controller
             ])
             ->with(['trabalhador:id,tscpf','trabalhador.categoria:trabalhador_id,cscategoria','tomador:id,tstipo,tscnpj,tsmatricula','valorcalculo:base_calculo_id,vicodigo,vireferencia,vivencimento,videscinto'])
             ->get();
-            // dd($basecalculo);
             $cd = '';
-            $file_name = 'storage\1201.txt';
+            if (count($novotrabalhadores) > 1){
+                $file_name = 'storage/'.$novapasta.'/1200'.$i.'.txt';
+            }else{
+                $file_name = '1200.txt';
+            }
+           
             foreach ($trabalhador as $key => $trabalhadores) {
                 $cd .= 'INCLUIRS1200'."\r\n";
                 $cd .= 'indRetif_4=1'."\r\n";
@@ -112,57 +122,47 @@ class Evento1200Controller extends Controller
                         }
                     }
                 }
-            $cd.='SALVARS1200'."\r\n";
+                $cd.='SALVARS1200'."\r\n";
             }
-            if ($trabalhador->count() <= 50) {
-                $file = fopen( $file_name, "w" );
-                fwrite($file, $cd);
-                fclose($file);
-                $fileName = 'storage/meuZip.zip';
-                $zipPath = public_path($fileName);
-               
-                if ($this->zip->open($zipPath, ZipArchive::CREATE) === true)
-                {
-                    // dd($zipPath,$this->zip->open($zipPath, ZipArchive::CREATE));
-                    // dd(asset('storage/1200'));
-                    // $files = Storage::get('public\1200.txt');
-                    // $relativeNameInZipFile = basename($files);
-                    // dd($relativeNameInZipFile);
-                    // $this->zip->addFile($files, $relativeNameInZipFile);
-                    // $this->zip->close();
-                    // dd($files);
-                    $files = File::files(public_path('storage'));
-                  
-                    foreach ($files as $key => $value) {
-                       
-                        // nome/diretorio do arquivo dentro do zip
-                        $relativeNameInZipFile = basename($value);
-                        // dd($relativeNameInZipFile,$value);
-                        // adicionar arquivo ao zip
-                        $this->zip->addFile($value,$relativeNameInZipFile);
-                    }
-                    
-                    $this->zip->close();
-                   
-                }
-                // dd($zipPath);
-                // return response()->download($zipPath);
-                return Storage::download('public/meuZip.zip');
-                // $file = fopen( $file_name, "w" );
-                // fwrite($file, $cd);
-                // fclose($file);
-                // header("Content-Type: application/save");
-                // header("Content-Length:".filesize($file_name));
-                // header('Content-Disposition: attachment; filename="' . $file_name . '"');
-                // header("Content-Transfer-Encoding: binary");
-                // header('Expires: 0');
-                // header('Pragma: no-cache');
-                // echo $cd;
-                // exit;
-            }
+            $file = fopen( $file_name, "w" );
+            fwrite($file, $cd);
+            fclose($file);
+           
+          
           
         }
-        dd($competencia);
+        if (count($novotrabalhadores) > 1){
+            $novozip = rand(1000, 100000);
+            $fileName = 'storage/'.$novozip.'.zip';
+            $zipPath = public_path($fileName);
+            if ($this->zip->open($zipPath, ZipArchive::CREATE) === true)
+            {
+            
+                $files = File::files(public_path('storage/'.$novapasta));
+            
+                foreach ($files as $key => $value) {
+                
+                    // nome/diretorio do arquivo dentro do zip
+                    $relativeNameInZipFile = basename($value);
+                
+                    // adicionar arquivo ao zip
+                    $this->zip->addFile($value,$relativeNameInZipFile);
+                }
+                
+                $this->zip->close();
+            
+            }
+            return response()->download($zipPath);
+        }else{
+            header("Content-Type: application/save");
+            header("Content-Length:".filesize($file_name));
+            header('Content-Disposition: attachment; filename="' . $file_name . '"');
+            header("Content-Transfer-Encoding: binary");
+            header('Expires: 0');
+            header('Pragma: no-cache');
+            echo $cd;
+            exit;
+        }
 
     }
 }

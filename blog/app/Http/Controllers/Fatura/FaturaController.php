@@ -109,7 +109,7 @@ class FaturaController extends Controller
         $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
         $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
         $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
-        // dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
+        dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
         if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
