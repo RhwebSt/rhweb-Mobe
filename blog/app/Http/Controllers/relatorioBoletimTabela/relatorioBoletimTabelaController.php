@@ -5,6 +5,7 @@ namespace App\Http\Controllers\relatorioBoletimTabela;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use PDF;
 use App\Lancamentotabela;
 use App\Trabalhador;
@@ -22,6 +23,10 @@ class relatorioBoletimTabelaController extends Controller
     {
        $id = base64_decode($id);
        $user = auth()->user();
+       $permissions = Permission::where('name','like','%'.'mbctr'.'%')->first(); 
+       if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+           return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+       }
     //    $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
        $lancamentotabelas = $this->lancamentotabela->where('id',$id)->with(['lancamentorublica','tomador','empresa:id,esnome,escnpj,estelefone,esfoto','empresa.endereco'])->first(); 
        

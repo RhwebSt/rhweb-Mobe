@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Boletim\Tabela\Lanca\Validacao;
+use Spatie\Permission\Models\Permission;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
 class TabCadastroController extends Controller
@@ -39,6 +40,10 @@ class TabCadastroController extends Controller
         $trabalhador = request('codicao');
         $user = Auth::user(); 
         // $lista = $this->lancamentorublica->listacadastro($search,$id,'M','asc');
+         $permissions = Permission::where('name','like','%'.'mbctl'.'%')->first(); 
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(10);
         if ($trabalhador) {

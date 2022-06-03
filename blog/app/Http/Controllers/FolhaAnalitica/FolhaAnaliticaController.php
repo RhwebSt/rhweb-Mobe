@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FolhaAnalitica;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use App\Folhar;
 use App\ValorCalculo;
 use App\BaseCalculo;
@@ -89,6 +90,12 @@ class FolhaAnaliticaController extends Controller
         //     return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o INSS sobre 13° Salário.']);
         // }
         // $vale = $valorcalculo->calculoFolhaAnaliticaDesconto($id,$sim,null);
+        $user = auth()->user();
+        $permissions = Permission::where('name','like','%'.'mcfa'.'%')->first();
+            
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $folhar = $this->folhar->where('id',$id)
         ->with(['basecalculo.valorcalculo','basecalculo.trabalhador','empresa'])
         ->first();

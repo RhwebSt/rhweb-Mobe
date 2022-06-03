@@ -145,14 +145,14 @@ class CadastroCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all();
-        $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
+       // $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
         
         $user = Auth::user();
         // dd($permissions->name,$user->hasPermissionTo($permissions->name));
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
             
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
        
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {

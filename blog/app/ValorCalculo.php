@@ -905,11 +905,11 @@ class ValorCalculo extends Model
             SUM(valor_calculos.videscinto) as desconto,
             valor_calculos.vireferencia,
             
-            folhars.fscodigo,
+            
             valor_calculos.vicodigo,
             valor_calculos.vsdescricao'
         )
-        ->groupBy('valor_calculos.vireferencia','folhars.fscodigo','valor_calculos.vicodigo','valor_calculos.vsdescricao')
+        ->groupBy('valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
         ->where('base_calculos.tomador_id',$dados['tomador'])
         ->whereIn('valor_calculos.vicodigo',$codigo)
         ->orderBy('valor_calculos.vicodigo','asc')

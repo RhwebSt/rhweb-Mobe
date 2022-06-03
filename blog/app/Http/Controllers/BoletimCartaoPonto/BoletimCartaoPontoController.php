@@ -41,10 +41,10 @@ class BoletimCartaoPontoController extends Controller
         $tomador = base64_decode($tomador);
         $feriado = base64_decode($feriado);
         $user = Auth::user();
-        $permissions = Permission::where('name','like','%'.'mbcpl'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpl'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         // $lista = $bolcartaoponto->listaCartaoPontoPaginacao($id,$data);
         $lista = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(5);

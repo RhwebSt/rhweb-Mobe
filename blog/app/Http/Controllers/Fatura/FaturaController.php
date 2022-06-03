@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use PDF;
 use App\Tomador;
 use App\ValorCalculo;
+use App\Folhar;
 use App\Fatura;
 use App\FaturaPrincipal;
 use App\FaturaSecundaria;
@@ -22,7 +23,7 @@ use App\ValoresRublica;
 class FaturaController extends Controller
 {
     private $rublica,$valorrublica,$fatura,$tabelapreco,$valorcalculor,$faturaprincipais,
-    $faturasecundario,$faturademostrativa,$faturatotal,$faturarublica,$tomador,$empresa;
+    $faturasecundario,$folhar,$faturademostrativa,$faturatotal,$faturarublica,$tomador,$empresa;
     public function __construct()
     {
         $this->rublica = new Rublica;
@@ -37,6 +38,7 @@ class FaturaController extends Controller
         $this->faturarublica = new FaturaRubrica;
         $this->tomador = new Tomador;
         $this->empresa = new Empresa;
+        $this->folhar = new Folhar;
     } 
     public function index()
     {
@@ -72,12 +74,10 @@ class FaturaController extends Controller
         $user = auth()->user();
         if (date('m',strtotime($dados['ano_inicial'])) !== date('m',strtotime($dados['ano_final']))) {
             return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'O valor inicial e o valor final tem que ser do mesmo mês!','ano_final'=>'O valor inicial e o valor final tem que ser do mesmo mês!']);
-        }else if ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['ano_inicial']))) {
-            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao periodo!']);
-        }else if ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['ano_final']))){
-            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao periodo!']);
-        }else if ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['competencia']))){
-            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento tem que ser igual ao competência!']);
+        }else if (strtotime($dados['ano_final']) > strtotime($dados['vencimento'])) {
+            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento não pode ser menor ao periodo!']);
+        }elseif ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['competencia']))){
+            return redirect()->back()->withInput()->withErrors(['competencia'=>'O mês de vencimento tem que ser igual ao competência!']);
         }
         // dd(date('m',strtotime($dados['ano_inicial'])),$dados);
         // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
@@ -109,14 +109,20 @@ class FaturaController extends Controller
         $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
         $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
         $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
-        dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
+        $folhar = $this->folhar->where([
+            ['empresa_id',$user->empresa_id],
+            ['fsinicio','>=',$dados['ano_inicial']],
+            ['fsfinal','<=',$dados['ano_final']]
+        ])->first();
+        // dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
         if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
         }
         $quantrabalhador = $this->valorcalculor->quantrabalhador($dados);
         $dados['trabalhador'] = $quantrabalhador[0]->trabalhador;
-        $dados['folhar'] = $fatura1[0]->fscodigo;
-        $dados['folhar'] = $fatura2[0]->fscodigo;
+        $dados['folhar'] = $folhar->fscodigo;
+        // $dados['folhar'] = $fatura1[0]->fscodigo;
+        // $dados['folhar'] = $fatura2[0]->fscodigo;
         $dadosrublicas =[
             'item'=>'',
             'descricao'=>'',
@@ -139,7 +145,7 @@ class FaturaController extends Controller
         $valordemostrativo = 0;
         $totalproducao = 0;
         $faturas = $this->fatura->cadastro($dados);
-        $this->valorrublica->where('id', $user->empresa_id)
+        $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {
             foreach ($valorrublica as $valorrublicas) {
                 $numero = $valorrublicas->vsnrofatura += 1;
@@ -181,6 +187,7 @@ class FaturaController extends Controller
         $producao['indice'] = 1;
         $producao['fatura'] = $faturas['id'];
         $this->faturaprincipal->cadastro($producao);
+        // dd($fatura2);
         foreach ($fatura2 as $r => $valorublica) {
             if ($valorublica->vicodigo === 1008) {
                 $producao['descricao'] = 'DSR';
@@ -633,12 +640,15 @@ class FaturaController extends Controller
             // $this->faturademostrativa->deletarFatura($id);
             // $this->faturarublica->deletarFatura($id);
             // $this->faturatotal->deletarFatura($id);
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
-                    $numero = $valorrublicas->vsnrofatura -= 1;
-                    $this->valorrublica->where('empresa_id', $user->empresa_id)
-                    ->update(['vsnrofatura'=>$numero]);
+                    if ($valorrublicas->vsnrofatura > 0) {
+                        $numero = $valorrublicas->vsnrofatura -= 1;
+                        $this->valorrublica->where('empresa_id', $user->empresa_id)
+                        ->update(['vsnrofatura'=>$numero]);
+                    }
+                   
                 }
             });
             $this->fatura->deletar($id);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FolhaAnalitica;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use App\Folhar;
 use App\BaseCalculo;
 use App\ValorCalculo;
@@ -20,7 +21,12 @@ class FolhaAnaliticaTomadorController extends Controller
     }
     public function calculoFolhaAnalitica($id,$tomador)
     {
-        
+        $user = auth()->user();
+        $permissions = Permission::where('name','like','%'.'mcfa'.'%')->first();
+            
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
        
         $folhar = $this->basecalculo->where([
             ['folhar_id',$id],

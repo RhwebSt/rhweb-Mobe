@@ -143,8 +143,8 @@ class BancoController extends Controller
                 $trabalhador['dataEmissaoRg'] = $dataemissao;
             
                 
-                $trabalhador['cpf'] = str_replace("  ", "",substr(utf8_encode($linha), 387, 11));
-                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 402, 11));
+                $trabalhador['cpf'] = str_replace("  ", "",substr(utf8_encode($linha), 391, 11));
+                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 406, 11));
                 if (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '1') {
                     $trabalhador['raca'] = '1-Branco';
                 }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '2') {
@@ -158,7 +158,7 @@ class BancoController extends Controller
                 }else{
                     $trabalhador['raca'] = '6-Não informado';
                 }
-                $dataafastamento = str_replace("  ", "",substr($linha, 476, 8));
+                $dataafastamento = str_replace("  ", "",substr($linha, 477, 8));
                 $dia = substr($dataafastamento, 0, 2);
                 $mes = substr($dataafastamento, 2,2);
                 $ano = substr($dataafastamento, 4,4);

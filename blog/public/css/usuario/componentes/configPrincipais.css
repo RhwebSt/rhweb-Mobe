@@ -67,9 +67,10 @@ body{
     min-height: 100vh;
 }
 
-label,h1,h2,h3,h4,h5,small{
+label,h1,h2,h3,h4,h5,small, span{
     color: var(--body-color);
 }
+
 
 main{
     position: relative;
@@ -90,6 +91,7 @@ input[type=date]::-webkit-calendar-picker-indicator{
     border-radius: 3px;
     padding:2px;
     background-color:white;
+    margin-bottom: 3px;
 }
 
 

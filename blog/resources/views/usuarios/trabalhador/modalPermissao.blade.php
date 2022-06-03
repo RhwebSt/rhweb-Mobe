@@ -135,27 +135,92 @@
                                     
                                 
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="cadastrarBoletimTabela" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbctc') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="cadastrarBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mbctc') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="cadastrarBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="cadastrarBoletimTabela"><i class="fad fa-user-plus"></i> Cadastrar</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="editarBoletimTabela" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbctd') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="editarBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mbctd') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="editarBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="editarBoletimTabela"><i class="fad fa-pen"></i> Editar</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="excluirBoletimTabela" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbcte') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="excluirBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mbcte') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="excluirBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="excluirBoletimTabela"><i class="fad fa-trash"></i> Excluir</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="lancamentoBoletimTabela" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbctl') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="lancamentoBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mbctl') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="lancamentoBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="lancamentoBoletimTabela"><i class="fad fa-eye"></i> Lançamento no Boletim</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="relatorioBoletimTabela" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mbctr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="relatorioBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mbctr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="relatorioBoletimTabela" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="relatorioBoletimTabela"><i class="fas fa-file-alt"></i> Relatório</label>
                                     </div>
 
@@ -225,48 +290,165 @@
                                     
                                 
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="calcularCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfc') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="calcularCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfc') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="calcularCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="calcularCalFolha"><i class="fad fa-calculator-alt"></i> Calcular</label>
                                     </div>
 
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="excluirCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfe') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="excluirCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfe') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="excluirCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="excluirCalFolha"><i class="fad fa-trash"></i> Excluir</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="imprimirCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfi') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="imprimirCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfi') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="imprimirCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="imprimirCalFolha"><i class="fad fa-print"></i> Imprimir</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="folhaAnaliticaCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfa') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="folhaAnaliticaCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfa') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="folhaAnaliticaCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="folhaAnaliticaCalFolha"><i class="fad fa-analytics"></i> Folha Analítica</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="sefipCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfps') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="sefipCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfps') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="sefipCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="sefipCalFolha"><i class="fad fa-file-alt"></i> Sefip</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="reciboCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="reciboCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="reciboCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="reciboCalFolha"><i class="fad fa-user"></i> Recibo</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="depositoCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfwde') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="depositoCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfwde') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="depositoCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="depositoCalFolha"><i class="fad fa-envelope-open-dollar"></i> Depósito</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="eventoCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfwes') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="eventoCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfwes') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="eventoCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="eventoCalFolha"><i class="fas fa-file-invoice"></i> Evento s-1270</label>
                                     </div>
                                     
                                     <div class="form-check form-switch div__switch">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="rubricasCalFolha" checked>
+                                      
+                                      @foreach($valoruser->permissions as $permissao)
+                                        
+                                        @if($permissao->pivot->model_type && mb_strpos($permissao->name, 'mcfsr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="rubricasCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($permissao->pivot->permission_id)}}','R')" checked>
+                                        
+                                        @endif
+                                    @endforeach
+                                    @foreach($permissions as $p)
+                                        @if(!in_array($p->id,$perm) && $p->id != 1 && mb_strpos($p->name, 'mcfsr') !== false)
+                                        <input class="form-check-input" type="checkbox" role="switch" id="rubricasCalFolha" onclick="permissao('{{base64_encode($valoruser->id)}}','{{base64_encode($p->id)}}','D')">
+                                        
+                                        @endif
+                                    @endforeach
                                       <label class="form-check-label title__switch" for="rubricasCalFolha"><i class="fas fa-file-invoice"></i> Rúbricas</label>
                                     </div>
 

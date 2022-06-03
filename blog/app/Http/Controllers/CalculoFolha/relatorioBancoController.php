@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CalculoFolha;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use App\Folhar;
 use PDF;
 class relatorioBancoController extends Controller
@@ -12,6 +13,12 @@ class relatorioBancoController extends Controller
     {
 
         $dados = $request->all();
+        $user = auth()->user();
+        $permissions = Permission::where('name','like','%'.'mcfa'.'%')->first();
+            
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $folhar = new Folhar;
             $folhars = $folhar->buscaListaBancos($dados['folharbanco'],$dados['banco'],$dados['empresabanco']);
             if (count($folhars) < 1) {

@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\CalculoFolha;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use App\Lancamentotabela;
 use App\Bolcartaoponto;
@@ -53,6 +55,7 @@ class calculoFolhaGeralController extends Controller
     public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
         $user = auth()->user();
+        
         $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
         $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
         
@@ -119,7 +122,7 @@ class calculoFolhaGeralController extends Controller
             foreach ($lancamentotabela as $key => $lancamentotabelas) {
                 foreach ($lancamentotabelas->bolcartaoponto as $key => $bolcartaopontos) {
                     foreach ($tomadores->tabelapreco as $key => $tabelapreco) {
-                        if ($tabelapreco->tsdescricao == 'hora normal') {
+                        if ($tabelapreco->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor);
                             array_push($dados['valor'], self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor));
@@ -127,7 +130,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                             array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }else if ($tabelapreco->tsdescricao == 'hora extra 50%') {
+                        }else if ($tabelapreco->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor));
@@ -135,7 +138,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                            array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }else if ($tabelapreco->tsdescricao == 'hora extra 100%') {
+                        }else if ($tabelapreco->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor));
@@ -143,7 +146,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                             array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }elseif ($tabelapreco->tsdescricao == 'adicional noturno') {
+                        }elseif ($tabelapreco->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor));
@@ -1294,7 +1297,7 @@ class calculoFolhaGeralController extends Controller
                 $basecalculos->bivalordesconto += $seguro;
                 $basecalculos->bivalorliquido -= $seguro;
             }
-            if ($seguros->escondicaosindicato) {
+            if ($seguros->essindicalizado === '1-Sim') {
                 $sindicato = str_replace(',','.',$seguros->escondicaosindicato);
                 $sindicato = (float) $sindicato;
                 $basecalculos->bivalordesconto += $sindicato;
@@ -1408,7 +1411,7 @@ class calculoFolhaGeralController extends Controller
                 $boletim['basecalculo'] = $base['id'];
                 $this->valorcalculo->cadastroaseguro($boletim);
             }
-            if ($seguros->escondicaosindicato) {
+            if ($seguros->essindicalizado === '1-Sim') {
                 $seguros_rublicas =  $this->rublica->buscaRublicaUnidade('Sindicator');
                 $boletim['sindicator']['codigos'] = $seguros_rublicas->rsrublica;
                 $boletim['sindicator']['rublicas'] = $seguros_rublicas->rsdescricao;
@@ -1468,7 +1471,7 @@ class calculoFolhaGeralController extends Controller
     }
     public function destroy($id)
     {
-        try {
+        
             // $basecalculo_id = $this->basecalculo->buscaId($id);
             // $base_id = [];
             // foreach($basecalculo_id as $i=>$basevalor){
@@ -1478,6 +1481,11 @@ class calculoFolhaGeralController extends Controller
             // $this->relacaodia->deletar($base_id);
             // $this->basecalculo->deletar($base_id);
             $user = auth()->user();
+            $permissions = Permission::where('name','like','%'.'mcfe'.'%')->first();
+            
+            if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+                return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+            }
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
@@ -1490,6 +1498,7 @@ class calculoFolhaGeralController extends Controller
             });
             $this->folhar->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
+            try {
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
         }

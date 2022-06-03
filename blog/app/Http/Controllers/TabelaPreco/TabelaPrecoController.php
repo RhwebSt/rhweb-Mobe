@@ -42,11 +42,11 @@ class TabelaPrecoController extends Controller
             }else{
                 $query->where([
                     ['tomador_id',$tomador],
-                    ['tsano',$this->dt->year]
+                    // ['tsano',$this->dt->year]
                 ]);
             }
         })
-        ->orderBy('tsano', 'asc')
+        ->orderBy('tsano', 'desc')
         ->paginate(5);
         if ($condicao) {
             // $tabelaprecos_editar = $this->tabelapreco->buscaTabelaPrecoEditar($condicao);
@@ -70,7 +70,7 @@ class TabelaPrecoController extends Controller
         $tabelaprecos = $this->tabelapreco->where(function($query) use ($tomador){
             $query->where([
                 ['tomador_id',$tomador],
-                ['tsano',$this->dt->year]
+                // ['tsano',$this->dt->year]
             ]);
         })
         ->orderBy('tsano', $ordem)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Boletim\Tabela\Validacao;
+use Spatie\Permission\Models\Permission;
 use App\Lancamentotabela;
 use App\Lancamentorublica;
 use App\ValoresRublica;
@@ -128,6 +129,11 @@ class TabCartaoPontoController extends Controller
         $dados = $request->all(); 
         // dd($dados);
         $user = auth()->user();
+        $permissions = Permission::where('name','like','%'.'mbctc'.'%')->first(); 
+         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
+       
         $today = Carbon::today();
         if (strtotime($dados['data']) > strtotime($today) ) {
             return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
@@ -273,6 +279,11 @@ class TabCartaoPontoController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
+        $permissions = Permission::where('name','like','%'.'mbctd'.'%')->first(); 
+        $user = Auth::user();
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         // $quantidadeTrabalhador = $this->lancamentorublica->verificaTrabalhador($dados,$novadata);
         // $lancamentorublica = $this->lancamentorublica->where('lancamentotabela_id', $dados['lancamento'])->count();
         // if ($lancamentorublica > $dados['num__trabalhador']) {
@@ -299,8 +310,13 @@ class TabCartaoPontoController extends Controller
     public function destroy($id)
     {
         try {
-            // $this->lancamentorublica->deletar($id);
             $user = Auth::user();
+            $permissions = Permission::where('name','like','%'.'mbcte'.'%')->first(); 
+            if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+                return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+            }
+            // $this->lancamentorublica->deletar($id);
+           
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {

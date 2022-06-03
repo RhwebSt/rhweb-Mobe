@@ -9,7 +9,7 @@
         <meta name="copyright" content="© 2022 RHWeb sistemas inteligentes" />
         <title>RHWEB - Sistemas Inteligentes</title>
         <link rel="icon" type="image/x-icon" href="{{url('/imagem/arrowMobe.png')}}">
-        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,17 +60,22 @@
                         </p>
                     </div>
                 </div>
-                <img class="img-fluid" src="/images/devices.svg" alt="..." />
+                
             </div>
         </section>
         <!-- Contact-->
+        
+        
+        
         <section class="contact-section" id="signup">
-            <div class="container px-4 px-lg-5">
+            <h1 class="text-center text-white mb-5">Contatos</h1>
+            
+            <div class="container mt-2 px-4 px-lg-5">
                 <div class="row d-flex gx-4 gx-lg-5">
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-map-marked-alt text-white mb-2"></i>
+                                <i class="fad fa-2x fa-map-marked-alt text-white mb-2"></i>
                                 <h4 class="text-uppercase m-0  text-white">Endereço</h4>
                                 <hr class="my-4 mx-auto text-white" />
                                 <div class="small text-white">Rua Nereu Ramos, 646 - SC</div>
@@ -80,7 +85,7 @@
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-headset text-white mb-2"></i>
+                                <i class="fad fa-2x fa-headset text-white mb-2"></i>
                                 <h4 class="text-uppercase m-0  text-white">Suporte</h4>
                                 <hr class="my-4 mx-auto text-white" />
                                 <div class="small"><a href="mailto:suporte@rhwebsistemasinteligentes.com.br" class="text-white">suporte@rhwebsistemasinteligentes.com.br</a></div>
@@ -90,7 +95,7 @@
                     <div class="col-md-4 mb-3 mb-md-0">
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
-                                <i class="fas fa-mobile-alt text-white mb-2"></i>
+                                <i class="fad fa-2x fa-mobile-alt text-white mb-2"></i>
                                 <h4 class="text-uppercase m-0 text-white">Telefone</h4>
                                 <hr class="my-4 mx-auto  text-white" />
                                 <div class="small text-white">(67) 98448-0740</div>

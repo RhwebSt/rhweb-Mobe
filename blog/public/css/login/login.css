@@ -1,0 +1,261 @@
+
+body{
+  background-color: #080710 !important;
+  overflow: hidden;
+}
+
+label{
+  color: white;
+}
+
+h1{
+  color: white;
+}
+
+section{
+  margin: 0px;
+  padding: 0px;
+}
+
+input{
+  background-color: #474747 !important;
+  border: none !important;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3) !important;
+  color: white !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 17px !important;
+  transition: 300ms linear !important;
+}
+
+input:hover{
+  box-shadow: 0 3px 2px rgba(125, 159, 250, 0.8) !important;
+}
+
+input:focus{
+  box-shadow: 3px 3px 3px rgba(125, 159, 250, 0.89) !important;
+  /* animation: inputHover 300ms ease-in-out infinite alternate; */
+}
+
+.botao-entrar{
+  background-color: #40309C !important;
+  color: white  !important;
+  border-radius: 10px !important;
+  width: 100px;
+  box-shadow: 0 5px 2px rgba(0, 0, 0, 0.5);
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  transition: 300ms linear !important;
+  margin-bottom: 30px !important;
+}
+
+.botao-entrar:hover{
+  transform: translateY(-2px);
+  transition: 300ms ease-out;
+  box-shadow: 0 8px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 14px !important;
+
+}
+
+.botao-entrar:focus{
+  transform: translateY(-2px);
+  transition: 300ms ease-out;
+  box-shadow: 0 8px 2px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 14px !important;
+}
+
+span{
+  margin-top: 10px !important;
+}
+
+.inputErro{
+    border: 2px solid #ff6d6d !important;
+}
+
+.errorInput{
+  font-size: 14px;
+  color:#ff6d6d;
+}
+
+.div-log{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-login{
+  width: 250px;
+  height: 110px;
+  
+}
+
+.eye__icon{
+  margin-top: 31px;
+  border-radius: 20%;
+  padding: 5px;
+  color: white !important;
+  transition: 300ms ease-out;
+}
+
+.eye__icon:hover{
+  transform: scale(1.15);
+  transition: 300ms ease-out;
+  color: rgb(196, 196, 196) !important;
+  cursor: pointer !important;
+}
+
+.icone__inside {
+  position:absolute;
+  top:0; 
+  right:0;
+  margin-right: 10px;
+  margin-top: 25px;
+  z-index:10;
+  border:none;
+  background:transparent;
+  outline:none;
+}
+
+.esqueceuSenha-title{
+  color: rgb(199, 199, 199);
+  text-decoration: linear;
+  cursor: pointer !important;
+}
+
+.esqueceuSenha-title:hover{
+  color: lightblue;
+  cursor: pointer !important;
+}
+
+.div__icone--inside {
+  position: relative;
+}
+
+.card-body{
+  width: 50%;
+  background-color: rgba(255,255,255,0.13);
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  position: relative;
+}
+
+.background{
+  
+  z-index: 1;
+  width: 100px;
+  height: 100px;;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 50%;
+}
+.background .shape{
+  z-index:1;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  border-radius: 15px;
+}
+.shape:first-child{
+  z-index:0;
+  background: linear-gradient(
+      #1845ad,
+      #23f6b0
+  );
+  left: -30px;
+  top: -30px;
+  animation: left-ball 30s linear infinite alternate;
+}
+.shape:nth-child(2){
+  z-index:0;
+  background: linear-gradient(
+      #1b18ad,
+      #23a2f6
+  );
+  left: -60px;
+  top: -30px;
+  animation: middle-ball 30s linear infinite alternate;
+}
+
+.shape:last-child{
+  z-index:0;
+  background: linear-gradient(
+      to right,
+      #ff512f,
+      #a119f0
+  );
+  right: 10px;
+  bottom: -150px;
+
+  animation: right-ball 50s linear infinite alternate;
+}
+
+@keyframes inputHover{
+  0%{
+   border-color: red !important;
+  }
+  100%{
+    border:rgb(98, 0, 255) !important;
+  }
+}
+
+
+@keyframes middle-ball{
+  0%{
+    transform: translateY(800px) scale(0.5);
+  }
+
+  25%{
+    transform: translateX(300px) scale(3);
+  }
+
+  50%{
+    transform: translateY(-350px) scale(1);
+  }
+
+  75%{
+    transform: translateX(-400px) scale(3);
+  }
+
+  100%{
+    transform: translateY(800px) scale(2);
+  }
+}
+
+@keyframes right-ball {
+    0%{
+      transform: translateY( calc(80px * 102px)) scale(1);
+    }
+
+    25%{
+      transform: translateX(250px) scale(2);
+    }
+
+    50%{
+      transform: translateY(-500px) scale(1);
+    }
+
+    75%{
+      transform: translateX(10px) scale(3);
+    }
+
+    100%{
+      transform: translateY(-100px) scale(1);
+    }
+}
+
+@keyframes left-ball {
+  0%{
+    transform: translateX(-300px) scale(3);
+  }
+
+  50%{
+    transform: translateY(300px) scale(2);
+  }
+
+  100%{
+    transform: translateX(-700px) scale(1);
+  }
+}

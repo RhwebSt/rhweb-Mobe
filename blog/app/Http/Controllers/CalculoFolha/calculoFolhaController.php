@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CalculoFolha;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use App\Folhar;
 use App\BaseCalculo;
 class calculoFolhaController extends Controller
@@ -31,6 +32,11 @@ class calculoFolhaController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
+        $user = auth()->user();
+        $permissions = Permission::where('name','like','%'.'mcfc'.'%')->first(); 
+        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
         $request->validate([
             'ano_inicial'=>'required|max:10',
             'ano_final'=>'required|max:10',
