@@ -15,7 +15,7 @@ class Trabalhador extends Model
     }
     public function esocial()
     {
-        return $this->belongsTo(Esocial::class);
+        return $this->hasMany(Esocial::class);
     }
     public function documento()
     {

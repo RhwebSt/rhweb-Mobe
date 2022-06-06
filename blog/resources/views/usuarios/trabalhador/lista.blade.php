@@ -52,7 +52,7 @@
                                 <th class="th__header text-nowrap">Usuário</th>
                                 <th class="th__header text-nowrap">Email</th>
                                 <th class="th__header text-nowrap" style="width:120px;">Cargo</th>
-                                <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
+                                <th class="th__header text-nowrap d-none" style="width:100px;">Permissão</th>
                                 <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Editar</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
@@ -70,7 +70,7 @@
                                     <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$valoruser->email}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$valoruser->email}}</td>
                                     <td class="td__body text-nowrap col" style="width:120px;">{{$valoruser->cargo}}</td>
                                     
-                                    <td class="td__body text-nowrap col" style="width:100px;">
+                                    <td class="td__body text-nowrap col d-none" style="width:100px;">
                                         <div class="dropdown">
                                           <button class="btn btn__permissao dropdown-toggle" type="button" id="dropdownMenuButton{{$key}}" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fad fa-user-lock"></i>
@@ -108,6 +108,7 @@
                                           </ul>
                                         </div>
                                     </td>
+                                   
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                             <a class="btn btn__permissao" data-bs-toggle="modal" data-bs-target="#modalPermissao{{$key}}"><i class="fad fa-user-lock"></i></a>
                                             @include('usuarios.trabalhador.modalPermissao')

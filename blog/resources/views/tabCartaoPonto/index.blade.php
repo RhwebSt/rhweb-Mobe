@@ -114,7 +114,7 @@
                 @enderror
             </div>
                 
-            <input type="hidden" name="tomador"  class="@error('tomador') is-invalid @enderror" id="tomador">
+            <input type="hidden" name="tomador" value="{{old('tomador')}}" class="@error('tomador') is-invalid @enderror" id="tomador">
             <input type="hidden" name="status" value="M" id="status">
             <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
 

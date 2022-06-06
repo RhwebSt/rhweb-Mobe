@@ -96,7 +96,7 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="btn__evento btn" data-id="{{base64_encode($trabalhador->id)}}" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
+                                        <a class="btn__evento btn btn__padrao--evento" data-id="{{base64_encode($trabalhador->id)}}" href="{{route('esocial.trabalhador',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-file-invoice"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">

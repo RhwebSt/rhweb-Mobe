@@ -26,6 +26,7 @@ class TabelaPrecoController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $tomador = base64_decode($tomador);
+        
         // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,null,$search,'asc'); 
         $tabelaprecos = $this->tabelapreco->where(function($query) use ($tomador,$search){
             if ($search) {

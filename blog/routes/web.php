@@ -90,7 +90,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('tabela/preco/editar/{id}/{tomador}','TabelaPreco\\TabelaPrecoController@edit')->name('tabela.preco.editar');
     Route::resource('tabelapreco','TabelaPreco\\TabelaPrecoController')->only(['store', 'update', 'destroy']);
     Route::get('verifica/tabela/preco/{tomador}','TabelaPreco\\TabelaPrecoController@verificaTabelaPreco'); 
-    Route::get('tabela/preco/atualizar','TabelaPreco\\TabelaPrecoController@AtualizarTabelaPreco');
+    Route::post('tabela/preco/atualizar','TabelaPreco\\AtualizarController@index')->name('tabela.preco.atualizar');
 
     Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio');
     Route::get('ordem/tabela/preco/{id?}/{tomador}/{condicao}','TabelaPreco\\TabelaPrecoController@ordem')->name('ordem.tabela.preco');
@@ -167,7 +167,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
-    Route::put('trabalhador/esocial/{id}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
+    Route::put('trabalhador/esocial/{id?}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
     Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
     Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
     Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');

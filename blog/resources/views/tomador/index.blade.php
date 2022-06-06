@@ -771,7 +771,7 @@
                                     
                                         <div class="col-md-4 mt-2">
                                             <label for="dias_uteis" class="form-label letter__color"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Dias Úteis</label>
-                                            <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror" name="dias_uteis" value="{{old('dias_uteis')}}" id="dias_uteis">
+                                            <input type="time" class="form-control @error('dias_uteis') is-invalid @enderror" name="dias_uteis" value="{{old('dias_uteis') ?? '08:00'}}" id="dias_uteis">
                                             @error('dias_uteis')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

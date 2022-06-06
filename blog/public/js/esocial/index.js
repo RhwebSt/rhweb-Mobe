@@ -37,7 +37,7 @@ $(document).ready(function(){
     function gerarxml(dados,trabalhador){
 
         $.ajax({
-            url: "https://api.tecnospeed.com.br/esocial/v1/evento/enviar/tx2",
+            url: "https://api.tecnospeed.com.br/esocial/v1/evento/gerar/xml",
             type: "POST",
             data: dados,
             // dataType: 'json',
@@ -53,7 +53,11 @@ $(document).ready(function(){
                 $('#msg').text('Lote Recebido com Sucesso.')
                 $('#progress').text('50%').css({"width": "50%"});
                 setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
-            }
+            },
+            error: function () {
+                $('#msg').text('Não foi porssivél realizar o processo');
+                $('#progress').text('0%').css({"width": "0%"});
+            },
          });
     }
     function consultaevento(id,trabalhador) {
@@ -74,14 +78,38 @@ $(document).ready(function(){
                 console.log(retorno);
                 $('#progress').text('75%').css({"width": "75%"});
                 $('#msg').text('Cadastrando no banco.')
+                consultaidevento(retorno)
                 cadastra(retorno.data,trabalhador)
+                // buscaxml(retorno.data.eventos[0])
+            }
+         });
+    }
+    function consultaidevento(dados) {
+        $.ajax({
+            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/idevento/${dados.data.eventos[0].id}?ambiente=2&empregador=${dados.data.cnpj_sh}`,
+            type: "GET",
+            // data: dados,
+            // dataType: 'json',
+            processData: false,  
+            // async:false,
+            headers: {
+                // 'content-type':'text/tx2',
+                'cnpj_sh':'34350915000149',
+                'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                'empregador':'34350915000149'
+            },
+            success: function(retorno){
+                console.log(retorno);
+                $('#progress').text('75%').css({"width": "75%"});
+                $('#msg').text('Cadastrando no banco.')
+                // cadastra(retorno.data,trabalhador)
                 // buscaxml(retorno.data.eventos[0])
             }
          });
     }
     function cadastra(dados,id) {
         $.ajax({
-            url: `${window.location.href}/esocial/${id}`,
+            url: `${window.Laravel.esocial}/${id}`,
             type: "PUT",
             data: {
                 id:dados.id,
@@ -92,7 +120,7 @@ $(document).ready(function(){
             // processData: false,  
             // async:false,
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': window.Laravel.csrf
                 // 'content-type':'text/tx2',
                 // 'cnpj_sh':'34350915000149',
                 // 'token_sh':'3048136792bc6c57aecab949f3f79b74',

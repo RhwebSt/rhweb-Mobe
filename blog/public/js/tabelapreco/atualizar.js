@@ -4,6 +4,7 @@ $(document).ready(function () {
     var hoje = new Date();
     var ontem = new Date().setHours(-1);
     ontem = new Date(ontem)
+    console.log(ontem);
     var dataontemformatada = ontem.toLocaleDateString('pt-BR'); // '30/09/2018'
     dataontemformatada = dataontemformatada.split('/')
     var datahojeformatada = hoje.toLocaleDateString('pt-BR');

@@ -102,17 +102,19 @@ class UsuarioController extends Controller
             return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
         }
         $request->validate([
-            'name' => 'required|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
+            'name' => 'required|max:20|unique:users|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
             'cargo'=>'max:100|regex:/^[a-zA-Z0-9_\-]*$/',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users',
            
         ],[
             'name.required'=>'O campo não pode estar vazio!',
+            'name.unique'=>'Esse nome já esta sendo utilizado!',
             // 'name.regex'=>'O campo não pode ter caracteres especiais!',
             'name.max'=>'O campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
             'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
+            'email.unique'=>'Esse email já esta sendo utilizado!',
             // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
         ]);
 

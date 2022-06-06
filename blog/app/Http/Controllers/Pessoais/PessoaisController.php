@@ -80,6 +80,11 @@ class PessoaisController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        dd($dados);
+        $usuario = $this->user->where('name',$dados['nome'])->count();
+        if ($usuario) {
+            return redirect()->back()->withInput()->withErrors(['nome'=>'Este usuario já esta sendo utilizado.']);
+        }
         $request->validate([
             'nome' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             'cpf' => 'required|max:15|cpf|formato_cpf',

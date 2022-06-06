@@ -98,6 +98,8 @@ class EsocialController extends Controller
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=2.5.00'."\r\n".
+        // 'versaomanual=S.01.00.00'."\r\n".
+        // 'versaomanual=1.0.0.0'."\r\n".
         'ambiente=2'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
         'indRetif_4=1'."\r\n".                                                                    
@@ -107,8 +109,9 @@ class EsocialController extends Controller
         'verProc_8=1.0.0'."\r\n".                                                               
         'tpInsc_10=1'."\r\n".                                                                     
         'nrInsc_11='.substr(str_replace(array(".", ",", "-", "/"), "", $empresa->escnpj),0,-6)."\r\n".                                                           
-        'cpfTrab_13='.substr(str_replace(array(".", ",", "-", "/"), "", $trabalhador->tscpf),0,-6)."\r\n".                                                         
-        'nmTrab_15='."\r\n".                                     
+        'cpfTrab_13='.str_replace(array(".", ",", "-", "/"), "", $trabalhador->tscpf)."\r\n".
+        'nisTrab_14='.str_replace(array(".", ",", "-", "/"), "", $trabalhador->documento[0]->dspis)."\r\n".                                                         
+        'nmTrab_15='.$trabalhador->tsnome."\r\n".                                     
         'sexo_16='.$trabalhador->tssexo[0]."\r\n".                                                                       
         'racaCor_17='.$trabalhador->nascimento[0]->nsraca[0]."\r\n".                                                                   
         'estCiv_18='.$trabalhador->nascimento[0]->nscivil[0]."\r\n".                                                                    
@@ -124,15 +127,21 @@ class EsocialController extends Controller
         'cep_65='.str_replace(array(".", ",", "-", "/"), "",$empresa->endereco[0]->escep)."\r\n".                                                               
         'codMunic_66='.$empresa->escodigomunicipio."\r\n".                                                           
         'UF_67='.$empresa->endereco[0]->esuf."\r\n".                                                                       
-        'cadIni_164=N'."\r\n".                                                                  
-        'matricula_173='.$trabalhador->tsmatricula."\r\n".                                                           
-        'codCateg_104='.$trabalhador->categoria[0]->cscategoria[0].$trabalhador->categoria[0]->cscategoria[1].$trabalhador->categoria[0]->cscategoria[2]."\r\n".                                                               
-        'dtInicio_105='.$trabalhador->categoria[0]->csadmissao."\r\n".                                                      
+        'cadIni_164=N'."\r\n".       
+        'codCateg_104='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".  
+        'dtInicio_105='.$trabalhador->categoria[0]->csadmissao."\r\n".                                                         
+        // 'matricula_173='.$trabalhador->tsmatricula."\r\n". 
+        'matricOrig_122='.$trabalhador->tsmatricula."\r\n".                                                          
+        'categOrig_119='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".                                                                                                       
         'natAtividade_106=1'."\r\n".                                                             
-        'nmCargo_175='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
-        'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
-        'nmFuncao_177='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
-        'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                          
+        //'nmCargo_175='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
+        // 'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
+        // 'nmFuncao_177='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
+        // 'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".  
+        'codCargo_109='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
+        // 'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
+        'codFuncao_110='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
+        // 'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                          
         'SALVARS2300';
         $verificar =  $this->esocial->where('trabalhador_id',$id)->count();
         if (!$verificar) {
@@ -166,7 +175,10 @@ class EsocialController extends Controller
     }
     public function montastring($valor)
     {
-        $valor = explode('-',$valor);
+        if (mb_strpos($valor, '-') !== false) {
+            $valor = explode('-',$valor);
+        }
+       
         return $valor;
     }
     public function monta_inteiro($nome,$quantidade,$status)

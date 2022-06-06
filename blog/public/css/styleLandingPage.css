@@ -11474,7 +11474,7 @@ body {
 
 #mainNav {
   min-height: 3.5rem;
-  background-color: #131B7C;
+  background-color: #020113;
 }
 #mainNav .navbar-toggler {
   font-size: 80%;
@@ -11486,7 +11486,7 @@ body {
   outline: none;
 }
 #mainNav .navbar-brand {
-  color: #131B7C;
+  color: #020113;
   font-weight: 700;
   padding: 0.9rem 0;
 }
@@ -11520,16 +11520,16 @@ body {
     color: rgba(255, 255, 255, 0.75);
   }
   #mainNav .nav-link:active {
-    color: #131B7C;
+    color: #020113;
   }
   #mainNav.navbar-shrink {
-    background-color: #131B7C;
+    background-color: #020113;
   }
   #mainNav.navbar-shrink .navbar-brand {
-    color: #131B7C;
+    color: #020113;
   }
   #mainNav.navbar-shrink .nav-link {
-    color: #131B7C;
+    color: #020113;
     padding: 1.5rem 1.5rem 1.25rem;
     border-bottom: 0.25rem solid transparent;
   }
@@ -11540,7 +11540,7 @@ body {
     color: white;
   }
   #mainNav.navbar-shrink .nav-link.active {
-    color: #64a19d;
+    color: #020113;
     outline: none;
     border-bottom: 0.25rem solid white;
   }
@@ -11586,11 +11586,11 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
-  background: linear-gradient(0deg, rgba(0,6,70,1) 0%, rgba(0,16,83,1) 100%);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
+  background-color: #020113;
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-attachment: scroll;*/
+  /*background-size: cover;*/
 }
 .masthead h1, .masthead .h1 {
   font-family: 'Poppins', sans-serif;
@@ -11630,7 +11630,7 @@ body {
 
 .about-section {
   padding-top: 10rem;
-  background: linear-gradient(180deg, rgba(0,6,70,1) 0%, rgba(0,16,83,1) 100%);
+  background-color: #020113;
 }
 .about-section p {
   margin-bottom: 5rem;
@@ -11639,7 +11639,7 @@ body {
 
 .contact-section {
   padding-top: 5rem;
-  background-image: linear-gradient(0deg, rgba(0,6,70,1) 0%, rgba(0,16,83,1) 100%);
+  background-color: #020113;
 }
 .contact-section .card {
   border: 0;
@@ -11692,5 +11692,5 @@ body {
 
 .footer {
   padding: 1rem 0;
-  background-color:#131B7C;
+  background-color:#020113;
 }

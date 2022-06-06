@@ -1,46 +1,51 @@
 
 $(document).ready(function () {
-    
-    var hoje = new Date();
-    var ontem = new Date().setHours(-1);
-    ontem = new Date(ontem)
-    var dataontemformatada = ontem.toLocaleDateString('pt-BR'); // '30/09/2018'
-    dataontemformatada = dataontemformatada.split('/')
-    var datahojeformatada = hoje.toLocaleDateString('pt-BR');
-    datahojeformatada = datahojeformatada.split('/')
-    if (parseInt(dataontemformatada[2]) < parseInt(datahojeformatada[2])) {
-        let pocentagem = 50
-        let status = false
-        let time = 0;
-        let mensagem = 'Aguarde'
+    if (window.Laravel.tabelapreco.condicao) {
+            Swal.fire({
+                title: 'Ano (colocar ano aqui - do proximo ano) está chegando <i class="fas fa-glass-cheers"></i>',
+                html: '<p>Para melhor funcionamento do sistema, já estamos atualizando a tabela de preço dos tomadores para o próximo ano. Escolha apenas uma das opções abaixo</p>' + 
+                '<div class="form-check">'+
+                    '<input class="form-check-input text-black" name="valor" type="checkbox" id="valor1" value="option1">'+
+                    '<label class="form-check-label text-black text-start" for="valor1">Manter todos os preços e rúbricas atuais.</label>'+
+                '</div>'+
+
+                '<div class="form-check mb-3">'+
+                    '<input class="form-check-input" type="checkbox" name="valor" id="valor2" value="option2">'+
+                    '<label class="form-check-label text-black text-start" for="valor2">Apenas Rubricas padrão e sem valor.</label>'+
+                '</div>'+'<div class="progress-bar bg-success" role="progressbar" id="progress" style="width: 0;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>'+'<p id="msg"></p>',
+                confirmButtonText:
+                    'Confirmar <i class="fas fa-check"></i>',
+                confirmButtonColor: '#017329',
+                preConfirm: (event) => {
+                    atualizar()
+                    return false;
+                }
+            })
+    }
+    function atualizar() {
+        $('#msg').text('Em processamento...');
+        $('#progress').text('50%').css({"width": "50%"});
         $.ajax({
-            url: "tabela/preco/atualizar",
+            url: `${window.Laravel.tabelapreco.url}`,
             dataType: 'json',
-            type: "get",
+            type: "post",
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrf
+            }, 
+            data:{
+                'condicao':$('input[name="valor"]:checked').val(),
+                'empresa':window.Laravel.empresa
+            },
             async: false,
             error: function () {
-                console.log("Error");
-                 time = 3000;
+                $('#msg').text('Não foi porssivél realizar o processo');
+                $('#progress').text('0%').css({"width": "0%"});
             },
             success: function (data) {
-                if (data.status) {
-                    status = data.status
-                    pocentagem = 100;
-                }
-                time = 3000;
+                $('#msg').text('Processo realizado com sucesso');
+                $('#progress').text('100%').css({"width": "100%"});
             }
         });
-        Swal.fire({
-            html:
-                `<h1 class="text-center fw-bold fs-3 mb-3">Atualizando...</h1>
-            <h4 class="text-center fs-6 mb-3">${mensagem}</h4>
-            <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${pocentagem}" aria-valuemin="0" aria-valuemax="100" style="width: ${pocentagem}%">${pocentagem}%</div>
-            </div>`,
-            showConfirmButton: false,
-            allowEnterKey: false,
-            allowOutsideClick: false,
-            timer: time,
-        });
     }
+    
 });

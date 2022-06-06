@@ -61,31 +61,39 @@
         
         
         <script>
-          
-            if (!localStorage.getItem('bemvindo')) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                    background: '#F2F6F8' ,
-                    showConfirmButton: false,
-                    padding: 25,
-                    timer: 4000,
-                    width: 500,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer)
-                      toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                  })
+          window.Laravel = {!! json_encode([
+              'tabelapreco'=>[
+                  'condicao'=>'',
+                  'url'=>route('tabela.preco.atualizar')
+            ],
+            'empresa'=>$user->empresa_id,
+            'csrf'=>csrf_token(),
+            'esocial'=>route('esocial.trabalhador.update')
+          ]) !!}
+            // if (!localStorage.getItem('bemvindo')) {
+            //   const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: 'top-end',
+            //         background: '#F2F6F8' ,
+            //         showConfirmButton: false,
+            //         padding: 25,
+            //         timer: 4000,
+            //         width: 500,
+            //         timerProgressBar: true,
+            //         didOpen: (toast) => {
+            //           toast.addEventListener('mouseenter', Swal.stopTimer)
+            //           toast.addEventListener('mouseleave', Swal.resumeTimer)
+            //         }
+            //       })
                   
-                  Toast.fire({
-                    html:'<p style="color:black;"><i class="fas fa-xl fa-user-circle" style="color: black;"></i>  Seja bem vindo {{$user->name}}.</p>',
-                  })
-            }
-            localStorage.setItem('bemvindo',1)
-            function bemvindo() {
-              localStorage.removeItem('bemvindo')
-            }
+            //       Toast.fire({
+            //         html:'<p style="color:black;"><i class="fas fa-xl fa-user-circle" style="color: black;"></i>  Seja bem vindo {{$user->name}}.</p>',
+            //       })
+            // }
+            // localStorage.setItem('bemvindo',1)
+            // function bemvindo() {
+            //   localStorage.removeItem('bemvindo')
+            // }
         </script>   
             
             
@@ -293,7 +301,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
-        <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
+        
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
         <!--<script src="{{url('/js/user/usuario/notificacaoUser.js')}}"></script>-->
         <script src="{{url('/js/ferramentas/masck.js')}}"></script>
@@ -308,6 +316,7 @@
         <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
         <script src="{{url('/js/esocial/index.js')}}"></script>
         <script src="{{url('/js/user/tabelapreco/atualizar.js')}}"></script>
+        <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
    
   </body>
 </html>
