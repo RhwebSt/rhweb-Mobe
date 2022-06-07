@@ -51,6 +51,8 @@ class calculoFolhaGeralController extends Controller
         $this->empresa = new Empresa;
         $this->leis = new Leis;
         $this->comissionador = new Comissionado;
+        $today = Carbon::today();
+        $this->dt = Carbon::create($today);
     }
     public function calculoFolhaGeral($datainicio,$datafinal,$competencia)
     {
@@ -58,7 +60,6 @@ class calculoFolhaGeralController extends Controller
         
         $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
         $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
-        
         $quantdias = $date2->diffInDays($date1); 
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
@@ -122,7 +123,7 @@ class calculoFolhaGeralController extends Controller
             foreach ($lancamentotabela as $key => $lancamentotabelas) {
                 foreach ($lancamentotabelas->bolcartaoponto as $key => $bolcartaopontos) {
                     foreach ($tomadores->tabelapreco as $key => $tabelapreco) {
-                        if ($tabelapreco->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais) {
+                        if ($tabelapreco->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais && $this->dt->year == $tabelapreco->tsano) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor);
                             array_push($dados['valor'], self::calculardia($bolcartaopontos->horas_normais,$tabelapreco->tsvalor));
@@ -130,7 +131,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                             array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }else if ($tabelapreco->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
+                        }else if ($tabelapreco->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex && $this->dt->year == $tabelapreco->tsano) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bshoraex,$tabelapreco->tsvalor));
@@ -138,7 +139,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                            array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }else if ($tabelapreco->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem) {
+                        }else if ($tabelapreco->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem && $this->dt->year == $tabelapreco->tsano) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bshoraexcem,$tabelapreco->tsvalor));
@@ -146,7 +147,7 @@ class calculoFolhaGeralController extends Controller
                             array_push($dados['dia'], date('d',strtotime($bolcartaopontos->lancamentotabela->lsdata)));
                             array_push($dados['descricao'], $tabelapreco->tsdescricao);
                             array_push($dados['codigos'], $tabelapreco->tsrubrica);
-                        }elseif ($tabelapreco->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
+                        }elseif ($tabelapreco->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno && $this->dt->year == $tabelapreco->tsano) {
                             array_push($dados['id'],$bolcartaopontos->trabalhador_id);
                             //$salario += self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor);
                             array_push($dados['valor'],self::calculardia($bolcartaopontos->bsadinortuno,$tabelapreco->tsvalor));

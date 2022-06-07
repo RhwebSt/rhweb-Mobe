@@ -58,7 +58,6 @@
 body{
     font-family: 'Poppins', sans-serif;
     background-image: var(--body-bg);
-    
     display: flex;
     flex-direction: column;
     position: relative;

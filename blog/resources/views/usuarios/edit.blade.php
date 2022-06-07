@@ -116,7 +116,7 @@
 
                     <div class="col-md-8">
                         <label for="nome" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome</label>
-                        <input type="text" class="form-control @error('esnome') is-invalid @enderror" value="{{old('esnome')}}" name="esnome" id="nome" maxlength="50">
+                        <input type="text" class="form-control @error('esnome') is-invalid @enderror" value="{{old('esnome')}}" name="esnome" id="nome" maxlength="40">
                         @error('esnome')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

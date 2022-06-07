@@ -795,24 +795,6 @@
             verificaCampoObrigatorioAccordion();
             // fim da verificação do accordion//
 
-    
-
-//     // verifica se o usuario clickou em algum botao que necessite abrir o modal de novo
-  $('.modal-botao').click(function() {
-    localStorage.setItem("modal", "enabled");
-  })
-
-  function verficarModal() {
-    var valueModal = localStorage.getItem('modal');
-    if (valueModal === "enabled") {
-      $(document).ready(function() {
-        $("#modalTrabalhador").modal("show");
-      });
-      localStorage.setItem("modal", "disabled");
-    }
-  }
-  verficarModal();
-  //fim da verificação//
 
   
 

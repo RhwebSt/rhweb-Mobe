@@ -235,15 +235,15 @@ class TomadorController extends Controller
                        ['tomadors.empresa_id', $user->empresa_id]
                    ])
                    ->orWhere([
-                       ['tscnpj','like','%'.$id.'%'],
+                       ['tscnpj',$id],
                        ['tomadors.empresa_id', $user->empresa_id],
                    ])
                    ->orWhere([
-                       ['tomadors.id','like','%'.$id.'%'],
+                       ['tomadors.id',$id],
                        ['tomadors.empresa_id', $user->empresa_id],
                    ])
                    ->orWhere([
-                       ['tsmatricula','like','%'.$id.'%'],
+                       ['tsmatricula',$id],
                        ['tomadors.empresa_id', $user->empresa_id],
                    ]);
                }else{
@@ -257,6 +257,7 @@ class TomadorController extends Controller
         ->orderBy('tsnome','asc')
         ->distinct()
         ->get();
+        // dd($tomadors);
         return response()->json($tomadors);
     }
     /**

@@ -63,7 +63,7 @@
         <script>
           window.Laravel = {!! json_encode([
               'tabelapreco'=>[
-                  'condicao'=>'',
+                  'condicao'=>isset($atualizar) && $atualizar ?$atualizar:false,
                   'url'=>route('tabela.preco.atualizar')
             ],
             'empresa'=>$user->empresa_id,
@@ -100,6 +100,12 @@
         <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(243, 243, 253, 0.8);z-index:1;" id="carregamento" class="">
             <div class="text-center " >
               <img class="imagem" src="{{url('/imagem/carregamento.png')}}" alt="" srcset="">
+            </div>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(243, 243, 253, 0.9);z-index:1;" id="desconectado" class="">
+            <div class="text-center">
+              <h1 class="text-black fs-1 fw-bold">Sem conexão <i class="fad fa-lg fa-wifi-slash"></i></h1>
             </div>
         </div>
         
@@ -300,8 +306,8 @@
         
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+        <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
-        
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
         <!--<script src="{{url('/js/user/usuario/notificacaoUser.js')}}"></script>-->
         <script src="{{url('/js/ferramentas/masck.js')}}"></script>
@@ -317,6 +323,19 @@
         <script src="{{url('/js/esocial/index.js')}}"></script>
         <script src="{{url('/js/user/tabelapreco/atualizar.js')}}"></script>
         <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
+        
+        <script>
+        
+            setInterval(function(){
+                var online = navigator.onLine;
+                if(online == false){
+                    $('#desconectado').removeClass('d-none');
+                }else{
+                    $('#desconectado').addClass('d-none');
+                }
+            },1000);
+            
+        </script>
    
   </body>
 </html>

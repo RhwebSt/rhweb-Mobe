@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Esocial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\Tomador;
 use App\Empresa;
 use App\Trabalhador;
 use App\Esocial;
+use App\Notifications\notificacaoEsocial;
+
 class EsocialController extends Controller
 {
     private $tomador,$empresa,$trabalhador,$esocial;
@@ -41,7 +44,7 @@ class EsocialController extends Controller
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
-        'versaomanual=2.5.00'."\r\n".
+        'versaomanual=S.01.00.00'."\r\n".
         'ambiente=2'."\r\n".
         'INCLUIRS1020'."\r\n".                                                                   
         'tpAmb_4=1'."\r\n".                                                                  
@@ -50,7 +53,7 @@ class EsocialController extends Controller
         'tpInsc_8=1'."\r\n".                                                                   
         'nrInsc_9='.substr(str_replace(array(".", ",", "-", "/"), "", $tomador->tscnpj),0,-6)."\r\n".                                                               
         'codLotacao_13='.self::monta_inteiro($tomador->tsmatricula,6,'esquerda')."\r\n".                                                           
-        'iniValid_14='.date("Ym")."\r\n".                                                         
+        'iniValid_14='.date("Y-m")."\r\n".                                                         
         'fimValid_15='."\r\n".                                           
         'tpLotacao_17=09'."\r\n".                                                                
         'tpInsc_18=1'."\r\n".                                                                    
@@ -96,9 +99,9 @@ class EsocialController extends Controller
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
-        'idgrupoeventos=1'."\r\n".
-        'versaomanual=2.5.00'."\r\n".
-        // 'versaomanual=S.01.00.00'."\r\n".
+        'idgrupoeventos=2'."\r\n".
+        // 'versaomanual=2.5.00'."\r\n".
+        'versaomanual=S.01.00.00'."\r\n".
         // 'versaomanual=1.0.0.0'."\r\n".
         'ambiente=2'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
@@ -106,11 +109,11 @@ class EsocialController extends Controller
         'nrRecibo_5='."\r\n".                                                                   
         'tpAmb_6=1'."\r\n".                                                                      
         'procEmi_7=1'."\r\n".                                                                    
-        'verProc_8=1.0.0'."\r\n".                                                               
+        'verProc_8=1.00.00'."\r\n".                                                               
         'tpInsc_10=1'."\r\n".                                                                     
         'nrInsc_11='.substr(str_replace(array(".", ",", "-", "/"), "", $empresa->escnpj),0,-6)."\r\n".                                                           
         'cpfTrab_13='.str_replace(array(".", ",", "-", "/"), "", $trabalhador->tscpf)."\r\n".
-        'nisTrab_14='.str_replace(array(".", ",", "-", "/"), "", $trabalhador->documento[0]->dspis)."\r\n".                                                         
+        // 'nisTrab_14='.str_replace(array(".", ",", "-", "/"), "", $trabalhador->documento[0]->dspis)."\r\n".                                                         
         'nmTrab_15='.$trabalhador->tsnome."\r\n".                                     
         'sexo_16='.$trabalhador->tssexo[0]."\r\n".                                                                       
         'racaCor_17='.$trabalhador->nascimento[0]->nsraca[0]."\r\n".                                                                   
@@ -130,17 +133,17 @@ class EsocialController extends Controller
         'cadIni_164=N'."\r\n".       
         'codCateg_104='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".  
         'dtInicio_105='.$trabalhador->categoria[0]->csadmissao."\r\n".                                                         
-        // 'matricula_173='.$trabalhador->tsmatricula."\r\n". 
-        'matricOrig_122='.$trabalhador->tsmatricula."\r\n".                                                          
-        'categOrig_119='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".                                                                                                       
+        'matricula_173='.$trabalhador->tsmatricula."\r\n". 
+        // 'matricOrig_122='.$trabalhador->tsmatricula."\r\n".                                                          
+        // 'categOrig_119='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".                                                                                                       
         'natAtividade_106=1'."\r\n".                                                             
-        //'nmCargo_175='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
+        'nmCargo_175='.substr($trabalhador->categoria[0]->cbo,7,50)."\r\n".                             
+        'CBOCargo_176='.substr($trabalhador->categoria[0]->cbo,0,6)."\r\n".                                                      
+        'nmFuncao_177='.substr($trabalhador->categoria[0]->cbo,7,50)."\r\n".                                   
+        'CBOFuncao_178='.substr($trabalhador->categoria[0]->cbo,0,6)."\r\n".  
+        // 'codCargo_109='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
         // 'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
-        // 'nmFuncao_177='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
-        // 'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".  
-        'codCargo_109='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
-        // 'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      
-        'codFuncao_110='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
+        // 'codFuncao_110='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
         // 'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                          
         'SALVARS2300';
         $verificar =  $this->esocial->where('trabalhador_id',$id)->count();
@@ -166,12 +169,15 @@ class EsocialController extends Controller
     public function update(Request $request,$id)
     {
         $dados = $request->all();
-        $id = base64_decode($id);
-        $dados['trabalhador']=$id;
-        $esocial =  $this->esocial->editar($dados,$id);
-        if ($esocial) {
-            return response()->json('Cadastro realizado com sucesso.');
-        }
+        $user = Auth::user();
+        $user->notify(new notificacaoEsocial($dados['dados']));
+        return response()->json('Cadastro realizado com sucesso.');
+        // $id = base64_decode($id);
+        // $dados['trabalhador']=$id;
+        // $esocial =  $this->esocial->editar($dados,$id);
+        // if ($esocial) {
+        //     return response()->json('Cadastro realizado com sucesso.');
+        // }
     }
     public function montastring($valor)
     {

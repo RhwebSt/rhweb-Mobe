@@ -3,6 +3,14 @@ main{
     
 }
 
+.animation-slide-in{
+    animation: slide-out 1.5s ease !important;
+}
+
+.animation-slide-out{
+    animation: slide-in 500ms ease !important;
+}
+
 .animation-pulse{
     animation: pulse 500ms ease-in-out infinite alternate;
 }
@@ -26,7 +34,7 @@ main{
 
 @keyframes slide-in {
   25% {
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
   75% {
     transform: translate(120%) scale(0.8);

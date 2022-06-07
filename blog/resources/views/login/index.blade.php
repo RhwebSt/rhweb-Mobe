@@ -1,26 +1,4 @@
- 
- <?php
- $curl = curl_init();
-    
-    curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://hcaptcha.com/siteverify',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => [
-            'response' => $_POST['h-captcha-response'] ?? '',
-            'secret' => '0x955E220995438CBC12CEde4BCC6fEc9c7BE28465'
-            ]
-        ] );
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        
-        $responseArray = json_decode($response, true);
-        
-        $sucesso = $responseArray['success'] ?? false;
 
-    ?>
 
 
 <!DOCTYPE html>
@@ -113,6 +91,16 @@
 </html>
 
 <script>
+
+    $(document).ready(function(){
+                
+        $('.card-body').addClass('slide-in');
+        esperaTransicao = setTimeout(esperaTransicao, 2000);
+        function esperaTransicao(){
+           $('.card-body').removeClass('slide-in'); 
+        }
+    });
+
 
     function validaRobo(){
 
