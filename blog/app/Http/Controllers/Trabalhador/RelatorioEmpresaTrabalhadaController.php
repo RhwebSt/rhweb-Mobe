@@ -22,7 +22,7 @@ class RelatorioEmpresaTrabalhadaController extends Controller
                 return $pdf->setPaper('a4')->stream('Relat贸rio de empresas trabalhadas do trabalhador '.$trabalhadors->tsnome.'.pdf');
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'N茫o foi poss铆vel gerar a ficha do relat贸rio do tomador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar a ficha do relatório do tomador.']);
         }
     }
 }

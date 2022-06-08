@@ -267,7 +267,7 @@
                 <select id="grau__instrucao" name="grau__instrucao" class="form-select" value="">
                     <?php
                       $escolaridade = [
-                            'Analfabetos'
+                            '01-Analfabetos'
                             ,'02-Até o 5º incompleto do ensino fundamental'
                             ,'03-5º ano completo do ensino fundamental'
                             ,'04-Do 6º ao 9º ano do ensino fundamental incompleto (antiga 5ª a 8ª série)'
@@ -634,10 +634,12 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="categoria" class="form-label letter__color">Categoria</label>
-                                      <input type="text" class="form-control @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
+                                      <input type="text" list="categoria_list" class="form-control @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
                                       @error('categoria__contrato')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
+                                      <datalist id="categoria_list">
+                                          </datalist>
                                     </div>
                                 
                                     <div class="col-md-6 mt-2">
@@ -698,6 +700,7 @@
                                       @error('data__afastamento')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
+                                      
                                     </div>
                                 
                                 </section>
@@ -763,7 +766,32 @@
 
 
 <script>
-
+$.ajax({
+      url: "{{route('administrador.cbo.pesquisa')}}",
+      type: 'get',
+      contentType: 'application/json',
+      success: function(data) {
+          let nome = ''
+          data.forEach(element => {
+              nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
+              // nome += `<option value="${element.csdescricao}">`
+          });
+          $('#cbo_list').html(nome)
+      }
+    })
+    $.ajax({
+        url: "{{route('administrador.categoria.pesquisa')}}",
+        type: 'get',
+        contentType: 'application/json',
+        success: function(data) {
+            let nome = ''
+            data.forEach(element => {
+                nome += `<option value="${element.codigo}-${element.descricao}">`
+                // nome += `<option value="${element.descricao}">`
+            });
+            $('#categoria_list').html(nome)
+        }
+    })
     function animarBotaoAtualizar(){
 
     $('#atualizar').mouseover(function(){

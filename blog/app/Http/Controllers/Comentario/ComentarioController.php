@@ -24,7 +24,7 @@ class ComentarioController extends Controller
         }else{
             return response()->json([
                 'status'=>false,
-                'msg'=>'Não foi possível efetuar o cadastro.'
+                'msg'=>'Mensagem não cadastrada.'
             ]);
         }
     }

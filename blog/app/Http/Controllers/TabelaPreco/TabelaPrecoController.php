@@ -110,7 +110,7 @@ class TabelaPrecoController extends Controller
         $dados = $request->all();
         // dd($dados);
         if ($dados['ano'] > $this->dt->year) {
-            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
+            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é válida data atuais!']);
         }
         // $tabelaprecos = $tabelapreco->verificaRublica($dados);
         $tabelaprecos = $this->tabelapreco->where([
@@ -210,13 +210,13 @@ class TabelaPrecoController extends Controller
     {
         $dados = $request->all();
         if ($dados['ano'] > $this->dt->year) {
-            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é valida data atuais!']);
+            return redirect()->back()->withInput()->withErrors(['ano'=>'Só é válida data atuais!']);
         }
         try {
             $tabelaprecos = $this->tabelapreco->editar($dados, $id);
             return redirect()->back()->withSuccess('Atualizador com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi porssível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi porssível atualizar.']);
         }
     }
 
@@ -266,7 +266,7 @@ class TabelaPrecoController extends Controller
             } else {
                 return response()->json([
                     'status' => true,
-                    'mensagem' => 'Não tem tomadores registados'
+                    'mensagem' => 'Não possui tomadores cadastrados'
                 ]);
             }
         }else{

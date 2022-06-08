@@ -191,8 +191,9 @@
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#atalhos"><i class="fad fa-external-link-square"></i> Atalhos</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#contador"><i class="fad fa-abacus"></i> Contador</a></li>
                                     <li><a class="dropdown-item" href="{{route('empresa.perfil.edit',$user->empresa_id)}}"><i class="fad fa-landmark"></i> Dados da Empresa</a></li>
-                                    <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
+                                    
                                  @endcan
+                                    <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
                                     <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()"><i class="fad fa-sign-out"></i> Sair</a></li>
                                 </ul>
                             </li>
@@ -211,14 +212,14 @@
                     ?>
                     
                     <div class="d-flex justify-content-end flex-row div__botoes--nav">
-                        <div class="ms-1">
-                            <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                                <i id="bell__notification" class="fad fa-bell bell__notification"></i>
-                                <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                  {{$quantidade}} 
-                                </span>
-                            </button>
-                        </div>
+                        <!--<div class="ms-1">-->
+                        <!--    <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">-->
+                        <!--        <i id="bell__notification" class="fad fa-bell bell__notification"></i>-->
+                        <!--        <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-->
+                        <!--          {{$quantidade}} -->
+                        <!--        </span>-->
+                        <!--    </button>-->
+                        <!--</div>-->
         
         
                         <div class="ms-2 me-2">

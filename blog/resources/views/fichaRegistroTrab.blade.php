@@ -326,7 +326,7 @@
                 </tr>
             </table>
         </div>
-
+    
         <div class="margin-top borderT">
             <table class="padding-border">
                 <tr>
@@ -339,7 +339,7 @@
                 <tr>
                     <td class="small__font documento__info text-center">{{$trabalhadors->documento[0]->dspis}}</td>
                     <td class="small__font documento__info text-center">{{$trabalhadors->tscpf}}</td>
-                    <td class="small__font documento__info text-center">{{date('d/m/Y',strtotime($trabalhadors->nsnascimento))}}</td>
+                    <td class="small__font documento__info text-center">{{date('d/m/Y',strtotime($trabalhadors->nascimento[0]->nsnascimento))}}</td>
                     <td class="small__font documento__info text-center">{{$trabalhadors->tstelefone}}</td>
                 </tr>
 >

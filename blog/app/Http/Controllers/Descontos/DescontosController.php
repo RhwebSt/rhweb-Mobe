@@ -87,7 +87,7 @@ class DescontosController extends Controller
         })->first();
     
         if ($folhar) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'A folhar já foi calculada nesta quizena.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'A folha já foi cálculada nesta quizena.']);
         }
         $desconto = new Descontos;
         try {
@@ -162,7 +162,7 @@ class DescontosController extends Controller
             $descontos = $desconto->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

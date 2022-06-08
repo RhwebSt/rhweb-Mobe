@@ -99,7 +99,7 @@ class UsuarioController extends Controller
             ['empresa_id',$user->empresa_id]
         ])->with('user')->count();
         if ($verificar) {
-            return redirect()->back()->withInput()->withErrors(['email'=>'Este email já esta cadastrado!']);
+            return redirect()->back()->withInput()->withErrors(['email'=>'Este email já está cadastrado!']);
         }
         $request->validate([
             'name' => 'required|max:20|unique:users|regex:/^[a-zA-Z0-9_\-]*$/',
@@ -134,7 +134,7 @@ class UsuarioController extends Controller
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
             
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }
     }
 
@@ -211,19 +211,19 @@ class UsuarioController extends Controller
             'email'=>'required|email',
            
         ],[
-            'name.required'=>'O campo não pode estar vazio!',
-            // 'name.regex'=>'O campo não pode ter caracteres especiais!',
-            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'name.required'=>'Este campo não pode estar vazio!',
+            // 'name.regex'=>'Este campo não pode ter caracteres especiais!',
+            'name.max'=>'Este campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
-            'cargo.max'=>'O campo não pode conter mais de 100 caracteres!',
-            // 'cargo.regex'=>'O campo não pode ter caracteres especiais!',
+            'cargo.max'=>'Este campo não pode conter mais de 100 caracteres!',
+            // 'cargo.regex'=>'Este campo não pode ter caracteres especiais!',
         ]);
         try {
             $users = $this->user->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
             
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél atualizar.']);
         }
     }
 

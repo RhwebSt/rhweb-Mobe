@@ -145,7 +145,7 @@ class TomadorController extends Controller
        
         $rublicas = $this->rublica->listaRublicaTabelaPreco(); 
         if (!$rublicas) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nem uma rublica contate o suporte.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não existe nenhuma rúbrica, contacte o suporte.']);
         }
             $tomadors = $this->tomador->cadastro($dados);
             if ($tomadors) {
@@ -238,10 +238,10 @@ class TomadorController extends Controller
                        ['tscnpj',$id],
                        ['tomadors.empresa_id', $user->empresa_id],
                    ])
-                   ->orWhere([
-                       ['tomadors.id',$id],
-                       ['tomadors.empresa_id', $user->empresa_id],
-                   ])
+                //    ->orWhere([
+                //        ['tomadors.id',$id],
+                //        ['tomadors.empresa_id', $user->empresa_id],
+                //    ])
                    ->orWhere([
                        ['tsmatricula',$id],
                        ['tomadors.empresa_id', $user->empresa_id],
@@ -332,7 +332,7 @@ class TomadorController extends Controller
             $taxas = $this->taxa->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 
@@ -347,7 +347,7 @@ class TomadorController extends Controller
         $user = auth()->user();
         $tomador = $this->basecalculo->where('tomador_id',$id)->count();
         if ($tomador) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este tomador não pode ser deletado.']);
         }
         $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {

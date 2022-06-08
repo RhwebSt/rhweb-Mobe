@@ -1436,7 +1436,7 @@ class calculoFolhaGeralController extends Controller
             }
             
             $valorcalculo =   $this->valorcalculo->listaIntegral($folhar['id'],$basecalculos->trabalhador_id,$nao);
-            
+            // dd($valorcalculo);
             foreach ($valorcalculo as $key => $valorcalculos) {
                 $this->valorcalculo->create([
                     'vicodigo'=> $valorcalculos->vicodigo,
@@ -1465,7 +1465,7 @@ class calculoFolhaGeralController extends Controller
             }
         });
         $this->folhar->deletar($folhar['id']);
-        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível cadastra o registro.']);
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
       }
        
        
@@ -1501,7 +1501,7 @@ class calculoFolhaGeralController extends Controller
             return redirect()->back()->withSuccess('Deletado com sucesso.');
             try {
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
     public function calculardia($horas,$valores)
@@ -1585,7 +1585,7 @@ class calculoFolhaGeralController extends Controller
         // $valorcalculos = $this->valorcalculo->buscaImprimir($basecalculo_id);
         // $relacaodias = $this->relacaodia->buscaImprimir($basecalculo_id);
         $pdf = PDF::loadView('comprovantegeral',compact('folhar','leis'));
-        return $pdf->setPaper('a4')->stream('CALCULO FOLHA GERAL.pdf');
+        return $pdf->setPaper('a4')->stream('Cálculo da folha geral.pdf');
     }
 }
 ?>

@@ -55,7 +55,7 @@ class ReceboTrabalhadorController extends Controller
             return $pdf->setPaper('a4','potrait')->stream('Recibo Avulso.pdf');
             
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }
         
     }

@@ -450,7 +450,7 @@
                                     <th class="th__header text-nowrap" style="width:160px">Data Inicial</th>
                                     <th class="th__header text-nowrap" style="width:160px">Data Final</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Imprimir</th>
-                                    <th class="th__header text-nowrap" style="width:50px;">s-1270</th>
+                                    <th class="th__header text-nowrap" style="width:50px;">s-1200</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Recibo</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Rúbricas</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Depósito</th>

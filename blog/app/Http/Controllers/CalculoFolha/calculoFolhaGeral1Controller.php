@@ -972,7 +972,7 @@ class calculoFolhaGeralController extends Controller
             $this->valorcalculo->deletar($basecalculoid);
             $this->relacaodia->deletar($basecalculoid);
             $this->basecalculo->deletar($basecalculoid);
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível cadastra o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
         }
        
         
@@ -1395,7 +1395,7 @@ class calculoFolhaGeralController extends Controller
         $folhas = $this->folhar->buscaLista($id);
         $leis = $this->leis->categorias();
         if (!$folhas) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada a folha pra este trabalhador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi lançada nenhuma folha para este trabalhador.']);
         }
         $basecalculo_id = [];
         foreach ($folhas as $key => $folhar) {
@@ -1430,7 +1430,7 @@ class calculoFolhaGeralController extends Controller
             $this->folhar->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

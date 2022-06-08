@@ -96,9 +96,9 @@ class UsuarioTrabalhadorController extends Controller
             $empresas = $this->empresa->editar($dados,$id);
             $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
             $valoresrublicas = $this->valoresrublica->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

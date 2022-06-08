@@ -77,13 +77,13 @@ class UsuarioController extends Controller
             'empresa' => 'required'
 
         ], [
-            'name.required' => 'O campo não pode estar vazio!',
-            'name.regex' => 'O campo não pode ter caracteres especiais!',
-            'name.max' => 'O campo não pode conter mas de 20 caracteres!',
+            'name.required' => 'Este campo não pode estar vazio!',
+            'name.regex' => 'Este campo não pode ter caracteres especiais!',
+            'name.max' => 'Este campo não pode conter mas de 20 caracteres!',
             'senha.min' => 'A senha não pode conter menos de 6 caracteres!',
-            'cargo.max' => 'O campo não pode conter mais de 100 caracteres!',
-            'cargo.regex' => 'O campo não pode ter caracteres especiais!',
-            'empresa.required' => 'O campo não pode estar vazio!',
+            'cargo.max' => 'Este campo não pode conter mais de 100 caracteres!',
+            'cargo.regex' => 'Este campo não pode ter caracteres especiais!',
+            'empresa.required' => 'Este campo não pode estar vazio!',
         ]);
 
         try {
@@ -97,7 +97,7 @@ class UsuarioController extends Controller
             //->givePermissionTo('user', 'cadastro', 'editar', 'deleta', 'rotinamensal', 'fatura', 'recibo', 'relatorio');
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi prossível cadastrar.']);
+            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi possível cadastrar.']);
         }
     }
 
@@ -140,12 +140,12 @@ class UsuarioController extends Controller
             'empresa' => 'required'
 
         ], [
-            'name.required' => 'O campo não pode estar vazio!',
-            // 'name.regex'=>'O campo não pode ter caracteres especiais!',
-            'name.max' => 'O campo não pode conter mas de 20 caracteres!',
+            'name.required' => 'Este campo não pode estar vazio!',
+            // 'name.regex'=>'Este campo não pode ter caracteres especiais!',
+            'name.max' => 'Este campo não pode conter mas de 20 caracteres!',
             'senha.min' => 'A senha não pode conter menos de 6 caracteres!',
-            'cargo.max' => 'O campo não pode conter mais de 100 caracteres!',
-            'empresa.required' => 'O campo não pode estar vazio!',
+            'cargo.max' => 'Este campo não pode conter mais de 100 caracteres!',
+            'empresa.required' => 'Este campo não pode estar vazio!',
         ]);
         try {
             if ($dados['senha']) {
@@ -166,9 +166,9 @@ class UsuarioController extends Controller
                     'empresa_id' => $dados['empresa'],
                 ]);
             }
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi possivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false' => 'Não foi possível atualizar.']);
         }
     }
 

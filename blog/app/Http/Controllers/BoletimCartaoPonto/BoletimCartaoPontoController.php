@@ -230,9 +230,9 @@ class BoletimCartaoPontoController extends Controller
        }
         try {
             $bolcartaopontos = $this->bolcartaoponto->editar($dados,$id);
-            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 
@@ -248,7 +248,7 @@ class BoletimCartaoPontoController extends Controller
             $bolcartaopontos = $this->bolcartaoponto->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssivél deleta o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 public function calcularhoras($horas)

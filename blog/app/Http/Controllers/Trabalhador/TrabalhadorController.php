@@ -304,7 +304,7 @@ class TrabalhadorController extends Controller
             $this->arquivo->editarg($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 
@@ -320,7 +320,7 @@ class TrabalhadorController extends Controller
         $trabalhador = $this->basecalculo->where('trabalhador_id',$id)->count();
         // $trabalhador = $this->basecalculo->verificaTrabalhador($id);
         if ($trabalhador) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletador.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este trabalhador não pode ser deletado.']);
         }
         $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {

@@ -34,7 +34,7 @@
                   <div class="shape"></div>
               </div>
 
-            <div class="card-body col-12">
+            <div class="card-body col-12 slide-in">
 
               <form action="{{ route('login.store') }}" method="POST" onsubmit="return validaRobo()">
                 @csrf
@@ -91,17 +91,6 @@
 </html>
 
 <script>
-
-    $(document).ready(function(){
-                
-        $('.card-body').addClass('slide-in');
-        esperaTransicao = setTimeout(esperaTransicao, 2000);
-        function esperaTransicao(){
-           $('.card-body').removeClass('slide-in'); 
-        }
-    });
-
-
     function validaRobo(){
 
        if(hcaptcha.getResponse() != "") return true;

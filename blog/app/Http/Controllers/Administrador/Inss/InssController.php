@@ -215,9 +215,9 @@ class InssController extends Controller
             
         }
         
-        return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+        return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
        } catch (\Throwable $th) {
-        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar a atualização.']);
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
        }
     }
 

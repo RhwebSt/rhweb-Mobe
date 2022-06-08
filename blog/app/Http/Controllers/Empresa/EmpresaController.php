@@ -193,7 +193,7 @@ class EmpresaController extends Controller
         return redirect()->back()->withSuccess('Atualizado com sucesso.');
         try {
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

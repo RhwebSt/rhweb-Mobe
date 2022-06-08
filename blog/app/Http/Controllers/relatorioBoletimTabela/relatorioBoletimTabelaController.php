@@ -40,7 +40,7 @@ class relatorioBoletimTabelaController extends Controller
 
        
         //     if (count($lancamentotabelas) === 0) {
-        //         return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera relatório.']);
+        //         return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar relatório.']);
         //     }
         //     $empresa = $this->empresa->buscaUnidadeEmpresa($lancamentotabelas[0]->id);
         //     $dados = [];

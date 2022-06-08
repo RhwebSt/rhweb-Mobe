@@ -10,6 +10,6 @@ class ComprovantePagController extends Controller
     public function index()
     {
         $pdf = PDF::loadView('comprovantePag');
-        return $pdf->setPaper('a4')->stream('comprovantepagamento.pdf');
+        return $pdf->setPaper('a4')->stream('Comprovante de Pagamento.pdf');
     }
 }

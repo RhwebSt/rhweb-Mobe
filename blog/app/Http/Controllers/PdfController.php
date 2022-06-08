@@ -12,6 +12,6 @@ class PdfController extends Controller
         $trabalhador = new Trabalhador;
         $trabalhadors = $trabalhador->roltrabalhado();
         $pdf = PDF::loadView('pdf',compact('trabalhadors'));
-        return $pdf->setPaper('a4')->stream('relatoria.pdf');
+        return $pdf->setPaper('a4')->stream('relatorio.pdf');
     }
 }

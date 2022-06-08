@@ -28,7 +28,7 @@ class SenhaController extends Controller
         // $dados['password'] = rand(100000, 999999);
         // $user = $this->user->editarSenharLogin($dados);
         // if (!$user) {
-        //     return redirect()->back()->withInput()->withErrors(['false'=>'Este email nÃ£o esta cadastrador.']);
+        //     return redirect()->back()->withInput()->withErrors(['false'=>'Este email n«ªo est«¡ cadastrado.']);
         // }
         // Mail::send(new \App\Mail\Email($dados));
         

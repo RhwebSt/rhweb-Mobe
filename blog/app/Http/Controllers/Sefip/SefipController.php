@@ -837,7 +837,7 @@ class SefipController extends Controller
        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
        try {
     } catch (\Throwable $th) {
-        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél gera o relatório.']);
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
     }
     
     }

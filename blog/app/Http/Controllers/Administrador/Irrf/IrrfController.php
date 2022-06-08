@@ -222,7 +222,7 @@ class IrrfController extends Controller
         try {
         return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->route('irrf.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
         
     }

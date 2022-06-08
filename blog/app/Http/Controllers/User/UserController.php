@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\notificaUser;
+use Spatie\Permission\Models\Permission;
 use App\User;
 use App\Empresa;
 use App\Pessoai;
@@ -46,26 +47,34 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all(); 
-        
+        $p = [];
+        $permissions = Permission::get();
+        foreach ($permissions as $key => $permissao) {
+            if ($permissao->name === 'Super Admin') {
+               
+            }else{
+                array_push($p,$permissao->name);
+            }
+        }
         $request->validate([
             'name' => 'required|unique:users|max:20|regex:/^[a-zA-Z0-9_\-]*$/',
             'senha'=>'max:20',
             // 'email'=>'required|email|unique:users',
         ],[
             
-            'name.required'=>'O campo não pode estar vazio!',
+            'name.required'=>'Este campo não pode estar vazio!',
             'name.unique'=>'Este usuario já esta cadastrado!',
-            'name.regex'=>'O campo não pode ter caracteres especiais!',
-            'name.max'=>'O campo não pode conter mas de 20 caracteres!',
+            'name.regex'=>'Este campo não pode conter caracteres especiais!',
+            'name.max'=>'Este campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
-            'email.unique'=>'Este email já esta cadastrado!',
-            'email.required'=>'O campo não pode estar vazio!',
-            'email.email'=>'O campo não é um email valido!',
+            'email.unique'=>'Este email já está cadastrado!',
+            'email.required'=>'Este campo não pode estar vazio!',
+            'email.email'=>'Este não é um email válido!',
             
         ]);
        
         
-            $use = $this->user->precadastro($dados);
+            $use = $this->user->precadastro($dados,$p);
             $dados['id'] = $use['id']; 
             $dados['user'] = $use['id'];
             $pessoais = $this->pessoais->cadastra($dados);
@@ -121,8 +130,8 @@ class UserController extends Controller
             'email'=>'required|email',
             'empresa'=>'required|min:1',
         ],[
-            'nome__completo.required'=>'O campo não pode estar vazio!',
-            'name.required'=>'O campo não pode estar vazio!',
+            'nome__completo.required'=>'Este campo não pode estar vazio!',
+            'name.required'=>'Este campo não pode estar vazio!',
             // 'name.regex'=>'O campo não pode ter caracteres especiais!',
             'name.max'=>'O campo não pode conter mas de 20 caracteres!',
             'senha.min'=>'A senha não pode conter menos de 6 caracteres!',
@@ -136,7 +145,7 @@ class UserController extends Controller
             $users = $user->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

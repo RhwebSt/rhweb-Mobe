@@ -45,7 +45,7 @@ class EsocialController extends Controller
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=S.01.00.00'."\r\n".
-        'ambiente=2'."\r\n".
+        'ambiente=1'."\r\n".
         'INCLUIRS1020'."\r\n".                                                                   
         'tpAmb_4=1'."\r\n".                                                                  
         'procEmi_5=1'."\r\n".                                                                   
@@ -137,9 +137,9 @@ class EsocialController extends Controller
         // 'matricOrig_122='.$trabalhador->tsmatricula."\r\n".                                                          
         // 'categOrig_119='.substr(str_replace(array(".", ",", "-", "/"), "",$trabalhador->categoria[0]->cscategoria),0,3)."\r\n".                                                                                                       
         'natAtividade_106=1'."\r\n".                                                             
-        'nmCargo_175='.substr($trabalhador->categoria[0]->cbo,7,50)."\r\n".                             
+        'nmCargo_175='.$trabalhador->categoria[0]->cbo."\r\n".                             
         'CBOCargo_176='.substr($trabalhador->categoria[0]->cbo,0,6)."\r\n".                                                      
-        'nmFuncao_177='.substr($trabalhador->categoria[0]->cbo,7,50)."\r\n".                                   
+        'nmFuncao_177='.$trabalhador->categoria[0]->cbo."\r\n".                                   
         'CBOFuncao_178='.substr($trabalhador->categoria[0]->cbo,0,6)."\r\n".  
         // 'codCargo_109='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                             
         // 'CBOCargo_176='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                      

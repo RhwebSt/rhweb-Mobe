@@ -20,9 +20,9 @@ class PermissaoController extends Controller
             case 'D':
                     $permissao = $this->user->givePermissionTos($id,$permisao);
                     if ($permissao) {
-                        return response()->json('Permissão consedida com sucesso.');
+                        return response()->json('Permissão concedida com sucesso.');
                     }else{
-                        return response()->json('Não foi porssivél consedida permissão.');
+                        return response()->json('Não foi possível conceder a permissão.');
                     }
                 break;
             case 'R':
@@ -30,7 +30,7 @@ class PermissaoController extends Controller
                     if ($permissao) {
                         return response()->json('Permissão revogada com sucesso.');
                     }else{
-                        return response()->json('Não foi porssivél revogada permissão.');
+                        return response()->json('Não foi possível conceder a permissão.');
                     }
                 break;
             default:

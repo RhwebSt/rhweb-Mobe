@@ -25,6 +25,6 @@ class FolhaPagamentoController extends Controller
         ->get();
         // dd($relatorio);
         $pdf = PDF::loadView('relatorioResumoFolhaPagamento',compact('relatorio'));
-        return $pdf->setPaper('a4')->stream('RelatÃ³rio1270.pdf');
+        return $pdf->setPaper('a4')->stream('Relat¨®rio1270.pdf');
     }
 }

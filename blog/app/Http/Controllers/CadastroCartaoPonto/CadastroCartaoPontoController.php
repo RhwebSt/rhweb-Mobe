@@ -156,10 +156,10 @@ class CadastroCartaoPontoController extends Controller
        
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
-            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado ou final de semana o campo tem que ser sim!']);
+            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data é um feriado ou final de semana, o campo tem que ser "sim"!']);
         }
         if (strtotime($dados['data']) > strtotime($today) ) {
-            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é válido data atuais!']);
         }
         // $lancamentotabelas = $this->lancamentotabela->verificaBoletimDias($dados);
         $lancamentotabelas = $this->lancamentotabela->where([
@@ -175,10 +175,10 @@ class CadastroCartaoPontoController extends Controller
             ['tsano',$today->year]
         ])->count();
         if (!$tabelaprecos) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rúbricas necessárias do ano '.date('Y').'!']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rúbricas necessárias do ano'.date('Y').'!']);
         }
         if ($lancamentotabelas) { 
-            return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrado hoje!']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrado!']);
         }
         
         try {
@@ -289,17 +289,17 @@ class CadastroCartaoPontoController extends Controller
         }
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
-            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data e um feriado ou final de semana o campo tem que ser sim!']);
+            return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data é um feriado ou final de semana, o campo tem que ser "sim"!']);
         }
         if (strtotime($dados['data']) > strtotime($today) ) {
-            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é válido data atuais!']);
         }
         try {
             $lancamentotabelas = $this->lancamentotabela->editar($dados,$id);
             // $lista = $this->bolcartaoponto->listaCartaoPontoPaginacao($id,$dados['data']);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

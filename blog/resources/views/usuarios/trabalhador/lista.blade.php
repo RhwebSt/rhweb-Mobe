@@ -52,7 +52,7 @@
                                 <th class="th__header text-nowrap">Usuário</th>
                                 <th class="th__header text-nowrap">Email</th>
                                 <th class="th__header text-nowrap" style="width:120px;">Cargo</th>
-                                <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
+                                <th class="th__header text-nowrap " style="width:100px;">Permissão</th>
                                 <th class="th__header text-nowrap" style="width:100px;">Permissão</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Editar</th>
                                 <th class="th__header text-nowrap" style="width:60px;">Excluir</th>

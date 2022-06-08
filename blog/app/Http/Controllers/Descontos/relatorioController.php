@@ -26,12 +26,12 @@ class relatorioController extends Controller
             $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
             $descontos = $this->desconto->buscaRelatorio($user->empresa_id,$inicio,$final);
             if (count($descontos) < 1) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não a dados cadatrados!']);
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não á dados cadatrados!']);
             }
             $pdf = PDF::loadView('rolDescontos',compact('descontos','empresa','inicio','final'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO DESCONTOS.pdf');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gerar o relatório.']);
         }
        
     }
@@ -44,13 +44,13 @@ class relatorioController extends Controller
             $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa_id);
             $descontos = $this->desconto->relatorioTrabalhador($user->empresa_id,$dados);
             if (count($descontos) < 1) {
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não a dados cadatrados!']);
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não á dados cadatrados!']);
             }
             $pdf = PDF::loadView('rolDescontoTrab',compact('descontos','empresa','dados'));
             return $pdf->setPaper('a4')->stream('RELATÓRIO DESCONTOS TRABALHADOR '.$dados['pesquisa'].'.pdf');
             try {
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivél gera o relatório.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possivel gerar o relatório.']);
         }
        
     }

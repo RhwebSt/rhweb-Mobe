@@ -101,23 +101,23 @@ class CboController extends Controller
         $dados = $request->all();
         $verificar =  $this->cbo->verificarCbo($dados['codigo__cbo']);
         if ($verificar) {
-            return redirect()->back()->withInput()->withErrors(['codigo__cbo'=>'Este CBO já esta cadastrador.']);
+            return redirect()->back()->withInput()->withErrors(['codigo__cbo'=>'Este CBO já está cadastrado']);
         }
         $request->validate([
             'codigo__cbo'=>'required|max:11',
-            'descricao__cbo'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
+            'descricao__cbo'=>'required|max:40|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
         ],[
-            'codigo__cbo.required'=>'O campo não pode estar vazio.',
-            'codigo__cbo.max'=>'O campo não pode conter mais de 11 caracteres.',
-            'descricao__cbo.required'=>'O campo não pode estar vazio.',
-            'descricao__cbo.max'=>'O campo não pode conter mais de 100 caracteres.',
-            'descricao__cbo.regex'=>'O campo possui um formato inválido.',
+            'codigo__cbo.required'=>'Este campo não pode estar vazio.',
+            'codigo__cbo.max'=>'Este campo não pode conter mais de 11 caracteres.',
+            'descricao__cbo.required'=>'Este campo não pode estar vazio.',
+            'descricao__cbo.max'=>'Este campo não pode conter mais de 40 caracteres.',
+            'descricao__cbo.regex'=>'Este campo possui um formato inválido.',
         ]);
         try{
             $this->cbo->atualizar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

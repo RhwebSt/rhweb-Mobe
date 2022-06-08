@@ -25,6 +25,6 @@ class Evento1270Controller extends Controller
         ->get();
         // dd($relatorio);
         $pdf = PDF::loadView('relatorio1270',compact('relatorio'));
-        return $pdf->setPaper('a4')->stream('RelatÃ³rio1270.pdf');
+        return $pdf->setPaper('a4')->stream('Relat¨®rio1270.pdf');
     }
 }

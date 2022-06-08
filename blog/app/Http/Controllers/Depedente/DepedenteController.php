@@ -116,10 +116,10 @@ class DepedenteController extends Controller
         try {
             $depedentes = $depedente->editar($dados,$id);
             if($depedentes) {
-                return redirect()->back()->withSuccess('Atualizador realizado com sucesso.');
+                return redirect()->back()->withSuccess('Atualizado com sucesso.');
             }
         } catch (\Throwable $th) {
-            return redirect()->route('depedente.edit',$id)->withInput()->withErrors(['false'=>'Não foi porssivél atualizar os dados.']);
+            return redirect()->route('depedente.edit',$id)->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
         }
         
     }
@@ -137,7 +137,7 @@ class DepedenteController extends Controller
             $excluir = $depedente->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

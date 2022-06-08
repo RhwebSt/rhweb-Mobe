@@ -83,7 +83,7 @@ class PessoaisController extends Controller
         dd($dados);
         $usuario = $this->user->where('name',$dados['nome'])->count();
         if ($usuario) {
-            return redirect()->back()->withInput()->withErrors(['nome'=>'Este usuario já esta sendo utilizado.']);
+            return redirect()->back()->withInput()->withErrors(['nome'=>'Este usuário já está sendo utilizado.']);
         }
         $request->validate([
             'nome' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
@@ -99,99 +99,99 @@ class PessoaisController extends Controller
             'uf'=>'required|max:2|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
         ],
         [
-            'nome__completo.required'=>'Campo não pode esta vazio.',
-            'nome__completo.max'=>'Campo não ter mais de 100 caracteres.',
-            'nome__completo.regex'=>'O campo nome social tem um formato inválido.',
+            'nome__completo.required'=>'Este campo não pode estar vázio.',
+            'nome__completo.max'=>'Este campo não pode conter mais de 30 caracteres.',
+            'nome__completo.regex'=>'Este campo tem um formato inválido.',
             
-            'nome__social.required'=>'Campo não pode esta vazio.',
-            'nome__social.max'=>'Campo não ter mais de 100 caracteres.',
-            'nome__social.regex'=>'O campo nome social tem um formato inválido.',
+            'nome__social.required'=>'Este campo não pode estar vázio.',
+            'nome__social.max'=>'Este campo não pode conter mais de 30 caracteres.',
+            'nome__social.regex'=>'Este campo tem um formato inválido.',
             
-            'cpf.required'=>'Campo não pode esta vazio.',
-            'cpf.max'=>'Campo não ter mais de 15 caracteres.',
-            'cpf.cpf'=>'Este CPF é invalido.',
-            'cpf.formato_cpf'=>'Este CPF não tem um formato valido.',
+            'cpf.required'=>'Este campo não pode estar vázio.',
+            'cpf.max'=>'Este campo não pode conter mais de 15 caracteres.',
+            'cpf.cpf'=>'Este CPF é inválido.',
+            'cpf.formato_cpf'=>'Este CPF não possui um formato válido.',
             
-            'pis.required'=>'Campo não pode esta vazio.',
-            'pis.max'=>'Campo não ter mais de 20 caracteres.',
-            'pis.pis'=>'Este CPF é invalido.',
+            'pis.required'=>'Este campo não pode estar vázio.',
+            'pis.max'=>'Este campo não pode conter mais de 20 caracteres.',
+            'pis.pis'=>'Este PIS é inválido.',
             
-            'data_nascimento.required'=>'Campo não pode esta vazio.',
-            'data_nascimento.max'=>'Campo não ter mais de 10 caracteres.',
-            'data_nascimento.regex'=>'O campo nome social tem um formato inválido.',
+            'data_nascimento.required'=>'Este campo não pode estar vázio.',
+            'data_nascimento.max'=>'Este campo não pode conter mais de 10 caracteres.',
+            'data_nascimento.regex'=>'Este campo tem um formato inválido.',
             
-            'pais__nascimento.required'=>'Campo não pode esta vazio.',
-            'pais__nascimento.max'=>'Campo não ter mais de 60 caracteres.',
-            'pais__nascimento.regex'=>'O campo nome social tem um formato inválido.',
+            'pais__nascimento.required'=>'Este campo não pode estar vázio.',
+            'pais__nascimento.max'=>'Este campo não pode conter mais de 30 caracteres.',
+            'pais__nascimento.regex'=>'Este campo tem um formato inválido.',
             
-            'pais__nacionalidade.required'=>'Campo não pode esta vazio.',
-            'pais__nacionalidade.max'=>'Campo não ter mais de 60 caracteres.',
-            'pais__nacionalidade.regex'=>'O campo nome social tem um formato inválido.',
+            'pais__nacionalidade.required'=>'Este campo não pode estar vázio.',
+            'pais__nacionalidade.max'=>'Este campo não pode conter mais de 30 caracteres.',
+            'pais__nacionalidade.regex'=>'Este campo tem um formato inválido.',
             
-            'nome__mae.required'=>'Campo não pode esta vazio.',
-            'nome__mae.max'=>'Campo não ter mais de 60 caracteres.',
-            'nome__mae.regex'=>'O campo nome social tem um formato inválido.',
+            'nome__mae.required'=>'Este campo não pode estar vázio.',
+            'nome__mae.max'=>'Este campo não pode conter mais de 30 caracteres..',
+            'nome__mae.regex'=>'Este campo tem um formato inválido.',
             
-            'telefone.required'=>'Campo não pode esta vazio.',
-            'telefone.max'=>'Campo não ter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não e valido.',
+            'telefone.required'=>'Este campo não pode estar vázio.',
+            'telefone.max'=>'Este campo não pode conter mais de 16 caracteres.',
+            'telefone.celular_com_ddd'=>'Este DDD não é válido.',
             
-            'telefone.required'=>'Campo não pode esta vazio.',
-            'telefone.max'=>'Campo não ter mais de 16 caracteres.',
-            'telefone.celular_com_ddd'=>'Este DDD não e valido.',
+            'telefone.required'=>'Este campo não pode estar vázio.',
+            'telefone.max'=>'Este campo não pode conter mais de 16 caracteres.',
+            'telefone.celular_com_ddd'=>'Este DDD não é válido.',
             
-            'cep.required'=>'Campo não pode esta vazio.',
-            'cep.max'=>'Campo não ter mais de 16 caracteres.',
-            'cep.regex'=>'O campo nome social tem um formato inválido.',
+            'cep.required'=>'Este campo não pode estar vázio.',
+            'cep.max'=>'Este campo não pode conter mais de 16 caracteres.',
+            'cep.regex'=>'Este campo tem um formato inválido.',
             
-            'logradouro.required'=>'Campo não pode esta vazio.',
-            'logradouro.max'=>'Campo não ter mais de 50 caracteres.',
-            'logradouro.regex'=>'O campo nome social tem um formato inválido.',
+            'logradouro.required'=>'Este campo não pode estar vázio.',
+            'logradouro.max'=>'Este campo não pode conter mais de 40 caracteres.',
+            'logradouro.regex'=>'Este campo tem um formato inválido.',
             
-            'numero.required'=>'Campo não pode esta vazio.',
-            'numero.max'=>'Campo não ter mais de 10 caracteres.',
-            'numero.regex'=>'O campo nome social tem um formato inválido.',
+            'numero.required'=>'Este campo não pode estar vázio.',
+            'numero.max'=>'Este campo não pode conter mais de 10 caracteres.',
+            'numero.regex'=>'Este campo tem um formato inválido.',
             
-            'bairro.required'=>'Campo não pode esta vazio.',
-            'bairro.max'=>'Campo não ter mais de 10 caracteres.',
-            'bairro.regex'=>'O campo nome social tem um formato inválido.',
+            'bairro.required'=>'Este campo não pode estar vázio.',
+            'bairro.max'=>'Este campo não pode conter mais de 30 caracteres.',
+            'bairro.regex'=>'Este campo tem um formato inválido.',
             
-            'localidade.required'=>'Campo não pode esta vazio.',
-            'localidade.max'=>'Campo não ter mais de 10 caracteres.',
-            'localidade.regex'=>'O campo nome social tem um formato inválido.',
+            'localidade.required'=>'Este campo não pode estar vázio.',
+            'localidade.max'=>'Este campo não pode conter mais de 30 caracteres..',
+            'localidade.regex'=>'Este campo tem um formato inválido.',
             
-            'uf.required'=>'Campo não pode esta vazio.',
-            'uf.max'=>'Campo não ter mais de 10 caracteres.',
-            'uf.regex'=>'O campo nome social tem um formato inválido.',
+            'uf.required'=>'Este campo não pode estar vázio.',
+            'uf.max'=>'Este campo não pode conter mais de 2 caracteres..',
+            'uf.regex'=>'Este campo tem um formato inválido.',
             
-            'data__admissao.required'=>'Campo não pode esta vazio.',
-            'data__admissao.max'=>'Campo não ter mais de 10 caracteres.',
-            'data__admissao.regex'=>'O campo nome social tem um formato inválido.',
+            'data__admissao.required'=>'Este campo não pode estar vázio.',
+            'data__admissao.max'=>'Este campo não pode conter mais de 10 caracteres..',
+            'data__admissao.regex'=>'Este campo tem um formato inválido.',
             
-            'categoria__contrato.required'=>'Campo não pode esta vazio.',
-            'categoria__contrato.max'=>'Campo não ter mais de 255 caracteres.',
-            'categoria__contrato.regex'=>'O campo nome social tem um formato inválido.',
+            'categoria__contrato.required'=>'Este campo não pode estar vázio.',
+            'categoria__contrato.max'=>'Este campo não pode conter mais de 30 caracteres..',
+            'categoria__contrato.regex'=>'Este campo tem um formato inválido.',
             
-            'cbo.required'=>'Campo não pode esta vazio.',
-            'cbo.max'=>'Campo não ter mais de 225 caracteres.',
-            'cbo.regex'=>'O campo nome social tem um formato inválido.',
+            'cbo.required'=>'Este campo não pode estar vázio.',
+            'cbo.max'=>'Este campo não pode conter mais de 30 caracteres..',
+            'cbo.regex'=>'Este campo tem um formato inválido.',
             
-            'ctps.required'=>'Campo não pode esta vazio.',
-            'ctps.max'=>'Campo não ter mais de 20 caracteres.',
+            'ctps.required'=>'Este campo não pode estar vázio.',
+            'ctps.max'=>'Este campo não pode conter mais de 20 caracteres..',
             
-            'serie__ctps.required'=>'Campo não pode esta vazio.',
-            'serie__ctps.max'=>'Campo não ter mais de 20 caracteres.',
+            'serie__ctps.required'=>'Este campo não pode estar vázio.',
+            'serie__ctps.max'=>'Este campo não pode conter mais de 10 caracteres..',
             
-            'uf__ctps.required'=>'Campo não pode esta vazio.',
-            'uf__ctps.max'=>'Campo não ter mais de 255 caracteres.',
-            'uf__ctps.regex'=>'O campo nome social tem um formato inválido.',
+            'uf__ctps.required'=>'Este campo não pode estar vázio.',
+            'uf__ctps.max'=>'Este campo não pode conter mais de 2 caracteres..',
+            'uf__ctps.regex'=>'Este campo tem um formato inválido.',
             
-            'data__afastamento.max'=>'Campo não ter mais de 10 caracteres.',
-            'banco.max'=>'Campo não ter mais de 100 caracteres.',
-            'agencia.max'=>'Campo não ter mais de 4 caracteres.',
-            'operacao.max'=>'Campo não ter mais de 3 caracteres.',
-            'conta.max'=>'Campo não ter mais de 10 caracteres.',
-            'pix.max'=>'Campo não ter mais de 225 caracteres.'
+            'data__afastamento.max'=>'Este campo não pode conter mais de 10 caracteres..',
+            'banco.max'=>'Este campo não pode conter mais de 30 caracteres..',
+            'agencia.max'=>'Este campo não pode conter mais de 4 caracteres..',
+            'operacao.max'=>'Este campo não pode conter mais de 3 caracteres..',
+            'conta.max'=>'Este campo não pode conter mais de 10 caracteres..',
+            'pix.max'=>'Este campo não pode conter mais de 255 caracteres..'
             
         ]
         );
@@ -209,9 +209,9 @@ class PessoaisController extends Controller
             $this->pessoais->Atualizar($dados,$id);
             $this->endereco->editarUsuario($dados,$id);
         }
-            return redirect()->back()->withSuccess('Atualizador com sucesso.'); 
+            return redirect()->back()->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssivél realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

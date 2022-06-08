@@ -177,7 +177,7 @@ class TabCadastroController extends Controller
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
             try {
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
       
     }
@@ -194,7 +194,7 @@ class TabCadastroController extends Controller
             $lancamentorublicas = $this->lancamentorublica->deletar($id);
             return redirect()->back()->withSuccess('Registro deletado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi possivél deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
       
     }

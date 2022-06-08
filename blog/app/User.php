@@ -69,13 +69,13 @@ class User extends Authenticatable
         ])
         ->givePermissionTo($p);
     }
-    public function precadastro($dados)
+    public function precadastro($dados,$p)
     {
         return User::create([
             'name' => $dados['name'],
             'email' => $dados['email'],
             'password' => Hash::make($dados['senha'])
-        ])->givePermissionTo('admin');
+        ])->givePermissionTo($p);
     }
     public function buscaUnidadeUser($id)
     {

@@ -136,7 +136,7 @@ class TabCartaoPontoController extends Controller
        
         $today = Carbon::today();
         if (strtotime($dados['data']) > strtotime($today) ) {
-            return redirect()->back()->withInput()->withErrors(['data'=>'Só é valida data atuais!']);
+            return redirect()->back()->withInput()->withErrors(['data'=>'Só é válida data atuais!']);
         }
         // $novadata = explode('-',$dados['data']);
         $lancamentotabelas = $this->lancamentotabela->where([
@@ -156,7 +156,7 @@ class TabCartaoPontoController extends Controller
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi encontrada todas as rúbricas necessárias do ano '.date('Y').'!']);
         }
         if ($lancamentotabelas) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrador este mês!']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Este boletim já foi cadastrado este mês!']);
         }
       
         
@@ -296,7 +296,7 @@ class TabCartaoPontoController extends Controller
             // $this->bolcartaoponto->editarBoletim($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
         } catch (\Throwable $th) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar a atualização.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
         
     }

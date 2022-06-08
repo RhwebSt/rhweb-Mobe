@@ -17,7 +17,7 @@ class relatorioRublicaController extends Controller
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não existe rúbricas cadastradas.']);
             }
             $pdf = PDF::loadView('relatorioRubricas',compact('rubricas'));
-            return $pdf->setPaper('a4')->stream('RELATÓRIO DE RUBRICAS.pdf');
+            return $pdf->setPaper('a4')->stream('Relatório das Rúbricas.pdf');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível gerar o relatório.']);
         }

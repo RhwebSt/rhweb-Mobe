@@ -41,15 +41,15 @@ class LoginController extends Controller
             'user' => 'required',
             'password'=>'required' 
         ],[
-            'user.required'=>'Campo usuÃ¡rio nÃ£o pode estar vazio!',
+            'user.required'=>'Este campo n«ªo pode estar vazio!',
             'password.required'=>'Informe sua senha!',
-            'password.min'=>'A senha nÃ£o pode conter menos de 6 caracteres!',
+            'password.min'=>'A senha n«ªo pode conter menos de 6 caracteres!',
             
         ]);
         if (Auth::attempt(['name'=>$dados['user'],'password'=>$dados['password']])) {
             return redirect()->route('administrador');
         } 
-        return redirect()->back()->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuÃ¡rio. Tente novamente.']);
+        return redirect()->back()->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login. Tente novamente.']);
     }
 
     /**

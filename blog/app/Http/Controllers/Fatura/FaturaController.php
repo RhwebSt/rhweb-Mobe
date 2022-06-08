@@ -75,7 +75,7 @@ class FaturaController extends Controller
         if (date('m',strtotime($dados['ano_inicial'])) !== date('m',strtotime($dados['ano_final']))) {
             return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'O valor inicial e o valor final tem que ser do mesmo mês!','ano_final'=>'O valor inicial e o valor final tem que ser do mesmo mês!']);
         }else if (strtotime($dados['ano_final']) > strtotime($dados['vencimento'])) {
-            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento não pode ser menor ao periodo!']);
+            return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento não pode ser menor do que periodo!']);
         }elseif ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['competencia']))){
             return redirect()->back()->withInput()->withErrors(['competencia'=>'O mês de vencimento tem que ser igual ao competência!']);
         }
@@ -87,11 +87,11 @@ class FaturaController extends Controller
         //     return redirect()->back()->withInput()->withErrors(['ano_final'=>'Só é valida data atuais!']);
         // }
         if (!$dados['tomador']) {
-            return redirect()->back()->withInput()->withErrors(['pesquisa'=>'Tomador não encontrador.']);
+            return redirect()->back()->withInput()->withErrors(['pesquisa'=>'Tomador não encontrado.']);
         }
         $verifica = $this->fatura->verificaFaturas($dados);
         if ($verifica) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador nesse mês.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já foi lançada uma fatura para este tomador neste mês.']);
         }
         
         $dados['empresa'] = $user->empresa_id;
@@ -116,7 +116,7 @@ class FaturaController extends Controller
         ])->first();
         // dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
         if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gera a fatura.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gerar a fatura.']);
         }
         $quantrabalhador = $this->valorcalculor->quantrabalhador($dados);
         $dados['trabalhador'] = $quantrabalhador[0]->trabalhador;

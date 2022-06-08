@@ -63,12 +63,12 @@ class RublicaController extends Controller
             'descricao'=>'required|max:60|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
             'incidencia'=>'required'
         ],[
-            'rubricas.required'=>'O campo não pode estar vazio.',
-            'rubricas.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'descricao.required'=>'O campo não pode estar vazio.',
-            'descricao.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'descricao.regex'=>'O campo possui um formato inválido.',
-            'incidencia.required'=>'O campo não pode estar vazio.',
+            'rubricas.required'=>'Este campo não pode estar vázio.',
+            'rubricas.max'=>'Este campo não pode conter mais de 15 caracteres.',
+            'descricao.required'=>'Este campo não pode estar vázio.',
+            'descricao.max'=>'Este campo não pode conter mais de 15 caracteres.',
+            'descricao.regex'=>'Este campo possui um formato inválido.',
+            'incidencia.required'=>'Este campo não pode estar vázio.',
         ]);
         try {
           
@@ -125,18 +125,18 @@ class RublicaController extends Controller
             'descricao'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-(),+.%]*$/',
             'incidencia'=>'required'
         ],[
-            'rubricas.required'=>'O campo não pode estar vazio.',
-            'rubricas.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'descricao.required'=>'O campo não pode estar vazio.',
-            'descricao.max'=>'O campo não pode conter mais de 15 caracteres.',
-            'descricao.regex'=>'O campo possui um formato inválido.',
-            'incidencia.required'=>'O campo não pode estar vazio.',
+            'rubricas.required'=>'Este campo não pode estar vázio.',
+            'rubricas.max'=>'Este campo não pode conter mais de 15 caracteres.',
+            'descricao.required'=>'Este campo não pode estar vázio.',
+            'descricao.max'=>'Este campo não pode conter mais de 15 caracteres.',
+            'descricao.regex'=>'Este campo possui um formato inválido.',
+            'incidencia.required'=>'Este campo não pode estar vázio.',
         ]);
         try {
             $rublicas = $this->rublica->editar($dados,$id);
             return redirect()->route('rublica.index')->withSuccess('Atualizado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar os dados.']);
+            return redirect()->route('rublica.index')->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
         }
     }
 

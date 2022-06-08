@@ -46,14 +46,14 @@ class ComisionarioController extends Controller
         try {
         $comissionados = $comissionado->verifica($dados);
         if ($comissionados) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Estes dados já tão cadastrados.']);  
+            return redirect()->back()->withInput()->withErrors(['false'=>'Estes dados já estão cadastrados.']);  
         }
         $comissionados = $comissionado->cadastro($dados);
         if ($comissionados) {
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
         }
        } catch (\Throwable $th) {
-        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível realizar o cadastro.']);  
+        return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);  
        }
     }
 
@@ -114,9 +114,9 @@ class ComisionarioController extends Controller
         $comissionado = new Comissionado;
         $comissionados = $comissionado->editar($dados,$id);
         if ($comissionados) {
-            return redirect()->back()->withSuccess('Atualizador com sucesso.');  
+            return redirect()->back()->withSuccess('Atualizado com sucesso.');  
         }else{
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível atualizar o registro.']);  
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar o registro.']);  
         }
     }
 
@@ -133,7 +133,7 @@ class ComisionarioController extends Controller
             $comissionados = $comissionado->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
-            return redirect()->back()->withErrors(['false'=>'Não foi porssível deletar o registro.']);
+            return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }
     }
 }

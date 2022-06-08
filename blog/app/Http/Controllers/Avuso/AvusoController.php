@@ -87,7 +87,7 @@ class AvusoController extends Controller
         $dados = $request->all();
         $verifica = $this->avuso->verifica($dados['codigo']);
         if ($verifica) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Já existe um recibo com este codigo.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Já existe um recibo com este código.']);
         }
         $credito = 0;
         $desconto = 0;
@@ -102,7 +102,7 @@ class AvusoController extends Controller
             }
         }
         if ($credito < $desconto) {
-            return redirect()->back()->withInput()->withErrors(['false'=>'Desconto não pode ser maior que o crédito.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'O desconto não pode ser maior que o crédito.']);
         }
         $total = $credito - $desconto;
         $dados['liquido'] = $total;
@@ -144,7 +144,7 @@ class AvusoController extends Controller
                    
                 }
             });
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar o registro.']);
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
         }
     }
 

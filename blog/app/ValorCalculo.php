@@ -276,12 +276,12 @@ class ValorCalculo extends Model
             ->selectRaw(
                 'SUM(valor_calculos.vivencimento) as vencimento,
                 SUM(valor_calculos.videscinto) as desconto,
-                valor_calculos.vireferencia as referencia,
+                SUM(valor_calculos.vireferencia) as referencia,
                 valor_calculos.trabalhador_id,
                 valor_calculos.vicodigo,
                 valor_calculos.vsdescricao'
             )
-            ->groupBy('valor_calculos.trabalhador_id','valor_calculos.vireferencia','valor_calculos.vicodigo','valor_calculos.vsdescricao')
+            ->groupBy('valor_calculos.trabalhador_id','valor_calculos.vicodigo','valor_calculos.vsdescricao')
             ->where('base_calculos.folhar_id',$folhar)
             ->where('base_calculos.tomador_id','!=',null)
             ->where('base_calculos.trabalhador_id',$trabalhador)

@@ -8,7 +8,7 @@ main{
 }
 
 .animation-slide-out{
-    animation: slide-in 500ms ease !important;
+    animation: slide-in 900ms ease !important;
 }
 
 .animation-pulse{

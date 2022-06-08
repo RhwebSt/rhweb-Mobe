@@ -28,6 +28,7 @@ class Arquivo extends Model
        
         return Arquivo::where('trabalhador_id', $id)
         ->update([
+            'dstipo'=>'rg',
             'dsnumero'=>$dados['rg'],
             'dsemissao'=>$dados['dataEmissaoRg'],
             'dsuf'=>$dados['ufRg'],
