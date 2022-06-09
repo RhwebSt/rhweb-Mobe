@@ -101,7 +101,7 @@
                                                                 
                                                                 <div class="modal-body body__modal ">
                                                                         <div class="d-flex align-items-center justify-content-center flex-column">
-                                                                            <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                            <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
                                                                         
                                                                             <p class="content--deletar">Deseja realmente excluir?</p>
                                                                             

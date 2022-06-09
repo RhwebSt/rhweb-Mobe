@@ -1,5 +1,5 @@
 @extends('administrador.layouts.index')
-@section('titulo','Rhweb - Categorias')
+@section('titulo','Cadastrar categorias - Rhweb')
 @section('conteine')
         <div class="container">
 

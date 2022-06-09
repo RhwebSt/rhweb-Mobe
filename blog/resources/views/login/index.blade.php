@@ -48,7 +48,7 @@
                 @enderror
                 
                 <div class="div-log">
-                  <img class="logo-login" src="{{url('imagem/rhwebTop2.png')}}" alt="">
+                  <img class="logo-login" src="{{url('imagem/rhwebColorWhiteBigger.png')}}" alt="">
                 </div>
 
                 <div class="col-12 mb-2">
@@ -61,7 +61,7 @@
                     <label for="password" class="form-label"><i class="fad fa-lock"></i> Senha</label>
                     <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="" maxlength="10">
                     <span class="show icone__inside"><i class="fad fa-lg fa-eye eye__icon" id=""></i></span>
-                    <span class="small esqueceuSenha-title mt-0" href="{{route('esqueci.senha.index')}}">Esqueceu sua senha?</span>
+                   <a href="{{route('esqueci.senha.index')}}"> <span class="small esqueceuSenha-title mt-0" >Esqueceu sua senha? </span></a>
                     <span class="d-none errorInput" id="errorSenha">Campo senha precisar ser preenchido. <i class="fad fa-exclamation-triangle"></i></span>
                 </div>
 

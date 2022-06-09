@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Atualizar os Dados')
+@section('titulo','Atualizar os Dados - Rhweb')
 @section('conteine')
 
 <main role="main">

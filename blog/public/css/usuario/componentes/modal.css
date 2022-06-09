@@ -49,6 +49,16 @@
 .gif__warning--delete{
     width: 100px;
     height: 100px;
+    animation: animaIconeDelete 1s ease infinite alternate;
+}
+
+@keyframes animaIconeDelete{
+    from{
+        transform: scale(1) rotate(-5deg)
+    }
+    to{
+        transform: scale(0.95) rotate(5deg);
+    }
 }
 
 .content--deletar{

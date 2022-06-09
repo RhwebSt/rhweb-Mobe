@@ -75,16 +75,23 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::post('filtro/pesquisa/fatura','Fatura\\FaturaController@filtroPesquisa')->name('filtro.pesquisa.fatura');
     Route::get('ordem/filtro/fatura/{condicao}','Fatura\\FaturaController@filtroPesquisaOrdem')->name('filtro.ordem.fatura');
 
+    Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo')->middleware(['permission:mtc15555738']);
+    Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra')->middleware(['permission:mtc15555738']);
+    Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar')->middleware(['permission:mtd15555738']);
+    Route::put('tomador/atualizar/{id}','Tomador\\TomadorController@update')->name('tomador.atualizar')->middleware(['permission:mtd15555738']);
+    Route::delete('tomador/deletar/{id}','Tomador\\TomadorController@destroy')->name('tomador.deletar')->middleware(['permission:mte15555738']);
+
+    // Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
     Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
-    Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
+    
     Route::get('ordem/tomador/{ordem}/{id?}/{search?}','Tomador\\TomadorController@ordem')->name('ordem.tomador');
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
-    Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
+    Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador')->middleware(['permission:mtor15555738']);
     Route::get('relatorio/geral/tomador','Tomador\\relatorioTomadorController@relatorioGeral')->name('relatorio.geral.tomador');
     Route::get('folhar/tomador/evento/1270/{tomador}/{folhar}','CalculoFolha\\Evento1270Controller@index')->name('folhar.tomador.evento.1270');
     Route::get('folhar/tomador/resumo/pagamento/{tomador}/{folhar}','CalculoFolha\\FolhaPagamentoController@index')->name('folhar.tomador.resumo.pagamento');
 
-    Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
+    Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index')->middleware(['permission:mtpt15555738']);
     Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');
     Route::get('tabelapreco/perfil/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show');
     Route::get('tabela/preco/editar/{id}/{tomador}','TabelaPreco\\TabelaPrecoController@edit')->name('tabela.preco.editar');
@@ -92,32 +99,42 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('verifica/tabela/preco/{tomador}','TabelaPreco\\TabelaPrecoController@verificaTabelaPreco'); 
     Route::post('tabela/preco/atualizar','TabelaPreco\\AtualizarController@index')->name('tabela.preco.atualizar');
 
-    Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio');
+    Route::get('relatorio/tabela/preco/{id}','TabelaPreco\\RelatorioController@relatorio')->name('tabela.preco.relatorio')->middleware(['permission:mtor15555738']);
     Route::get('ordem/tabela/preco/{id?}/{tomador}/{condicao}','TabelaPreco\\TabelaPrecoController@ordem')->name('ordem.tabela.preco');
 
 
-    Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
+    Route::get('trabalhador/novo','Trabalhador\\TrabalhadorController@create')->name('trabalhador.novo')->middleware(['permission:mtrc15555738']);
+    Route::post('trabalhador/cadastra','Trabalhador\\TrabalhadorController@store')->name('trabalhador.cadastra')->middleware(['permission:mtrc15555738']);
+    Route::get('trabalhador/editar/{id}','Trabalhador\\TrabalhadorController@edit')->name('trabalhador.editar')->middleware(['permission:mtrd15555738']);
+    Route::put('trabalhador/atualizar/{id}','Trabalhador\\TrabalhadorController@update')->name('trabalhador.atualizar')->middleware(['permission:mtrd15555738']);
+    Route::delete('trabalhador/deletar/{id}','Trabalhador\\TrabalhadorController@destroy')->name('trabalhador.deletar')->middleware(['permission:mtre15555738']);
+    Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show'])->middleware(['permission:mdpe15555738']);
+    Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create'])->middleware(['permission:mdpe15555738']);
+
+    Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador')->middleware(['permission:mtr15555738']);
+    Route::get('cracha/trabalhador/{id}','Trabalhador\\CrachaTrabalhadorController@cracha')->name('cracha.trabalhador')->middleware(['permission:mtr15555738']);
+    Route::get('declaracao/admissao/trabalhador/{id}','Trabalhador\\declaracaoAdmissaoController@declarassaoadminssao')->name('declaracao.admissao.trabalhador')->middleware(['permission:mtr15555738']);
+    Route::get('declaracao/afastamento/trabalhador/{id}','Trabalhador\\declaracaoAfastamentoController@declarassaoafastamento')->name('declaracao.afastamento.trabalhador')->middleware(['permission:mtr15555738']);
+    Route::get('devolucao/ctps/trabalhador/{id}','Trabalhador\\devolucaoCtpsController@devolucaoctps')->name('devolucao.ctps.trabalhador')->middleware(['permission:mtr15555738']);
+    Route::resource('epi','Trabalhador\\EpiController')->only(['store', 'update', 'index','create','show','edit'])->middleware(['permission:mtr15555738']);
+    Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador')->middleware(['permission:mtrve15555738']);
+    // Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::get('ordem/trabalhador/{ordem}/{id?}/{search?}','Trabalhador\\TrabalhadorController@ordem')->name('ordem.trabalhador');
-    Route::resource('epi','Trabalhador\\EpiController')->only(['store', 'update', 'index','create','show','edit']);
     Route::get('epi/deleta/{id}','Trabalhador\\EpiController@destroy')->name('epi.deleta');
     Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');
+
 
     // Route::post('trabalhador/comprovante/pagamento/dia','Trabalhador\\comprovantePagDiaController@ComprovantePagDia')->name('trabalhador.comprovante.dia');
 
     Route::post('relatorio/empresa/trabalhada','Trabalhador\\RelatorioEmpresaTrabalhadaController@relatorioempresatrabalhada')->name('relatorio.empresa.trabalhada');
-    Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
-    Route::get('cracha/trabalhador/{id}','Trabalhador\\CrachaTrabalhadorController@cracha')->name('cracha.trabalhador');
-    Route::get('declaracao/admissao/trabalhador/{id}','Trabalhador\\declaracaoAdmissaoController@declarassaoadminssao')->name('declaracao.admissao.trabalhador');
-    Route::get('declaracao/afastamento/trabalhador/{id}','Trabalhador\\declaracaoAfastamentoController@declarassaoafastamento')->name('declaracao.afastamento.trabalhador');
-    Route::get('devolucao/ctps/trabalhador/{id}','Trabalhador\\devolucaoCtpsController@devolucaoctps')->name('devolucao.ctps.trabalhador');
+  
     Route::get('ficha/epi/trabalhador/{id}','Trabalhador\\fichaEpiTrabController@ficha')->name('ficha.epi.trabalhador'); 
     Route::get('trabalhadorolnome','Trabalhador\\PdfController@rolnome');
 
 
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado'); 
     Route::get('pesquisa/comisionado','Comisionario\\ComisionarioController@pesquisa')->name('comisionado.pesquisa');
-    Route::resource('depedente','Depedente\\DepedenteController')->only(['store', 'update', 'destroy','edit','show']);
-    Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
+   
     
 
     
@@ -166,7 +183,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('gera/txt/sefip/{tomador}/{folha}/{empresa}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
-    Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
+    
     Route::put('trabalhador/esocial/{id?}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
     Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
     Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
@@ -187,9 +204,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
         Route::resource('usuario','Usuario\\UsuarioController')->names('usuario');
         Route::get('usuario/pesquisa/admin','Usuario\\UsuarioController@pesquisa')->name('usuario.pesquisa.admin');
-        
         Route::resource('perfil','Perfil\\PerfilController')->names('perfil'); 
-
         Route::get('usuario/ordem/admin/{ordem}/{id?}','Usuario\\UsuarioController@ordem')->name('usuario.ordem.admin');
 
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');

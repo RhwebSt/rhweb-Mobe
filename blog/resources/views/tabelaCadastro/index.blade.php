@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Boletim com Tabela Preço')
+@section('titulo','Boletim com Tabela Preço - Rhweb')
 @section('conteine')
 <main role="main">
     <div class="container">

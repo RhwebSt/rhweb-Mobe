@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Tomador')
+@section('titulo','Tomador - Rhweb')
 @section('conteine')
 
 <main role="main">
@@ -95,7 +95,7 @@
         <!--</script>-->
         <!--fim do modal-->
 
-            <form class="row g-3" novalidate id="form" action="{{ route('tomador.store') }}"  method="Post">
+            <form class="row g-3" novalidate id="form" action="{{ route('tomador.cadastra') }}"  method="Post">
                 
                 <input type="hidden" name="tomador" id="tomador">
                 <input type="hidden" name="pessoal">
@@ -980,7 +980,7 @@
             function campo() {
                 $('#carregamento').addClass('d-none')
                 $('#relatoriotomador').addClass('disabled')
-                $('#form').attr('action', "{{ route('tomador.store') }}");
+                $('#form').attr('action', "{{ route('tomador.cadastra') }}");
                 $('#incluir').removeAttr( "disabled" )
                 $('#atualizar').attr('disabled','disabled')
                 $('#deletar').attr('disabled','disabled')

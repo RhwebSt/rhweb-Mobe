@@ -1,0 +1,70 @@
+body{
+    background-color: #1C2021 !important;
+    font-family: 'Poppins', sans-serif  !important;
+    color: white  !important;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+main {
+    position: relative !important;
+    margin-bottom: 150px !important;
+}
+
+.title__altera--senha{
+    margin-top: 10%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color:white;
+}
+
+.section__altera--senha {
+    margin-top: 15% !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50, -50);
+}
+
+.botao__alterar{
+    width: 200px;
+    background-color: #388334 !important;
+    color: #fff  !important;
+    border-radius: 8px  !important;
+    font-size: 1rem  !important;
+    transition: 300ms ease-in-out  !important;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 45%)  !important;
+    text-decoration: none  !important;
+}
+
+.botao__alterar:hover {
+    background-color: #154713 !important;
+    transition: 300ms ease-in-out  !important;
+    transform: scale(1.07) translateY(-2px);
+     box-shadow: 6px 6px 6px 1px rgb(0 0 0 / 30%)  !important;
+}
+
+.input, select {
+    background-color: #546063 !important;
+    color: #fff !important;
+}
+
+
+.required {
+    color: #f00;
+}
+
+
+.footer {
+    margin-bottom: 0px;
+    text-align: center !important;
+    font-size: 13px !important;
+    padding: 15px !important;
+    background-color: #212529 !important;
+    /*position: relative !important;*/
+}

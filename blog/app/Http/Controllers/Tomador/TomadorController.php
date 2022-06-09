@@ -52,6 +52,29 @@ class TomadorController extends Controller
     }
     public function index()
     {
+        
+    }
+    public function ordem($ordem,$id = null,$search = null)
+    {
+        $user = Auth::user();
+        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,$ordem);
+        if ($id) {
+            $tomador = $this->tomador->first($id);
+            return view('tomador.edit',compact('user','tomador','tomadors'));
+        }else{
+            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
+            
+            return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
+        }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
         $user = auth()->user();
         $search = request('search');
         $condicao = request('codicao');
@@ -78,7 +101,7 @@ class TomadorController extends Controller
         ->orderBy('tsnome','asc') 
         ->orderBy('tsmatricula','asc')
         ->distinct()
-        ->paginate(20);
+        ->paginate(10);
         // dd($tomadors);
         if ($condicao) {
             $tomador = $this->tomador->first($condicao);
@@ -87,30 +110,6 @@ class TomadorController extends Controller
             $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
             return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
         }
-    }
-    public function ordem($ordem,$id = null,$search = null)
-    {
-        $user = Auth::user();
-        $tomadors = $this->tomador->buscaListaTomadorPaginate($search,$ordem);
-        if ($id) {
-            $tomador = $this->tomador->first($id);
-            return view('tomador.edit',compact('user','tomador','tomadors'));
-        }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
-            
-            return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $user = Auth::user();
-        // return view('tomador.create',compact('user'));
     }
 
     /**

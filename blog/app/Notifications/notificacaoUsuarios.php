@@ -6,20 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\User;
-class notificaEsqueceuSenha extends Notification implements ShouldQueue
+
+class notificacaoUsuarios extends Notification
 {
     use Queueable;
-    private $usuario,$senha;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $usuario,$senha)
+    public function __construct()
     {
-        $this->usuario = $usuario;
-        $this->senha = $senha;
+        //
     }
 
     /**
@@ -41,17 +40,10 @@ class notificaEsqueceuSenha extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        // return (new MailMessage)
-        //         ->line('Sua nova palavra chaver.')
-        //         ->subject('Testando notificação')
-        //         ->greeting('palavra chaver:'.$this->senha)
-        //         // ->action('entra no sistema', route('user.edit',$this->usuario->id))
-        //         ->line('Obrigador por usar o sistema');
         return (new MailMessage)
-        // ->line('The introduction to the notification.')
-        ->greeting('palavra chaver:'.$this->senha)
-        ->action('Notification Action', route('login.create'));
-        // ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

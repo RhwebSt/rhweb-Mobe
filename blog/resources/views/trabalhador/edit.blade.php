@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Editar Trabalhador')
+@section('titulo','Editar Trabalhador - Rhweb')
 @section('conteine')
 <main role="main">
     <div class="container">
@@ -58,12 +58,12 @@
         <!--</script>-->
         <!--fim do modal-->
         
-        <form class="row g-3" action="{{ route('trabalhador.update',$trabalhador->id) }}" method="POST">
+        <form class="row g-3" action="{{ route('trabalhador.atualizar',$trabalhador->id) }}" method="POST">
             
             <section class="section__botoes--trabalhador">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{ route('trabalhador.novo') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
@@ -864,7 +864,7 @@ $.ajax({
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
-          $('#trabfoto').removeAttr('src')
+        //   $('#trabfoto').removeAttr('src')
           $('#refres').addClass('d-none').prev().removeClass('d-none')
           let nome = ''
           if (data.length >= 1) {

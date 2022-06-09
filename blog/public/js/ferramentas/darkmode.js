@@ -35,15 +35,13 @@
                         $('#iconDarkMode').removeClass('fa-moon');
                         $('#iconDarkMode').addClass('fad');
                         $('#iconDarkMode').addClass('fa-sun');
-                        console.log($('#iconDarkMode'))
-                        
+
                     }else{
                         disableDarkMode();
                         $('#iconDarkMode').removeClass('fas');
                         $('#iconDarkMode').removeClass('fa-sun');
                         $('#iconDarkMode').addClass('fad');
                         $('#iconDarkMode').addClass('fa-moon');
-                        console.log($('#iconDarkMode'))
                     }
                 });
     

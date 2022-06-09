@@ -10,7 +10,7 @@
                 
                 <section class="section__search">
                     <div class="col-md-5">
-                        <form action="{{route('trabalhador.index')}}" method="GET">
+                        <form action="{{route('trabalhador.novo')}}" method="GET">
                             
                             <div class="d-flex">
                                 
@@ -100,20 +100,18 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="button__editar btn" href="{{route('trabalhador.edit',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('trabalhador.editar',base64_encode($trabalhador->id))}}" class=""><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;" >
-                                        <!--<form action="{{route('trabalhador.destroy',$trabalhador->id)}}" method="post">-->
-                                        <!--    @csrf-->
-                                        <!--    @method('delete')-->
+                                       
                                             <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTrabalhador{{$key}}"><i class="icon__color fad fa-trash"></i></button>
-                                        <!--</form>-->
+                                    
                                         <section class="delete__tabela--trabalhador">
                                             <div class="modal fade" id="deleteTrabalhador{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered col-8">
                                                     <div class="modal-content">
-                                                        <form action="{{route('trabalhador.destroy',$trabalhador->id)}}" id="" method="post">
+                                                        <form action="{{route('trabalhador.deletar',$trabalhador->id)}}" id="" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-header header__modal">
@@ -123,7 +121,7 @@
                                                             
                                                             <div class="modal-body body__modal ">
                                                                     <div class="d-flex align-items-center justify-content-center flex-column">
-                                                                        <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
+                                                                        <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
                                                                     
                                                                         <p class="content--deletar">Deseja realmente excluir?</p>
                                                                         

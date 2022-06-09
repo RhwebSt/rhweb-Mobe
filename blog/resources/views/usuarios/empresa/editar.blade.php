@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Cadastro de Usuário')
+@section('titulo','Editar cadastro de usuário - Rhweb')
 @section('conteine')
 <div class="container">
     @if(session('success'))

@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Editar Comissionado')
+@section('titulo','Editar Comissionado - Rhweb')
 @section('conteine')
 
 <main role="main">

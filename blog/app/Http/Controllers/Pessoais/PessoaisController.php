@@ -80,7 +80,6 @@ class PessoaisController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        dd($dados);
         $usuario = $this->user->where('name',$dados['nome'])->count();
         if ($usuario) {
             return redirect()->back()->withInput()->withErrors(['nome'=>'Este usuário já está sendo utilizado.']);
@@ -195,9 +194,7 @@ class PessoaisController extends Controller
             
         ]
         );
-        try {
-            //code...
-        
+        try {        
         $this->user->AtualizarUsuario($dados,$id);
         $pessoais = $this->pessoais->editar($id);
         if (!$pessoais) {

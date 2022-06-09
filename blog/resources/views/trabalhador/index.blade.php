@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Cadastro do Trabalhador')
+@section('titulo','Cadastro do Trabalhador - Rhweb')
 @section('conteine')
 
 <main role="main">
@@ -60,7 +60,7 @@
         <!--fim do modal-->
 
 
-        <form class="row g-3" id="form" action="{{ route('trabalhador.store') }}" enctype="multipart/form-data" method="POST">
+        <form class="row g-3" id="form" action="{{ route('trabalhador.cadastra') }}" enctype="multipart/form-data" method="POST">
             
             <section class="section__botoes--trabalhador">
                 
@@ -920,7 +920,7 @@
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
-          $('#trabfoto').removeAttr('src')
+        //   $('#trabfoto').removeAttr('src')
           $('#refres').addClass('d-none').prev().removeClass('d-none')
           let nome = ''
           if (data.length >= 1) {
@@ -965,7 +965,7 @@
       $('#imprimir').addClass('disabled')
       $('#fichaepi').addClass('disabled')
       $('#depedente').addClass('disabled')
-      $('#form').attr('action', "{{ route('trabalhador.store') }}");
+      $('#form').attr('action', "{{ route('trabalhador.cadastra') }}");
       $('#incluir').removeAttr("disabled")
       $('#depedente').removeAttr("disabled")
       $('#atualizar').attr('disabled', 'disabled')
@@ -1003,7 +1003,7 @@
         $('#imprimir').addClass('disabled')
         $('#fichaepi').addClass('disabled')
         $('#depedente').addClass('disabled')
-        $('#form').attr('action', "{{ route('trabalhador.store') }}");
+        $('#form').attr('action', "{{ route('trabalhador.cadastra') }}");
         $('#incluir').removeAttr("disabled")
         $('#depedente').removeAttr("disabled")
         $('#atualizar').attr('disabled', 'disabled')

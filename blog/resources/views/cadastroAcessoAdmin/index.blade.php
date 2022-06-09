@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - Cadastro de Acesso')
+@section('titulo','Cadastro de Acesso -Rhweb')
 @section('conteine')
 
 <div class="container">

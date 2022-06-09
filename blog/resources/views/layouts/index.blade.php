@@ -132,8 +132,8 @@
                                     <li><a class="dropdown-item" href="{{route('usuario.create')}}"><i class="fad fa-user-plus"></i> Cadastro de Acesso</a></li>
                                     @endcan
                                     <li><a class="dropdown-item " href="{{route('comisionado.index')}}"><i class="fad fa-percentage"></i> Comissionado</a></li>
-                                    <li><a class="dropdown-item " href="{{ route('tomador.index') }}"><i class="fad fa-industry"></i> Tomador</a></li>
-                                    <li><a class="dropdown-item" href="{{route('trabalhador.index')}}"><i class="fad fa-user-hard-hat"></i> Trabalhador</a></li>
+                                    <li><a class="dropdown-item " href="{{ route('tomador.novo') }}"><i class="fad fa-industry"></i> Tomador</a></li>
+                                    <li><a class="dropdown-item" href="{{route('trabalhador.novo')}}"><i class="fad fa-user-hard-hat"></i> Trabalhador</a></li>
                                 </ul>
                             </li>
     

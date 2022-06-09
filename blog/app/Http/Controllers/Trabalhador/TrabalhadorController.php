@@ -123,8 +123,39 @@ class TrabalhadorController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        return view('trabalhador.create',compact('user'));
+        $user = auth()->user();
+        $search = request('search');
+        $condicao = request('codicao');
+        // $trabalhadors = $this->trabalhador->lista($search,'desc');
+        $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
+                if ($search) {
+                    $query->where([
+                        ['tsnome','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id]
+                    ])
+                    ->orWhere([
+                        ['tscpf','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id],
+                    ])
+                    ->orWhere([
+                        ['tsmatricula','like','%'.$search.'%'],
+                        ['empresa_id', $user->empresa_id],
+                    ]);
+                }else{
+                    $query->where('empresa_id', $user->empresa_id);
+                }
+        }) 
+        ->orderBy('tsnome', 'asc')
+        ->paginate(20);
+        $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
+        if ($condicao) {
+            $trabalhador = $this->trabalhador->where('id',$condicao)
+            ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
+            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
+        }else{
+            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
+        }
     }
 
     /**
@@ -284,7 +315,7 @@ class TrabalhadorController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-      
+        dd($dados);
         if ($dados['banco']) {
             $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
         }

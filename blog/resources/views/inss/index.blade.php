@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('titulo','Rhweb - INSS')
+@section('titulo','INSS - Rhweb')
 @section('conteine')
     <div class="container">
     @if(session('success'))

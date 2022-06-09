@@ -84,7 +84,7 @@ class UserController extends Controller
             $usuario = $dados['name'];
             $email = $dados['email'];
             $senha = $dados['senha'];
-            // $use->notify(new notificaUser($use,$dados['senha']));
+            $use->notify(new notificaUser($use,$dados['senha']));
             // \App\Jobs\Email::dispatch($dados)->delay(now()->addSeconds(15));
             // Mail::send(new \App\Mail\Email($dados));
             return redirect()->back()->with(compact('url','email','senha','usuario'))->withSuccess('Cadastro realizado com sucesso.'); 
