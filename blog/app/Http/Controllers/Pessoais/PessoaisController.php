@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pessoais;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Usuario\Perfil\Validacao;
 use App\User;
 use App\Pessoai;
 use App\Endereco;
@@ -26,9 +27,14 @@ class PessoaisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $pessoais = $this->pessoais->where('user_id',$id)->count();
+        if ($pessoais) {
+            return redirect()->route('login.create');
+        }
+        $user = $this->user->where('id',$id)->first();
+        return view('usuarios.pessoais.primeiroAcessoDadosPessoais',compact('user'));
     }
 
     /**
@@ -37,9 +43,17 @@ class PessoaisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
-        //
+        $dados = $request->all();
+        try {
+            $pessoais = $this->pessoais->cadastra($dados);
+            $dados['pessoal'] = $pessoais['id'];
+            $this->endereco->cadastro($dados);
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
+        } 
     }
 
     /**
@@ -67,7 +81,7 @@ class PessoaisController extends Controller
             $pessoais = $this->user->edit($id);
             
         }
-        return view('usuarios.pessoais.index',compact('user','pessoais'));
+        return view('usuarios.dadosPessoais.index',compact('user','pessoais'));
     }
 
     /**

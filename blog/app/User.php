@@ -174,7 +174,7 @@ class User extends Authenticatable
     {
         return DB::table('users')
             ->join('empresas', 'empresas.id', '=', 'users.empresa_id')
-            ->select('users.id', 'users.name', 'users.email', 'users.cargo', 'users.empresa', 'empresas.esnome')
+            ->select('users.id', 'users.name', 'users.email', 'users.cargo', 'users.empresa_id', 'empresas.esnome')
             ->where('users.id', $id)
             ->first();
     }

@@ -60,7 +60,7 @@
         <!--</script>-->
         <!--fim do modal-->
  
-        <form class="row g-3" id="form" method="POST" action="{{route('cadastrocartaoponto.update',$dados->id)}}">
+        <form class="row g-3" id="form" method="POST" action="{{route('cartao.ponto.atualizar',base64_encode($dados->id))}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="PUT">
             <input type="hidden" name="status" value="D" id="status">
@@ -68,7 +68,7 @@
             <section class="section__botoes--cartao--ponto">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{route('cadastrocartaoponto.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{route('cartao.ponto.novo')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -244,7 +244,7 @@
               })
             }
             function limpaCamposTab() {
-              $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
+              $('#form').attr('action', "{{ route('cartao.ponto.cadastro') }}");
               $('#incluir').removeAttr( "disabled" )
               $('#atualizar').attr('disabled','disabled')
               $('#deletar').attr('disabled','disabled')
@@ -267,7 +267,7 @@
                       $('#method').val('PUT')
                       buscatomador(data.tomador)
                   }else{
-                    $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
+                    $('#form').attr('action', "{{ route('cartao.ponto.cadastro') }}");
                     $('#incluir').removeAttr( "disabled" )
                     $('#atualizar').attr('disabled','disabled')
                     $('#deletar').attr('disabled','disabled')

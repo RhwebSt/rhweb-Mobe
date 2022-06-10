@@ -114,7 +114,7 @@
             <nav class="navbar navbar-expand-lg nav__bar mb-5">
                 <div class="container-fluid">
                     
-                    <a class="logo__clickavel" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/rhwebTop2.png')}}" alt="" srcset="" style="width: 90px;"></a>
+                    <a class="logo__clickavel" href="{{route('home.index')}}"><img class="navbar-brand" src="{{url('/imagem/NewLogoBrancaRh.png')}}" alt="" srcset="" style="width: 90px;"></a>
                     
                     
                     
@@ -193,7 +193,11 @@
                                     <li><a class="dropdown-item" href="{{route('empresa.perfil.edit',$user->empresa_id)}}"><i class="fad fa-landmark"></i> Dados da Empresa</a></li>
                                     
                                  @endcan
+                                 @if(auth()->user()->can('admin'))
                                     <li><a class="dropdown-item" href="{{route('perfil.edit',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
+                                 @else
+                                 <li><a class="dropdown-item" href="{{route('dados.editar',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
+                                 @endif
                                     <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()"><i class="fad fa-sign-out"></i> Sair</a></li>
                                 </ul>
                             </li>

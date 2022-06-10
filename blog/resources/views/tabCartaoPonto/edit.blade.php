@@ -60,7 +60,7 @@
         <!--</script>-->
         <!--fim do modal-->
 
-        <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabcartaoponto.update',$dados->id)}}">
+        <form class="row g-3 mt-1 mb-3" method="POST" id="form" action="{{route('tabela.cartao.ponto.atualizar',base64_encode($dados->id))}}">
             <input type="hidden" name="lancamento" value="{{$dados->id}}">
             @csrf
             @method('PATCH')
@@ -68,7 +68,7 @@
             <section class="section__botoes--boletim-tabela">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{route('tabcartaoponto.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{route('tabela.cartao.ponto.novo')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -186,7 +186,7 @@
             });
             $('#listapesquisa').html(nome)
           }
-          if (data.length === 1) {
+          if (data.length === 1 ) {
             $('#search').val(data[0].liboletim)
             // lancamentoTab(dados, status, data[0].lsdata)
           } 
@@ -209,7 +209,7 @@
       })
     }
     function limpaCamposTab() {
-      $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+      $('#form').attr('action', "{{ route('tabela.cartao.ponto.cadastro') }}");
       $('#incluir').removeAttr( "disabled" )
       $('#atualizar').attr('disabled','disabled')
       $('#deletar').attr('disabled','disabled')
@@ -232,7 +232,7 @@
               $('#method').val('PUT')
               buscatomador(data.tomador)
           }else{
-            $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+            $('#form').attr('action', "{{ route('tabela.cartao.ponto.cadastro') }}");
             $('#incluir').removeAttr( "disabled" )
             $('#atualizar').attr('disabled','disabled')
             $('#deletar').attr('disabled','disabled')
@@ -282,6 +282,10 @@
     function monta_dados(dados) {
       let novodados = dados.split('  ')
       return novodados[1];
+    }
+    function monta_dados_pesquisa(dados) {
+      let novodados = dados.split('  ')
+      return novodados[0];
     }
     function Alerta(tomador) {
         Swal.fire({

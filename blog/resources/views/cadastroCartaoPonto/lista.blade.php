@@ -11,7 +11,7 @@
                 <section class="section__search">
 
                     <div class="col-md-5">
-                        <form action="{{  route('cadastrocartaoponto.index')}}" method="GET">
+                        <form action="{{  route('cartao.ponto.novo')}}" method="GET">
                             <div class="d-flex">
                                 <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa"  id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
@@ -91,20 +91,17 @@
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                     
-                                        <a class="button__editar btn" href="{{route('cadastrocartaoponto.edit',$lancamentotabela->id)}}"><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('cartao.ponto.editar',base64_encode($lancamentotabela->id))}}"><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <!--<form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}" method="post">-->
-                                        <!--    @csrf-->
-                                        <!--    @method('delete')-->
-                                        <!--    <input type="hidden" name="editar" value="1">-->
+                                     
                                             <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCartaoPonto{{$key}}"><i class="icon__color fad fa-trash"></i></button>
-                                        <!--</form>-->
+                                    
                                         <section class="delete__tabela--cartaoPonto">
                                             <div class="modal fade" id="deleteCartaoPonto{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered col-8">
                                                     <div class="modal-content">
-                                                        <form action="{{route('cadastrocartaoponto.destroy',$lancamentotabela->id)}}" id="formdelete" method="post">
+                                                        <form action="{{route('cartao.ponto.deletar',base64_encode($lancamentotabela->id))}}" id="formdelete" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-header header__modal">

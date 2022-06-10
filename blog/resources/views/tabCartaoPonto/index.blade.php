@@ -60,7 +60,7 @@
         <!--</script>-->
         <!--fim do modal-->
 
-        <form class="row g-3" method="POST" id="form" action="{{route('tabcartaoponto.store')}}">
+        <form class="row g-3" method="POST" id="form" action="{{route('tabela.cartao.ponto.cadastro')}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="">
             <input type="hidden" name="feriado">
@@ -216,7 +216,7 @@
       })
     }
     function limpaCamposTab() {
-      $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+      $('#form').attr('action', "{{ route('tabela.cartao.ponto.cadastro') }}");
       $('#incluir').removeAttr( "disabled" )
       $('#atualizar').attr('disabled','disabled')
       $('#deletar').attr('disabled','disabled')
@@ -242,7 +242,7 @@
               $('#method').val('PUT')
               buscatomador(data.tomador)
           }else{
-            $('#form').attr('action', "{{ route('tabcartaoponto.store') }}");
+            $('#form').attr('action', "{{ route('tabela.cartao.ponto.cadastro') }}");
             $('#incluir').removeAttr( "disabled" )
             $('#atualizar').attr('disabled','disabled')
             $('#deletar').attr('disabled','disabled')

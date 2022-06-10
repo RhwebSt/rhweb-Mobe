@@ -11,7 +11,7 @@
                 <section class="section__search">
 
                     <div class="col-md-5">
-                        <form action="{{route('tabcartaoponto.index')}}" method="GET">
+                        <form action="{{route('tabela.cartao.ponto.novo')}}" method="GET">
                             <div class="d-flex">
                                 <input placeholder="clique ou digite para pesquisar" class="form-control" list="listapesquisa"  id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
@@ -89,7 +89,7 @@
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <a class="button__editar btn" href="{{route('tabcartaoponto.edit',base64_encode($lancamentotabela->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('tabela.cartao.ponto.editar',base64_encode($lancamentotabela->id))}}"><i class="icon__color fas fa-pen"></i></a>
                                     </td>
                                     
                                     <td class="td__body text-nowrap col" style="width:60px;">
@@ -101,7 +101,7 @@
                                             <div class="modal fade" id="deleteBoletimTabPreco{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered col-8">
                                                     <div class="modal-content">
-                                                        <form action="{{route('tabcartaoponto.destroy',$lancamentotabela->id)}}" id="" method="post">
+                                                        <form action="{{route('tabela.cartao.ponto.deletar',base64_encode($lancamentotabela->id))}}" id="" method="post">
                                                         @csrf
                                                                 @method('delete')
                                                             <div class="modal-header header__modal">

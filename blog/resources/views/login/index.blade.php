@@ -48,7 +48,7 @@
                 @enderror
                 
                 <div class="div-log">
-                  <img class="logo-login" src="{{url('imagem/rhwebColorWhiteBigger.png')}}" alt="">
+                  <img class="logo-login" src="{{url('imagem/NewLogoBrancaRh.png')}}" alt="">
                 </div>
 
                 <div class="col-12 mb-2">

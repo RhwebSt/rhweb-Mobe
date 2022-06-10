@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
+use App\Notifications\notificacaoUsuarios;
 use App\User;
 use App\Pessoai;
 use App\Empresa;
@@ -128,11 +129,11 @@ class UsuarioController extends Controller
                     array_push($p,$permissao->name);
                 }
             }
-        try {
+        
             $users = $this->user->cadastro($dados,$p);
-           
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
-            
+            $users->notify(new notificacaoUsuarios($users,$dados['senha']));
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+            try { 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível cadastrar.']);
         }

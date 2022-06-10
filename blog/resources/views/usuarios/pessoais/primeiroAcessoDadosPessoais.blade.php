@@ -81,13 +81,13 @@
             <h1 class="title__principal">Dados Pessoais</h1>
     
             <section class="">
-                <form class="row g-3" id="form" action="" method="POST">
+                <form class="row g-3" id="form" action="{{route('dados.cadastro')}}" method="POST">
                     @csrf
 
-
+                    <input type="hidden" name="user" value="{{$user->id}}">
                     <div class="col-md-8">
                         <label for="nome" class="form-label ">Nome</label>
-                        <input type="text" class="form-control @error('nome') is-invalid @enderror" value="{{$pessoais->name}}" name="nome" id="nome" placeholder="Ex:Maria">
+                        <input type="text" class="form-control @error('nome') is-invalid @enderror" value="{{old('nome').@$user->name}}" name="nome" id="nome" placeholder="Ex:Maria">
                         @error('nome')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -95,7 +95,7 @@
                         
                     <div class="col-md-4">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control @error('cpf') is-invalid @enderror" value="{{isset($pessoais->pscpf) ? $pessoais->pscpf : 'Default'}}" name="cpf" id="cpf" placeholder="Ex: 000.000.000-00">
+                        <input type="text" class="form-control @error('cpf') is-invalid @enderror" value="{{old('cpf')}}" name="cpf" id="cpf" placeholder="Ex: 000.000.000-00">
                         @error('cpf')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -103,7 +103,7 @@
         
                     <div class="col-md-4">
                         <label for="data__nascimento" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror" value="{{isset($pessoais->psnascimento) ? $pessoais->psnascimento : 'Default'}}" name="data__nascimento"  id="data__nascimento">
+                        <input type="date" class="form-control @error('data__nascimento') is-invalid @enderror" value="{{old('data__nascimento')}}" name="data__nascimento"  id="data__nascimento">
                         @error('data__nascimento')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -111,7 +111,7 @@
                     
                     <div class="col-md-4">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror"  value="{{$pessoais->email}}" name="email" id="email" placeholder="Ex: email@email.com">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror"  value="{{old('email').@$user->email}}" name="email" id="email" placeholder="Ex: email@email.com">
                         @error('email')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -120,7 +120,7 @@
                     
                     <div class="col-md-4">
                         <label for="telefone" class="form-label">Telefone</label>
-                        <input type="text" class="form-control @error('telefone') is-invalid @enderror" value="{{isset($pessoais->pstelefone) ? $pessoais->pstelefone : ''}}" name="telefone" id="telefone" placeholder="Ex:(00) 00000-0000">
+                        <input type="text" class="form-control @error('telefone') is-invalid @enderror" value="{{old('telefone')}}" name="telefone" id="telefone" placeholder="Ex:(00) 00000-0000">
                         @error('telefone')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -128,7 +128,7 @@
         
                     <div class="col-md-4">
                         <label for="cep" class="form-label">CEP</label>
-                        <input type="text" class="form-control @error('cep') is-invalid @enderror" maxlength="16" value="{{isset($pessoais->escep) ? $pessoais->escep : ''}}" name="cep" id="cep" placeholder="Ex: 00000-000">
+                        <input type="text" class="form-control @error('cep') is-invalid @enderror" maxlength="16" value="{{old('cep')}}" name="cep" id="cep" placeholder="Ex: 00000-000">
                         @error('cep')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -136,7 +136,7 @@
                         
                     <div class="col-md-8">
                         <label for="logradouro" class="form-label">Rua</label>
-                        <input type="text" class="form-control  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{isset($pessoais->eslogradouro) ? $pessoais->eslogradouro : ''}}" name="logradouro" id="logradouro">
+                        <input type="text" class="form-control  @error('logradouro') is-invalid @enderror" maxlength="50" value="{{old('logradouro')}}" name="logradouro" id="logradouro">
                         @error('logradouro')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -144,7 +144,7 @@
         
                     <div class="col-md-4">
                         <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control @error('numero') is-invalid @enderror" maxlength="10" value="{{isset($pessoais->esnum) ? $pessoais->esnum : ''}}" name="numero" id="numero">
+                        <input type="text" class="form-control @error('numero') is-invalid @enderror" maxlength="10" value="{{old('numero')}}" name="numero" id="numero">
                         @error('numero')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -336,18 +336,14 @@
                             ]
                         ?>
                         @foreach($tipo as $tipos)
-                            @if($tipos === $pessoais->escomplemento)
-                                <option selected >{{$pessoais->escomplemento}}</option>
-                            @else
-                                <option >{{$tipos}}</option>
-                            @endif
+                            <option >{{$tipos}}</option>
                         @endforeach
                         </select> 
                     </div>
                             
                     <div class="col-md-5">
                         <label for="bairro" class="form-label">Bairro</label>
-                        <input type="text" class="form-control @error('bairro') is-invalid @enderror" maxlength="40"  value="{{isset($pessoais->esbairro) ? $pessoais->esbairro : ''}}" name="bairro" id="bairro">
+                        <input type="text" class="form-control @error('bairro') is-invalid @enderror" maxlength="40"  value="{{old('bairro')}}" name="bairro" id="bairro">
                         @error('bairro')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -355,7 +351,7 @@
         
                     <div class="col-md-8">
                         <label for="localidade" class="form-label">Municipio</label>
-                        <input type="text" class="form-control @error('localidade') is-invalid @enderror" maxlength="30" value="{{isset($pessoais->esmunicipio) ? $pessoais->esmunicipio : ''}}" name="localidade" id="localidade">
+                        <input type="text" class="form-control @error('localidade') is-invalid @enderror" maxlength="30" value="{{old('localidade')}}" name="localidade" id="localidade">
                         @error('localidade')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -363,7 +359,7 @@
         
                     <div class="col-md-4">
                         <label for="uf" class="form-label">UF</label>
-                        <input type="text" class="form-control @error('uf') is-invalid @enderror" maxlength="2" value="{{isset($pessoais->esuf) ? $pessoais->esuf : ''}}" name="uf" id="uf">
+                        <input type="text" class="form-control @error('uf') is-invalid @enderror" maxlength="2" value="{{old('uf')}}" name="uf" id="uf">
                         @error('uf')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -385,7 +381,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+        <script type="text/javascript" src="{{url('/js/ferramentas/cep.js')}}" ></script>
         <script>
             $('#cep').mask("00000-000")
             $('#cpf').mask('000.000.000-00', {reverse: true});

@@ -31,55 +31,7 @@ class CadastroCartaoPontoController extends Controller
     }
     public function index()
     {
-        $search = request('search');
-        // dd($search);
-        $condicao = request('codicao'); 
-        $today = Carbon::today();
-        $user = auth()->user(); 
-        $lancamentotabelas = $this->lancamentotabela
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
-        ->select('tomadors.tsnome','tomadors.tscnpj','lancamentotabelas.*')
-        ->where(function($query) use ($search,$user){
-           if ($search) {
-            $query->where([
-                ['lancamentotabelas.lsstatus','D'],
-                ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['lancamentotabelas.liboletim',$search] 
-            ])
-            ->orWhere([
-                ['lancamentotabelas.lsstatus','D'],
-                ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['tomadors.tsnome','like','%'.$search.'%']
-            ])
-            ->orWhere([
-                ['lancamentotabelas.lsstatus','D'],
-                ['lancamentotabelas.empresa_id', $user->empresa_id],
-                ['tomadors.tscnpj',$search]
-            ]);
-           }else{
-            $query->where([
-                ['lancamentotabelas.lsstatus','D'],
-                ['lancamentotabelas.empresa_id', $user->empresa_id]
-            ]);
-           }
-        })
-        ->with('tomador.cartaoponto')
-        ->orderBy('lancamentotabelas.liboletim', 'asc')
-        ->paginate(10);
-        // dd($lancamentotabelas);
-        // if ($search) {
-        //     $lancamentotabelas = $this->lancamentotabela->pesquisaLista('D','asc',$search);
-        // }else{
-        //     $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
-        // }
-        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
-        
-        // ->buscaUnidadeEmpresa($user->empresa);
-        if ($condicao) {
-            $dados = $this->lancamentotabela->where('id',$condicao)->with('tomador')->first();
-            return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
-        }
-        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+      
     }
     public function filtroPesquisaOrdem($condicao = null,$ordem)
     {
@@ -133,7 +85,54 @@ class CadastroCartaoPontoController extends Controller
      */
     public function create()
     {
-        //
+        $search = request('search');
+        $condicao = request('codicao'); 
+        $today = Carbon::today();
+        $user = auth()->user(); 
+        $lancamentotabelas = $this->lancamentotabela
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->select('tomadors.tsnome','tomadors.tscnpj','lancamentotabelas.*')
+        ->where(function($query) use ($search,$user){
+           if ($search) {
+            $query->where([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['lancamentotabelas.liboletim',$search] 
+            ])
+            ->orWhere([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tsnome','like','%'.$search.'%']
+            ])
+            ->orWhere([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id],
+                ['tomadors.tscnpj',$search]
+            ]);
+           }else{
+            $query->where([
+                ['lancamentotabelas.lsstatus','D'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id]
+            ]);
+           }
+        })
+        ->with('tomador.cartaoponto')
+        ->orderBy('lancamentotabelas.liboletim', 'asc')
+        ->paginate(10);
+        // dd($lancamentotabelas);
+        // if ($search) {
+        //     $lancamentotabelas = $this->lancamentotabela->pesquisaLista('D','asc',$search);
+        // }else{
+        //     $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
+        // }
+        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        
+        // ->buscaUnidadeEmpresa($user->empresa);
+        if ($condicao) {
+            $dados = $this->lancamentotabela->where('id',$condicao)->with('tomador')->first();
+            return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        }
+        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
     /**
@@ -227,6 +226,7 @@ class CadastroCartaoPontoController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
+        $id =  base64_decode($id);
         // $valorrublica = new ValoresRublica;
         // $lancamentotabela = new Lancamentotabela;
         // $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
@@ -282,6 +282,7 @@ class CadastroCartaoPontoController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
+        $id =  base64_decode($id);
         $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
         $user = Auth::user();
         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
@@ -313,6 +314,7 @@ class CadastroCartaoPontoController extends Controller
     {
        
         $user = Auth::user();
+        $id =  base64_decode($id);
         $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
             return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
@@ -330,7 +332,7 @@ class CadastroCartaoPontoController extends Controller
         try {
             // $bolcartaopontos = $this->bolcartaoponto->deletarLancamentoTabela($id);
             $this->lancamentotabela->deletar($id);
-            return redirect()->route('cadastrocartaoponto.index')->withSuccess('Deletado com sucesso.'); 
+            return redirect()->back()->withSuccess('Deletado com sucesso.'); 
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }

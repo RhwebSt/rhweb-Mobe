@@ -31,6 +31,37 @@ class TabCartaoPontoController extends Controller
     }
     public function index()
     {
+        
+        
+    }
+
+    public function filtroPesquisaOrdem($condicao)
+    {
+        $user = Auth::user();
+        $lancamentotabelas = $this->lancamentotabela
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->where(function($query) use ($user){
+            $query->where([
+                ['lancamentotabelas.lsstatus','M'],
+                ['lancamentotabelas.empresa_id', $user->empresa_id]
+            ]);
+        })
+        ->with('tomador.cartaoponto')
+        ->orderBy('liboletim', $condicao)
+        ->paginate(10);
+        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
+        // $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
+        // $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
+        return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
         // $search = request('search');
         // $condicao = request('codicao'); 
         // if ($search) {
@@ -39,6 +70,7 @@ class TabCartaoPontoController extends Controller
         //     $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
         // }
         $search = request('search');
+        // dd($search);
         $condicao = request('codicao'); 
         $today = Carbon::today();
         $user = auth()->user();
@@ -85,37 +117,6 @@ class TabCartaoPontoController extends Controller
            
             return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
         }
-        
-    }
-
-    public function filtroPesquisaOrdem($condicao)
-    {
-        $user = Auth::user();
-        $lancamentotabelas = $this->lancamentotabela
-        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
-        ->where(function($query) use ($user){
-            $query->where([
-                ['lancamentotabelas.lsstatus','M'],
-                ['lancamentotabelas.empresa_id', $user->empresa_id]
-            ]);
-        })
-        ->with('tomador.cartaoponto')
-        ->orderBy('liboletim', $condicao)
-        ->paginate(10);
-        $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
-        // $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
-        // $lancamentotabelas = $this->lancamentotabela->buscaListas('M',$condicao);
-        return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -279,6 +280,7 @@ class TabCartaoPontoController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
+        $id = base64_decode($id);
         $permissions = Permission::where('name','like','%'.'mbctd'.'%')->first(); 
         $user = Auth::user();
         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
@@ -311,6 +313,7 @@ class TabCartaoPontoController extends Controller
     {
         try {
             $user = Auth::user();
+            $id = base64_decode($id);
             $permissions = Permission::where('name','like','%'.'mbcte'.'%')->first(); 
             if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
                 return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);

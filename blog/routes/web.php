@@ -17,6 +17,8 @@ Route::resource('/','Home\\HomeController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->names('login');
 Route::resource('administrador/login','Administrador\\Login\\LoginController')->names('login.administrador');
 Route::get('usuario/cadastro','User\\UserController@index');
+Route::get('dados/pessoais/{id}','Pessoais\\PessoaisController@create')->name('dados.pessoais');
+Route::post('dados/pessoais/cadastro','Pessoais\\PessoaisController@store')->name('dados.cadastro');
 Route::resource('cadastro/empresa','Empresa\\EmpresaController')->only(['store'])->names('cadastro.empresa');
 Route::resource('user','User\\UserController')->names('user'); 
 // Route::post('usuario/cadastro','User\\UserController@PreStore')->name('usuario.pre.cadastro');
@@ -37,19 +39,31 @@ Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name(
 Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('relatorio/boletim/tabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
-    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create');
+    Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create')->middleware(['permission:mbcpl15555738']);
     Route::get('boletim/cartaoponto/editar/{id}/{idboletim}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@edit')->name('boletim.cartaoponto.edit');
     Route::get('boletim/cartao/ponto/{boletim}/{trabalhador}/{data}','BoletimCartaoPonto\\BoletimCartaoPontoController@show');
     
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
 
-    Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
+    Route::get('cartao/ponto/novo','CadastroCartaoPonto\\CadastroCartaoPontoController@create')->name('cartao.ponto.novo')->middleware(['permission:mbcpc15555738']);
+    Route::post('cartao/ponto/cadastro','CadastroCartaoPonto\\CadastroCartaoPontoController@store')->name('cartao.ponto.cadastro')->middleware(['permission:mbcpc15555738']);
+    Route::get('cartao/ponto/editar/{id}','CadastroCartaoPonto\\CadastroCartaoPontoController@edit')->name('cartao.ponto.editar')->middleware(['permission:mbcpd15555738']);
+    Route::put('cartao/ponto/atualizar/{id}','CadastroCartaoPonto\\CadastroCartaoPontoController@update')->name('cartao.ponto.atualizar')->middleware(['permission:mbcpd15555738']);
+    Route::delete('cartao/ponto/deletar/{id}','CadastroCartaoPonto\\CadastroCartaoPontoController@destroy')->name('cartao.ponto.deletar')->middleware(['permission:mbcpe15555738']);
+    // Route::resource('cadastrocartaoponto','CadastroCartaoPonto\\CadastroCartaoPontoController');
+
     Route::get('ordem/cadastro/cartao/ponto/{condicao?}/{ordem}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdem')->name('ordem.cadastro.cartao.ponto');
     Route::get('edit/ordem/cadastro/cartao/ponto/{id?}/{condicao}','CadastroCartaoPonto\\CadastroCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.cadastro.cartao.ponto');
 
-    Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
+    Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto')->middleware(['permission:mbcpr15555738']);
 
-    Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
+    Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo')->middleware(['permission:mbctc15555738']);
+    Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro');
+    Route::get('tabela/cartao/ponto/editar/{id}','TabCartaoPonto\\TabCartaoPontoController@edit')->name('tabela.cartao.ponto.editar');
+    Route::put('tabela/cartao/ponto/atualizar/{id}','TabCartaoPonto\\TabCartaoPontoController@update')->name('tabela.cartao.ponto.atualizar');
+    Route::delete('tabela/cartao/ponto/deletar/{id}','TabCartaoPonto\\TabCartaoPontoController@destroy')->name('tabela.cartao.ponto.deletar');
+    // Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
+
     Route::get('tabela/cartao/ponto/unidade/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
     Route::get('tabela/cartao/ponto/pesquisa/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@pesquisa');
     Route::get('ordem/tabela/cartao/ponto/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdem')->name('ordem.tabela.cartao.ponto');
@@ -164,6 +178,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::post('imprimir/calculo/folha/banco','CalculoFolha\\relatorioBancoController@imprimirBanco')->name('calculo.folha.banco.imprimir');
     Route::post('imprimir/calculo/folha/rublica','CalculoFolha\\relatorioRublicaCFController@imprimir')->name('calculo.folha.rublica.imprimir');
 
+    Route::get('dados/pessoais/editar/{id}','Pessoais\\PessoaisController@edit')->name('dados.editar');
     
     
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');

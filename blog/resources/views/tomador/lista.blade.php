@@ -10,7 +10,7 @@
                 
                 <section class="section__search">
                     <div class="col-md-5">
-                        <form action="{{route('tomador.index')}}" method="GET">
+                        <form action="{{route('tomador.novo')}}" method="GET">
                             
                             <div class="d-flex">
                                 
@@ -68,7 +68,7 @@
                             
                             <tbody class="table__body">
                                 @if(count($tomadors) > 0)
-                                @foreach($tomadors as $tomador)
+                                @foreach($tomadors as $key => $tomador)
                                 <tr class="tr__body">
                                     <td class="td__body text-nowrap col" style="width:80px;">{{$tomador->tsmatricula}}</td>
                                     <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$tomador->tsnome}}">
@@ -98,15 +98,44 @@
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
                                         
-                                        <a class="button__editar btn" href="{{route('tomador.edit',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
+                                        <a class="button__editar btn" href="{{route('tomador.editar',base64_encode($tomador->id))}}"><i class="icon__color fas fa-pen"></i></a>
                                         
                                     </td>
                                     <td class="td__body text-nowrap col" style="width:60px;">
-                                        <!--<form action="{{route('tomador.destroy',$tomador->id)}}" method="post">-->
-                                        <!--    @csrf-->
-                                        <!--    @method('delete')-->
-                                            <button type="submit" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTomador"><i class="icon__color fad fa-trash"></i></button>
-                                        <!--</form>-->
+                                       
+                                            <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTomador{{$key}}"><i class="icon__color fad fa-trash"></i></button>
+                                        <section class="delete__tabela--tomador">
+                                            <div class="modal fade" id="deleteTomador{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered col-8">
+                                                    <div class="modal-content">
+                                                        <form action="{{route('tomador.deletar',$tomador->id)}}" id="formdelete" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <div class="modal-header header__modal">
+                                                                <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                                <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                            </div>
+                                                            
+                                                            <div class="modal-body body__modal ">
+                                                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                                                        <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
+                                                                    
+                                                                        <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                        
+                                                                        <p class="content--deletar2">Obs: Será excluído tudo o que está vinculado á este tomador.</p>
+                                                                        
+                                                                    </div>
+                                                            </div>
+                                                            
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                                <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -135,35 +164,3 @@
     </div>
 </div>
 
-<section class="delete__tabela--tomador">
-    <div class="modal fade" id="deleteTomador" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered col-8">
-            <div class="modal-content">
-                <form action="" id="formdelete" method="post">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header header__modal">
-                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                    </div>
-                    
-                    <div class="modal-body body__modal ">
-                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
-                            
-                                <p class="content--deletar">Deseja realmente excluir?</p>
-                                
-                                <p class="content--deletar2">Obs: Será excluído tudo o que está vinculado á este tomador.</p>
-                                
-                            </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                        <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>

@@ -61,7 +61,7 @@
         <!--</script>-->
         <!--fim do modal-->
 
-        <form class="row g-3" id="form" method="POST" action="{{route('cadastrocartaoponto.store')}}">
+        <form class="row g-3" id="form" method="POST" action="{{route('cartao.ponto.cadastro')}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="">
             <input type="hidden" name="status" value="D" id="status">
@@ -258,7 +258,7 @@
     }
 
     function limpaCamposTab() {
-      $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
+      $('#form').attr('action', "{{ route('cartao.ponto.cadastro') }}");
       $('#incluir').removeAttr("disabled")
       $('#atualizar').attr('disabled', 'disabled')
       $('#deletar').attr('disabled', 'disabled')
@@ -284,7 +284,7 @@
 
 
       } else {
-        $('#form').attr('action', "{{ route('cadastrocartaoponto.store') }}");
+        $('#form').attr('action', "{{ route('cartao.ponto.cadastro') }}");
         $('#incluir').removeAttr("disabled")
         $('#atualizar').attr('disabled', 'disabled')
         $('#deletar').attr('disabled', 'disabled')

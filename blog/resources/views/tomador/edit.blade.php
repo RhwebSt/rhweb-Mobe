@@ -70,12 +70,12 @@
 
 
 
-        <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.update',$tomador->id) }}" method="Post">
+        <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.atualizar',$tomador->id) }}" method="Post">
             
             <section class="section__botoes--tomador">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{route('tomador.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar</a>
+                    <a class="botao__voltar" href="{{route('tomador.novo')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar</a>
                 </div>
 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
@@ -1247,7 +1247,7 @@
             function campo() {
                 $('#carregamento').addClass('d-none')
                 $('#relatoriotomador').addClass('disabled')
-                $('#form').attr('action', "{{ route('tomador.store') }}");
+                $('#form').attr('action', "{{ route('tomador.cadastra') }}");
                 $('#incluir').removeAttr("disabled")
                 $('#atualizar').attr('disabled', 'disabled')
                 $('#deletar').attr('disabled', 'disabled')

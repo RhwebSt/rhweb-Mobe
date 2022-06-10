@@ -305,8 +305,12 @@
                     ]
                 ?>
                 @foreach($tipo as $tipos)
-                    @if($tipos === $pessoais->escomplemento)
-                        <option selected >{{$pessoais->escomplemento}}</option>
+                    @if(isset($pessoais->escomplemento))
+                        @if($tipos === $pessoais->escomplemento)
+                            <option selected >{{$pessoais->escomplemento}}</option>
+                        @else
+                            <option >{{$tipos}}</option>
+                        @endif
                     @else
                         <option >{{$tipos}}</option>
                     @endif

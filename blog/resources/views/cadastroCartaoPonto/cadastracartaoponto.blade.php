@@ -73,7 +73,7 @@
             <section class="section__botoes--cartao--ponto">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{route('cadastrocartaoponto.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{route('cartao.ponto.novo')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
