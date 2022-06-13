@@ -66,7 +66,7 @@
             <section class="section__botoes--boletim-tabela">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="{{route('tabcartaoponto.index')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{route('tabela.cartao.ponto.novo')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-4 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">

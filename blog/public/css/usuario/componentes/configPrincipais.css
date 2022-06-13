@@ -22,7 +22,7 @@
     --color-bg-svg-home: rgb(237,237,241,1);
     --input-bg-color: #FAFAFA;
     --select-icon-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath fill='black' stroke='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") ;
-    --date-icon-color:
+    --stroke--color: black !important;
 }
 
 .darkmode{
@@ -50,7 +50,7 @@
     --color-bg-svg-home:rgba(73,71,71,1);
     --input-bg-color: #1F1F1F;
     --select-icon-color:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath fill='white' stroke='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") ;
-    --date-icon-color
+    --stroke--color: white !important;
 }
 
 
@@ -313,7 +313,7 @@ input, select{
     stroke: var(--color-teste);
     stroke-linecap: round;
     stroke-linejoin: round;
-    animation: teste ease-in-out 600ms forwards 2.3s;
+    animation: teste ease 1s forwards 3s;
 }
 
 .letterRhwebNone{
@@ -321,8 +321,13 @@ input, select{
     stroke: var(--color-teste);
     stroke-linecap: round;
     stroke-linejoin: round;
-    animation: teste1 ease-in-out 600ms forwards 2.3s;
+    animation: teste1 ease 1s forwards 3s;
 }
+
+.cls-1 {
+    fill: none;
+    stroke: var(--stroke--color);
+  }
 
 
 

@@ -37,7 +37,7 @@ Route::get('error/servidor/{id}','Sevidor\\ErrosSevidorController@index')->name(
 
 
 Route::group(['middleware' => 'autenticacao'], function () {
-    Route::get('relatorio/boletim/tabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela');
+    Route::get('relatorio/boletim/tabela/{id}','relatorioBoletimTabela\\relatorioBoletimTabelaController@fichaLancamentoTab')->name('relatorio.boletim.tabela')->middleware(['permission:mbctr15555738']);
     Route::get('listatabelapreco/{id}','TabelaPreco\\TabelaPrecoController@listaget')->name('listatabelapreco.lista');
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create')->middleware(['permission:mbcpl15555738']);
     Route::get('boletim/cartaoponto/editar/{id}/{idboletim}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@edit')->name('boletim.cartaoponto.edit');
@@ -58,10 +58,10 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto')->middleware(['permission:mbcpr15555738']);
 
     Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo')->middleware(['permission:mbctc15555738']);
-    Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro');
-    Route::get('tabela/cartao/ponto/editar/{id}','TabCartaoPonto\\TabCartaoPontoController@edit')->name('tabela.cartao.ponto.editar');
-    Route::put('tabela/cartao/ponto/atualizar/{id}','TabCartaoPonto\\TabCartaoPontoController@update')->name('tabela.cartao.ponto.atualizar');
-    Route::delete('tabela/cartao/ponto/deletar/{id}','TabCartaoPonto\\TabCartaoPontoController@destroy')->name('tabela.cartao.ponto.deletar');
+    Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro')->middleware(['permission:mbctc15555738']);
+    Route::get('tabela/cartao/ponto/editar/{id}','TabCartaoPonto\\TabCartaoPontoController@edit')->name('tabela.cartao.ponto.editar')->middleware(['permission:mbctd15555738']);
+    Route::put('tabela/cartao/ponto/atualizar/{id}','TabCartaoPonto\\TabCartaoPontoController@update')->name('tabela.cartao.ponto.atualizar')->middleware(['permission:mbctd15555738']);
+    Route::delete('tabela/cartao/ponto/deletar/{id}','TabCartaoPonto\\TabCartaoPontoController@destroy')->name('tabela.cartao.ponto.deletar')->middleware(['permission:mbcte15555738']);
     // Route::resource('tabcartaoponto','TabCartaoPonto\\TabCartaoPontoController')->names('tabcartaoponto');
 
     Route::get('tabela/cartao/ponto/unidade/{id}/{status}','TabCartaoPonto\\TabCartaoPontoController@show');
@@ -70,7 +70,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('edit/ordem/tabela/cartao/ponto/{id?}/{condicao}','TabCartaoPonto\\TabCartaoPontoController@filtroPesquisaOrdemEdit')->name('edit.ordem.tabela.cartao.ponto');
     
 
-    Route::get('boletim/tabela/cadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('boletim.tabela.create');
+    Route::get('boletim/tabela/cadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('boletim.tabela.create')->middleware(['permission:mbctl15555738']);
 
     Route::get('boletim/tabela/edita/{quantidade}/{boletim}/{tomador}/{lancamento}/{id}/{data}','TabCadastro\\TabCadastroController@edit')->name('boletim.tabela.edit');
     Route::get('boletim/ordem/tabela/{quantidade}/{boletim}/{tomador}/{id}/{trabalhador?}/{data}/{ordem}','TabCadastro\\TabCadastroController@ordem')->name('boletim.tabela.ordem');
@@ -206,6 +206,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
+        
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 
         // Route::resource('usuario','UsuarioSindicato\\UsuarioSindicatoController')->only(['store', 'update', 'destroy','edit','index'])->names('usuario'); 
         Route::resource('empresa','Empresa\\EmpresaController')->only(['store', 'update', 'destroy','edit','index'])->names('empresa');  

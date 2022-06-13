@@ -21,7 +21,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand icone__rhweb" id="home" href="#page-top"><img class="fotoTopo" src="{{url('/imagem/rhwebTop2.png')}}" alt=""></a>
+                <a class="navbar-brand icone__rhweb" id="home" href="#page-top"><img class="fotoTopo" src="{{url('/imagem/NewLogoBrancaRh.png')}}" alt=""></a>
                 <button class="navbar-toggler navbar-toggler-right" id="hamburgerButton" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <i id="iconHambButton" class="fad fa-2x fa-bars"></i>
                 </button>

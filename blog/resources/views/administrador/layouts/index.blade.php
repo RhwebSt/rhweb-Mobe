@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="{{url('/css/administrador/usuario/editarLoginAcesso.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/usuario/indexLoginUsuario.css')}}">
         <link rel="stylesheet" href="{{url('/css/administrador/usuario/CadastroEmpresa.css')}}">
+        <link rel="stylesheet" href="{{url('/css/administrador/mensagemEmail/mensagemEmail.css')}}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
         <!-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -142,6 +143,7 @@
                                         <i class="fad fa-comment-alt-dots"></i> Notificações Usuários
                                     </a>
                                     <ul class="dropdown-menu dropDown__menu--list" aria-labelledby="offcanvasNavbarDropdown">
+                                        <li><a class="dropdown-item dropdown__item--list" href="#">Enviar Email</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Enviar notificação</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">atualização do sistema</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Recibo Avulso</a></li>

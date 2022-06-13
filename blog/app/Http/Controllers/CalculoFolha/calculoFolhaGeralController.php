@@ -1512,7 +1512,7 @@ class calculoFolhaGeralController extends Controller
         if ($valores != null) {
             $horasex = $valores * ($horasex/60);
         }else{
-            $horasex = ($horasex/60);
+            $horasex = ($horasex/60) * $valores;
         }
         return $horasex;
     }

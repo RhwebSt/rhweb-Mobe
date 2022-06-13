@@ -15,8 +15,8 @@ class CreateSugestaosTable extends Migration
     {
         Schema::create('sugestaos', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('ssdescricao', 60)->nullable();
-            $table->char('ssicon', 10)->nullable();
+            $table->char('ssdescricao', 255)->nullable();
+            $table->char('ssicon', 20)->nullable();
             $table->unsignedInteger('empresa_id')->unsigned()->nullable();
             $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
             $table->timestamps();

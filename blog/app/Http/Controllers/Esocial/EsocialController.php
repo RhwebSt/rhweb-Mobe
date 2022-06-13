@@ -45,14 +45,14 @@ class EsocialController extends Controller
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=S.01.00.00'."\r\n".
-        'ambiente=1'."\r\n".
+        'ambiente=2'."\r\n".
         'INCLUIRS1020'."\r\n".                                                                   
         'tpAmb_4=1'."\r\n".                                                                  
         'procEmi_5=1'."\r\n".                                                                   
         'verProc_6=1.0.0'."\r\n".                                                                
         'tpInsc_8=1'."\r\n".                                                                   
         'nrInsc_9='.substr(str_replace(array(".", ",", "-", "/"), "", $tomador->tscnpj),0,-6)."\r\n".                                                               
-        'codLotacao_13='.self::monta_inteiro($tomador->tsmatricula,6,'esquerda')."\r\n".                                                           
+        'codLotacao_13='.$tomador->tsmatricula."\r\n".                                                           
         'iniValid_14='.date("Y-m")."\r\n".                                                         
         'fimValid_15='."\r\n".                                           
         'tpLotacao_17=09'."\r\n".                                                                

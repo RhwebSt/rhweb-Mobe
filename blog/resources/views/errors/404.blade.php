@@ -13,7 +13,7 @@
     <title>RHWeb - Error 404</title>
 </head>
 <body>
-    <section class="vh-100 p-5" style="background-image: linear-gradient( 120deg, #0746f2, #2901da, #5629d1 );">
+    <section class="vh-100 p-5">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-10">

@@ -71,15 +71,15 @@
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
                     
                     <li class="nav-item pill__item ms-1 mt-1 " role="presentation">
-                        <button class="nav-link botao__pill" id="calcula-folha-tab" data-bs-toggle="pill" data-bs-target="#calculaFolha" type="button" role="tab" aria-controls="calculaFolha" aria-selected="true"><i class="icon__color fad fa-calculator-alt"></i> Cálculo da Folha</button>
+                        <button class="nav-link botao__pill" id="calcula-folha-tab" data-bs-toggle="pill" data-bs-target="#calculaFolha" type="button" role="tab" aria-controls="calculaFolha" aria-selected="true"><i class="icon__color fad fa-calculator-alt"></i> Calcular Folha</button>
                     </li>
                     
                     <li class="nav-item pill__item ms-1 mt-1 pillstop" role="presentation">
-                        <button class="nav-link botao__pill" id="lista-tomador-tab" data-bs-toggle="pill" data-bs-target="#lista-tomador" type="button" role="tab" aria-controls="lista-tomador" aria-selected="false"><i class="icon__color fad fa-th-list"></i> Lista Tomador</button>
+                        <button class="nav-link botao__pill" id="lista-tomador-tab" data-bs-toggle="pill" data-bs-target="#lista-tomador" type="button" role="tab" aria-controls="lista-tomador" aria-selected="false"><i class="fad icon__color fa-industry"></i> Lista Tomador</button>
                     </li>
                     
                     <li class="nav-item pill__item ms-1 mt-1 pillstop1" role="presentation">
-                        <button class="nav-link botao__pill" id="lista-geral-tab" data-bs-toggle="pill" data-bs-target="#lista-geral" type="button" role="tab" aria-controls="lista-geral" aria-selected="false"><i class="icon__color fad fa-th-list"></i> Lista Geral</button>
+                        <button class="nav-link botao__pill" id="lista-geral-tab" data-bs-toggle="pill" data-bs-target="#lista-geral" type="button" role="tab" aria-controls="lista-geral" aria-selected="false"><i class="icon__color fad fa-globe"></i> Lista Geral</button>
                     </li>
                     
                 </ul>
@@ -208,8 +208,8 @@
                                     <th class="th__header text-nowrap" style="width:200px">Data Inicial</th>
                                     <th class="th__header text-nowrap" style="width:200px">Data Final</th>
                                     <th class="th__header text-nowrap" style="width:60px;">Relatórios</th>
-                                    <th class="th__header text-nowrap" style="width:60px;">Imprimir</th>
-                                    <th class="th__header text-nowrap" style="width:60px;">Recibo</th>
+                                    <th class="th__header text-nowrap" style="width:60px;">Recibo Geral</th>
+                                    <th class="th__header text-nowrap" style="width:60px;">Recibo Trab</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Analítico</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Sefip</th>
                                 </thead>
@@ -276,13 +276,13 @@
                                         <td class="td__body text-nowrap col" style="width:60px;">
                                         
                                             <a class="btn btn__recibo" data-bs-toggle="offcanvas" href="#tomador_trabalhador{{$t}}" role="button" aria-controls="offcanvasExample">
-                                              <i class="icon__color fad fa-user"></i>
+                                              <i class="icon__color fad fa-print"></i>
                                             </a>
                                             
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="tomador_trabalhador{{$t}}" aria-labelledby="offcanvasExampleLabel">
                                             
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel{{$tomador->folhar_id}}"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
+                                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel{{$tomador->folhar_id}}"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
@@ -449,9 +449,9 @@
                                     <th class="th__header text-nowrap" style="width:120px;">Código da Folha</th>
                                     <th class="th__header text-nowrap" style="width:160px">Data Inicial</th>
                                     <th class="th__header text-nowrap" style="width:160px">Data Final</th>
-                                    <th class="th__header text-nowrap" style="width:50px;">Imprimir</th>
+                                    <th class="th__header text-nowrap" style="width:50px;">Recibo Geral</th>
                                     <th class="th__header text-nowrap" style="width:50px;">s-1200</th>
-                                    <th class="th__header text-nowrap" style="width:50px;">Recibo</th>
+                                    <th class="th__header text-nowrap" style="width:50px;">Recibo Trab</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Rúbricas</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Depósito</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Analítico</th>
@@ -490,14 +490,14 @@
                                         <td class="td__body text-nowrap col" style="width:60px;">
                                             
                                             <a class="btn btn__recibo" data-bs-toggle="offcanvas" href="#offcanvasExample1{{$folhar->id}}" role="button" aria-controls="offcanvasExample1">
-                                                <i  class="icon__color fad fa-user"></i>
+                                                <i class="icon__color fad fa-print"></i>
                                             </a>
     
                                             
                                             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel1">
                                                 
                                                 <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
+                                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel1"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
                                                     <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                                                 </div>
                                                 
@@ -866,6 +866,60 @@
     }
     
     activePill();
+    
+    
+    $('#calcula-folha-tab').click(function(){
+        $('#calculaFolha').addClass('animation-slide-in-pill');
+            setTimeout(function(){
+           $('#calculaFolha').removeClass('animation-slide-in-pill'); 
+        },1500);
+        
+        $('#lista-tomador').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#lista-tomador').removeClass('animation-slide-out'); 
+        },1500);
+        
+        $('#lista-geral').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#lista-geral').removeClass('animation-slide-out'); 
+        },1500)
+    });
+    
+    
+    $('#lista-tomador-tab').click(function(){
+        $('#lista-tomador').addClass('animation-slide-in-pill');
+            setTimeout(function(){
+           $('#lista-tomador').removeClass('animation-slide-in-pill'); 
+        },1500);
+        
+        $('#calculaFolha').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#calculaFolha').removeClass('animation-slide-out'); 
+        },1500);
+        
+        $('#lista-geral').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#lista-geral').removeClass('animation-slide-out'); 
+        },1500)
+    });
+    
+    
+    $('#lista-geral-tab').click(function(){
+        $('#lista-geral').addClass('animation-slide-in-pill');
+            setTimeout(function(){
+           $('#lista-geral').removeClass('animation-slide-in-pill'); 
+        },1500);
+        
+        $('#calculaFolha').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#calculaFolha').removeClass('animation-slide-out'); 
+        },1500);
+        
+        $('#lista-tomador').addClass('animation-slide-out');
+            setTimeout(function(){
+           $('#lista-tomador').removeClass('animation-slide-out'); 
+        },1500)
+    });
 
 </script>
 

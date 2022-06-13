@@ -1,0 +1,32 @@
+.section__botao--voltar--msg-email{
+    margin-top: 6%;
+}
+
+.button__incluir--msg-email{
+    background-color: #6e7bee;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+}
+
+.button__incluir--msg-email:hover{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+}
+
+.button__incluir--msg-email:focus{
+    background-color: #3d47a7;
+    color: white;
+    transition: 300ms ease-in-out;
+    border: 1px solid #a6afff;
+    transform: scale(1.06);
+    box-shadow: none !important;
+}
+
+.title__msg-email{
+    text-align: center;
+    font-size: 1.5rem;
+}
