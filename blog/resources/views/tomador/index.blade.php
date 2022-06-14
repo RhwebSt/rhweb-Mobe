@@ -192,8 +192,8 @@
                 </div>
                         
                 <?php
-                    if ( isset($valorrublica_matricular->vimatriculartomador)) {
-                        $matricular = $valorrublica_matricular->vimatriculartomador + 1;
+                    if ( isset($valorrublica_matricular->valoresrublica[0]->vimatriculartomador)) {
+                        $matricular = $valorrublica_matricular->valoresrublica[0]->vimatriculartomador + 1;
                     }else{
                         $matricular = 1; 
                     }

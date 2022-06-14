@@ -45,7 +45,7 @@ class EsocialController extends Controller
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'idgrupoeventos=1'."\r\n".
         'versaomanual=S.01.00.00'."\r\n".
-        'ambiente=2'."\r\n".
+        'ambiente=1'."\r\n".
         'INCLUIRS1020'."\r\n".                                                                   
         'tpAmb_4=1'."\r\n".                                                                  
         'procEmi_5=1'."\r\n".                                                                   
@@ -103,7 +103,7 @@ class EsocialController extends Controller
         // 'versaomanual=2.5.00'."\r\n".
         'versaomanual=S.01.00.00'."\r\n".
         // 'versaomanual=1.0.0.0'."\r\n".
-        'ambiente=2'."\r\n".
+        'ambiente=1'."\r\n".
         'INCLUIRS2300'."\r\n".                                                                    
         'indRetif_4=1'."\r\n".                                                                    
         'nrRecibo_5='."\r\n".                                                                   
@@ -170,7 +170,7 @@ class EsocialController extends Controller
     {
         $dados = $request->all();
         $user = Auth::user();
-        $user->notify(new notificacaoEsocial($dados['dados']));
+        $user->notify(new notificacaoEsocial($dados));
         return response()->json('Cadastro realizado com sucesso.');
         // $id = base64_decode($id);
         // $dados['trabalhador']=$id;

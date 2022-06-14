@@ -1,8 +1,13 @@
+cpfcnpjtransmissor=34350915000149
+cpfcnpjempregador=34350915000149
+idgrupoeventos=3
+versaomanual=S.01.00.00
+ambiente=2
 INCLUIRS1200
 indRetif_4=1
 nrRecibo_5=
 indApuracao_6=1
-perApur_7=15
+perApur_7=14
 tpAmb_8=1
 procEmi_9=1
 verProc_10=VER062.052021
@@ -84,7 +89,7 @@ INCLUIRS1200
 indRetif_4=1
 nrRecibo_5=
 indApuracao_6=1
-perApur_7=15
+perApur_7=14
 tpAmb_8=1
 procEmi_9=1
 verProc_10=VER062.052021

@@ -1,6 +1,15 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Página Principal')
 @section('conteine')
+    <style>
+        #particles-js{
+            display: float;
+            min-width: 100vh;
+            min-height: 100%;
+            z-index: -1 !important;
+        }
+    </style>
+
 
     <div class="svg-home-letter">
 
@@ -51,11 +60,15 @@
 
         </svg>
     </div>
+    
+    <div id="particles-js"></div>
+    
+    <script src="{{url('js/particlesjs.js')}}"></script>
+    <script src="{{url('js/appParticles.js')}}"></script>
 
-    <div class="float-end ms-auto p-2 bd-highlight feedback">
+    <div class="float-end ms-auto p-2 feedback">
         <div class="d-flex collumn">
-            <a class="text-white" style="cursor: pointer"><i class="fad fa-lg fa-comment-alt-smile"></i></a>
-            <a class="text-white fw-bold ms-1 text-decoration-none" id="feedback" style="font-size: 14px; cursor: pointer;">FeedBack</a>
+            <a class="ms-1" id="feedback"><i class="fad fa-comment-alt-lines"></i> FeedBack</a>
         </div>
     </div>
 
@@ -68,6 +81,7 @@
 
 <script>
 
+   
    
     $(document).ready(function(){
         setTimeout(function(){

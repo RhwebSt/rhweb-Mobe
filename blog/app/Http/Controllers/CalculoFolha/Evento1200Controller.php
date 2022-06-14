@@ -59,7 +59,11 @@ class Evento1200Controller extends Controller
             }else{
                 $file_name = '1200.txt';
             }
-           
+            $cd = 'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+                  'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
+                  'idgrupoeventos=3'."\r\n".
+                  'versaomanual=S.01.00.00'."\r\n".
+                  'ambiente=2'."\r\n";
             foreach ($trabalhador as $key => $trabalhadores) {
                 $cd .= 'INCLUIRS1200'."\r\n";
                 $cd .= 'indRetif_4=1'."\r\n";

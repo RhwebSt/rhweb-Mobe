@@ -24,12 +24,13 @@ use App\Comissionado;
 use App\ValoresRublica;
 use App\Rublica;
 use App\BaseCalculo;
+use App\Empresa;
 class TomadorController extends Controller
 {
     private $rublica,$tomador,$valorrublica,$taxa,$endereco,$bancario,
     $tabelapreco,$cartaoponto,$parametrosefip,$incidefolhar,$indicefatura,
     $comissionado,$retencaofatura,$bolcartaoponto,$lancamentorublica,$lancamentotabela
-    ,$basecalculo;
+    ,$basecalculo,$empresa;
     public function __construct()
     {
         $this->rublica = new Rublica;
@@ -49,6 +50,7 @@ class TomadorController extends Controller
         $this->lancamentorublica = new Lancamentorublica;
         $this->lancamentotabela = new Lancamentotabela;
         $this->basecalculo = new BaseCalculo;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -103,11 +105,13 @@ class TomadorController extends Controller
         ->distinct()
         ->paginate(10);
         // dd($tomadors);
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
         if ($condicao) {
             $tomador = $this->tomador->first($condicao);
             return view('tomador.edit',compact('user','tomador','tomadors'));
         }else{
-            $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
+            // $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
+            // dd($valorrublica_matricular);
             return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
         }
     }

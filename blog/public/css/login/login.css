@@ -9,7 +9,8 @@ label{
 }
 
 h1{
-  color: white;
+  color: white !important;
+  font-size: 18px;
 }
 
 section{
@@ -84,8 +85,8 @@ span{
 }
 
 .logo-login{
-  /*width: 250px;*/
-  /*height: 130px;*/
+  width: 240px;
+  height: 140px;
   
 }
 

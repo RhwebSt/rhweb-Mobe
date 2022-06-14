@@ -71,12 +71,13 @@ class TrabalhadorController extends Controller
         ->orderBy('tsnome', 'asc')
         ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
         if ($condicao) {
             $trabalhador = $this->trabalhador->where('id',$condicao)
             ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
-            return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
+            return view('trabalhador.edit',compact('user','trabalhador','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }else{
-            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+           
             
             return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }

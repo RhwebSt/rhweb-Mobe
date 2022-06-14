@@ -143,7 +143,7 @@
                                         <i class="fad fa-comment-alt-dots"></i> Notificações Usuários
                                     </a>
                                     <ul class="dropdown-menu dropDown__menu--list" aria-labelledby="offcanvasNavbarDropdown">
-                                        <li><a class="dropdown-item dropdown__item--list" href="#">Enviar Email</a></li>
+                                        <li><a class="dropdown-item dropdown__item--list" href="{{route('email')}}">Enviar Email</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Enviar notificação</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">atualização do sistema</a></li>
                                         <li><a class="dropdown-item dropdown__item--list" href="#">Recibo Avulso</a></li>

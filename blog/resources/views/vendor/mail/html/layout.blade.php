@@ -6,6 +6,17 @@
 </head>
 <body>
 <style>
+
+.body{
+   background-color: #252525; 
+   color: black;
+}
+
+td{
+   background-color: #252525; 
+    color: black;
+}
+
 @media only screen and (max-width: 600px) {
 .inner-body {
 width: 100% !important;
@@ -35,7 +46,7 @@ width: 100% !important;
 <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
 <!-- Body content -->
 <tr>
-<td class="content-cell">
+<td class="content-cell--body">
 {{ Illuminate\Mail\Markdown::parse($slot) }}
 
 {{ $subcopy ?? '' }}
@@ -51,4 +62,10 @@ width: 100% !important;
 </tr>
 </table>
 </body>
+<script>
+    console.log("ok");
+</script>
+
 </html>
+
+

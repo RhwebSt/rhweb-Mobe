@@ -66,7 +66,10 @@
                   'condicao'=>isset($atualizar) && $atualizar ?$atualizar:false,
                   'url'=>route('tabela.preco.atualizar')
             ],
-            'empresa'=>$user->empresa_id,
+            'empresa'=>[
+                'id'=>$user->empresa_id,
+                'cnpj'=>str_replace(array(".", ",", "-", "/"), "",$valorrublica_matricular->escnpj)
+            ],
             'csrf'=>csrf_token(),
             'esocial'=>route('esocial.trabalhador.update')
           ]) !!}
@@ -127,7 +130,7 @@
                                   Cadastro
                                 </a>
                                 
-                                <ul class="dropdown-menu" aria-labelledby="cadastro">
+                                <ul class="dropdown-menu" aria-labelledby="cadastro"> 
                                     @can('admin')
                                     <li><a class="dropdown-item" href="{{route('usuario.create')}}"><i class="fad fa-user-plus"></i> Cadastro de Acesso</a></li>
                                     @endcan
@@ -145,8 +148,8 @@
                                 
                                 <ul class="dropdown-menu" aria-labelledby="rotinaMensal">
                                     
-                                    <li><a class="dropdown-item" href="{{route('cadastrocartaoponto.index')}}"><i class="fad fa-alarm-clock"></i> Boletim Cartão Ponto</a></li>
-                                    <li><a class="dropdown-item" href="{{route('tabcartaoponto.index')}}"><i class="fad fa-sack-dollar"></i> Boletim com Tabela</a></li>
+                                    <li><a class="dropdown-item" href="{{route('cartao.ponto.novo')}}"><i class="fad fa-alarm-clock"></i> Boletim Cartão Ponto</a></li>
+                                    <li><a class="dropdown-item" href="{{route('tabela.cartao.ponto.novo')}}"><i class="fad fa-sack-dollar"></i> Boletim com Tabela</a></li>
                                     <li><a class="dropdown-item " href="{{route('calculo.folha.index')}}"><i class="fad fa-calculator-alt"></i> Cálculo da Folha</a></li>
                                     <li><a class="dropdown-item" href="{{route('descontos.index')}}"><i class="fad fa-tags"></i> Descontos</a></li>
 
@@ -216,14 +219,14 @@
                     ?>
                     
                     <div class="d-flex justify-content-end flex-row div__botoes--nav">
-                        <!--<div class="ms-1">-->
-                        <!--    <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">-->
-                        <!--        <i id="bell__notification" class="fad fa-bell bell__notification"></i>-->
-                        <!--        <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-->
-                        <!--          {{$quantidade}} -->
-                        <!--        </span>-->
-                        <!--    </button>-->
-                        <!--</div>-->
+                        <div class="ms-1">
+                           <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                               <i id="bell__notification" class="fad fa-bell bell__notification"></i>
+                               <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                 
+                               </span>
+                           </button>
+                        </div>
         
         
                         <div class="ms-2 me-2">
@@ -245,10 +248,10 @@
                         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificações <i id="bell__notification--ofcanvas" class="fad fa-bell bell__notification--ofcanvas"></i></h5>
                         <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                     </div>
-                    <div class="offcanvas-body off__canvas--body">
+                    <div class="offcanvas-body off__canvas--body " id="notificacaocontaine">
                         @if(isset($esocialtrabalhador) && count($esocialtrabalhador) > 0)
                           @foreach($esocialtrabalhador as $esocialtrabalhadores)
-                            <div class="body__notification" id="notification">
+                            <div class="body__notification d-none" id="notification">
                                 <div class="d-flex flex-row justify-content-between header__notification">
                                     {{-- cabecalho da notificação o Rhweb é fixo só muda o tempo que a mensagem foi feita --}}
                                     <div class="">
