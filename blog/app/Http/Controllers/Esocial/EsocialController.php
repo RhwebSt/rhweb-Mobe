@@ -40,6 +40,11 @@ class EsocialController extends Controller
         $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
         $tomador = $this->tomador->where('id',$id)->with('parametrosefip')->first();
         // dd($tomador);
+        if (!$tomador->parametrosefip[0]->psfpas) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o FPAS.']);
+        }elseif (!$tomador->parametrosefip[0]->psfpasterceiros) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o FPAS TERCEIRO.']);
+        }
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
@@ -96,6 +101,13 @@ class EsocialController extends Controller
         $trabalhador = $this->trabalhador->where('id',$id)
         ->with(['documento','endereco','categoria','nascimento','bancario','depedente','epi'])->first();
         // dd($trabalhador);
+            if (!$trabalhador->categoria[0]->cbo) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o CBO.']);
+            }elseif (!$trabalhador->categoria[0]->csadmissao) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o a data de admissão.']);
+            }elseif (!$trabalhador->categoria[0]->cscategoria) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o a data de admissão.']);
+            }
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".

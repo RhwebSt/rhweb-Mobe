@@ -53,6 +53,22 @@
 .dropdown-item{
     color: white;
     transition: ease-in-out 400ms;
+    
+}
+
+.dropdown-menuAnimate{
+    animation: animacaoDropDown 3s ease  !important;
+}
+
+
+@keyframes animacaoDropDown{
+    from{
+        transform: translateY(-1000);
+    }
+    
+    to{
+        transform: translateY(1);
+    }
 }
 
 .dropdown-item:hover{

@@ -196,9 +196,10 @@
 
             <div class="col-md-3">
                 <label for="quinzena" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Quinzena</label>
-                <select id="quinzena" name="quinzena" class="form-select text-dark" >
+                <select id="quinzena" name="quinzena" class="form-select" >
                     <option selected>1 - Primeira</option>
                     <option>2 - Segunda</option>
+                    <!-- <option selected>3 - Mês</option> -->
                 </select>
             </div>
 

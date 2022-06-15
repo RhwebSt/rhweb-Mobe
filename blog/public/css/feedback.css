@@ -32,16 +32,19 @@
 }
 
 
-.feedback{
-     background-color:green;
-     color: white;
-     padding: 20px;
-     margin: 0px;
-     border-top-left-radius: 10px;
-     border-bottom-left-radius: 10px; 
-     transition: 400ms;
+#feedback{
+    position: relative;
+    width:100px !important;
+    top: 50%;
+    background-color:green;
+    color: white;
+    /*padding: 20px;*/
+    margin: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px; 
+    transition: 400ms;
 }
 
-.feedback:hover{
+#feedback:hover{
     background-color:#134611;
 }

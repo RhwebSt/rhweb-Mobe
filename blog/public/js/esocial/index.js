@@ -1,4 +1,8 @@
+
+
 $(document).ready(function(){
+    data =  new Date
+    // console.log(data);
     $('.btn__padrao--evento').click(function () {
         let trabalhador = $(this).attr('data-id')
         Swal.fire({
@@ -99,7 +103,7 @@ $(document).ready(function(){
                 'empregador':'34350915000149'
             },
             success: function(retorno){
-                console.log(retorno);
+                // console.log(retorno);
                 $('#progress').text('75%').css({"width": "75%"});
                 $('#msg').text('Cadastrando no banco.')
                 // cadastra(retorno.data,trabalhador)
@@ -127,7 +131,7 @@ $(document).ready(function(){
                 // 'empregador':'34350915000149'
             },
             success: function(retorno){
-                console.log(retorno);
+                // console.log(retorno);
                 $('#progress').text('100%').css({"width": "100%"});
                 $('#msg').text(retorno)
                 // console.log(trabalhador);
@@ -135,50 +139,101 @@ $(document).ready(function(){
             }
          });
     }
-    function buscaxml(id) {
+    function consultaempregado() {
+      
         $.ajax({
-            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/idevento/${id}?ambiente=2&empregador=34350915000149`,
+            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/empregador/${window.Laravel.empresa.cnpj}?ambiente=1&datainicial=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-01&datafinal=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-30&pagina=20&limite=100`,
             type: "GET",
             // data: dados,
             // dataType: 'json',
             processData: false,  
             headers: {
                 // 'content-type':'text/tx2',
-                'cnpj_sh':'34350915000149',
+                'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'26844068000140'
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
            
             success: function(retorno){
-                console.log(retorno);
-                enviaxml(retorno.data);
+                // console.log(retorno);
+                retorno.data.forEach(element => {
+                    consultaevento(element._id)
+                });
+               
             }
         });
     }
-    function enviaxml(dados) {
-        console.log($.parseXML(dados.xml));
-        var formData = new FormData();
-        formData.append('versaomanual','2.5.00')
-        formData.append('empregador',dados.cnpj_sh)
-        formData.append('ambiente','2')
-        formData.append('inscricao',dados.cnpj_sh)
-        formData.append('idgrupoeventos',dados.id)
-        formData.append('xml',$.parseXML(dados.xml))
+    consultaempregado()
+    
+    function consultaevento(id) {
         $.ajax({
-            url: "https://api.tecnospeed.com.br/esocial/v1/evento/enviar",
-            type: "POST",
-            data: formData,
+            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${id}?ambiente=1&versaomanual=S.01.00.00`,
+            type: "GET",
+            // data: dados,
             // dataType: 'json',
             processData: false,  
+            // async:false,
             headers: {
-                'content-type':'text/xml',
-                'cnpj_sh':dados.cnpj_sh,
+                // 'content-type':'text/tx2',
+                'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':dados.cnpj_sh,
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
             success: function(retorno){
-                console.log(retorno);
+                // console.log(retorno);
+                    let notificacao = `<div class="body__notification" id="notification">
+                            <div class="d-flex flex-row justify-content-between header__notification">
+                            
+                                <div class="">
+                                    <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+                                </div>
+                                
+                                <div class="">
+                                    <p class="content__header-notification">
+                                    
+                                    </p>
+                                </div>
+                                
+                            </div>
+                        
+
+                        
+                            <div class="teste">
+                                <p class="text__body--notification">
+                                    Protocolo:${retorno.data.protocolo}<br>
+                                    Mensagem de Retorno:${retorno.data.status_consulta.mensagem}<br> 
+                                    Id do Lote: ${retorno.data.id}<br>
+                                    ${evento(retorno.data)}
+                                </p>
+                            </div>
+                        
+                            <div class="d-flex justify-content-end footer-notification">
+                                <form action=""></form>
+                                <div class="content__footer-notification">
+                                    <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+                                </div>
+                            </div>
+                            
+                        </div>`;
+                    $('#notificacaocontaine').prepend(notificacao);
+             
             }
+         });
+    }
+    function evento(dados) {
+        let ocorrencias = '';
+        dados.eventos[0].ocorrencias.forEach(element => {
+            ocorrencias += `
+            Ocorrencia: ${element.tipo}<br>
+            Código: ${element.codigo}<br>
+            Descrição:${element.descricao}<br>`
         });
+        let notificacao = `  
+        Id Evento: ${dados.eventos[0].id}<br>
+        Número Recibo: <br>
+        Código de Status: ${dados.eventos[0].status.codigo}<br>
+        Mensagem: ${dados.eventos[0].status.mensagem}<br>
+        ${ocorrencias}`;
+        return notificacao;
     }
 })

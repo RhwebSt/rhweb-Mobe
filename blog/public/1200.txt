@@ -7,7 +7,7 @@ INCLUIRS1200
 indRetif_4=1
 nrRecibo_5=
 indApuracao_6=1
-perApur_7=14
+perApur_7=13
 tpAmb_8=1
 procEmi_9=1
 verProc_10=VER062.052021
@@ -89,7 +89,7 @@ INCLUIRS1200
 indRetif_4=1
 nrRecibo_5=
 indApuracao_6=1
-perApur_7=14
+perApur_7=13
 tpAmb_8=1
 procEmi_9=1
 verProc_10=VER062.052021

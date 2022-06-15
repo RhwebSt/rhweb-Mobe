@@ -61,20 +61,20 @@ body{
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 100%;
+    width: 100vw;
     overflow-x: hidden;
     min-height: 100vh;
 }
 
-label,h1,h2,h3,h4,h5,small, span, month{
+label,h1,h2,h3,h4,h5,small, span, option{
     color: var(--body-color);
 }
 
 
-main{
-    position: relative;
-    margin-bottom: 150px;
-}
+/*main{*/
+/*    position: relative;*/
+/*    margin-bottom: 150px;*/
+/*}*/
 
 select{
     background-color:var(--input-bg-color) !important;
@@ -85,6 +85,15 @@ select{
 }
 
 input[type=date]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+    color: red;
+    border-radius: 3px;
+    padding:2px;
+    background-color:white;
+    margin-bottom: 3px;
+}
+
+input[type=month]::-webkit-calendar-picker-indicator{
     cursor: pointer;
     color: red;
     border-radius: 3px;

@@ -1,29 +1,21 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Página Principal')
 @section('conteine')
-    <style>
-        #particles-js{
-            display: float;
-            min-width: 100vh;
-            min-height: 100%;
-            z-index: -1 !important;
-        }
-    </style>
+<main role="main" class="main__home" id="particles-js">
 
 
-    <div class="svg-home-letter">
+    <div class="svg-home-letter" id="">
 
         <svg  id="rhwebLetter" class="d-none" xmlns="http://www.w3.org/2000/svg" viewBox="-200 0 850 100">
           <defs>
             <style>
                #rhwebLetter{
-                   display: flex;
-                   position: absolute;
-                        position: absolute;
-                        left: 50%;
-                        transform: translate(-50%);
-                        width: 50%;
-                        top: 45%;
+                    display: flex;
+                    position: relative;
+                    left: 50%;
+                    transform: translate(-50%);
+                    width: 50%;
+                    top: 45%;
                }
                
                 @media only screen and (max-width: 600px) {
@@ -61,24 +53,23 @@
         </svg>
     </div>
     
-    <div id="particles-js"></div>
+    <!--<div id="particles-js"></div>-->
     
-    <script src="{{url('js/particlesjs.js')}}"></script>
-    <script src="{{url('js/appParticles.js')}}"></script>
+    
 
-    <div class="float-end ms-auto p-2 feedback">
-        <div class="d-flex collumn">
-            <a class="ms-1" id="feedback"><i class="fad fa-comment-alt-lines"></i> FeedBack</a>
-        </div>
+    <div class="feedback float-end">
+        <a class="" id="feedback"><i class="fad fa-comment-alt-lines"></i> FeedBack</a>
     </div>
 
-<input type="hidden" name="icon" id="icon">
-<!--<div class="d-flex collumn align-items-center">-->
-<!--    <div class="fixed-bottom mb-5 ms-5 align-items-end ms-auto">-->
-<!--      <button type="submit" class="btn btn-success"><i class="fas fa-comment-dots"></i></button>-->
-<!--    </div>-->
-<!--</div>-->
+    <input type="hidden" name="icon" id="icon">
+    <!--<div class="d-flex collumn align-items-center">-->
+    <!--    <div class="fixed-bottom mb-5 ms-5 align-items-end ms-auto">-->
+    <!--      <button type="submit" class="btn btn-success"><i class="fas fa-comment-dots"></i></button>-->
+    <!--    </div>-->
+    <!--</div>-->
 
+
+</main>
 <script>
 
    

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Esocial;
 use App\Trabalhador;
+use App\Empresa;
 use Carbon\Carbon;
 class HomeController extends Controller
 {
@@ -16,6 +17,7 @@ class HomeController extends Controller
     {
         $this->esocial = new Esocial;
         $this->trabalhador = new Trabalhador;
+        $this->empresa = new Empresa;
         $today = Carbon::today();
         $this->dt = Carbon::create($today);
     }
@@ -23,6 +25,7 @@ class HomeController extends Controller
     {
         $atualizar = false;
         $user = Auth::user();   
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->first();
         if ($this->dt->month === 12 && $user->hasPermissionTo('admin')) {
             $atualizar = true;
         }
@@ -35,7 +38,7 @@ class HomeController extends Controller
             }else{
                 $esocialtrabalhador = $this->trabalhador->where('empresa_id',$user->empresa_id)->with('esocial.trabalhador')->get();
                 // dd($esocialtrabalhador);
-                return view('login.home',compact('user','esocialtrabalhador','atualizar')); 
+                return view('login.home',compact('user','esocialtrabalhador','atualizar','valorrublica_matricular')); 
             }
         }
         return view('index'); 

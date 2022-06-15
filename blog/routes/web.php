@@ -189,7 +189,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     
     
     
-    Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index');
+    Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index')->middleware(['permission:mcfc15555738']);
+
     Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
     Route::post('tomador/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaTomador')->name('calculo.folha.tomador.filtro');
     // Route::get('tomador/filtra/folha/calculo/{codicao}/{tomador}/{inicio}/{final}','CalculoFolha\\calculoFolhaController@filtroPesquisaTomadorOrdem')->name('filtra.folha.tomador.calculo');
@@ -204,7 +205,10 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('imprimir/calculo/folha/tomador/{folhar}/{tomador}','CalculoFolha\\calculoFolhaPorTomadorController@imprimirTomador')->name('calculo.folha.tomador.imprimir');
     Route::post('imprimir/calculo/folha/tomador/trabalhador','CalculoFolha\\calculoFolhaPorTomadorController@imprimirTrabalhador')->name('calculo.folha.tomador.trabalhador.imprimir');
     Route::get('calculo/folha/geral/{ano_inicial}/{ano_final}/{competencia}','CalculoFolha\\calculoFolhaGeralController@calculoFolhaGeral')->name('calculo.folha.geral');
+
     Route::get('calculo/folha/imprimir/{id}','CalculoFolha\\calculoFolhaGeralController@imprimirFolhar')->name('calculo.folha.imprimir');
+    // ->middleware(['permission:mcfd15555738']);
+
     Route::get('deleta/calculo/folha/geral/{id}','CalculoFolha\\calculoFolhaGeralController@destroy')->name('calculo.folha.deletar');
 
     Route::get('analitica/calculo/folha/{id}','FolhaAnalitica\\FolhaAnaliticaController@calculoFolhaAnalitica')->name('calculo.folha.analitica');
