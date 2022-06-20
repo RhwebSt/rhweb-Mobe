@@ -10,23 +10,34 @@
     --table-body-bg-color-hover: #5C5C5C;
 }
 
+
 .table{
     margin-top: 1%;
     border-radius: 12px;
-    background-color: #171718 !important;
+    background-color: #2b2b2b !important;
     box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
     border: none !important;
     transition: 300ms ease-in-out;
 }
 
 
+
 .th__header{
+    background-color: rgb(15, 15, 15) !important;
     color: rgb(255, 255, 255);
     font-weight: 300 !important;
-    text-align: center;
+    text-align: center;  
+}
+
+.th__header:first-child{
     border-top-left-radius: 12px !important;
+}
+
+.th__header:last-child{
     border-top-right-radius: 12px !important;
 }
+
+
 
 .table__body{
     background-color: var(--table-body-bg-color) !important;
@@ -39,6 +50,7 @@
     transition: 300ms ease-in-out;
     text-align: center;
     align-self:center;
+
 }
 
 .tr__body:hover{
@@ -46,6 +58,7 @@
     color: white;
     transition: 300ms ease-in-out;
 }
+
 
 .tr__body:first-child{
     border-top: none !important;
@@ -527,6 +540,15 @@
     border: 1px solid #C1CCB8;
     transition: 300ms ease-in-out;
     transform: scale(1.06); 
+}
+
+table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+    text-align: center !important;
+    
+}
+
+.dataTables_info{
+    color: white !important;
 }
 
 

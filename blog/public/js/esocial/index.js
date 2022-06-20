@@ -56,7 +56,8 @@ $(document).ready(function(){
             success: function(retorno){
                 $('#msg').text('Lote Recebido com Sucesso.')
                 $('#progress').text('50%').css({"width": "50%"});
-                setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
+                cadastra(retorno.data,trabalhador)
+                // setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
             },
             error: function () {
                 $('#msg').text('Não foi porssivél realizar o processo');
@@ -82,7 +83,7 @@ $(document).ready(function(){
                 console.log(retorno);
                 $('#progress').text('75%').css({"width": "75%"});
                 $('#msg').text('Cadastrando no banco.')
-                consultaidevento(retorno)
+                // consultaidevento(retorno)
                 cadastra(retorno.data,trabalhador)
                 // buscaxml(retorno.data.eventos[0])
             }
@@ -139,101 +140,102 @@ $(document).ready(function(){
             }
          });
     }
-    function consultaempregado() {
+  
+    // function consultaempregado() {
       
-        $.ajax({
-            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/empregador/${window.Laravel.empresa.cnpj}?ambiente=1&datainicial=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-01&datafinal=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-30&pagina=20&limite=100`,
-            type: "GET",
-            // data: dados,
-            // dataType: 'json',
-            processData: false,  
-            headers: {
-                // 'content-type':'text/tx2',
-                'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
-                'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':`${window.Laravel.empresa.cnpj}`
-            },
+    //     $.ajax({
+    //         url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/empregador/${window.Laravel.empresa.cnpj}?ambiente=1&datainicial=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-01&datafinal=${data.getFullYear()}-${data.getMonth() < 9?'0':''}${data.getMonth()+1}-30&pagina=20&limite=100`,
+    //         type: "GET",
+    //         // data: dados,
+    //         // dataType: 'json',
+    //         processData: false,  
+    //         headers: {
+    //             // 'content-type':'text/tx2',
+    //             'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
+    //             'token_sh':'3048136792bc6c57aecab949f3f79b74',
+    //             'empregador':`${window.Laravel.empresa.cnpj}`
+    //         },
            
-            success: function(retorno){
-                // console.log(retorno);
-                retorno.data.forEach(element => {
-                    consultaevento(element._id)
-                });
+    //         success: function(retorno){
+    //             // console.log(retorno);
+    //             retorno.data.forEach(element => {
+    //                 consultaevento(element._id)
+    //             });
                
-            }
-        });
-    }
-    consultaempregado()
+    //         }
+    //     });
+    // }
+    // consultaempregado()
     
-    function consultaevento(id) {
-        $.ajax({
-            url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${id}?ambiente=1&versaomanual=S.01.00.00`,
-            type: "GET",
-            // data: dados,
-            // dataType: 'json',
-            processData: false,  
-            // async:false,
-            headers: {
-                // 'content-type':'text/tx2',
-                'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
-                'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':`${window.Laravel.empresa.cnpj}`
-            },
-            success: function(retorno){
-                // console.log(retorno);
-                    let notificacao = `<div class="body__notification" id="notification">
-                            <div class="d-flex flex-row justify-content-between header__notification">
+    // function consultaevento(id) {
+    //     $.ajax({
+    //         url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${id}?ambiente=1&versaomanual=S.01.00.00`,
+    //         type: "GET",
+    //         // data: dados,
+    //         // dataType: 'json',
+    //         processData: false,  
+    //         // async:false,
+    //         headers: {
+    //             // 'content-type':'text/tx2',
+    //             'cnpj_sh':`${window.Laravel.empresa.cnpj}`,
+    //             'token_sh':'3048136792bc6c57aecab949f3f79b74',
+    //             'empregador':`${window.Laravel.empresa.cnpj}`
+    //         },
+    //         success: function(retorno){
+    //             // console.log(retorno);
+    //                 let notificacao = `<div class="body__notification" id="notification">
+    //                         <div class="d-flex flex-row justify-content-between header__notification">
                             
-                                <div class="">
-                                    <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
-                                </div>
+    //                             <div class="">
+    //                                 <p class="content__header-notification">Rhweb <i id="notification__icon-no-read" class="fas fa-circle notification__icon-no-read"></i></p>
+    //                             </div>
                                 
-                                <div class="">
-                                    <p class="content__header-notification">
+    //                             <div class="">
+    //                                 <p class="content__header-notification">
                                     
-                                    </p>
-                                </div>
+    //                                 </p>
+    //                             </div>
                                 
-                            </div>
+    //                         </div>
                         
 
                         
-                            <div class="teste">
-                                <p class="text__body--notification">
-                                    Protocolo:${retorno.data.protocolo}<br>
-                                    Mensagem de Retorno:${retorno.data.status_consulta.mensagem}<br> 
-                                    Id do Lote: ${retorno.data.id}<br>
-                                    ${evento(retorno.data)}
-                                </p>
-                            </div>
+    //                         <div class="teste">
+    //                             <p class="text__body--notification">
+    //                                 Protocolo:${retorno.data.protocolo}<br>
+    //                                 Mensagem de Retorno:${retorno.data.status_consulta.mensagem}<br> 
+    //                                 Id do Lote: ${retorno.data.id}<br>
+    //                                 ${evento(retorno.data)}
+    //                             </p>
+    //                         </div>
                         
-                            <div class="d-flex justify-content-end footer-notification">
-                                <form action=""></form>
-                                <div class="content__footer-notification">
-                                    <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
-                                </div>
-                            </div>
+    //                         <div class="d-flex justify-content-end footer-notification">
+    //                             <form action=""></form>
+    //                             <div class="content__footer-notification">
+    //                                 <a href="#"><i class="fas icone__footer-notification fa-trash"></i></a>
+    //                             </div>
+    //                         </div>
                             
-                        </div>`;
-                    $('#notificacaocontaine').prepend(notificacao);
+    //                     </div>`;
+    //                 $('#notificacaocontaine').prepend(notificacao);
              
-            }
-         });
-    }
-    function evento(dados) {
-        let ocorrencias = '';
-        dados.eventos[0].ocorrencias.forEach(element => {
-            ocorrencias += `
-            Ocorrencia: ${element.tipo}<br>
-            Código: ${element.codigo}<br>
-            Descrição:${element.descricao}<br>`
-        });
-        let notificacao = `  
-        Id Evento: ${dados.eventos[0].id}<br>
-        Número Recibo: <br>
-        Código de Status: ${dados.eventos[0].status.codigo}<br>
-        Mensagem: ${dados.eventos[0].status.mensagem}<br>
-        ${ocorrencias}`;
-        return notificacao;
-    }
+    //         }
+    //      });
+    // }
+    // function evento(dados) {
+    //     let ocorrencias = '';
+    //     dados.eventos[0].ocorrencias.forEach(element => {
+    //         ocorrencias += `
+    //         Ocorrencia: ${element.tipo}<br>
+    //         Código: ${element.codigo}<br>
+    //         Descrição:${element.descricao}<br>`
+    //     });
+    //     let notificacao = `  
+    //     Id Evento: ${dados.eventos[0].id}<br>
+    //     Número Recibo: <br>
+    //     Código de Status: ${dados.eventos[0].status.codigo}<br>
+    //     Mensagem: ${dados.eventos[0].status.mensagem}<br>
+    //     ${ocorrencias}`;
+    //     return notificacao;
+    // }
 })

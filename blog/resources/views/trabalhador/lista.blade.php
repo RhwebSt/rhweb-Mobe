@@ -50,6 +50,7 @@
                 
                 
                 <section class="table">
+                 
                     <div class="table-responsive-xxl">
                         <table class="table">
                             <thead class="tr__header">

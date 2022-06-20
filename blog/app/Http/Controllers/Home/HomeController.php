@@ -25,14 +25,14 @@ class HomeController extends Controller
     {
         $atualizar = false;
         $user = Auth::user();   
-        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->first();
-        if ($this->dt->month === 12 && $user->hasPermissionTo('admin')) {
-            $atualizar = true;
-        }
+        
         // dd(Hash::make('mbcpc15555738'),Hash::make('mbcpd15555738'),Hash::make('mbcpe15555738'),Hash::make('mbcpl15555738'),Hash::make('mbcpr15555738'));
        
         if (auth()->check()){
-           
+            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->first();
+            if ($this->dt->month === 12 && $user->hasPermissionTo('admin')) {
+                $atualizar = true;
+            }
             if ($user->hasPermissionTo('Super Admin')) {
                 return redirect()->route('administrador');
             }else{

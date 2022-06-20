@@ -239,6 +239,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     
     Route::put('trabalhador/esocial/{id?}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
+    Route::post('trabalhador/esocial/lista','Esocial\\EsocialController@show')->name('esocial.trabalhador.lista');
+    Route::get('esocial','Esocial\\EsocialController@index')->name('esocial.index');
     Route::get('administrador/pesquisa/cbo','Administrador\\Cbo\\CboController@pesquisa')->name('administrador.cbo.pesquisa');
     Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
     Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');

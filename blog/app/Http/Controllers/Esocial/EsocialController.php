@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Esocial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
+use DataTables;
 use App\Tomador;
 use App\Empresa;
 use App\Trabalhador;
@@ -181,15 +182,32 @@ class EsocialController extends Controller
     public function update(Request $request,$id)
     {
         $dados = $request->all();
+       
         $user = Auth::user();
-        $user->notify(new notificacaoEsocial($dados));
+        // $user->notify(new notificacaoEsocial($dados));
+        $id = base64_decode($id);
+        
+        $dados['trabalhador']=$id;
+        $esocial =  $this->esocial->editar($dados,$id);
         return response()->json('Cadastro realizado com sucesso.');
-        // $id = base64_decode($id);
-        // $dados['trabalhador']=$id;
-        // $esocial =  $this->esocial->editar($dados,$id);
         // if ($esocial) {
         //     return response()->json('Cadastro realizado com sucesso.');
         // }
+    }
+    public function index()
+    {
+        $user = Auth::user();
+        return view('esocial.index',compact('user'));
+    }
+    public function show()
+    {
+        $user = Auth::user();
+       
+        $esocial = DB::table('esocials')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'esocials.trabalhador_id')
+        ->select('trabalhadors.tsnome','trabalhadors.tsmatricula','esocials.id','esocials.esid','esocials.esstatus');
+        return DataTables::of($esocial)->toJson();
+       
     }
     public function montastring($valor)
     {

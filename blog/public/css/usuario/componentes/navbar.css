@@ -46,15 +46,23 @@
     background-color: rgba(17, 25, 40, 0.75);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
+    transition: ease-in-out 400ms !important;
+    
 }
+
 
 
 
 .dropdown-item{
     color: white;
-    transition: ease-in-out 400ms;
+    transition: ease-in-out 400ms  !important;
     
 }
+
+.dropdown, .dropend, .dropstart, .dropup {
+    animation: animacaoDropDown 3s ease  !important;
+}
+
 
 .dropdown-menuAnimate{
     animation: animacaoDropDown 3s ease  !important;
@@ -82,13 +90,13 @@
 
 .nav-link{
     color: #E0E0E0 !important;
-    transition: 200ms ease-in-out;
+    transition: 200ms ease-in-out !important;
 }
 
 .nav-link:hover{
     color: white !important;
     transform: scale(1.06);
-    transition: 200ms ease-in-out;
+    transition: 200ms ease-in-out  !important;
     font-weight: 500;
     
     
