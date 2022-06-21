@@ -28,6 +28,7 @@ class Esocial extends Model
     public function editar($dados,$id)
     {
         return Esocial::where('trabalhador_id', $id)
+        ->orWhere('escodigo', $id)
         ->update([
             'escodigo'=>$dados['codigo'],
             'esid'=>$dados['id'],

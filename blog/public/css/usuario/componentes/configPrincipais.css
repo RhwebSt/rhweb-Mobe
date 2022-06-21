@@ -64,17 +64,41 @@ body{
     width: 100vw;
     overflow-x: hidden;
     min-height: 100vh;
+    font-weight: 400;
 }
 
 label,h1,h2,h3,h4,h5,small, span, option{
     color: var(--body-color);
 }
 
+h1{
+    font-weight: 700;
+}
 
-/*main{*/
-/*    position: relative;*/
-/*    margin-bottom: 150px;*/
-/*}*/
+
+main{
+    position: relative;
+    margin-bottom: 150px;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+  transition: ease-in-out .2s;
+}
+
+body::-webkit-scrollbar:hover{
+    width: 13px;
+    transition: ease-in-out .2s;
+}
+
+body::-webkit-scrollbar-track {
+  background: white;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: gray;    /* color of the scroll thumb */
+  border-radius: 25px;       /* roundness of the scroll thumb */
+}
 
 select{
     background-color:var(--input-bg-color) !important;
@@ -124,9 +148,6 @@ input, select{
     border-radius: 6px !important;
 }
 
-.swal2-file{
-    background-color:red;
-}
 
 .swal2-file:hover{
     border-color:none;
@@ -150,26 +171,6 @@ input, select{
 .form-check-label{
     font-size: 16px;
 }
-
-
-
-
-
-.botao__dark{
-    border-radius: 10px;
-    border: 1px solid #8F8F8F;
-    background-color: var(--botao-dark-mode-color);
-    color: var(--botao-dark-mode-icon-color);
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
-}
-
-.botao__dark:hover{
-    background-color: var(--hover-dark-mode-bg);
-    color: var(--hover-dark-mode-color);
-    transition: ease-out 1s;
-    transition: ease-in 800ms;
-}
-
 
 .table-hover:hover{
     background-color: var(--button-hover-color);

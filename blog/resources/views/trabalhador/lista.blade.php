@@ -50,7 +50,6 @@
                 
                 
                 <section class="table">
-                 
                     <div class="table-responsive-xxl">
                         <table class="table">
                             <thead class="tr__header">
@@ -168,5 +167,5 @@
     </div>
 </div>
 
-
+<script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
 

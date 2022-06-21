@@ -29,21 +29,7 @@
             });
         </script>
         @enderror
-        
-        <!--Modal de Acesso não permitido-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--      icon: 'error',-->
-        <!--      allowOutsideClick: false,-->
-        <!--      allowEscapeKey: false,-->
-        <!--      allowEnterKey: true,-->
-        <!--      html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+-->
-        <!--      '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+-->
-        <!--      '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',-->
-        <!--      showConfirmButton: false,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--Fim do modal de Acesso não permitido-->
+
         
         <form class="row g-3"  action="{{ route('depedente.store') }}" method="POST" id="form">
 
@@ -135,4 +121,5 @@
     </div>         
 </main>
 
+<script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
 @stop

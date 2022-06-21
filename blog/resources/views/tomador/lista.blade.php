@@ -163,4 +163,4 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>

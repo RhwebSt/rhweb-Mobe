@@ -33,7 +33,7 @@
         <section class="section__botoes--trabalhador">
             
             <div class="d-flex justify-content-start align-items-start div__voltar">
-                <a class="botao__voltar" href="{{ route('trabalhador.index') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                <a class="botao__voltar" href="{{ route('trabalhador.novo') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
             </div>
             
             <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap">
@@ -117,6 +117,7 @@
     </div>
 </main>
 
+
 <section class="delete__tabela--trabalhador">
     <div class="modal fade" id="deletarDepedente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered col-8">
@@ -150,4 +151,7 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/index.js')}}"></script>
+
 @stop

@@ -29,23 +29,7 @@
             });
         </script>
         @enderror
-        
-        <!--Modal de Acesso não permitido-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--      icon: 'error',-->
-        <!--      allowOutsideClick: false,-->
-        <!--      allowEscapeKey: false,-->
-        <!--      allowEnterKey: true,-->
-        <!--      html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+-->
-        <!--      '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+-->
-        <!--      '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',-->
-        <!--      showConfirmButton: false,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--Fim do modal de Acesso não permitido-->
-        
-          
+
 
         <form class="row g-3" action="{{route('epi.store')}}" method="POST">
         @csrf
@@ -53,7 +37,7 @@
             <section class="section__botoes--trabalhador">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                        <a class="botao__voltar" href="{{route('trabalhador.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                        <a class="botao__voltar" href="{{route('trabalhador.novo')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
                 
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="group" aria-label="Basic example">
@@ -249,105 +233,6 @@
     </div>
 </main>
 
-        <script>
-            function remove(index) {
-                $(`.campo${index}`).remove();
-            }
-            let index = 0;
-            function conteiner(index) {
-                    let conteiner = '';
-                    conteiner += `<div class="row d-flex mb-3 campo${index}">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
-                            <label for="quantidade" class="form-label">Quant.</label>
-                            <input type="text" class="form-control numero input fw-bold text-dark" name="quantidade${index}" maxlength="100" id="quantidade${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4 mt-2">
-                            <label for="descricao" class="form-label">Descrição</label>
-                            <input type="text" class="form-control input fw-bold text-dark"  name="descricao${index}" maxlength="100" id="descricao${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
-                            <label for="tamanho" class="form-label">Tam.</label>
-                            <input type="text" class="form-control input fw-bold text-dark"  name="tamanho${index}" maxlength="100" id="tamanho${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-1 col-xxl-1 mt-2">
-                            <label for="ca" class="form-label">CA</label>
-                            <input type="text" class="form-control numero input fw-bold text-dark"  name="ca${index}" maxlength="100" id="ca${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2 col-xxl-2 mt-2">
-                            <label for="data__recolhimento" class="form-label">Dta.Rec</label>
-                            <input type="date" class="form-control input fw-bold text-dark"  name="data__recolhimento${index}" maxlength="100" id="data__recolhimento${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-2 col-xxl-2 mt-2">
-                            <label for="data__devolucao" class="form-label">Dta.Dev</label>
-                            <input type="date" class="form-control input fw-bold text-dark"  name="data__devolucao${index}" maxlength="100" id="data__devolucao${index}">
-                            <div class="mt-1">
-                                    <span class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="d-flex align-items-center col-md-1" id="botaoDelete">  
-                            <a onclick="remove(${index})">  
-                                <i class="fas fa-2x fa-times btn icon__exit--epi"></i>
-                            </a>
-                        </div>
-
-                    </div>`
-                    
-                return conteiner;
-      
-            }
-
-            function alerta() {
-                
-                Swal.fire({
-                  position: 'error',
-                  icon: 'success',
-                  html: '<p class="modal__aviso">Não pode ser cadastrado mais de 20!</p>',
-                  background: '#45484A',
-                  showConfirmButton: true,
-                  timer: 2500,
-        
-                });
-
-            }
-
-            $(document).ready(function(){
-                $('.numero').mask('00000000000');
-                $('#adicinar').click(function () {
-                   
-                    if ($('#quantidade').val() <= 20) {
-                        index += 1;
-                        let quantidade =  parseInt($('#quantidade').val());
-                        $('#conteiner').append(conteiner(quantidade));
-                        $('.numero').mask('00000000000');
-                        $('#quantidade').val(quantidade + 1);
-                    }else{
-                        alerta()
-                        $(this).addClass('disabled')
-                    }
-                })
-            });
-            
-            </script>
+<script type="text/javascript" src="{{url('/js/user/trabalhador/epi/epi.js')}}"></script>
 
 @stop

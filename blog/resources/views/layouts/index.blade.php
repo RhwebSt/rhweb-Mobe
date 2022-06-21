@@ -43,21 +43,20 @@
 		<link rel="stylesheet" href="{{url('/css/usuario/esocial/esocial.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <!-- <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script> -->
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <script type="text/javascript" src="{{url('/js/jquery.mask.js')}}" ></script>
         <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vivus@0.4.6/dist/vivus.min.js"></script>
-        
+
     </head>
     
 
@@ -75,10 +74,7 @@
                 'cnpj'=>isset($valorrublica_matricular->escnpj)?str_replace(array(".", ",", "-", "/"), "",$valorrublica_matricular->escnpj):''
             ],
             'csrf'=>csrf_token(),
-            'esocial'=>[
-                'update'=>route('esocial.trabalhador.update'),
-                'show'=>route('esocial.trabalhador.lista'),
-            ]
+            'esocial'=>route('esocial.trabalhador.update')
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
             //   const Toast = Swal.mixin({
@@ -319,14 +315,13 @@
         @include('usuarios.dadosAnaliticos.contador.listaContador')
         @include('usuarios.atalhos.atalhos')
     
-        <footer>
+        <footer class="footer">
             <p class="">&copy;Copyright Rhweb Sistemas Inteligentes - 2022 - Versão 1.0.0</p>
         </footer>
         <script src="{{url('/js/esocial/index.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
-        <script src="{{url('/js/tabela/index.js')}}"></script>
         <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
@@ -348,6 +343,12 @@
         <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
         
         <script>
+        
+            $('.teste').mouseover(function(){
+                $('.teste').addClass('dropdown-menuAnimate');
+                $('.teste').addClass('testeActive');
+            })
+        
         
             setInterval(function(){
                 var online = navigator.onLine;

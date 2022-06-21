@@ -1,23 +1,28 @@
 $(document).ready(function(){
     
     $('#tabelaEsocial').DataTable({
-      
+       
         processing:true,
         serverSide:true,
+        searchable: false,
+        orderable: false,
         'ajax':{
             url:`${window.Laravel.esocial.show}`,
-            type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': window.Laravel.csrf
-            }
+            type: "get",
+            
         },
         
         'columns':[
-            {'data':'id'},
+            {'data':'esnome'},
             {'data':'tsmatricula'},
             {'data':'tsnome'},
             {'data':'esid'},
-            {'data':'esstatus'},
+            {'data':'created_at',
+                render:function (data, type, row) {
+                    data = data.split('T')
+                    return data[0].split('-').reverse().join('/');
+                }
+            },
             {'data':'esid',
             render: function(data, type, row){
                 let dados = '';
@@ -40,7 +45,38 @@ $(document).ready(function(){
                         dados = retorno;
                     }
                  });
-                return erros(dados)
+                if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
+                    dados.data.eventos[0].ocorrencias.forEach(element => {
+                        dados += `${element.descricao}<br><br>`
+                    });
+                    $.ajax({
+                        url: `${window.Laravel.esocial.update}/${dados.data.id}`,
+                        type: "PUT",
+                        data: {
+                            id:dados.data.id,
+                            codigo:dados.data.eventos[0].status.codigo,
+                            status:dados.data.eventos[0].status.mensagem
+                        },
+                        // dataType: 'json',
+                        // processData: false,  
+                        // async:false,
+                        headers: {
+                            'X-CSRF-TOKEN': window.Laravel.csrf
+                            // 'content-type':'text/tx2',
+                            // 'cnpj_sh':'34350915000149',
+                            // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                            // 'empregador':'34350915000149'
+                        },
+                        success: function(retorno){
+                            // console.log(retorno);
+                          
+                        }
+                     });
+                    return erros(dados)
+                }else{
+                    return`<span class="badge bg-warning text-dark">EMPROCESSAMENTO</span>`
+                }
+               
             }
             },
         ],
@@ -65,8 +101,8 @@ $(document).ready(function(){
     function erros(dados) {
         
         return `
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEsocial">
-          Visualizar
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEsocial">
+        <span class="badge bg-danger">Erros</span>
         </button>
         
         
@@ -97,7 +133,7 @@ $(document).ready(function(){
                                     <div id="endereco" class="accordion-body row">
                                         
                                         <section  class="row residencia">
-                                            <xml>${dados.data.xml}</xml>
+                                           ${dados}
                                         </section>
                                     </div>
                                 </div>
@@ -137,4 +173,7 @@ $(document).ready(function(){
         </div>
     </div>`
     }
+    $("#form").submit(function () {
+        var formData = new FormData(this);
+    })
 })

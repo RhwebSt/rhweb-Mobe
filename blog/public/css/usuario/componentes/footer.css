@@ -7,6 +7,10 @@
 }
 
 footer{
+    margin-top: 300px;
+}
+
+.footer{
     background-image: var(--bg-footer);
     position: absolute;
     color: #FFF;
@@ -19,5 +23,5 @@ footer{
     overflow: hidden;
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-top: 50px;
+    font-weight: 500;
 }

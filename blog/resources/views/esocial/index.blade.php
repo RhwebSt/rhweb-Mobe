@@ -15,14 +15,16 @@
 
 
             <section class="enviarEsocial">
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="formFile" class="form-label"><i class="fad fa-file-alt"></i> Selecione seu arquivo</label>
-                    <input class="form-control" type="file" id="formFile">
-                </div>
+                <form id="form" method="post" enctype="multipart/form-data">
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="formFile" class="form-label"><i class="fad fa-file-alt"></i> Selecione seu arquivo</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
 
-                <div class="col-12 col-md-2 mb-3">
-                    <a href="#" class="botao">Enviar <i class="fad fa-paper-plane"></i></a>
-                </div>
+                    <div class="col-12 col-md-2 mb-3">
+                        <a href="#" class="botao">Enviar <i class="fad fa-paper-plane"></i></a>
+                    </div>
+                </form>
             </section>
 
 

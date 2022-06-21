@@ -87,7 +87,7 @@ class EsocialController extends Controller
         $user = Auth::user();
         $id = base64_decode($id);
         $dados = [
-            'nome'=>'',
+            'nome'=>'S2300',
             'codigo'=>'',
             'id'=>'',
             'ambiente'=>0,
@@ -159,7 +159,10 @@ class EsocialController extends Controller
         // 'codFuncao_110='.self::montastring($trabalhador->categoria[0]->cbo)[0].self::montastring($trabalhador->categoria[0]->cbo)[1]."\r\n".                                   
         // 'CBOFuncao_178='.self::montastring($trabalhador->categoria[0]->cbo)[0]."\r\n".                                                          
         'SALVARS2300';
-        $verificar =  $this->esocial->where('trabalhador_id',$id)->count();
+        $verificar =  $this->esocial->where([
+            ['trabalhador_id',$id],
+            ['escodigo','!=',50]
+        ])->count();
         if (!$verificar) {
             $this->esocial->cadastro($dados);
         }
@@ -203,10 +206,11 @@ class EsocialController extends Controller
     {
         $user = Auth::user();
        
-        $esocial = DB::table('esocials')
-        ->join('trabalhadors', 'trabalhadors.id', '=', 'esocials.trabalhador_id')
-        ->select('trabalhadors.tsnome','trabalhadors.tsmatricula','esocials.id','esocials.esid','esocials.esstatus');
-        return DataTables::of($esocial)->toJson();
+        $esocial = $this->trabalhador
+        ->join('esocials', 'trabalhadors.id', '=', 'esocials.trabalhador_id')
+        ->select('trabalhadors.tsnome','trabalhadors.tsmatricula','esocials.id','esocials.esnome','esocials.esid','esocials.esstatus','esocials.created_at')->get();
+        return DataTables::of($esocial)
+        ->make(true);
        
     }
     public function montastring($valor)

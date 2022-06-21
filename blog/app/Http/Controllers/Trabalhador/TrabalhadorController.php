@@ -316,7 +316,6 @@ class TrabalhadorController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-        dd($dados);
         if ($dados['banco']) {
             $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
         }

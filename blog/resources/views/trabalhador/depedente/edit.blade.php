@@ -170,4 +170,6 @@
         
     </div>         
 </main>
+
+<script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/edit.js')}}"></script>
 @stop

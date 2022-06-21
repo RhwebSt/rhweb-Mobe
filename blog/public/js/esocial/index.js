@@ -22,6 +22,7 @@ $(document).ready(function(){
             allowOutsideClick: false,
             allowEscapeKey: false,
             preConfirm: (event) => {
+                console.log(event);
             if (event) {
                 var ext = ['text']
                 var type = event.type.split('/')
@@ -114,7 +115,7 @@ $(document).ready(function(){
     }
     function cadastra(dados,id) {
         $.ajax({
-            url: `${window.Laravel.esocial}/${id}`,
+            url: `${window.Laravel.esocial.update}/${id}`,
             type: "PUT",
             data: {
                 id:dados.id,

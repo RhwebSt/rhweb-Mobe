@@ -149,3 +149,4 @@
 </div>
 
 
+<script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>

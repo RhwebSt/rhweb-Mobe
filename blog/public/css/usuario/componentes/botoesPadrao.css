@@ -125,6 +125,21 @@
     transition: 200ms ease-in-out;
 }
 
+.botao__dark{
+    border-radius: 10px;
+    border: 1px solid #8F8F8F;
+    background-color: var(--botao-dark-mode-color);
+    color: var(--botao-dark-mode-icon-color);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+.botao__dark:hover{
+    background-color: var(--hover-dark-mode-bg);
+    color: var(--hover-dark-mode-color);
+    transition: ease-out 1s;
+    transition: ease-in 800ms;
+}
+
 
 
 
