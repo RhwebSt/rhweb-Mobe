@@ -69,7 +69,7 @@
 
         <form class="row g-3 mt-1 mb-3  g-3 needs-validation" novalidate id="form" action="{{ route('tomador.atualizar',$tomador->id) }}" method="Post">
             
-            <section class="section__botoes--tomador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{route('tomador.novo')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar</a>
@@ -89,7 +89,7 @@
             <div id=" mensagem-pesquisa" class="invalid-feedback"></div>
         
         
-            <h1 class="title__tomador">Editar dados do Tomador <i class="fad fa-industry"></i></h1>  
+            <h1 class="title__pagina--padrao">Editar dados do Tomador <i class="fad fa-industry"></i></h1>  
             @csrf
             <input type="hidden" id="method" name="_method" value="PUT">
 

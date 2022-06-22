@@ -20,6 +20,8 @@ class CreateEsocialsTable extends Migration
             $table->char('esid', 100)->nullable();
             $table->integer('esambiente')->nullable();
             $table->char('esstatus', 30)->nullable();
+            $table->char('esprenome ', 40)->nullable();
+            $table->char('esinscricao ', 6)->nullable();
             $table->unsignedInteger('trabalhador_id')->unsigned()->nullable();
             $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
             $table->unsignedInteger('tomador_id')->unsigned()->nullable();

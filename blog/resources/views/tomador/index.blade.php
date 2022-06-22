@@ -66,41 +66,14 @@
                     })
             </script>
         @enderror
-        
-        <!--Modal de Acesso não permitido-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--      icon: 'error',-->
-        <!--      allowOutsideClick: false,-->
-        <!--      allowEscapeKey: false,-->
-        <!--      allowEnterKey: true,-->
-        <!--      html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+-->
-        <!--      '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+-->
-        <!--      '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',-->
-        <!--      showConfirmButton: false,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--Fim do modal de Acesso não permitido-->
 
-        <!--Modal de não permitido para o Editar, relatorio, excluir e outros botoes-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--        icon: 'error',-->
-        <!--        title: 'Você não tem Permissão',-->
-        <!--        text: 'Contate seu Administrador para receber acesso.',-->
-        <!--        allowOutsideClick: false,-->
-        <!--        allowEscapeKey: false,-->
-        <!--        allowEnterKey: true,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--fim do modal-->
 
             <form class="row g-3" novalidate id="form" action="{{ route('tomador.cadastra') }}"  method="Post">
                 
                 <input type="hidden" name="tomador" id="tomador">
                 <input type="hidden" name="pessoal">
                 
-                <section class="section__botoes--tomador">
+                <section class="section__botao--padrao">
                     
                     <div class="d-flex justify-content-start align-items-start div__voltar">
                         <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -115,41 +88,11 @@
                     </div>
                     
                 </section>
-                        
 
-                <script>
-                    function botaoModal (tomador){
-                    Swal.fire({
-                        title: 'Periodo',
-                        html:
-                        '<input type="date" name="inicio" id="swal-input1" class="swal2-input">' +
-                        '<input type="date" name="final" id="swal-input2" class="swal2-input">',
-                       Label: 'teste',
-                        confirmButtonText: 'Buscar',
-                        showDenyButton: true,
-                        denyButtonText: 'Sair',
-                        showConfirmButton: true,
-                        focusConfirm: false,
-                        preConfirm: () => {
-                            if (!document.getElementById('swal-input1').value || !document.getElementById('swal-input1').value) {
-                                Swal.showValidationMessage('Preencha todos os campos')   
-                            }else{
-                                let inicio =  document.getElementById('swal-input1').value
-                                let final = document.getElementById('swal-input2').value
-                                // let tomador = document.getElementById('tomador').value
-                                location.href=`{{url('boletim/tomador')}}/${tomador}/${inicio}/${final}`;
-                            } 
-                            
-                        }
-                    });
-                    }
-                </script>
-                        
-                        
                 <input type="hidden" class="form-control is-invalid" id="validationServer05" aria-describedby="mensagem-pesquisa" required>
                 <div id="mensagem-pesquisa" class="invalid-feedback"></div>
                 
-                <h1 class="title__tomador">Dados do Tomador <i class="fad fa-industry"></i></h1>            
+                <h1 class="title__pagina--padrao">Dados do Tomador <i class="fad fa-industry"></i></h1>            
 
                 @csrf
                 <input type="hidden" id="method" name="_method" value="">

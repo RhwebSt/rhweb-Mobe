@@ -74,7 +74,12 @@
                 'cnpj'=>isset($valorrublica_matricular->escnpj)?str_replace(array(".", ",", "-", "/"), "",$valorrublica_matricular->escnpj):''
             ],
             'csrf'=>csrf_token(),
-            'esocial'=>route('esocial.trabalhador.update')
+            'esocial'=>[
+                'update'=>route('esocial.trabalhador.update'),
+                'show'=>route('esocial.trabalhador.lista'),
+                'trabalhador'=>route('esocial.trabalhador'),
+                'tomador'=>route('esocial.tomador')
+            ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
             //   const Toast = Swal.mixin({
@@ -168,7 +173,7 @@
                             </li>
                             
                             <li class="nav-item">
-                              <a class="nav-link" href="#">E-social</a>
+                              <a class="nav-link" href="{{route('esocial.index')}}">E-social</a>
                             </li>
     
     
@@ -322,6 +327,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
+        <script src="{{url('/js/tabela/index.js')}}"></script>
         <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>

@@ -33,7 +33,7 @@
         
         <form class="row g-3"  action="{{ route('depedente.store') }}" method="POST" id="form">
 
-            <section class="section__botoes--trabalhador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{ route('depedente.mostrar.index',base64_encode($id)) }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -46,7 +46,7 @@
             </section>
             @csrf
             
-            <h1 class="title__trabalhador">Dependentes <i class="fad fa-users"></i></h1>
+            <h1 class="title__pagina--padrao">Dependentes <i class="fad fa-users"></i></h1>
               
             <div class="col-md-8">
                 <label for="nome__dependente" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Nome</label>

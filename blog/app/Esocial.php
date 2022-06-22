@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Esocial extends Model
 {
     protected $fillable = [
-        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus', 'trabalhador_id','tomador_id'
+        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus','esprenome','esinscricao', 'trabalhador_id','tomador_id'
     ];
     public function trabalhador()
     {
@@ -21,6 +21,8 @@ class Esocial extends Model
             'esid'=>$dados['id'],
             'esambiente'=>$dados['ambiente'],
             'esstatus'=>$dados['status'],
+            'esprenome'=>$dados['prenome'],
+            'esinscricao'=>$dados['inscricao'],
             'trabalhador_id'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
             'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
         ]);
@@ -28,6 +30,7 @@ class Esocial extends Model
     public function editar($dados,$id)
     {
         return Esocial::where('trabalhador_id', $id)
+        ->orWhere('tomador_id', $id)
         ->orWhere('escodigo', $id)
         ->update([
             'escodigo'=>$dados['codigo'],
@@ -37,6 +40,7 @@ class Esocial extends Model
             'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
         ]);
     }
+  
     
     public function notificacaoCadastroTrabalhador()
     {

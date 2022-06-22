@@ -14,7 +14,7 @@
             <h1 class="title__esocial">E-social <i class="fad fa-upload"></i></h1>
 
 
-            <section class="enviarEsocial">
+            <section class="enviarEsocial d-none">
                 <form id="form" method="post" enctype="multipart/form-data">
                     <div class="col-12 col-md-6 mb-3">
                         <label for="formFile" class="form-label"><i class="fad fa-file-alt"></i> Selecione seu arquivo</label>

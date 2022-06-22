@@ -30,7 +30,7 @@
         </script>
         @enderror  
 
-        <section class="section__botoes--trabalhador">
+        <section class="section__botao--padrao">
             
             <div class="d-flex justify-content-start align-items-start div__voltar">
                 <a class="botao__voltar" href="{{ route('trabalhador.novo') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -42,7 +42,7 @@
 
         </section>
             
-        <h1 class="title__trabalhador">Dependentes <i class="fad fa-users"></i></h1>
+        <h1 class="title__pagina--padrao">Dependentes <i class="fad fa-users"></i></h1>
             
         <section class="table">
             <div class="table-responsive-xxl">

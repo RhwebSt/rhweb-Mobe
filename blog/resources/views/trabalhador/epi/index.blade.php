@@ -34,7 +34,7 @@
         <form class="row g-3" action="{{route('epi.store')}}" method="POST">
         @csrf
         
-            <section class="section__botoes--trabalhador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                         <a class="botao__voltar" href="{{route('trabalhador.novo')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -46,7 +46,7 @@
                 
             </section>
         
-            <h1 class="title__trabalhador">Item da Ficha de EPI <i class="fad fa-user-hard-hat"></i></h1>
+            <h1 class="title__pagina--padrao">Item da Ficha de EPI <i class="fad fa-user-hard-hat"></i></h1>
             
             <input type="hidden" name="trabalhador" value="{{$id}}">
             

@@ -32,7 +32,7 @@
 
         <form class="row g-3" action="{{ route('trabalhador.atualizar',$trabalhador->id) }}" method="POST">
             
-            <section class="section__botoes--trabalhador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{ route('trabalhador.novo') }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -46,7 +46,7 @@
                 </div>
             </section>
             
-            <h1 class="title__trabalhador">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></h1>
+            <h1 class="title__pagina--padrao">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></h1>
             
             @csrf
             @method('put')

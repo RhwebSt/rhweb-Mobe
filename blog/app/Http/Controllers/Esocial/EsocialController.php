@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Esocial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use DataTables;
 use App\Tomador;
 use App\Empresa;
@@ -28,10 +28,10 @@ class EsocialController extends Controller
         $user = Auth::user();
         $id = base64_decode($id);
         $dados = [
-            'nome'=>'',
+            'nome'=>'S1020',
             'codigo'=>'',
             'id'=>'',
-            'ambiente'=>'',
+            'ambiente'=>0,
             'status'=>'',
             'trabalhador'=>null,
             'tomador'=>$id
@@ -46,6 +46,17 @@ class EsocialController extends Controller
         }elseif (!$tomador->parametrosefip[0]->psfpasterceiros) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o FPAS TERCEIRO.']);
         }
+        $dados = [
+            'nome'=>'S1020',
+            'codigo'=>'',
+            'id'=>'',
+            'ambiente'=>0,
+            'status'=>'',
+            'prenome'=> $tomador->tsnome,
+            'inscricao'=>$tomador->tsmatricula,
+            'trabalhador'=>null,
+            'tomador'=>$id
+        ];
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
         'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
@@ -67,6 +78,13 @@ class EsocialController extends Controller
         'fpas_21='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->parametrosefip[0]->psfpas)."\r\n".                                                                     
         'codTercs_22='.str_replace(array(".", ",","(",")", "-", "/"), "",$tomador->parametrosefip[0]->psfpasterceiros)."\r\n".                                                             
         'SALVARS1020';
+        $verificar =  $this->esocial->where([
+            ['tomador_id',$id],
+            ['escodigo','!=',50]
+        ])->count();
+        if (!$verificar) {
+            $this->esocial->cadastro($dados);
+        }
         $file_name = 'S1020_'.date("Ymd").'11475900170.txt';
         $file = fopen( $file_name, "w" );
         fwrite($file, $cd);
@@ -79,22 +97,13 @@ class EsocialController extends Controller
         header('Pragma: no-cache');
         echo $cd;
         exit;
-        $this->esocial->cadastro($dados);
         return redirect()->back();
     }
     public function eventS2300($id)
     {
         $user = Auth::user();
         $id = base64_decode($id);
-        $dados = [
-            'nome'=>'S2300',
-            'codigo'=>'',
-            'id'=>'',
-            'ambiente'=>0,
-            'status'=>'',
-            'trabalhador'=>$id,
-            'tomador'=>null
-        ];
+       
         // $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         // $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
         // dd($trabalhador->nsraca[1],$empresa,$trabalhador);
@@ -102,6 +111,17 @@ class EsocialController extends Controller
         $trabalhador = $this->trabalhador->where('id',$id)
         ->with(['documento','endereco','categoria','nascimento','bancario','depedente','epi'])->first();
         // dd($trabalhador);
+        $dados = [
+            'nome'=>'S2300',
+            'codigo'=>'',
+            'id'=>'',
+            'ambiente'=>0,
+            'status'=>'',
+            'prenome'=> $trabalhador->tsnome,
+            'inscricao'=>$trabalhador->tsmatricula,
+            'trabalhador'=>$id,
+            'tomador'=>null
+        ];
             if (!$trabalhador->categoria[0]->cbo) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o CBO.']);
             }elseif (!$trabalhador->categoria[0]->csadmissao) {
@@ -185,12 +205,15 @@ class EsocialController extends Controller
     public function update(Request $request,$id)
     {
         $dados = $request->all();
-       
         $user = Auth::user();
         // $user->notify(new notificacaoEsocial($dados));
         $id = base64_decode($id);
-        
-        $dados['trabalhador']=$id;
+        if ($dados['evento'] === 'S1020') {
+            $dados['tomador']=$id;
+        }
+        if ($dados['evento'] === 'S2300') {
+            $dados['trabalhador']=$id;
+        }
         $esocial =  $this->esocial->editar($dados,$id);
         return response()->json('Cadastro realizado com sucesso.');
         // if ($esocial) {
@@ -205,11 +228,32 @@ class EsocialController extends Controller
     public function show()
     {
         $user = Auth::user();
+        $esocial = $this->esocial
+        ->select('trabalhador_id','tomador_id','esprenome','esinscricao','esnome','esid','esstatus','created_at')
+        ->get();
        
-        $esocial = $this->trabalhador
-        ->join('esocials', 'trabalhadors.id', '=', 'esocials.trabalhador_id')
-        ->select('trabalhadors.tsnome','trabalhadors.tsmatricula','esocials.id','esocials.esnome','esocials.esid','esocials.esstatus','esocials.created_at')->get();
         return DataTables::of($esocial)
+        // ->addColumn('trabalhador_id', function($trabalhador) {   
+        //         if ($trabalhador->trabalhador_id) {
+        //             $trabalhador =  $this->trabalhador->where('id',$trabalhador->trabalhador_id)
+        //             ->select('id','tsnome','tsmatricula')
+        //             ->first();
+        //             return [
+        //                 'id'=>$trabalhador->id,
+        //                 'tsnome'=>$trabalhador->tsnome,
+        //                 'tsmatricula'=>$trabalhador->tsmatricula
+        //             ];
+        //         }else{
+        //             $tomador =  $this->tomador->where('id',$trabalhador->tomador_id)
+        //             ->select('id','tsnome','tsmatricula')
+        //             ->first();
+        //             return [
+        //                 'id'=>$tomador->id,
+        //                 'tsnome'=>$tomador->tsnome,
+        //                 'tsmatricula'=>$tomador->tsmatricula
+        //             ];
+        //         }
+        // })
         ->make(true);
        
     }

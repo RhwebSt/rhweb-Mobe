@@ -165,7 +165,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     // ->middleware(['permission:mtr15555738']);
     Route::resource('epi','Trabalhador\\EpiController')->only(['store', 'update', 'index','create','show','edit']);
     // ->middleware(['permission:mtr15555738']);
-    Route::get('esocial/trabalhador/{id}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
+    Route::get('esocial/trabalhador/{id?}','Esocial\\EsocialController@eventS2300')->name('esocial.trabalhador');
     // ->middleware(['permission:mtrve15555738']);
     // Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::get('ordem/trabalhador/{ordem}/{id?}/{search?}','Trabalhador\\TrabalhadorController@ordem')->name('ordem.trabalhador');
@@ -236,7 +236,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('gera/txt/sefip/{tomador}/{folha}/{empresa}','Sefip\\SefipController@geraTxt')->name('gera.txt.sefip');
     Route::post('recibo/avulso/trabalhador','Avuso\\ReceboTrabalhadorController@relatorio')->name('recibo.avulso.trabalhador');
-    Route::get('esocial/tomador/{id}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
+    Route::get('esocial/tomador/{id?}','Esocial\\EsocialController@eventS1020')->name('esocial.tomador');
     
     Route::put('trabalhador/esocial/{id?}','Esocial\\EsocialController@update')->name('esocial.trabalhador.update');
     Route::get('trabalhador/esocial/lista','Esocial\\EsocialController@show')->name('esocial.trabalhador.lista');

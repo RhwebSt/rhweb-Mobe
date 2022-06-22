@@ -33,7 +33,7 @@
 
         <form class="row g-3" id="form" action="{{ route('trabalhador.cadastra') }}" enctype="multipart/form-data" method="POST">
             
-            <section class="section__botoes--trabalhador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -50,7 +50,7 @@
                 </div>
             </section>
 
-            <h1 class="title__trabalhador">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></h1>
+            <h1 class="title__pagina--padrao">Identificação do Trabalhador <i class="fad fa-user-hard-hat"></i></h1>
             
             @csrf
             <input type="hidden" id="method" name="_method" value="">

@@ -1,3 +1,30 @@
+function botaoModal (tomador){
+    Swal.fire({
+        title: 'Periodo',
+        html:
+        '<input type="date" name="inicio" id="swal-input1" class="swal2-input">' +
+        '<input type="date" name="final" id="swal-input2" class="swal2-input">',
+       Label: 'teste',
+        confirmButtonText: 'Buscar',
+        showDenyButton: true,
+        denyButtonText: 'Sair',
+        showConfirmButton: true,
+        focusConfirm: false,
+        preConfirm: () => {
+            if (!document.getElementById('swal-input1').value || !document.getElementById('swal-input1').value) {
+                Swal.showValidationMessage('Preencha todos os campos')   
+            }else{
+                let inicio =  document.getElementById('swal-input1').value
+                let final = document.getElementById('swal-input2').value
+                // let tomador = document.getElementById('tomador').value
+                location.href=`{{url('boletim/tomador')}}/${tomador}/${inicio}/${final}`;
+            } 
+            
+        }
+    });
+}
+
+
 
 // modal de colocar o nome fantasia como o principal//
 var radio = document.getElementById("radio");

@@ -14,9 +14,31 @@ $(document).ready(function(){
         
         'columns':[
             {'data':'esnome'},
-            {'data':'tsmatricula'},
-            {'data':'tsnome'},
-            {'data':'esid'},
+            {'data':'esinscricao'},
+            {'data':'esprenome'},
+            // {'data':'trabalhador_id',
+            //     render:function(data, type, row){
+            //         if (data) {
+            //             return data.tsmatricula
+            //         }
+            //     }
+            // },
+            // {'data':'trabalhador_id',
+            //     render:function(data, type, row){
+            //         if (data) {
+            //             return data.tsnome
+            //         }
+            //     }
+            // },
+            {'data':'esid',
+                render:function(data, type, row){
+                    if (!data) {
+                        return `<span class="badge bg-danger">Este evento ainda não foi enviado</span>`
+                    }else{
+                        return data;
+                    }
+                }
+            },
             {'data':'created_at',
                 render:function (data, type, row) {
                     data = data.split('T')
@@ -25,56 +47,68 @@ $(document).ready(function(){
             },
             {'data':'esid',
             render: function(data, type, row){
+                console.log(row);
                 let dados = '';
-                if (data != null)
-               
-                $.ajax({
-                    url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=1&versaomanual=S.01.00.00`,
-                    type: "GET",
-                    // data: dados,
-                    // dataType: 'json',
-                    processData: false,  
-                    async:false,
-                    headers: {
-                        // 'content-type':'text/tx2',
-                        'cnpj_sh':'34350915000149',
-                        'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                        'empregador':'34350915000149'
-                    },
-                    success: function(retorno){
-                        dados = retorno;
-                    }
-                 });
-                if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
-                    dados.data.eventos[0].ocorrencias.forEach(element => {
-                        dados += `${element.descricao}<br><br>`
-                    });
+                if (data){
                     $.ajax({
-                        url: `${window.Laravel.esocial.update}/${dados.data.id}`,
-                        type: "PUT",
-                        data: {
-                            id:dados.data.id,
-                            codigo:dados.data.eventos[0].status.codigo,
-                            status:dados.data.eventos[0].status.mensagem
-                        },
+                        url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=1&versaomanual=S.01.00.00`,
+                        type: "GET",
+                        // data: dados,
                         // dataType: 'json',
-                        // processData: false,  
-                        // async:false,
+                        processData: false,  
+                        async:false,
                         headers: {
-                            'X-CSRF-TOKEN': window.Laravel.csrf
                             // 'content-type':'text/tx2',
-                            // 'cnpj_sh':'34350915000149',
-                            // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                            // 'empregador':'34350915000149'
+                            'cnpj_sh':'34350915000149',
+                            'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                            'empregador':'34350915000149'
                         },
                         success: function(retorno){
-                            // console.log(retorno);
-                          
+                            dados = retorno;
                         }
-                     });
-                    return erros(dados)
+                    });
+                    if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
+                        dados.data.eventos[0].ocorrencias.forEach(element => {
+                            dados += `${element.descricao}<br><br>`
+                        });
+                        $.ajax({
+                            url: `${window.Laravel.esocial.update}/${dados.data.id}`,
+                            type: "PUT",
+                            data: {
+                                id:dados.data.id,
+                                codigo:dados.data.eventos[0].status.codigo,
+                                status:dados.data.eventos[0].status.mensagem
+                            },
+                            // dataType: 'json',
+                            // processData: false,  
+                            // async:false,
+                            headers: {
+                                'X-CSRF-TOKEN': window.Laravel.csrf
+                                // 'content-type':'text/tx2',
+                                // 'cnpj_sh':'34350915000149',
+                                // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                                // 'empregador':'34350915000149'
+                            },
+                            success: function(retorno){
+                                // console.log(retorno);
+                            
+                            }
+                        });
+                        return erros(dados)
+                    }else{
+                        return`<span class="badge bg-warning text-dark">EMPROCESSAMENTO</span>`
+                    }
                 }else{
-                    return`<span class="badge bg-warning text-dark">EMPROCESSAMENTO</span>`
+                    let url = '';
+                    let id = '';
+                    if (row.esnome == 'S2300') {
+                        url = window.Laravel.esocial.trabalhador
+                        id = btoa(row.trabalhador_id)
+                    }else if (row.esnome == 'S1020') {
+                        url = window.Laravel.esocial.tomador
+                        id = btoa(row.tomador_id)
+                    }
+                    return evento(id,url,row.esnome);
                 }
                
             }
@@ -173,7 +207,115 @@ $(document).ready(function(){
         </div>
     </div>`
     }
-    $("#form").submit(function () {
-        var formData = new FormData(this);
-    })
+    function evento(id,url,nome) {
+        $("#enviar-evento").click(function() {
+            let id = $(this).attr('data-id')
+            Swal.fire({
+                title: '<strong>Evento baixado com sucesso</strong>',
+                icon: 'success',
+                html: '<div class="progress mb-3" style="height: 12px;">' +
+                '<div class="progress-bar bg-success" role="progressbar" id="progress" style="width: 0;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>' +
+                '</div>' +
+                '<p id="msg">Deseja Integrar esse arquivo com o E-SOCIAL?</p>',
+                input: 'file',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                showConfirmButton: true,
+                confirmButtonText: 'Enviar <i class="fas fa-paper-plane"></i>',
+                confirmButtonColor: '#04888B',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                preConfirm: (event) => {
+                if (event) {
+                    var ext = ['text']
+                    var type = event.type.split('/')
+                    if (event.name.includes(nome) === false) {
+                        $('#msg').text(`O txt passado não tem o evento correto. ${nome}`).addClass('text-danger')
+                        $('#progress').text('0%').css({"width": "0%"}).removeClass('bg-success').addClass('bg-dange');
+                        return false;
+                    }else if(ext.indexOf(type[0]) === -1){
+                        $('#msg').text('Não em um arquivo txt.').addClass('text-danger')
+                        $('#progress').text('0%').css({"width": "0%"}).removeClass('bg-success').addClass('bg-dange');
+                        return false;
+                    }else{
+                        $('#msg').text('Evento sendo enviado para SEFAZ.').removeClass('text-danger').addClass('text-black');
+                        $('#progress').text('25%').css({"width": "25%"}).removeClass('bg-dange').addClass('bg-success');
+                        var myFormData = new FormData();
+                        myFormData.append('file', event);
+                        gerarxml(myFormData,id,nome)
+                    }  
+                }
+                return false;
+                }
+            })
+        })
+        return `
+        <div class="dropdown">
+            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Evento
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li class="btn__padrao--evento"><a class="dropdown-item modal-botao" href="${url}/${id}" id="cracha" role="button">Baixar evento</li>
+                <li class="" id="enviar-evento" data-id="${id}"><a class="dropdown-item modal-botao" href="#"  role="button">Enviar evento</li>           
+            </ul>
+        </div>`;
+    }
+    function gerarxml(dados,trabalhador,nome){
+
+        $.ajax({
+            url: "https://api.tecnospeed.com.br/esocial/v1/evento/gerar/xml",
+            type: "POST",
+            data: dados,
+            // dataType: 'json',
+            processData: false,  
+            // async:false,
+            headers: {
+                'content-type':'text/tx2',
+                'cnpj_sh':'34350915000149',
+                'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                'empregador':'26844068000140'
+            },
+            success: function(retorno){
+                $('#msg').text('Lote Recebido com Sucesso.')
+                $('#progress').text('50%').css({"width": "50%"});
+                cadastra(retorno.data,trabalhador,nome)
+                // setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
+            },
+            error: function () {
+                $('#msg').text('Não foi porssivél realizar o processo');
+                $('#progress').text('0%').css({"width": "0%"});
+            },
+         });
+    }
+    function cadastra(dados,id,nome) {
+        $.ajax({
+            url: `${window.Laravel.esocial.update}/${id}`,
+            type: "PUT",
+            data: {
+                evento:nome,
+                id:dados.id,
+                codigo:dados.status_envio.codigo,
+                status:dados.status_envio.mensagem
+            },
+            // dataType: 'json',
+            // processData: false,  
+            // async:false,
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrf
+                // 'content-type':'text/tx2',
+                // 'cnpj_sh':'34350915000149',
+                // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                // 'empregador':'34350915000149'
+            },
+            success: function(retorno){
+                // console.log(retorno);
+                $('#progress').text('100%').css({"width": "100%"});
+                $('#msg').text(retorno)
+                // console.log(trabalhador);
+                // buscaxml(retorno.data.eventos[0])
+            }
+         });
+    }
+    
 })

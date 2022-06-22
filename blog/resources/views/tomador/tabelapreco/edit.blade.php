@@ -34,7 +34,7 @@
     
         <form class="row g-3" id="form" method="POST" action="{{ route('tabelapreco.update',$id) }}">
             
-            <section class="section__botoes--tomador">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{ route('tabelapreco.index',[' ',base64_encode($tomador)]) }}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -52,7 +52,7 @@
                 
             </section>
     
-            <h1 class="title__tomador">Tabela de Preços <i class="fad fa-sack-dollar"></i></h1>
+            <h1 class="title__pagina--padrao">Tabela de Preços <i class="fad fa-sack-dollar"></i></h1>
     
     
             <input type="hidden" value="{{$tomador}}" name="tomador" id="tomador">

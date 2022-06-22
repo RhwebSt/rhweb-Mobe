@@ -2,7 +2,6 @@
 
 $(document).ready(function(){
     data =  new Date
-    // console.log(data);
     $('.btn__padrao--evento').click(function () {
         let trabalhador = $(this).attr('data-id')
         Swal.fire({
