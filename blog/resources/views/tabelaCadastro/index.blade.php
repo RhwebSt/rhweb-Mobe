@@ -29,41 +29,12 @@
                 });
             </script>
         @enderror
-        
-        <!--Modal de Acesso não permitido-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--      icon: 'error',-->
-        <!--      allowOutsideClick: false,-->
-        <!--      allowEscapeKey: false,-->
-        <!--      allowEnterKey: true,-->
-        <!--      html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+-->
-        <!--      '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+-->
-        <!--      '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',-->
-        <!--      showConfirmButton: false,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--Fim do modal de Acesso não permitido-->
 
-        <!--Modal de não permitido para o Editar, relatorio, excluir e outros botoes-->
-        <!--<script>-->
-        <!--    Swal.fire({-->
-        <!--        icon: 'error',-->
-        <!--        title: 'Você não tem Permissão',-->
-        <!--        text: 'Contate seu Administrador para receber acesso.',-->
-        <!--        allowOutsideClick: false,-->
-        <!--        allowEscapeKey: false,-->
-        <!--        allowEnterKey: true,-->
-        <!--    });-->
-        <!--</script>-->
-        <!--fim do modal-->
-        
-        
         <form class="row g-3" id="form" method="POST" action="{{route('boletim.tabela.store')}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="">
             
-            <section class="section__botoes--boletim-tabela">
+            <section class="section__botao--padrao">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{route('tabela.cartao.ponto.novo')}}"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -81,7 +52,7 @@
                 
             </section>
 
-            <h1 class="title__boletim-tabela">Lançamento com Tabela de Preço <i class="fad fa-sack-dollar"></i></h1>
+            <h1 class="title__pagina--padrao">Lançamento com Tabela de Preço <i class="fad fa-sack-dollar"></i></h1>
               
             <input type="hidden" name="lancamento" value="{{$id}}">
             <input type="hidden" name="numtrabalhador" value="{{$quantidade}}">
@@ -154,6 +125,8 @@
     @include('tabelaCadastro.lista')
 </main>
 
+<script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/index.js')}}"></script> 
+
     <?php
         function calculovalores($horas,$valores)
         {
@@ -168,127 +141,5 @@
             return $horasex; 
        }
     ?>
-        
-        
 
-     
-<script>
-
-    let rublicas = ['1002','1003','1004','1005']
-    $( "#rubrica" ).on('keyup focus',function() {
-        var dados = '0';
-        if ($(this).val()) {
-          dados = $(this).val()
-          if (dados.indexOf('  ') !== -1) {
-            dados = monta_dados(dados);
-            if (dados.indexOf('%') !== -1) {
-                dados = dados.replace('%','')
-            }
-          }
-        }
-        $.ajax({
-            url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
-            type: 'get',
-            contentType: 'application/json',
-            success: function(data) {
-                $('#codigo').val(' ')
-                $('#valor').val(' ')
-                $('#lftomador').val(' ')
-                // $('#quantidade').attr('type','text')
-                $('#conteinarquant').html(`<input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">`)
-                $('#quantidade').mask('000.000.000.000.000.00', {reverse: true});
-                let nome = ''
-                if (data.length >= 1) {
-                    data.forEach(element => {
-                        nome += `<option value="${element.tsrubrica}  ${element.tsdescricao}">`
-                    });
-                    $('#rublicas').html(nome)
-                }
-                if(data.length === 1 && dados.length > 3){
-                    $('#valor').val(data[0].tsvalor)
-                    $('#lftomador').val(data[0].tstomvalor)
-                    $('#rubrica').val(data[0].tsdescricao)
-                    $('#codigo').val(data[0].tsrubrica)
-                    $('#descricao').val(data[0].tsdescricao)
-                    if (rublicas.indexOf(data[0].tsrubrica) !== -1) {
-                        // $('#quantidade').attr('type','time')
-                        $('#conteinarquant').html(`<input type="time" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="">`)
-                    }
-                }else if(dados.length > 3 && !data.length){
-                    $('#valor').val(' ')
-                    $('#lftomador').val(' ')
-                    $('#conteinarquant').html(`<input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">`)
-                    $('#quantidade').mask('000.000.000.000.000.00', {reverse: true});
-                    // $('#quantidade').attr('type','text')
-                }
-            }
-        });
-    });
-    // $( "#pesquisa" ).on('keyup focus',function() { 
-    //     let  dados = '0'
-    //     if ($(this).val()) {
-    //       dados = $(this).val()
-    //       if (dados.indexOf('  ') !== -1) {
-    //         dados = monta_dados(dados);
-    //       }
-    //     }
-      
-    // });
-    $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+0,
-            type: 'get',
-            contentType: 'application/json',
-            success: function(data) {
-              let nome = ''
-              if (data.length >= 1) {
-                data.forEach(element => {
-                  nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
-                  // nome += `<option value="${element.tsmatricula}">`
-                  nome += `<option value="${element.tscpf}">`
-                });
-                $('#listapesquisa').html(nome)
-              }            
-            }
-        });
-    $( "#nome__completo" ).on('keyup focus',function() { 
-        let  dados = '0'
-        if ($(this).val()) {
-          dados = $(this).val()
-          if (dados.indexOf('  ') !== -1) {
-            dados = monta_dados(dados);
-          }
-        }
-        $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+dados,
-            type: 'get',
-            contentType: 'application/json',
-            success: function(data) {
-              $('#nomemensagem').text(' ')
-              $('#matricula').val(' ')
-            //   $( "#nome__completo" ).removeClass('is-invalid')
-              let nome = ''
-              if (data.length >= 1) {
-                data.forEach(element => {
-                  nome += `<option value="${element.tsmatricula}  ${element.tsnome}">`
-                  // nome += `<option value="${element.tsmatricula}">`
-                  nome += `<option value="${element.tscpf}">`
-                });
-                $('#nomecompleto').html(nome)
-              }
-              if(data.length === 1 && dados.length > 4){
-                $('#nomecompleto').html(nome)
-                $('#trabalhador').val(data[0].id)
-                $('#matricula').val(data[0].tsmatricula)
-              }else if(!data.length && dados.length > 4){
-                $('#nomemensagem').text('Este trabalhador não ta cadastrador!')
-                // $( "#nome__completo" ).addClass('is-invalid')
-              }              
-            }
-        });
-    });
-    function monta_dados(dados) {
-      let novodados = dados.split('  ')
-      return novodados[1];
-    }
-</script>
 @stop

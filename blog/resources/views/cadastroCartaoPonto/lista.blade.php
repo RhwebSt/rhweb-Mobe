@@ -162,4 +162,5 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
 

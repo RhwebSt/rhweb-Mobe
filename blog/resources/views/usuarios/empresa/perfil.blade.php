@@ -39,7 +39,7 @@
             <input type="hidden" name="tomador">
             <input type="hidden" id="method" name="_method" value="PUT">
             
-            <section class="section__botoes--atualiza--empresa">
+            <section class="section__botao--padrao">
                     
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
@@ -52,7 +52,7 @@
                 
             </section>
             
-            <h1 class="title__atualiza--empresa">Atualizar os dados da empresa <i class="fad fa-building"></i></h1>
+            <h1 class="title__pagina--padrao">Atualizar os dados da empresa <i class="fad fa-building"></i></h1>
     
             <section class="section__foto--atualizar--empresa">
                 
@@ -423,7 +423,7 @@
                 @enderror
             </div>
             
-            <h1 class="title__atualiza--empresa">Contadores <i class="fad fa-abacus"></i></h1>
+            <h1 class="title__pagina--padrao-secondary">Contadores <i class="fad fa-abacus"></i></h1>
             
             <div class="col-md-3">
                 <label for="nro__fatura" class="form-label">Fatura <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Quantidade de faturas cadastradas"></i></label>
@@ -473,68 +473,6 @@
     </div>
 </section>
 
+<script type="text/javascript" src="{{url('/js/user/perfilEmpresa/index.js')}}"></script> 
 
-        <script>
-            
-            function BotaoAlterafoto() {
-                (async () => {
-                    const { value: file } = await Swal.fire({
-                    title: 'Selecione sua imagem',
-                    input: 'file',
-                    confirmButtonText:'Enviar <i class="far fa-paper-plane"></i>',
-                    inputAttributes: {
-                        'accept': 'image/*',
-                        'aria-label': 'Upload your profile picture', 
-                        'class': 'false'
-                    }
-                    })
-
-                    if (file) {
-                        var ext = ['jpg','jpeg','png','svg','tiff','webp']
-                        var type = file.type.split('/')
-                        if (file.size < 3145728) {
-                            if (ext.indexOf(type[1]) >= 1) {
-                                const reader = new FileReader()
-                                reader.onload = (e) => {
-                                    Swal.fire({
-                                    title: 'Foto atualizada!!',
-                                    imageUrl: e.target.result,
-                                    imageAlt: 'Foto atualizada',
-                                    confirmButtonText:'Ok',
-                                    })
-                                    var myFormData = new FormData();
-                                    myFormData.append('image_file', e.target.result);
-                                    myFormData.append('_token','{{ csrf_token() }}')
-                                    myFormData.append('empresa',"{{$user->empresa}}")
-                                    $.ajax({
-                                        url: "{{url('foto/editer')}}",
-                                        type: 'POST',
-                                        data: myFormData,
-                                        cache: false,
-                                        processData: false,
-                                        contentType: false,
-                                        beforeSend: function() {    
-                                        },  
-                                        complete: function() {  
-                                        },              
-                                        success: function(data) {
-                                            $('#foto').attr('src',e.target.result)
-                                            $('#inputfoto').val(e.target.result)       
-                                        },
-                                    })
-                                }
-                                reader.readAsDataURL(file)
-                            }else{
-                                $('#msgfoto').removeClass('d-none').text('A extensão não é suportada. Apenas(jpg, png,svg,tiff,webp)')
-                            }
-                        } else {
-                            Swal.showValidationMessage('O tamanho suportado é de até 3MB')
-                            $('#msgfoto').removeClass('d-none').text('O tamanho suportado é de até 3MB');
-                        }  
-                        
-                }
-            })()  
-            }
-           
-        </script>
 @stop

@@ -61,3 +61,5 @@
 </div>
 
 
+<script type="text/javascript" src="{{url('/js/user/atalhos/atalhos.js')}}"></script> 
+

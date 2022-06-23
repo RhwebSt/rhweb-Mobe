@@ -18,7 +18,7 @@
     box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
     border: none !important;
     transition: 300ms ease-in-out;
-    width: 100%;
+    width: 100% !important;
 }
 
 
@@ -27,7 +27,7 @@
     background-color: rgb(15, 15, 15) !important;
     color: rgb(255, 255, 255);
     font-weight: 300 !important;
-    text-align: center;  
+    text-align: center !important;  
 }
 
 .th__header:first-child{
@@ -543,15 +543,123 @@
     transform: scale(1.06); 
 }
 
-/*table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {*/
-/*    text-align: center !important;*/
-    
-/*}*/
 
-/*.dataTables_info{*/
-/*    color: white !important;*/
-/*}*/
+.dataTables_wrapper .dataTables_filter {
+    margin-right: 10px !important;
+    margin-top: 10px !important;
+}
 
+.dataTables_length{
+    margin-top: 10px !important;
+    margin-left: 15px !important;
+}
+
+.dataTables_length label{
+    color: white !important;
+}
+
+.dataTables_length select{
+    background-color: #3D3D3D !important;
+    color: white !important;
+}
+
+.dataTables_length select option{
+    color: white !important;
+}
+
+.dataTables_filter label{
+    color: white !important;
+}
+
+.dataTables_filter input{
+    background-color: #3D3D3D !important;
+}
+
+.dataTables_info{
+    margin-left: 15px !important;
+}
+
+.dataTables_wrapper .dataTables_filter input{
+    width: 300px !important;
+}
+
+.dataTables_wrapper{
+    background-color: #1C1C1D !important;
+    border-radius: 15px;
+}
+
+.dataTables_paginate{
+    margin-right: 10px !important;
+}
+
+.odd, .even{
+    background-color: #464649 !important;
+    text-align: center;
+    transition: 200ms ease-in-out;
+}
+
+.even:hover{
+    background-color: #646468 !important;
+    transition: 200ms ease-in-out;
+}
+
+.odd:hover{
+    background-color: #646468 !important;
+    transition: 200ms ease-in-out;
+}
+
+.even .badge{
+    font-weight: 400 !important;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.odd .badge{
+    font-weight: 400 !important;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.even td{
+    color: white !important;
+}
+
+.odd td{
+    color: white !important;
+}
+
+.dataTables_info{
+    color: white !important;
+}
+
+.previous .page-link{
+    background-color: #3E3E3E !important;
+    border: none !important;
+    box-shadow: 0px 4px 2px 1px rgb(0,0,0, 0.3);
+    margin-bottom: 20px;
+    color: white !important;
+}
+
+.next .page-link{
+    background-color: #3E3E3E !important;
+    border: none !important;
+    box-shadow: 0px 4px 2px 1px rgb(0,0,0, 0.3);
+    margin-bottom: 20px;
+    color: white !important;
+}
+
+
+.page-item.active .page-link {
+    color: white;
+    background-color: #6184FA !important;
+    border: none !important;
+    box-shadow: 0px 4px 2px 1px rgb(0,0,0, 0.3);
+    margin-bottom: 20px;
+}
+
+.badge{
+    box-shadow: 0px 4px 2px 1px rgb(0,0,0, 0.3);
+}
 
 
 

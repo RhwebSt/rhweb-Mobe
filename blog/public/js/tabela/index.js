@@ -47,7 +47,6 @@ $(document).ready(function(){
             },
             {'data':'esid',
             render: function(data, type, row){
-                console.log(row);
                 let dados = '';
                 if (data){
                     $.ajax({
@@ -96,7 +95,7 @@ $(document).ready(function(){
                         });
                         return erros(dados)
                     }else{
-                        return`<span class="badge bg-warning text-dark">EMPROCESSAMENTO</span>`
+                        return`<span class="badge bg-warning text-black">Em Processamento</span>`
                     }
                 }else{
                     let url = '';
@@ -113,6 +112,10 @@ $(document).ready(function(){
                
             }
             },
+        ],
+        
+        "columnDefs": [
+            { className: "copiaId", "targets": [ 3 ] }
         ],
        
         "language": {
@@ -132,6 +135,12 @@ $(document).ready(function(){
             },
         }
     });
+    
+    
+    
+    
+    
+    
     function erros(dados) {
         
         return `
@@ -208,7 +217,7 @@ $(document).ready(function(){
     </div>`
     }
     function evento(id,url,nome) {
-        $("#enviar-evento").click(function() {
+        $(".enviar-evento").click(function() {
             let id = $(this).attr('data-id')
             Swal.fire({
                 title: '<strong>Evento baixado com sucesso</strong>',
@@ -252,12 +261,12 @@ $(document).ready(function(){
         })
         return `
         <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Evento
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li class="btn__padrao--evento"><a class="dropdown-item modal-botao" href="${url}/${id}" id="cracha" role="button">Baixar evento</li>
-                <li class="" id="enviar-evento" data-id="${id}"><a class="dropdown-item modal-botao" href="#"  role="button">Enviar evento</li>           
+                <li class=""><a class="dropdown-item modal-botao" href="${url}/${id}" id="baixarEvento" role="button">Baixar evento</li>
+                <li class="enviar-evento" id="enviar-evento" data-id="${id}"><a class="dropdown-item modal-botao" href="#"  role="button">Enviar evento</li>           
             </ul>
         </div>`;
     }

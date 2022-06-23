@@ -130,7 +130,7 @@
                 <form class="row g-3" action="{{route('calculo.folha.tomador.filtro')}}" method="POST">
                 <section class="section__lista--tomador--pill">
                     
-                    <section class="section__search">
+                    <section class="section__search d-none">
                         <div class="col-md-5">
                             
                                 
@@ -151,7 +151,7 @@
                         </div>
                     </section>
                     
-                    <section class="section__filtro--pill row">
+                    <section class="section__filtro--pill row d-none">
                        
                             @csrf
                                 <div class="col-12 col-md-3">
@@ -166,7 +166,7 @@
                         
                     </section>
                     
-                    <section>
+                    <section class="d-none">
                         <div class="d-flex justify-content-end">
                             <div>
                                 <div class="dropdown">
@@ -187,7 +187,9 @@
                     <section class="table">           
                 
                         <div class="table-responsive-xxl">
-                            <table class="table">
+                           
+                        </div>
+                        <table class="table" id="table-calculo-folhar-tomador">
                                 <thead class="tr__header">
                                     <th class="th__header text-nowrap" style="width:115px;">Código</th>
                                     <th class="th__header text-nowrap">Nome</th>
@@ -199,168 +201,7 @@
                                     <th class="th__header text-nowrap" style="width:50px;">Analítico</th>
                                     <th class="th__header text-nowrap" style="width:50px;">Sefip</th>
                                 </thead>
-                                
-                                <tbody class="table__body">
-                                    @if(count($tomadores) > 0)
-                                    @foreach($tomadores as $t => $tomador)
-                                    <tr class="tr__body">               
-                                        <td class="td__body text-nowrap col" style="width:115px;">
-                                            @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar_id)
-                                                    {{$folhar->fscodigo}}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$tomador->tsnome}}">
-                                            {{$tomador->tsnome}}
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col"style="width:200px">
-                                            @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar_id)
-                                                <?php
-                                                    $data = explode('-',$folhar->fsinicio)
-                                                ?>
-                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:200px">
-                                            @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar_id)
-                                                <?php
-                                                    $data = explode('-',$folhar->fsfinal)
-                                                ?>
-                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            <div class="dropdown">
-                                                <button class="btn btn__relatorio modal-botao dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="icon__color fas fa-file-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item modal-botao" href="{{route('folhar.tomador.resumo.pagamento',[base64_encode($tomador->id),base64_encode($folhar->id)])}}"><i class="fas fa-file"></i> Resumo Folha de Pagamento</a></li>
-                                                    <li><a class="dropdown-item modal-botao" href="{{route('folhar.tomador.evento.1270',[base64_encode($tomador->id),base64_encode($folhar->id)])}}"><i class="fad fa-file-invoice"></i> Resumo Evento s-1270</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            
-                                            @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar_id)
-                                                    <a class="btn btn__imprimir" href="{{route('calculo.folha.tomador.imprimir',[base64_encode($folhar->id),base64_encode($tomador->id)])}}"><i class="icon__color fad fa-print"></i></a>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                        
-                                            <a class="btn btn__recibo" data-bs-toggle="offcanvas" href="#tomador_trabalhador{{$t}}" role="button" aria-controls="offcanvasExample">
-                                              <i class="icon__color fad fa-print"></i>
-                                            </a>
-                                            
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="tomador_trabalhador{{$t}}" aria-labelledby="offcanvasExampleLabel">
-                                            
-                                                <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel{{$tomador->folhar_id}}"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
-                                                    <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
-                                                </div>
-                                                
-                                                <form action="{{route('calculo.folha.tomador.trabalhador.imprimir')}}" method="post">
-                                                    @csrf
-                                                        
-                                                    <div class="offcanvas-body off__canvas--body">
-                                                        
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                                <label for="exampleDataList" class="form-label"></label>
-                                                                @foreach($folhas as $folhar)
-                                                                    @if($folhar->id === $tomador->folhar_id)
-                                                                    <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                                    
-                                                                    @endif
-                                                                @endforeach
-                                                                <input type="hidden" name="tomador" value="{{$tomador->id}}">
-                                                                
-                                                                <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
-                                                                <input class="form-control pesquisa" list="listatomador{{$folhar->id}}" name="trabalhador" id="trabalhador1" placeholder="duplo clique para pesquisar">
-                                                                <datalist id="listatomador{{$folhar->id}}"> 
-                                                                @foreach($trabalhadores as $trabalhador)
-                                                                    @if($trabalhador->folhar_id === $folhar->id && $folhar->id === $tomador->folhar_id)
-                                                                        <option value="{{$trabalhador->tsnome}}">
-                                                                            
-                                                                    @endif
-                                                                @endforeach
-                                                                </datalist>
-                                                                
-                                                                <button type="submit" class="btn botao__search" id="butao_trabalhador">
-                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </form>
-                                            </div>
-    
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:50px;">
-                                               
-                                                @foreach($folhas as $folhar)
-                                                    @if($folhar->id === $tomador->folhar_id)
-                                                    <a class="btn btn__analitico" href="{{route('tomador.calculo.folha.analitica',[$folhar->id,$tomador->id])}}">
-                                                        <i class="icon__color fad fa-analytics"></i>
-                                                    </a>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                           
-                                        <td class="td__body text-nowrap col" style="width:50px;">
-                                            <?php
-                                                $diferenca = strtotime($folhar->fsinicio) - strtotime($folhar->fsfinal);
-                                                $dias = floor($diferenca / (60 * 60 * 24)); 
-                                                if ($dias <= 15) {
-                                                    $dias = 'disabled';
-                                                }else{
-                                                    $dias = '';
-                                                }
-                                            ?>
-                                            @foreach($folhas as $folhar)
-                                                @if($folhar->id === $tomador->folhar_id)
-                                                    <a href="{{route('gera.txt.sefip',[base64_encode($tomador->id),base64_encode($folhar->id),base64_encode($user->empresa_id)])}}" class="btn btn__sefip $dias">
-                                                        <i class="icon__color fad fa-file-alt"></i>
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                                
-                                        </td>
-                                        
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr class="tr__body">
-                                        <td colspan="11" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                                <tfoot>
-                                    <tr class="">
-                                        <td colspan="11">
-                                            
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                    
                             </table>
-                        </div>
                     </section>
                 
                 </section>
@@ -373,7 +214,7 @@
                 <form class="row g-3" action="{{route('calculo.folha.geral.filtro')}}" method="POST">
                 <section class="section__lista--geral--pill">
                     
-                    <section class="section__search">
+                    <section class="section__search d-none">
                         <div class="col-md-5">
                             
                                 
@@ -394,7 +235,7 @@
                         </div>
                     </section>
                 
-                    <section class="section__filtro--pill row">
+                    <section class="section__filtro--pill row d-none">
                         
                             @csrf
     
@@ -411,7 +252,7 @@
                     </section>
                     </form>
                     
-                    <section>
+                    <section class="d-none">
                         <div class="d-flex justify-content-end">
                             <div>
                                 <div class="dropdown">
@@ -430,7 +271,8 @@
     
                     <section class="table">
                         <div class="table-responsive-xxl">
-                            <table class="table">
+                           
+                            <table class="table" id="table-calculo-folhar">
                                 <thead class="tr__header">
                                     <th class="th__header text-nowrap" style="width:120px;">Código da Folha</th>
                                     <th class="th__header text-nowrap" style="width:160px">Data Inicial</th>
@@ -443,224 +285,7 @@
                                     <th class="th__header text-nowrap" style="width:50px;">Analítico</th>
                                     <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
-                                
-                                <tbody class="table__body">
-                                @if(count($folhas) > 0)
-                                    @foreach($folhas as $folhar)
-                                    <tr class="tr__body">               
-                                        <td class="td__body text-nowrap col" style="width:120px;">{{$folhar->fscodigo}}</td>
-                                        
-                                        <td class="td__body text-nowrap col"style="width:160px">
-                                            <?php
-                                                $data = explode('-',$folhar->fsinicio)
-                                            ?>
-                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-        
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:160px">
-                                            <?php
-                                                $data = explode('-',$folhar->fsfinal)
-                                            ?>
-                                            {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:50px;">
-                                            <a class="btn btn__imprimir" href="{{route('calculo.folha.imprimir',$folhar->id)}}"><i class="icon__color fad fa-print"></i></a>
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:50px;">
-                                            <a class="btn btn__evento" href="{{route('gera.evento.1200',[$folhar->id,$folhar->empresa_id])}}"><i class="icon__color fas fa-file-invoice"></i></a>
-                                        </td>
-                                                
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            
-                                            <a class="btn btn__recibo" data-bs-toggle="offcanvas" href="#offcanvasExample1{{$folhar->id}}" role="button" aria-controls="offcanvasExample1">
-                                                <i class="icon__color fad fa-print"></i>
-                                            </a>
-    
-                                            
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample1{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel1">
-                                                
-                                                <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel1"><i class="fad fa-file-alt"></i> Recibo por Trabalhador</h5>
-                                                    <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
-                                                </div>
-                                                
-                                                <form action="{{route('calculo.folha.trabalhador.imprimir')}}" method="post">
-                                                    @csrf
-                                                    <div class="offcanvas-body off__canvas--body">
-                                                        
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                                <label for="exampleDataList" class="form-label"></label>
-                                                                <input type="hidden" name="folhar" value="{{$folhar->id}}">
-                                                                <input type="hidden" name="empresa" value="{{$user->empresa_id}}">
-                                                                <input type="text" class="form-control trabalhador" name="trabalhador"   list="lista{{$folhar->id}}" placeholder="duplo clique para pesquisar">
-                                                                
-                                                                <datalist id="lista{{$folhar->id}}">
-                                                                    @foreach($trabalhadores as $trabalhador)
-                                                                        @if($trabalhador->folhar_id === $folhar->id)
-                                                                            <option value="{{$trabalhador->tsnome}}">
-                                                                        @endif
-                                                                    @endforeach
-                                                                </datalist>
-                                                                
-                                                                <button type="submit" class="btn botao__search" id="butao_trabalhador">
-                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            
-                                        </td>
-                                                
-                                                
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            
-                                            <a class="btn btn__rubricas" data-bs-toggle="offcanvas" href="#rublica{{$folhar->id}}" role="button" aria-controls="rublica">
-                                                <i class="icon__color fad fa-file-invoice"></i>
-                                            </a>
-                                            
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="rublica{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
-                                                
-                                                <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-edit"></i> Rúbricas</h5>
-                                                    <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
-                                                </div>
-                                                
-                                                <form action="{{route('calculo.folha.rublica.imprimir')}}" method="post">
-                                                    @csrf
-                                                    <div class="offcanvas-body off__canvas--body">
-
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                                <input type="hidden" name="folharublica" value="{{$folhar->id}}">
-                                                                <input type="hidden" name="empresarublica" value="{{$user->empresa_id}}">
-                                                                <input type="hidden" name="inicio" value="{{$folhar->fsinicio}}">
-                                                                <input type="hidden" name="final" value="{{$folhar->fsfinal}}">
-                                                                <label for="exampleDataList" class="form-label"></label>
-                                                                <input class="form-control pesquisarublica" list="listarublica{{$folhar->fscodigo}}" data-id="{{$folhar->fscodigo}}" name="rublica" id="" placeholder="duplo clique para pesquisar">
-                                                                <datalist id="listarublica{{$folhar->fscodigo}}"></datalist>
-                                                                
-                                                                <button type="submit" class="btn botao__search">
-                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            
-                                        </td>
-                                                
-            
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            
-                                            <a class="btn btn__deposito" data-bs-toggle="offcanvas" href="#banco{{$folhar->id}}" role="button" aria-controls="banco">
-                                                <i class="icon__color fad fa-envelope-open-dollar"></i>
-                                            </a>
-                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="banco{{$folhar->id}}" aria-labelledby="offcanvasExampleLabel2">
-                                                
-                                                <div class="offcanvas-header">
-                                                    <h5 class="offcanvas-title" id="offcanvasExampleLabel1"><i class="fad fa-file-invoice-dollar"></i> Depósito por Banco</h5>
-                                                    <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
-                                                </div>
-                                                
-                                                <form action="{{route('calculo.folha.banco.imprimir')}}" method="post">
-                                                    @csrf
-                                                    <div class="offcanvas-body off__canvas--body">
-
-                                                        <div class="col-md-12 col-12 mt-2 p-1 pesquisar">
-                                                            <div class="d-flex">
-                                                                <input type="hidden" name="folharbanco" value="{{$folhar->id}}">
-                                                                <input type="hidden" name="empresabanco" value="{{$user->empresa_id}}">
-                                                                <label for="exampleDataList" class="form-label"></label>
-                                                                <input class="form-control banco" list="listabanco{{$folhar->id}}" name="banco" id="pesquisa" placeholder="duplo clique para pesquisar">
-                                                                <datalist id="listabanco{{$folhar->id}}"></datalist>
-                                                                
-                                                                <button type="submit" class="btn botao__search">
-                                                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                                                </button>
-
-                                                            </div>
-                                                        </div>
-                     
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            
-                                        </td>
-                                                
-                                        <td class="td__body text-nowrap col" style="width:50px;">
-                                            <a href="{{route('calculo.folha.analitica',$folhar->id)}}" class="btn btn__analitico">
-                                                <i class="icon__color fad fa-analytics"></i>
-                                            </a>
-                                        </td>
-                                                
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            <!--{{route('calculo.folha.deletar',$folhar->id)}}-->
-                                            
-                                            <a href="" class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteCalculoFolha{{$folhar->id}}"><i class="icon__color fad fa-trash"></i></a>
-                                            <section class="delete__tabela--calculoFolha">
-                                                <div class="modal fade" id="deleteCalculoFolha{{$folhar->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered col-8">
-                                                        <div class="modal-content">
-                                                            <form action="{{route('calculo.folha.deletar',$folhar->id)}}" id="formdelete" method="get">
-                                                                
-                                                                <div class="modal-header header__modal">
-                                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                                                                </div>
-                                                                
-                                                                <div class="modal-body body__modal ">
-                                                                        <div class="d-flex align-items-center justify-content-center flex-column">
-                                                                            <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
-                                                                        
-                                                                            <p class="content--deletar">Deseja realmente excluir?</p>
-                                                                            
-                                                                            <p class="content--deletar2">Obs: A exclusão pode afetar em outros cálculos.</p>
-                                                                            
-                                                                        </div>
-                                                                </div>
-                                                                
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                                                                    <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                     
-                                        </td>
-                                            
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr class="tr__body">
-                                        <td colspan="11" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                                
-                                <tfoot>
-                                    <tr class="">
-                                        <td colspan="11">
-                                            
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                    
                             </table>
-                                
                         </div>
                     </section>   
                     
@@ -670,6 +295,6 @@
     </div>
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/calculoFolha/index.js')}}"></script>
+
 
         @stop

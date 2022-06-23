@@ -344,10 +344,8 @@
         <script src="{{url('js/particlesjs.js')}}"></script>
         <script src="{{url('js/appParticles.js')}}"></script>
         <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
-        
         <script src="{{url('/js/user/tabelapreco/atualizar.js')}}"></script>
-        <script src="{{url('/js/user/usuario/alteracaoSenha.js')}}"></script>
-        
+
         <script>
         
             $('.teste').mouseover(function(){

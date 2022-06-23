@@ -93,4 +93,5 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{{url('/js/user/contador/contador.js')}}"></script> 
 

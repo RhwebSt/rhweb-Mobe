@@ -150,4 +150,6 @@
     </div>
 </main>
 
+<script type="text/javascript" src="{{url('/js/user/alteraSenha/alteracaoSenha.js')}}"></script> 
+
             @stop

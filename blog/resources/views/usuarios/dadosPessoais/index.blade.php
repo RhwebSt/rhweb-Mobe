@@ -35,7 +35,7 @@
             @csrf
            
             
-            <section class="section__botoes--dados--pessoais">
+            <section class="section__botao--padrao">
                 <div class="d-flex justify-content-start align-items-start div__voltar">
                     <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
@@ -47,7 +47,7 @@
                 </div>
             </section>
    
-            <h1 class="title__dados--pessoais">Dados Pessoais <i class="fad fa-user-cog"></i></h1>
+            <h1 class="title__pagina--padrao">Dados Pessoais <i class="fad fa-user-cog"></i></h1>
 
             <input type="hidden" name="user" value="{{$user->id}}">
             <input type="hidden" name="trabalhador">
@@ -345,4 +345,6 @@
         </form>
     </div>
 </main>
+
+<script type="text/javascript" src="{{url('/js/user/dadosPessoais/index.js')}}"></script>
 @stop

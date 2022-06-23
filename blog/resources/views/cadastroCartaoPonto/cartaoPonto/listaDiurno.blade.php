@@ -151,4 +151,4 @@
 </div>
 
 
-
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/lista.js')}}"></script>     

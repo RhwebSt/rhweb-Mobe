@@ -140,6 +140,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('trabalhador/novo','Trabalhador\\TrabalhadorController@create')->name('trabalhador.novo');
     // ->middleware(['permission:mtrc15555738']);
+    Route::get('trabalhador/lista','Trabalhador\\TrabalhadorController@lista')->name('trabalhador.lista');
+    // ->middleware(['permission:mtrc15555738']);
     Route::post('trabalhador/cadastra','Trabalhador\\TrabalhadorController@store')->name('trabalhador.cadastra');
     // ->middleware(['permission:mtrc15555738']);
     Route::get('trabalhador/editar/{id}','Trabalhador\\TrabalhadorController@edit')->name('trabalhador.editar');
@@ -192,10 +194,10 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('calculo/folha','CalculoFolha\\calculoFolhaController@index')->name('calculo.folha.index')->middleware(['permission:mcfc15555738']);
 
     Route::post('cadastro/folha','CalculoFolha\\calculoFolhaController@store')->name('calculo.folha.store');
-    Route::post('tomador/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaTomador')->name('calculo.folha.tomador.filtro');
+    Route::get('tomador/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaTomador')->name('calculo.folha.tomador.filtro');
     // Route::get('tomador/filtra/folha/calculo/{codicao}/{tomador}/{inicio}/{final}','CalculoFolha\\calculoFolhaController@filtroPesquisaTomadorOrdem')->name('filtra.folha.tomador.calculo');
 
-    Route::post('geral/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaGeral')->name('calculo.folha.geral.filtro');
+    Route::get('geral/filtra/calculo/folha','CalculoFolha\\calculoFolhaController@filtroPesquisaGeral')->name('calculo.folha.geral.filtro');
     Route::get('filtra/folha/calculo/{codicao}','CalculoFolha\\calculoFolhaController@filtroPesquisaOrdem')->name('filtra.folha.calculo');
 
     Route::get('calculo/folha/tomador/{trabalhador?}/{tomador?}/{ano_inicial}/{ano_final}','CalculoFolha\\calculoFolhaPorTomadorController@calculoFolhaPorTomador')->name('calculo.folha.tomador');

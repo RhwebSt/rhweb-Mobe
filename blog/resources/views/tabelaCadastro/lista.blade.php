@@ -158,3 +158,4 @@
     </div>
 </div>
               
+<script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script> 

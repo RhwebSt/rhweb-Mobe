@@ -113,6 +113,16 @@ label,h1,h2,h3,h4,h5,small, span, option{
     margin-top: 3%;
 }
 
+.title__pagina--padrao-secondary{
+    font-weight: 500 !important;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-title-pagina-padrao);
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
 
 
 select{

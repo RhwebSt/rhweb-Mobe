@@ -21,6 +21,7 @@ use App\BaseCalculo;
 use App\Esocial;
 use App\Empresa;
 use App\Arquivo;
+use DataTables;
 class TrabalhadorController extends Controller
 {
     private $trabalhador,$endereco,$bancario,$nascimento,$categoria,$valorrublica,
@@ -82,7 +83,71 @@ class TrabalhadorController extends Controller
             return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
-
+    public function lista()
+    {
+        $user = Auth::user();
+        $trabalhadors = $this->trabalhador->where('empresa_id', $user->empresa_id)->orderBy('tsnome', 'asc');
+        return DataTables::of($trabalhadors)
+        ->addColumn('id', function($id) {
+            $excluir = ' <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTrabalhador'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
+                                    
+            <section class="delete__tabela--trabalhador">
+                <div class="modal fade" id="deleteTrabalhador'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered col-8">
+                        <div class="modal-content">
+                            <form action="'.route('trabalhador.deletar',$id->id).'" id="" method="post">
+                                <input type="hidden" name="_token" value="'.csrf_token().'">
+                                <input type="hidden" name="method" value="delete">
+                               
+                                <div class="modal-header header__modal">
+                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                </div>
+                                
+                                <div class="modal-body body__modal ">
+                                        <div class="d-flex align-items-center justify-content-center flex-column">
+                                            <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                        
+                                            <p class="content--deletar">Deseja realmente excluir?</p>
+                                            
+                                            <p class="content--deletar2">Obs: Será excluído tudo que está vinculado á este trabalhador</p>
+                                            
+                                        </div>
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                    <button type="submit" class="btn botao__deletar--modal modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>';
+            return [
+                'depedente'=>' <a class="btn__depedente btn" href="'.route('depedente.mostrar.index',base64_encode($id->id)).'"><i class="icon__color fad fa-users"></i></a>',
+                'relatorio'=>'<div class="dropdown">
+                                <button class="btn btn__relatorio dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="icon__color fas fa-file-alt"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('cracha.trabalhador',base64_encode($id->id)).'" id="cracha" role="button"><i class="fad fa-file-alt"></i> Crachá</a></li>
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('declaracao.afastamento.trabalhador',base64_encode($id->id)).'" id="declaracao__afas" role="button"><i class="fad fa-file-alt"></i> Declaração de Afastamento</a></li>
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('declaracao.admissao.trabalhador',base64_encode($id->id)).'" id="declaracao__adm" role="button"><i class="fad fa-file-alt"></i> Declaração de Admissão</a></li>
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('devolucao.ctps.trabalhador',base64_encode($id->id)).'" id="devolucao__ctps" role="button"><i class="fad fa-file-alt"></i> Devolução da CTPS</a></li>
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('ficha.registro.trabalhador',base64_encode($id->id)).'" id="imprimir" role="button"><i class="fad fa-file-alt"></i> Ficha de Registro</a></li>
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('epi.show',base64_encode($id->id)).'" id="fichaepi" role="button"><i class="fad fa-file-alt"></i> Ficha de EPI</a></li>
+                                    
+                                </ul>
+                            </div>',
+                'evento'=>' <a class="btn__evento btn btn__padrao--evento" data-id="'.base64_encode($id->id).'" href="'.route('esocial.trabalhador',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-file-invoice"></i></a>',
+                'editar'=>'<a class="button__editar btn" href="'.route('trabalhador.editar',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>$excluir
+            ];
+        })
+        ->rawColumns(['id.depedente','id.relatorio','id.evento','id.editar','id.excluir'])
+        ->make(true);
+    }
     public function ordem($ordem,$id = null,$search = null)
     {
         $user = Auth::user();
