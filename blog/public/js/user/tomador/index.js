@@ -17,7 +17,7 @@ function botaoModal (tomador){
                 let inicio =  document.getElementById('swal-input1').value
                 let final = document.getElementById('swal-input2').value
                 // let tomador = document.getElementById('tomador').value
-                location.href=`{{url('boletim/tomador')}}/${tomador}/${inicio}/${final}`;
+                location.href=`${window.Laravel.tomador.boletim}/${tomador}/${inicio}/${final}`;
             } 
             
         }

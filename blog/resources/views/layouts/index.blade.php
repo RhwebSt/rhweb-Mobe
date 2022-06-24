@@ -79,6 +79,26 @@
                 'show'=>route('esocial.trabalhador.lista'),
                 'trabalhador'=>route('esocial.trabalhador'),
                 'tomador'=>route('esocial.tomador')
+            ],
+            'trabalhador'=>[
+                'lista'=>route('trabalhador.lista')
+            ],
+            'tomador'=>[
+                'lista'=>route('tomador.lista'),
+                'boletim'=>route('boletim.tomador')
+            ],
+            'tabelapreco'=>[
+                'lista'=>route('tabelapreco.lista',isset($tomador)?$tomador:' '),
+            ],
+            'folhar'=>[
+                'geral'=>route('calculo.folha.geral.filtro'),
+                'tomador'=>route('calculo.folha.tomador.filtro')
+            ],
+            'boletimtabela'=>[
+                'lista'=>route('tabela.cartao.ponto.lista'),
+                'lancamento'=>[
+                    'lista'=>route('boletim.tabela.lista',isset($id)?$id:' ')
+                ]
             ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
@@ -328,6 +348,19 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
         <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/calculoFolha/tabela.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/tomador/tabelapreco/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimTabela/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/fatura/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/comissionado/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/descontos/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/reciboAvulso/index.js')}}"></script>
         <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>

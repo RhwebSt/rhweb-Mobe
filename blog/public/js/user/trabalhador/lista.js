@@ -43,6 +43,12 @@ $('#trabalhador-lista').DataTable({
             }
         },
     ],
+    
+    'columnDefs': [
+                {className: "limitaCarcteres", targets: [0,1,2]},
+            ],
+    
+    
     "language": {
         "infoEmpty": "mostrando",
         "search":         "Pesquisar",

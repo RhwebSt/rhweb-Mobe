@@ -684,7 +684,7 @@
 
 @include('trabalhador.lista')
 
-<script type="text/javascript" src="{{url('/js/cbo.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/user/trabalhador/index.js')}}"></script>
+<!-- <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script> -->
+<!-- <script type="text/javascript" src="{{url('/js/user/trabalhador/index.js')}}"></script> -->
 
 @stop

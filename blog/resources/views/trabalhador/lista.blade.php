@@ -51,17 +51,16 @@
                 
                 <section class="table">
                     <div class="table-responsive-xxl">
-                       
-                        <table id="trabalhador-lista">
+                        <table id="trabalhador-lista"  class="table display">
                             <thead class="tr__header">
-                                <th class="th__header text-nowrap" style="width:80px;">Matr√≠cula</th>
+                                <th class="th__header text-nowrap">Matric</th>
                                 <th class="th__header text-nowrap">Trabalhador</th>
-                                <th class="th__header text-nowrap" style="width:120px">CPF</th>
-                                <th class="th__header text-nowrap" style="width:60px">Depedentes</th>
-                                <th class="th__header text-nowrap" style="width:60px">Relat√≥rios</th>
-                                <th class="th__header text-nowrap" style="width:60px">S-2300</th>
-                                <th class="th__header text-nowrap" style="width:60px">Editar</th>
-                                <th class="th__header text-nowrap" style="width:60px">Excluir</th>
+                                <th class="th__header text-nowrap">CPF</th>
+                                <th class="th__header text-nowrap">Depedentes</th>
+                                <th class="th__header text-nowrap">Relat®Ærios</th>
+                                <th class="th__header text-nowrap">S-2300</th>
+                                <th class="th__header text-nowrap">Editar</th>
+                                <th class="th__header text-nowrap">Excluir</th>
                             </thead>
                         </table>
                     </div>

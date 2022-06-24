@@ -9,6 +9,7 @@ use App\Http\Requests\Boletim\Tabela\Lanca\Validacao;
 use Spatie\Permission\Models\Permission;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
+use DataTables;
 class TabCadastroController extends Controller
 {
    private $lancamentorublica;
@@ -22,11 +23,6 @@ class TabCadastroController extends Controller
         return view('tabelaCadastro.index',compact('user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($quantidade,$boletim,$tomador,$id,$data)
     {
         $quantidade = base64_decode($quantidade);
@@ -40,10 +36,10 @@ class TabCadastroController extends Controller
         $trabalhador = request('codicao');
         $user = Auth::user(); 
         // $lista = $this->lancamentorublica->listacadastro($search,$id,'M','asc');
-         $permissions = Permission::where('name','like','%'.'mbctl'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        //  $permissions = Permission::where('name','like','%'.'mbctl'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(10);
         if ($trabalhador) {
@@ -54,6 +50,57 @@ class TabCadastroController extends Controller
         }
     }
 
+    public function lista($id)
+    {
+        $lancamentorublica = $this->lancamentorublica->where('lancamentotabela_id',$id)
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'lancamentorublicas.lancamentotabela_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'lancamentorublicas.trabalhador_id')
+        ->select('lancamentorublicas.*','trabalhadors.tsnome','lancamentotabelas.liboletim','lancamentotabelas.tomador_id','lancamentotabelas.lsdata')
+        ->get();
+        return DataTables::of($lancamentorublica)
+        ->addColumn('id', function($id) {
+            return [
+                'unitario'=>'R$ '.number_format((float)$id->lfvalor, 2, ',', '.'),
+                'total'=>'R$ '.number_format((float)($id->lfvalor*$id->lsquantidade), 2, ',', '.'),
+                'editar'=>' <a href="'.route('boletim.tabela.edit',[base64_encode($id->lsquantidade),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lancamentotabela_id),base64_encode($id->id),base64_encode($id->lsdata)]).'" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>' <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteBoletimTabPrecoInside'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
+                <section class="delete__tabela--boletim">
+                    <div class="modal fade" id="deleteBoletimTabPrecoInside'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered col-8"> 
+                            <div class="modal-content">
+                                <form action="'.route('boletim.tabela.destroy',$id->id).'" id="" method="post">
+                                <input type="hidden" name="_token" value="'.csrf_token().'">
+                                <input type="hidden" name="method" value="delete">
+                                    <div class="modal-header header__modal">
+                                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                    </div>
+                                    
+                                    <div class="modal-body body__modal ">
+                                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                                <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                            
+                                                <p class="content--deletar">Deseja realmente excluir?</p>
+                                                
+                                                <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos</p>
+                                                
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                        <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>'
+            ];
+        })
+        ->rawColumns(['id.unitario','id.total','id.editar','id.excluir'])
+        ->make(true);
+    }
     public function ordem($quantidade,$boletim,$tomador,$id,$trabalhador,$data,$ordem)
     {
         // $quantidade = base64_decode($quantidade);

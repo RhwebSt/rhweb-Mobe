@@ -25,6 +25,7 @@ use App\ValoresRublica;
 use App\Rublica;
 use App\BaseCalculo;
 use App\Empresa;
+use DataTables;
 class TomadorController extends Controller
 {
     private $rublica,$tomador,$valorrublica,$taxa,$endereco,$bancario,
@@ -116,12 +117,63 @@ class TomadorController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function lista()
+    {
+        $user = auth()->user();
+        $tomadors = $this->tomador->where('empresa_id',$user->empresa_id)->get(); 
+        return DataTables::of($tomadors)
+        ->addColumn('id', function($id) {
+            return[
+                'tabelapreco'=>'<a class="btn btn__tabela--preco" href="'.route('tabelapreco.index',[' ',base64_encode($id->id)]).'" class=""><i class="icon__color fas fa-dollar-sign"></i></a>',
+                'relatorio'=>' <div class="dropdown">
+                                    <button class="btn btn__relatorio dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="icon__color fas fa-file-alt"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="#" onclick="botaoModal ('."'".$id->id."'".')"><i class="fas fa-file"></i> Rol dos Boletins</a></li>
+                                        <li><a class="dropdown-item" href="'.route('tabela.preco.relatorio',base64_encode($id->id)).'"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
+                                    </ul>
+                                </div>',
+                'evento'=>' <a class="btn__evento btn modal-botao btn__padrao--evento" data-id="'.base64_encode($id->id).'" href="'.route('esocial.tomador',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-file-invoice"></i></a>',
+                'editar'=>'<a class="button__editar btn" href="'.route('tomador.editar',base64_encode($id->id)).'"><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>' <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTomador'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
+                            <section class="delete__tabela--tomador">
+                                <div class="modal fade" id="deleteTomador'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered col-8">
+                                        <div class="modal-content">
+                                            <form action="'.route('tomador.deletar',$id->id).'" id="formdelete" method="post">
+                                            <input type="hidden" name="_token" value="'.csrf_token().'">
+                                            <input type="hidden" name="method" value="delete">
+                                                <div class="modal-header header__modal">
+                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                                </div>
+                                                
+                                                <div class="modal-body body__modal ">
+                                                        <div class="d-flex align-items-center justify-content-center flex-column">
+                                                            <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                                        
+                                                            <p class="content--deletar">Deseja realmente excluir?</p>
+                                                            
+                                                            <p class="content--deletar2">Obs: Será excluído tudo o que está vinculado á este tomador.</p>
+                                                            
+                                                        </div>
+                                                </div>
+                                                
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                                    <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>'
+            ];
+        })
+        ->rawColumns(['id.tabelapreco','id.relatorio','id.evento','id.editar','id.excluir'])
+        ->make(true);
+    }
     public function store(ValidacaoTomador $request)
     {
         $dados = $request->all(); 

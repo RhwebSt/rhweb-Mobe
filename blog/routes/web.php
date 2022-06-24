@@ -66,6 +66,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo');
     // ->middleware(['permission:mbctc15555738']);
+    Route::get('tabela/cartao/ponto/lista','TabCartaoPonto\\TabCartaoPontoController@lista')->name('tabela.cartao.ponto.lista');
+    // ->middleware(['permission:mbctc15555738']);
     Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro');
     // ->middleware(['permission:mbctc15555738']);
     Route::get('tabela/cartao/ponto/editar/{id}','TabCartaoPonto\\TabCartaoPontoController@edit')->name('tabela.cartao.ponto.editar');
@@ -84,6 +86,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('boletim/tabela/cadastro/{quantidade}/{boletim}/{tomador}/{id}/{data}','TabCadastro\\TabCadastroController@create')->name('boletim.tabela.create');
     // ->middleware(['permission:mbctl15555738']);
+    Route::get('boletim/tabela/lista/{id}','TabCadastro\\TabCadastroController@lista')->name('boletim.tabela.lista');
+    
 
     Route::get('boletim/tabela/edita/{quantidade}/{boletim}/{tomador}/{lancamento}/{id}/{data}','TabCadastro\\TabCadastroController@edit')->name('boletim.tabela.edit');
     Route::get('boletim/ordem/tabela/{quantidade}/{boletim}/{tomador}/{id}/{trabalhador?}/{data}/{ordem}','TabCadastro\\TabCadastroController@ordem')->name('boletim.tabela.ordem');
@@ -104,6 +108,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo');
     // ->middleware(['permission:mtc15555738']);
+    Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista');
+    // ->middleware(['permission:mtc15555738']);
     Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra');
     // ->middleware(['permission:mtc15555738']);
     Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar');
@@ -118,13 +124,15 @@ Route::group(['middleware' => 'autenticacao'], function () {
     
     Route::get('ordem/tomador/{ordem}/{id?}/{search?}','Tomador\\TomadorController@ordem')->name('ordem.tomador');
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
-    Route::get('boletim/tomador/{tomador}/{inicio}/{final}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
+    Route::get('boletim/tomador/{tomador?}/{inicio?}/{final?}','Tomador\\rolBoletimTomadorController@rolBoletim')->name('boletim.tomador');
     // ->middleware(['permission:mtor15555738']);
     Route::get('relatorio/geral/tomador','Tomador\\relatorioTomadorController@relatorioGeral')->name('relatorio.geral.tomador');
     Route::get('folhar/tomador/evento/1270/{tomador}/{folhar}','CalculoFolha\\Evento1270Controller@index')->name('folhar.tomador.evento.1270');
     Route::get('folhar/tomador/resumo/pagamento/{tomador}/{folhar}','CalculoFolha\\FolhaPagamentoController@index')->name('folhar.tomador.resumo.pagamento');
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
+    // ->middleware(['permission:mtpt15555738']);
+    Route::get('tabelapreco/{tomador}','TabelaPreco\\TabelaPrecoController@lista')->name('tabelapreco.lista');
     // ->middleware(['permission:mtpt15555738']);
     Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');
     Route::get('tabelapreco/perfil/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show');

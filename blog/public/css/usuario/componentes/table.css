@@ -581,12 +581,21 @@
 
 .dataTables_wrapper .dataTables_filter input{
     width: 300px !important;
+    color: white !important;
+    
 }
 
-.dataTables_wrapper{
-    background-color: #1C1C1D !important;
-    border-radius: 15px;
+.dataTables_wrapper {
+    width: 100% !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    flex-wrap: nowrap;
 }
+
+/*.dataTables_wrapper{*/
+/*    background-color: #1C1C1D !important;*/
+/*    border-radius: 15px;*/
+/*}*/
 
 .dataTables_paginate{
     margin-right: 10px !important;
@@ -659,6 +668,10 @@
 
 .badge{
     box-shadow: 0px 4px 2px 1px rgb(0,0,0, 0.3);
+}
+
+.display, .table{
+    width:100% !important;
 }
 
 

@@ -185,11 +185,8 @@
     
                     
                     <section class="table">           
-                
                         <div class="table-responsive-xxl">
-                           
-                        </div>
-                        <table class="table" id="table-calculo-folhar-tomador">
+                            <table class="table" id="table-calculo-folhar-tomador">
                                 <thead class="tr__header">
                                     <th class="th__header text-nowrap" style="width:115px;">Código</th>
                                     <th class="th__header text-nowrap">Nome</th>
@@ -202,6 +199,7 @@
                                     <th class="th__header text-nowrap" style="width:50px;">Sefip</th>
                                 </thead>
                             </table>
+                        </div>
                     </section>
                 
                 </section>
@@ -295,6 +293,7 @@
     </div>
 </main>
 
-
+<script type="text/javascript" src="{{url('/js/user/calculoFolha/backPill.js')}}"></script>
+<script type="text/javascript" src="{{url('/js/user/calculoFolha/animacao.js')}}"></script>
 
         @stop

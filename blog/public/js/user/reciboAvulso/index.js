@@ -1,7 +1,7 @@
-function remove(index) {
-    console.log(index);
-        $(`.campo${index}`).remove();
-}
+// function remove(index) {
+//     console.log(index);
+//         $(`.campo${index}`).remove();
+// }
 
     let index = 0;
 
@@ -120,96 +120,63 @@ function remove(index) {
     //     });
     // });
     function voltaPill(){
-        var Back = document.getElementById('info-avulso-tab');
-        Back.addEventListener("click", function() {
+
+        $('#info-avulso-tab').click(function(){
             localStorage.setItem('Backrb', 'backpill1');
-    
-        })
-    
-        var Back1 = document.getElementById('rol-avulso-tab');
-        Back1.addEventListener("click", function() {
+        });
+        
+        $('#rol-avulso-tab').click(function(){
             localStorage.setItem('Backrb', 'backpill3');
-    
-        })
-    
-        var Back2 = document.getElementById('lista-avulso-tab');
-        Back2.addEventListener("click", function() {
+        });
+        
+        $('#lista-avulso-tab').click(function(){
             localStorage.setItem('Backrb', 'backpill2');
-    
-        })
-    
-        backActive = document.getElementById("lista-avulso");
-        backActive1 = document.getElementById("info-avulso");
-        backActive2 = document.getElementById("rol-avulso");
-    
-        voltar = localStorage.getItem("Backrb");
-    
-    
+        });
+
+        var voltar = localStorage.getItem("Backrb");
+
         if (voltar === null) {
             localStorage.setItem('Backrb', 'backpill1');
-            Back.classList.add("active");
-            backActive1.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("info-avulso-tab").click();
+            $('#info-avulso-tab').addClass("active");
+            $("#info-avulso").addClass("active");
+            $("#info-avulso").addClass("show");
+            $('#lista-avulso').removeClass("show");
+            $('#lista-avulso').removeClass("active");
+            $("#rol-avulso").removeClass("show");
+            $("#rol-avulso").removeClass("active");
         }
     
         if (voltar === "backpill1") {
-            Back.classList.add("active");
-            backActive1.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("info-avulso-tab").click();
-    
-    
+            $('#info-avulso-tab').addClass("active");
+            $("#info-avulso").addClass("show");
+            $("#info-avulso").addClass("active");
+            $('#lista-avulso').removeClass("active");
+            $('#lista-avulso').removeClass("show");
+            $("#rol-avulso").removeClass("show");
+            $("#rol-avulso").removeClass("active");
+
         } else if (voltar === "backpill2") {
-            Back2.classList.add("active");
-            backActive.classList.add("show", "active");
-            backActive1.classList.remove("show", "active");
-            backActive2.classList.remove("show", "active");
-            document.getElementById("lista-avulso-tab").click();
-    
+            $('#lista-avulso-tab').addClass("active");
+            $('#lista-avulso').addClass("show");
+            $('#lista-avulso').addClass("active");
+            $("#info-avulso").removeClass("active");
+            $("#info-avulso").removeClass("show");
+            $("#rol-avulso").removeClass("active");
+            $("#rol-avulso").removeClass("show");
+
         } else if (voltar === "backpill3") {
-            Back1.classList.add("active");
-            backActive2.classList.add("show", "active");
-            backActive.classList.remove("show", "active");
-            backActive1.classList.remove("show", "active");
-            document.getElementById("rol-avulso-tab").click();
-    
+            $('#rol-avulso-tab').addClass("active");
+            $("#rol-avulso").addClass('show');
+            $("#rol-avulso").addClass('active');
+            $('#lista-avulso').removeClass("active");
+            $('#lista-avulso').removeClass("show");
+            $("#info-avulso").removeClass("active");
+            $("#info-avulso").removeClass("show");
         }
-    
-    
-        var botao = document.getElementById("backTop");
-        var botaoAdicionar = document.getElementById("adicinar");
-        var quantidade = document.getElementById("quantidade");
-        var acaoTopo = document.getElementById("acaoTopo");
-        var backTopTitle = document.getElementById("backTopTitle");
     }
 
     voltaPill();
-
-    function validaInputQuantidade(idCampo, QuantidadeCarcteres) {
-        var telefone = document.querySelector(idCampo);
-
-        telefone.addEventListener('input', function() {
-            var telefone = document.querySelector(idCampo);
-            var result = telefone.value;
-            if (result > " " && result.length >= QuantidadeCarcteres) {
-                telefone.classList.add('is-valid');
-            } else {
-                telefone.classList.remove('is-valid');
-            }
-
-        });
-    }
-
-    var nome = validaInputQuantidade("#nome", 1);
-    var cpf = validaInputQuantidade("#cpf", 14);
-    var tano = validaInputQuantidade("#tano", 8);
-    var tanoFinal = validaInputQuantidade("#tanoFinal", 8);
-
-
-
+    
     $('#pesquisatomador').on('keyup focus', function() {
         var dados = '0';
         if ($(this).val()) {
@@ -272,26 +239,26 @@ function remove(index) {
     }
     
 
-    botaoAdicionar.addEventListener('click', function() {
-        var contador = quantidade.value + 1;
-        if (contador >= 71) {
-            acaoTopo.classList.remove("d-none");
-        }
+    // botaoAdicionar.addEventListener('click', function() {
+    //     var contador = quantidade.value + 1;
+    //     if (contador >= 71) {
+    //         acaoTopo.classList.remove("d-none");
+    //     }
 
-    })
+    // })
 
-    botao.addEventListener('click', function() {
-        var contador = quantidade.value + 1;
-        if (contador >= 71) {
-            window.scrollTo(0, 1);
+    // botao.addEventListener('click', function() {
+    //     var contador = quantidade.value + 1;
+    //     if (contador >= 71) {
+    //         window.scrollTo(0, 1);
 
-        }
-    })
+    //     }
+    // })
 
-    backTopTitle.addEventListener('click', function() {
-        var contador = quantidade.value + 1;
-        if (contador >= 71) {
-            window.scrollTo(0, 1);
+    // backTopTitle.addEventListener('click', function() {
+    //     var contador = quantidade.value + 1;
+    //     if (contador >= 71) {
+    //         window.scrollTo(0, 1);
 
-        }
-    })
+    //     }
+    // })
