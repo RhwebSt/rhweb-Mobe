@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 use App\Bolcartaoponto;
 use App\CartaoPonto;
 use Carbon\Carbon;
+use DataTables;
 class BoletimCartaoPontoController extends Controller
 {
     private $bolcartaoponto;
@@ -52,12 +53,150 @@ class BoletimCartaoPontoController extends Controller
         return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   public function listaDiurno()
+   {
+        $user = Auth::user();
+        $diurno = $this->bolcartaoponto
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
+        ->select(
+            'bolcartaopontos.*',
+            'lancamentotabelas.liboletim',
+            'lancamentotabelas.tomador_id',
+            'lancamentotabelas.lsdata',
+            'lancamentotabelas.lsferiado',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos'
+        )
+        ->where([
+            ['lancamentotabelas.empresa_id',$user->empresa_id],
+            ['bolcartaopontos.bsentradamanhao','!=',null],
+            ['bolcartaopontos.bssaidamanhao','!=',null]
+        ])
+        ->orWhere([
+            ['lancamentotabelas.empresa_id',$user->empresa_id],
+            ['bolcartaopontos.bsentradatarde','!=',null],
+            ['bolcartaopontos.bssaidatarde','!=',null]
+        ])
+        ->get();
+        return DataTables::of($diurno)
+        ->addColumn('id', function($id) {
+            return[
+                'editar'=>'<a href="'.route('boletim.cartaoponto.edit',[base64_encode($id->id),base64_encode($id->lancamentotabela_id),base64_encode($id->csdomingos)?$id->csdomingos:' ',$id->cssabados?base64_encode($id->cssabados):' ',$id->csdiasuteis?base64_encode($id->csdiasuteis):' ',base64_encode($id->lsdata),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lsferiado)]).'" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>' <a class="btn button__excluir"  data-bs-toggle="modal" data-bs-target="#deleteListaDiurno'.$id->id.'"><i class="icon__color fad fa-trash"></i></a>
+                <section class="delete__tabela--tomador">
+                      <div class="modal fade" id="deleteListaDiurno'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered col-8">
+                              <div class="modal-content">
+                                  <form action="'.route('boletimcartaoponto.destroy',base64_encode($id->id)).'" id="" method="post">
+                                  <input type="hidden" name="_token" value="'.csrf_token().'">
+                                  <input type="hidden" name="method" value="delete">
+                                      <div class="modal-header header__modal">
+                                          <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                          <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                      </div>
+                                      
+                                      <div class="modal-body body__modal ">
+                                              <div class="d-flex align-items-center justify-content-center flex-column">
+                                                  <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                              
+                                                  <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                            
+                                                  <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos.</p>
+                                              </div>
+                                      </div>
+                                      
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                          <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </section>'
+            ];
+        })
+        ->rawColumns(['id.editar','id.excluir'])
+        ->make(true);
+   }
+   public function listaNoturno()
+   {
+        $user = Auth::user();
+        $diurno = $this->bolcartaoponto
+        ->join('lancamentotabelas', 'lancamentotabelas.id', '=', 'bolcartaopontos.lancamentotabela_id')
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
+        ->join('trabalhadors', 'trabalhadors.id', '=', 'bolcartaopontos.trabalhador_id')
+        ->select(
+            'bolcartaopontos.*',
+            'lancamentotabelas.liboletim',
+            'lancamentotabelas.tomador_id',
+            'lancamentotabelas.lsdata',
+            'lancamentotabelas.lsferiado',
+            'trabalhadors.tsnome',
+            'trabalhadors.tsmatricula',
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos'
+        )
+        ->where([
+            ['lancamentotabelas.empresa_id',$user->empresa_id],
+            ['bolcartaopontos.bsentradanoite','!=',null],
+            ['bolcartaopontos.bssaidanoite','!=',null]
+        ])
+        ->orWhere([
+            ['lancamentotabelas.empresa_id',$user->empresa_id],
+            ['bolcartaopontos.bsentradamadrugada','!=',null],
+            ['bolcartaopontos.bssaidamadrugada','!=',null]
+        ])
+        ->get();
+        return DataTables::of($diurno)
+        ->addColumn('id', function($id) {
+            return[
+                'editar'=>'<a href="'.route('boletim.cartaoponto.edit',[base64_encode($id->id),base64_encode($id->lancamentotabela_id),base64_encode($id->csdomingos)?$id->csdomingos:' ',$id->cssabados?base64_encode($id->cssabados):' ',$id->csdiasuteis?base64_encode($id->csdiasuteis):' ',base64_encode($id->lsdata),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lsferiado)]).'" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>' <a class="btn button__excluir"  data-bs-toggle="modal" data-bs-target="#deleteListaDiurno'.$id->id.'"><i class="icon__color fad fa-trash"></i></a>
+                <section class="delete__tabela--tomador">
+                      <div class="modal fade" id="deleteListaDiurno'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered col-8">
+                              <div class="modal-content">
+                                  <form action="'.route('boletimcartaoponto.destroy',base64_encode($id->id)).'" id="" method="post">
+                                  <input type="hidden" name="_token" value="'.csrf_token().'">
+                                  <input type="hidden" name="method" value="delete">
+                                      <div class="modal-header header__modal">
+                                          <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                          <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                      </div>
+                                      
+                                      <div class="modal-body body__modal ">
+                                              <div class="d-flex align-items-center justify-content-center flex-column">
+                                                  <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                              
+                                                  <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                            
+                                                  <p class="content--deletar2">Obs: Este trabalhador não irá fazer mais parte dos cálculos.</p>
+                                              </div>
+                                      </div>
+                                      
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                          <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </section>'
+            ];
+        })
+        ->rawColumns(['id.editar','id.excluir'])
+        ->make(true);
+   }
     public function store(Validacao $request)
     {
         $dados = $request->all(); 

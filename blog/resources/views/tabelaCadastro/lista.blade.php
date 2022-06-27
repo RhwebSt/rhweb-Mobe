@@ -9,7 +9,7 @@
             
             <div class="modal-body">
                 
-                <section class="section__search">
+                <section class="section__search d-none ">
                     <div class="col-md-5">
                         <form action="{{  route('boletim.tabela.create',[$quantidade,$boletim,$tomador,base64_encode($id),$data])}}" method="GET">
                             

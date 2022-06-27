@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="{{url('/css/usuario/fatura/fatura.css')}}">
 		<link rel="stylesheet" href="{{url('/css/usuario/feedback/feedback.css')}}">
 		<link rel="stylesheet" href="{{url('/css/usuario/esocial/esocial.css')}}">
+		<link rel="stylesheet" href="{{url('/css/usuario/configuracoes/configuracoes.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -81,7 +82,9 @@
                 'tomador'=>route('esocial.tomador')
             ],
             'trabalhador'=>[
-                'lista'=>route('trabalhador.lista')
+                'lista'=>route('trabalhador.lista'),
+                'pesquisa'=>route('trabalhador.pesquisa'),
+                
             ],
             'tomador'=>[
                 'lista'=>route('tomador.lista'),
@@ -99,6 +102,17 @@
                 'lancamento'=>[
                     'lista'=>route('boletim.tabela.lista',isset($id)?$id:' ')
                 ]
+            ],
+            'boletimcartaoponto'=>[
+                'lista'=>route('cartao.ponto.lista'),
+                'lancamento'=>[
+                    'diurno'=>route('boletim.cartao.ponto.lista.diurno',isset($id)?$id:' '),
+                    'noturno'=>route('boletim.cartao.ponto.lista.noturno',isset($id)?$id:' ')
+                ]
+            ],
+            'desconto'=>[
+                'lista'=>route('desconto.lista'),
+                'relatorio'=>route('descontos.relatorio.index')
             ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
@@ -233,6 +247,7 @@
                                  @else
                                  <li><a class="dropdown-item" href="{{route('dados.editar',$user->id)}}"><i class="fad fa-user"></i> Dados Pessoais</a></li>
                                  @endif
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#configuracoes"><i class="fad fa-cogs"></i> Configurações</a></li>
                                     <li><a class="dropdown-item" href="{{route('logout')}}" onclick="bemvindo()"><i class="fad fa-sign-out"></i> Sair</a></li>
                                 </ul>
                             </li>
@@ -339,6 +354,7 @@
         
         @include('usuarios.dadosAnaliticos.contador.listaContador')
         @include('usuarios.atalhos.atalhos')
+        @include('configuracoes.modalConfig')
     
         <footer class="footer">
             <p class="">&copy;Copyright Rhweb Sistemas Inteligentes - 2022 - Versão 1.0.0</p>
@@ -352,13 +368,18 @@
         <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/calculoFolha/tabela.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/tomador/tabelapreco/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/edit.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/edit.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/fatura/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/comissionado/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/descontos/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/descontos/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/reciboAvulso/index.js')}}"></script>
         <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>

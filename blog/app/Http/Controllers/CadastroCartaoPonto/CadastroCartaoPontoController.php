@@ -13,6 +13,7 @@ use App\Trabalhador;
 use App\TabelaPreco;
 use App\ValoresRublica;
 use Carbon\Carbon;
+use DataTables;
 use PDF;
 class CadastroCartaoPontoController extends Controller
 {
@@ -78,11 +79,70 @@ class CadastroCartaoPontoController extends Controller
         return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function lista()
+    {
+        $user = auth()->user(); 
+        $lancamentotabelas = $this->lancamentotabela
+        ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
+        ->join('cartao_pontos', 'tomadors.id', '=', 'cartao_pontos.tomador_id')
+        ->select(
+            'tomadors.tsnome',
+            'tomadors.tscnpj',
+            'lancamentotabelas.*',
+            'cartao_pontos.csdiasuteis',
+            'cartao_pontos.cssabados',
+            'cartao_pontos.csdomingos'
+        )
+        
+        ->where([
+            ['lancamentotabelas.lsstatus','D'],
+            ['lancamentotabelas.empresa_id', $user->empresa_id]
+        ])
+        ->get();
+        return DataTables::of($lancamentotabelas)
+        ->addColumn('id', function($id) {
+            return [
+                'relatorio'=>'<a class="btn btn__relatorio modal-botao" href="'.route('cadastrocartaoponto.relatoriocartaoponto',[base64_encode($id->id),base64_encode($id->csdomingos)?$id->csdomingos:' ',$id->cssabados?base64_encode($id->cssabados):' ',$id->csdiasuteis?base64_encode($id->csdiasuteis):' ',base64_encode($id->lsdata),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lsferiado)]).'"><i class="icon__color fas fa-file-alt"></i></a>',
+                'visualizar'=>'<a class="btn btn__vizualizar" href="'.route('boletimcartaoponto.create',[base64_encode($id->id),base64_encode($id->csdomingos)?$id->csdomingos:' ',$id->cssabados?base64_encode($id->cssabados):' ',$id->csdiasuteis?base64_encode($id->csdiasuteis):' ',base64_encode($id->lsdata),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lsferiado)]).'"><i class="icon__color fad fa-eye"></i></a>',
+                'editar'=>'<a href="'.route('cartao.ponto.editar',base64_encode($id->id)).'" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>',
+                'excluir'=>' <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTabelaPreco'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
+                <section class="delete__tabela--tomador">
+                      <div class="modal fade" id="deleteTabelaPreco'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered col-8">
+                              <div class="modal-content">
+                                  <form action="'.route('cartao.ponto.deletar',base64_encode($id->id)).'" id="" method="post">
+                                  <input type="hidden" name="_token" value="'.csrf_token().'">
+                                  <input type="hidden" name="method" value="delete">
+                                      <div class="modal-header header__modal">
+                                          <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                          <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                      </div>
+                                      
+                                      <div class="modal-body body__modal ">
+                                              <div class="d-flex align-items-center justify-content-center flex-column">
+                                                  <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                              
+                                                  <p class="content--deletar">Deseja realmente excluir?</p>
+                                                                        
+                                                  <p class="content--deletar2">Obs: Excluir esse boletim pode afetar em alguns cálculos.</p>
+                                                  
+                                              </div>
+                                      </div>
+                                      
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                          <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </section>'
+            ];
+        })
+        ->rawColumns(['id.relatorio','id.editar','id.excluir','id.visualizar'])
+        ->make(true);
+    }
     public function create()
     {
         $search = request('search');

@@ -204,5 +204,5 @@
     @include('cadastroCartaoPonto.cartaoPonto.listaNoturno')
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/index.js')}}"></script>      
+      
 @stop

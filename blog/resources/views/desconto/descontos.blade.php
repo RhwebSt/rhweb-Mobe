@@ -152,6 +152,4 @@
      @include('desconto.lista')
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/descontos/index.js')}}"></script>
-
 @stop

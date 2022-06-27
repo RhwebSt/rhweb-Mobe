@@ -206,6 +206,6 @@
     </div>
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/edit.js')}}"></script>
+
 
 @stop

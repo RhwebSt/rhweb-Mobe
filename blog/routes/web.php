@@ -43,10 +43,15 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('boletimcartaoponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@create')->name('boletimcartaoponto.create')->middleware(['permission:mbcpl15555738']);
     Route::get('boletim/cartaoponto/editar/{id}/{idboletim}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}/{feriado}','BoletimCartaoPonto\\BoletimCartaoPontoController@edit')->name('boletim.cartaoponto.edit');
     Route::get('boletim/cartao/ponto/{boletim}/{trabalhador}/{data}','BoletimCartaoPonto\\BoletimCartaoPontoController@show');
-    
-    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
+    Route::get('boletim/cartao/ponto/diurno/{id}','BoletimCartaoPonto\\BoletimCartaoPontoController@listaDiurno')->name('boletim.cartao.ponto.lista.diurno');
+
+    Route::get('boletim/cartao/ponto/noturno/{id}','BoletimCartaoPonto\\BoletimCartaoPontoController@listaNoturno')->name('boletim.cartao.ponto.lista.noturno');
+
+    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController@')->only(['store', 'update', 'destroy']);
 
     Route::get('cartao/ponto/novo','CadastroCartaoPonto\\CadastroCartaoPontoController@create')->name('cartao.ponto.novo');
+    // ->middleware(['permission:mbcpc15555738']);
+    Route::get('cartao/ponto/lista','CadastroCartaoPonto\\CadastroCartaoPontoController@lista')->name('cartao.ponto.lista');
     // ->middleware(['permission:mbcpc15555738']);
     Route::post('cartao/ponto/cadastro','CadastroCartaoPonto\\CadastroCartaoPontoController@store')->name('cartao.ponto.cadastro');
     // ->middleware(['permission:mbcpc15555738']);
@@ -132,7 +137,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
     // ->middleware(['permission:mtpt15555738']);
-    Route::get('tabelapreco/{tomador}','TabelaPreco\\TabelaPrecoController@lista')->name('tabelapreco.lista');
+    Route::get('tabela/preco/lista/{tomador}','TabelaPreco\\TabelaPrecoController@lista')->name('tabelapreco.lista');
     // ->middleware(['permission:mtpt15555738']);
     Route::get('tabelapreco/pesquisa/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@pesquisa')->name('tabelapreco.pesquisa');
     Route::get('tabelapreco/perfil/{codigo}/{tomador}','TabelaPreco\\TabelaPrecoController@show');
@@ -180,7 +185,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     // Route::resource('trabalhador','Trabalhador\\TrabalhadorController')->names('trabalhador');
     Route::get('ordem/trabalhador/{ordem}/{id?}/{search?}','Trabalhador\\TrabalhadorController@ordem')->name('ordem.trabalhador');
     Route::get('epi/deleta/{id}','Trabalhador\\EpiController@destroy')->name('epi.deleta');
-    Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa');
+    Route::get('trabalhador/pesquisa/{id?}','Trabalhador\\TrabalhadorController@pesquisa')->name('trabalhador.pesquisa');
 
 
     // Route::post('trabalhador/comprovante/pagamento/dia','Trabalhador\\comprovantePagDiaController@ComprovantePagDia')->name('trabalhador.comprovante.dia');
@@ -233,8 +238,9 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('rublica/unic/{id}','Rublica\\RublicaController@unic');
 
     Route::resource('descontos','Descontos\\DescontosController')->names('descontos');
+    Route::get('desconto/lista','Descontos\\DescontosController@lista')->name('desconto.lista');
     Route::get('descontos/ordem/{ordem}/{id?}','Descontos\\DescontosController@ordem')->name('desconto.ordem');
-    Route::get('relatorio/descontos/{inicio}/{final}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
+    Route::get('relatorio/descontos/{inicio?}/{final?}','Descontos\\relatorioController@index')->name('descontos.relatorio.index');
     Route::post('trabalhador/relatorio/descontos','Descontos\\relatorioController@reltatorioTrabalhador')->name('descontos.relatorio.trabalhador');
 
     Route::resource('avuso','Avuso\\AvusoController')->names('avuso'); 

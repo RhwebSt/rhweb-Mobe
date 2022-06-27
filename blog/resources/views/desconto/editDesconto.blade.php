@@ -139,7 +139,7 @@
         </form>
     </div>
     @include('desconto.lista')
-    <script type="text/javascript" src="{{url('/js/user/descontos/edit.js')}}"></script>
+   
 
 </main>
 @stop
