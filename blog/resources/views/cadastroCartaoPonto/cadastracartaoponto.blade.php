@@ -72,8 +72,8 @@
              
             <div class="col-md-10">
                 <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Trabalhador</label>
-                <input class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo" placeholder="dê um duplo clique para pesquisar">
-                <datalist id="datalistOptions"></datalist>
+                <input class="form-control @error('nome__completo') is-invalid @enderror" list="lista_cartao_ponto_trabalhador" value="{{old('nome__completo')}}" name="nome__completo" id="nome__completo_cartao_ponto_trabalhador" placeholder="dê um duplo clique para pesquisar">
+                <datalist id="lista_cartao_ponto_trabalhador"></datalist>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -204,5 +204,5 @@
     @include('cadastroCartaoPonto.cartaoPonto.listaNoturno')
 </main>
 
-      
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/index.js')}}"></script>
 @stop

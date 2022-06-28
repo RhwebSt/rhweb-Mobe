@@ -140,7 +140,7 @@
         }
       }
     }
-    $("#nome__completo").on('keyup focus', function() {
+    $("#nome__completo_cartao_ponto_tomador").on('keyup focus', function() {
       var dados = '0';
       if ($(this).val()) {
         dados = $(this).val();
@@ -149,7 +149,7 @@
         }
       }
       $.ajax({
-        url: "{{url('tomador')}}/pesquisa/" + dados,
+        url: `${window.Laravel.tomador.pesquisa}/${dados}`,
         type: 'get',
         contentType: 'application/json',
         success: function(data) {
@@ -161,15 +161,16 @@
               // nome += `<option value="${element.tsmatricula}">`
               nome += `<option value="${element.tscnpj}">`
             });
-            $('#datalistOptions').html(nome)
+            $('#lista_cartao_ponto_tomador').html(nome)
           }
           if (data.length === 1 ) {
-            let tabela = tabelaPreco(data[0].id);
-            if (tabela) {
-              tomador(data[0])
-            } else {
-              Alerta(data[0].id)
-            }
+            tomador(data[0])
+            // let tabela = tabelaPreco(data[0].id);
+            // if (tabela) {
+              
+            // } else {
+            //   Alerta(data[0].id)
+            // }
           }
         }
       });
@@ -186,31 +187,9 @@
       return novodados[0];
     }
 
-    function Alerta(tomador) {
-      Swal.fire({
-        title: '<strong>Algo deu Errado!</strong>',
-        icon: 'error',
-        html: '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
-          `<a href="{{url('tabelapreco')}}/ /${tomador}">Cadastrar</a> `,
-        showCloseButton: true,
-        allowOutsideClick: false,
-        allowEnterKey: true,
-      })
-    }
+   
 
-    function tabelaPreco(tomador) { 
-      var resul = false;
-      $.ajax({
-        url: "{{url('verifica/tabela/preco')}}/" + tomador,
-        type: 'get',
-        contentType: 'application/json',
-        async: false,
-        success: function(data) {
-          resul = data
-        }
-      })
-      return resul;
-    }
+   
 
     function buscatomador(dados) {
       $.ajax({

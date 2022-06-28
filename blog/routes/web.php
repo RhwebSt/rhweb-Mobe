@@ -47,7 +47,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('boletim/cartao/ponto/noturno/{id}','BoletimCartaoPonto\\BoletimCartaoPontoController@listaNoturno')->name('boletim.cartao.ponto.lista.noturno');
 
-    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController@')->only(['store', 'update', 'destroy']);
+    Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
 
     Route::get('cartao/ponto/novo','CadastroCartaoPonto\\CadastroCartaoPontoController@create')->name('cartao.ponto.novo');
     // ->middleware(['permission:mbcpc15555738']);
@@ -111,6 +111,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::post('filtro/pesquisa/fatura','Fatura\\FaturaController@filtroPesquisa')->name('filtro.pesquisa.fatura');
     Route::get('ordem/filtro/fatura/{condicao}','Fatura\\FaturaController@filtroPesquisaOrdem')->name('filtro.ordem.fatura');
 
+    Route::get('fatura/lista','Fatura\\FaturaController@lista')->name('fatura.lista');
+
     Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo');
     // ->middleware(['permission:mtc15555738']);
     Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista');
@@ -125,7 +127,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     // ->middleware(['permission:mte15555738']);
 
     // Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
-    Route::get('tomador/pesquisa/{id}','Tomador\\TomadorController@pesquisa');
+    Route::get('tomador/pesquisa/{id?}','Tomador\\TomadorController@pesquisa')->name('tomador.pesquisa');
     
     Route::get('ordem/tomador/{ordem}/{id?}/{search?}','Tomador\\TomadorController@ordem')->name('ordem.tomador');
     Route::post('comprovante/pagamento/dia','Tomador\\comprovantePagDia@ComprovantePagDia')->name('comprovante.pagamento.dia');
@@ -197,6 +199,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
 
     Route::resource('comisionado','Comisionario\\ComisionarioController')->names('comisionado'); 
+    Route::get('comisionado/tabela/lista','Comisionario\\ComisionarioController@lista')->name('comisionado.lista');
     Route::get('pesquisa/comisionado','Comisionario\\ComisionarioController@pesquisa')->name('comisionado.pesquisa');
    
     
@@ -247,6 +250,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('avuso/pesquisa/{id}','Avuso\\AvusoController@pesquisa')->name('avuso.pesquisa');
     Route::post('filtra/pesquisa/avuso','Avuso\\AvusoController@filtroPesquisa')->name('filtra.pesquisa.avuso');
     Route::get('filtra/ordem/avuso/{condicao}','Avuso\\AvusoController@filtroPesquisaOrdem')->name('filtra.ordem.avuso');
+    Route::get('avuso/tabela/lista','Avuso\\AvusoController@lista')->name('avuso.lista');
 
     Route::get('avuso/relatorio/{id}/{inicio}/{final}','Avuso\\ReciboController@relatorio')->name('recibo.avulso');
 

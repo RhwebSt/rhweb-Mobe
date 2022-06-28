@@ -10,7 +10,7 @@ $(document).ready(function(){
             }
         }
         $.ajax({
-            url: "{{url('tomador/pesquisa')}}/"+dados,
+            url:`${window.Laravel.tomador.pesquisa}/${dados}`,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -43,7 +43,7 @@ $(document).ready(function(){
             }
         }
         $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+dados,
+            url:`${window.Laravel.trabalhador.pesquisa}/${dados}`,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -69,22 +69,22 @@ $(document).ready(function(){
             }
         });
     });
-    $.ajax({
-        url: "{{url('pesquisa/comisionado')}}",
-        type: 'get',
-        contentType: 'application/json',
-        success: function(data) {
-            let nome = ''
-            if (data.length >= 1) {
-                data.forEach(element => {
-                nome += `<option value="${element.tsnome}">`
-                // nome += `<option value="${element.tsmatricula}">`
-                // nome += `<option value="${element.tscpf}">`
-                });
-                $('#listapesquisa').html(nome)
-            }  
-        }
-    });
+    // $.ajax({
+    //     url: "{{url('pesquisa/comisionado')}}",
+    //     type: 'get',
+    //     contentType: 'application/json',
+    //     success: function(data) {
+    //         let nome = ''
+    //         if (data.length >= 1) {
+    //             data.forEach(element => {
+    //             nome += `<option value="${element.tsnome}">`
+    //             // nome += `<option value="${element.tsmatricula}">`
+    //             // nome += `<option value="${element.tscpf}">`
+    //             });
+    //             $('#listapesquisa').html(nome)
+    //         }  
+    //     }
+    // });
     function monta_dados(dados) {
       let novodados = dados.split('  ')
       return novodados[1];

@@ -1,6 +1,7 @@
 
  
   $(document).ready(function() {
+    
     $('#refre').click(function() {
       $('#rubricas').val(' ').removeAttr('disabled')
       $('#descricao').val(' ').removeAttr('disabled');

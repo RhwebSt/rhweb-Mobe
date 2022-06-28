@@ -61,8 +61,8 @@
                 
                 <div class="col-md-10 mt-5 input">
                     <label for="nome__completo" class="form-label">Nome Trabalhador <i class="fad fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
-                    <input class="pesquisa form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" value="{{$bolcartaoponto->trabalhador->tsnome}}" name="nome__completo" id="nome__completo" readonly >
-                    <datalist id="datalistOptions"></datalist>
+                    <input class="pesquisa form-control @error('nome__completo') is-invalid @enderror" list="lista_cartao_ponto_trabalhador" value="{{$bolcartaoponto->trabalhador->tsnome}}" name="nome__completo" id="nome__completo_cartao_ponto_trabalhador" readonly >
+                    <datalist id="lista_cartao_ponto_trabalhador"></datalist>
                     @error('nome__completo')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -207,5 +207,5 @@
 </main>
 
 
-
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/edit.js')}}"></script>
 @stop

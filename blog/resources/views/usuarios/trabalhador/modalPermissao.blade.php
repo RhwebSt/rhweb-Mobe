@@ -741,7 +741,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{url('/js/user/cadastroAcesso/modalPermissao.js')}}"></script>
+
 
 
               

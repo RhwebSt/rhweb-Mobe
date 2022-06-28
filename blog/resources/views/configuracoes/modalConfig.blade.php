@@ -1,5 +1,5 @@
 <div class="modal fade" id="configuracoes" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header header__modal">
                 <h5 class="modal-title" id="staticBackdropLabel1"><i class="fad fa-lg fa-cogs"></i> Configurações</h5>
@@ -8,27 +8,205 @@
             
             <div class="modal-body body__modal">
                 
-                <div class="d-flex">
-                  <div class="nav flex-column align-items-start nav-pills nav__bar--config" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <button class="botao__nav--config active" id="pill-aparencia" data-bs-toggle="pill" data-bs-target="#aparencia" type="button" role="tab" aria-controls="aparencia" aria-selected="true"><i class="fad fa-palette"></i> Aparência</button>
-                    <button class="botao__nav--config" id="pill-acessibilidade" data-bs-toggle="pill" data-bs-target="#acessibilidade" type="button" role="tab" aria-controls="acessibilidade" aria-selected="false"><i class="fad fa-universal-access"></i> Acessibilidade</button>
-                    <button class="botao__nav--config" id="pill-esocial" data-bs-toggle="pill" data-bs-target="#esocial" type="button" role="tab" aria-controls="esocial" aria-selected="false"><i class="fad fa-file-certificate"></i> E-social</button>
-                    <button class="botao__nav--config" id="pill-preferencia" data-bs-toggle="pill" data-bs-target="#preferencia" type="button" role="tab" aria-controls="preferencia" aria-selected="false"><i class="fad fa-sliders-v"></i> Preferências</button>
-                  </div>
-                  <div class="tab-content div-content-config d-flex flex-row justify-content-center" id="v-pills-tabContent">
-                      
-                    <div class="tab-pane fade show active pill-content-config" id="aparencia" role="tabpanel" aria-labelledby="pill-aparencia">
-                        <p class="title-config">Temas</p>
-                        <div class="form-check form-switch">
-                          <input class="form-check-input toggle-darkmode" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <section  class="section__accoordion row">
+                                
+                    <div class="accordion div__acordion" id="accordionFlushExample">
+                        
+                        <div id="" class="accordion-item item__acorddion">
+                        
+                            <h2 class="accordion-header accoordion__header" id="aparenciaAccordion">
+                                  <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aparencia" aria-expanded="false" aria-controls="aparencia">
+                                        <i class=" fa-lg fad me-1 fa-palette"></i> Aparência
+                                  </button>
+                            </h2>
+                            
+                            <div id="aparencia" class="accordion-collapse collapse" aria-labelledby="aparenciaAccordion" data-bs-parent="#accordionFlushExample">
+                                
+                                <div id="" class="accordion-body">
+                                    
+                                    <p class="title-config">Temas</p>
+                                    
+                                    <div class="form-check form-switch d-flex justify-content-between div__darkmode">
+                                        <label class="form-check-label align-self-center label-config" for="swicthDarkMode">Darkmode</label>
+                                        <input class="form-check-input switchDark" type="checkbox" role="switch" id="swicthDarkMode">
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <p class="title-config">Fonte</p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center  label-config">Tamanho da Fonte</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option selected>16px</option>
+                                          <option value="1">18px</option>
+                                          <option value="2">20px</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Formato da Fonte</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option selected>Padrão</option>
+                                          <option value="1">Maiúscula</option>
+                                          <option value="2">Minúscula</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+
+                                </div>
+                                
+                            </div>
+                            
                         </div>
+                        
+                        <div id="" class="accordion-item item__acorddion">
+                        
+                            <h2 class="accordion-header accoordion__header" id="acessibilidadeAccordion">
+                                  <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#acessibilidade" aria-expanded="false" aria-controls="acessibilidade">
+                                        <i class="fad fa-lg me-1 fa-universal-access"></i> Acessibilidade
+                                  </button>
+                            </h2>
+                            
+                            <div id="acessibilidade" class="accordion-collapse collapse" aria-labelledby="acessibilidadeAccordion" data-bs-parent="#accordionFlushExample">
+                                
+                                <div id="" class="accordion-body">
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Animações</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option selected>Ativado</option>
+                                          <option value="1">Desativado</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        <div id="" class="accordion-item item__acorddion">
+                        
+                            <h2 class="accordion-header accoordion__header" id="esocialAccordion">
+                                  <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#esocial" aria-expanded="false" aria-controls="esocial">
+                                        <i class="fad fa-lg me-1 fa-file-certificate"></i> E-social
+                                  </button>
+                            </h2>
+                            
+                            <div id="esocial" class="accordion-collapse collapse" aria-labelledby="esocialAccordion" data-bs-parent="#accordionFlushExample">
+                                
+                                <div id="" class="accordion-body">
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Enviar Certificado Digital</label>
+                                        
+                                        <button class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCertificado">Enviar <i class="fad fa-file-import"></i></button>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Excluir Certificado Digital</label>
+                                        
+                                        <button class="btn button__excluir"  data-bs-toggle="modal" data-bs-target="#deleteCertificado">Excluir <i class="fad fa-trash"></i></button>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Situação Certificado Digital</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example"disabled>
+                                            <option selected>Desabilitado</option>
+                                            <option>Em análise</option>
+                                            <option>Enviado</option>
+                                            <option value="1">Inválido</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Deseja receber notifacação do E-social?</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option selected>Sim</option>
+                                          <option value="1">Não</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        <div id="" class="accordion-item item__acorddion">
+                        
+                            <h2 class="accordion-header accoordion__header" id="preferenciaAccordion">
+                                  <button class="accordion-button button__accoordion collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#preferencia" aria-expanded="false" aria-controls="preferencia">
+                                        <i class="fad fa-lg me-1 fa-sliders-v"></i> Preferências
+                                  </button>
+                            </h2>
+                            
+                            <div id="preferencia" class="accordion-collapse collapse" aria-labelledby="preferenciaAccordion" data-bs-parent="#accordionFlushExample">
+                                
+                                <div id="" class="accordion-body">
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Notificações</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option selected>Ativar</option>
+                                          <option value="1">Desativar</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Preenchimento Automático</label>
+                                        
+                                        <select class="form-select select__font" aria-label="Default select example">
+                                          <option>Sim</option>
+                                          <option value="1" selected>Não</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    
                     </div>
                     
-                    <div class="tab-pane fade  pill-content-config" id="acessibilidade" role="tabpanel" aria-labelledby="pill-acessibilidade">aaaa</div>
-                    <div class="tab-pane fade  pill-content-config" id="esocial" role="tabpanel" aria-labelledby="pill-esocial">aaaaaddsd.</div>
-                    <div class="tab-pane fade  pill-content-config" id="preferencia" role="tabpanel" aria-labelledby="pill-preferencia">bbbbbb</div>
-                  </div>
-                </div>
+                </section>
+
                 
             </div>
             

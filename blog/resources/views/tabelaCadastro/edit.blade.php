@@ -66,7 +66,7 @@
             
             <div class="col-md-10">
                 <label for="nome__completo" class="form-label">Trabalhador <i class="fas fa-lock" <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo inalterável"></i></label>
-                <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo" Readonly>
+                <input value="{{$lancamentorublicas->tsnome}}" class="pesquisa form-control  @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo_boletim_tabela_trabalhador" Readonly>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror

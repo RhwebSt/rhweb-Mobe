@@ -14,7 +14,7 @@
           }
           verficarModal()
           $.ajax({
-              url: "{{route('usuario.pesquisa.admin')}}", 
+              url: `${window.Laravel.user.pesquisa}`, 
               type: 'get',
               success: function(data) {
               

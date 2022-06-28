@@ -88,9 +88,9 @@
             </div>
 
             <div class="col-md-8 input">
-                <label for="tomador" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tomador</label>
-                <input type="text" list="datalistOptions" class=" form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="{{old('nome__completo')}}" id="nome__completo" placeholder="dê um duplo clique para pesquisar">
-                <datalist id="datalistOptions"></datalist>
+                <label for="nome__completo_tomador" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tomador</label>
+                <input type="text" list="listatomador" class=" form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" value="{{old('nome__completo')}}" id="nome__completo_tomador" placeholder="dê um duplo clique para pesquisar">
+                <datalist id="listatomador"></datalist>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror

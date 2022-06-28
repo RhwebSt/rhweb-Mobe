@@ -99,6 +99,6 @@
     @include('usuarios.trabalhador.lista');
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/cadastroAcesso/index.js')}}"></script>
+
  
 @stop

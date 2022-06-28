@@ -1,39 +1,31 @@
 $(document).ready(function(){
-    $('#boletim-tabela').DataTable({
+    $('#tabela-fatura-lista').DataTable({
         processing:true,
         serverSide:true,
         searchable: false,
         orderable: false,
         'ajax':{
-            url:`${window.Laravel.boletimtabela.lista}`,
+            url:`${window.Laravel.fatura.lista}`,
             type: "get",
         },
         'columns':[
-            {'data':'liboletim'},
+            {'data':'tsmatricula'},
             {'data':'tsnome'},
-            {'data':'lsdata',
+            {'data':'fsinicio',
                 render:function (data, type, row) {
-                    data = data.split('T')
-                    return data[0].split('-').reverse().join('/');
+                    return data.split('-').reverse().join('/');
                 }
             },
-            {'data':'lsnumero'},
+            {'data':'fsfinal',
+                render:function (data, type, row) {
+                    return data.split('-').reverse().join('/');
+                }
+            },
+            {'data':'fsnumero'},
             {
             'data':'id',
                 render:function (data, type, row) {
-                    return row.id.relatorio;
-                }
-            },
-            {
-            'data':'id',
-                render:function (data, type, row) {
-                    return row.id.visualizar;
-                }
-            },
-            {
-            'data':'id',
-                render:function (data, type, row) {
-                    return row.id.editar;
+                    return row.id.imprimir;
                 }
             },
             {

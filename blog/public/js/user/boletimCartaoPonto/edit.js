@@ -142,7 +142,7 @@ var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quint
                 }
               }
               $.ajax({
-                  url: "{{url('tomador')}}/pesquisa/"+dados,
+                  url: `${window.Laravel.tomador.pesquisa}/${dados}`,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {
@@ -175,32 +175,6 @@ var semana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quint
               let novodados = dados.split('  ')
               console.log(novodados);
               return novodados[0];
-            }
-
-            function Alerta(tomador) {
-                Swal.fire({
-                title: '<strong>Algo deu Errado!</strong>',
-                icon: 'error',
-                html:
-                  '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
-                  `<a href="{{url('tabelapreco')}}/ /${tomador}">Cadastrar</a> `,
-                showCloseButton: true,
-                allowOutsideClick: false,
-                allowEnterKey: true,
-              })
-            }
-            function tabelaPreco(tomador) {
-              var resul = false;
-              $.ajax({
-                  url: "{{url('verifica/tabela/preco')}}/"+tomador,
-                  type: 'get',
-                  contentType: 'application/json',
-                  async: false,
-                  success: function(data) {
-                    resul = data
-                  }
-              })
-              return resul;
             }
             function buscatomador(dados) {
               $.ajax({

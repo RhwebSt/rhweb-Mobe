@@ -1,4 +1,4 @@
-console.log("entrou cadAcesso")
+
         $('#incluir').click(function(event){
             event.preventDefault();
             console.log("executou");
@@ -41,7 +41,7 @@ console.log("entrou cadAcesso")
             
             
             $.ajax({
-              url: "{{route('usuario.pesquisa.admin')}}", 
+              url: `${window.Laravel.user.pesquisa}`, 
               type: 'get',
               success: function(data) {
               
@@ -98,7 +98,7 @@ console.log("entrou cadAcesso")
                   dados = $(this).val();
                 }
                 $.ajax({
-                    url: "{{url('empresa')}}/pesquisa/"+dados,
+                    url:`${window.Laravel.empresa.pesquisa}/${dados}`,
                     type: 'get',
                     contentType: 'application/json',
                     success: function(data) {

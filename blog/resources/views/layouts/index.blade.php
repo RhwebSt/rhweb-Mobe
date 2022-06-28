@@ -88,10 +88,13 @@
             ],
             'tomador'=>[
                 'lista'=>route('tomador.lista'),
-                'boletim'=>route('boletim.tomador')
+                'boletim'=>route('boletim.tomador'),
+                'pesquisa'=>route('tomador.pesquisa'),
             ],
             'tabelapreco'=>[
                 'lista'=>route('tabelapreco.lista',isset($tomador)?$tomador:' '),
+                'verificar'=>url('verifica/tabela/preco'),
+                'pesquisa'=>url('tabelapreco/pesquisa')
             ],
             'folhar'=>[
                 'geral'=>route('calculo.folha.geral.filtro'),
@@ -108,12 +111,31 @@
                 'lancamento'=>[
                     'diurno'=>route('boletim.cartao.ponto.lista.diurno',isset($id)?$id:' '),
                     'noturno'=>route('boletim.cartao.ponto.lista.noturno',isset($id)?$id:' ')
-                ]
+                ],
+                'pesquisa'=>url('tabela/cartao/ponto/pesquisa'),
+                'store'=>route('boletimcartaoponto.store'),
+                'trabalhador'=>url('boletim/cartao/ponto'),
+                'data'=>isset($data)?$data:' '
             ],
             'desconto'=>[
                 'lista'=>route('desconto.lista'),
                 'relatorio'=>route('descontos.relatorio.index')
-            ]
+            ],
+            'fatura'=>[
+                'lista'=>route('fatura.lista')
+            ],
+            'avuso'=>[
+                'lista'=>route('avuso.lista')
+            ],
+            'comissionado'=>[
+                'lista'=>route('comisionado.lista')
+            ],
+            'user'=>[
+                'pesquisa'=>route('usuario.pesquisa.admin')
+            ],
+            'empresa'=>[
+                'pesquisa'=>url('empresa/pesquisa')
+            ],
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
             //   const Toast = Swal.mixin({
@@ -364,24 +386,31 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
         <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/modalPermissao.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/calculoFolha/tabela.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/index.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/edit.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/index.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/edit.js')}}"></script>
+        
+      
+        
+        
         <script type="text/javascript" src="{{url('/js/user/fatura/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/fatura/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/comissionado/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/descontos/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/descontos/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/reciboAvulso/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/reciboAvulso/lista.js')}}"></script>
+        
         <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
         <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>

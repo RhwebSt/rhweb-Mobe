@@ -20,6 +20,7 @@ use App\FaturaRubrica;
 use App\TabelaPreco;
 use App\Rublica;
 use App\ValoresRublica;
+use DataTables;
 class FaturaController extends Controller
 {
     private $rublica,$valorrublica,$fatura,$tabelapreco,$valorcalculor,$faturaprincipais,
@@ -49,6 +50,54 @@ class FaturaController extends Controller
         // dd($faturas);
         return view('fatura.index',compact('user','faturas','valorrublica_fatura'));
         
+    }
+    public function lista()
+    {
+        $user = auth()->user();
+        $fatura = $this->fatura
+        ->join('tomadors', 'tomadors.id', '=', 'faturas.tomador_id')
+        ->select('faturas.*','tomadors.tsnome','tomadors.tsmatricula')
+        ->where('faturas.empresa_id',$user->empresa_id)
+        ->get();
+        return DataTables::of($fatura)
+        ->addColumn('id', function($id) {
+            return [
+                'imprimir'=>'<a href="'.route('fatura.relatorio',[$id->id,$id->fsinicio,$id->fsfinal]).'" class="btn btn__imprimir" ><i class="icon__color fad fa-print"></i></a>',
+                'excluir'=>' <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteFatura'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
+                <section class="delete__tabela--tomador">
+                      <div class="modal fade" id="deleteFatura'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered col-8">
+                              <div class="modal-content">
+                                  <form action="'.route('fatura.deleta',base64_encode($id->id)).'" id="" method="post">
+                                  <input type="hidden" name="_token" value="'.csrf_token().'">
+                                  <input type="hidden" name="method" value="delete">
+                                      <div class="modal-header header__modal">
+                                          <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
+                                          <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
+                                      </div>
+                                      
+                                      <div class="modal-body body__modal ">
+                                              <div class="d-flex align-items-center justify-content-center flex-column">
+                                                  <img class="gif__warning--delete" src="'.url('imagem/complain.png').'">
+                                              
+                                                  <p class="content--deletar">Deseja realmente excluir?</p>
+                                                  
+                                              </div>
+                                      </div>
+                                      
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
+                                          <button type="submit" class="btn botao__deletar--modal  modal-botao"><i class="fad fa-trash"></i> Deletar</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </section>'
+            ];
+        })
+        ->rawColumns(['id.imprimir','id.excluir'])
+        ->make(true);
     }
     public function filtroPesquisa(Validacao $request)
     {

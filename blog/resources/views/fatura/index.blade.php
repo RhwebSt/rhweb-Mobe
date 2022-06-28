@@ -169,7 +169,7 @@
                 
                 <h1 class="title__pagina--padrao">Lista de Faturas <i class="fad fa-calculator"></i></h1>
                 
-                <section class="section__search">
+                <section class="section__search d-none">
                     <div class="col-md-5">
                         <form action="" method="GET">
                             
@@ -190,7 +190,7 @@
                     </div>
                 </section>
                 
-                <section class="section__filtro--fatura row">
+                <section class="section__filtro--fatura row d-none">
                     <form class="row g-3" action="{{route('filtro.pesquisa.fatura')}}" method="POST">
                         @csrf
 
@@ -207,7 +207,7 @@
                     </form>
                 </section>
                     
-                        <section>
+                        <section class="d-none">
                             <div class="d-flex justify-content-end">
                                 <div>
                                     <div class="dropdown">
@@ -227,7 +227,8 @@
 
                         <section class="table">
                             <div class="table-responsive-xxl">
-                                <table class="table">
+                                
+                                <table class="table" id="tabela-fatura-lista">
                                     <thead class="tr__header">
                                         <th class="th__header text-nowrap" style="width:60px;">Matrícula</th>
                                         <th class="th__header text-nowrap">Tomador</th>
@@ -237,90 +238,6 @@
                                         <th class="th__header text-nowrap" style="width:60px;">Imprimir</th>
                                         <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
                                     </thead>
-                                    
-                                    <tbody class="table__body">
-                                    @if(count($faturas) > 0)
-                                        @foreach($faturas as $fatura)
-                                        <tr class="tr__body">  
-                                            <td class="td__body text-nowrap col" style="width:60px;">{{$fatura->tsmatricula}}</td>  
-                                            
-                                            <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$fatura->tsnome}}">
-                                                {{$fatura->tsnome}}
-                                            </td>
-                                            
-                                            <td class="td__body text-nowrap col">
-                                                <?php
-                                                    $data = explode('-',$fatura->fsinicio);
-                                                ?>
-                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                            </td>
-                                            <td class="td__body text-nowrap col">
-                                                <?php
-                                                    $data = explode('-',$fatura->fsfinal);
-                                                ?>
-                                                {{$data[2]}}/{{$data[1]}}/{{$data[0]}}
-                                            </td>
-                                            <td class="td__body text-nowrap col" style="width:110px;">
-                                                {{$fatura->fsnumero}}
-                                            </td>
-                                            
-                                            <td class="td__body text-nowrap col" style="width:60px;">
-                                                    <a href="{{route('fatura.relatorio',[$fatura->id,$fatura->fsinicio,$fatura->fsfinal])}}" class="btn btn__imprimir" ><i class="icon__color fad fa-print"></i></a>
-                                            </td> 
-                                            
-                                            <td class="td__body text-nowrap col" style="width:60px;">
-                                                
-                                                <button class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#deleteFatura{{$fatura->id}}">
-                                                    <i class="icon__color fad fa-trash"></i>
-                                                </button>
-                                                <section class="delete__tabela--fatura">
-                                                    <div class="modal fade" id="deleteFatura{{$fatura->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered col-8">
-                                                            <div class="modal-content">
-                                                                <form action="{{route('fatura.deleta',$fatura->id)}}" id="formdelete" method="post">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <div class="modal-header header__modal">
-                                                                        <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                                                                        <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                                                                    </div>
-                                                                    
-                                                                    <div class="modal-body body__modal ">
-                                                                            <div class="d-flex align-items-center justify-content-center flex-column">
-                                                                                <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
-                                                                            
-                                                                                <p class="content--deletar">Deseja realmente excluir?</p>
-
-                                                                            </div>
-                                                                    </div>
-                                                                    
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                                                                        <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <tr class="tr__body">
-                                            <td colspan="7" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
-                                    
-                                    <tfoot>
-                                        <tr class="">
-                                            <td colspan="11">
-        
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                
                                 </table>
                             </div>
                         </section>

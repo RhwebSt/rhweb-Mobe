@@ -53,7 +53,7 @@
         totalgeral()
     }
     function verificardata(valor) {
-        var data = '{{$data}}'
+        var data = `${window.Laravel.boletimcartaoponto.data}`
         var dias = '';
         data = data.split('-')
         dias = new Date(`${data[0]}-${data[1]}-${ parseInt(data[2]) + valor} 08:24:30`);
@@ -256,7 +256,7 @@
         }
     }
        
-                $( "#nome__completo" ).on('keyup focus',function() {
+                $( "#nome__completo_cartao_ponto_trabalhador" ).on('keyup focus',function() {
                     var dados = '0';
                     if ($(this).val()) {
                         dados = $(this).val()
@@ -265,7 +265,7 @@
                         }
                     }
                     $.ajax({
-                        url: "{{url('trabalhador/pesquisa')}}/"+dados,
+                        url: `${window.Laravel.trabalhador.pesquisa}/${dados}`, 
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
@@ -276,7 +276,7 @@
                             //nome += `<option value="${element.tsmatricula}">`
                               nome += `<option value="${element.tscpf}">`
                             });
-                            $('#datalistOptions').html(nome)
+                            $('#lista_cartao_ponto_trabalhador').html(nome)
                             
                           }
                           if(data.length === 1 && dados.length > 4){
@@ -294,10 +294,10 @@
                   return novodados[1];
                 }
                 function campos() {
-                    $('#form').attr('action', "{{route('boletimcartaoponto.store')}}");
-                    $('#atualizar').attr('disabled','disabled')
-                    $('#method').val(' ')
-                    $('#incluir').removeAttr( "disabled" )
+                    // $('#form').attr('action', `${window.Laravel.boletimcartaoponto.store}`);
+                    // $('#atualizar').attr('disabled','disabled')
+                    // $('#method').val(' ')
+                    // $('#incluir').removeAttr( "disabled" )
                     $('#trabalhador').val(' ')
                     $('#matricula').val(' ')
                     $('#entrada1').val(' ')
@@ -317,19 +317,19 @@
                 function boletim(dados) {
                     $('#carregamento').removeClass('d-none')
                     $.ajax({
-                        url: `{{url('boletim/cartao/ponto')}}/${dados}/${$('#lancamento').val()}/{{$data}}`,
+                        url: `${window.Laravel.boletimcartaoponto.trabalhador}/${dados}/${$('#lancamento').val()}/${window.Laravel.boletimcartaoponto.data}`,
                         type: 'get',
                         contentType: 'application/json',
                         success: function(data) {
                             $('#carregamento').addClass('d-none')
                             if (data.id) {
-                                $('#form').attr('action', "{{ url('boletimcartaoponto')}}/"+data.id);
-                                $('#formdelete').attr('action',"{{ url('boletimcartaoponto')}}/"+data.id)
-                                $('#incluir').attr('disabled','disabled')
-                                $('#atualizar').removeAttr( "disabled" )
-                                // $('#deletar').removeAttr( "disabled" )
-                                $('#excluir').removeAttr( "disabled" )
-                                $('#method').val('PUT')
+                                // $('#form').attr('action', "{{ url('boletimcartaoponto')}}/"+data.id);
+                                // $('#formdelete').attr('action',"{{ url('boletimcartaoponto')}}/"+data.id)
+                                // $('#incluir').attr('disabled','disabled')
+                                // $('#atualizar').removeAttr( "disabled" )
+                                // // $('#deletar').removeAttr( "disabled" )
+                                // $('#excluir').removeAttr( "disabled" )
+                                // $('#method').val('PUT')
                                 $('#trabalhador').val(data.trabalhador)
                                 $('#matricula').val(data.tsmatricula)
                                 $('#entrada1').val(data.bsentradamanhao)

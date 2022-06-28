@@ -1,39 +1,31 @@
 $(document).ready(function(){
-    $('#boletim-tabela').DataTable({
+    $('#table-avuso-lista').DataTable({
         processing:true,
         serverSide:true,
         searchable: false,
         orderable: false,
         'ajax':{
-            url:`${window.Laravel.boletimtabela.lista}`,
+            url:`${window.Laravel.avuso.lista}`,
             type: "get",
         },
         'columns':[
-            {'data':'liboletim'},
-            {'data':'tsnome'},
-            {'data':'lsdata',
+            {'data':'asnome'},
+            {'data':'ascpf'},
+            {'data':'asinicial',
                 render:function (data, type, row) {
-                    data = data.split('T')
-                    return data[0].split('-').reverse().join('/');
+                    return data.split('-').reverse().join('/');
                 }
             },
-            {'data':'lsnumero'},
+            {'data':'asfinal',
+                render:function (data, type, row) {
+                    return data.split('-').reverse().join('/');
+                }
+            },
+            {'data':'aicodigo'},
             {
             'data':'id',
                 render:function (data, type, row) {
-                    return row.id.relatorio;
-                }
-            },
-            {
-            'data':'id',
-                render:function (data, type, row) {
-                    return row.id.visualizar;
-                }
-            },
-            {
-            'data':'id',
-                render:function (data, type, row) {
-                    return row.id.editar;
+                    return row.id.imprimir;
                 }
             },
             {

@@ -1,7 +1,4 @@
-// function remove(index) {
-//     console.log(index);
-//         $(`.campo${index}`).remove();
-// }
+
 
     let index = 0;
 

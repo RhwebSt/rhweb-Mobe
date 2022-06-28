@@ -94,8 +94,8 @@
 
             <div class="col-md-8 input">
                 <label for="tomador" class="form-label "><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tomador</label>
-                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" list="datalistOptions" name="nome__completo" value="{{old('nome__completo')}}" id="nome__completo" placeholder="dê um duplo clique para escolher o tomador">
-                <datalist id="datalistOptions"></datalist>
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" list="lista_cartao_ponto_tomador" name="nome__completo" value="{{old('nome__completo')}}" id="nome__completo_cartao_ponto_tomador" placeholder="dê um duplo clique para escolher o tomador">
+                <datalist id="lista_cartao_ponto_tomador"></datalist>
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -144,5 +144,5 @@
 </main>
 
 
-
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/index.js')}}"></script>
   @stop

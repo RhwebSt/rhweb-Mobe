@@ -136,5 +136,5 @@
     @include('cadastroCartaoPonto.lista')
 </main>
 
-
+<script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/edit.js')}}"></script>
 @stop

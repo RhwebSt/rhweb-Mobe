@@ -66,7 +66,7 @@
             
             <div class="col-md-10">
                 <label for="nome__completo" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Trabalhador</label>
-                <input class="pesquisa form-control @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo" value="{{old('nome__completo')}}" placeholder="dê um duplo clique para pesquisar">
+                <input class="pesquisa form-control @error('nome__completo') is-invalid @enderror" list="nomecompleto" name="nome__completo" id="nome__completo_boletim_tabela_trabalhador" value="{{old('nome__completo')}}" placeholder="dê um duplo clique para pesquisar">
                 @error('nome__completo')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -124,22 +124,5 @@
     </div>
     @include('tabelaCadastro.lista')
 </main>
-
 <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/index.js')}}"></script> 
-
-    <?php
-        function calculovalores($horas,$valores)
-        {
-            if(strpos($horas,':')){
-               list($horas,$minitos) = explode(':',$horas);
-               $horasex = $horas * 3600 + $minitos * 60;
-               $horasex = $horasex/60;
-               $horasex = $valores * ($horasex/60);
-            }else{
-               $horasex = $valores * $horas;
-            }
-            return $horasex; 
-       }
-    ?>
-
 @stop

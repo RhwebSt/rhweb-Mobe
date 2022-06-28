@@ -168,9 +168,9 @@
                 
                 <h1 class="title__pagina--padrao">Lista Recibos Avulsos <i class="fad fa-industry"></i></h1>
                 
-                <section class="section__lista--avulso">
+                <section class="section__lista--avulso ">
     
-                    <form class="row g-3" action="{{route('filtra.pesquisa.avuso')}}" method="POST">
+                    <form class="row g-3 d-none" action="{{route('filtra.pesquisa.avuso')}}" method="POST">
                         @csrf
                         <section class="section__search">
                             <div class="col-md-5">
@@ -206,11 +206,7 @@
         
         
                     </form>
-        
-        
-                    
-                    
-                    <section>
+                    <section class="d-none">
                         <div class="d-flex justify-content-end">
                             <div>
                                 <div class="dropdown">
@@ -230,8 +226,8 @@
         
                     <section class="table">
                         <div class="table-responsive-xxl">
-                            <table class="table">
-                                
+                           
+                            <table class="table" id="table-avuso-lista">
                                 <thead class="tr__header">
                                     <th class="th__header text-nowrap">Nome</th>
                                     <th class="th__header text-nowrap" style="width:150px;">CPF/CNPJ </th>
@@ -241,96 +237,6 @@
                                     <th class="th__header text-nowrap" style="width:60px;">Imprimir</th>
                                     <th class="th__header text-nowrap" style="width:60px;">Excluir</th>
                                 </thead>
-                                
-                                <tbody class="table__body">
-                                    @if(count($lista)>0)
-                                    @foreach($lista as $listas)
-                                    <tr class="tr__body">
-                                        
-                                        <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->asnome}}">
-                                                <a>{{$listas->asnome}}</a>
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col limitaCarcteres" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$listas->ascpf}}">
-                                                <a>{{$listas->ascpf}}</a>
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col">
-                                            <?php
-                                            $inicio = explode('-', $listas->asinicial);
-                                            ?>
-                                            {{$inicio[2]}}/{{$inicio[1]}}/{{$inicio[0]}}
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col">
-                                            <?php
-                                            $final = explode('-', $listas->asfinal);
-                                            ?>
-                                            {{$final[2]}}/{{$final[1]}}/{{$final[0]}}
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:110px;">{{$listas->aicodigo}}</td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-                                            <a href="{{route('recibo.avulso',[base64_encode($listas->id),base64_encode($listas->asinicial),base64_encode($listas->asfinal)])}}" class="btn btn__imprimir"><i class="icon__color fad fa-print"></i></a>
-            
-                                        </td>
-                                        
-                                        <td class="td__body text-nowrap col" style="width:60px;">
-            
-                                            <button type="submit" class="btn button__excluir modal-botao" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$listas->id}}">
-                                                <i class="icon__color fad fa-trash"></i>
-                                            </button>
-                                            
-                                            <section class="delete__tabela--tomador">
-                                                <div class="modal fade" id="staticBackdrop{{$listas->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered col-8">
-                                                        <div class="modal-content">
-                                                            <form action="{{route('avuso.destroy',$listas->id)}}" id="formdelete" method="post">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <div class="modal-header header__modal">
-                                                                    <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
-                                                                    <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
-                                                                </div>
-                                                                
-                                                                <div class="modal-body body__modal ">
-                                                                        <div class="d-flex align-items-center justify-content-center flex-column">
-                                                                            <img class="gif__warning--delete" src="{{url('imagem/warning.gif')}}">
-                                                                        
-                                                                            <p class="content--deletar">Deseja realmente excluir?</p>
-
-                                                                        </div>
-                                                                </div>
-                                                                
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn botao__fechar--modal" data-bs-dismiss="modal"><i class="fad fa-times-circle"></i> Não</button>
-                                                                    <button type="submit" class="btn botao__deletar--modal"><i class="fad fa-trash"></i> Deletar</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-
-                                        </td>
-                                        
-                                    </tr>
-                                    @endforeach
-                                    @else
-                                    <tr class="tr__body">
-                                        <td colspan="11" class="no__register--table">Não há nenhum registro cadastrado <i class="fad fa-exclamation-triangle fa-lg"></td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                                
-                                <tfoot>
-                                    <tr class="">
-                                        <td colspan="11">
-                                        </td>
-                                    </tr>
-                                </tfoot>
-            
                             </table>
                         </div>
         
@@ -409,6 +315,6 @@
 
 </main>
 
-<script type="text/javascript" src="{{url('/js/user/reciboAvulso/index.js')}}"></script> 
+
 
 @stop

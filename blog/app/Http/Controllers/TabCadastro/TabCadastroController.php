@@ -61,7 +61,7 @@ class TabCadastroController extends Controller
         ->addColumn('id', function($id) {
             return [
                 'unitario'=>'R$ '.number_format((float)$id->lfvalor, 2, ',', '.'),
-                'total'=>'R$ '.number_format((float)($id->lfvalor*$id->lsquantidade), 2, ',', '.'),
+                'total'=>'R$ '.number_format((float) self::calculovalores($id->lsquantidade , $id->lfvalor), 2, ',', '.'),
                 'editar'=>' <a href="'.route('boletim.tabela.edit',[base64_encode($id->lsquantidade),base64_encode($id->liboletim),base64_encode($id->tomador_id),base64_encode($id->lancamentotabela_id),base64_encode($id->id),base64_encode($id->lsdata)]).'" class="button__editar btn" ><i class="icon__color fas fa-pen"></i></a>',
                 'excluir'=>' <button  class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteBoletimTabPrecoInside'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
                 <section class="delete__tabela--boletim">
@@ -245,4 +245,16 @@ class TabCadastroController extends Controller
         }
       
     }
+    function calculovalores($horas,$valores)
+    {
+        if(strpos($horas,':')){
+           list($horas,$minitos) = explode(':',$horas);
+           $horasex = $horas * 3600 + $minitos * 60;
+           $horasex = $horasex/60;
+           $horasex = $valores * ($horasex/60);
+        }else{
+           $horasex = $valores * $horas;
+        }
+        return $horasex; 
+   }
 }

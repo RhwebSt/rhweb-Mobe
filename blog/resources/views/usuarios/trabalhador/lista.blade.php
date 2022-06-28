@@ -8,7 +8,7 @@
             
             <div class="modal-body body__modal">
                 
-                <section class="section__search">          
+                <section class="section__search d-none">          
                     <div class="col-md-5">
                         <form action="{{route('usuario.create')}}" method="GET">
                             <div class="d-flex">
@@ -28,7 +28,7 @@
                     </div>
                 </section>
  
-                <section>
+                <section class="d-none">
                     <div class="d-flex justify-content-end">
                         <div>
                             <div class="dropdown">
@@ -47,7 +47,7 @@
                              
                 <section class="table">    
                     <div class="table-responsive-xxl">
-                        <table class="table">
+                        <table class="table" id="table-usuario-lista">
                             <thead class="tr__header">
                                 <th class="th__header text-nowrap">Usuário</th>
                                 <th class="th__header text-nowrap">Email</th>
@@ -69,45 +69,14 @@
                                     <td class="td__body text-nowrap col" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$valoruser->email}}" style="max-width: 30ch; overflow: hidden; text-overflow: ellipsis;">{{$valoruser->email}}</td>
                                     <td class="td__body text-nowrap col" style="width:120px;">{{$valoruser->cargo}}</td>
                                     
-                                    <td class="td__body text-nowrap col d-none" style="width:100px;">
-                                        <div class="dropdown">
-                                          <button class="btn btn__permissao dropdown-toggle" type="button" id="dropdownMenuButton{{$key}}" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fad fa-user-lock"></i>
-                                          </button>
-                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$key}}">
-                                          
-                                          <?php
-                                                $perm = [];
-                                                foreach ($valoruser->permissions as $permissao) {
-                                                    array_push($perm,$permissao->pivot->permission_id);
-                                                }
-                                            ?>
-                                            @foreach($valoruser->permissions as $permissao)
-                                                @if($permissao->pivot->model_type)
-                                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($permissao->id),base64_encode($permissao->pivot->permission_id),'R'])}}">{{$permissao->name}}<i class="fas fa-check text-success"></i></a></li>
-                                                @endif
-                                            @endforeach
-                                            @foreach($permissions as $p)
-                                                @if(!in_array($p->id,$perm) && $p->id != 1)
-                                                    <li><a class="dropdown-item dropdown-item--filter botao-modal" href="{{route('permissao',[base64_encode($valoruser->id),base64_encode($p->id),'D'])}}">{{$p->name}}<i class="fad fa-ban text-danger"></i></a></li>
-                                                @endif
-                                            @endforeach
-    
-                                            
-                                              
-    
-                                                <!-- <li><a class="dropdown-item botao-modal" href="#">Cadastro <i class="fas fa-check text-success"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Rotina Mensal <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Fatura <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Recibo Avulso <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Cadastro de Acesso <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Excluir <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Editar <i class="fad fa-check"></i></a></li>
-                                                <li><a class="dropdown-item botao-modal" href="#">Relatórios <i class="fad fa-check"></i></a></li> -->
-                                          </ul>
-                                        </div>
-                                    </td>
+                                   
                                     <td class="td__body text-nowrap col" style="width:60px;">
+                                        <?php
+                                                    $perm = [];
+                                                    foreach ($valoruser->permissions as $permissao) {
+                                                        array_push($perm,$permissao->pivot->permission_id);
+                                                    }
+                                                ?>
                                             <a class="btn btn__permissao" data-bs-toggle="modal" data-bs-target="#modalPermissao{{$key}}"><i class="fad fa-user-lock"></i></a>
                                             @include('usuarios.trabalhador.modalPermissao')
                                     </td>
@@ -123,7 +92,7 @@
                                             <div class="modal fade" id="deleteCadAcesso{{$key}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered col-8">
                                                     <div class="modal-content">
-                                                        <form action="{{route('usuario.destroy',$valoruser->id)}}" id="" method="post">
+                                                        <form action="{{route('usuario.destroy',$valoruser->id)}}"  method="post">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-header header__modal">
@@ -163,14 +132,14 @@
                             <tfoot>
                                 <tr class=" border-bottom">
                                     <td colspan="11">
-                                    {{$lista->links()}}
+                                   
                                   
                                     </td>
                                 </tr>
                             </tfoot>
                         
                         </table>
-            
+                        
                     </div>
                 </section>
             </div>
@@ -182,6 +151,6 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{url('/js/user/cadastroAcesso/lista.js')}}"></script>
+
 
                 

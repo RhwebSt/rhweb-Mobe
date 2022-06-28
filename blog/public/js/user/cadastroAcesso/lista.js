@@ -1,22 +1,20 @@
-  function togglePermissao(idIcone, idBotao){
-  
-        var verificaClasse = document.querySelector(idIcone);
-        const botaoTeste = document.querySelector(idBotao);
-        
-        botaoTeste.addEventListener('click', function(){
-            const classe = verificaClasse.classList;
-            var result = classe.toggle("fa-times");
-            
-            if(result == true){
-                verificaClasse.classList.remove('text-success');
-                verificaClasse.classList.add('text-danger');
-            }else{
-                verificaClasse.classList.remove('text-danger');
-                verificaClasse.classList.add('text-success');
-            }
-            console.log(classe.value);
-        });
-    
-    }
-    
-    var permissaoCadastro = togglePermissao("#iconeCadastro","#botaoCadastro");
+$(document).ready(function(){
+    $('#table-usuario-lista').DataTable({
+        "language": {
+            "infoEmpty": "mostrando",
+            "search":         "Pesquisar",
+            "info":           "Mostrando _START_ de _END_ registros",
+            "infoFiltered":   "",
+            "zeroRecords":    "Não há nenhum registro cadastrado <i class='fad fa-exclamation-triangle fa-lg' style='color: red !important;'>",
+            "lengthMenu":     "Mostrar _MENU_ registros",
+            "emptyTable":     "Não há dados disponíveis na tabela",
+            "loadingRecords": "Carregando...",
+            "paginate": {
+                "first":      "Primeira",
+                "last":       "Última",
+                "next":       "Próxima",
+                "previous":   "Anterior"
+            },
+        }
+    })
+})

@@ -46,7 +46,7 @@
             
         <section class="table">
             <div class="table-responsive-xxl">
-                <table class="table">
+                <table class="table" id="tabela-dependente-lista">
                     <thead class="tr__header">
                         <th class="th__header text-nowrap">Nome</th>
                         <th class="th__header text-nowrap" style="width:100px;">CPF</th>

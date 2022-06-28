@@ -11,7 +11,7 @@
           }
         }
         $.ajax({
-            url: "{{url('tabelapreco')}}/pesquisa/"+dados+"/"+$('#tomador').val(),
+            url: `${window.Laravel.tabelapreco.pesquisa}/${dados}/${$('#tomador').val()}`,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -48,18 +48,9 @@
             }
         });
     });
-    // $( "#pesquisa" ).on('keyup focus',function() { 
-    //     let  dados = '0'
-    //     if ($(this).val()) {
-    //       dados = $(this).val()
-    //       if (dados.indexOf('  ') !== -1) {
-    //         dados = monta_dados(dados);
-    //       }
-    //     }
-      
-    // });
+   
     $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+0,
+            url: `${window.Laravel.trabalhador.pesquisa}/0`,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
@@ -74,7 +65,7 @@
               }            
             }
         });
-    $( "#nome__completo" ).on('keyup focus',function() { 
+    $( "#nome__completo_boletim_tabela_trabalhador" ).on('keyup focus',function() { 
         let  dados = '0'
         if ($(this).val()) {
           dados = $(this).val()
@@ -83,7 +74,7 @@
           }
         }
         $.ajax({
-            url: "{{url('trabalhador/pesquisa')}}/"+dados,
+            url: `${window.Laravel.trabalhador.pesquisa}/${dados}`,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
