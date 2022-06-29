@@ -79,7 +79,8 @@
                 'update'=>route('esocial.trabalhador.update'),
                 'show'=>route('esocial.trabalhador.lista'),
                 'trabalhador'=>route('esocial.trabalhador'),
-                'tomador'=>route('esocial.tomador')
+                'tomador'=>route('esocial.tomador'),
+                'folhar'=>route('gera.evento.1200')
             ],
             'trabalhador'=>[
                 'lista'=>route('trabalhador.lista'),
@@ -377,22 +378,24 @@
         @include('usuarios.dadosAnaliticos.contador.listaContador')
         @include('usuarios.atalhos.atalhos')
         @include('configuracoes.modalConfig')
+        @include('configuracoes.modalCertificado')
     
         <footer class="footer">
             <p class="">&copy;Copyright Rhweb Sistemas Inteligentes - 2022 - Versão 1.0.0</p>
         </footer>
-        <script src="{{url('/js/esocial/index.js')}}"></script>
+       
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
         <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/modalPermissao.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/calculoFolha/tabela.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
+        
         <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
@@ -401,7 +404,7 @@
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script>
         
       
-        
+        <!-- <script src="{{url('/js/esocial/index.js')}}"></script> -->
         
         <script type="text/javascript" src="{{url('/js/user/fatura/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/fatura/lista.js')}}"></script>

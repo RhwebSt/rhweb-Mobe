@@ -286,7 +286,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
-        Route::get('gera/evento/1200/{competencia}/{empresa}','CalculoFolha\\Evento1200Controller@index')->name('gera.evento.1200');
+        Route::get('gera/evento/1200/{competencia?}','CalculoFolha\\Evento1200Controller@index')->name('gera.evento.1200');
        
     });
     Route::group(['middleware' => ['permission:Super Admin']], function () {

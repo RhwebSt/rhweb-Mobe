@@ -26,6 +26,8 @@ class CreateEsocialsTable extends Migration
             $table->foreign('trabalhador_id')->references('id')->on('trabalhadors')->onDelete('cascade');
             $table->unsignedInteger('tomador_id')->unsigned()->nullable();
             $table->foreign('tomador_id')->references('id')->on('tomadors')->onDelete('cascade');
+            $table->unsignedInteger('folhar_id')->unsigned()->nullable();
+            $table->foreign('folhar_id')->references('id')->on('folhars')->onDelete('cascade');
             $table->timestamps();
         });
     }

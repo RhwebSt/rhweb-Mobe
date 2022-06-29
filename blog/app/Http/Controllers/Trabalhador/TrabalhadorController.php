@@ -140,7 +140,7 @@ class TrabalhadorController extends Controller
                                     
                                 </ul>
                             </div>',
-                'evento'=>' <a class="btn__evento btn btn__padrao--evento" data-id="'.base64_encode($id->id).'" href="'.route('esocial.trabalhador',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-file-invoice"></i></a>',
+                'evento'=>' <a class="btn__evento btn btn__padrao--evento" data-id="'.base64_encode($id->id).'" href="'.route('esocial.trabalhador',base64_encode($id->id)).'"><i class="icon__color fas fa-file-invoice"></i></a>',
                 'editar'=>'<a class="button__editar btn" href="'.route('trabalhador.editar',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-pen"></i></a>',
                 'excluir'=>$excluir
             ];

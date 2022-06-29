@@ -120,7 +120,7 @@ $(document).ready(function(){
         
     // })
     $.ajax({
-            url: "{{url('tomador')}}/pesquisa/"+0,
+            url:`${window.Laravel.tomador.pesquisa}/0`,
             type: 'get',
             contentType: 'application/json', 
             success: function(data) {

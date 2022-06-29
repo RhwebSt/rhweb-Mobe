@@ -64,8 +64,18 @@ $(document).ready(function(){
                         },
                         success: function(retorno){
                             dados = retorno;
+                        },
+                        error:function(retorno){
+                            dados = retorno;
+                            return  `<span class="badge bg-danger">${retorno.responseJSON.error.message}</span>`
                         }
                     });
+                    if (dados.data.eventos.length < 1) {
+                        dados.data.status_envio.mensagem.forEach(element => {
+                            dados += `${element}<br><br>`
+                        });
+                        return erros(dados)
+                    }
                     if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
                         dados.data.eventos[0].ocorrencias.forEach(element => {
                             dados += `${element.descricao}<br><br>`
@@ -106,6 +116,9 @@ $(document).ready(function(){
                     }else if (row.esnome == 'S1020') {
                         url = window.Laravel.esocial.tomador
                         id = btoa(row.tomador_id)
+                    }else if (row.esnome == 'S1200') {
+                        url = window.Laravel.esocial.folhar
+                        id = row.folhar_id
                     }
                     return evento(id,url,row.esnome);
                 }
@@ -219,6 +232,7 @@ $(document).ready(function(){
     function evento(id,url,nome) {
         $(".enviar-evento").click(function() {
             let id = $(this).attr('data-id')
+            let evento = $(this).attr('data-evento')
             Swal.fire({
                 title: '<strong>Evento baixado com sucesso</strong>',
                 icon: 'success',
@@ -239,7 +253,7 @@ $(document).ready(function(){
                 if (event) {
                     var ext = ['text']
                     var type = event.type.split('/')
-                    if (event.name.includes(nome) === false) {
+                    if (event.name.includes(evento) === false) {
                         $('#msg').text(`O txt passado não tem o evento correto. ${nome}`).addClass('text-danger')
                         $('#progress').text('0%').css({"width": "0%"}).removeClass('bg-success').addClass('bg-dange');
                         return false;
@@ -252,7 +266,7 @@ $(document).ready(function(){
                         $('#progress').text('25%').css({"width": "25%"}).removeClass('bg-dange').addClass('bg-success');
                         var myFormData = new FormData();
                         myFormData.append('file', event);
-                        gerarxml(myFormData,id,nome)
+                        gerarxml(myFormData,id,evento)
                     }  
                 }
                 return false;
@@ -266,7 +280,7 @@ $(document).ready(function(){
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li class=""><a class="dropdown-item modal-botao" href="${url}/${id}" id="baixarEvento" role="button">Baixar evento</li>
-                <li class="enviar-evento" id="enviar-evento" data-id="${id}"><a class="dropdown-item modal-botao" href="#"  role="button">Enviar evento</li>           
+                <li class="enviar-evento" id="enviar-evento" data-evento="${nome}" data-id="${id}"><a class="dropdown-item modal-botao" href="#"  role="button">Enviar evento</li>           
             </ul>
         </div>`;
     }

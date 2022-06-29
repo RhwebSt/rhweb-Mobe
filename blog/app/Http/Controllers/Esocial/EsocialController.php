@@ -214,6 +214,9 @@ class EsocialController extends Controller
         if ($dados['evento'] === 'S2300') {
             $dados['trabalhador']=$id;
         }
+        if ($dados['evento'] === 'S1200') {
+            $dados['folhar']=$id;
+        }
         $esocial =  $this->esocial->editar($dados,$id);
         return response()->json('Cadastro realizado com sucesso.');
         // if ($esocial) {
@@ -229,7 +232,7 @@ class EsocialController extends Controller
     {
         $user = Auth::user();
         $esocial = $this->esocial
-        ->select('trabalhador_id','tomador_id','esprenome','esinscricao','esnome','esid','esstatus','created_at')
+        ->select('trabalhador_id','tomador_id','folhar_id','esprenome','esinscricao','esnome','esid','esstatus','created_at')
         ->get();
        
         return DataTables::of($esocial)

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Esocial extends Model
 {
     protected $fillable = [
-        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus','esprenome','esinscricao', 'trabalhador_id','tomador_id'
+        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus','esprenome','esinscricao', 'trabalhador_id','tomador_id','folhar_id'
     ];
     public function trabalhador()
     {
@@ -25,12 +25,14 @@ class Esocial extends Model
             'esinscricao'=>$dados['inscricao'],
             'trabalhador_id'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
             'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
+            'folhar_id'=>isset($dados['folhar'])?$dados['folhar']:null,
         ]);
     }
     public function editar($dados,$id)
     {
         return Esocial::where('trabalhador_id', $id)
         ->orWhere('tomador_id', $id)
+        ->orWhere('folhar_id', $id)
         ->orWhere('escodigo', $id)
         ->update([
             'escodigo'=>$dados['codigo'],
@@ -38,6 +40,7 @@ class Esocial extends Model
             'esstatus'=>$dados['status'],
             'trabalhador_id'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
             'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
+            'folhar_id'=>isset($dados['folhar'])?$dados['folhar']:null,
         ]);
     }
   

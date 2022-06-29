@@ -38,10 +38,11 @@
                                     <div class="d-flex justify-content-between  div__config">
                                         <label class="align-self-center  label-config">Tamanho da Fonte</label>
                                         
-                                        <select class="form-select select__font" aria-label="Default select example">
-                                          <option selected>16px</option>
-                                          <option value="1">18px</option>
-                                          <option value="2">20px</option>
+                                        <select class="form-select select__font" id="select-font-size" aria-label="Default select example">
+                                          <option value="16px">16px</option>
+                                          <option value="18px">18px</option>
+                                          <option value="20px">20px</option>
+                                          <option value="22px">22px</option>
                                         </select>
                                         
                                     </div>
@@ -51,10 +52,9 @@
                                     <div class="d-flex justify-content-between  div__config">
                                         <label class="align-self-center label-config">Formato da Fonte</label>
                                         
-                                        <select class="form-select select__font" aria-label="Default select example">
-                                          <option selected>Padrão</option>
-                                          <option value="1">Maiúscula</option>
-                                          <option value="2">Minúscula</option>
+                                        <select class="form-select select__font" id="select-formato-font" aria-label="Default select example">
+                                          <option value="padrao">Padrão</option>
+                                          <option value="maiuscula">Maiúscula</option>
                                         </select>
                                         
                                     </div>
@@ -82,9 +82,9 @@
                                     <div class="d-flex justify-content-between  div__config">
                                         <label class="align-self-center label-config">Animações</label>
                                         
-                                        <select class="form-select select__font" aria-label="Default select example">
-                                          <option selected>Ativado</option>
-                                          <option value="1">Desativado</option>
+                                        <select class="form-select select__font" id="select-animacoes" aria-label="Default select example">
+                                          <option value="true">Ativado</option>
+                                          <option value="false">Desativado</option>
                                         </select>
                                         
                                     </div>
@@ -146,8 +146,8 @@
                                         <label class="align-self-center label-config">Deseja receber notifacação do E-social?</label>
                                         
                                         <select class="form-select select__font" aria-label="Default select example">
-                                          <option selected>Sim</option>
-                                          <option value="1">Não</option>
+                                          <option value="true">Sim</option>
+                                          <option value="false">Não</option>
                                         </select>
                                         
                                     </div>
@@ -177,8 +177,8 @@
                                         <label class="align-self-center label-config">Notificações</label>
                                         
                                         <select class="form-select select__font" aria-label="Default select example">
-                                          <option selected>Ativar</option>
-                                          <option value="1">Desativar</option>
+                                          <option selected value="true">Ativar</option>
+                                          <option value="false">Desativar</option>
                                         </select>
                                         
                                     </div>
@@ -188,9 +188,9 @@
                                     <div class="d-flex justify-content-between  div__config">
                                         <label class="align-self-center label-config">Preenchimento Automático</label>
                                         
-                                        <select class="form-select select__font" aria-label="Default select example">
-                                          <option>Sim</option>
-                                          <option value="1" selected>Não</option>
+                                        <select class="form-select select__font" id="preenchimentoAutomatico" aria-label="Default select example">
+                                          <option value="true">Sim</option>
+                                          <option value="false">Não</option>
                                         </select>
                                         
                                     </div>

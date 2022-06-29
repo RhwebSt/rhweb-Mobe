@@ -10,6 +10,7 @@ use App\Empresa;
 use App\Folhar;
 use App\BaseCalculo;
 use App\Trabalhador;
+use App\Esocial;
 use ZipArchive;
 class Evento1200Controller extends Controller
 {
@@ -21,10 +22,13 @@ class Evento1200Controller extends Controller
         $this->empresa = new Empresa;
         $this->trabalhador = new Trabalhador;
         $this->zip = new ZipArchive;
+        $this->esocial = new Esocial;
     }
-    public function index($competencia,$empresa)
+    public function index($competencia)
     {
-        $empresa = $this->empresa->where('id',$empresa)->first();
+        $user = auth()->user();
+        $folhar = $this->folhar->where('id',$competencia)->first();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $tranalhadores = $this->basecalculo->where([
             ['folhar_id',$competencia],
             ['tomador_id','!=',null]
@@ -40,9 +44,21 @@ class Evento1200Controller extends Controller
         // dd($novotrabalhadores);
         $novapasta = rand(1000, 100000);
         
-        if (count($novotrabalhadores) > 1) {
+        if (count($novotrabalhadores) > 1) { 
             mkdir('storage/'.$novapasta);
         }
+        $dados = [
+            'nome'=>'S1200',
+            'codigo'=>'',
+            'id'=>'',
+            'ambiente'=>0,
+            'status'=>'',
+            'prenome'=> 'Calculo da folhar',
+            'inscricao'=>$folhar->fscodigo,
+            'trabalhador'=>null,
+            'tomador'=>null,
+            'folhar'=>$folhar->id,
+        ];
         foreach ($novotrabalhadores as $i => $novoval) {
             $trabalhador = $this->trabalhador->whereIn('id',$novoval)
             ->with('categoria:trabalhador_id,cscategoria')
@@ -55,15 +71,15 @@ class Evento1200Controller extends Controller
             ->get();
             $cd = '';
             if (count($novotrabalhadores) > 1){
-                $file_name = 'storage/'.$novapasta.'/1200'.$i.'.txt';
+                $file_name = 'storage/'.$novapasta.'/S1200_'.$i.'.txt';
             }else{
-                $file_name = '1200.txt';
+                $file_name = 'S1200.txt';
             }
             $cd = 'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
                   'cpfcnpjempregador='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".
                   'idgrupoeventos=3'."\r\n".
                   'versaomanual=S.01.00.00'."\r\n".
-                  'ambiente=2'."\r\n";
+                  'ambiente=1'."\r\n";
             foreach ($trabalhador as $key => $trabalhadores) {
                 $cd .= 'INCLUIRS1200'."\r\n";
                 $cd .= 'indRetif_4=1'."\r\n";
@@ -155,6 +171,13 @@ class Evento1200Controller extends Controller
                 
                 $this->zip->close();
             
+            }
+            $verificar =  $this->esocial->where([
+                ['folhar_id',$folhar->id],
+                ['escodigo','!=',50]
+            ])->count();
+            if (!$verificar) {
+                $this->esocial->cadastro($dados);
             }
             return response()->download($zipPath);
         }else{

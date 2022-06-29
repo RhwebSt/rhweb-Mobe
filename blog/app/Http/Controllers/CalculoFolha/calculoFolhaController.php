@@ -334,7 +334,7 @@ class calculoFolhaController extends Controller
             return [
                 'imprimim'=>' <a class="btn btn__imprimir" href="'.route('calculo.folha.imprimir',$id).'"><i class="icon__color fad fa-print"></i></a>',
                 'analitica'=>' <a href="'.route('calculo.folha.analitica',$id).'" class="btn btn__analitico"><i class="icon__color fad fa-analytics"></i></a>',
-                'evento'=>' <a class="btn btn__evento" href="'.route('gera.evento.1200',[$id,$id->empresa_id]).'"><i class="icon__color fas fa-file-invoice"></i></a>',
+                'evento'=>' <a class="btn btn__evento btn__padrao--evento" data-id="'.base64_encode($id->id).'" href="'.route('gera.evento.1200',$id).'"><i class="icon__color fas fa-file-invoice"></i></a>',
                 'recibo'=> $recibo,
                 'rublicas'=>$rublica,
                 'banco'=>$banco,

@@ -499,6 +499,8 @@ class calculoFolhaGeralController extends Controller
                             }
                         }
                     }
+                    if ($boletim['servico']) {
+                        
                     
                     $boletim['vencimento'] = $boletim['servico'];
                     $novovalor = 0;
@@ -689,6 +691,7 @@ class calculoFolhaGeralController extends Controller
                     
                     $this->valorcalculo->cadastrocomissionador($boletim);
                     $this->valorcalculo->cadastroinss_decimoter($boletim);
+                    }
                 }
             }
             $trabalhador =  $this->comissionador
@@ -958,164 +961,164 @@ class calculoFolhaGeralController extends Controller
                             }
                         }
                     }
-                   
-                    $boletim['vencimento'] = $boletim['servico'];
-                    $tomador_cartao_ponto_horas = self::calculardia($lancamentotabelas->tomador->cartaoponto[0]->csdiasuteis,null);
-                    if ($boletim['horanormal']['quantidade'] && $tomador_cartao_ponto_horas) {
-                        $tomador_cartao_ponto_horas =  $boletim['horanormal']['quantidade'] / $tomador_cartao_ponto_horas + $boletim['diarianormal']['quantidade'];
-                    }else{
-                        $tomador_cartao_ponto_horas =  $boletim['diarianormal']['quantidade'];
-                    }
-                   
-
-                    $vt =  $this->rublica->buscaRublicaUnidade('Vale transporte');
-                    $boletim['vt']['codigos'] = $vt->rsrublica;
-                    $boletim['vt']['descricao'] = $vt->rsdescricao;
-                    $boletim['vt']['quantidade'] = ceil($tomador_cartao_ponto_horas);
-                    $boletim['vt']['valor'] = $lancamentotabelas->tomador->incidefolhar[0]->instransporte * ceil($tomador_cartao_ponto_horas);
-                    $boletim['vencimento'] +=  $boletim['vt']['valor'];
-                    $va =  $this->rublica->buscaRublicaUnidade('Vale alimentação');
-                    $boletim['va']['codigos'] = $va->rsrublica;
-                    $boletim['va']['descricao'] = $va->rsdescricao;
-                    $boletim['va']['quantidade'] = ceil($tomador_cartao_ponto_horas);
-                    $boletim['va']['valor'] = $lancamentotabelas->tomador->incidefolhar[0]->insalimentacao * ceil($tomador_cartao_ponto_horas);
-                    // dd($tomador_cartao_ponto_horas);
-                    $boletim['vencimento'] +=  $boletim['va']['valor'];
-                    $dsr =  $this->rublica->buscaRublicaUnidade('DSR 18,18%');
-                    $boletim['dsr1818']['codigos'] = $dsr->rsrublica;
-                    $boletim['dsr1818']['rublicas'] = $dsr->rsdescricao;
-                    $boletim['dsr1818']['quantidade'] = 18.18;
-                    $boletim['dsr1818']['valor'] = self::calculoPocentagem($boletim['servico'],18.18);
-                    $boletim['vencimento'] +=  $boletim['dsr1818']['valor'];
-                    $boletim['servicodsr'] = $boletim['dsr1818']['valor'] + $boletim['servico'];
-                    $dsr =  $this->rublica->buscaRublicaUnidade('13º Salário');
-                    $boletim['decimo_ter']['codigos'] = $dsr->rsrublica;
-                    $boletim['decimo_ter']['rublicas'] = $dsr->rsdescricao;
-                    $boletim['decimo_ter']['quantidade'] = 8.34;
-                    $boletim['decimo_ter']['valor'] = self::calculoPocentagem($boletim['servico'],8.34);
-                    $boletim['vencimento'] +=  $boletim['decimo_ter']['valor'];
-                    $dsr =  $this->rublica->buscaRublicaUnidade('Ferias + 1/3');
-                    $boletim['ferias_decimoter']['codigos'] = $dsr->rsrublica;
-                    $boletim['ferias_decimoter']['rublicas'] = $dsr->rsdescricao;
-                    $boletim['ferias_decimoter']['quantidade'] = 11.12;
-                    $boletim['ferias_decimoter']['valor'] = self::calculoPocentagem($boletim['servico'],11.12);
-                    $boletim['vencimento'] +=  $boletim['ferias_decimoter']['valor'];
-                    $boletim['base_inss'] = $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
-                    $boletim['base_fgts'] = $boletim['decimo_ter']['valor'] + $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
-                    $boletim['fgts_mes'] = $boletim['base_fgts'] * 0.08;
-                    $inss = $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
-                    $dsr =  $this->rublica->buscaRublicaUnidade('INSS Sobre 13º Salário');
-                    $boletim['inss_sobre_ter']['codigos'] = $dsr->rsrublica;
-                    $boletim['inss_sobre_ter']['rublicas'] = $dsr->rsdescricao;
-                    $boletim['inss_sobre_ter']['quantidade'] = 7.5;
-                    $boletim['inss_sobre_ter']['valor'] =  $boletim['decimo_ter']['valor'] * 0.075;
-                    $boletim['desconto'] +=  $boletim['inss_sobre_ter']['valor'];
-                    $inss_rublica =  $this->rublica->buscaRublicaUnidade('INSS');
-                    foreach ($inss_lista as $in => $valor_inss) {
-                        $novoinss =  str_replace(".","",$valor_inss->isvalorfinal);
-                        $novoinss =  str_replace(',','.',$novoinss);
-                        $novoinss = (float) $novoinss;
-                        if ($inss <= $novoinss && $in == 0) {
-                            $resultado = $inss * ((float)str_replace(',','.',$valor_inss->isindece)/100);
-                            $boletim['inss']['valor'] = $resultado;
-                            $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
-                            $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
-                            $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
-                            $boletim['desconto'] += $resultado;
-                            // dd('1');
-                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
-                            $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal));
-                            $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
-                            $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[0]->isreducao));
-                            $boletim['inss']['valor'] = $resultado;
-                            $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
-                            $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
-                            $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
-                            $boletim['desconto'] += $resultado;
-                            // dd('2');
-                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
-                            $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal));
-                            $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
-                            $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[1]->isreducao));
-                            $boletim['inss']['valor'] = $resultado;
-                            $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
-                            $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
-                            $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
-                            $boletim['desconto'] += $resultado;
-                            // dd('3');
-                        }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal))  && $inss <= $novoinss && $in == 3) {
-                            $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal));
-                            $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
-                            $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[2]->isreducao));
-                            $boletim['inss']['valor'] = $resultado;
-                            $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
-                            $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
-                            $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
-                            $boletim['desconto'] += $resultado;
-                            // dd('4');
+                    if ($boletim['servico']) {
+                        $boletim['vencimento'] = $boletim['servico'];
+                        $tomador_cartao_ponto_horas = self::calculardia($lancamentotabelas->tomador->cartaoponto[0]->csdiasuteis,null);
+                        if ($boletim['horanormal']['quantidade'] && $tomador_cartao_ponto_horas) {
+                            $tomador_cartao_ponto_horas =  $boletim['horanormal']['quantidade'] / $tomador_cartao_ponto_horas + $boletim['diarianormal']['quantidade'];
+                        }else{
+                            $tomador_cartao_ponto_horas =  $boletim['diarianormal']['quantidade'];
                         }
                     
-                    }
-                    
-                    $boletim['depedente'] = $trabalhadores->trabalhador->depedente->count();
-                    $boletim['base_irrf'] = str_replace(',','.',$irrf_lista[0]->irdepedente) * $boletim['depedente'];
-                    $boletim['base_irrf'] += $boletim['inss']['valor'] + $boletim['inss_sobre_ter']['valor'];
-                    $boletim['base_irrf'] = $boletim['base_fgts'] -  $boletim['base_irrf'];
-                    
-            
-                    $inss_rublica =  $this->rublica->buscaRublicaUnidade('Comissionador');
-                    $boletim['comissionador']['valor_comissionado'] = $novovalor;
-                    $boletim['comissionador']['rublicas'] = $inss_rublica->rsdescricao;
-                    $boletim['comissionador']['quantidade'] = $indece;
-                    $boletim['comissionador']['codigos'] = $inss_rublica->rsrublica;
 
-                    $boletim['liquido'] = $boletim['vencimento'] - $boletim['desconto'];
-
-
-                    $basecalculo = $this->basecalculo->cadastros($boletim);
-                    $boletim['basecalculo'] = $basecalculo['id'];
-                    $dia['basecalculo'] = $basecalculo['id'];
-                    for ($i=0; $i < count($dia['dias']); $i++) { 
-                        $this->relacaodia->cadastros($dia,$i);
-                    }
-                
-                    if ($boletim['horanormal']['valor']) {
-                        $this->valorcalculo->cadastroHorasnormais($boletim);
-                    }
-                
-                    if ($boletim['hora50']['valor']) {
-                        $this->valorcalculo->cadastroHoras50($boletim);
-                    }
-                    if ($boletim['hora100']['valor']) {
-                        $this->valorcalculo->cadastroHoras100($boletim);
-                    }
-                    if ($boletim['noturno']['valor']) {
-                        $this->valorcalculo->cadastroNoturno($boletim);
-                    }
-                    if ($boletim['producao']['valor']) {
-                        $this->valorcalculo->cadastroProducao($boletim);
-                    }
-                    if ($boletim['gratificacao']['valor']) {
-                        $this->valorcalculo->cadastroGratificacao($boletim);
-                    }
-                    if ($boletim['diarianormal']['valor']) {
-                        $this->valorcalculo->cadastroDiarianormal($boletim);
-                    }
-                    // if ($boletim['va']['valor']) {
+                        $vt =  $this->rublica->buscaRublicaUnidade('Vale transporte');
+                        $boletim['vt']['codigos'] = $vt->rsrublica;
+                        $boletim['vt']['descricao'] = $vt->rsdescricao;
+                        $boletim['vt']['quantidade'] = ceil($tomador_cartao_ponto_horas);
+                        $boletim['vt']['valor'] = $lancamentotabelas->tomador->incidefolhar[0]->instransporte * ceil($tomador_cartao_ponto_horas);
+                        $boletim['vencimento'] +=  $boletim['vt']['valor'];
+                        $va =  $this->rublica->buscaRublicaUnidade('Vale alimentação');
+                        $boletim['va']['codigos'] = $va->rsrublica;
+                        $boletim['va']['descricao'] = $va->rsdescricao;
+                        $boletim['va']['quantidade'] = ceil($tomador_cartao_ponto_horas);
+                        $boletim['va']['valor'] = $lancamentotabelas->tomador->incidefolhar[0]->insalimentacao * ceil($tomador_cartao_ponto_horas);
+                        // dd($tomador_cartao_ponto_horas);
+                        $boletim['vencimento'] +=  $boletim['va']['valor'];
+                        $dsr =  $this->rublica->buscaRublicaUnidade('DSR 18,18%');
+                        $boletim['dsr1818']['codigos'] = $dsr->rsrublica;
+                        $boletim['dsr1818']['rublicas'] = $dsr->rsdescricao;
+                        $boletim['dsr1818']['quantidade'] = 18.18;
+                        $boletim['dsr1818']['valor'] = self::calculoPocentagem($boletim['servico'],18.18);
+                        $boletim['vencimento'] +=  $boletim['dsr1818']['valor'];
+                        $boletim['servicodsr'] = $boletim['dsr1818']['valor'] + $boletim['servico'];
+                        $dsr =  $this->rublica->buscaRublicaUnidade('13º Salário');
+                        $boletim['decimo_ter']['codigos'] = $dsr->rsrublica;
+                        $boletim['decimo_ter']['rublicas'] = $dsr->rsdescricao;
+                        $boletim['decimo_ter']['quantidade'] = 8.34;
+                        $boletim['decimo_ter']['valor'] = self::calculoPocentagem($boletim['servico'],8.34);
+                        $boletim['vencimento'] +=  $boletim['decimo_ter']['valor'];
+                        $dsr =  $this->rublica->buscaRublicaUnidade('Ferias + 1/3');
+                        $boletim['ferias_decimoter']['codigos'] = $dsr->rsrublica;
+                        $boletim['ferias_decimoter']['rublicas'] = $dsr->rsdescricao;
+                        $boletim['ferias_decimoter']['quantidade'] = 11.12;
+                        $boletim['ferias_decimoter']['valor'] = self::calculoPocentagem($boletim['servico'],11.12);
+                        $boletim['vencimento'] +=  $boletim['ferias_decimoter']['valor'];
+                        $boletim['base_inss'] = $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
+                        $boletim['base_fgts'] = $boletim['decimo_ter']['valor'] + $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
+                        $boletim['fgts_mes'] = $boletim['base_fgts'] * 0.08;
+                        $inss = $boletim['ferias_decimoter']['valor'] + $boletim['servicodsr'];
+                        $dsr =  $this->rublica->buscaRublicaUnidade('INSS Sobre 13º Salário');
+                        $boletim['inss_sobre_ter']['codigos'] = $dsr->rsrublica;
+                        $boletim['inss_sobre_ter']['rublicas'] = $dsr->rsdescricao;
+                        $boletim['inss_sobre_ter']['quantidade'] = 7.5;
+                        $boletim['inss_sobre_ter']['valor'] =  $boletim['decimo_ter']['valor'] * 0.075;
+                        $boletim['desconto'] +=  $boletim['inss_sobre_ter']['valor'];
+                        $inss_rublica =  $this->rublica->buscaRublicaUnidade('INSS');
+                        foreach ($inss_lista as $in => $valor_inss) {
+                            $novoinss =  str_replace(".","",$valor_inss->isvalorfinal);
+                            $novoinss =  str_replace(',','.',$novoinss);
+                            $novoinss = (float) $novoinss;
+                            if ($inss <= $novoinss && $in == 0) {
+                                $resultado = $inss * ((float)str_replace(',','.',$valor_inss->isindece)/100);
+                                $boletim['inss']['valor'] = $resultado;
+                                $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
+                                $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
+                                $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
+                                $boletim['desconto'] += $resultado;
+                                // dd('1');
+                            }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal))  && $inss <= $novoinss && $in == 1) {
+                                $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[0]->isvalorfinal));
+                                $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
+                                $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[0]->isreducao));
+                                $boletim['inss']['valor'] = $resultado;
+                                $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
+                                $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
+                                $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
+                                $boletim['desconto'] += $resultado;
+                                // dd('2');
+                            }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal))  && $inss <= $novoinss && $in == 2) {
+                                $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[1]->isvalorfinal));
+                                $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
+                                $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[1]->isreducao));
+                                $boletim['inss']['valor'] = $resultado;
+                                $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
+                                $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
+                                $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
+                                $boletim['desconto'] += $resultado;
+                                // dd('3');
+                            }elseif ($inss > (float)str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal))  && $inss <= $novoinss && $in == 3) {
+                                $resultado = $inss - str_replace(',','.',str_replace(".","",$inss_lista[2]->isvalorfinal));
+                                $resultado = $resultado * ((float)str_replace(',','.',$valor_inss->isindece)/100);
+                                $resultado = $resultado + ((float)str_replace(',','.',$inss_lista[2]->isreducao));
+                                $boletim['inss']['valor'] = $resultado;
+                                $boletim['inss']['codigos'] = $inss_rublica->rsrublica;
+                                $boletim['inss']['rublicas'] = $inss_rublica->rsdescricao;
+                                $boletim['inss']['quantidade'] = $boletim['base_inss']/$resultado;
+                                $boletim['desconto'] += $resultado;
+                                // dd('4');
+                            }
                         
-                    // }
-                    // if ($boletim['vt']['valor']) {
-                       
-                    // }
-                    $this->valorcalculo->cadastroVt($boletim);
-                    $this->valorcalculo->cadastroVa($boletim);
-                    $this->valorcalculo->cadastrodsr($boletim);
-                    $this->valorcalculo->cadastrodecimo_ter($boletim);
-                    $this->valorcalculo->cadastroferias_decimoter($boletim);
-                    $this->valorcalculo->cadastroinss($boletim);
-                    $this->valorcalculo->cadastrocomissionador($boletim);
-                    $this->valorcalculo->cadastroinss_decimoter($boletim);
+                        }
+                        
+                        $boletim['depedente'] = $trabalhadores->trabalhador->depedente->count();
+                        $boletim['base_irrf'] = str_replace(',','.',$irrf_lista[0]->irdepedente) * $boletim['depedente'];
+                        $boletim['base_irrf'] += $boletim['inss']['valor'] + $boletim['inss_sobre_ter']['valor'];
+                        $boletim['base_irrf'] = $boletim['base_fgts'] -  $boletim['base_irrf'];
+                        
                 
+                        $inss_rublica =  $this->rublica->buscaRublicaUnidade('Comissionador');
+                        $boletim['comissionador']['valor_comissionado'] = $novovalor;
+                        $boletim['comissionador']['rublicas'] = $inss_rublica->rsdescricao;
+                        $boletim['comissionador']['quantidade'] = $indece;
+                        $boletim['comissionador']['codigos'] = $inss_rublica->rsrublica;
+
+                        $boletim['liquido'] = $boletim['vencimento'] - $boletim['desconto'];
+
+
+                        $basecalculo = $this->basecalculo->cadastros($boletim);
+                        $boletim['basecalculo'] = $basecalculo['id'];
+                        $dia['basecalculo'] = $basecalculo['id'];
+                        for ($i=0; $i < count($dia['dias']); $i++) { 
+                            $this->relacaodia->cadastros($dia,$i);
+                        }
+                    
+                        if ($boletim['horanormal']['valor']) {
+                            $this->valorcalculo->cadastroHorasnormais($boletim);
+                        }
+                    
+                        if ($boletim['hora50']['valor']) {
+                            $this->valorcalculo->cadastroHoras50($boletim);
+                        }
+                        if ($boletim['hora100']['valor']) {
+                            $this->valorcalculo->cadastroHoras100($boletim);
+                        }
+                        if ($boletim['noturno']['valor']) {
+                            $this->valorcalculo->cadastroNoturno($boletim);
+                        }
+                        if ($boletim['producao']['valor']) {
+                            $this->valorcalculo->cadastroProducao($boletim);
+                        }
+                        if ($boletim['gratificacao']['valor']) {
+                            $this->valorcalculo->cadastroGratificacao($boletim);
+                        }
+                        if ($boletim['diarianormal']['valor']) {
+                            $this->valorcalculo->cadastroDiarianormal($boletim);
+                        }
+                        // if ($boletim['va']['valor']) {
+                            
+                        // }
+                        // if ($boletim['vt']['valor']) {
+                        
+                        // }
+                        $this->valorcalculo->cadastroVt($boletim);
+                        $this->valorcalculo->cadastroVa($boletim);
+                        $this->valorcalculo->cadastrodsr($boletim);
+                        $this->valorcalculo->cadastrodecimo_ter($boletim);
+                        $this->valorcalculo->cadastroferias_decimoter($boletim);
+                        $this->valorcalculo->cadastroinss($boletim);
+                        $this->valorcalculo->cadastrocomissionador($boletim);
+                        $this->valorcalculo->cadastroinss_decimoter($boletim);
+                    }
             }
            
         }
