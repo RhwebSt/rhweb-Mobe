@@ -85,6 +85,7 @@
 .dropdown-item{
     color: white;
     transition: ease-in-out 400ms  !important;
+    cursor: pointer !important;
     
 }
 

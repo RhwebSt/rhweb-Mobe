@@ -1,11 +1,11 @@
 
-// $(document).ready(function(){
+// window.onload = function () {
 //     $('main').addClass('animation-slide-in');
 //     var AnimationMain = setTimeout(transicaoEntrar, 2000);
 //     function transicaoEntrar(){
 //       $('main').removeClass('animation-slide-in');
 //     }
-// });
+// };
 
 
 $('.botao__voltar').click(function(e){
@@ -17,3 +17,4 @@ $('.botao__voltar').click(function(e){
     }
 
 });
+

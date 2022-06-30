@@ -28,7 +28,9 @@
                                     
                                     <div class="form-check form-switch d-flex justify-content-between div__darkmode">
                                         <label class="form-check-label align-self-center label-config" for="swicthDarkMode">Darkmode</label>
-                                        <input class="form-check-input switchDark" type="checkbox" role="switch" id="swicthDarkMode">
+                                        <!--<div class="ms-2 me-2">-->
+                                             <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i id="iconDarkMode" class="fad fa-moon fa-lg iconbtn"></i></button>
+                                        <!--</div>-->
                                     </div>
                                     
                                     <p class="span__divisor"></p>
@@ -55,6 +57,18 @@
                                         <select class="form-select select__font" id="select-formato-font" aria-label="Default select example">
                                           <option value="padrao">Padrão</option>
                                           <option value="maiuscula">Maiúscula</option>
+                                        </select>
+                                        
+                                    </div>
+                                    
+                                    <p class="span__divisor"></p>
+                                    
+                                    <div class="d-flex justify-content-between  div__config">
+                                        <label class="align-self-center label-config">Expessura da Fonte</label>
+                                        
+                                        <select class="form-select select__font" id="select-expessura-font" aria-label="Default select example">
+                                          <option value="padrao">Padrão</option>
+                                          <option value="negrito">Negrito</option>
                                         </select>
                                         
                                     </div>

@@ -63,7 +63,7 @@ $(document).ready(function(){
     })
     function evento_tomador() {
         let nome = 'S1020';
-        $(".btn__padrao--evento").click(function() {
+        $(".btn__padrao--evento_tomador").click(function() {
             let id = $(this).attr('data-id')
             Swal.fire({
                 title: '<strong>Evento baixado com sucesso</strong>',
@@ -98,7 +98,7 @@ $(document).ready(function(){
                         $('#progress').text('25%').css({"width": "25%"}).removeClass('bg-dange').addClass('bg-success');
                         var myFormData = new FormData();
                         myFormData.append('file', event);
-                        gerarxml(myFormData,id,nome)
+                        gerarxml_tomador(myFormData,id,nome)
                     }  
                 }
                 return false;

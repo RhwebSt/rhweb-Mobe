@@ -2,7 +2,7 @@ setInterval(function () {
 
     // verifica se tem algo no local storage, se n√£o tiver ele coloca// 
     if(localStorage.getItem("configUser") === null){    
-        var config = {fontSize:{tamanhoFont: "16px"}, textTransform: {formatoFont:"padrao"}, animacoes: {resultAnimacoes: true }, automaticFill: {preenchimentoAutomatico: true}};
+        var config = {fontSize:{tamanhoFont: "16px"}, textTransform: {formatoFont:"padrao"}, expessuraFont: {expessura: "padrao"}, animacoes: {resultAnimacoes: true }, automaticFill: {preenchimentoAutomatico: true}};
         localStorage.setItem("configUser", JSON.stringify(config) );
     }
     // fim//
@@ -12,8 +12,8 @@ setInterval(function () {
     var resultFormatoFont = resultado.textTransform.formatoFont;
     var resultAnimacao = resultado.animacoes.resultAnimacoes;
     var resultPreenchimentoAutomatico = resultado.automaticFill.preenchimentoAutomatico;
-    
-    
+    var resultExpessuraFont = resultado.expessuraFont.expessura;
+
     if(resultTamanhoFont === '16px'){
         $("#select-font-size option:contains(16px)").attr('selected', true);
     }
@@ -54,13 +54,21 @@ setInterval(function () {
         $("#preenchimentoAutomatico option:contains(N√£o)").attr('selected', true);
     }
 
+    if(resultExpessuraFont === "negrito"){
+        $("#select-expessura-font option:contains(Negrito)").attr('selected', true);
+    }
+    
+    if(resultExpessuraFont === "padrao"){
+        $("#select-expessura-font option:contains(Padrè´™o)").attr('selected', true);
+    }
 
     tamanhoFont = $("#select-font-size").val();
     formatoFont = $("#select-formato-font").val();
     resultAnimacoes = $("#select-animacoes").val();
     preenchimentoAutomatico = $("#preenchimentoAutomatico").val();
+    expessura = $("#select-expessura-font").val();
 
-    config = {fontSize:{tamanhoFont}, textTransform: {formatoFont}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
+    config = {fontSize:{tamanhoFont}, textTransform: {formatoFont}, expessuraFont: {expessura}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
 
     localStorage.setItem("configUser", JSON.stringify(config) );
 
@@ -70,9 +78,10 @@ setInterval(function () {
     resultFormatoFont = resultado.textTransform.formatoFont;
     resultAnimacao = resultado.animacoes.resultAnimacoes;
     resultPreenchimentoAutomatico = resultado.automaticFill.preenchimentoAutomatico;
+    resultExpessuraFont = resultado.expessuraFont.expessura;
 
     if(resultTamanhoFont === '16px'){
-        config = {fontSize:{tamanhoFont: "16px"}, textTransform: {formatoFont}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
+        config = {fontSize:{tamanhoFont: "16px"}, textTransform: {formatoFont}, expessuraFont: {expessura}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
         localStorage.setItem("configUser", JSON.stringify(config) );
         $("#select-font-size option:contains(16px)").attr('selected', true);
         $(".body-content").css("font-size", "16px");
@@ -80,14 +89,14 @@ setInterval(function () {
     }
     
     if(resultTamanhoFont === '18px'){
-        config = {fontSize:{tamanhoFont: "18px"}, textTransform: {formatoFont}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
+        config = {fontSize:{tamanhoFont: "18px"}, textTransform: {formatoFont}, expessuraFont: {expessura}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
         localStorage.setItem("configUser", JSON.stringify(config) );
         $(".body-content").css("font-size", "18px");
         $("#select-font-size option:contains(18px)").attr('selected', true);
     }
     
     if(resultTamanhoFont === '20px'){
-        config = {fontSize:{tamanhoFont: "20px"}, textTransform: {formatoFont}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
+        config = {fontSize:{tamanhoFont: "20px"}, textTransform: {formatoFont}, expessuraFont: {expessura}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
         localStorage.setItem("configUser", JSON.stringify(config) );
         $(".body-content").css("font-size", "20px");
         $("#select-font-size option:contains(20px)").attr('selected', true);
@@ -95,7 +104,7 @@ setInterval(function () {
     }
     
     if(resultTamanhoFont === '22px'){
-        config = {fontSize:{tamanhoFont: "22px"}, textTransform: {formatoFont}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
+        config = {fontSize:{tamanhoFont: "22px"}, textTransform: {formatoFont}, expessuraFont: {expessura}, animacoes: {resultAnimacoes}, automaticFill: {preenchimentoAutomatico}};
         localStorage.setItem("configUser", JSON.stringify(config) );
         $("#select-font-size option:contains(22px)").attr('selected', true);
         $(".body-content").css("font-size", "22px");
@@ -109,12 +118,15 @@ setInterval(function () {
         $("input").css("text-transform", "none");
     }
     
-    if(resultAnimacao === false){
+    if(resultAnimacao === "false"){
         $("main").css("animation", "none");
+        $(".animation-slide-out").css("animation", "none");
     }
     
-    if(resultAnimacao === true){
-        $("main").css("animation", "slide-out 1.5s ease");
+    if(resultAnimacao === "true"){
+        $("main").css("animation-name", "slide-out");
+        $("main").css("animation-duration", "1.5s");
+        $("main").css("animation-duration", "ease");
     }
     
     if(resultPreenchimentoAutomatico === "true"){
@@ -124,7 +136,17 @@ setInterval(function () {
     if(resultPreenchimentoAutomatico === "false"){
         $("form").attr("autocomplete", "off");
     }
+    
+    if(resultExpessuraFont === "negrito"){
+        $(".body-content").css("font-weight", "bold");
+    }
+    
+    if(resultExpessuraFont === "padrao"){
+        $(".body-content").css("font-weight", "");
+    }
+    
 
 
 }, 1000);
+
 

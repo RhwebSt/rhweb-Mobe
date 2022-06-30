@@ -266,6 +266,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
     Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
     Route::group(['middleware' => ['permission:admin']], function () {  
+        Route::post('certificado/cadastro','Certificado\\CertificadoController@store')->name('certificado.cadastro');
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 

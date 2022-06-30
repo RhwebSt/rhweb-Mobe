@@ -15,7 +15,7 @@
                 if (darkMode === "enabled") {
                     enableDarkMode();
                     $('#iconDarkMode').addClass('fad');
-                    $('#iconDarkMode').addClass('fa-sun');
+                    $('#iconDarkMode').addClass('fa-power-off');
                 }
                 
                 if(darkMode === null){
@@ -34,12 +34,12 @@
                         $('#iconDarkMode').removeClass('fad');
                         $('#iconDarkMode').removeClass('fa-moon');
                         $('#iconDarkMode').addClass('fad');
-                        $('#iconDarkMode').addClass('fa-sun');
+                        $('#iconDarkMode').addClass('fa-power-off');
 
                     }else{
                         disableDarkMode();
                         $('#iconDarkMode').removeClass('fas');
-                        $('#iconDarkMode').removeClass('fa-sun');
+                        $('#iconDarkMode').removeClass('fa-power-off');
                         $('#iconDarkMode').addClass('fad');
                         $('#iconDarkMode').addClass('fa-moon');
                     }

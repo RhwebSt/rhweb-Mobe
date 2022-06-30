@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('titulo','Rhweb - Página Principal')
 @section('conteine')
-<div class="main__home" id="particles-js">
+<div class="main__home">
 
 
     <div class="svg-home-letter" id="">

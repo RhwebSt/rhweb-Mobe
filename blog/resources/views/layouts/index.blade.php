@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <link rel="shortcut icon" href="{{url('/imagem/arrowMobe.png')}}" type="image/x-icon">
         <title>@yield('titulo')</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -61,7 +62,7 @@
     </head>
     
 
-    <body class="body-content">
+    <body class="body-content d-none">
         
         
         <script>
@@ -137,6 +138,9 @@
             'empresa'=>[
                 'pesquisa'=>url('empresa/pesquisa')
             ],
+            'certificado'=>[
+                'cadastro'=>route('certificado.cadastro')
+            ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
             //   const Toast = Swal.mixin({
@@ -299,11 +303,11 @@
                         </div>
         
         
-                        <div class="ms-2 me-2">
-                            <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i id="iconDarkMode" class="fad fa-moon fa-lg iconbtn"></i></button>
-                        </div>
+                        <!--<div class="ms-2 me-2">-->
+                        <!--    <button class="botao__dark btn" id = "flexSwitchCheckDefault"><i id="iconDarkMode" class="fad fa-moon fa-lg iconbtn"></i></button>-->
+                        <!--</div>-->
                         
-                        <button class="navbar-toggler navb__burger--button btn" type="button" data-bs-toggle="collapse" data-bs-target="#burgerButton" aria-controls="burgerButton" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="ms-2 navbar-toggler navb__burger--button btn" type="button" data-bs-toggle="collapse" data-bs-target="#burgerButton" aria-controls="burgerButton" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="icon__color fad fa-bars"></i>
                         </button>
                         
@@ -388,6 +392,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
         <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/configuracoes/configuracoes.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/configuracoes/modalCertificado.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/modalPermissao.js')}}"></script>
@@ -427,12 +433,17 @@
         <script type="text/javascript" src="{{url('/js/ferramentas/paisnascimento.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/ferramentas/categoriatrabalhador.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/ferramentas/criptografa.js')}}"></script>
-        <script src="{{url('js/particlesjs.js')}}"></script>
-        <script src="{{url('js/appParticles.js')}}"></script>
+        <!--<script src="{{url('js/particlesjs.js')}}"></script>-->
+        <!--<script src="{{url('js/appParticles.js')}}"></script>-->
         <!-- <script type="text/javascript" src="{{url('/js/validation.js')}}"></script> -->
         <script src="{{url('/js/user/tabelapreco/atualizar.js')}}"></script>
 
         <script>
+        
+            window.onload = function () {
+                $("body").removeClass('d-none');
+                $("main").addClass('main__Animation');
+            } 
         
             $('.teste').mouseover(function(){
                 $('.teste').addClass('dropdown-menuAnimate');
@@ -450,6 +461,9 @@
             },1000);
             
         </script>
+        
+        
+
    
   </body>
 </html>

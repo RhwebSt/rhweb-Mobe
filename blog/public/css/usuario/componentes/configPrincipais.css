@@ -67,6 +67,7 @@ body{
     overflow-x: hidden;
     min-height: 100vh;
     font-weight: 400;
+    scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar {
@@ -104,7 +105,7 @@ label,h1,h2,h3,h4,h5,small, span, option{
     margin-top: 5%;
     margin-bottom: 4%;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: 500;
     color: var(--color-title-pagina-padrao);
 }
@@ -171,6 +172,7 @@ input:focus, select:focus{
 
 input, select{
     border-radius: 6px !important;
+    cursor: pointer;
 }
 
 

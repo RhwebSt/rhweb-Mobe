@@ -11,17 +11,19 @@ use App\Tomador;
 use App\Empresa;
 use App\Trabalhador;
 use App\Esocial;
+use Carbon\Carbon;
 use App\Notifications\notificacaoEsocial;
 
 class EsocialController extends Controller
 {
-    private $tomador,$empresa,$trabalhador,$esocial;
+    private $tomador,$empresa,$trabalhador,$esocial,$today;
     public function __construct()
     {
         $this->tomador = new Tomador;
         $this->empresa = new Empresa;
         $this->trabalhador = new Trabalhador;
         $this->esocial = new Esocial;
+        $this->today = Carbon::today();
     }
     public function eventS1020($id)
     {

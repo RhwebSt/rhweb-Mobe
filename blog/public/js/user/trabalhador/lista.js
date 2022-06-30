@@ -69,7 +69,7 @@ $('#trabalhador-lista').DataTable({
 })
 function evento_trabalhador() {
     let nome = 'S2300';
-    $(".btn__padrao--evento").click(function() {
+    $(".btn__padrao--evento_trabalhador").click(function() {
         let id = $(this).attr('data-id')
         Swal.fire({
             title: '<strong>Evento baixado com sucesso</strong>',
@@ -104,7 +104,7 @@ function evento_trabalhador() {
                     $('#progress').text('25%').css({"width": "25%"}).removeClass('bg-dange').addClass('bg-success');
                     var myFormData = new FormData();
                     myFormData.append('file', event);
-                    gerarxml(myFormData,id,nome)
+                    gerarxml_trabalhador(myFormData,id,nome)
                 }  
             }
             return false;
@@ -133,7 +133,7 @@ function gerarxml_trabalhador(dados,trabalhador,nome){
         success: function(retorno){
             $('#msg').text('Lote Recebido com Sucesso.')
             $('#progress').text('50%').css({"width": "50%"});
-            cadastra_tomador(retorno.data,trabalhador,nome)
+            cadastra_trabalhador(retorno.data,trabalhador,nome)
             // setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
         },
         error: function () {

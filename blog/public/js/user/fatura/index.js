@@ -31,65 +31,46 @@ $( "#pesquisa" ).on('keyup focus',function() {
               return novodados[0];
             }
             
-        
-            var Back = document.getElementById('gerar-fatura-tab');
-            Back.addEventListener("click", function(){
-               localStorage.setItem('Backft', 'backpill1');
-               
-           })
-           
-        //    var Back1 = document.getElementById('pills-contact-tab');
-        //     Back1.addEventListener("click", function(){
-        //        localStorage.setItem('Backft', 'backpill3');
-               
-        //    })
-           
-           var Back2 = document.getElementById('lista-fatura-tab');
-            Back2.addEventListener("click", function(){
-               localStorage.setItem('Backft', 'backpill2');
-               
-           })
-           
-           backActive =  document.getElementById("lista-fatura");
-           backActive1 =  document.getElementById("gerar-fatura");
-        //    backActive2 =  document.getElementById("pills-contact");
-
-            voltar = localStorage.getItem("Backft");
-
             
-            if(voltar === null){
-                localStorage.setItem('Backft', 'backpill1');
-                Back.classList.add("active");
-                backActive1.classList.add("show", "active");
-                backActive.classList.remove("show", "active");
-                // backActive2.classList.remove("show", "active");
-                document.getElementById("gerar-fatura-tab").click();
-            }
-
-            if(voltar === "backpill1"){
-                Back.classList.add("active");
-                backActive1.classList.add("show", "active");
-                backActive.classList.remove("show", "active");
-                // backActive2.classList.remove("show", "active");
-                document.getElementById("gerar-fatura-tab").click();
+            function voltaPill(){
                 
-
-            }else if (voltar === "backpill2"){
-                Back2.classList.add("active");
-                backActive.classList.add("show", "active");
-                backActive1.classList.remove("show", "active");
-                // backActive2.classList.remove("show", "active");
-                document.getElementById("lista-fatura-tab").click();
-
-            }   
-            // else if (voltar === "backpill3"){
-            //     Back1.classList.add("active");
-            //     backActive2.classList.add("show", "active");
-            //     backActive.classList.remove("show", "active");
-            //     backActive1.classList.remove("show", "active");
-            //     document.getElementById("pills-contact-tab").click();
-
-            // }    
-
-
+                $("#gerar-fatura-tab").click(function(){
+                    localStorage.setItem('Backft', 'backpill1');
+                });
+                
+                $("#lista-fatura-tab").click(function(){
+                    localStorage.setItem('Backft', 'backpill2');
+                });
+                
+                 var voltar = localStorage.getItem("Backft");
+                
+                if(voltar === null){
+                    localStorage.setItem('Backft', 'backpill1');
+                    $('#gerar-fatura-tab').addClass("active");
+                    $("#gerar-fatura").addClass("show");
+                    $("#gerar-fatura").addClass("active");
+                    $("#lista-fatura").removeClass("show");
+                    $("#lista-fatura").removeClass("active");
+                }
+    
+                if(voltar === "backpill1"){
+                    $('#gerar-fatura-tab').addClass("active");
+                    $("#gerar-fatura").addClass("show");
+                    $("#gerar-fatura").addClass("active");
+                    $("#lista-fatura").removeClass("show");
+                    $("#lista-fatura").removeClass("active");
+    
+                }else if (voltar === "backpill2"){
+                    $('#lista-fatura-tab').addClass("active");
+                    $("#lista-fatura").addClass("show");
+                    $("#lista-fatura").addClass("active");
+                    $("#gerar-fatura").removeClass("show");
+                    $("#gerar-fatura").removeClass("active");
+  
+                }
+                
+            }
             
+            voltaPill();
+            
+    

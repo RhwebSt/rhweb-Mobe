@@ -134,7 +134,7 @@ class TomadorController extends Controller
                                         <li><a class="dropdown-item" href="'.route('tabela.preco.relatorio',base64_encode($id->id)).'"><i class="fas fa-dollar-sign"></i> Rol da Tabela de preço</a></li>
                                     </ul>
                                 </div>',
-                'evento'=>' <a class="btn__evento  btn btn__padrao--evento"  data-id="'.base64_encode($id->id).'" href="'.route('esocial.tomador',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-file-invoice"></i></a>',
+                'evento'=>' <a class="btn__evento  btn btn__padrao--evento_tomador"  data-id="'.base64_encode($id->id).'" href="'.route('esocial.tomador',base64_encode($id->id)).'" class=""><i class="icon__color fas fa-file-invoice"></i></a>',
                 'editar'=>'<a class="button__editar btn" href="'.route('tomador.editar',base64_encode($id->id)).'"><i class="icon__color fas fa-pen"></i></a>',
                 'excluir'=>' <button class="btn button__excluir" data-bs-toggle="modal" data-bs-target="#deleteTomador'.$id->id.'"><i class="icon__color fad fa-trash"></i></button>
                             <section class="delete__tabela--tomador">
