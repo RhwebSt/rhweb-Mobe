@@ -31,7 +31,7 @@
         </script>
         @enderror
 
-        <form class="row g-3" id="form" action="{{ route('trabalhador.cadastra') }}" enctype="multipart/form-data" method="POST">
+        <form class="row g-3" id="formTrab" action="{{ route('trabalhador.cadastra') }}" enctype="multipart/form-data" method="POST">
             
             <section class="section__botao--padrao">
                 
@@ -66,7 +66,7 @@
 
                 <div class="col-md-4 div__input--foto">
                     <label for="formFileSm " class="form-label"><i class="fad fa-lg fa-camera-alt"></i> Foto do Trabalhador</label>
-                    <input class="form-control form-control-sm color__input--foto" onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
+                    <input class="form-control form-control-sm color__input--foto" onchange="encodeImageFileAsURL(this)" id="formFile" type="file">
                     <span id="msgfoto" class="text-danger"></span>
                 </div>
                 
@@ -683,6 +683,8 @@
 </main>
 
 @include('trabalhador.lista')
+
+
 
 <!-- <script type="text/javascript" src="{{url('/js/cbo.js')}}"></script> -->
 <!-- <script type="text/javascript" src="{{url('/js/user/trabalhador/index.js')}}"></script> -->

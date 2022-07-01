@@ -4,24 +4,34 @@ namespace App\Http\Controllers\Certificado;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Certificado;
+use Carbon\Carbon;
 class CertificadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $certificado,$today;
+    public function __construct()
+    {
+        $this->certificado = new Certificado;
+        $this->today = Carbon::today();
+    }
     public function index()
     {
-        //
+        $user = auth()->user();
+        $certificado = $this->certificado
+        ->where('empresa_id',$user->empresa_id)
+        ->first();
+        if ($certificado) {
+            if (strtotime($certificado->dtvencimento) > strtotime($this->today) ) {
+                return response()->json(true);
+            }else{
+                return response()->json(false);
+            }
+        }else{
+            return response()->json(true);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
@@ -35,8 +45,11 @@ class CertificadoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         $dados = $request->all();
-        dd($dados);
+        $dados['empresa'] = $user->empresa_id;
+        $this->certificado->cadastro($dados);
+        return response()->json(true);
     }
 
     /**
@@ -47,7 +60,29 @@ class CertificadoController extends Controller
      */
     public function show($id)
     {
-        //
+        $certificado = $this->certificado
+        ->where('empresa_id',$id)
+        ->first();
+        if ($certificado) {
+            $data = strtotime($certificado->dtvencimento) - strtotime($this->today);
+            $dias = floor($data / (60 * 60 * 24));
+            if ($dias <= 5) {
+                return response()->json([
+                    'status'=>false,
+                    'mensagem'=>'Seu certificado digital expira em '.$dias.' dias'
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>true,
+                    'mensagem'=>'Seu certificado digital expira em '. date('d/m/Y',strtotime($certificado->dtvencimento))
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status'=>false,
+                'mensagem'=>'Não a certificado cadastrado'
+            ]);
+        }
     }
 
     /**
@@ -81,6 +116,7 @@ class CertificadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->certificado->deletar($id);
+        return response()->json('Deletado com sucesso.');
     }
 }

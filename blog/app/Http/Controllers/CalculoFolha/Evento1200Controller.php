@@ -58,6 +58,7 @@ class Evento1200Controller extends Controller
             'trabalhador'=>null,
             'tomador'=>null,
             'folhar'=>$folhar->id,
+            'empresa'=>$user->empresa_id
         ];
         foreach ($novotrabalhadores as $i => $novoval) {
             $trabalhador = $this->trabalhador->whereIn('id',$novoval)

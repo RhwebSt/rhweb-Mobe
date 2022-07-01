@@ -17,10 +17,10 @@ class CreateCertificadosTable extends Migration
             $table->increments('id');
             $table->char('apelido', 40)->nullable();
             $table->integer('diasvencimento')->nullable();
-            $table->char('dtvencimento', 10)->nullable();
+            $table->char('dtvencimento', 30)->nullable();
             $table->char('csemail', 40)->nullable();
             $table->integer('handle')->nullable();
-            $table->char('csnome', 40)->nullable();
+            $table->char('csnome', 255)->nullable();
             $table->char('cssenha', 40)->nullable();
             $table->unsignedInteger('empresa_id')->unsigned()->nullable();
             $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');

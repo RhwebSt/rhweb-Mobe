@@ -267,6 +267,10 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::post('certificado/cadastro','Certificado\\CertificadoController@store')->name('certificado.cadastro');
+        Route::get('certificado/index','Certificado\\CertificadoController@index')->name('certificado.index');
+        Route::delete('certificado/deletar/{id}','Certificado\\CertificadoController@destroy');
+        Route::get('certificado/situacao/{id}','Certificado\\CertificadoController@show');
+
         Route::get('permissao/{id}/{permissao}/{condicao}','Permissao\\PermissaoController@permissao')->name('permissao');
         
         Route::post('comentario','Comentario\\ComentarioController@store')->name('comentario'); 

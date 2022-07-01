@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Esocial extends Model
 {
     protected $fillable = [
-        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus','esprenome','esinscricao', 'trabalhador_id','tomador_id','folhar_id'
+        'esnome', 'escodigo', 'esid', 'esambiente', 'esstatus','esprenome','esinscricao', 'trabalhador_id','tomador_id','folhar_id','empresa_id'
     ];
     public function trabalhador()
     {
@@ -26,6 +26,7 @@ class Esocial extends Model
             'trabalhador_id'=>isset($dados['trabalhador'])?$dados['trabalhador']:null,
             'tomador_id'=>isset($dados['tomador'])?$dados['tomador']:null,
             'folhar_id'=>isset($dados['folhar'])?$dados['folhar']:null,
+            'empresa_id'=>isset($dados['empresa'])?$dados['empresa']:null,
         ]);
     }
     public function editar($dados,$id)

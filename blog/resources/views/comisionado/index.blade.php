@@ -31,7 +31,7 @@
         @enderror
 
         
-        <form class="row g-3" id="form" method="POST" action="{{route('comisionado.store')}}">
+        <form class="row g-3" id="formComissionado" method="POST" action="{{route('comisionado.store')}}">
             @csrf
             <input type="hidden" id="method" name="_method" value="">
             <input type="hidden" name="tomador" id="idtomador" class="@error('tomador') is-invalid @enderror">

@@ -120,13 +120,11 @@ setInterval(function () {
     
     if(resultAnimacao === "false"){
         $("main").css("animation", "none");
-        $(".animation-slide-out").css("animation", "none");
+        $("main").removeClass('main__Animation');
     }
     
     if(resultAnimacao === "true"){
-        $("main").css("animation-name", "slide-out");
-        $("main").css("animation-duration", "1.5s");
-        $("main").css("animation-duration", "ease");
+        $("main").addClass('main__Animation');
     }
     
     if(resultPreenchimentoAutomatico === "true"){

@@ -1,20 +1,19 @@
 
-        $('#incluir').click(function(event){
-            event.preventDefault();
-            console.log("executou");
-            $('#inclurIcone').removeClass('fa-save');
-            $('#inclurIcone').addClass('fa-spinner-third');
-            $('#inclurIcone').addClass('fa-spin');
-            console.log($('#inclurIcone'));
-            var teste = setTimeout(function () {
+        // $('#incluir').click(function(event){
+        //     event.preventDefault();
+        //     console.log("executou");
+        //     $('#inclurIcone').removeClass('fa-save');
+        //     $('#inclurIcone').addClass('fa-spinner-third');
+        //     $('#inclurIcone').addClass('fa-spin');
+        //     console.log($('#inclurIcone'));
+        //     var teste = setTimeout(function () {
                 
-                $('#form').submit();
-                console.log("dentro da funcão");
-            }, 3000);
+        //         $('#form').submit();
+        //     }, 3000);
             
 
             
-        })
+        // })
         
         // $('#incluir').mouseover(function(){
         //     $('#inclurIcone').addClass('fa-check');

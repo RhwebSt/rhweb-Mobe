@@ -1,17 +1,17 @@
 .main__Animation{
-    animation: slideLeftReturn 1.5s ease !important;
+    animation: slideLeftReturn 600ms ease !important;
 }
 
 .animation-slide-in{
-    animation: slideLeftReturn 1.5s ease-in !important;
+    animation: slideLeftReturn 600ms ease-in !important;
 }
 
 .animation-slide-in-pill{
-    animation: slide-out-pill 1.5s ease !important;
+    animation: slide-out-pill 700ms ease !important;
 }
 
 .animation-slide-out{
-    animation: slideRight 900ms ease !important;
+    animation: slideRight 800ms ease !important;
 }
 
 .animation-pulse{

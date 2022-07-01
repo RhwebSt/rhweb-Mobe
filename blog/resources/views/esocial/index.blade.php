@@ -7,7 +7,7 @@
             <section class="section__botoes--esocial">
                 
                 <div class="d-flex justify-content-start align-items-start div__voltar">
-                    <a class="botao__voltar" href="#" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
+                    <a class="botao__voltar" href="{{route('home.index')}}" role="button"><i class="fad fa-arrow-left"></i> Voltar </a>
                 </div>
             </section>
 

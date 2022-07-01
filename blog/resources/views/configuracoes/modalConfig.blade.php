@@ -142,15 +142,15 @@
                                     
                                     <p class="span__divisor"></p>
                                     
-                                    <div class="d-flex justify-content-between  div__config">
+                                    <div class="d-flex justify-content-between  div__config" id="situacao-certificado">
                                         <label class="align-self-center label-config">Situação Certificado Digital</label>
                                         
-                                        <select class="form-select select__font" aria-label="Default select example"disabled>
+                                        <!-- <select class="form-select select__font" aria-label="Default select example"disabled>
                                             <option selected>Desabilitado</option>
                                             <option>Em análise</option>
                                             <option>Enviado</option>
                                             <option value="1">Inválido</option>
-                                        </select>
+                                        </select> -->
                                         
                                     </div>
                                     

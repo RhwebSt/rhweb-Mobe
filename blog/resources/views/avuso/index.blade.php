@@ -167,63 +167,7 @@
             <div class="tab-pane fade" id="lista-avulso" role="tabpanel" aria-labelledby="lista-avulso-tab">
                 
                 <h1 class="title__pagina--padrao">Lista Recibos Avulsos <i class="fad fa-industry"></i></h1>
-                
-                <section class="section__lista--avulso ">
-    
-                    <form class="row g-3 d-none" action="{{route('filtra.pesquisa.avuso')}}" method="POST">
-                        @csrf
-                        <section class="section__search">
-                            <div class="col-md-5">
-                                
-                                    
-                                    <div class="d-flex">
-                                        
-                                        <input placeholder="clique ou digite para pesquisar" class="form-control" list="listatrabalhador" name="pesquisa" id="pesquisatrabalhador">
-                                        <datalist id="listatrabalhador"></datalist>
-        
-                                        <input type="hidden" name="codicao" value="{{isset($trabalhador->id)?$trabalhador->id:''}}">
-                                        
-                                        <button class="btn botao__search">
-                                            <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                        </button>
-        
-                                    </div>
-                                    
-                                
-                            </div>
-                        </section>
-        
-                        <section class="row section__filtro-avulso">
-                            <div class="col-12 col-md-3">
-                                <label for="ano" class="form-label">Competência</label>
-                                <input type="month" class="form-control " name="competencia" value="" id="tano1Final">
-                            </div>
 
-                            <div class="col-md-2 align-self-center pt-4">
-                                <button type="submit" class="btn botao">Filtrar <i class="fad fa-filter"></i></button>
-                            </div>
-                        </section>
-        
-        
-                    </form>
-                    <section class="d-none">
-                        <div class="d-flex justify-content-end">
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn button__filter dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fad fa-sort"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown__filtro" aria-labelledby="dropdownMenuButton2">
-                                      <li><a class="dropdown-item dropdown__links--filter" href="{{route('filtra.ordem.avuso','asc')}}"><i class="fad fa-sort-amount-down-alt"></i> Ordem Crescente</a></li>
-                                      <li><a class="dropdown-item dropdown__links--filter" href="{{route('filtra.ordem.avuso','desc')}}"><i class="fad fa-sort-amount-down"></i> Ordem Decrescente</a></li>
-                                    </ul>
-                                  </div>
-                            </div>
-        
-                        </div>
-                    </section>
-        
-        
                     <section class="table">
                         <div class="table-responsive-xxl">
                            
@@ -285,7 +229,7 @@
 
                             <div class="col-12 col-sm-6">
                                 <label for="ano" class="form-label">Data Inicial</label>
-                                <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="tano1">
+                                <input type="date" class="form-control @error('ano_inicial1') is-invalid @enderror" name="ano_inicial1" value="" id="ano_inicial1">
                                 <div class="mt-1">
                                     @error('ano_inicial1')
                                     <span class="text-danger">{{ $message }}</span>
@@ -295,7 +239,7 @@
         
                             <div class="col-12 col-sm-6">
                                 <label for="ano" class="form-label">Data Final</label>
-                                <input type="date" class="form-control @error('ano_final1') is-invalid @enderror" name="ano_final1" value="" id="tano1">
+                                <input type="date" class="form-control @error('ano_final1') is-invalid @enderror" name="ano_final1" value="" id="ano_final1">
                                 <div class="mt-1">
                                     @error('ano_final1')
                                     <span class="text-danger">{{ $message }}</span>

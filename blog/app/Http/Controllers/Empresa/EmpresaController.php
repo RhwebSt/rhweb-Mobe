@@ -123,7 +123,7 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        $empresas = $this->empresa->buscaUnidadeEmpresa($id);
+        $empresas = $this->empresa->buscaUnidadeEmpresa($id); 
         return response()->json($empresas);
     }
     public function pesquisa($id)

@@ -1,6 +1,16 @@
 $(document).ready(function(){
     $( "#form-certificado" ).submit(function( event ) {
         event.preventDefault();
+        if (!verificar()) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                html:`<p class="modal__aviso">Seu certificado esta expirado</p>`,
+                background: '#45484A',
+                showConfirmButton: true,
+    
+            });
+        }else{
         var form = new FormData();
         form.append("certificado", $('#certificado').prop('files')[0], "/path/to/file");
         form.append( 'cpfCnpjEmpregador',$('#cnpjEmpregador').val());
@@ -29,7 +39,6 @@ $(document).ready(function(){
                     background: '#45484A',
                     showConfirmButton: true,
                 });
-                console.log(retorno.data.data);
                 cadastra(retorno.data.data)
             },
             error: function (response) {
@@ -44,41 +53,133 @@ $(document).ready(function(){
                
             },
             });
+        }
     });
+    $( "#deleta-certificado" ).submit(function( event ) {
+        event.preventDefault();
+        let id = $('#cnpj').val();
+        $.ajax({
+            url: `${window.Laravel.empresa.lista}/${id}`,
+            method: "get",
+            dataType: 'json',
+            async:false,
+            success: function(retorno){
+                deleta(retorno,id)
+            },
+            error: function () {
+                
+            },
+        });
+       
+    })
+    function deleta(dados,id) {
+        let cnpj = dados.escnpj.replace(/[^\w\s]/gi, '')
+        $.ajax({
+            url: `https://api.tecnospeed.com.br/esocial/v1/empregadores/${cnpj}/certificado/`,
+            method: "DELETE",
+            headers: {
+                'cnpj_sh':'34350915000149',
+                'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                'empregador':'34350915000149'
+            },
+            success: function(retorno){
+                deleter(id)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    html: `<p class="modal__aviso">${retorno.mensagem}</p>`,
+                    background: '#45484A',
+                    showConfirmButton: true,
+                });
+            },
+            error: function (response) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    html:`<p class="modal__aviso">${response.responseJSON.error.message}</p>`,
+                    background: '#45484A',
+                    showConfirmButton: true,
+        
+                });
+               
+            },
+        });
+    }
+    function deleter(id) {
+        $.ajax({
+            url: `${window.Laravel.certificado.deletar}/${id}`,
+            method: "DELETE",
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrf
+            },
+            success: function(retorno){
+                situacao()
+            },
+            error: function () {
+               
+            },
+        });
+    }
+
+    function verificar() {
+        let resultado = '';
+        $.ajax({
+            url: `${window.Laravel.certificado.verifica}`,
+            method: "get",
+            dataType: 'json',
+            async:false,
+            success: function(retorno){
+                resultado = retorno;
+            },
+            error: function () {
+                
+            },
+        });
+        return resultado;
+    }
+   
     function cadastra(dados) {
         $.ajax({
             url: `${window.Laravel.certificado.cadastro}`,
             method: "POST",
             data:dados,
-            // data:{
-            //     apelido:dados.apelido,
-            //     diasVencimento:dados.diasVencimento,
-            //     dtVencimento:dados.dtVencimento,
-            //     email:dados.email,
-            //     handle:dados.handle,
-            //     nome:dados.nome,
-            //     senha:dados.senha,
-            // },
-            // dataType: 'json',
+            
+            dataType: 'json',
             // processData: false,  
             // async:false,
             headers: {
                 'X-CSRF-TOKEN': window.Laravel.csrf
-                // 'content-type':'text/tx2',
-                // 'cnpj_sh':'34350915000149',
-                // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                // 'empregador':'26844068000140'
+              
             },
             success: function(retorno){
-                $('#msg').text('Lote Recebido com Sucesso.')
-                $('#progress').text('50%').css({"width": "50%"});
-                cadastra_tomador(retorno.data,trabalhador,nome)
-                // setTimeout(consultaevento(retorno.data.id,trabalhador), 100000);
+                situacao()
             },
             error: function () {
-                $('#msg').text('Não foi porssivél realizar o processo');
-                $('#progress').text('0%').css({"width": "0%"});
+              
             },
         });
     }
+
+    function situacao() {
+        let id = $('#cnpj').val();
+        $.ajax({
+            url: `${window.Laravel.certificado.situacao}/${id}`,
+            method: "get",
+            dataType: 'json',
+            // async:false,
+            success: function(retorno){
+                if (retorno.status) {
+                    $('#situacao-certificado span').remove();
+                    $('#situacao-certificado').append(`<span class="badge bg-warning text-dark">${retorno.mensagem}</span>`)
+                }else{
+                    $('#situacao-certificado span').remove();
+                    $('#situacao-certificado').append(`<span class="badge bg-danger">${retorno.mensagem}</span>`)
+                }
+            },
+            error: function () {
+                
+            },
+        });
+    }
+    situacao()
 })

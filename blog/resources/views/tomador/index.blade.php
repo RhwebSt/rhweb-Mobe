@@ -68,7 +68,7 @@
         @enderror
 
 
-            <form class="row g-3" novalidate id="form" action="{{ route('tomador.cadastra') }}"  method="Post">
+            <form class="row g-3" novalidate id="formTomador" action="{{ route('tomador.cadastra') }}"  method="Post">
                 
                 <input type="hidden" name="tomador" id="tomador">
                 <input type="hidden" name="pessoal">

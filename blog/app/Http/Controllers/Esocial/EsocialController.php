@@ -36,7 +36,8 @@ class EsocialController extends Controller
             'ambiente'=>0,
             'status'=>'',
             'trabalhador'=>null,
-            'tomador'=>$id
+            'tomador'=>$id,
+            'empresa'=>$user->empresa_id
         ];
         // $tomador = $this->tomador->first($id);
         // $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
@@ -122,7 +123,8 @@ class EsocialController extends Controller
             'prenome'=> $trabalhador->tsnome,
             'inscricao'=>$trabalhador->tsmatricula,
             'trabalhador'=>$id,
-            'tomador'=>null
+            'tomador'=>null,
+            'empresa'=>$user->empresa_id
         ];
             if (!$trabalhador->categoria[0]->cbo) {
                 return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível encotrar o CBO.']);
@@ -232,11 +234,11 @@ class EsocialController extends Controller
     }
     public function show()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         $esocial = $this->esocial
         ->select('trabalhador_id','tomador_id','folhar_id','esprenome','esinscricao','esnome','esid','esstatus','created_at')
+        ->where('empresa_id',$user->empresa_id)
         ->get();
-       
         return DataTables::of($esocial)
         // ->addColumn('trabalhador_id', function($trabalhador) {   
         //         if ($trabalhador->trabalhador_id) {

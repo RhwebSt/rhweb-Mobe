@@ -12,8 +12,9 @@
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.css"/>
         <link rel="stylesheet" href="{{url('/css/reset.css')}}">
-        <link rel="stylesheet" href="{{url('/css/usuario/componentes/configPrincipais.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/animacoes/animacaoSlides.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/componentes/configPrincipais.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/configuracoes/configuracoes.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/navbar.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/footer.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/offCanvas.css')}}">
@@ -42,7 +43,6 @@
         <link rel="stylesheet" href="{{url('/css/usuario/fatura/fatura.css')}}">
 		<link rel="stylesheet" href="{{url('/css/usuario/feedback/feedback.css')}}">
 		<link rel="stylesheet" href="{{url('/css/usuario/esocial/esocial.css')}}">
-		<link rel="stylesheet" href="{{url('/css/usuario/configuracoes/configuracoes.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -58,6 +58,7 @@
         <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.6/dist/sweetalert2.all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vivus@0.4.6/dist/vivus.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
 
     </head>
     
@@ -136,10 +137,15 @@
                 'pesquisa'=>route('usuario.pesquisa.admin')
             ],
             'empresa'=>[
-                'pesquisa'=>url('empresa/pesquisa')
+                'pesquisa'=>url('empresa/pesquisa'),
+                'lista'=>url('empresa/lista'),
+                
             ],
             'certificado'=>[
-                'cadastro'=>route('certificado.cadastro')
+                'cadastro'=>route('certificado.cadastro'),
+                'verifica'=>route('certificado.index'),
+                'deletar'=>url('certificado/deletar'),
+                'situacao'=>url('certificado/situacao')
             ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {
@@ -390,28 +396,25 @@
        
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
-        <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/configuracoes/configuracoes.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/configuracoes/modalCertificado.js')}}"></script>
+        <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
+        <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
+        <script src="{{url('/js/tabela/index.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
+        <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/modalPermissao.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/cadastroAcesso/index.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/trabalhador/lista.js')}}"></script>
-        <script type="text/javascript" src="{{url('/js/user/trabalhador/depedente/create.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/calculoFolha/tabela.js')}}"></script>
-        
         <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/tomador/tabelaPreco/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimCartaoPonto/cartaoPonto/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/boletimTabela/lancamentoTabelaPreco/lista.js')}}"></script>
-        
-      
-        <!-- <script src="{{url('/js/esocial/index.js')}}"></script> -->
-        
         <script type="text/javascript" src="{{url('/js/user/fatura/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/fatura/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/comissionado/lista.js')}}"></script>
@@ -419,10 +422,6 @@
         <script type="text/javascript" src="{{url('/js/user/descontos/lista.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/reciboAvulso/index.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/user/reciboAvulso/lista.js')}}"></script>
-        
-        <script src="{{url('/js/animacoes/animacaoPrincipal.js')}}"></script>
-        <script src="{{url('/js/ferramentas/reabreModal.js')}}"></script>
-        <script src="{{url('/js/ferramentas/darkmode.js')}}"></script>
         <!--<script src="{{url('/js/user/usuario/notificacaoUser.js')}}"></script>-->
         <script src="{{url('/js/ferramentas/masck.js')}}"></script>
         <script src="{{url('/js/ferramentas/limpaCampos.js')}}"></script>
@@ -442,7 +441,21 @@
         
             window.onload = function () {
                 $("body").removeClass('d-none');
-                $("main").addClass('main__Animation');
+                
+                var resultado = JSON.parse(localStorage.getItem("configUser"));
+                resultAnim = resultado.animacoes.resultAnimacoes;
+                
+                if(localStorage.getItem("configUser") === null){  
+                    $('main').addClass('main__Animation');
+                }
+                
+                if(resultAnim === "true"){
+                    $('main').addClass('main__Animation');
+                }
+                
+                if(resultAnim === "false"){
+                    $('main').removeClass('main__Animation');
+                }
             } 
         
             $('.teste').mouseover(function(){

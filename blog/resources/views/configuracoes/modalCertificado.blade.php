@@ -8,11 +8,11 @@
             
             <div class="modal-body body__modal">
                 
-                <form class="row g-3" id="form" action="" enctype="multipart/form-data" method="POST" autocomplete="false">
+                <form class="row g-3" id="form-certificado" action="" enctype="multipart/form-data" method="POST" autocomplete="false">
                     
                     <div class="col-md-12 div__input--foto">
                         <label for="formFileSm " class="form-label"><i class="fad fa-file-certificate"></i> Selecionar Certificado</label>
-                        <input class="form-control form-control-sm color__input--foto" onchange="" id="formFileSm" type="file" accept=".pfx">
+                        <input class="form-control form-control-sm color__input--foto" onchange="" id="certificado" type="file" accept=".pfx">
                     </div>
                     
                     <div class="col-md-12">
@@ -40,8 +40,8 @@
                     </div>
                     
                     <div class="col-md-12">
-                          <label for="validadeCertificado" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Expiração do Certificado</label>
-                          <input type="date" class="form-control" value="" name="validadeCertificado"  id="validadeCertificado" maxlength="40" autocomplete="false" >
+                          <label for="apelidoCertificado" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Apelido do Certificado</label>
+                          <input type="text" class="form-control" value="" name="apelidoCertificado"  id="apelidoCertificado" maxlength="40" autocomplete="false" >
                           <span class="text-danger"></span>
                     </div>
                     
@@ -66,14 +66,13 @@
     <div class="modal fade" id="deleteCertificado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered col-8">
             <div class="modal-content">
-                <form action="" id="" method="post">
-                    @csrf
-                    <!--@method('delete')-->
+                <form action="" id="deleta-certificado" method="get">
+                   
                     <div class="modal-header header__modal">
                         <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                         <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
                     </div>
-                    
+                    <input type="hidden" name="" id="cnpj" value="{{$user->empresa_id}}">
                     <div class="modal-body body__modal ">
                             <div class="d-flex align-items-center justify-content-center flex-column">
                                 <img class="gif__warning--delete" src="{{url('imagem/complain.png')}}">
