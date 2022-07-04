@@ -29,16 +29,7 @@ class EsocialController extends Controller
     {
         $user = Auth::user();
         $id = base64_decode($id);
-        $dados = [
-            'nome'=>'S1020',
-            'codigo'=>'',
-            'id'=>'',
-            'ambiente'=>0,
-            'status'=>'',
-            'trabalhador'=>null,
-            'tomador'=>$id,
-            'empresa'=>$user->empresa_id
-        ];
+      
         // $tomador = $this->tomador->first($id);
         // $empresa = $this->empresa->buscaUnidadeEmpresa($user->empresa);
         $empresa = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 
@@ -58,7 +49,8 @@ class EsocialController extends Controller
             'prenome'=> $tomador->tsnome,
             'inscricao'=>$tomador->tsmatricula,
             'trabalhador'=>null,
-            'tomador'=>$id
+            'tomador'=>$id,
+            'empresa'=>$user->empresa_id
         ];
         $cd = 
         'cpfcnpjtransmissor='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n".

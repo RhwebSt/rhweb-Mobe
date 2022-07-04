@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/notificacaoUser.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/table.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/componentes/accordion.css')}}">
+        <link rel="stylesheet" href="{{url('/css/usuario/componentes/modalCamera.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/home/home.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/trabalhador.css')}}">
         <link rel="stylesheet" href="{{url('/css/usuario/trabalhador/epi/epi.css')}}">

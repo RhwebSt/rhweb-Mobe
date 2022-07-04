@@ -37,12 +37,13 @@
                             <th class="th__header text-nowrap">Nome</th>
                             <th class="th__header text-nowrap">ID Evento</th>
                             <th class="th__header text-nowrap">Data</th>
+                            <th class="th__header text-nowrap">Xml</th>
                             <th class="th__header text-nowrap">Detalhes</th>
                         </thead>
                     
                     </table>
                 </div>
-                
+               
             </section> 
 
         </div>

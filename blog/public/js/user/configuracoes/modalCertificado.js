@@ -1,16 +1,18 @@
 $(document).ready(function(){
     $( "#form-certificado" ).submit(function( event ) {
         event.preventDefault();
-        if (!verificar()) {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                html:`<p class="modal__aviso">Seu certificado esta expirado</p>`,
-                background: '#45484A',
-                showConfirmButton: true,
+        // if (!verificar()) {
+        //     Swal.fire({
+        //         position: 'center',
+        //         icon: 'error',
+        //         html:`<p class="modal__aviso">Seu certificado esta expirado</p>`,
+        //         background: '#45484A',
+        //         showConfirmButton: true,
     
-            });
-        }else{
+        //     });
+        // }else{
+    
+        // }
         var form = new FormData();
         form.append("certificado", $('#certificado').prop('files')[0], "/path/to/file");
         form.append( 'cpfCnpjEmpregador',$('#cnpjEmpregador').val());
@@ -53,8 +55,8 @@ $(document).ready(function(){
                
             },
             });
-        }
     });
+   
     $( "#deleta-certificado" ).submit(function( event ) {
         event.preventDefault();
         let id = $('#cnpj').val();
