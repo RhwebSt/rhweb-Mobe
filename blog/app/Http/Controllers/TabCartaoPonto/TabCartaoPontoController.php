@@ -12,6 +12,7 @@ use App\Lancamentorublica;
 use App\ValoresRublica;
 use App\TabelaPreco;
 use App\Bolcartaoponto;
+use App\Empresa;
 use Carbon\Carbon;
 use DataTables;
 class TabCartaoPontoController extends Controller
@@ -21,7 +22,7 @@ class TabCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $tabelapreco,$lancamentorublica,$valorrublica,$lancamentotabela,$bolcartaoponto;
+    private $tabelapreco,$lancamentorublica,$valorrublica,$lancamentotabela,$bolcartaoponto,$empresa;
     public function __construct()
     {
         $this->lancamentorublica = new Lancamentorublica;
@@ -29,6 +30,7 @@ class TabCartaoPontoController extends Controller
         $this->lancamentotabela = new Lancamentotabela;
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->tabelapreco = new TabelaPreco;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -129,6 +131,7 @@ class TabCartaoPontoController extends Controller
         $condicao = request('codicao'); 
         $today = Carbon::today();
         $user = auth()->user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lancamentotabelas = $this->lancamentotabela
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
         ->select('tomadors.tsnome','tomadors.tscnpj','lancamentotabelas.*')
@@ -170,7 +173,7 @@ class TabCartaoPontoController extends Controller
         }else{
             // $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
            
-            return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+            return view('tabCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas','empresa'));
         }
     }
 
@@ -276,6 +279,7 @@ class TabCartaoPontoController extends Controller
         $user = Auth::user();
         $id = base64_decode($id);
         $search = request('search');
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
             if ($search) {
              $query->where([
@@ -309,7 +313,7 @@ class TabCartaoPontoController extends Controller
         // $numboletimtabela = $this->valorrublica->buscaUnidadeEmpresa($user->empresa);
         // $lancamentotabelas = $this->lancamentotabela->buscaListas('M','asc');
         // $dados = $this->lancamentotabela->buscaUnidade($id);
-        return view('tabCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        return view('tabCartaoPonto.edit',compact('user','dados','empresa','numboletimtabela','lancamentotabelas'));
     }
     public function filtroPesquisaOrdemEdit($id,$condicao)
     {

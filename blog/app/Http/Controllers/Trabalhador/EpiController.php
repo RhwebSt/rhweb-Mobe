@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Trabalhador;
 
+use App\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Epi;
 class EpiController extends Controller
 {
-    private $epi;
+    private $epi,$empresa;
     public function __construct()
     {
         $this->epi = new Epi;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -65,8 +67,9 @@ class EpiController extends Controller
     {
         $user = auth()->user();
         $listaepi = $this->epi->buscalista($id);
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         // dd($listaepi);
-        return view('trabalhador.epi.index',compact('user','id','listaepi'));
+        return view('trabalhador.epi.index',compact('user','id','listaepi','empresa'));
     }
 
     /**

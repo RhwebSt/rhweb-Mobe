@@ -12,6 +12,7 @@ use App\Bolcartaoponto;
 use App\Trabalhador;
 use App\TabelaPreco;
 use App\ValoresRublica;
+use App\Empresa;
 use Carbon\Carbon;
 use DataTables;
 use PDF;
@@ -22,13 +23,14 @@ class CadastroCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $valorrublica,$lancamentotabela,$tabelapreco,$bolcartaoponto;
+    private $valorrublica,$lancamentotabela,$tabelapreco,$bolcartaoponto,$empresa;
     public function __construct()
     {
         $this->valorrublica = new ValoresRublica;
         $this->lancamentotabela = new Lancamentotabela;
         $this->tabelapreco = new TabelaPreco;
         $this->bolcartaoponto = new Bolcartaoponto;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -186,13 +188,13 @@ class CadastroCartaoPontoController extends Controller
         //     $lancamentotabelas = $this->lancamentotabela->buscaListas('D','asc');
         // }
         $numboletimtabela = $this->valorrublica->where('empresa_id',$user->empresa->id)->first();
-        
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         // ->buscaUnidadeEmpresa($user->empresa);
         if ($condicao) {
             $dados = $this->lancamentotabela->where('id',$condicao)->with('tomador')->first();
             return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
         }
-        return view('cadastroCartaoPonto.index',compact('user','numboletimtabela','lancamentotabelas'));
+        return view('cadastroCartaoPonto.index',compact('user','empresa','numboletimtabela','lancamentotabelas'));
     }
 
     /**
@@ -321,8 +323,8 @@ class CadastroCartaoPontoController extends Controller
          ->orderBy('liboletim', 'asc')
          ->paginate(10);
         $dados = $this->lancamentotabela->where('id',$id)->with('tomador')->first();
-        
-        return view('cadastroCartaoPonto.edit',compact('user','dados','numboletimtabela','lancamentotabelas'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('cadastroCartaoPonto.edit',compact('empresa','user','dados','numboletimtabela','lancamentotabelas'));
     }
     public function filtroPesquisaOrdemEdit($id,$condicao)
     {

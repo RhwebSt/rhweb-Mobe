@@ -77,31 +77,31 @@ var radio = document.getElementById("radio");
 
 
 $.ajax({
-      url: "{{route('administrador.cbo.pesquisa')}}",
-      type: 'get',
-      contentType: 'application/json',
-      success: function(data) {
-          let nome = ''
-          data.forEach(element => {
-              nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
-              // nome += `<option value="${element.csdescricao}">`
-          });
-          $('#cbo_list').html(nome)
-      }
-    })
-    $.ajax({
-        url: "{{route('administrador.categoria.pesquisa')}}",
-        type: 'get',
-        contentType: 'application/json',
-        success: function(data) {
-            let nome = ''
-            data.forEach(element => {
-                nome += `<option value="${element.codigo}-${element.descricao}">`
-                // nome += `<option value="${element.descricao}">`
-            });
-            $('#categoria_list').html(nome)
-        }
-    })
+  url: `${window.Laravel.administrador.cbo}`, 
+  type: 'get',
+  contentType: 'application/json',
+  success: function(data) {
+      let nome = ''
+      data.forEach(element => {
+          nome += `<option value="${element.cscodigo}-${element.csdescricao}">`
+          // nome += `<option value="${element.csdescricao}">`
+      });
+      $('#cbo_list').html(nome)
+  }
+})
+$.ajax({
+    url: `${window.Laravel.administrador.categoria}`,
+    type: 'get',
+    contentType: 'application/json',
+    success: function(data) {
+        let nome = ''
+        data.forEach(element => {
+            nome += `<option value="${element.codigo}-${element.descricao}">`
+            // nome += `<option value="${element.descricao}">`
+        });
+        $('#categoria_list').html(nome)
+    }
+})
     function animarBotaoAtualizar(){
 
     $('#atualizar').mouseover(function(){
@@ -169,29 +169,29 @@ $.ajax({
   //     $('#icon').addClass('d-none').next().removeClass('d-none')
       
   //   });
-    $.ajax({
-        url: "{{url('trabalhador')}}/pesquisa/" + 0,
-        type: 'get',
-        contentType: 'application/json',
-        success: function(data) {
-        //   $('#trabfoto').removeAttr('src')
-          $('#refres').addClass('d-none').prev().removeClass('d-none')
-          let nome = ''
-          if (data.length >= 1) {
-            data.forEach(element => {
-              nome += `<option value="${element.tsnome}">`
-              // nome += `<option value="${element.tsmatricula}">`
-              nome += `<option value="${element.tscpf}">`
-            });
-            $('#listapesquisa').html(nome)
-          }
-          // if(data.length === 1 && dados.length >= 4){
-          //   buscaItem(dados)
-          // }else{
-          //   campo()
-          // }              
-        }
-      });
+    // $.ajax({
+    //     url: "{{url('trabalhador')}}/pesquisa/" + 0,
+    //     type: 'get',
+    //     contentType: 'application/json',
+    //     success: function(data) {
+    //     //   $('#trabfoto').removeAttr('src')
+    //       $('#refres').addClass('d-none').prev().removeClass('d-none')
+    //       let nome = ''
+    //       if (data.length >= 1) {
+    //         data.forEach(element => {
+    //           nome += `<option value="${element.tsnome}">`
+    //           // nome += `<option value="${element.tsmatricula}">`
+    //           nome += `<option value="${element.tscpf}">`
+    //         });
+    //         $('#listapesquisa').html(nome)
+    //       }
+    //       // if(data.length === 1 && dados.length >= 4){
+    //       //   buscaItem(dados)
+    //       // }else{
+    //       //   campo()
+    //       // }              
+    //     }
+    //   });
     $('#pais__nacionalidade,#pais__nascimento').on('keyup focus', function() {
       if (!$(this).val()) {
         paisnascimento = ''

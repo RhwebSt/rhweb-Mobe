@@ -22,7 +22,8 @@ class UsuarioController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('usuarios.index',compact('user'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('usuarios.index',compact('user','empresa'));
     }
 
     /**
@@ -35,6 +36,7 @@ class UsuarioController extends Controller
         $user = auth()->user();
         $search = request('search');
         $codicao = request('codicao');
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lista = $this->user->with(['empresa.user', 'permissions'])
             ->where(function ($query) use ($search) {
                 $user = auth()->user();
@@ -64,7 +66,7 @@ class UsuarioController extends Controller
             $editar = $this->user->where('id', $codicao)->with('empresa.user')->first();
             return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
         }else{
-            return view('usuarios.trabalhador.index',compact('user','lista','permissions'));
+            return view('usuarios.trabalhador.index',compact('user','lista','permissions','empresa'));
         }
     }
 
@@ -168,6 +170,7 @@ class UsuarioController extends Controller
         $id = base64_decode($id);
         $user = auth()->user();
         $search = request('search');
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $editar = $this->user->where('id', $id)->with('empresa.user')->first();
         $lista = $this->user->with(['empresa.user', 'permissions'])
             ->where(function ($query) use ($search) {
@@ -192,7 +195,7 @@ class UsuarioController extends Controller
         ->orderBy('name', 'asc')
         ->paginate(10);
         $permissions = Permission::get();
-        return view('usuarios.trabalhador.edit',compact('user','lista','editar','permissions'));
+        return view('usuarios.trabalhador.edit',compact('user','empresa','lista','editar','permissions'));
     }
 
     /**

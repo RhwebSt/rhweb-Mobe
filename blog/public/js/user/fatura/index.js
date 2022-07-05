@@ -2,12 +2,12 @@ $( "#pesquisa" ).on('keyup focus',function() {
               var dados = '0';
               if ($(this).val()) {
                 dados = $(this).val();
-                if (dados.indexOf('  ') !== -1) {
+                if (dados.indexOf('  ') !== -1) { 
                   dados = monta_dados(dados);
                 }
               }
               $.ajax({
-                  url: "{{url('tomador')}}/pesquisa/"+dados,
+                  url: `${window.Laravel.tomador.pesquisa}/${dados}`,
                   type: 'get',
                   contentType: 'application/json',
                   success: function(data) {

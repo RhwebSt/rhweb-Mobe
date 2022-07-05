@@ -18,7 +18,7 @@ class relatorioController extends Controller
     }
     public function index($inicio,$final)
     {
-        $desconto = new Descontos;
+       
         $inicio = base64_decode($inicio);
         $final = base64_decode($final);
         $user = Auth::user();

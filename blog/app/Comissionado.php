@@ -112,7 +112,7 @@ class Comissionado extends Model
         ->where(function($query) use ($id){
             $user = auth()->user();
             $query->where([
-                ['trabalhadors.empresa_id',$user->empresa],
+                ['trabalhadors.empresa_id',$user->empresa_id],
                 ['comissionados.id',$id]
             ]);
         })

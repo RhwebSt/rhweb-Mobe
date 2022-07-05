@@ -23,7 +23,8 @@ class PerfilController extends Controller
         $user = Auth::user();
         // $empresa = new Empresa;
         // $empresas = $empresa->first($user->empresa);
-        return view('usuarios.empresa.perfil',compact('user'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('usuarios.empresa.perfil',compact('user','empresa'));
     }
 
     /**
@@ -68,8 +69,9 @@ class PerfilController extends Controller
     {
         $user = Auth::user();
         // $empresas = $this->empresa->buscaUnidadeEmpresa($id);
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $empresas = $this->empresa->where('id',$id)->with(['valoresrublica','endereco'])->first();
-        return view('usuarios.empresa.perfil',compact('user','empresas'));
+        return view('usuarios.empresa.perfil',compact('user','empresas','empresa'));
     }
 
     /**

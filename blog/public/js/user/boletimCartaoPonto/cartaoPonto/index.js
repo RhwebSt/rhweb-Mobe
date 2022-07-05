@@ -6,7 +6,7 @@
     function index() {
         let diurno = manhao() + tarde()
         let noturno = noite() + madrugada()
-        if ("{{$feriado}}" === 'Sim') {
+        if (`${window.Laravel.boletimcartaoponto.feriado}` === 'Sim') { 
             $('#horas_normais').val(horas(diurno))
             horaextra()
             adnoturno(noturno)

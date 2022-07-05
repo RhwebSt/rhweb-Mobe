@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers\Login;
 
+use App\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    private $user;
+   
+    private $user,$empresa;
     public function __construct()
     {
         $this->user = new User;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
+        
         if (auth()->check()){
             return redirect()->route('home.index');
         }
-        return view('index'); 
+        $user = auth()->user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('index',compact('empresa')); 
     }
 
     /**

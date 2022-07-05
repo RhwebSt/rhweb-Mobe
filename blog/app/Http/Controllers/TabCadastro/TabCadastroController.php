@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TabCadastro;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,13 +10,15 @@ use App\Http\Requests\Boletim\Tabela\Lanca\Validacao;
 use Spatie\Permission\Models\Permission;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
+use App\Empresa;
 use DataTables;
 class TabCadastroController extends Controller
 {
-   private $lancamentorublica;
+   private $lancamentorublica,$empresa;
    public function __construct()
    {
     $this->lancamentorublica = new Lancamentorublica;
+    $this->empresa = new Empresa;
    }
     public function index()
     {
@@ -40,13 +43,14 @@ class TabCadastroController extends Controller
         // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
         //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
         // }
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(10);
         if ($trabalhador) {
             $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
             return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
         }else{
-            return view('tabelaCadastro.index',compact('user','boletim','quantidade','tomador','id','lista','data'));
+            return view('tabelaCadastro.index',compact('user','empresa','boletim','quantidade','tomador','id','lista','data'));
         }
     }
 
@@ -190,6 +194,7 @@ class TabCadastroController extends Controller
        $trabalhador = base64_decode($trabalhador);
     //    $data = base64_decode($data);
        $user = Auth::user();
+       $empresa = $this->empresa->where('id',$user->empresa_id)->first();
        $lista = $this->lancamentorublica->where('lancamentotabela_id',$id)
        ->with('trabalhador')->paginate(10);
     //    $lista = $this->lancamentorublica->listacadastro(null,$id,'M','asc');
@@ -197,7 +202,7 @@ class TabCadastroController extends Controller
     
        $lancamentorublicas = $this->lancamentorublica->buscaUnidadeRublica($trabalhador);
        
-       return view('tabelaCadastro.edit',compact('lancamentorublicas','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
+       return view('tabelaCadastro.edit',compact('lancamentorublicas','empresa','user','boletim','quantidade','tomador','id','lista','data','trabalhador'));
     }
 
     /**

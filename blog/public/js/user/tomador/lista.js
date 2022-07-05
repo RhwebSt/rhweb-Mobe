@@ -122,7 +122,7 @@ $(document).ready(function(){
                 'content-type':'text/tx2',
                 'cnpj_sh':'34350915000149',
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'26844068000140'
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
             success: function(retorno){
                 $('#msg').text('Lote Recebido com Sucesso.')

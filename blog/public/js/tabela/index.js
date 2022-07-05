@@ -47,22 +47,19 @@ $(document).ready(function(){
             },
             {'data':'esid',
             render: function(data, type, row){
-               
                 let dados = '';
                 if (data){
                     $.ajax({
                         url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=1&versaomanual=S.01.00.00`,
                         type: "GET",
-                        // data: dados,
-                        // dataType: 'json',
-                        // dataType: 'xml',
+                       
                         processData: false,  
                         async:false,
                         headers: {
                             // 'content-type':'text/tx2',
                             'cnpj_sh':'34350915000149',
                             'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                            'empregador':'34350915000149'
+                            'empregador':`${window.Laravel.empresa.cnpj}`
                         },
                         success: function(retorno){
                             dados = retorno;
@@ -73,11 +70,12 @@ $(document).ready(function(){
                         }
                     });
                     if (dados.data.status_envio.codigo == 50) {
-                        console.log(dados.data.status_envio);
                         return xml(dados,row.folhar_id)
                     }else{
-                        return ' '
+                        return ` `
                     }
+                }else{
+                    return ` `
                 }
             }
             },
@@ -96,7 +94,7 @@ $(document).ready(function(){
                             // 'content-type':'text/tx2',
                             'cnpj_sh':'34350915000149',
                             'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                            'empregador':'34350915000149'
+                            'empregador':`${window.Laravel.empresa.cnpj}`
                         },
                         success: function(retorno){
                             dados = retorno;
@@ -154,7 +152,7 @@ $(document).ready(function(){
                         id = btoa(row.tomador_id)
                     }else if (row.esnome == 'S1200') {
                         url = window.Laravel.esocial.folhar
-                        id = row.folhar_id
+                        id = btoa(row.folhar_id)
                     }
                     return evento(id,url,row.esnome);
                 }
@@ -379,7 +377,7 @@ $(document).ready(function(){
                 'content-type':'text/tx2',
                 'cnpj_sh':'34350915000149',
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'26844068000140'
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
             success: function(retorno){
                 $('#msg').text('Lote Recebido com Sucesso.')

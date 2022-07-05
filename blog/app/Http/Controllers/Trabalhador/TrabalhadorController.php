@@ -73,14 +73,15 @@ class TrabalhadorController extends Controller
         ->paginate(20);
         $esocialtrabalhador = $this->esocial->notificacaoCadastroTrabalhador();
         $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         if ($condicao) {
             $trabalhador = $this->trabalhador->where('id',$condicao)
             ->with(['documento','endereco','categoria','nascimento','bancario'])->first();
-            return view('trabalhador.edit',compact('user','trabalhador','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
+            return view('trabalhador.edit',compact('user','empresa','trabalhador','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }else{
            
             
-            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
+            return view('trabalhador.index',compact('user','empresa','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
     public function lista()
@@ -95,7 +96,7 @@ class TrabalhadorController extends Controller
                 <div class="modal fade" id="deleteTrabalhador'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered col-8">
                         <div class="modal-content">
-                            <form action="'.route('trabalhador.deletar',$id->id).'" id="" method="post">
+                            <form action="'.route('trabalhador.deletar',$id->id).'"  method="post">
                                 <input type="hidden" name="_token" value="'.csrf_token().'">
                                 <input type="hidden" name="method" value="delete">
                                
@@ -193,6 +194,7 @@ class TrabalhadorController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         // $trabalhadors = $this->trabalhador->lista($search,'desc');
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
                 if ($search) {
                     $query->where([
@@ -220,7 +222,7 @@ class TrabalhadorController extends Controller
             return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
         }else{
             $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
-            return view('trabalhador.index',compact('user','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
+            return view('trabalhador.index',compact('user','empresa','valorrublica_matricular','trabalhadors','esocialtrabalhador'));
         }
     }
 
@@ -343,7 +345,7 @@ class TrabalhadorController extends Controller
         $search = request('search');
         $trabalhador = $this->trabalhador->where('id',$id)
         ->with(['documento','endereco','categoria','nascimento','bancario','arquivo'])->first();
-       
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $trabalhadors = $this->trabalhador->where(function($query) use ($search,$user){
             if ($search) {
                 $query->where([
@@ -368,7 +370,7 @@ class TrabalhadorController extends Controller
         // $trabalhadors = $this->trabalhador->lista($search,'asc');
         // $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
 
-        return view('trabalhador.edit',compact('user','trabalhador','trabalhadors','esocialtrabalhador'));
+        return view('trabalhador.edit',compact('user','empresa','trabalhador','trabalhadors','esocialtrabalhador'));
     }
 
     /**

@@ -15,9 +15,9 @@
         semana.forEach((element,index) => {
             if (dias == index) {
                 if (element === 'Domingo') {
-                  $('#feriadostatus').val(true)
+                  $('#feriadostatus').val(null)
                 }else if (element === 'Sábado') {
-                  $('#feriadostatus').val(true)
+                  $('#feriadostatus').val(null)
                 }
                 let novadata = `${data[0]}-${data[1]}-${ parseInt(data[2]) + valor}`
                 if (feriador_nacionais(novadata)) {

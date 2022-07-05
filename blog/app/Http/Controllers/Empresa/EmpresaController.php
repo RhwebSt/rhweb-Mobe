@@ -37,11 +37,12 @@ class EmpresaController extends Controller
         $search = request('search');
         $codicao = request('codicao');
         $empresas = $this->empresa->buscaListaEmpresaPaginate($search,'asc');
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
         if($codicao){
             $empresa = $this->empresa->buscaUnidadeEmpresa($codicao);
             return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
         }else{
-            return view('usuarios.empresa.index',compact('user','empresas'));
+            return view('usuarios.empresa.index',compact('user','empresas','valorrublica_matricular'));
         }
     }
     public function ordem($ordem,$id = null,$search = null)
@@ -141,9 +142,10 @@ class EmpresaController extends Controller
     {
         $user = Auth::user();
         $search = request('search');
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
         $empresas = $this->empresa->buscaListaEmpresaPaginate($search,'asc');
         $empresa = $this->empresa->buscaUnidadeEmpresa($id);
-        return view('usuarios.empresa.editar',compact('user','empresas','empresa'));
+        return view('usuarios.empresa.editar',compact('user','empresas','empresa','valorrublica_matricular'));
     }
 
     /**

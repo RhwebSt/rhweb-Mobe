@@ -27,9 +27,9 @@ class HomeController extends Controller
         $user = Auth::user();   
         
         // dd(Hash::make('mbcpc15555738'),Hash::make('mbcpd15555738'),Hash::make('mbcpe15555738'),Hash::make('mbcpl15555738'),Hash::make('mbcpr15555738'));
-       
+        
         if (auth()->check()){
-            $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->first();
+            $empresa = $this->empresa->where('id',$user->empresa_id)->first();
             if ($this->dt->month === 12 && $user->hasPermissionTo('admin')) {
                 $atualizar = true;
             }
@@ -38,7 +38,7 @@ class HomeController extends Controller
             }else{
                 $esocialtrabalhador = $this->trabalhador->where('empresa_id',$user->empresa_id)->with('esocial.trabalhador')->get();
                 // dd($esocialtrabalhador);
-                return view('login.home',compact('user','esocialtrabalhador','atualizar','valorrublica_matricular')); 
+                return view('login.home',compact('user','esocialtrabalhador','atualizar','empresa')); 
             }
         }
         return view('index'); 

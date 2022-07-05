@@ -182,6 +182,13 @@ class Evento1200Controller extends Controller
             }
             return response()->download($zipPath);
         }else{
+            $verificar =  $this->esocial->where([
+                ['folhar_id',$folhar->id],
+                ['escodigo','!=',50]
+            ])->count();
+            if (!$verificar) {
+                $this->esocial->cadastro($dados);
+            }
             header("Content-Type: application/save");
             header("Content-Length:".filesize($file_name));
             header('Content-Disposition: attachment; filename="' . $file_name . '"');

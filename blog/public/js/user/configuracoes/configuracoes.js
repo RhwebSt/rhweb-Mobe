@@ -59,7 +59,7 @@ setInterval(function () {
     }
     
     if(resultExpessuraFont === "padrao"){
-        $("#select-expessura-font option:contains(Padr«ªo)").attr('selected', true);
+        $("#select-expessura-font option:contains(Padrï¿½ï¿½ï¿½o)").attr('selected', true);
     }
 
     tamanhoFont = $("#select-font-size").val();

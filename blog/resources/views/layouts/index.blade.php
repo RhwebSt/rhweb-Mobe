@@ -75,7 +75,9 @@
             ],
             'empresa'=>[
                 'id'=>$user->empresa_id,
-                'cnpj'=>isset($valorrublica_matricular->escnpj)?str_replace(array(".", ",", "-", "/"), "",$valorrublica_matricular->escnpj):''
+                'cnpj'=>str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj),
+                'pesquisa'=>url('empresa/pesquisa'),
+                'lista'=>url('empresa/lista')
             ],
             'csrf'=>csrf_token(),
             'esocial'=>[
@@ -119,7 +121,8 @@
                 'pesquisa'=>url('tabela/cartao/ponto/pesquisa'),
                 'store'=>route('boletimcartaoponto.store'),
                 'trabalhador'=>url('boletim/cartao/ponto'),
-                'data'=>isset($data)?$data:' '
+                'data'=>isset($data)?$data:' ',
+                'feriado'=>isset($feriado)?$feriado:' '
             ],
             'desconto'=>[
                 'lista'=>route('desconto.lista'),
@@ -137,16 +140,16 @@
             'user'=>[
                 'pesquisa'=>route('usuario.pesquisa.admin')
             ],
-            'empresa'=>[
-                'pesquisa'=>url('empresa/pesquisa'),
-                'lista'=>url('empresa/lista'),
-                
-            ],
+           
             'certificado'=>[
                 'cadastro'=>route('certificado.cadastro'),
                 'verifica'=>route('certificado.index'),
                 'deletar'=>url('certificado/deletar'),
                 'situacao'=>url('certificado/situacao')
+            ],
+            'administrador'=>[
+                'cbo'=>route('administrador.cbo.pesquisa'),
+                'categoria'=>route('administrador.categoria.pesquisa')
             ]
           ]) !!}
             // if (!localStorage.getItem('bemvindo')) {

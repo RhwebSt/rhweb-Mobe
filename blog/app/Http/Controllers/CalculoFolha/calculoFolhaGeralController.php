@@ -505,13 +505,21 @@ class calculoFolhaGeralController extends Controller
                     $boletim['vencimento'] = $boletim['servico'];
                     $novovalor = 0;
                     $indece = 0;
-                    if ($comissionador->count() > 0) {
+                    if ($comissionador->count() >= 2) {
                         foreach ($comissionador as $key => $comissionados) {
                             $novovalor = $boletim['vencimento'] * ($comissionados->csindece/100);
                             array_push($valor_comissionador['valor'],$novovalor);
                             array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
                             $indece += $comissionados->csindece;
                             $novovalor += $boletim['vencimento'] * ($comissionados->csindece/100);
+                        }
+                    }else if ($comissionador->count() == 1) {
+                        foreach ($comissionador as $key => $comissionados) {
+                            $novovalor += $boletim['vencimento'] * ($comissionados->csindece/100);
+                            $indece += $comissionados->csindece;
+                            array_push($valor_comissionador['valor'],$novovalor);
+                            array_push($valor_comissionador['id'],$comissionados->trabalhador_id);
+                            // $novovalor += $boletim['vencimento'] * ($comissionados->csindece/100);
                         }
                     }
                     $tomador_cartao_ponto_horas = self::calculardia($lancamentotabelas->tomador->cartaoponto[0]->csdiasuteis,null);

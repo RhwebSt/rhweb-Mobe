@@ -31,7 +31,7 @@ $(document).ready(function(){
             headers: {
                 'cnpj_sh':'34350915000149',
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'34350915000149'
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
             success: function(retorno){
                 Swal.fire({
@@ -82,7 +82,7 @@ $(document).ready(function(){
             headers: {
                 'cnpj_sh':'34350915000149',
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                'empregador':'34350915000149'
+                'empregador':`${window.Laravel.empresa.cnpj}`
             },
             success: function(retorno){
                 deleter(id)

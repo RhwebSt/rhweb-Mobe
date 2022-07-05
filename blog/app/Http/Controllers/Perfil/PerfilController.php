@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Perfil;
 
+use App\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Usuario\Perfil\Validacao;
@@ -10,12 +11,13 @@ use App\Pessoai;
 use App\Endereco;
 class PerfilController extends Controller
 {
-    private $user,$pessoais,$endereco;
+    private $user,$pessoais,$endereco,$empresa;
     public function __construct()
     {
         $this->user = new User;
         $this->pessoais = new Pessoai;
         $this->endereco = new Endereco;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
@@ -63,9 +65,10 @@ class PerfilController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         try {
             $pessoais = $this->pessoais->editar($id);
-            return view('usuarios.pessoais.index',compact('user','pessoais'));
+            return view('usuarios.pessoais.index',compact('user','pessoais','empresa'));
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Erro.']);
         }

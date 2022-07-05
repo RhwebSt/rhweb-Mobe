@@ -10,17 +10,21 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use App\Folhar;
 use App\BaseCalculo;
+use App\Empresa;
+
 class calculoFolhaController extends Controller
 {
-    private $folhar,$basecalculo;
+    private $folhar,$basecalculo,$empresa;
     public function __construct()
     {
         $this->folhar = new Folhar;
         $this->basecalculo = new BaseCalculo;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
         $user = Auth::user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $idfolhas = [];
         $folhas = $this->folhar->buscaListaFolhar($user->empresa_id);
         foreach ($folhas as $key => $folha) {
@@ -29,7 +33,7 @@ class calculoFolhaController extends Controller
         $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
         $tomadores = $this->basecalculo->listaTomador($idfolhas,'asc');
         // dd($tomadores,$trabalhadores);
-        return view('calculofolha.index',compact('user','folhas','trabalhadores','tomadores'));
+        return view('calculofolha.index',compact('empresa','user','folhas','trabalhadores','tomadores'));
     }
     public function store(Request $request)
     {

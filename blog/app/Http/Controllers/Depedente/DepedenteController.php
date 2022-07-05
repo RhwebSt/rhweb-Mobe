@@ -6,21 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Dependente;
+use App\Empresa;
+
 class DepedenteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
+    private $empresa,$depedente;
+    public function __construct()
+    {
+        $this->empresa = new Empresa;
+        $this->depedente = new Dependente;
+    }
     public function index($depedente)
     {
         
         $id =  base64_decode($depedente);
-        $depedente = new Dependente;
-        $depedentes = $depedente->buscaListaDepedente($id); 
+        $depedentes = $this->depedente->buscaListaDepedente($id); 
         $user = Auth::user();
-        return view('trabalhador.depedente.index',compact('depedentes','id','user'));
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.index',compact('depedentes','id','user','valorrublica_matricular'));
     }
 
     /**
@@ -31,7 +35,8 @@ class DepedenteController extends Controller
     public function create($id)
     {
         $user = Auth::user();
-        return view('trabalhador.depedente.create',compact('id','user'));
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.create',compact('id','user','valorrublica_matricular'));
     }
 
     /**
@@ -43,9 +48,8 @@ class DepedenteController extends Controller
     public function store(Request $request)
     {
         $dados = $request->all();
-        $depedente = new Dependente;
-        $depedentes_cpf = $depedente->verificaCpf($dados);
-        $depedentes_quant = $depedente->quantidadeDependente($dados);
+        $depedentes_cpf = $this->depedente->verificaCpf($dados);
+        $depedentes_quant = $this->depedente->quantidadeDependente($dados);
         if ($depedentes_cpf) {
             return redirect()->back()->withInput()->withErrors(['dscpf'=>'Este dependente já está cadastrado neste CPF.']);
         }elseif ($depedentes_quant > 10) {
@@ -60,7 +64,7 @@ class DepedenteController extends Controller
             // 'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
         try {
-            $depedente->cadastro($dados);
+            $this->depedente->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível realizar o cadastro.']);
@@ -88,10 +92,10 @@ class DepedenteController extends Controller
     public function edit($id)
     {
         $id =  base64_decode($id);
-        $depedente = new Dependente;
-        $depedentes = $depedente->buscaUnidadeDepedente($id);
+        $depedentes = $this->depedente->buscaUnidadeDepedente($id);
         $user = Auth::user();
-        return view('trabalhador.depedente.edit',compact('depedentes','id','user'));
+        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.edit',compact('depedentes','id','user','valorrublica_matricular'));
     }
 
     /**
@@ -112,9 +116,8 @@ class DepedenteController extends Controller
             // 'irrf'=>'required|max:20|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/',
             // 'sf'=>'required|max:10|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÏÍÔÕÛÙÜŸÑÆŒa-zàáâãçéèêëîíïôõûùüÿñæœ 0-9_\-]*$/'
         ]);
-        $depedente = new Dependente;
         try {
-            $depedentes = $depedente->editar($dados,$id);
+            $depedentes = $this->depedente->editar($dados,$id);
             if($depedentes) {
                 return redirect()->back()->withSuccess('Atualizado com sucesso.');
             }
@@ -132,9 +135,8 @@ class DepedenteController extends Controller
      */
     public function destroy($id)
     {
-        $depedente = new Dependente;
         try {
-            $excluir = $depedente->deletar($id);
+            $excluir = $this->depedente->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors(['false'=>'Não foi possível deletar o registro.']);

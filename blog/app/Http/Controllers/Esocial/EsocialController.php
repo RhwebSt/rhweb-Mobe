@@ -222,7 +222,8 @@ class EsocialController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('esocial.index',compact('user'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('esocial.index',compact('user','empresa'));
     }
     public function show()
     {

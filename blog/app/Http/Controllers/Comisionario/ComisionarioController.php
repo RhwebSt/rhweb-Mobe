@@ -7,21 +7,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Comissionado\Validacao;
 use Illuminate\Support\Facades\Auth;
 use App\Comissionado;
+use App\Empresa;
 use DataTables;
 class ComisionarioController extends Controller
 {
-    private $comissionado;
+    private $comissionado,$empresa;
     public function __construct()
     {
         $this->comissionado = new Comissionado;
+        $this->empresa = new Empresa;
     }
     public function index()
     {
         $user = Auth::user();
         $search = request('search');
-        $comissionado = new Comissionado;
-        $comissionados = $comissionado->buscaListaComissionado($search);
-        return view('comisionado.index',compact('user','comissionados'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        $comissionados = $this->comissionado->buscaListaComissionado($search);
+        return view('comisionado.index',compact('user','comissionados','empresa'));
     }
 
     /**
@@ -141,11 +143,13 @@ class ComisionarioController extends Controller
      */
     public function edit($id)
     {
+        $id = base64_decode($id);
         $user = Auth::user();
         $comissionado = new Comissionado;
-        $comissionados = $comissionado->buscaListaComissionado();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        // $comissionados = $comissionado->buscaListaComissionado();
         $dados = $comissionado->buscaUnidadeComissionado($id);
-        return view('comisionado.edit',compact('comissionados','user','dados'));
+        return view('comisionado.edit',compact('empresa','user','dados'));
     }
 
     /**

@@ -81,6 +81,7 @@ class TomadorController extends Controller
         $user = auth()->user();
         $search = request('search');
         $condicao = request('codicao');
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $tomadors = $this->tomador 
         ->where(function($query) use ($search,$user){
           
@@ -107,13 +108,14 @@ class TomadorController extends Controller
         ->paginate(10);
         // dd($tomadors);
         $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         if ($condicao) {
             $tomador = $this->tomador->first($condicao);
             return view('tomador.edit',compact('user','tomador','tomadors'));
         }else{
             // $valorrublica_matricular = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
             // dd($valorrublica_matricular);
-            return view('tomador.index',compact('user','valorrublica_matricular','tomadors'));
+            return view('tomador.index',compact('user','valorrublica_matricular','empresa','tomadors'));
         }
     }
 
@@ -327,6 +329,7 @@ class TomadorController extends Controller
         $user = Auth::user();
         $search = request('search');
         // $tomador = $this->tomador->first($id);
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $tomador = $this->tomador->where('id',$id)
         ->with(['taxa','endereco','bancario','cartaoponto','parametrosefip','indicefatura','incidefolhar'])->first();
         $tomadors = $this->tomador 
@@ -352,7 +355,7 @@ class TomadorController extends Controller
         ->orderBy('tsmatricula','asc')
         ->distinct()
         ->paginate(20);
-        return view('tomador.edit',compact('user','tomador','tomadors'));
+        return view('tomador.edit',compact('user','tomador','empresa','tomadors'));
     }
    
     /**

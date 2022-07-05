@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Avuso\Validacao;
 use App\Avuso;
 use App\AvusoDescricao;
+use App\Empresa;
 use App\ValoresRublica;
 use DataTables;
 class AvusoController extends Controller
@@ -17,12 +18,13 @@ class AvusoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $avuso,$descricao,$valorrublica;
+    private $avuso,$descricao,$valorrublica,$empresa;
    public function __construct()
     {
         $this->avuso = new Avuso;
         $this->descricao = new AvusoDescricao;
         $this->valorrublica = new ValoresRublica;
+        $this->empresa = new Empresa;
 
     }
     public function index()
@@ -30,8 +32,8 @@ class AvusoController extends Controller
         $user = Auth::user();
         $valorrublica_avuso = $this->valorrublica->buscaUnidadeEmpresa($user->empresa_id);
         $lista = $this->avuso->buscaListaRecibos();
-        
-        return view('avuso.index',compact('user','valorrublica_avuso','lista'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('avuso.index',compact('user','valorrublica_avuso','lista','empresa'));
     }
     public function filtroPesquisa(Request $request)
     {

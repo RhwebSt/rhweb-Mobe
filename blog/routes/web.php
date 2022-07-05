@@ -280,7 +280,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
         Route::resource('empresa/perfil','Empresa\\PerfilController')->names('empresa.perfil');
         Route::get('empresa/pesquisa/{id}','Empresa\\EmpresaController@pesquisa');
         
-        Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer');
+        Route::post('foto/editer','Empresa\\PerfilController@editFoto')->name('foto.editer'); 
 
         Route::get('altera/senha','Login\\alteraSenhaController@index')->name('altera.index');
 

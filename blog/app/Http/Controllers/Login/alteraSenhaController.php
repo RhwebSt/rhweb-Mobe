@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Empresa;
 class alteraSenhaController extends Controller
 {
+    private $user,$empresa;
+    public function __construct()
+    {
+        $this->user = new User;
+        $this->empresa = new Empresa;
+    }
     public function index()
     {
         $user = Auth::user();
-        return view('login.alteracaoSenha',compact('user'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('login.alteracaoSenha',compact('user','empresa'));
     }
     public function store(Request $request)
     {

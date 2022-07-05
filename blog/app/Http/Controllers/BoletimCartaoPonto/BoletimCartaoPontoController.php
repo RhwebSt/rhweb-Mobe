@@ -10,13 +10,16 @@ use Spatie\Permission\Models\Permission;
 use App\Bolcartaoponto;
 use App\CartaoPonto;
 use Carbon\Carbon;
+use App\Empresa;
 use DataTables;
 class BoletimCartaoPontoController extends Controller
 {
-    private $bolcartaoponto;
+    private $bolcartaoponto,$empresa;
     public function __construct()
     {
         $this->bolcartaoponto = new Bolcartaoponto;
+        $this->empresa = new Empresa;
+        
     }
     public function index()
     {
@@ -42,6 +45,7 @@ class BoletimCartaoPontoController extends Controller
         $tomador = base64_decode($tomador);
         $feriado = base64_decode($feriado);
         $user = Auth::user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         // $permissions = Permission::where('name','like','%'.'mbcpl'.'%')->first(); 
         // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
         //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
@@ -50,7 +54,7 @@ class BoletimCartaoPontoController extends Controller
         $lista = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->paginate(5);
         // dd($lista,$id);
-        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
+        return view('cadastroCartaoPonto.cadastracartaoponto',compact('user','empresa','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
     }
 
    public function listaDiurno()
@@ -305,7 +309,8 @@ class BoletimCartaoPontoController extends Controller
         $id = $idboletim;
         // dd($idboletim ,$id);
         $user = Auth::user();
-        return view('cadastroCartaoPonto.cartaoPonto.edit',compact('bolcartaoponto','user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        return view('cadastroCartaoPonto.cartaoPonto.edit',compact('empresa','bolcartaoponto','user','id','lista','domingo','sabado','diasuteis','data','boletim','tomador','feriado'));
         
     }
 
