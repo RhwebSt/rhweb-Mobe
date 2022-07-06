@@ -530,9 +530,9 @@
                     </tr>
 
                     <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">INSS a recolher do Trabalhador 13° Salário</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem"></td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 
+                        <td class="padding-left-texto medium__font border-right descri">INSS a recolher do Trabalhador 13° Salário</td>
+                        <td class="padding-left-texto medium__font border-right text-center porcentagem"></td>
+                        <td class="padding-left-texto medium__font text-center valor">R$ 
                         <?php
                                 $insalario13 = 0;
                                 foreach ($relatorio as $key => $relatorios) {
@@ -546,50 +546,8 @@
                              {{number_format((float)$insalario13, 2, ',', '.')}}
                         </td>
                     </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri destaque text-bold">Total a recolher - INSS</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center destaque"></td>
-                        <td class="padding-left-texto medium__font text-center border-right border-bottom valor text-bold destaque">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">Base de Cálculo da Empresa Férias</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem"></td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">INSS Empresa</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem">27,300</td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">Base de Cálculo da Empresa 13° Salário</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem"></td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">INSS Empresa sobre 13° Salário</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem">27,300</td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right border-bottom descri">Base de Cálculo INSS Empresa</td>
-                        <td class="padding-left-texto medium__font border-right border-bottom text-center porcentagem"></td>
-                        <td class="padding-left-texto medium__font text-center border-bottom valor">R$ 999.999.999,99</td>
-                    </tr>
-
-                    <tr>
-                        <td class="padding-left-texto medium__font border-right descri">INSS Empresa</td>
-                        <td class="padding-left-texto medium__font border-right text-center porcentagem">27,300</td>
-                        <td class="padding-left-texto medium__font text-center valor">R$ 999.999.999,99</td>
-                    </tr>
-                    
                 </table>
+                    
             </div>
 
 

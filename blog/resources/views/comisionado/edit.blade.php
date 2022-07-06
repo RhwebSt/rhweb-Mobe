@@ -45,7 +45,7 @@
                 <div class="btn d-grid gap-1 mt-5 mx-auto d-md-block d-flex flex-wrap" role="button" aria-label="Basic example">
                     <button type="submit"   class="btn botao" ><i class="fad fa-sync-alt"></i> Atualizar</button>
                     
-                    <a type="button" class="btn botao modal-botao" data-bs-toggle="modal" data-bs-target="#teste">
+                    <a type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalComissionado">
                         <i class="fad fa-list-ul"></i> Lista
                     </a>
                 </div>

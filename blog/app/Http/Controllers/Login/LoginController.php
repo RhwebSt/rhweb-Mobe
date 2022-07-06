@@ -20,11 +20,11 @@ class LoginController extends Controller
     {
         
         if (auth()->check()){
+           
             return redirect()->route('home.index');
         }
-        $user = auth()->user();
-        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
-        return view('index',compact('empresa')); 
+       
+        return view('index'); 
     }
 
     /**

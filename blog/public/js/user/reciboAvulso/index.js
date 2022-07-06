@@ -64,7 +64,7 @@
         }
         $('#icon').addClass('d-none').next().removeClass('d-none')
         $.ajax({
-            url: "{{url('avuso')}}/pesquisa/" + dados,
+            url: `${window.Laravel.avuso.pesquisa}/${dados}`, 
             type: 'get',
             contentType: 'application/json',
             success: function(data) {

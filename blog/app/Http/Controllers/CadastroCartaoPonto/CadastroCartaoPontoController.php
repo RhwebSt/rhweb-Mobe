@@ -13,6 +13,7 @@ use App\Trabalhador;
 use App\TabelaPreco;
 use App\ValoresRublica;
 use App\Empresa;
+use App\Folhar;
 use Carbon\Carbon;
 use DataTables;
 use PDF;
@@ -23,7 +24,7 @@ class CadastroCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $valorrublica,$lancamentotabela,$tabelapreco,$bolcartaoponto,$empresa;
+    private $valorrublica,$lancamentotabela,$tabelapreco,$bolcartaoponto,$empresa,$folhar;
     public function __construct()
     {
         $this->valorrublica = new ValoresRublica;
@@ -31,6 +32,7 @@ class CadastroCartaoPontoController extends Controller
         $this->tabelapreco = new TabelaPreco;
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->empresa = new Empresa;
+        $this->folhar = new Folhar;
     }
     public function index()
     {
@@ -114,7 +116,7 @@ class CadastroCartaoPontoController extends Controller
                               <div class="modal-content">
                                   <form action="'.route('cartao.ponto.deletar',base64_encode($id->id)).'" id="" method="post">
                                   <input type="hidden" name="_token" value="'.csrf_token().'">
-                                  <input type="hidden" name="method" value="delete">
+                                  <input type="hidden" name="_method" value="delete">
                                       <div class="modal-header header__modal">
                                           <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                                           <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
@@ -289,6 +291,20 @@ class CadastroCartaoPontoController extends Controller
     {
         $user = Auth::user();
         $id =  base64_decode($id);
+        $today = Carbon::today();
+        $lancamentotabelas = $this->lancamentotabela
+        ->where([
+            ['lsstatus','D'],
+            ['empresa_id', $user->empresa_id],
+            ['id',$id]
+        ])
+        ->first();
+        $folhar = $this->folhar
+        ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+        ->first();
+        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar. Pos já existe um folhar lançada']);
+        }
         // $valorrublica = new ValoresRublica;
         // $lancamentotabela = new Lancamentotabela;
         // $numboletimtabela = $valorrublica->buscaUnidadeEmpresa($user->empresa);
@@ -377,9 +393,23 @@ class CadastroCartaoPontoController extends Controller
        
         $user = Auth::user();
         $id =  base64_decode($id);
+        $today = Carbon::today();
         $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
             return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        }
+        $lancamentotabelas = $this->lancamentotabela
+        ->where([
+            ['lsstatus','D'],
+            ['empresa_id', $user->empresa_id],
+            ['id',$id]
+        ])
+        ->first();
+        $folhar = $this->folhar
+        ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+        ->first();
+        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
         }
         $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {

@@ -86,7 +86,7 @@ class TabCartaoPontoController extends Controller
                               <div class="modal-content">
                                   <form action="'.route('tabela.cartao.ponto.deletar',base64_encode($id->id)).'" id="" method="post">
                                   <input type="hidden" name="_token" value="'.csrf_token().'">
-                                  <input type="hidden" name="method" value="delete">
+                                  <input type="hidden" name="_method" value="delete">
                                       <div class="modal-header header__modal">
                                           <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                                           <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
@@ -278,6 +278,20 @@ class TabCartaoPontoController extends Controller
     {
         $user = Auth::user();
         $id = base64_decode($id);
+        $today = Carbon::today();
+        $lancamentotabelas = $this->lancamentotabela
+        ->where([
+            ['lsstatus','M'],
+            ['empresa_id', $user->empresa_id],
+            ['id',$id]
+        ])
+        ->first();
+        $folhar = $this->folhar
+        ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+        ->first();
+        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar. Pos já existe um folhar lançada']);
+        }
         $search = request('search');
         $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
@@ -377,8 +391,20 @@ class TabCartaoPontoController extends Controller
             if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
                 return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
             }
-            // $this->lancamentorublica->deletar($id);
-           
+            $today = Carbon::today();
+            $lancamentotabelas = $this->lancamentotabela
+            ->where([
+                ['lsstatus','M'],
+                ['empresa_id', $user->empresa_id],
+                ['id',$id]
+            ])
+            ->first();
+            $folhar = $this->folhar
+            ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+            ->first();
+            if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+            }
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {

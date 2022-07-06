@@ -68,9 +68,9 @@ class FaturaController extends Controller
                       <div class="modal fade" id="deleteFatura'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered col-8">
                               <div class="modal-content">
-                                  <form action="'.route('fatura.deleta',base64_encode($id->id)).'" id="" method="post">
+                                  <form action="'.route('fatura.deleta',$id->id).'" id="" method="post">
                                   <input type="hidden" name="_token" value="'.csrf_token().'">
-                                  <input type="hidden" name="method" value="delete">
+                                  <input type="hidden" name="_method" value="delete">
                                       <div class="modal-header header__modal">
                                           <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                                           <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>

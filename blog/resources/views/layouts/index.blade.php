@@ -132,10 +132,11 @@
                 'lista'=>route('fatura.lista')
             ],
             'avuso'=>[
-                'lista'=>route('avuso.lista')
+                'lista'=>route('avuso.lista'),
+                'pesquisa'=>url('avuso/pesquisa')
             ],
             'comissionado'=>[
-                'lista'=>route('comisionado.lista')
+                'lista'=>route('comisionado.lista') 
             ],
             'user'=>[
                 'pesquisa'=>route('usuario.pesquisa.admin')

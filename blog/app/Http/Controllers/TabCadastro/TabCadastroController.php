@@ -74,7 +74,7 @@ class TabCadastroController extends Controller
                             <div class="modal-content">
                                 <form action="'.route('boletim.tabela.destroy',$id->id).'" id="" method="post">
                                 <input type="hidden" name="_token" value="'.csrf_token().'">
-                                <input type="hidden" name="method" value="delete">
+                                <input type="hidden" name="_method" value="delete">
                                     <div class="modal-header header__modal">
                                         <h5 class="modal-title" id="rolDescontoTrabLabel"><i class="fad fa-trash"></i> Deletar</h5>
                                         <i class="fas fa-2x fa-times icon__exit--modal" data-bs-dismiss="modal" aria-label="Close"></i>
