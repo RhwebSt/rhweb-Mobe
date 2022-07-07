@@ -580,10 +580,12 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="cbo" class="form-label letter__color">CBO</label>
-                                      <input type="text" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
+                                      <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
                                       @error('cbo')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
+                                      <datalist id="cbo_list">
+                                          </datalist>
                                     </div>
                                 
                                 

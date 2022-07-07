@@ -94,6 +94,7 @@ class Rublica extends Model
     public function listaRublicaTabelaPreco()
     {
         return Rublica::whereBetween('rsrublica',[1000,1005])
+        ->orderBy('rsrublica', 'ASC')
         ->get();
     }
     public function listaGeral()

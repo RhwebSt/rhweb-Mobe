@@ -75,7 +75,7 @@ class Validacao extends FormRequest
             
             'pis.required'=>'O campo não pode estar vazio.',
             'pis.max'=>'O campo não pode conter mais de 20 caracteres.',
-            'pis.pis'=>'Este CPF é invalido.',
+            'pis.pis'=>'Este PIS é invalido.',
             
             'data_nascimento.required'=>'O campo não pode estar vazio.',
             'data_nascimento.max'=>'O campo não pode conter mais de 10 caracteres.',
@@ -146,7 +146,12 @@ class Validacao extends FormRequest
             'uf__ctps.required'=>'O campo não pode estar vazio.',
             'uf__ctps.max'=>'O campo não ter mais de 255 caracteres.',
             'uf__ctps.regex'=>'O campo nome social possui um formato inválido.',
-            
+            'ufRg.required'=>'O campo não pode estar vazio.',
+            'ufRg.max'=>'O campo não pode conter mais de 2 caracteres.',
+            'dataEmissaoRg.required'=>'O campo não pode estar vazio.',
+            'dataEmissaoRg.max'=>'O campo não pode conter mais de 10 caracteres.',
+            // 'ufRg.uf'=>'Este campo tem que conte letra ma.',
+            'rg.required'=>'O campo não pode estar vazio.',
             'data__afastamento.max'=>'O campo não pode conter mais de 10 caracteres.',
             'banco.max'=>'O campo não pode conter mais de 100 caracteres.',
             'agencia.max'=>'O campo não pode conter mais de 4 caracteres.',

@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\TabelaPreco;
 
+use App\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\Tomador\TabelaPreco\Validacao;
 use App\TabelaPreco;
 use App\Tomador;
+use App\Rublica;
 use Carbon\Carbon;
 use DataTables;
 class TabelaPrecoController extends Controller
 {
-    private $tomador, $tabelapreco,$dt;
+    private $tomador, $tabelapreco,$dt,$empresa,$rublica;
     public function __construct()
     {
+        $this->rublica = new Rublica;
         $this->tomador = new Tomador;
         $this->tabelapreco = new TabelaPreco;
+        $this->empresa = new Empresa;
         $today = Carbon::today();
         $this->dt = Carbon::create($today);
     }
@@ -26,7 +30,7 @@ class TabelaPrecoController extends Controller
         $search = request('search');
         $condicao = request('codicao');
         $tomador = base64_decode($tomador);
-        
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,null,$search,'asc'); 
         $tabelaprecos = $this->tabelapreco->where(function($query) use ($tomador,$search){
             if ($search) {
@@ -59,7 +63,7 @@ class TabelaPrecoController extends Controller
             ->first();
             return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
         }else{
-            return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos', 'tomador'));
+            return view('tomador.tabelapreco.index', compact('id', 'user', 'tabelaprecos','empresa', 'tomador'));
         }
     }
     public function lista($tomador)
@@ -146,9 +150,25 @@ class TabelaPrecoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($tomador)
     {
-        //
+        $tomador = base64_decode($tomador);
+        $rublicas = $this->rublica->listaRublicaTabelaPreco();
+        $user = auth()->user();
+        foreach ($rublicas as $key => $rublica) {
+            $dadostabelapreco = [
+                'ano' => date('Y'),
+                'rubricas' => $rublica->rsrublica,
+                'descricao' => $rublica->rsdescricao,
+                'status' => '',
+                'valor' => 0,
+                'valor__tomador' => 0,
+                'empresa' => $user->empresa_id,
+                'tomador' => $tomador
+            ];
+            $this->tabelapreco->cadastro($dadostabelapreco);
+        }
+        return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
     }
 
     /**
@@ -216,11 +236,11 @@ class TabelaPrecoController extends Controller
                 ->where('tsano', $this->dt->year);
             }else{
                 $query->where([
-                    ['id','>',$id],
+                    // ['id','>',$id],
                     ['tomador_id',$tomador],
                     ['empresa_id', $user->empresa_id]
-                ])
-                ->where('tsano', $this->dt->year);
+                ]);
+                // ->where('tsano', $this->dt->year);
             }  
         })
         ->orderBy('tsrubrica', 'asc')
@@ -239,6 +259,7 @@ class TabelaPrecoController extends Controller
         $id = base64_decode($id);
         $tomador = base64_decode($tomador);
         $user = Auth::user();
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         // $tabelaprecos = $tabelapreco->buscaTabelaTomador($tomador, $this->dt->year,null,'asc');
          // $tabelaprecos_editar = $tabelapreco->buscaTabelaPrecoEditar($id);
         $tabelaprecos = $this->tabelapreco->where('tomador_id',$tomador)->paginate(5);
@@ -248,7 +269,7 @@ class TabelaPrecoController extends Controller
             ['tsano',$this->dt->year]
         ])
         ->first();
-        return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar', 'tabelaprecos', 'tomador', 'id', 'user'));
+        return view('tomador.tabelapreco.edit', compact('tabelaprecos_editar','empresa', 'tabelaprecos', 'tomador', 'id', 'user'));
     }
 
     /**

@@ -24,12 +24,27 @@
           }
           if(data.length === 1){
             tomador(data[0])
-            // let tabela = tabelaPreco(data[0].id);
-            // if (tabela) {
-            
-            // }else{
-            //   Alerta(data[0].id)
-            // }
+            let tabela = tabelaPrecoTabela(data[0].id);
+            let rublica = '';
+            let status = '';
+            if (tabela.length > 0) {
+                tabela.forEach(element => {
+                  if (!element.tstomvalor) {
+                      status = 'vazia';
+                      rublica += ` <li class="list-group-item">O tomador da rublica ${element.tsdescricao} está R$ 0,00</li>`
+                  }
+                  if (!element.tsvalor) {
+                    status = 'vazia';
+                    rublica += `<li class="list-group-item">O trabalhador da rublica ${element.tsdescricao} está R$ 0,00</li>`
+                  }
+                });
+                if (status) {
+                  Alerta(data[0].id,status,rublica)
+                }
+            }else{
+              status = 'não a tabela'
+              Alerta(data[0].id,status,rublica)
+            }
           }           
       }
   });
@@ -43,22 +58,42 @@
       let novodados = dados.split('  ')
       return novodados[0];
     }
-    function Alerta(tomador) {
-        Swal.fire({
-        title: '<strong>Algo deu Errado!</strong>',
-        icon: 'error',
-        html:
-          '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
-          `<a href="{{url('tabelapreco')}}/ /${tomador}">Cadastrar</a> `,
-        showCloseButton: true,
-        allowOutsideClick: false,
-        allowEnterKey: true,
-      })
+    function Alerta(tomador,status,dados) {
+      switch (status) {
+        case 'vazia':
+            Swal.fire({
+              title: '<strong>Algo deu Errado!</strong>',
+              icon: 'error',
+              html:
+                `<strong>Tabela de Preço</strong> existe rublica com o valor 0,
+                <ul class="list-group">
+                 ${dados}
+                </ul>
+                <a href="${window.Laravel.tabelapreco.index}/ /${btoa(tomador)}">Atualizar valores</a> `,
+              showCloseButton: true,
+              allowOutsideClick: false,
+              allowEnterKey: true,
+            })
+          break;
+          case 'não a tabela':
+            Swal.fire({
+              title: '<strong>Algo deu Errado!</strong>',
+              icon: 'error',
+              html:
+                '<strong>Tabela de Preço</strong> não foi <b>cadastrada</b>, ' +
+                `<a href="${window.Laravel.tabelapreco.create}/${btoa(tomador)}">Cadastrar</a> `,
+              showCloseButton: true,
+              allowOutsideClick: false,
+              allowEnterKey: true,
+            })
+          break;
+      }
+    
     }
-    function tabelaPreco(tomador) {
+    function tabelaPrecoTabela(tomador) {
       var resul = false;
       $.ajax({
-          url: `${window.Laravel.tabelapreco.pesquisa}/${tomador}`,
+          url: `${window.Laravel.tabelapreco.pesquisa}/0/${btoa(tomador)}`,
           type: 'get',
           contentType: 'application/json',
           async: false,

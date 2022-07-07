@@ -138,6 +138,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('folhar/tomador/resumo/pagamento/{tomador}/{folhar}','CalculoFolha\\FolhaPagamentoController@index')->name('folhar.tomador.resumo.pagamento');
 
     Route::get('tabelapreco/{id?}/{tomador}','TabelaPreco\\TabelaPrecoController@index')->name('tabelapreco.index');
+    Route::get('tabela/preco/criar/{tomador}','TabelaPreco\\TabelaPrecoController@create')->name('tabelapreco.create');
     // ->middleware(['permission:mtpt15555738']);
     Route::get('tabela/preco/lista/{tomador}','TabelaPreco\\TabelaPrecoController@lista')->name('tabelapreco.lista');
     // ->middleware(['permission:mtpt15555738']);

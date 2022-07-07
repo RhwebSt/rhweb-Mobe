@@ -133,7 +133,8 @@ class BancoController extends Controller
                 $trabalhador['nome__mae'] = str_replace("  ", "",substr(utf8_encode($linha), 227, 40));
 
                 $trabalhador['conta'] = str_replace("  ", "",substr(utf8_encode($linha), 278, 13));
-                $trabalhador['ufRg'] = str_replace("  ", "",substr(utf8_encode($linha), 330, 2));
+                
+                $trabalhador['ufRg'] = str_replace("  ", "",substr($linha, 329, 2));
                 $trabalhador['rg'] = str_replace("  ", "",substr(utf8_encode($linha), 306, 15));
                 $dataemissao = str_replace("  ", "",substr($linha, 321, 8));
                 $dia = substr($dataemissao, 0, 2);
@@ -144,7 +145,7 @@ class BancoController extends Controller
             
                 
                 $trabalhador['cpf'] = str_replace("  ", "",substr(utf8_encode($linha), 391, 11));
-                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 406, 11));
+                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 405, 11));
                 if (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '1') {
                     $trabalhador['raca'] = '1-Branco';
                 }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '2') {
