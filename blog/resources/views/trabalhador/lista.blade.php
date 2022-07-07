@@ -57,7 +57,7 @@
                                 <th class="th__header text-nowrap">Trabalhador</th>
                                 <th class="th__header text-nowrap">CPF</th>
                                 <th class="th__header text-nowrap">Depedentes</th>
-                                <th class="th__header text-nowrap">Relat®Ærios</th>
+                                <th class="th__header text-nowrap">Relat√≥rios</th>
                                 <th class="th__header text-nowrap">S-2300</th>
                                 <th class="th__header text-nowrap">Editar</th>
                                 <th class="th__header text-nowrap">Excluir</th>

@@ -69,7 +69,7 @@
                     <input class="form-control form-control-sm color__input--foto" onchange="encodeImageFileAsURL(this)" id="formFile" type="file">
                     <span id="msgfoto" class="text-danger"></span>
                     
-                    <button  type="button" class="btn botao" data-bs-toggle="modal" data-bs-target="#modalCamera"><i class="fad fa-camera"></i> Tirar foto</button>
+                    <button  type="button" class="btn botao mt-2" data-bs-toggle="modal" data-bs-target="#modalCamera"><i class="fad fa-camera"></i> Tirar foto</button>
                 </div>
                 
             </section>

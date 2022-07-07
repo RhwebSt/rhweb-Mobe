@@ -1,6 +1,3 @@
-<style>
-    
-</style>
 
 <div class="modal fade" id="modalCamera" data-bs-backdrop="static1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -11,13 +8,15 @@
             </div>
             
             <div class="modal-body body__modal">
-                
+                <div class="alert alert-warning alert__camera d-none" id="alertaCamera" role="alert">
+                   Não temos a permissão para acessar a sua camera. Para dar permissão é necessário ir nas configurações do navegador e permitir o acesso a câmera. <i class="fas fa-exclamation-triangle"></i></a>
+                </div>
                 <video class="videoFoto" autoplay id="videoFoto"></video>
                 <canvas id="canvasFoto"></canvas>
                 <div>
-                    <button id="botaoFoto" class="botao btn">Tirar foto</button>
-                    <a id="botaoBaixar" class="botao btn">Baixar foto</a>
-                    <button id="resetarFoto" class="botao btn">Reset</button>
+                    <button id="botaoFoto" class="botaoTirarFoto btn"><i class="fad fa-camera"></i> Tirar foto</button>
+                    <a id="botaoBaixar" class="botaoTirarFoto btn"><i class="fad fa-download"></i> Baixar</a>
+                    <button id="resetarFoto" class="botaoTirarFoto btn"><i class="fad fa-undo-alt"></i> Resetar</button>
                 </div>
                 
             </div>
@@ -41,25 +40,33 @@
     })
     .catch(error => {
         console.log(error);
+        $("#alertaCamera").removeClass('d-none');
+        $("#videoFoto").addClass('d-none');
+        $("#botaoFoto").addClass('d-none');
+        $("#botaoBaixar").addClass('d-none');
+        $("#resetarFoto").addClass('d-none');
+
     })
-    
-    const constraints = {
-        facingMode: { exact: "environment" }
-    };
-    
+
     document.querySelector('#botaoFoto').addEventListener('click', () => {
         var canvas = document.querySelector('#canvasFoto');
+        canvas.style.display = "block";
         canvas.height = video.videoHeight;
         canvas.width = video.videoWidth;
         var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0);
         var botaoBaixar = document.querySelector('#botaoBaixar');
-        
+        video.style.display = "none";
         botaoBaixar.href = canvas.toDataURL();
         botaoBaixar.download = 'foto.png';
+        const music = new Audio('../sons/somCamera.wav');
+        music.play();
+
     });
     
-    $('#resetarFoto').click(function(){
+    $('#resetarFoto').click(() => {
         var canvas = document.querySelector('#canvasFoto');
+        canvas.style.display = 'none';
+        video.style.display = "block";
     })
 </script>

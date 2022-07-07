@@ -60,6 +60,8 @@
                     <label for="formFileSm " class="form-label"><i class="fad fa-lg fa-camera-alt"></i> Foto do Trabalhador</label>
                     <input class="form-control form-control-sm color__input--foto" onchange="encodeImageFileAsURL(this)" id="formFileSm" type="file">
                     <span id="msgfoto" class="text-danger"></span>
+                    
+                    <button  type="button" class="btn botao mt-2" data-bs-toggle="modal" data-bs-target="#modalCamera"><i class="fad fa-camera"></i> Tirar foto</button>
                 </div>
             </section>
 
@@ -580,12 +582,10 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="cbo" class="form-label letter__color">CBO</label>
-                                      <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
+                                      <input type="text" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
                                       @error('cbo')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
-                                      <datalist id="cbo_list">
-                                          </datalist>
                                     </div>
                                 
                                 
@@ -700,6 +700,7 @@
         </form>
     </div>
     @include('trabalhador.lista')
+    @include('trabalhador.modalCamera')
 </main>
 
 <script type="text/javascript" src="{{url('/js/user/trabalhador/editar.js')}}"></script>
