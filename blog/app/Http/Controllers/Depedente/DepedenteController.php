@@ -23,8 +23,9 @@ class DepedenteController extends Controller
         $id =  base64_decode($depedente);
         $depedentes = $this->depedente->buscaListaDepedente($id); 
         $user = Auth::user();
-        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
-        return view('trabalhador.depedente.index',compact('depedentes','id','user','valorrublica_matricular'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        // $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.index',compact('depedentes','id','user','empresa'));
     }
 
     /**
@@ -35,8 +36,9 @@ class DepedenteController extends Controller
     public function create($id)
     {
         $user = Auth::user();
-        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
-        return view('trabalhador.depedente.create',compact('id','user','valorrublica_matricular'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        // $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.create',compact('id','user','empresa'));
     }
 
     /**
@@ -94,8 +96,9 @@ class DepedenteController extends Controller
         $id =  base64_decode($id);
         $depedentes = $this->depedente->buscaUnidadeDepedente($id);
         $user = Auth::user();
-        $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
-        return view('trabalhador.depedente.edit',compact('depedentes','id','user','valorrublica_matricular'));
+        $empresa = $this->empresa->where('id',$user->empresa_id)->first();
+        // $valorrublica_matricular = $this->empresa->where('id',$user->empresa_id)->with('valoresrublica')->first();
+        return view('trabalhador.depedente.edit',compact('depedentes','id','user','empresa'));
     }
 
     /**

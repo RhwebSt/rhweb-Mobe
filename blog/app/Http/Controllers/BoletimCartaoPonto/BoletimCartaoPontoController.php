@@ -11,14 +11,16 @@ use App\Bolcartaoponto;
 use App\CartaoPonto;
 use Carbon\Carbon;
 use App\Empresa;
+use App\TabelaPreco;
 use DataTables;
 class BoletimCartaoPontoController extends Controller
 {
-    private $bolcartaoponto,$empresa;
+    private $bolcartaoponto,$empresa,$tabelapreco;
     public function __construct()
     {
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->empresa = new Empresa;
+        $this->tabelapreco = new TabelaPreco;
         
     }
     public function index()
@@ -204,6 +206,27 @@ class BoletimCartaoPontoController extends Controller
     public function store(Validacao $request)
     {
         $dados = $request->all(); 
+        // dd((int)$dados['horas_normais']);
+        $tabelapreco = $this->tabelapreco
+        ->where([
+            ['tomador_id',$dados['tomador']],
+            ['tsano',date('Y-m',strtotime($dados['data']))]
+        ])->get();
+        foreach ($tabelapreco as $key => $rublicas) {
+            if ($rublicas->tsrubrica == 1002 && (int)$dados['horas_normais'] > 0 && !$rublicas->tsvalor) {
+                return redirect()->back()->withErrors(['horas_normais'=>'A rublica '.$rublicas->tsdescricao.' está vazia. Atualizer a tabela de preço.']);
+            }
+            if ($rublicas->tsrubrica == 1003 && (int)$dados['hora__extra'] > 0 && !$rublicas->tsvalor) {
+                return redirect()->back()->withErrors(['hora__extra'=>'A rublica '.$rublicas->tsdescricao.' está vazia. Atualizer a tabela de preço.']);
+            }
+            if ($rublicas->tsrubrica == 1004 && (int)$dados['horas__cem'] > 0 && !$rublicas->tsvalor) {
+                return redirect()->back()->withErrors(['horas__cem'=>'A rublica '.$rublicas->tsdescricao.' está vazia. Atualizer a tabela de preço.']);
+            }
+            if ($rublicas->tsrubrica == 1005 && (int)$dados['adc__noturno'] > 0 && !$rublicas->tsvalor) {
+                return redirect()->back()->withErrors(['adc__noturno'=>'A rublica '.$rublicas->tsdescricao.' está vazia. Atualizer a tabela de preço.']);
+            }
+        }
+        // dd($dados,$tabelapreco);
         if ($dados['entrada1']) {
             if (self::calcularhoras($dados['entrada1']) < 5 || self::calcularhoras($dados['entrada1']) >= 12) {
                 return redirect()->back()->withErrors(['entrada1'=>'Este campo só pode receber valores entre 05 à 12 horas']);

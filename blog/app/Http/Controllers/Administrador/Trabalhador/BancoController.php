@@ -99,10 +99,10 @@ class BancoController extends Controller
                 $trabalhador['numero'] = str_replace("  ", "",substr(utf8_encode($linha), 111, 5));
                 $trabalhador['localidade'] = str_replace("  ", "",substr(utf8_encode($linha), 116, 30));
                 $trabalhador['cep'] = str_replace("  ", "",substr(utf8_encode($linha), 146, 8));
-                $trabalhador['uf'] = str_replace("  ", "",substr(utf8_encode($linha), 155, 2));
-                $telefone = str_replace("  ", "",substr(utf8_encode($linha), 157, 12));
-                $ddd = '('.substr($telefone, 0, 2).')';
-                $telefone = substr($telefone, 2, 10);
+                $trabalhador['uf'] = str_replace("  ", "",substr(utf8_encode($linha), 154, 2));
+                $telefone = str_replace("  ", "",substr(utf8_encode($linha), 156, 11));
+                $ddd = '('.substr($telefone, 9, 2).')';
+                $telefone = substr($telefone, 0, 9);
                 $trabalhador['telefone'] = $ddd.$telefone;
                 // $trabalhador['situacao__contrato'] = str_replace("  ", "",str_replace("0", "",substr(utf8_encode($linha), 602, 8)));
                 $trabalhador['cbo'] = str_replace("  ", "",substr(utf8_encode($linha), 171, 6));
@@ -112,29 +112,28 @@ class BancoController extends Controller
                 $ano = substr($datanascimento, 4,4);
                 $datanascimento = $ano.'-'.$mes.'-'.$dia;
                 $trabalhador['data_nascimento'] = $datanascimento;
-                if (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == 'M') {
+                if (str_replace("  ", "",substr(utf8_encode($linha), 184, 1)) == 'M') {
                     $trabalhador['sexo'] = 'Masculino';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == 'F') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 184, 1)) == 'F') {
                     $trabalhador['sexo'] = 'Feminino';
                 }else{
                     $trabalhador['sexo'] = 'Outro';
                 }
-                if (str_replace("  ", "",substr(utf8_encode($linha), 186, 1)) == '1') {
+                if (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == '1') {
                     $trabalhador['estado__civil'] = '1-Solteiro';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 186, 1)) == '2') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == '2') {
                     $trabalhador['estado__civil'] = '2-Casado';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 186, 1)) == '3') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == '3') {
                     $trabalhador['estado__civil'] = '3-Divorciados';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 186, 1)) == '4') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == '4') {
                     $trabalhador['estado__civil'] = '4-Separados';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 186, 1)) == '5'){
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 185, 1)) == '5'){
                     $trabalhador['estado__civil'] = '5-Viúvo';
                 }
-                $trabalhador['nome__mae'] = str_replace("  ", "",substr(utf8_encode($linha), 227, 40));
+                $trabalhador['nome__mae'] = str_replace("  ", "",substr(utf8_encode($linha), 226, 40));
 
                 $trabalhador['conta'] = str_replace("  ", "",substr(utf8_encode($linha), 278, 13));
-                
-                $trabalhador['ufRg'] = str_replace("  ", "",substr($linha, 329, 2));
+                $trabalhador['ufRg'] = str_replace("  ", "",substr(utf8_encode($linha), 329, 2));
                 $trabalhador['rg'] = str_replace("  ", "",substr(utf8_encode($linha), 306, 15));
                 $dataemissao = str_replace("  ", "",substr($linha, 321, 8));
                 $dia = substr($dataemissao, 0, 2);
@@ -145,16 +144,16 @@ class BancoController extends Controller
             
                 
                 $trabalhador['cpf'] = str_replace("  ", "",substr(utf8_encode($linha), 391, 11));
-                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 405, 11));
-                if (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '1') {
+                $trabalhador['pis'] = str_replace("  ", "",substr(utf8_encode($linha), 406, 11));
+                if (str_replace("  ", "",substr(utf8_encode($linha), 472, 1)) == '1') {
                     $trabalhador['raca'] = '1-Branco';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '2') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 472, 1)) == '2') {
                     $trabalhador['raca'] = '2-Preta';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '3') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 472, 1)) == '3') {
                     $trabalhador['raca'] = '3-Pardo';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '4') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 472, 1)) == '4') {
                     $trabalhador['raca'] = '4-Amarela';
-                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 473, 1)) == '5') {
+                }elseif (str_replace("  ", "",substr(utf8_encode($linha), 472, 1)) == '5') {
                     $trabalhador['raca'] = '5-Indígena';
                 }else{
                     $trabalhador['raca'] = '6-Não informado';

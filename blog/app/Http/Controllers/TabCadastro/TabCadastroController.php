@@ -11,14 +11,16 @@ use Spatie\Permission\Models\Permission;
 use App\Lancamentorublica;
 use App\Lancamentotabela;
 use App\Empresa;
+use App\TabelaPreco;
 use DataTables;
 class TabCadastroController extends Controller
 {
-   private $lancamentorublica,$empresa;
+   private $lancamentorublica,$empresa,$tabelapreco;
    public function __construct()
    {
     $this->lancamentorublica = new Lancamentorublica;
     $this->empresa = new Empresa;
+    $this->tabelapreco = new TabelaPreco;
    }
     public function index()
     {
@@ -128,7 +130,16 @@ class TabCadastroController extends Controller
     {
         $dados = $request->all();
         $user = auth()->user();
-        // dd($dados);
+        $tomador = base64_decode($dados['tomador']);
+        $tabelapreco = $this->tabelapreco->where([
+            ['tomador_id',$tomador],
+            ['tsdescricao',$dados['descricao']],
+            ['tsvalor',0]
+        ])->count();
+        if ($tabelapreco) {
+            return redirect()->back()->withErrors(['false'=>'A rublica '.$dados['descricao'].' está vazia.']);
+        }
+        // dd($tabelapreco);
         // $novadata = explode('-',$dados['data']);
 
         
@@ -215,7 +226,7 @@ class TabCadastroController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
-        
+    
         $request->validate([
             'nome__completo' => 'required',
             'matricula'=>'required|max:4',

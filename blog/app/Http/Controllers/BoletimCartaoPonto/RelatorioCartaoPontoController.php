@@ -43,7 +43,7 @@ class RelatorioCartaoPontoController extends Controller
         // dd($lancamentotabelas);
         $bolcartaoponto = $this->bolcartaoponto->where('lancamentotabela_id',$id)
         ->with('trabalhador')->get();
-    
+        // dd( $bolcartaoponto);
         // dd($lancamentotabelas,$bolcartaoponto,$id);
             // $tabelaprecos = $this->tabelapreco->buscaTabelaTomador($tomador,$ano[0],null,'asc'); 
             // $empresas = $this->empresa->where('id',$user->empresa_id)->with('endereco')->first(); 

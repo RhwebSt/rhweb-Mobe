@@ -1,3 +1,15 @@
+$('#valor__adiantamento').mask('000,00', {reverse: true});
+$('#valor__creditos').mask('000,00', {reverse: true});
+$( "#valor__adiantamento" ).on('keyup focus',function() {
+    if (!$(this).val()) {
+        $('#valor__adiantamento').val(0.00)
+    }
+})
+$( "#valor__creditos" ).on('keyup focus',function() {
+    if (!$(this).val()) {
+        $('#valor__creditos').val(0.00)
+    }
+})
 $( "#pesquisa" ).on('keyup focus',function() {
               var dados = '0';
               if ($(this).val()) {

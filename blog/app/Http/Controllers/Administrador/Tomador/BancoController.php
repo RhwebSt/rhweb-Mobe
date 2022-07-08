@@ -340,15 +340,18 @@ class BancoController extends Controller
                             array_push($idtomador,$tomadors['id']);
                             foreach ($tabela as $t => $tabelas) {
                                 // dd((int) str_replace("  ", "",substr(utf8_encode($tabelas), 6, 6)));
-                                
+                               
                                     // dd($tabelas,$tomador['matricula'],str_replace("  ", "",substr(utf8_encode($tabelas), 6, 6)));
                                     foreach ($rublicas as $key => $rublica) {
                                         if ($tomador['matricula'] ===  str_replace("  ", "",substr(utf8_encode($tabelas), 8, 4))) {
                                         // dd((int)str_replace("  ", "",substr(utf8_encode($tabelas), 12, 4)));
+                                            $date = str_replace("  ", "",substr(utf8_encode($tabelas), 2, 4));
                                             if ((int)str_replace("  ", "",substr(utf8_encode($tabelas), 12, 4)) == 1 && $rublica->rsrublica == 1000) {
-                                            
+                                                // $date = str_replace("  ", "",substr(utf8_encode($tabelas), 2, 6));
+                                                // $date = substr_replace($date, '-', 2, 0);
+                                                // dd($date);
                                                 $dadostabelapreco = [
-                                                    'ano' => date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6)))),
+                                                    'ano' => $date,
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
@@ -360,7 +363,7 @@ class BancoController extends Controller
                                                 $veritabela = $this->tabelapreco->where([
                                                     ['tomador_id', $tomadors['id']],
                                                     ['tsrubrica',$rublica->rsrublica],
-                                                    ['tsano',date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6))))],
+                                                    ['tsano',$date],
                                                 ])->count();
                                                 if (!$veritabela) {
                                                     $this->tabelapreco->cadastro($dadostabelapreco);
@@ -371,7 +374,7 @@ class BancoController extends Controller
                                                 
                                             
                                                 $dadostabelapreco = [
-                                                    'ano' => date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6)))),
+                                                    'ano' => $date,
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
@@ -383,7 +386,7 @@ class BancoController extends Controller
                                                 $veritabela = $this->tabelapreco->where([
                                                     ['tomador_id', $tomadors['id']],
                                                     ['tsrubrica',$rublica->rsrublica],
-                                                    ['tsano',date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6))))],
+                                                    ['tsano',$date],
                                                 ])->count();
                                                 if (!$veritabela) {
                                                     $this->tabelapreco->cadastro($dadostabelapreco);
@@ -393,7 +396,7 @@ class BancoController extends Controller
                                                 
                                             
                                                 $dadostabelapreco = [
-                                                    'ano' => date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6)))),
+                                                    'ano' => $date,
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
@@ -405,7 +408,7 @@ class BancoController extends Controller
                                                 $veritabela = $this->tabelapreco->where([
                                                     ['tomador_id', $tomadors['id']],
                                                     ['tsrubrica',$rublica->rsrublica],
-                                                    ['tsano',date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6))))],
+                                                    ['tsano',$date],
                                                 ])->count();
                                                 if (!$veritabela) {
                                                     $this->tabelapreco->cadastro($dadostabelapreco);
@@ -415,7 +418,7 @@ class BancoController extends Controller
                                                 
                                             
                                                 $dadostabelapreco = [
-                                                    'ano' => date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6)))),
+                                                    'ano' => $date,
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
@@ -427,7 +430,7 @@ class BancoController extends Controller
                                                 $veritabela = $this->tabelapreco->where([
                                                     ['tomador_id', $tomadors['id']],
                                                     ['tsrubrica',$rublica->rsrublica],
-                                                    ['tsano',date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6))))],
+                                                    ['tsano',$date],
                                                 ])->count();
                                                 if (!$veritabela) {
                                                     $this->tabelapreco->cadastro($dadostabelapreco);
@@ -437,7 +440,7 @@ class BancoController extends Controller
                                                 
                                             
                                                 $dadostabelapreco = [
-                                                    'ano' => date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6)))),
+                                                    'ano' => $date,
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
@@ -449,28 +452,57 @@ class BancoController extends Controller
                                                 $veritabela = $this->tabelapreco->where([
                                                     ['tomador_id', $tomadors['id']],
                                                     ['tsrubrica',$rublica->rsrublica],
-                                                    ['tsano',date('Y-m',strtotime(str_replace("  ", "",substr(utf8_encode($tabelas), 0, 6))))],
+                                                    ['tsano',$date],
                                                 ])->count();
                                                 if (!$veritabela) {
                                                     $this->tabelapreco->cadastro($dadostabelapreco);
                                                 }
                                             }
                                       
-                                        }else{
-                                            $dadostabelapreco = [
-                                                'ano' => date('Y'),
-                                                'rubricas' => $rublica->rsrublica,
-                                                'descricao' => $rublica->rsdescricao,
-                                                'status' => '',
-                                                'valor' => 0,
-                                                'valor__tomador' => 0,
-                                                'empresa' =>  $empresa['empresa'],
-                                                'tomador' => $tomadors['id']
-                                            ];
-                                            $this->tabelapreco->cadastro($dadostabelapreco);
                                         }
-                                   
+                                        // else{
+                                        //     $dadostabelapreco = [
+                                        //         'ano' => date('Y'),
+                                        //         'rubricas' => $rublica->rsrublica,
+                                        //         'descricao' => $rublica->rsdescricao,
+                                        //         'status' => '',
+                                        //         'valor' => 0,
+                                        //         'valor__tomador' => 0,
+                                        //         'empresa' =>  $empresa['empresa'],
+                                        //         'tomador' => $tomadors['id']
+                                        //     ];
+                                        //     $veritabela = $this->tabelapreco->where([
+                                        //         ['tomador_id', $tomadors['id']],
+                                        //         ['tsrubrica',$rublica->rsrublica],
+                                        //         ['tsano',date('Y')],
+                                        //     ])->count();
+                                        //     if (!$veritabela) {
+                                        //         $this->tabelapreco->cadastro($dadostabelapreco);
+                                        //     }
+                                        // }
                                     }
+                                // else{
+                                //     foreach ($rublicas as $key => $rublica) {
+                                //         $dadostabelapreco = [
+                                //             'ano' => date('Y'),
+                                //             'rubricas' => $rublica->rsrublica,
+                                //             'descricao' => $rublica->rsdescricao,
+                                //             'status' => '',
+                                //             'valor' => 0,
+                                //             'valor__tomador' => 0,
+                                //             'empresa' =>  $empresa['empresa'],
+                                //             'tomador' => $tomadors['id']
+                                //         ];
+                                //         $veritabela = $this->tabelapreco->where([
+                                //             ['tomador_id', $tomadors['id']],
+                                //             ['tsrubrica',$rublica->rsrublica],
+                                //             ['tsano',date('Y')],
+                                //         ])->count();
+                                //         if (!$veritabela) {
+                                //             $this->tabelapreco->cadastro($dadostabelapreco);
+                                //         }
+                                //     }
+                                // }
                             }
                             $incidefolhars = $this->incidefolhar->cadastro($tomador);
                             $enderecos = $this->endereco->cadastro($tomador);

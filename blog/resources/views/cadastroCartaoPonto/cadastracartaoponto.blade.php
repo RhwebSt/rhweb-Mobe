@@ -172,22 +172,34 @@
 
             <div class="col-md-3">
                 <label for="horas_normais" class="form-label">Horas Normais <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control " name="horas_normais" value="" id="horas_normais" readonly>
+                <input type="text" class="form-control @error('horas_normais') is-invalid @enderror" name="horas_normais" value="{{old('horas_normais')}}" id="horas_normais" readonly>
+                @error('horas_normais')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-2">
                 <label for="hora__extra" class="form-label">Hrs 50% <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control " name="hora__extra" value="" id="hora__extra" readonly>
+                <input type="text" class="form-control @error('hora__extra') is-invalid @enderror" name="hora__extra" value="{{old('hora__extra')}}" id="hora__extra" readonly>
+                @error('hora__extra')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-2">
                 <label for="horas__cem" class="form-label">Hrs 100% <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control " name="horas__cem" value="" id="horas__cem" readonly>
+                <input type="text" class="form-control @error('horas__cem') is-invalid @enderror" name="horas__cem" value="{{old('horas__cem')}}" id="horas__cem" readonly>
+                @error('horas__cem')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="col-md-2">
                 <label for="adc__noturno" class="form-label">Adc.Not <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control " name="adc__noturno" value="" id="adc__noturno" readonly>
+                <input type="text" class="form-control @error('adc__noturno') is-invalid @enderror" name="adc__noturno" value="{{old('adc__noturno')}}" id="adc__noturno" readonly>
+                @error('adc__noturno')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             
             <div class="col-md-3">

@@ -1,5 +1,5 @@
  let rublicas = ['1002','1003','1004','1005']
-    $( "#rubrica" ).on('keyup focus',function() {
+    $( "#rubrica" ).on('keyup',function() {
         var dados = '0';
         if ($(this).val()) {
           dados = $(this).val()
@@ -29,6 +29,11 @@
                     $('#rublicas').html(nome)
                 }
                 if(data.length === 1 && dados.length > 3){
+                  let rublica = '';
+                  if (!data[0].tsvalor) {
+                    rublica = ` <li class="list-group-item">O tomador da rublica ${data[0].tsdescricao} está R$ 0,00</li>`
+                    alertatabela(data[0].tomador_id,rublica)
+                  }
                     $('#valor').val(data[0].tsvalor)
                     $('#lftomador').val(data[0].tstomvalor)
                     $('#rubrica').val(data[0].tsdescricao)
@@ -39,6 +44,11 @@
                         $('#conteinarquant').html(`<input type="time" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="">`)
                     }
                 }else if(dados.length > 3 && !data.length){
+                    let rublica = '';
+                    if (!data[0].tsvalor) {
+                      rublica = ` <li class="list-group-item">O tomador da rublica ${data[0].tsdescricao} está R$ 0,00</li>`
+                      alertatabela(data[0].tomador_id,rublica)
+                    }
                     $('#valor').val(' ')
                     $('#lftomador').val(' ')
                     $('#conteinarquant').html(`<input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade" value="{{old('quantidade')}}" id="quantidade">`)
@@ -48,7 +58,21 @@
             }
         });
     });
-   
+    function alertatabela(tomador,dados) {
+      Swal.fire({
+        title: '<strong>Algo deu Errado!</strong>',
+        icon: 'error',
+        html:
+          `<strong>Tabela de Preço</strong> existe rublica com o valor R$0,00,
+          <ul class="list-group">
+            ${dados}
+          </ul>
+          <a href="${window.Laravel.tabelapreco.index}/ /${btoa(tomador)}">Atualizar valores</a> `,
+        // showCloseButton: false,
+        // allowOutsideClick: false,
+        // allowEnterKey: true,
+      })
+    }
     $.ajax({
             url: `${window.Laravel.trabalhador.pesquisa}/0`,
             type: 'get',

@@ -100,9 +100,7 @@
             'tabelapreco'=>[
                 'lista'=>route('tabelapreco.lista',isset($tomador)?$tomador:' '),
                 'verificar'=>url('verifica/tabela/preco'),
-                'pesquisa'=>url('tabelapreco/pesquisa'),
-                'index'=>url('tabelapreco'),
-                'create'=>url('tabela/preco/criar')
+                'pesquisa'=>url('tabelapreco/pesquisa')
             ],
             'folhar'=>[
                 'geral'=>route('calculo.folha.geral.filtro'),

@@ -1,5 +1,6 @@
 $("#telefone").mask("(00) 00000-0000");
 $("#cnpj").mask("00.000.000/0000-00");
+
 $('#cep').mask("00000-000")
 $('#caixa_benef').mask('000,00', {reverse: true});
 $('#ferias').mask('000,00', {reverse: true});
