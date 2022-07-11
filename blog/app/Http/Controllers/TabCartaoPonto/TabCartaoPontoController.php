@@ -13,6 +13,7 @@ use App\ValoresRublica;
 use App\TabelaPreco;
 use App\Bolcartaoponto;
 use App\Empresa;
+use App\Folhar;
 use Carbon\Carbon;
 use DataTables;
 class TabCartaoPontoController extends Controller
@@ -22,7 +23,7 @@ class TabCartaoPontoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $tabelapreco,$lancamentorublica,$valorrublica,$lancamentotabela,$bolcartaoponto,$empresa;
+    private $tabelapreco,$lancamentorublica,$valorrublica,$lancamentotabela,$bolcartaoponto,$empresa,$folhar;
     public function __construct()
     {
         $this->lancamentorublica = new Lancamentorublica;
@@ -31,6 +32,7 @@ class TabCartaoPontoController extends Controller
         $this->bolcartaoponto = new Bolcartaoponto;
         $this->tabelapreco = new TabelaPreco;
         $this->empresa = new Empresa;
+        $this->folhar = new Folhar;
     }
     public function index()
     {
@@ -384,9 +386,10 @@ class TabCartaoPontoController extends Controller
      */
     public function destroy($id)
     {
-        try {
+        
             $user = Auth::user();
             $id = base64_decode($id);
+            try {
             $permissions = Permission::where('name','like','%'.'mbcte'.'%')->first(); 
             if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
                 return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
@@ -417,6 +420,7 @@ class TabCartaoPontoController extends Controller
             });
             $this->lancamentotabela->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }

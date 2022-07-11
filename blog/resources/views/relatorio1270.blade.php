@@ -448,7 +448,19 @@
 
                     <tr>
                         <td class="padding-left-texto medium__font border-right descricao text-bold">INSS sobre (Produção/DSR/Férias)</td>
-                        <td class="padding-left-texto medium__font text-center valor">R$ 999.999.999,99</td>
+                        <td class="padding-left-texto medium__font text-center valor">R$ 
+                            <?php
+                                $inss2 = 0;
+                                foreach ($relatorio as $key => $relatorios) {
+                                    foreach ($relatorios->valorcalculo as $key => $inss5) {
+                                        if (mb_strpos(mb_strtoupper($inss5->vsdescricao,'UTF-8'), 'INSS') !== false) {
+                                            $inss2 += $inss5->videscinto;
+                                        }
+                                    }
+                                }
+                            ?>
+                             {{number_format((float)$inss2, 2, ',', '.')}}
+                        </td>
                     </tr>
                 </table>
             

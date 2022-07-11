@@ -443,7 +443,7 @@
                                     
                                         <div class="col-md-3 mt-2">
                                             <label for="taxa_adm" class="form-label letter__color">Taxa Adm %</label>
-                                            <input type="text" class="form-control @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{old('taxa_adm')}}" id="taxa_adm">
+                                            <input type="text" class="form-control @error('taxa_adm') is-invalid @enderror" name="taxa_adm" value="{{old('taxa_adm','3000')}}" id="taxa_adm">
                                             @error('taxa_adm')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -495,7 +495,7 @@
                                     
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__fpas" class="form-label letter__color">Cod FPAS</label>
-                                            <input type="text" class="form-control @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas')}}" id="cod__fpas">
+                                            <input type="text" class="form-control @error('cod__fpas') is-invalid @enderror " name="cod__fpas" value="{{old('cod__fpas','515')}}" id="cod__fpas">
                                             @error('cod__fpas')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -503,7 +503,7 @@
                                         
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__fap" class="form-label letter__color">Cod RAT</label>
-                                            <input type="text" class="form-control @error('') is-invalid @enderror " name="cod__fap" value="" id="cod__fap">
+                                            <input type="text" class="form-control @error('') is-invalid @enderror " name="cod__fap" value="{{old('cod__fap','3')}}" id="cod__fap">
                                             @error('cod__fap')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -511,7 +511,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__grps" class="form-label letter__color">Cod GRPS</label>
-                                            <input type="text" class="form-control @error('cod__grps') is-invalid @enderror" name="cod__grps" value="{{old('cod__grps')}}" id="cod__grps">
+                                            <input type="text" class="form-control @error('cod__grps') is-invalid @enderror" name="cod__grps" value="{{old('cod__grps','2100')}}" id="cod__grps">
                                             @error('cod__grps')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -519,7 +519,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cod__recol" class="form-label letter__color">Cod Recol</label>
-                                            <input type="text" class="form-control @error('cod__recol') is-invalid @enderror" name="cod__recol" value="{{old('cod__recol')}}" id="cod__recol">
+                                            <input type="text" class="form-control @error('cod__recol') is-invalid @enderror" name="cod__recol" value="{{old('cod__recol','135')}}" id="cod__recol">
                                             @error('cod__recol')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -527,7 +527,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="cnae" class="form-label letter__color">CNAE</label>
-                                            <input type="text" class="form-control @error('cnae') is-invalid @enderror" name="cnae" value="{{old('cnae')}}" id="cnae">
+                                            <input type="text" class="form-control @error('cnae') is-invalid @enderror" name="cnae" value="{{old('cnae','5212500')}}" id="cnae">
                                             @error('cnae')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -535,7 +535,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="fap__aliquota" class="form-label letter__color">FAP Aliquota %</label>
-                                            <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror" name="fap__aliquota" value="{{old('fap__aliquota')}}" id="fap__aliquota">
+                                            <input type="text" class="form-control @error('fap__aliquota') is-invalid @enderror" name="fap__aliquota" value="{{old('fap__aliquota','1')}}" id="fap__aliquota">
                                             @error('fap__aliquota')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -551,7 +551,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="fpas__terceiros" class="form-label letter__color">FPAS Terceiros</label>
-                                            <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror" name="fpas__terceiros" value="{{old('fpas__terceiros')}}" id="fpas__terceiros">
+                                            <input type="text" class="form-control @error('fpas__terceiros') is-invalid @enderror" name="fpas__terceiros" value="{{old('fpas__terceiros','0115')}}" id="fpas__terceiros">
                                             @error('fpas__terceiros')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -559,7 +559,7 @@
                 
                                         <div class="col-md-4 mt-2">
                                             <label for="aliq__terceiros" class="form-label letter__color">Aliq. Terceiros</label>
-                                            <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror" name="aliq__terceiros" value="{{old('aliq__terceiros')}}" id="aliq__terceiros">
+                                            <input type="text" class="form-control @error('aliq__terceiros') is-invalid @enderror" name="aliq__terceiros" value="{{old('aliq__terceiros','58')}}" id="aliq__terceiros">
                                             @error('aliq__terceiros')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -588,7 +588,7 @@
                                     
                                         <div class="col-md-6 mt-2">
                                             <label for="alimentacao" class="form-label letter__color"> Alimentação</label>
-                                            <input type="text" class="form-control @error('alimentacao') is-invalid @enderror" name="alimentacao" value="{{old('alimentacao')}}" id="alimentacao">
+                                            <input type="text" class="form-control @error('alimentacao') is-invalid @enderror" name="alimentacao" value="{{old('alimentacao','10')}}" id="alimentacao">
                                             @error('alimentacao')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -596,7 +596,7 @@
                 
                                         <div class="col-md-6 mt-2">
                                             <label for="transporte" class="form-label letter__color">Transporte</label>
-                                            <input type="text" class="form-control @error('transporte') is-invalid @enderror" name="transporte" value="{{old('transporte')}}" id="transporte">
+                                            <input type="text" class="form-control @error('transporte') is-invalid @enderror" name="transporte" value="{{old('transporte','10')}}" id="transporte">
                                             @error('transporte')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -604,7 +604,7 @@
                 
                                         <div class="col-md-6 mt-2">
                                             <label for="epi" class="form-label letter__color">EPI % (Sobre(PROD+DSR)Folha)</label>
-                                            <input type="text" class="form-control @error('epi') is-invalid @enderror" name="epi" value="{{old('epi')}}" id="epi">
+                                            <input type="text" class="form-control @error('epi') is-invalid @enderror" name="epi" value="{{old('epi','20')}}" id="epi">
                                             @error('epi')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -612,7 +612,7 @@
                 
                                         <div class="col-md-6 mt-2">
                                             <label for="seguro__trabalhador" class="form-label letter__color">Seguro (Val.Trab)</label>
-                                            <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror" name="seguro__trabalhador" value="{{old('seguro__trabalhador')}}" id="seguro__trabalhador">
+                                            <input type="text" class="form-control @error('seguro__trabalhador') is-invalid @enderror" name="seguro__trabalhador" value="{{old('seguro__trabalhador','30')}}" id="seguro__trabalhador">
                                             @error('seguro__trabalhador')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

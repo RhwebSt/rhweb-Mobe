@@ -244,7 +244,7 @@
                               <a class="nav-link" href="{{route('avuso.index')}}">Recibo Avulso</a>
                             </li>
                             
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                               <a class="nav-link" href="{{route('esocial.index')}}">E-social</a>
                             </li>
     
@@ -303,7 +303,7 @@
                       }
                     ?>
                     
-                    <div class="d-flex justify-content-end flex-row div__botoes--nav">
+                    <div class="d-flex justify-content-end flex-row div__botoes--nav d-none">
                         <div class="ms-1">
                            <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                                <i id="bell__notification" class="fad fa-bell bell__notification"></i>
@@ -327,9 +327,9 @@
                 
             </nav>
         
-            <section>
+            <section >
                 <div class="offcanvas off__canvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-                    <div class="offcanvas-header">
+                    <div class="offcanvas-header d-none">
                         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificações <i id="bell__notification--ofcanvas" class="fad fa-bell bell__notification--ofcanvas"></i></h5>
                         <i class="fas fa-2x fa-times icon__exit--side--bar" data-bs-dismiss="offcanvas"></i>
                     </div>

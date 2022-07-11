@@ -266,6 +266,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('administrador/pesquisa/categoria','Administrador\\Categoria\\CategoriaController@pesquisa')->name('administrador.categoria.pesquisa');
     Route::resource('administrador/categoria','Administrador\\Categoria\\CategoriaController')->names('administrador.categoria');
     Route::get('rublica/pesquisa/{id}','Administrador\\Rublica\\RublicaController@pesquisa');
+
+    Route::get('gera/evento/1200/{competencia?}','CalculoFolha\\Evento1200Controller@index')->name('gera.evento.1200');
     Route::group(['middleware' => ['permission:admin']], function () {  
         Route::post('certificado/cadastro','Certificado\\CertificadoController@store')->name('certificado.cadastro');
         Route::get('certificado/index','Certificado\\CertificadoController@index')->name('certificado.index');
@@ -292,7 +294,7 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
         Route::get('user/pesquisa/{id}','User\\UserController@pesquisa');
         Route::get('empresa/ordem/{ordem}/{id?}/{search?}','Empresa\\EmpresaController@ordem')->name('ordem.empresa');
-        Route::get('gera/evento/1200/{competencia?}','CalculoFolha\\Evento1200Controller@index')->name('gera.evento.1200');
+       
        
     });
     Route::group(['middleware' => ['permission:Super Admin']], function () {

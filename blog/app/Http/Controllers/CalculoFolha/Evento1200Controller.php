@@ -40,7 +40,7 @@ class Evento1200Controller extends Controller
         foreach ($tranalhadores as $key => $trabalahdorid) {
             array_push($trabalhadorarray,$trabalahdorid->trabalhador_id);
         }
-        $novotrabalhadores = array_chunk($trabalhadorarray, 3, true);
+        $novotrabalhadores = array_chunk($trabalhadorarray, 20, true);
         // dd($novotrabalhadores);
         $novapasta = rand(1000, 100000);
         
