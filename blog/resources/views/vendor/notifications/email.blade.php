@@ -6,13 +6,13 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Teste')
+# @lang('Rhweb - Sistemas Inteligentes')
 @endif
 @endif
 
-{{-- Intro Lines --}}
-@foreach ($introLines as $line)
-{{ $line }}
+<!--{{-- Intro Lines --}}-->
+<!--@foreach ($introLines as $line)-->
+<!--{{ $line }}-->
 
 @endforeach
 
@@ -33,9 +33,9 @@
 @endcomponent
 @endisset
 
-{{-- Outro Lines --}}
-@foreach ($outroLines as $line)
-{{ $line }}
+<!--{{-- Outro Lines --}}-->
+<!--@foreach ($outroLines as $line)-->
+<!--{{ $line }}-->
 
 @endforeach
 

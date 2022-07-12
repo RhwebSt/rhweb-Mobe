@@ -13,7 +13,7 @@
 }
 
 td{
-   background-color: #252525; 
+   /*background-color: #252525; */
     color: black;
 }
 
@@ -46,21 +46,18 @@ width: 100% !important;
 <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
 <!-- Body content -->
 <tr>
-<td class="content-cell--body">
+<!--<td class="content-cell--body">-->
 {{ Illuminate\Mail\Markdown::parse($slot) }}
 
 {{ $subcopy ?? '' }}
-</td>
+<!--</td>-->
 </tr>
 </table>
-</td>
-</tr>
 
+<table align="center">
 {{ $footer ?? '' }}
 </table>
-</td>
-</tr>
-</table>
+
 </body>
 <script>
     console.log("ok");

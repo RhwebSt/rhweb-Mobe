@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('backup',function(){
+    Storage::disk('google');
+});
 Route::resource('/','Home\\HomeController')->only(['index'])->names('/');
 Route::resource('login','Login\\LoginController')->names('login');
 Route::resource('administrador/login','Administrador\\Login\\LoginController')->names('login.administrador');
