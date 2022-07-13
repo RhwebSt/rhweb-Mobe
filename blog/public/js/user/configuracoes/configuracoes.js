@@ -12,7 +12,7 @@ setInterval(function () {
     var resultFormatoFont = resultado.textTransform.formatoFont;
     var resultAnimacao = resultado.animacoes.resultAnimacoes;
     var resultPreenchimentoAutomatico = resultado.automaticFill.preenchimentoAutomatico;
-    var resultExpessuraFont = resultado.expessuraFont.expessura;
+    // var resultExpessuraFont = resultado.expessuraFont.expessura;
 
     if(resultTamanhoFont === '16px'){
         $("#select-font-size option:contains(16px)").attr('selected', true);
@@ -54,13 +54,13 @@ setInterval(function () {
         $("#preenchimentoAutomatico option:contains(Não)").attr('selected', true);
     }
 
-    if(resultExpessuraFont === "negrito"){
-        $("#select-expessura-font option:contains(Negrito)").attr('selected', true);
-    }
+    // if(resultExpessuraFont === "negrito"){
+    //     $("#select-expessura-font option:contains(Negrito)").attr('selected', true);
+    // }
     
-    if(resultExpessuraFont === "padrao"){
-        $("#select-expessura-font option:contains(Padr���o)").attr('selected', true);
-    }
+    // if(resultExpessuraFont === "padrao"){
+    //     $("#select-expessura-font option:contains(Padr���o)").attr('selected', true);
+    // }
 
     tamanhoFont = $("#select-font-size").val();
     formatoFont = $("#select-formato-font").val();

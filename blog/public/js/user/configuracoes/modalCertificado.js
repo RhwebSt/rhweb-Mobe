@@ -1,3 +1,16 @@
+$('#proximoCertificado').click((e)=> {
+    e.preventDefault();
+    $('#form-certificado').removeClass('d-none');
+    $('#form-CadEmpresaCertificado').addClass('d-none');
+});
+
+$('#botaoVoltarCertificado').click((e)=>{
+    e.preventDefault();
+    $('#form-certificado').addClass('d-none');
+    $('#form-CadEmpresaCertificado').removeClass('d-none');
+})
+
+
 $(document).ready(function(){
     $( "#form-certificado" ).submit(function( event ) {
         event.preventDefault();
@@ -24,9 +37,9 @@ $(document).ready(function(){
             url: "https://api.tecnospeed.com.br/esocial/v1/certificados",
             method: "POST",
             mimeType: "multipart/form-data",
-            "contentType": false,
+            contentType: false,
             dataType: "json",
-            "data": form,
+            data: form,
             processData: false,  
             headers: {
                 'cnpj_sh':'34350915000149',
@@ -41,7 +54,7 @@ $(document).ready(function(){
                     background: '#45484A',
                     showConfirmButton: true,
                 });
-                cadastra(retorno.data.data)
+                // cadastra(retorno.data.data)
             },
             error: function (response) {
                 Swal.fire({

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Permissao;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use App\User;
 class PermissaoController extends Controller
 {
@@ -16,27 +17,24 @@ class PermissaoController extends Controller
     {
         $id = base64_decode($id);
         $permisao = base64_decode($permisao);
-        switch ($condicao) {
-            case 'D':
-                    $permissao = $this->user->givePermissionTos($id,$permisao);
-                    if ($permissao) {
-                        return response()->json('Permissão concedida com sucesso.');
-                    }else{
-                        return response()->json('Não foi possível conceder a permissão.');
-                    }
-                break;
-            case 'R':
-                    $permissao = $this->user->revokePermissionTo($id,$permisao);
-                    if ($permissao) {
-                        return response()->json('Permissão revogada com sucesso.');
-                    }else{
-                        return response()->json('Não foi possível conceder a permissão.');
-                    }
-                break;
-            default:
-                # code...
-                break;
+        $user = $this->user->where('id',$id)->first();
+        
+        if ($user->hasPermissionTo(Permission::find($permisao)->id)) {
+            $permissao = $this->user->revokePermissionTo($id,$permisao);
+            if ($permissao) {
+                return response()->json('Permissão revogada com sucesso.');
+            }else{
+                return response()->json('Não foi possível conceder a permissão.');
+            }
+        }else{
+            
+            $permissao = $this->user->givePermissionTos($id,$permisao);
+            if ($permissao) {
+                return response()->json('Permissão concedida com sucesso.');
+            }else{
+                $user->givePermissionTo(Permission::find($permisao)->name);
+                return response()->json('Não foi possível conceder a permissão.');
+            }
         }
-       
     }
 }

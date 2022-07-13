@@ -50,7 +50,7 @@ $(document).ready(function(){
                 let dados = '';
                 if (data){
                     $.ajax({
-                        url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=1&versaomanual=S.01.00.00`,
+                        url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=2&versaomanual=S.01.00.00`,
                         type: "GET",
                        
                         processData: false,  
@@ -84,7 +84,7 @@ $(document).ready(function(){
                 let dados = '';
                 if (data){
                     $.ajax({
-                        url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=1&versaomanual=S.01.00.00`,
+                        url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=2&versaomanual=S.01.00.00`,
                         type: "GET",
                         // data: dados,
                         // dataType: 'json',

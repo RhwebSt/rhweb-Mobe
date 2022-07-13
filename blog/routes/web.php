@@ -53,8 +53,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::resource('boletimcartaoponto','BoletimCartaoPonto\\BoletimCartaoPontoController')->only(['store', 'update', 'destroy']);
 
-    Route::get('cartao/ponto/novo','CadastroCartaoPonto\\CadastroCartaoPontoController@create')->name('cartao.ponto.novo');
-    // ->middleware(['permission:mbcpc15555738']);
+    Route::get('cartao/ponto/novo','CadastroCartaoPonto\\CadastroCartaoPontoController@create')->name('cartao.ponto.novo')
+    ->middleware(['permission:mbcpc15555738']);
     Route::get('cartao/ponto/lista','CadastroCartaoPonto\\CadastroCartaoPontoController@lista')->name('cartao.ponto.lista');
     // ->middleware(['permission:mbcpc15555738']);
     Route::post('cartao/ponto/cadastro','CadastroCartaoPonto\\CadastroCartaoPontoController@store')->name('cartao.ponto.cadastro');
@@ -73,8 +73,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
     // ->middleware(['permission:mbcpr15555738']);
 
-    Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo');
-    // ->middleware(['permission:mbctc15555738']);
+    Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo')
+    ->middleware(['permission:mbctc15555738']);
     Route::get('tabela/cartao/ponto/lista','TabCartaoPonto\\TabCartaoPontoController@lista')->name('tabela.cartao.ponto.lista');
     // ->middleware(['permission:mbctc15555738']);
     Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro');
@@ -117,18 +117,18 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('fatura/lista','Fatura\\FaturaController@lista')->name('fatura.lista');
 
-    Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo');
-    // ->middleware(['permission:mtc15555738']);
-    Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista');
-    // ->middleware(['permission:mtc15555738']);
-    Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra');
-    // ->middleware(['permission:mtc15555738']);
-    Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar');
-    // ->middleware(['permission:mtd15555738']);
-    Route::put('tomador/atualizar/{id}','Tomador\\TomadorController@update')->name('tomador.atualizar');
-    // ->middleware(['permission:mtd15555738']);
-    Route::delete('tomador/deletar/{id}','Tomador\\TomadorController@destroy')->name('tomador.deletar');
-    // ->middleware(['permission:mte15555738']);
+    Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo')
+    ->middleware(['permission:mtc15555738']);
+    Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista')
+    ->middleware(['permission:mtc15555738']);
+    Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra')
+    ->middleware(['permission:mtc15555738']);
+    Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar')
+    ->middleware(['permission:mtd15555738']);
+    Route::put('tomador/atualizar/{id}','Tomador\\TomadorController@update')->name('tomador.atualizar')
+    ->middleware(['permission:mtd15555738']);
+    Route::delete('tomador/deletar/{id}','Tomador\\TomadorController@destroy')->name('tomador.deletar')
+    ->middleware(['permission:mte15555738']);
 
     // Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
     Route::get('tomador/pesquisa/{id?}','Tomador\\TomadorController@pesquisa')->name('tomador.pesquisa');

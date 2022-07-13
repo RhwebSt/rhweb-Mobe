@@ -139,7 +139,8 @@
                 'lista'=>route('comisionado.lista') 
             ],
             'user'=>[
-                'pesquisa'=>route('usuario.pesquisa.admin')
+                'pesquisa'=>route('usuario.pesquisa.admin'),
+                'permicao'=>url('permissao')
             ],
            
             'certificado'=>[
@@ -244,7 +245,7 @@
                               <a class="nav-link" href="{{route('avuso.index')}}">Recibo Avulso</a>
                             </li>
                             
-                            <li class="nav-item d-none">
+                            <li class="nav-item ">
                               <a class="nav-link" href="{{route('esocial.index')}}">E-social</a>
                             </li>
     
@@ -303,9 +304,9 @@
                       }
                     ?>
                     
-                    <div class="d-flex justify-content-end flex-row div__botoes--nav d-none">
+                    <div class="d-flex justify-content-end flex-row div__botoes--nav ">
                         <div class="ms-1">
-                           <button type="button" id="buttonNotification" class="btn position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                           <button type="button" id="buttonNotification" class="btn d-none position-relative button__notification--with--message" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                                <i id="bell__notification" class="fad fa-bell bell__notification"></i>
                                <span id="valueNotification" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                  
