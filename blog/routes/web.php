@@ -117,18 +117,18 @@ Route::group(['middleware' => 'autenticacao'], function () {
 
     Route::get('fatura/lista','Fatura\\FaturaController@lista')->name('fatura.lista');
 
-    Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo')
-    ->middleware(['permission:mtc15555738']);
-    Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista')
-    ->middleware(['permission:mtc15555738']);
-    Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra')
-    ->middleware(['permission:mtc15555738']);
-    Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar')
-    ->middleware(['permission:mtd15555738']);
-    Route::put('tomador/atualizar/{id}','Tomador\\TomadorController@update')->name('tomador.atualizar')
-    ->middleware(['permission:mtd15555738']);
-    Route::delete('tomador/deletar/{id}','Tomador\\TomadorController@destroy')->name('tomador.deletar')
-    ->middleware(['permission:mte15555738']);
+    Route::get('tomador/novo','Tomador\\TomadorController@create')->name('tomador.novo');
+    // ->middleware(['permission:mtc15555738']);
+    Route::get('tomador/lista','Tomador\\TomadorController@lista')->name('tomador.lista');
+    // ->middleware(['permission:mtc15555738']);
+    Route::post('tomador/cadastra','Tomador\\TomadorController@store')->name('tomador.cadastra');
+    // ->middleware(['permission:mtc15555738']);
+    Route::get('tomador/editar/{id}','Tomador\\TomadorController@edit')->name('tomador.editar');
+    // ->middleware(['permission:mtd15555738']);
+    Route::put('tomador/atualizar/{id}','Tomador\\TomadorController@update')->name('tomador.atualizar');
+    // ->middleware(['permission:mtd15555738']);
+    Route::delete('tomador/deletar/{id}','Tomador\\TomadorController@destroy')->name('tomador.deletar');
+    // ->middleware(['permission:mte15555738']);
 
     // Route::resource('tomador','Tomador\\TomadorController')->names('tomador');
     Route::get('tomador/pesquisa/{id?}','Tomador\\TomadorController@pesquisa')->name('tomador.pesquisa');

@@ -12,13 +12,13 @@ class Certificado extends Model
     public function cadastro($dados)
     {
        return Certificado::create([
-            'apelido'=>$dados['apelido'],
-            'diasvencimento'=>$dados['diasVencimento'],
+            // 'apelido'=>$dados['apelido'],
+            // 'diasvencimento'=>$dados['diasVencimento'],
             'dtvencimento'=>$dados['dtVencimento'],
-            'csemail'=>$dados['email'],
+            // 'csemail'=>$dados['email'],
             'handle'=>$dados['handle'],
             'csnome'=>$dados['nome'],
-            'cssenha'=>$dados['senha'],
+            // 'cssenha'=>$dados['senha'],
             'empresa_id'=>$dados['empresa']
         ]);
     }

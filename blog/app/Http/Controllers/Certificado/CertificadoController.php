@@ -49,7 +49,9 @@ class CertificadoController extends Controller
         $dados = $request->all();
         $dados['empresa'] = $user->empresa_id;
         $this->certificado->cadastro($dados);
-        return response()->json(true);
+        return response()->json([
+            'message'=>'Cadastro realizado com sucesso.'
+        ]);
     }
 
     /**
