@@ -316,7 +316,7 @@ $(document).ready(function(){
                 'token_sh':'3048136792bc6c57aecab949f3f79b74',
                 'empregador':`${window.Laravel.empresa.cnpj}`
             },
-            success: function(retorno){
+            success: function(retorno){ 
                 deleter(id)
                 Swal.fire({
                     position: 'center',
