@@ -42,10 +42,10 @@ class notificacaoUsuarios extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->greeting('palavra chaver:'.$this->senha)
-                    ->action('Notification Action', route('dados.pessoais',$this->usuario->id))
-                    ->line('Thank you for using our application!');
+                    ->line('Cadastramento usuário.')
+                    ->greeting('Usuario:'.$this->usuario->name.'<br>Senha:'.$this->senha)
+                    ->action('Dados pessoais', route('dados.pessoais',$this->usuario->id))
+                    ->line('Obrigado por usa o sistema!');
     }
 
     /**

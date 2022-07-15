@@ -157,7 +157,12 @@ class FaturaController extends Controller
         $tomador = $this->tomador->where('id',$dados['tomador'])->with('taxa')->first();
         $fatura1 =  $this->valorcalculor->producaoFaturaIn($dados,$sim);
         $fatura2 =  $this->valorcalculor->producaoFatura($dados,$nao);
-        $tabelapreco = $this->tabelapreco->where('tomador_id',$dados['tomador'])->get();
+        $tabelapreco = $this->tabelapreco
+        ->where([
+            ['tomador_id',$dados['tomador']],
+            ['tsano',date('Y',strtotime($today))]
+        ])
+        ->get();
         $folhar = $this->folhar->where([
             ['empresa_id',$user->empresa_id],
             ['fsinicio','>=',$dados['ano_inicial']],
@@ -311,8 +316,8 @@ class FaturaController extends Controller
         }
 
         $producao['descricao'] = 'Federação';
-        $producao['indice'] = 1.99;
-        $producao['valor'] = $subtotalA * (1.99/100);
+        $producao['indice'] = $tomador->taxa[0]->tftaxafed;
+        $producao['valor'] = $subtotalA * ($tomador->taxa[0]->tftaxafed/100);
         $producao['fatura'] = $faturas['id'];
         $this->faturaprincipal->cadastro($producao);
         $totalbruto += $producao['valor'];
