@@ -118,7 +118,7 @@ setInterval(() => {
 function gerarxml_trabalhador(dados,trabalhador,nome){
 
     $.ajax({
-        url: "https://api.tecnospeed.com.br/esocial/v1/evento/gerar/xml",
+        url: "https://api.tecnospeed.com.br/esocial/v1/evento/enviar/tx2",
         type: "POST",
         data: dados,
         // dataType: 'json',

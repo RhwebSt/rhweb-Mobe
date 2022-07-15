@@ -98,49 +98,76 @@ $(document).ready(function(){
                         },
                         success: function(retorno){
                             dados = retorno;
+                           
                         },
                         error:function(retorno){
                             dados = retorno;
                             return  `<span class="badge bg-danger">${retorno.responseJSON.error.message}</span>`
                         }
                     });
+                   
                     if (dados.data.eventos.length < 1) {
-                        dados.data.status_envio.mensagem.forEach(element => {
-                            dados += `${element}<br><br>`
-                        });
-                        return erros(dados,row.folhar_id)
-                    }
-                    if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
-                        dados.data.eventos[0].ocorrencias.forEach(element => {
-                            dados += `${element.descricao}<br><br>`
-                        });
-                        $.ajax({
-                            url: `${window.Laravel.esocial.update}/${dados.data.id}`,
-                            type: "PUT",
-                            data: {
-                                id:dados.data.id,
-                                codigo:dados.data.eventos[0].status.codigo,
-                                status:dados.data.eventos[0].status.mensagem
-                            },
-                            // dataType: 'json',
-                            // processData: false,  
-                            // async:false,
-                            headers: {
-                                'X-CSRF-TOKEN': window.Laravel.csrf
-                                // 'content-type':'text/tx2',
-                                // 'cnpj_sh':'34350915000149',
-                                // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
-                                // 'empregador':'34350915000149'
-                            },
-                            success: function(retorno){
-                                // console.log(retorno);
-                            
+                        if (dados.data.status_envio.codigo == 1) {
+                            dados.data.status_envio.mensagem.forEach(element => {
+                                dados += `${element}<br><br>`
+                            });
+                          
+                            if (row.esnome == 'S1020') {
+                                return erros(dados,row.folhar_id)
                             }
-                        });
-                        return erros(dados,row.folhar_id)
+                            if (row.esnome == 'S2300') {
+                                return erros(dados,row.folhar_id)
+                            }
+                            if (row.esnome == 'S1200') {
+                                return erros(dados,row.folhar_id)
+                            }
+                        }
+                        
                     }else{
-                        return`<span class="badge bg-warning text-black">Em Processamento</span>`
+                        if (dados.data.eventos[0].status.codigo == 411) {
+                            if (row.esnome == 'S1020') {
+                                return erros(dados.data.eventos[0].status.mensagem,row.tomador_id);
+                            }
+                            if (row.esnome == 'S2300') {
+                                return erros(dados.data.eventos[0].status.mensagem,row.trabalhador_id);
+                            }
+                            if (row.esnome == 'S1200') {
+                                return erros(dados.data.eventos[0].status.mensagem,row.folhar_id);
+                            }
+                        }
                     }
+                    // if (typeof dados.data.eventos[0].ocorrencias !== 'undefined') {
+                    //     dados.data.eventos[0].ocorrencias.forEach(element => {
+                    //         dados += `${element.descricao}<br><br>`
+                    //     });
+                    //     $.ajax({
+                    //         url: `${window.Laravel.esocial.update}/${dados.data.id}`,
+                    //         type: "PUT",
+                    //         data: {
+                    //             id:dados.data.id,
+                    //             codigo:dados.data.eventos[0].status.codigo,
+                    //             status:dados.data.eventos[0].status.mensagem
+                    //         },
+                    //         // dataType: 'json',
+                    //         // processData: false,  
+                    //         // async:false,
+                    //         headers: {
+                    //             'X-CSRF-TOKEN': window.Laravel.csrf
+                    //             // 'content-type':'text/tx2',
+                    //             // 'cnpj_sh':'34350915000149',
+                    //             // 'token_sh':'3048136792bc6c57aecab949f3f79b74',
+                    //             // 'empregador':'34350915000149'
+                    //         },
+                    //         success: function(retorno){
+                    //             // console.log(retorno);
+                            
+                    //         }
+                    //     });
+                    //     return erros(dados,row.folhar_id)
+                    // }else{
+                    //     return`<span class="badge bg-warning text-black">Em Processamento</span>`
+                    // }
+                    
                 }else{
                     let url = '';
                     let id = '';

@@ -78,11 +78,11 @@ class LoginController extends Controller
             $user = $this->user->where('name', $dados['user'])->with('empresa.user')->first();
         
             if (!$user->empresa_id) {
-                return redirect()->back()->withInput()->withErrors(['mensagem'=>'Você precissa informa e sua empresa.']);
+                return redirect()->back()->withErrors(['empresa'=>route('user.edit',$user->id)]);
             }
             return redirect()->route('home.index');
         } 
-        return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Erro ao realizar o login do usuário. Tente novamente.']);
+        return redirect()->route('login.create')->withInput()->withErrors(['mensagem'=>'Este usuario não esta cadastrado.']);
     }
  
     /**

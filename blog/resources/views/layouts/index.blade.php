@@ -77,7 +77,8 @@
                 'id'=>$user->empresa_id,
                 'cnpj'=>str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj),
                 'pesquisa'=>url('empresa/pesquisa'),
-                'lista'=>url('empresa/lista')
+                'lista'=>url('empresa/lista'),
+                'foto'=>url('foto/editer')
             ],
             'csrf'=>csrf_token(),
             'esocial'=>[

@@ -26,10 +26,10 @@
                                     })
                                     var myFormData = new FormData();
                                     myFormData.append('image_file', e.target.result);
-                                    myFormData.append('_token','{{ csrf_token() }}')
-                                    myFormData.append('empresa',"{{$user->empresa}}")
+                                    myFormData.append('_token',`${window.Laravel.csrf}`)
+                                    myFormData.append('empresa',`${window.Laravel.empresa.id}`)
                                     $.ajax({
-                                        url: "{{url('foto/editer')}}",
+                                        url: `${window.Laravel.empresa.foto}`,
                                         type: 'POST',
                                         data: myFormData,
                                         cache: false,

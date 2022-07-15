@@ -43,14 +43,21 @@
                     <span class="errorInput">{{ $message }} <i class="fad fa-exclamation-triangle"></i></span>
                 @enderror
                 
-                @error('password')
+                @error('password') 
                     <span class="errorInput">{{ $message }} <i class="fad fa-exclamation-triangle"></i></span>
                 @enderror
+
+               
                 
                 <div class="div-log">
                   <img class="logo-login" src="{{url('imagem/NewLogoBrancaRh.png')}}" alt="">
                 </div>
-
+                @error('mensagem') 
+                    <span class="errorInput">{{ $message }} <i class="fad fa-exclamation-triangle"></i></span>
+                @enderror
+                @error('empresa') 
+                    <span class="errorInput">Você não cadastrou sua empresa. <a href="{{ $message }}">Click aqui</a><i class="fad fa-exclamation-triangle"></i></span>
+                @enderror
                 <div class="col-12 mb-2">
                   <label class="form-label " for="usuario"><i class="fad fa-user"></i> Usuário</label>
                   <input type="text" id="usuario" name="user" class="form-control usuario @error('user') is-invalid @enderror">

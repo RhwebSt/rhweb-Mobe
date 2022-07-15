@@ -92,7 +92,7 @@ $.ajax({
 $.ajax({
     url: `${window.Laravel.administrador.categoria}`,
     type: 'get',
-    contentType: 'application/json',
+    contentType: 'application/json', 
     success: function(data) {
         let nome = ''
         data.forEach(element => {
@@ -206,4 +206,4 @@ $.ajax({
       $('#pais_nascimento_list').html(paisnascimento)
       $('#pais_nacionalidade_list').html(paisnascimento)
     }
-    paisnascimentolista(pais__nascimento);
+    // paisnascimentolista(pais__nascimento);

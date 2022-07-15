@@ -239,7 +239,7 @@
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-md-6"> 
                 <label for="pais__nascimento" class="form-label">País de Nascimento</label>
                 <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nascimento[0]->nsnaturalidade}}">
                 @error('pais__nascimento')
@@ -582,10 +582,12 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="cbo" class="form-label letter__color">CBO</label>
-                                      <input type="text" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
+                                      <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
                                       @error('cbo')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
+                                      <datalist id="cbo_list">
+                                          </datalist>
                                     </div>
                                 
                                 
