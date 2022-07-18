@@ -73,8 +73,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     Route::get('cadastro/cartao/ponto/{id}/{domingo}/{sabado}/{diasuteis}/{data}/{boletim}/{tomador}','BoletimCartaoPonto\\RelatorioCartaoPontoController@relatorioCartaoPonto')->name('cadastrocartaoponto.relatoriocartaoponto');
     // ->middleware(['permission:mbcpr15555738']);
 
-    Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo')
-    ->middleware(['permission:mbctc15555738']);
+    Route::get('tabela/cartao/ponto/novo','TabCartaoPonto\\TabCartaoPontoController@create')->name('tabela.cartao.ponto.novo');
+    // ->middleware(['permission:mbctc15555738']);
     Route::get('tabela/cartao/ponto/lista','TabCartaoPonto\\TabCartaoPontoController@lista')->name('tabela.cartao.ponto.lista');
     // ->middleware(['permission:mbctc15555738']);
     Route::post('tabela/cartao/ponto/cadastra','TabCartaoPonto\\TabCartaoPontoController@store')->name('tabela.cartao.ponto.cadastro');

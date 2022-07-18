@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Desconto;
 
+use App\Rules\DescontoFolhar;
 use Illuminate\Foundation\Http\FormRequest;
 
 class Validacao extends FormRequest
@@ -24,7 +25,7 @@ class Validacao extends FormRequest
     public function rules()
     {
         return [
-            // 'competencia' => 'required|max:20',
+            // 'competencia' => ['required',new DescontoFolhar],
             // 'descricao'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             // 'quinzena'=>'required|max:17|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
             // 'valor'=>'required',

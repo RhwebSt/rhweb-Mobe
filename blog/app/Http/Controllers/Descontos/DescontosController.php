@@ -183,38 +183,26 @@ class DescontosController extends Controller
     {
         $dados = $request->all();
         $folhar = $this->folhar
-        ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
-        ->select('folhars.id')
         ->where(function($query) use ($dados){
             if ($dados['quinzena'] === '2 - Segunda') {
                 $datainicio = $dados['competencia'].'-16';
                 $datafinal = $dados['competencia'].'-31';
-                // dd($datainicio,$dados['quinzena']);
                 $query->where([
-                    ['folhars.empresa_id', $dados['empresa']],
-                    ['base_calculos.trabalhador_id',$dados['trabalhador']],
-                    ['base_calculos.tomador_id',null]
+                    ['empresa_id', $dados['empresa']],
                 ])
-                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal]);
-                // ->where('folhars.fsinicio','>',$datainicio)
-                // ->where('folhars.fsfinal','<=',$datafinal);
-               
+                ->whereBetween('fsfinal',[$datainicio,$datafinal]);
             }else{
                 $datainicio = $dados['competencia'].'-01';
                 $datafinal = $dados['competencia'].'-15';
                 $query->where([
-                    ['folhars.empresa_id', $dados['empresa']],
-                    ['base_calculos.trabalhador_id',$dados['trabalhador']],
-                    ['base_calculos.tomador_id',null]
+                    ['empresa_id', $dados['empresa']],
                 ])
-                ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal]);
+                ->whereBetween('fsfinal',[$datainicio,$datafinal]);
             }
-        })->first();
-    
+        })->count();
         if ($folhar) {
             return redirect()->back()->withInput()->withErrors(['false'=>'A folha já foi cálculada nesta quizena.']);
         }
-       
         try {
             $descontos = $this->desconto->cadastro($dados);
             return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
@@ -261,27 +249,6 @@ class DescontosController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
-        
-        // $request->validate([
-        //     'competencia' => 'required|max:20',
-        //     'descricao'=>'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-        //     'quinzena'=>'required|max:17|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ 0-9_\-().]*$/',
-        //     'valor'=>'required',
-        // ],
-        // [
-        //     'competencia.required'=>'O campo não pode estar vazio.',
-        //     'competencia.max'=>'O campo não ter mais de 100 caracteres.',
-        
-        //     'descricao.required'=>'O campo não pode estar vazio.',
-        //     'descricao.max'=>'O campo não ter mais de 100 caracteres.',
-        //     'descricao.regex'=>'O campo possui um formato inválido.',
-
-        //     'quinzena.required'=>'O campo não pode estar vazio.',
-        //     'quinzena.max'=>'O campo não ter mais de 100 caracteres.',
-        //     'quinzena.regex'=>'O campo possui um formato inválido.',
-        //     'valor.required'=>'O campo não pode estar vazio.',
-        // ]
-        // );
         try {
             $descontos = $this->desconto->editar($dados,$id);
             return redirect()->back()->withSuccess('Atualizado com sucesso.');
@@ -299,6 +266,28 @@ class DescontosController extends Controller
     public function destroy($id)
     {
         $id = base64_decode($id);
+        $user = auth()->user();
+        $desconto = $this->desconto->where('id',$id)->first();
+        $segunda = $this->folhar
+        ->where(function($query) use ($desconto,$user){
+            $datainicio = $desconto->dscompetencia.'-16';
+            $datafinal =$desconto->dscompetencia.'-31';
+            $query->where('empresa_id',$user->empresa_id)->whereBetween('fsfinal',[$datainicio,$datafinal]);
+           
+        })->count();
+        $primeira = $this->folhar
+        ->where(function($query) use ($desconto,$user){
+            $datainicio = $desconto->dscompetencia.'-01';
+            $datafinal = $desconto->dscompetencia.'-15';
+            $query->where('empresa_id',$user->empresa_id)->whereBetween('fsfinal',[$datainicio,$datafinal]);
+        })->count();
+       
+        if ($primeira &&  $desconto->dsquinzena === '1 - Primeira') {
+            return redirect()->back()->withErrors(['false'=>'A folha já foi cálculada nesta quizena']);
+        }
+        if ($segunda &&  $desconto->dsquinzena === '2 - Segunda') {
+            return redirect()->back()->withErrors(['false'=>'A folha já foi cálculada nesta quizena']);
+        } 
         try {
             $descontos = $this->desconto->deletar($id);
             return redirect()->back()->withSuccess('Deletado com sucesso.');

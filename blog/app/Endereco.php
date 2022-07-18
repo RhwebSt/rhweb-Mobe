@@ -87,6 +87,34 @@ class Endereco extends Model
             'esnum'=>$dados['numero'],
         ]);
     }
+    public function editarTomador($dados,$id)
+    {
+        return Endereco::where('tomador_id', $id)
+       
+        ->update([
+            'eslogradouro'=>$dados['logradouro'],
+            'esbairro'=>$dados['bairro'],
+            'escep'=>$dados['cep'],
+            'esmunicipio'=>$dados['localidade'],
+            'esuf'=>$dados['uf'],
+            'escomplemento'=>$dados['complemento__endereco'],
+            'esnum'=>$dados['numero'],
+        ]);
+    }
+    public function editarTrabalhador($dados,$id)
+    {
+        return Endereco::where('trabalhador_id', $id)
+       
+        ->update([
+            'eslogradouro'=>$dados['logradouro'],
+            'esbairro'=>$dados['bairro'],
+            'escep'=>$dados['cep'],
+            'esmunicipio'=>$dados['localidade'],
+            'esuf'=>$dados['uf'],
+            'escomplemento'=>$dados['complemento__endereco'],
+            'esnum'=>$dados['numero'],
+        ]);
+    }
     public function editarEmpresa($dados,$id)
     {
         return Endereco::where('empresa_id', $id)

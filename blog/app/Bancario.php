@@ -44,6 +44,32 @@ class Bancario extends Model
             'bspix'=>$dados['pix'],
         ]);
     }
+    public function editarTomador($dados,$id)
+    {
+        return Bancario::where('tomador_id', $id)
+        // ->orWhere('trabalhador', $id)
+        ->update([
+            // 'bstitular'=>$dados['nome__conta'],
+            'bsbanco'=>$dados['banco'],
+            'bsagencia'=>$dados['agencia'],
+            'bsoperacao'=>$dados['operacao'],
+            'bsconta'=>$dados['conta'],
+            'bspix'=>$dados['pix'],
+        ]);
+    }
+    public function editarTrabalhador($dados,$id)
+    {
+        return Bancario::where('trabalhador_id', $id)
+        // ->orWhere('trabalhador', $id)
+        ->update([
+            // 'bstitular'=>$dados['nome__conta'],
+            'bsbanco'=>$dados['banco'],
+            'bsagencia'=>$dados['agencia'],
+            'bsoperacao'=>$dados['operacao'],
+            'bsconta'=>$dados['conta'],
+            'bspix'=>$dados['pix'],
+        ]);
+    }
     public function first($id,$campo)
     {
         return Bancario::where($campo,$id)

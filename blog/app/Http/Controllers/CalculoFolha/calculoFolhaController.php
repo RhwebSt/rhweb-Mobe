@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Folhar\Validacao;
 use DataTables;
 use App\Folhar;
 use App\BaseCalculo;
@@ -35,7 +36,7 @@ class calculoFolhaController extends Controller
         // dd($tomadores,$trabalhadores);
         return view('calculofolha.index',compact('empresa','user','folhas','trabalhadores','tomadores'));
     }
-    public function store(Request $request)
+    public function store(Validacao $request)
     {
         $dados = $request->all();
         $user = auth()->user();
@@ -43,11 +44,7 @@ class calculoFolhaController extends Controller
         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
             return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
         }
-        $request->validate([
-            'ano_inicial'=>'required|max:10',
-            'ano_final'=>'required|max:10',
-            'competencia'=>'required|max:10'
-        ]);
+      
         $dados = $request->only('ano_inicial','ano_final','competencia');
         return redirect()->route('calculo.folha.geral',$dados);
     }

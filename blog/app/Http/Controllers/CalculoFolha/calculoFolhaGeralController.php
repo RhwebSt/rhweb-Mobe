@@ -58,9 +58,14 @@ class calculoFolhaGeralController extends Controller
     {
         $user = auth()->user();
         
-        $date1 = Carbon::createFromFormat('Y-m-d', $datainicio);
+        $date1 = Carbon::createFromFormat('Y-m-d', $competencia.'-01');
         $date2 = Carbon::createFromFormat('Y-m-d', $datafinal);
         $quantdias = $date2->diffInDays($date1); 
+        $df = date('Y-m',strtotime($datafinal));
+        $com =  date('Y-m',strtotime($competencia));
+        if (strtotime($df) > strtotime($com)) {
+            return redirect()->back()->withInput()->withErrors(['competencia'=>'Só é válida data atuais!']);
+        }
         $inss_lista = $this->inss->where('isano',date('Y',strtotime($datafinal)))->get();
         $irrf_lista = $this->irrf->where('irsano',date('Y',strtotime($datafinal)))->get();
         if (count($inss_lista) < 1) {
@@ -69,7 +74,11 @@ class calculoFolhaGeralController extends Controller
         if (count($irrf_lista) < 1) {
             return redirect()->back()->withErrors(['false'=>'O irrf '.date('Y',strtotime($datafinal)).' não está cadastrado. Entre em contato com suporte.']);
         }
-        $folhar = $this->folhar->whereBetween('fsfinal',[$datainicio,$datafinal])->where('empresa_id',$user->empresa_id)->count();
+        if (date('d',strtotime($datafinal)) <= 15) {
+            $folhar = $this->folhar->whereBetween('fsfinal',[$datainicio,$datafinal])->where('empresa_id',$user->empresa_id)->count();
+        }else{
+            $folhar = $this->folhar->whereBetween('fsfinal',[date('Y-m',strtotime($datainicio)).'-16',$datafinal])->where('empresa_id',$user->empresa_id)->count();
+        }
         if ($folhar) {
             return redirect()->back()->withErrors(['false'=>'Ja existe uma folha lançada neste periodo.']);
         }

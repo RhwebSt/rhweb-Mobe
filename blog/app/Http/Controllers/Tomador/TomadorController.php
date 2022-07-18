@@ -379,8 +379,8 @@ class TomadorController extends Controller
         }
         try {
             $tomadors = $this->tomador->editar($dados,$id);
-            $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
-            $bancarios = $this->bancario->editar($dados,$dados['bancario']);
+            $enderecos = $this->endereco->editarTomador($dados,$id); 
+            $bancarios = $this->bancario->editarTomador($dados,$id);
             // $retencaofaturas = $retencaofatura->editar($dados,$id);
             $cartaoponto = $this->cartaoponto->editar($dados,$id);
             $parametrosefips = $this->parametrosefip->editar($dados,$id);

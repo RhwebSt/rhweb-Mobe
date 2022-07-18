@@ -394,8 +394,8 @@ class TrabalhadorController extends Controller
         }
         try {
             $trabalhadors = $this->trabalhador->editar($dados,$id);
-            $enderecos = $this->endereco->editar($dados,$dados['endereco']); 
-            $bancarios = $this->bancario->editar($dados,$dados['bancario']);
+            $enderecos = $this->endereco->editarTrabalhador($dados,$id); 
+            $bancarios = $this->bancario->editarTrabalhador($dados,$id);
             $nascimentos = $this->nascimento->editar($dados,$id);
             $categorias = $this->categoria->editar($dados,$id);
             $documentos = $this->documento->editar($dados,$id);
