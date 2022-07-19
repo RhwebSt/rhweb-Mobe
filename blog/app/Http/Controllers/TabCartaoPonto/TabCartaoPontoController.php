@@ -190,12 +190,13 @@ class TabCartaoPontoController extends Controller
         $dados = $request->all(); 
         // dd($dados);
         $user = auth()->user();
-        $permissions = Permission::where('name','like','%'.'mbctc'.'%')->first(); 
-         if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbctc'.'%')->first(); 
+        //  if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
        
         $today = Carbon::today();
+       
         if (strtotime($dados['data']) > strtotime($today) ) {
             return redirect()->back()->withInput()->withErrors(['data'=>'Só é válida data atuais!']);
         }
@@ -290,10 +291,13 @@ class TabCartaoPontoController extends Controller
         ->first();
         $folhar = $this->folhar
         ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
-        ->first();
-        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar. Pos já existe um folhar lançada']);
+        ->get();
+        foreach ($folhar as $key => $folhas) {
+            if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível atualizar. Pos já existe um folhar lançada']);
+            }
         }
+       
         $search = request('search');
         $empresa = $this->empresa->where('id',$user->empresa_id)->first();
         $lancamentotabelas = $this->lancamentotabela->where(function($query) use ($search,$user){
@@ -390,10 +394,10 @@ class TabCartaoPontoController extends Controller
             $user = Auth::user();
             $id = base64_decode($id);
             try {
-            $permissions = Permission::where('name','like','%'.'mbcte'.'%')->first(); 
-            if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-                return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-            }
+            // $permissions = Permission::where('name','like','%'.'mbcte'.'%')->first(); 
+            // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+            // }
             $today = Carbon::today();
             $lancamentotabelas = $this->lancamentotabela
             ->where([
@@ -404,9 +408,11 @@ class TabCartaoPontoController extends Controller
             ->first();
             $folhar = $this->folhar
             ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
-            ->first();
-            if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
-                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+            ->get();
+            foreach ($folhar as $key => $folhas) {
+                if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
+                    return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+                }
             }
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {

@@ -202,10 +202,9 @@
                 <table>
                     <tr>
                         <td class="name__title text-center text-bold">
-                            <?php
-                                $banco = explode('-',$folhars[0]->bsbanco)
-                            ?>
-                            {{$banco[1]}}
+                           
+                            {{$folhars[0]->bsbanco}}
+                           
                         </td>
                     </tr>
                 </table>

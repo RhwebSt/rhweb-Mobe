@@ -120,21 +120,22 @@ class calculoFolhaGeralController extends Controller
             ->whereBetween('lsdata',[$datainicio,$datafinal])
             // ->where('tomador_id',$tomadores->id)
             ->get();
+        
         // dd($lancamentotabela);
         if (count($lancamentotabela) < 1) {
+            $this->folhar->deletar($folhar['id']);
             return redirect()->back()->withErrors(['false'=>'Não a boletins lançado neste periodo.']);
         }
+        $salario = 0;
+        $dados=[
+            'id'=>[],
+            'codigos'=>[],
+            'dia' => [],
+            'valor' =>[],
+            'quantidade' => [],
+            'descricao' => []
+        ];
         foreach ($lancamentotabela as $key => $lancamentotabelas) {
-            $salario = 0;
-            $dados=[
-                'id'=>[],
-                'codigos'=>[],
-                'dia' => [],
-                'valor' =>[],
-                'quantidade' => [],
-                'descricao' => []
-            ];
-           
             // $lancamentotabela = $this->lancamentotabela
             // ->with(['lancamentorublica.lancamentotabela:id,lsdata','bolcartaoponto.lancamentotabela:id,lsdata'])
             // ->whereBetween('lsdata',[$datainicio,$datafinal])
@@ -183,7 +184,7 @@ class calculoFolhaGeralController extends Controller
                 }
             }
             foreach ($lancamentotabelas->lancamentorublica as $key => $lancamentorublicas) {
-                if ($lancamentorublicas->lsdescricao == 'hora normal') {
+                if ($lancamentorublicas->lsdescricao == 'hora normal' ) {
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
                     array_push($dados['quantidade'], self::calcularhoras($lancamentorublicas->lsquantidade));
@@ -191,35 +192,35 @@ class calculoFolhaGeralController extends Controller
                     array_push($dados['descricao'], $lancamentorublicas->lsdescricao);
                     array_push($dados['codigos'], $lancamentorublicas->licodigo);
                    
-                }elseif ($lancamentorublicas->lsdescricao == 'hora extra 50%') {
+                }elseif ($lancamentorublicas->lsdescricao == 'hora extra 50%' ) {
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
                     array_push($dados['quantidade'], self::calcularhoras($lancamentorublicas->lsquantidade));
                     array_push($dados['dia'], date('d',strtotime($lancamentorublicas->lancamentotabela->lsdata)));
                     array_push($dados['descricao'], $lancamentorublicas->lsdescricao);
                     array_push($dados['codigos'], $lancamentorublicas->licodigo);
-                }elseif ($lancamentorublicas->lsdescricao == 'hora extra 100%') {
+                }elseif ($lancamentorublicas->lsdescricao == 'hora extra 100%' ) {
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
                     array_push($dados['quantidade'], self::calcularhoras($lancamentorublicas->lsquantidade));
                     array_push($dados['dia'], date('d',strtotime($lancamentorublicas->lancamentotabela->lsdata)));
                     array_push($dados['descricao'], $lancamentorublicas->lsdescricao);
                     array_push($dados['codigos'], $lancamentorublicas->licodigo);
-                }elseif ($lancamentorublicas->lsdescricao == 'adicional noturno') {
+                }elseif ($lancamentorublicas->lsdescricao == 'adicional noturno' ) {
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
                     array_push($dados['quantidade'], self::calcularhoras($lancamentorublicas->lsquantidade));
                     array_push($dados['dia'], date('d',strtotime($lancamentorublicas->lancamentotabela->lsdata)));
                     array_push($dados['descricao'], $lancamentorublicas->lsdescricao);
                     array_push($dados['codigos'], $lancamentorublicas->licodigo);
-                }elseif ($lancamentorublicas->lsdescricao == 'diaria normal') {
+                }elseif ($lancamentorublicas->lsdescricao == 'diaria normal' ) {
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
                     array_push($dados['quantidade'], self::calcularhoras($lancamentorublicas->lsquantidade));
                     array_push($dados['dia'], date('d',strtotime($lancamentorublicas->lancamentotabela->lsdata)));
                     array_push($dados['descricao'], $lancamentorublicas->lsdescricao);
                     array_push($dados['codigos'], $lancamentorublicas->licodigo);
-                }elseif ($lancamentorublicas->lsdescricao == 'gratificação') {
+                }elseif ($lancamentorublicas->lsdescricao == 'gratificação' ) {
                     $dsr =  $this->rublica->buscaRublicaUnidade('gratificação');
                     array_push($dados['id'],$lancamentorublicas->trabalhador_id);
                     array_push($dados['valor'], self::calculovalores($lancamentorublicas->lsquantidade,$lancamentorublicas->lfvalor));
@@ -237,6 +238,8 @@ class calculoFolhaGeralController extends Controller
                     array_push($dados['codigos'], $dsr->rsrublica);
                 }
             }
+        }
+            // dd($dados['id']);
             $trabalhador = $this->trabalhador->whereIn('id',$dados['id'])
             // ->select('')
             ->with('depedente')->get();
@@ -508,6 +511,8 @@ class calculoFolhaGeralController extends Controller
                             }
                         }
                     }
+                   
+                    
                     if ($boletim['servico']) {
                         
                     
@@ -1138,7 +1143,7 @@ class calculoFolhaGeralController extends Controller
                     }
             }
            
-        }
+        
        
        $rublica = $this->rublica->get();
        $irrf_rublica =  $this->rublica->buscaRublicaUnidade('IRRF');
@@ -1504,7 +1509,14 @@ class calculoFolhaGeralController extends Controller
     }
     public function destroy($id)
     {
-        
+            $user = auth()->user();
+            $today = Carbon::today();
+            $folhar = $this->folhar->where('id',$id)->first();
+            $df = date('Y-m',strtotime($today));
+            $com =  date('Y-m',strtotime($folhar->fscompetencia));
+            if (strtotime($df) != strtotime($com)) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não e porssível mas deletar esta folhar!']);
+            }
             // $basecalculo_id = $this->basecalculo->buscaId($id);
             // $base_id = [];
             // foreach($basecalculo_id as $i=>$basevalor){
@@ -1513,12 +1525,13 @@ class calculoFolhaGeralController extends Controller
             // $this->valorcalculo->deletar($base_id);
             // $this->relacaodia->deletar($base_id);
             // $this->basecalculo->deletar($base_id);
-            $user = auth()->user();
-            $permissions = Permission::where('name','like','%'.'mcfe'.'%')->first();
+           
+            // $permissions = Permission::where('name','like','%'.'mcfe'.'%')->first();
             
-            if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-                return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-            }
+            // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+            //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+            // } 
+           
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {

@@ -32,7 +32,7 @@ class Validacao implements Rule
             $folhar30 = $this->folhar
             ->where(function($query) use ($value,$user){
                 $query->where('empresa_id',$user->empresa_id)
-                ->whereBetween('fsfinal',[date('Y-m',strtotime($value)).'-01',date('Y-m',strtotime($value)).'-31']);
+                ->whereBetween('fsfinal',[date('Y-m',strtotime($value)).'-16',date('Y-m',strtotime($value)).'-31']);
             })->count();
             if ($folhar30) {
                 return false;

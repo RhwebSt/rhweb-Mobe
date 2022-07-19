@@ -301,9 +301,11 @@ class CadastroCartaoPontoController extends Controller
         ->first();
         $folhar = $this->folhar
         ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
-        ->first();
-        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar. Pos já existe um folhar lançada']);
+        ->get();
+        foreach ($folhar as $key => $folhas) {
+            if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi porssível atualizar. Pos já existe um folhar lançada']);
+            }
         }
         // $valorrublica = new ValoresRublica;
         // $lancamentotabela = new Lancamentotabela;
@@ -394,10 +396,10 @@ class CadastroCartaoPontoController extends Controller
         $user = Auth::user();
         $id =  base64_decode($id);
         $today = Carbon::today();
-        $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $lancamentotabelas = $this->lancamentotabela
         ->where([
             ['lsstatus','D'],
@@ -407,9 +409,11 @@ class CadastroCartaoPontoController extends Controller
         ->first();
         $folhar = $this->folhar
         ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
-        ->first();
-        if(date('Y-m',strtotime($folhar->fscompetencia)) !== date('Y-m',strtotime($today))){
-            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+        ->get();
+        foreach ($folhar as $key => $folhas) {
+            if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+            }
         }
         $this->valorrublica->where('empresa_id', $user->empresa_id)
         ->chunkById(100, function ($valorrublica) use ($user) {

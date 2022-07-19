@@ -163,11 +163,22 @@ class FaturaController extends Controller
             ['tsano',date('Y',strtotime($today))]
         ])
         ->get();
-        $folhar = $this->folhar->where([
-            ['empresa_id',$user->empresa_id],
-            ['fsinicio','>=',$dados['ano_inicial']],
-            ['fsfinal','<=',$dados['ano_final']]
-        ])->first();
+        if (date('d',strtotime($dados['ano_final']) > 15)) {
+            $folhar = $this->folhar->where([
+                ['empresa_id',$user->empresa_id],
+                ['fsinicio','>=',date('d',strtotime($dados['ano_inicial'])).'-16'],
+                ['fsfinal','<=',$dados['ano_final']]
+            ])->first();
+        }else{
+            $folhar = $this->folhar->where([
+                ['empresa_id',$user->empresa_id],
+                ['fsinicio','>=',$dados['ano_inicial']],
+                ['fsfinal','<=',$dados['ano_final']]
+            ])->first();
+        }
+        if (!$folhar) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não à folhar lançada neste periodo.']);
+        }
         // dd($fatura1,$fatura2,$tabelapreco,$sim,$nao,$dados);
         if (count($fatura1) < 1 || count($fatura2) < 1 || count($tabelapreco) < 1) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não à dados suficientes para gerar a fatura.']);
@@ -694,6 +705,13 @@ class FaturaController extends Controller
             // $this->faturademostrativa->deletarFatura($id);
             // $this->faturarublica->deletarFatura($id);
             // $this->faturatotal->deletarFatura($id);
+            $today = Carbon::today();
+            $fatura = $this->fatura->where('id',$id)->first();
+            $df = date('Y-m',strtotime($today));
+            $com =  date('Y-m',strtotime($fatura->fsfinal));
+            if (strtotime($df) != strtotime($com)) {
+                return redirect()->back()->withInput()->withErrors(['false'=>'Não e porssível mas deletar esta fatura!']);
+            }
             $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {

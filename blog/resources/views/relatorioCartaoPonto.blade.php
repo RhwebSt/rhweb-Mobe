@@ -271,35 +271,35 @@
                             <td class="small__font text-center border-bottom valor__padrao">Base Empresa</td>
                             <td class="small__font text-center border-bottom valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1000)
+                                    @if($tabelapreco->tsrubrica == 1000 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center border-bottom valor__padrao">R$
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1002)
+                                    @if($tabelapreco->tsrubrica == 1002 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center border-bottom valor__padrao">R$
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1003)
+                                    @if($tabelapreco->tsrubrica == 1003 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center border-bottom valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1004)
+                                    @if($tabelapreco->tsrubrica == 1004 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center border-bottom valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1005)
+                                    @if($tabelapreco->tsrubrica == 1005 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tstomvalor, 2, ',', '.')}}
                                     @endif
                                 @endforeach
@@ -310,35 +310,35 @@
                             <td class="small__font text-center valor__padrao">Base Folha</td>
                             <td class="small__font text-center valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1000)
+                                    @if($tabelapreco->tsrubrica == 1000 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center valor__padrao">R$
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1002)
+                                    @if($tabelapreco->tsrubrica == 1002 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1003)
+                                    @if($tabelapreco->tsrubrica == 1003 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1004)
+                                    @if($tabelapreco->tsrubrica == 1004 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                     @endif
                                 @endforeach
                             </td>
                             <td class="small__font text-center valor__padrao">R$ 
                                 @foreach($tomador->tabelapreco as $tabelapreco)
-                                    @if($tabelapreco->tsrubrica == 1005)
+                                    @if($tabelapreco->tsrubrica == 1005 && $tabelapreco->tsano == date('Y'))
                                         {{number_format((float)$tabelapreco->tsvalor, 2, ',', '')}}
                                     @endif
                                 @endforeach
@@ -428,13 +428,13 @@
                            <?php
                                 $valortotal = 0; 
                                 foreach ($tomador->tabelapreco as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
+                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex && $value->tsano == date('Y')) {
                                         $valortotal += calculovalores($bolcartaopontos->bshoraex,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais){
-                                        $valortotal += calculovalores($bolcartaopontos->horas_normais,$value->tsvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem){
+                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais && $value->tsano == date('Y')){
+                                        $valortotal += calculovalores($bolcartaopontos->horas_normais,$value->tsvalor );
+                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem && $value->tsano == date('Y')){
                                         $valortotal += calculovalores($bolcartaopontos->bshoraexcem,$value->tsvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
+                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno && $value->tsano == date('Y')) {
                                         $valortotal += calculovalores($bolcartaopontos->bsadinortuno,$value->tsvalor);
                                     }
                                 }
@@ -446,13 +446,13 @@
                             <?php
                                 $valortomador = 0;
                                 foreach ($tomador->tabelapreco as $key => $value) {
-                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex) {
+                                    if ($value->tsdescricao == 'hora extra 50%' && $bolcartaopontos->bshoraex  && $value->tsano == date('Y')) {
                                         $valortomador += calculovalores($bolcartaopontos->bshoraex,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais){
+                                    }elseif($value->tsdescricao == 'hora normal' && $bolcartaopontos->horas_normais  && $value->tsano == date('Y')){
                                         $valortomador += calculovalores($bolcartaopontos->horas_normais,$value->tstomvalor);
-                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem){
+                                    }elseif($value->tsdescricao == 'hora extra 100%' && $bolcartaopontos->bshoraexcem && $value->tsano == date('Y')){
                                         $valortomador += calculovalores($bolcartaopontos->bshoraexcem,$value->tstomvalor);
-                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno) {
+                                    }elseif ($value->tsdescricao == 'adicional noturno' && $bolcartaopontos->bsadinortuno && $value->tsano == date('Y')) {
                                         $valortomador += calculovalores($bolcartaopontos->bsadinortuno,$value->tstomvalor);
                                     }
                                 }
