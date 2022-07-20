@@ -15,10 +15,12 @@ class FrequenciaController extends Controller
     }
     public function index($id)
     {
-        $trabalhadors = $this->trabalhador->where('id',$id)
-        ->with(['empresa:id,esnome,esfoto,escnpj','empresa.endereco'])
+        $id = base64_decode($id);
+        $trabalhador = $this->trabalhador->where('id',$id)
+        ->with(['empresa:id,esnome,esfoto,escnpj,estelefone','empresa.endereco'])
         ->first();
-        $pdf = PDF::loadView('controleFrequencia',compact('trabalhadors'));
+        // dd($trabalhador);
+        $pdf = PDF::loadView('controleFrequencia',compact('trabalhador'));
         return $pdf->setPaper('a4')->stream('Frequência.pdf');
     }
 }

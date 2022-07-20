@@ -174,6 +174,8 @@ Route::group(['middleware' => 'autenticacao'], function () {
     // ->middleware(['permission:mdpe15555738']);
     Route::resource('depedente.mostrar','Depedente\\DepedenteController')->only(['index', 'create']);
     // ->middleware(['permission:mdpe15555738']);
+    Route::get('trabalhador/frequencia/{id}','Trabalhador\\FrequenciaController@index')->name('trabalhador.frequencia');
+    // ->middleware(['permission:mtrd15555738']);
 
     Route::get('ficha/registro/trabalhador/{id}','Trabalhador\\fichaRegistroTrabController@fichaRegistroTrabalhador')->name('ficha.registro.trabalhador');
     // ->middleware(['permission:mtr15555738']);

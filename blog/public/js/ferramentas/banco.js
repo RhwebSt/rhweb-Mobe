@@ -1,12 +1,13 @@
 $(document).ready(function(){
-    $('#banco').change(function () {
+    $('#banco-input').change(function () {
+       
         let dados = $(this).val()
         $.ajax({
             url: "https://brasilapi.com.br/api/banks/v1/"+dados,
             type: 'get',
             contentType: 'application/json',
             success: function(data) {
-                $("#banco").removeClass('is-valid').val(`${data.code} - ${data.name}`)
+                $("#banco-input").removeClass('is-valid').val(`${data.code} - ${data.name}`)
                 // $('#menssagem-banco').toogleClass('valid-feedback invalid-feedback')
                 
             },

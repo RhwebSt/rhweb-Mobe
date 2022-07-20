@@ -623,7 +623,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                           <label for="banco" class="form-label letter__color">Banco</label>
-                                          <input type="text" class="form-control @error('banco') is-invalid @enderror" aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" maxlength="30" id="banco" placeholder="digite o número do seu banco">
+                                          <input type="text" class="form-control @error('banco') is-invalid @enderror" aria-describedby="inputGroupPrepend3 menssagem-banco" name="banco" value="{{old('banco')}}" maxlength="30" id="banco-input" placeholder="digite o número do seu banco">
                                           <div id="menssagem-banco" class="valid-feedback">
                                     
                                           </div>

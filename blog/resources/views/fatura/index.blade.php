@@ -57,22 +57,15 @@
                 <h1 class="title__pagina--padrao">Gerar Fatura <i class="fad fa-calculator"></i></h1>
                 
                 <section class="section__search">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <form action="" method="GET">
                             
-                            <div class="d-flex">
-                                
-                                <input placeholder="clique ou digite para pesquisar" class="form-control" value="{{old('pesquisa')}}" list="listapesquisa" name="pesquisa" id="pesquisa">
+                                 <label for="pesquisa" class="mb-2"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Tomador</label>
+                                <input placeholder="clique ou digite para selecionar o tomador" class="form-control" value="{{old('pesquisa')}}" list="listapesquisa" name="pesquisa" id="pesquisa">
                                 <datalist id="listapesquisa"></datalist>
 
                                 <input type="hidden" name="codicao" value="">
-                                
-                                <button type="submit" class="btn botao__search">
-                                    <i class="icon__search fas fa-search fa-md" id="icon"></i>
-                                </button>
 
-                            </div>
-                            
                         </form>
                     </div>
                 </section>

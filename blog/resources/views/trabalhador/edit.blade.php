@@ -71,7 +71,7 @@
             
             <div class="col-md-6">
                 <label for="nome__completo" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{$trabalhador->tsnome}}">
+                <input type="text" class="form-control @error('nome__completo') is-invalid @enderror" name="nome__completo" id="nome__completo" value="{{ old('nome__completo',$trabalhador->tsnome)}}">
                 @error('nome__completo')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -80,7 +80,7 @@
     
             <div class="col-md-6">
                 <label for="nome__social" class="form-label"><input type="checkbox" name="radio_social" id="radio" data-toggle="tooltip" data-placement="top" title="Deseja tornar esse nome como padrão? clique" /> Nome Social (Opcional) </label>
-                <input type="text" class="form-control @error('nome__social') is-invalid @enderror" value="{{$trabalhador->tsnomesocial}}" maxlength="100" name="nome__social" id="nome__social">
+                <input type="text" class="form-control @error('nome__social') is-invalid @enderror" value="{{old('nome__completo',$trabalhador->tsnomesocial)}}" maxlength="100" name="nome__social" id="nome__social">
                 @error('nome__social')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -88,7 +88,7 @@
 
             <div class="col-md-4">
                     <label for="rg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> RG</label>
-                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsnumero:''}}" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? old('rg',$trabalhador->arquivo[0]->dsnumero):old('rg','')}}" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
                     @error('rg')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -96,7 +96,7 @@
             
             <div class="col-md-4">
                   <label for="ufRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> UF <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="UF referente ao RG"></i></label>
-                  <input type="text" class="form-control @error('ufRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsuf:''}}" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
+                  <input type="text" class="form-control @error('ufRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? old('rg',$trabalhador->arquivo[0]->dsuf):old('rg','')}}" name="ufRg" id="ufRg" maxlength="2" placeholder="Ex: SC">
                   @error('ufRg')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -104,7 +104,7 @@
             
             <div class="col-md-4">
                   <label for="dataEmissaoRg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Data de Emissão <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title="Data de emissão do RG"></i></label>
-                  <input type="date" class="form-control @error('dataEmissaoRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? $trabalhador->arquivo[0]->dsemissao:''}}" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
+                  <input type="date" class="form-control @error('dataEmissaoRg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? old('rg',$trabalhador->arquivo[0]->dsemissao):old('rg','')}}" name="dataEmissaoRg" id="dataEmissaoRg" maxlength="15">
                   @error('dataEmissaoRg')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -112,7 +112,7 @@
             
             <div class="col-md-3">
                 <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{$trabalhador->tscpf}}">
+                <input type="text" class="form-control cpf-mask @error('cpf') is-invalid @enderror" name="cpf" id="cpf" maxlength="15" value="{{old('cpf',$trabalhador->tscpf)}}">
                 @error('cpf')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -120,7 +120,7 @@
 
             <div class="col-md-3">
                 <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{$trabalhador->tsmatricula}}" readonly>
+                <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{old('cpf',$trabalhador->tsmatricula)}}" readonly>
                 @error('matricula')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -128,7 +128,7 @@
 
             <div class="col-md-3">
                 <label for="pis" class="form-label">PIS</label>
-                <input type="text" class="form-control @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{$trabalhador->documento[0]->dspis}}">
+                <input type="text" class="form-control @error('pis') is-invalid @enderror" name="pis" id="pis" value="{{old('pis',$trabalhador->documento[0]->dspis)}}">
                 @error('pis')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -232,7 +232,7 @@
 
             <div class="col-md-6">
                 <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{$trabalhador->nascimento[0]->nsnascimento}}">
+                <input type="date" class="form-control @error('data_nascimento') is-invalid @enderror" name="data_nascimento" id="data_nascimento" value="{{old('data_nascimento',$trabalhador->nascimento[0]->nsnascimento)}}">
                 @error('data_nascimento')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -241,7 +241,7 @@
 
             <div class="col-md-6"> 
                 <label for="pais__nascimento" class="form-label">País de Nascimento</label>
-                <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{$trabalhador->nascimento[0]->nsnaturalidade}}">
+                <input type="text" list="pais_nascimento_list" class="form-control @error('pais__nascimento') is-invalid @enderror" name="pais__nascimento" id="pais__nascimento" value="{{old('pais__nascimento',$trabalhador->nascimento[0]->nsnaturalidade)}}">
                 @error('pais__nascimento')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -251,7 +251,7 @@
 
             <div class="col-md-6">
                 <label for="pais__nacionalidade" class="form-label">País de Nacionalidade</label>
-                <input type="text" list="pais_nacionalidade_list" class="form-control @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{$trabalhador->nascimento[0]->nsnacionalidade}}">
+                <input type="text" list="pais_nacionalidade_list" class="form-control @error('pais__nacionalidade') is-invalid @enderror" name="pais__nacionalidade" id="pais__nacionalidade" value="{{old('pais__nacionalidade',$trabalhador->nascimento[0]->nsnacionalidade)}}">
                 @error('pais__nacionalidade')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -260,7 +260,7 @@
 
             <div class="col-md-6">
                 <label for="nome__mae" class="form-label">Nome da Mãe</label>
-                <input type="text" class="form-control @error('nome__mae') is-invalid @enderror" name="nome__mae" id="nome__mae" value="{{$trabalhador->tsmae}}">
+                <input type="text" class="form-control @error('nome__mae') is-invalid @enderror" name="nome__mae" id="nome__mae" value="{{old('nome__mae',$trabalhador->tsmae)}}">
                 @error('nome__mae')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -268,7 +268,7 @@
     
             <div class="col-md-6">
                 <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" id="telefone" value="{{$trabalhador->tstelefone}}">
+                <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" id="telefone" value="{{old('telefone',$trabalhador->tstelefone)}}">
                 @error('telefone')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror
@@ -295,7 +295,7 @@
                                 
                                     <div class="col-md-3 mt-2">
                                       <label for="cep" class="form-label letter__color">Cep</label>
-                                      <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{$trabalhador->endereco[0]->escep}}">
+                                      <input type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" id="cep" value="{{old('cep',$trabalhador->endereco[0]->escep)}}">
                                       @error('cep')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -305,7 +305,7 @@
                                 
                                     <div class="col-md-7 mt-2">
                                       <label for="logradouro" class="form-label letter__color">Rua</label>
-                                      <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{$trabalhador->endereco[0]->eslogradouro}}">
+                                      <input type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" id="logradouro" value="{{old('logradouro',$trabalhador->endereco[0]->eslogradouro)}}">
                                       @error('logradouro')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -313,7 +313,7 @@
                                 
                                     <div class="col-md-2 mt-2">
                                       <label for="numero" class="form-label letter__color">Número</label>
-                                      <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{$trabalhador->endereco[0]->esnum}}">
+                                      <input type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" id="numero" value="{{old('numero',$trabalhador->endereco[0]->esnum)}}">
                                       @error('numero')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -525,7 +525,7 @@
                                 
                                     <div class="col-md-8 mt-2">
                                       <label for="localidade" class="form-label letter__color">Municipio</label>
-                                      <input type="text" class="form-control @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{$trabalhador->endereco[0]->esmunicipio}}">
+                                      <input type="text" class="form-control @error('localidade') is-invalid @enderror" name="localidade" id="localidade" value="{{old('localidade',$trabalhador->endereco[0]->esmunicipio)}}">
                                       @error('localidade')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -533,7 +533,7 @@
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="uf" class="form-label letter__color">UF</label>
-                                      <input type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{$trabalhador->endereco[0]->esuf}}">
+                                      <input type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" id="uf" value="{{old('uf',$trabalhador->endereco[0]->esuf)}}">
                                       @error('uf')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -564,7 +564,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="data__admissao" class="form-label letter__color">Data de Admissão</label>
-                                      <input type="date" class="form-control @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{$trabalhador->categoria[0]->csadmissao}}">
+                                      <input type="date" class="form-control @error('data__admissao') is-invalid @enderror" name="data__admissao" id="data__admissao" value="{{old('data__admissao',$trabalhador->categoria[0]->csadmissao)}}">
                                       @error('data__admissao')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -572,7 +572,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="categoria" class="form-label letter__color">Categoria</label>
-                                      <input type="text" list="categoria_list" class="form-control @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{$trabalhador->categoria[0]->cscategoria}}">
+                                      <input type="text" list="categoria_list" class="form-control @error('categoria__contrato') is-invalid @enderror" name="categoria__contrato" id="categoria" value="{{old('categoria',$trabalhador->categoria[0]->cscategoria)}}">
                                       @error('categoria__contrato')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -582,7 +582,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="cbo" class="form-label letter__color">CBO</label>
-                                      <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{$trabalhador->categoria[0]->cbo}}">
+                                      <input type="text" list="cbo_list" class="form-control @error('cbo') is-invalid @enderror" name="cbo" id="cbo" value="{{old('cbo',$trabalhador->categoria[0]->cbo)}}">
                                       @error('cbo')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -594,7 +594,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="ctps" class="form-label letter__color">CTPS</label>
-                                      <input type="text" class="form-control @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{$trabalhador->documento[0]->dsctps}}">
+                                      <input type="text" class="form-control @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{old('ctps',$trabalhador->documento[0]->dsctps)}}">
                                       @error('ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -602,7 +602,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="serie__ctps" class="form-label letter__color">Série</label>
-                                      <input type="text" class="form-control @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{$trabalhador->documento[0]->dsserie}}">
+                                      <input type="text" class="form-control @error('serie__ctps') is-invalid @enderror" name="serie__ctps" id="serie__ctps" value="{{old('serie__ctps',$trabalhador->documento[0]->dsserie)}}">
                                       @error('serie__ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -610,7 +610,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="uf__ctps" class="form-label letter__color">UF</label>
-                                      <input type="text" class="form-control @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{$trabalhador->documento[0]->dsuf}}">
+                                      <input type="text" class="form-control @error('uf__ctps') is-invalid @enderror" name="uf__ctps" id="uf__ctps" value="{{old('uf__ctps',$trabalhador->documento[0]->dsuf)}}">
                                       @error('uf__ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -636,7 +636,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="data__afastamento" class="form-label letter__color">Data de Afastamento</label>
-                                      <input type="date" class="form-control @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{$trabalhador->categoria[0]->csafastamento}}">
+                                      <input type="date" class="form-control @error('data__afastamento') is-invalid @enderror" name="data__afastamento" id="data__afastamento" value="{{old('data__afastamento',$trabalhador->categoria[0]->csafastamento)}}">
                                       @error('data__afastamento')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror
@@ -667,27 +667,27 @@
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="banco" class="form-label letter__color">Banco</label>
-                                      <input type="text" class="form-control" name="banco" id="banco" value="{{$trabalhador->bancario[0]->bsbanco}}">
+                                      <input type="text" class="form-control" name="banco" id="banco-input" value="{{old('banco',$trabalhador->bancario[0]->bsbanco)}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="agencia" class="form-label letter__color">Agência</label>
-                                      <input type="text" class="form-control" name="agencia" id="agencia" value="{{$trabalhador->bancario[0]->bsagencia}}">
+                                      <input type="text" class="form-control" name="agencia" id="agencia" value="{{old('agencia',$trabalhador->bancario[0]->bsagencia)}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="operacao" class="form-label letter__color">Operação</label>
-                                      <input type="text" class="form-control" name="operacao" id="operacao" value="{{$trabalhador->bancario[0]->bsoperacao}}">
+                                      <input type="text" class="form-control" name="operacao" id="operacao" value="{{old('operacao',$trabalhador->bancario[0]->bsoperacao)}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="conta" class="form-label letter__color">Conta</label>
-                                      <input type="text" class="form-control" name="conta" id="conta" value="{{$trabalhador->bancario[0]->bsconta}}">
+                                      <input type="text" class="form-control" name="conta" id="conta" value="{{old('conta',$trabalhador->bancario[0]->bsconta)}}">
                                     </div>
                                 
                                     <div class="col-md-4 mt-2">
                                       <label for="pix" class="form-label letter__color">PIX</label>
-                                      <input type="text" class="form-control" name="pix" id="pix" value="{{$trabalhador->bancario[0]->bspix}}">
+                                      <input type="text" class="form-control" name="pix" id="pix" value="{{old('pix',$trabalhador->bancario[0]->bspix)}}">
                                     </div>
                                 
                                 </section>

@@ -138,7 +138,7 @@ class TrabalhadorController extends Controller
                                     <li class=""><a class="dropdown-item modal-botao" href="'.route('devolucao.ctps.trabalhador',base64_encode($id->id)).'" id="devolucao__ctps" role="button"><i class="fad fa-file-alt"></i> Devolução da CTPS</a></li>
                                     <li class=""><a class="dropdown-item modal-botao" href="'.route('ficha.registro.trabalhador',base64_encode($id->id)).'" id="imprimir" role="button"><i class="fad fa-file-alt"></i> Ficha de Registro</a></li>
                                     <li class=""><a class="dropdown-item modal-botao" href="'.route('epi.show',base64_encode($id->id)).'" id="fichaepi" role="button"><i class="fad fa-file-alt"></i> Ficha de EPI</a></li>
-                                    
+                                    <li class=""><a class="dropdown-item modal-botao" href="'.route('trabalhador.frequencia',base64_encode($id->id)).'" id="fichaepi" role="button"><i class="fad fa-file-alt"></i> Frequência</a></li>
                                 </ul>
                             </div>',
                 'evento'=>' <a class="btn__evento btn btn__padrao--evento_trabalhador" data-id="'.base64_encode($id->id).'" href="'.route('esocial.trabalhador',base64_encode($id->id)).'"><i class="icon__color fas fa-file-invoice"></i></a>',
@@ -293,14 +293,15 @@ class TrabalhadorController extends Controller
                     }
                 }
             });
-            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.'); 
+            return redirect()->back()->withSuccess('Cadastro realizado com sucesso.');
+             
         } catch (\Throwable $th) {
             // $this->nascimento->deletar($dados['trabalhador']);
             // $this->categoria->deletar($dados['trabalhador']);
             // $this->documento->deletar($dados['trabalhador']);
             // $this->endereco->deletarTrabalhador($dados['trabalhador']);
             // $this->bancario->deletarTrabalhador($dados['trabalhador']);
-            $this->valorrublica->where('id', $user->empresa_id)
+            $this->valorrublica->where('empresa_id', $user->empresa_id)
             ->chunkById(100, function ($valorrublica) use ($user) {
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vimatricular > 0) {
@@ -340,6 +341,7 @@ class TrabalhadorController extends Controller
      */
     public function edit($id)
     {
+        try {
         $id = base64_decode($id);
         $user = Auth::user();
         $search = request('search');
@@ -371,6 +373,10 @@ class TrabalhadorController extends Controller
         // $trabalhador = $this->trabalhador->buscaUnidadeTrabalhador($id);
 
         return view('trabalhador.edit',compact('user','empresa','trabalhador','trabalhadors','esocialtrabalhador'));
+        
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível atualizar.']);
+        }
     }
 
     /**
@@ -383,6 +389,7 @@ class TrabalhadorController extends Controller
     public function update(Validacao $request, $id)
     {
         $dados = $request->all();
+        $user = Auth::user();
         if ($dados['banco']) {
             $request->validate(['banco'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ 0-9-.]*$/']);
         }
@@ -391,6 +398,13 @@ class TrabalhadorController extends Controller
         }
         if ($dados['nome__social']) {
             $request->validate(['nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
+        }
+       $matricula =  $this->trabalhador->where([
+            ['empresa_id',$user->empresa_id],
+            ['tsmatricula',$dados['matricula']]
+        ])->count();
+        if ($matricula) {
+            return redirect()->back()->withInput()->withErrors(['matricula'=>'Esta matricula já existe.']);
         }
         try {
             $trabalhadors = $this->trabalhador->editar($dados,$id);
@@ -414,6 +428,7 @@ class TrabalhadorController extends Controller
      */
     public function destroy($id)
     {
+        try {
         $user = auth()->user();
         $trabalhador = $this->basecalculo->where('trabalhador_id',$id)->count();
         // $trabalhador = $this->basecalculo->verificaTrabalhador($id);
@@ -456,7 +471,7 @@ class TrabalhadorController extends Controller
             //     $this->valorrublica->editarMatricular($dados,$user->empresa);
             // }
             return redirect()->back()->withSuccess('Deletado com sucesso.');
-            try {
+            
         } catch (\Throwable $th) {
             return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro.']);
         }

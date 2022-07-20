@@ -185,27 +185,33 @@
         <div class="borderT margin-top">
             <table>
                 <tr>
-                    <td rowspan="7"><img class="logo" src="https://pbs.twimg.com/media/DgJ0aszU0AEX44i?format=jpg&name=small" alt="" srcset="" style="width:80px; height: 80px; padding-left: 10px; padding-bottom: 10px;"></td>
+                    <td rowspan="7">
+                    @if($trabalhador->empresa->esfoto)
+                                <img class="logo" src="{{$trabalhador->empresa->esfoto}}" alt="" srcset="">
+                    @else
+                        @include('imagem')
+                    @endif
+                    </td>
                 </tr>
 
                 <tr>
-                    <td class=" width__padrao padding-left-foto text-bold">Nome do Usuario (empresa)</td>
+                    <td class=" width__padrao padding-left-foto text-bold">{{$trabalhador->empresa->esnome}}</td>
                 </tr>
 
                 <tr> 
-                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : </td>
+                    <td class="small__font width__padrao padding-left-foto">CNPJ/MF Nroº : {{$trabalhador->empresa->escnpj}}</td>
                 </tr>
 
                 <tr>
-                    <td class="small__font width__padrao capitalize padding-left-foto">Rua:</td>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Rua: {{$trabalhador->empresa->endereco[0]->eslogradouro}}</td>
                 </tr>
 
                 <tr>
-                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro:</td>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Bairro: {{$trabalhador->empresa->endereco[0]->esbairro}}</td>
                 </tr>
 
                 <tr>
-                    <td class="small__font width__padrao padding-left-foto">Tel:</td>
+                    <td class="small__font width__padrao padding-left-foto">Tel: {{$trabalhador->empresa->estelefone}}</td>
                 </tr>
 
             </table>
@@ -223,23 +229,29 @@
         <div class="margin-top">
             <table>
                 <tr>
-                    <td rowspan="6"><img class="logo" src="https://pbs.twimg.com/media/DgJ0aszU0AEX44i?format=jpg&name=small" alt="" srcset="" style="width:80px; height: 80px; padding-left: 10px; padding-bottom: 10px;"></td>
+                    <td rowspan="6">
+                    @if($trabalhador->tsfoto)
+                        <img class="logo" src="{{$trabalhador->tsfoto}}" alt="" srcset="">
+                    @else
+                        @include('imagem')
+                    @endif
+                    </td>
                 </tr>
 
                 <tr>
-                    <td class=" width__padrao padding-left-foto text-bold">Nome do Trabalhador</td>
+                    <td class=" width__padrao padding-left-foto text-bold">{{$trabalhador->tsnome}}</td>
                 </tr>
 
                 <tr> 
-                    <td class="small__font width__padrao padding-left-foto">CPF: 000.000.000-00</td>
+                    <td class="small__font width__padrao padding-left-foto">CPF: {{$trabalhador->tscpf}}</td>
                 </tr>
 
                 <tr>
-                    <td class="small__font width__padrao capitalize padding-left-foto">Matricula: 500</td>
+                    <td class="small__font width__padrao capitalize padding-left-foto">Matricula: {{$trabalhador->tsmatricula}}</td>
                 </tr>
 
                 <tr>
-                    <td class="small__font width__padrao padding-left-foto">Tel: (00) 00000-0000</td>
+                    <td class="small__font width__padrao padding-left-foto">Tel: {{$trabalhador->tstelefone}}</td>
                 </tr>
 
             </table>
