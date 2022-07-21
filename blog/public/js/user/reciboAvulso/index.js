@@ -1,5 +1,14 @@
 
-
+function remove(index) {
+    let quantidade = parseInt($('#quantidade').val());
+    quantidade -= 1;
+    console.log($('#quantidade').val());
+    $('#quantidade').val(quantidade)
+    if (quantidade < 21) {
+        $('#adicinar').removeClass('disabled')
+    }
+    $(`.campo${index}`).remove();
+}
     let index = 0;
 
     function conteiner(index) {
@@ -42,6 +51,7 @@
     $('.numero').mask('000.000.000.000.000,00', {reverse: true});
     $('#adicinar').click(function() {
         if ($('#quantidade').val() <= 20) {
+            $(this).removeClass('disabled')
             // index += 1;
             let quantidade = parseInt($('#quantidade').val());
     

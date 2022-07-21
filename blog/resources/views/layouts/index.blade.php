@@ -181,7 +181,21 @@
             // }
         </script>   
             
-            
+      @error('permissaonegada')
+        <!--Modal de Acesso não permitido-->
+        <script>
+            Swal.fire({
+              icon: 'error',
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: true,
+              html: '<h1 class="fw-bold mb-3 fs-3">Permissão Negada!</h1>'+
+              '<p class=" mb-4 fs-6">Contate seu Administrador para receber acesso.</p>'+
+              '<div><a class="btn btn-secondary mb-3" href="{{route("home.index")}}">Voltar</a></div>',
+              showConfirmButton: false,
+            });
+        </script>
+        @enderror
         <div class="d-flex flex-column justify-content-center align-items-center d-none" style="position: fixed; height:100%;width:100%;background-color:rgba(243, 243, 253, 0.8);z-index:1;" id="carregamento" class="">
             <div class="text-center " >
               <img class="imagem" src="{{url('/imagem/carregamento.png')}}" alt="" srcset="">

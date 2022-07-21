@@ -8,7 +8,7 @@ $(document).on('keydown', function(e) {
     // console.log(e.shiftKey);
     
 
-	if(e.shiftKey === true && e.which === 68){
+	if(e.shiftKey === true && e.which === 68 && e.altKey === true){
 	    
 	    // cartao ponto //
 	    $('#nome__completo').val(""); 

@@ -118,7 +118,7 @@ class calculoFolhaGeralController extends Controller
         $lancamentotabela = $this->lancamentotabela
             ->with(['lancamentorublica.lancamentotabela:id,lsdata','bolcartaoponto.lancamentotabela:id,lsdata','tomador:id','tomador.tabelapreco','tomador.cartaoponto','tomador.incidefolhar'])
             ->whereBetween('lsdata',[$datainicio,$datafinal])
-            // ->where('tomador_id',$tomadores->id)
+            ->where('empresa_id',$user->empresa_id)
             ->get();
         
         // dd($lancamentotabela);

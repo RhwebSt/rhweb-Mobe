@@ -18,6 +18,10 @@
                             <p class="align-self-center me-2">Limpar Campos</p>
                             
                             <span class="tecla__shift"><i><i class="fal fa-arrow-alt-up"></i> Shift</i></span>
+                            
+                            <p class="align-self-center me-2 ms-2"><i class="fas fa-plus"></i></p>
+                            
+                            <span class="tecla__shift"><i>Alt</i></span>
 
                             
                             <p class="align-self-center me-2 ms-2"><i class="fas fa-plus"></i></p>
@@ -37,6 +41,11 @@
                             <p class="align-self-center me-2">Limpar Campos</p>
                             
                             <span class="tecla__shift"><i><i class="fal fa-arrow-alt-up"></i> Shift</i></span>
+
+                            
+                            <p class="align-self-center me-2 ms-2"><i class="fas fa-plus"></i></p>
+                            
+                            <span class="tecla__shift"><i>Alt</i></span>
 
                             
                             <p class="align-self-center me-2 ms-2"><i class="fas fa-plus"></i></p>

@@ -33,7 +33,7 @@ class calculoFolhaController extends Controller
         }
         $trabalhadores = $this->basecalculo->listaTrabalhador($idfolhas);
         $tomadores = $this->basecalculo->listaTomador($idfolhas,'asc');
-        // dd($tomadores,$trabalhadores);
+    
         return view('calculofolha.index',compact('empresa','user','folhas','trabalhadores','tomadores'));
     }
     public function store(Validacao $request)
