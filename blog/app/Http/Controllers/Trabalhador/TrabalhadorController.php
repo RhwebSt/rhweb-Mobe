@@ -399,13 +399,13 @@ class TrabalhadorController extends Controller
         if ($dados['nome__social']) {
             $request->validate(['nome__social'=>'regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôõóûùúüÿñæœ ]*$/']);
         }
-       $matricula =  $this->trabalhador->where([
-            ['empresa_id',$user->empresa_id],
-            ['tsmatricula',$dados['matricula']]
-        ])->count();
-        if ($matricula) {
-            return redirect()->back()->withInput()->withErrors(['matricula'=>'Esta matricula já existe.']);
-        }
+    //    $matricula =  $this->trabalhador->where([
+    //         ['empresa_id',$user->empresa_id],
+    //         ['tsmatricula',$dados['matricula']]
+    //     ])->count();
+    //     if ($matricula) {
+    //         return redirect()->back()->withInput()->withErrors(['matricula'=>'Esta matricula já existe.']);
+    //     }
         try {
             $trabalhadors = $this->trabalhador->editar($dados,$id);
             $enderecos = $this->endereco->editarTrabalhador($dados,$id); 

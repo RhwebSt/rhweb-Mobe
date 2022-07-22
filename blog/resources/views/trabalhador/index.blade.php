@@ -95,7 +95,7 @@
 
             <div class="col-md-4">
                     <label for="rg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> RG</label>
-                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{old('rg')}}" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{old('rg')}}" name="rg" id="rg" maxlength="20" placeholder="Ex: 0000-000">
                     @error('rg')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -558,7 +558,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                           <label for="ctps" class="form-label letter__color">CTPS</label>
-                                          <input type="text" class="form-control @error('ctps') is-invalid @enderror" maxlength="10" value="{{old('ctps')}}" name="ctps" id="ctps" placeholder="Ex: 0000000">
+                                          <input type="text" class="form-control @error('ctps') is-invalid @enderror" maxlength="7" value="{{old('ctps')}}" name="ctps" id="ctps" placeholder="Ex: 0000000">
                                           @error('ctps')
                                           <span class="text-danger">{{ $message }}</span>
                                           @enderror

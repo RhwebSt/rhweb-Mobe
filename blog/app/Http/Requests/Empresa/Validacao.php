@@ -24,7 +24,7 @@ class Validacao extends FormRequest
     public function rules()
     {
         return [
-            'esnome'=>'required|max:100',
+            'esnome'=>'required|max:60',
             'escnpj'=>'required|max:100',
             'dataregistro'=>'required|max:30',
             'responsave'=>'required|max:30',

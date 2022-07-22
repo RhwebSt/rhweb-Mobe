@@ -88,7 +88,7 @@
 
             <div class="col-md-4">
                     <label for="rg" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> RG</label>
-                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? old('rg',$trabalhador->arquivo[0]->dsnumero):old('rg','')}}" name="rg" id="rg" maxlength="8" placeholder="Ex: 0000-000">
+                    <input type="text" class="form-control @error('rg') is-invalid @enderror" value="{{$trabalhador->arquivo[0]->dstipo === 'rg'? old('rg',$trabalhador->arquivo[0]->dsnumero):old('rg','')}}" name="rg" id="rg" maxlength="20" placeholder="Ex: 0000-000">
                     @error('rg')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -594,7 +594,7 @@
                                 
                                     <div class="col-md-6 mt-2">
                                       <label for="ctps" class="form-label letter__color">CTPS</label>
-                                      <input type="text" class="form-control @error('ctps') is-invalid @enderror" name="ctps" id="ctps" value="{{old('ctps',$trabalhador->documento[0]->dsctps)}}">
+                                      <input type="text" class="form-control @error('ctps') is-invalid @enderror" name="ctps" maxlength="7" id="ctps" value="{{old('ctps',$trabalhador->documento[0]->dsctps)}}">
                                       @error('ctps')
                                       <span class="text-danger">{{ $message }}</span> 
                                       @enderror

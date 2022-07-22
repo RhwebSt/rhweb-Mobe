@@ -11,6 +11,8 @@ $('#inss__empresa').mask('000,00', {reverse: true});
 $('#valor').mask('000.000.000.000.000,00', {reverse: true});
 $('#seguro').mask('000.000.000.000.000,00', {reverse: true});
 $('#contribuicao__sindicato').mask('000.000.000.000.000,00', {reverse: true});
+$('#ctps').mask('0000000');
+$('#serie__ctps').mask('0000');
 $('#ano').mask('0000')
 $('#cod__fpas').mask('000')
 $('#cod__grps').mask('0000')

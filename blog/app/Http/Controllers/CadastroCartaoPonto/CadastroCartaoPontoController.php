@@ -153,10 +153,10 @@ class CadastroCartaoPontoController extends Controller
         $condicao = request('codicao'); 
         $today = Carbon::today();
         $user = auth()->user(); 
-        $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
       
         $lancamentotabelas = $this->lancamentotabela
         ->join('tomadors', 'tomadors.id', '=', 'lancamentotabelas.tomador_id')
@@ -214,10 +214,10 @@ class CadastroCartaoPontoController extends Controller
     {
         $dados = $request->all();
         $user = Auth::user();
-        $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpc'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
             return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data é um feriado ou final de semana, o campo tem que ser "sim"!']);
@@ -293,10 +293,10 @@ class CadastroCartaoPontoController extends Controller
         $user = Auth::user();
         $id =  base64_decode($id);
         $today = Carbon::today();
-        $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $lancamentotabelas = $this->lancamentotabela
         ->where([
             ['lsstatus','D'],
@@ -368,11 +368,11 @@ class CadastroCartaoPontoController extends Controller
     {
         $dados = $request->all();
         $id =  base64_decode($id);
-        $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
-        $user = Auth::user();
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpd'.'%')->first(); 
+        // $user = Auth::user();
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $today = Carbon::today();
         if ($dados['feriadostatus'] === 'true' && $dados['feriado'] === 'Não') {
             return redirect()->back()->withInput()->withErrors(['feriado'=>'Esta data é um feriado ou final de semana, o campo tem que ser "sim"!']);
@@ -401,10 +401,10 @@ class CadastroCartaoPontoController extends Controller
         $user = Auth::user();
         $id =  base64_decode($id);
         $today = Carbon::today();
-        $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
-        if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
-            return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
-        }
+        // $permissions = Permission::where('name','like','%'.'mbcpe'.'%')->first(); 
+        // if ($user->hasPermissionTo($permissions->name) === false && $user->hasPermissionTo('admin') === false){
+        //     return redirect()->back()->withInput()->withErrors(['permissaonegada'=>'true']);
+        // }
         $lancamentotabelas = $this->lancamentotabela
         ->where([
             ['lsstatus','D'],

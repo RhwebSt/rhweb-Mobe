@@ -24,7 +24,7 @@ class Validacao extends FormRequest
     public function rules()
     {
         return [
-            'nome__completo' => 'required|max:100|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ ]*$/',
+            'nome__completo' => 'required|max:70|regex:/^[A-ZÀÁÂÃÇÉÈÊËÎÍÏÔÓÕÛÙÚÜŸÑÆŒa-zàáâãçéèêëîíïôóõûùúüÿñæœ ]*$/',
             'nome__social' => 'max:100',
             'cpf' => 'required|max:15|cpf|formato_cpf',
             'pis'=>'required|max:20|pis',
@@ -45,8 +45,8 @@ class Validacao extends FormRequest
             'data__admissao'=>'max:10',
             'categoria__contrato'=>'max:255',
             'cbo'=>'max:255',
-            'ctps'=>'max:20',
-            'serie__ctps'=>'max:20',
+            'ctps'=>'max:7',
+            'serie__ctps'=>'max:4',
             'uf__ctps'=>'max:2',
             'data__afastamento'=>'max:10',
             'banco'=>'max:100',
@@ -61,7 +61,7 @@ class Validacao extends FormRequest
         // remova somente aquele validação que foi customizada na classe
         return [
             'nome__completo.required'=>'O campo não pode estar vazio.',
-            'nome__completo.max'=>'O campo não pode conter mais de 100 caracteres.',
+            'nome__completo.max'=>'O campo não pode conter mais de 70 caracteres.',
             'nome__completo.regex'=>'O campo nome social tem um formato inválido.',
             
             'nome__social.required'=>'O campo não pode estar vazio.',
@@ -138,10 +138,10 @@ class Validacao extends FormRequest
             'cbo.regex'=>'O campo nome social possui um formato inválido.',
             
             'ctps.required'=>'O campo não pode estar vazio.',
-            'ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
+            'ctps.max'=>'O campo não pode conter mais de 7 caracteres.',
             
             'serie__ctps.required'=>'O campo não pode estar vazio.',
-            'serie__ctps.max'=>'O campo não pode conter mais de 20 caracteres.',
+            'serie__ctps.max'=>'O campo não pode conter mais de 4 caracteres.',
             
             'uf__ctps.required'=>'O campo não pode estar vazio.',
             'uf__ctps.max'=>'O campo não ter mais de 255 caracteres.',

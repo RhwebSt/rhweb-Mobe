@@ -1537,6 +1537,7 @@ class calculoFolhaGeralController extends Controller
                 foreach ($valorrublica as $valorrublicas) {
                     if ($valorrublicas->vsnrofolha > 0) {
                         $numero = $valorrublicas->vsnrofolha -= 1;
+                        
                         $this->valorrublica->where('empresa_id', $user->empresa_id)
                         ->update(['vsnrofolha'=>$numero]);
                     }

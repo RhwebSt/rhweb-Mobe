@@ -98,7 +98,8 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $cidade = substr($sefip->folhar->empresa->endereco[0]->esmunicipio,0,20);
-         $cd .= $cidade;
+         $cidade = strtr($cidade,$caracteres_sem_acento);
+         $cd .= strtoupper($cidade);
          $cidade = strlen($cidade);
          for ($i=0; $i < (20 - $cidade); $i++) { 
             $cd .= ' ';
@@ -137,11 +138,11 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $cd .= '1';
-         for ($i=0; $i < 8; $i++) { 
+         for ($i=0; $i < 9; $i++) { 
             $cd .= ' ';
          }
          $cd .= '1';
-         for ($i=0; $i < 16; $i++) { 
+         for ($i=0; $i < 15; $i++) { 
             $cd .= ' ';
          }
          $cd .= '1';
@@ -218,7 +219,7 @@ class SefipController extends Controller
          $cd .= $telefone;
          $telefone = strlen($telefone);
          for ($i=0; $i < (12-$telefone); $i++) { 
-            $cd .= ' ';
+            $cd .= '0';
          }
          $cd .= 'N';
          $cnae = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->pscnae);
@@ -371,19 +372,20 @@ class SefipController extends Controller
             for ($i=0; $i < (11-$pis); $i++) { 
                $cd .= ' ';
             }
-            $admissao = date('d-m-Y',strtotime($trabalhadores->trabalhador->categoria[0]->csadmissao));
-            $admissao = str_replace(array(".", ",", "-", "/"), "",$admissao);
-            $cd .= $admissao;
-            $admissao = strlen($admissao);
-            for ($i=0; $i < (8-$admissao); $i++) { 
+            // $admissao = date('d-m-Y',strtotime($trabalhadores->trabalhador->categoria[0]->csadmissao));
+            // $admissao = str_replace(array(".", ",", "-", "/"), "",$admissao);
+            // $cd .= $admissao;
+            // $admissao = strlen($admissao);
+            for ($i=0; $i < 8; $i++) { 
                $cd .= ' ';
             }
-            $categoria = substr($trabalhadores->trabalhador->categoria[0]->cscategoria,0,2);
-            $cd .= $categoria;
-            $categoria = strlen($categoria);
-            for ($i=0; $i < (2-$categoria); $i++) { 
-               $cd .= ' ';
-            }
+            // $categoria = substr($trabalhadores->trabalhador->categoria[0]->cscategoria,0,2);
+            // $cd .= $categoria;
+            // $categoria = strlen($categoria);
+            // for ($i=0; $i < (2-$categoria); $i++) { 
+            //    $cd .= ' ';
+            // }
+            $cd .= '02';
             $nome = strtr($trabalhadores->trabalhador->tsnome,$caracteres_sem_acento);
             $nome = substr($nome,0,70);
             $cd .= strtoupper($nome);
@@ -391,31 +393,48 @@ class SefipController extends Controller
             for ($i=0; $i < (70 - $nome); $i++) { 
                $cd .= ' ';
             }
-            $cpf = substr(str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->tscpf),0,11);
-            $cd .= $cpf;
-            $cpf = strlen($cpf);
-            for ($i=0; $i < (11 - $cpf); $i++) { 
-               $cd .= ' ';
+            $matriculatrabalhador = substr(str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->tsmatricula),0,11);
+            
+            $matriculaquant = strlen($matriculatrabalhador);
+            for ($i=0; $i < (11 - $matriculaquant); $i++) { 
+               $cd .= '0';
             }
+           
+            $cd .= $matriculatrabalhador;
             $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsctps);
+            
+            $ctpsquant = strlen($ctps);
+            for ($i=0; $i < (7-$ctpsquant); $i++) { 
+               $cd .= '0';
+            }
             $cd .= $ctps;
-            $ctps = strlen($ctps);
-            for ($i=0; $i < (7-$ctps); $i++) { 
-               $cd .= ' ';
-            }
             $serie = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsserie);
-            $cd .= $serie;
-            $serie = strlen($serie);
-            for ($i=0; $i < (5-$serie); $i++) { 
-               $cd .= ' ';
+            
+            $seriequant = strlen($serie);
+            for ($i=0; $i < (5-$seriequant); $i++) { 
+               $cd .= '0';
             }
+            $cd .= $serie;
+            // if ($trabalhadores->trabalhador->categoria[0]->csafastamento) {
+            //     $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->categoria[0]->csafastamento);
+            //     $cd .= $afastamento;
+            //     $afastamento = strlen($afastamento);
+            //     for ($i=0; $i < (8-$afastamento); $i++) { 
+            //        $cd .= '0';
+            //     }
+            // } else {
+            //     for ($i=0; $i < 8; $i++) { 
+            //         $cd .= '0';
+            //      }
+            // }
+            
             $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->categoria[0]->csafastamento);
             $cd .= $afastamento;
             $afastamento = strlen($afastamento);
             for ($i=0; $i < (8-$afastamento); $i++) { 
                $cd .= ' ';
             }
-            $nascimento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->nascimento[0]->nsnascimento);
+            $nascimento = str_replace(array(".", ",", "-", "/"), "",date('d-m-Y', strtotime($trabalhadores->trabalhador->nascimento[0]->nsnascimento)));
             $cd .= $nascimento;
             $nascimento = strlen($nascimento);
             for ($i=0; $i < (8-$nascimento); $i++) { 
@@ -423,11 +442,11 @@ class SefipController extends Controller
             }
             $cbo = substr($trabalhadores->trabalhador->categoria[0]->cbo,0,5);
             $cbo = str_replace(array(".", ",", "-", "/"), "",$cbo);
-            $cd .= $cbo;
-            $cbo = strlen($cbo);
-            for ($i=0; $i < (5-$cbo); $i++) { 
-               $cd .= ' ';
+            $cboquant = strlen($cbo);
+            for ($i=0; $i < (5-$cboquant); $i++) { 
+               $cd .= '0';
             }
+            $cd .= $cbo;
             $soma = 0;
             foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 1009) {
@@ -436,11 +455,12 @@ class SefipController extends Controller
             }
             
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-            $cd .= $soma;
-            $soma = strlen($soma);
-            for ($i=0; $i < (13-$soma); $i++) { 
-               $cd .= ' ';
+        
+            $somaquant = strlen($soma);
+            for ($i=0; $i < (15-$somaquant); $i++) { 
+               $cd .= '0';
             }
+            $cd .= $soma;
             $soma = 0;
             foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 1010) {
@@ -449,13 +469,14 @@ class SefipController extends Controller
             }
             
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-            $cd .= $soma;
-            $soma = strlen($soma);
-            for ($i=0; $i < (13-$soma); $i++) { 
-               $cd .= ' ';
+           
+            $somaquant = strlen($soma);
+            for ($i=0; $i < (15-$somaquant); $i++) { 
+               $cd .= '0';
             }
+            $cd .= $soma;
             for ($i=0; $i < 4; $i++) { 
-                $cd .= '0';
+                $cd .= ' ';
              }
              $soma = 0;
             foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
@@ -465,12 +486,13 @@ class SefipController extends Controller
             }
             
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-            $cd .= $soma;
-            $soma = strlen($soma);
-            for ($i=0; $i < (13-$soma); $i++) { 
-               $cd .= ' ';
+            
+            $somaquant = strlen($soma);
+            for ($i=0; $i < (15-$somaquant); $i++) { 
+               $cd .= '0';
             }
-            for ($i=0; $i < 19; $i++) { 
+            $cd .= $soma;
+            for ($i=0; $i < 15; $i++) { 
                 $cd .= '0';
              }
             $soma = 0;
@@ -481,12 +503,13 @@ class SefipController extends Controller
             }
             
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-            $cd .= $soma;
-            $soma = strlen($soma);
-            for ($i=0; $i < (13-$soma); $i++) { 
-               $cd .= ' ';
+            
+            $somaquant = strlen($soma);
+            for ($i=0; $i < (15-$somaquant); $i++) { 
+               $cd .= '0';
             }
-            for ($i=0; $i < 19; $i++) { 
+            $cd .= $soma;
+            for ($i=0; $i < 15; $i++) { 
                 $cd .= '0';
              }
             for ($i=0; $i < 98; $i++) { 
