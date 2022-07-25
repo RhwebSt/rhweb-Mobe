@@ -82,6 +82,7 @@ $(document).ready(function(){
             {'data':'esid',
             render: function(data, type, row){
                 let dados = '';
+                let codigoerro = ["401","402","411"];
                 if (data){
                     $.ajax({
                         url: `https://api.tecnospeed.com.br/esocial/v1/evento/consultar/${data}?ambiente=2&versaomanual=S.01.00.00`,
@@ -107,24 +108,26 @@ $(document).ready(function(){
                     });
                    
                     if (dados.data.eventos.length < 1) {
-                        if (dados.data.status_envio.codigo == 1) {
-                            dados.data.status_envio.mensagem.forEach(element => {
-                                dados += `${element}<br><br>`
-                            });
+                        // if (dados.data.status_envio.codigo == 1) {
+                        //     dados.data.status_envio.mensagem.forEach(element => {
+                        //         dados += `${element}<br><br>`
+                        //     });
                           
-                            if (row.esnome == 'S1020') {
-                                return erros(dados,row.folhar_id)
-                            }
-                            if (row.esnome == 'S2300') {
-                                return erros(dados,row.folhar_id)
-                            }
-                            if (row.esnome == 'S1200') {
-                                return erros(dados,row.folhar_id)
-                            }
-                        }
+                        //     if (row.esnome == 'S1020') {
+                        //         return erros(dados,row.folhar_id)
+                        //     }
+                        //     if (row.esnome == 'S2300') {
+                        //         return erros(dados,row.folhar_id)
+                        //     }
+                        //     if (row.esnome == 'S1200') {
+                        //         return erros(dados,row.folhar_id)
+                        //     }
+                        // }
                         
                     }else{
-                        if (dados.data.eventos[0].status.codigo == 411) {
+                        
+                        console.log(dados.data.eventos[0].status.codigo,dados.data.eventos[0].status.codigo.indexOf(codigoerro));
+                        if (dados.data.eventos[0].status.codigo.indexOf(codigoerro) !== -1) {
                             if (row.esnome == 'S1020') {
                                 return erros(dados.data.eventos[0].status.mensagem,row.tomador_id);
                             }

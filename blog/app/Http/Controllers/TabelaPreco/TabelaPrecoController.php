@@ -85,7 +85,7 @@ class TabelaPrecoController extends Controller
                       <div class="modal fade" id="deleteTabelaPreco'.$id->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered col-8">
                               <div class="modal-content">
-                                  <form action="'.route('tabelapreco.destroy',$id->id).'" id="" method="post">
+                                  <form action="'.route('tabelapreco.destroy',$id->id).'"  method="post">
                                   <input type="hidden" name="_token" value="'.csrf_token().'">
                                   <input type="hidden" name="_method" value="delete">
                                       <div class="modal-header header__modal">

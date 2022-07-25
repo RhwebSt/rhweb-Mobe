@@ -71,7 +71,10 @@
           window.Laravel = {!! json_encode([
               'tabelapreco'=>[
                   'condicao'=>isset($atualizar) && $atualizar ?$atualizar:false,
-                  'url'=>route('tabela.preco.atualizar')
+                  'url'=>route('tabela.preco.atualizar'),
+                  'lista'=>route('tabelapreco.lista',isset($tomador)?$tomador:' '),
+                  'verificar'=>url('verifica/tabela/preco'),
+                  'pesquisa'=>url('tabelapreco/pesquisa')
             ],
             'empresa'=>[
                 'id'=>$user->empresa_id,
@@ -98,11 +101,7 @@
                 'boletim'=>route('boletim.tomador'),
                 'pesquisa'=>route('tomador.pesquisa'),
             ],
-            'tabelapreco'=>[
-                'lista'=>route('tabelapreco.lista',isset($tomador)?$tomador:' '),
-                'verificar'=>url('verifica/tabela/preco'),
-                'pesquisa'=>url('tabelapreco/pesquisa')
-            ],
+          
             'folhar'=>[
                 'geral'=>route('calculo.folha.geral.filtro'),
                 'tomador'=>route('calculo.folha.tomador.filtro')

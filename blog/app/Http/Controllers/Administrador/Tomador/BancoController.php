@@ -355,8 +355,8 @@ class BancoController extends Controller
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
-                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
-                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
+                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 64, 8)), 2, ',', '.'),
+                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 57, 8)), 2, ',', '.'),
                                                     'empresa' => $empresa['empresa'],
                                                     'tomador' => $tomadors['id']
                                                 ];
@@ -378,8 +378,8 @@ class BancoController extends Controller
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
-                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
-                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
+                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 64, 8)), 2, ',', '.'),
+                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 57, 8)), 2, ',', '.'),
                                                     'empresa' => $empresa['empresa'],
                                                     'tomador' => $tomadors['id']
                                                 ];
@@ -400,8 +400,8 @@ class BancoController extends Controller
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
-                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
-                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
+                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 64, 8)), 2, ',', '.'),
+                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 57, 8)), 2, ',', '.'),
                                                     'empresa' => $empresa['empresa'],
                                                     'tomador' => $tomadors['id']
                                                 ];
@@ -422,8 +422,8 @@ class BancoController extends Controller
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
-                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
-                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
+                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 64, 8)), 2, ',', '.'),
+                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 57, 8)), 2, ',', '.'),
                                                     'empresa' => $empresa['empresa'],
                                                     'tomador' => $tomadors['id']
                                                 ];
@@ -444,8 +444,8 @@ class BancoController extends Controller
                                                     'rubricas' =>  $rublica->rsrublica,
                                                     'descricao' =>$rublica->rsdescricao,
                                                     'status' => '',
-                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
-                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 65, 4)), 2, ',', '.'),
+                                                    'valor' => number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 64, 8)), 2, ',', '.'),
+                                                    'valor__tomador' =>number_format((float)str_replace("  ", "",substr(utf8_encode($tabelas), 57, 8)), 2, ',', '.'),
                                                     'empresa' => $empresa['empresa'],
                                                     'tomador' => $tomadors['id']
                                                 ];

@@ -66,6 +66,10 @@ $(document).ready(function(){
     $( "#deleta-certificado" ).submit(function( event ) {
         event.preventDefault();
         let id = $('#cnpj').val();
+        buscadelete(id)
+       
+    })
+    function buscadelete(id) {
         $.ajax({
             url: `${window.Laravel.empresa.lista}/${id}`,
             method: "get",
@@ -78,8 +82,7 @@ $(document).ready(function(){
                 
             },
         });
-       
-    })
+    }
     $('#cadCnpjEmpregador').on('change',function () {
         let dados = $(this).val();
         dados = dados.replace(/\D/g, '');
@@ -302,7 +305,9 @@ $(document).ready(function(){
             },
             error: function (response) {
                 $('#progress').text('100%').css({"width": "100%"});
-                $('#msg').text('Certificado digital não vinculado.') 
+                $('#msg').text(response.responseJSON.error.message) 
+                let id = $('#cnpj').val();
+                buscadelete(id)
             },
         });
     }
@@ -327,6 +332,7 @@ $(document).ready(function(){
                 });
             },
             error: function (response) {
+                deleter(id)
                 Swal.fire({
                     position: 'center',
                     icon: 'error',

@@ -125,9 +125,10 @@ class FaturaController extends Controller
             return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'O valor inicial e o valor final tem que ser do mesmo mês!','ano_final'=>'O valor inicial e o valor final tem que ser do mesmo mês!']);
         }else if (strtotime($dados['ano_final']) > strtotime($dados['vencimento'])) {
             return redirect()->back()->withInput()->withErrors(['vencimento'=>'O mês de vencimento não pode ser menor do que periodo!']);
-        }elseif ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['competencia']))){
-            return redirect()->back()->withInput()->withErrors(['competencia'=>'O mês de vencimento tem que ser igual ao competência!']);
         }
+        // elseif ((int)date('m',strtotime($dados['vencimento'])) !== (int)date('m',strtotime($dados['competencia']))){
+        //     return redirect()->back()->withInput()->withErrors(['competencia'=>'O mês de vencimento tem que ser igual ao competência!']);
+        // }
         // dd(date('m',strtotime($dados['ano_inicial'])),$dados);
         // if (strtotime($dados['ano_inicial']) > strtotime($today)) {
         //     return redirect()->back()->withInput()->withErrors(['ano_inicial'=>'Só é valida data atuais!']);

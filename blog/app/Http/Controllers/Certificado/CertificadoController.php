@@ -119,6 +119,6 @@ class CertificadoController extends Controller
     public function destroy($id)
     {
         $this->certificado->deletar($id);
-        return response()->json('Deletado com sucesso.');
+        return response()->json('Deletado com sucesso.'); 
     }
 }

@@ -448,14 +448,15 @@ class SefipController extends Controller
             }
             $cd .= $cbo;
             $soma = 0;
-            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
-                if ($valorcalculo->vicodigo == 1009) {
-                    $soma = $valorcalculo->vivencimento + $trabalhadores->biservicodsr;
-                }
-            }
-            
-            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-        
+            // foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+            //     if ($valorcalculo->vicodigo == 1009) {
+            //         $soma = $valorcalculo->vivencimento + $trabalhadores->biservicodsr;
+            //     }
+            // }
+            $soma = $trabalhadores->biinss;
+            $soma = (string)sprintf('%.2f',$soma);
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
+
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
                $cd .= '0';
@@ -467,7 +468,7 @@ class SefipController extends Controller
                     $soma = $valorcalculo->vivencimento;
                 }
             }
-            
+            $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
            
             $somaquant = strlen($soma);
@@ -478,14 +479,21 @@ class SefipController extends Controller
             for ($i=0; $i < 4; $i++) { 
                 $cd .= ' ';
              }
-             $soma = 0;
+            
             foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 2001) {
-                    $soma = $valorcalculo->videscinto;
+                    $inssvalor = $valorcalculo->videscinto;
                 }
             }
-            
-            $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
+            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+                if ($valorcalculo->vicodigo == 2002) {
+                    $decimo = $valorcalculo->videscinto;
+                }
+            }
+            // $soma = $trabalhadores->bivalordesconto;
+            $soma = $inssvalor + $decimo;
+            $soma = (string)sprintf('%.2f',$soma);
+            $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
             
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
@@ -501,7 +509,7 @@ class SefipController extends Controller
                     $soma = $valorcalculo->vivencimento;
                 }
             }
-            
+            $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
             
             $somaquant = strlen($soma);
