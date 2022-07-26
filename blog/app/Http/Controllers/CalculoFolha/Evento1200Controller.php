@@ -86,12 +86,12 @@ class Evento1200Controller extends Controller
                 $cd .= 'indRetif_4=1'."\r\n";
                 $cd .= 'nrRecibo_5='."\r\n";
                 $cd .= 'indApuracao_6=1'."\r\n";
-                $cd .= 'perApur_7='.$competencia."\r\n";
+                $cd .= 'perApur_7='.$folhar->fscompetencia."\r\n";
                 $cd .= 'tpAmb_8=1'."\r\n";
                 $cd .= 'procEmi_9=1'."\r\n";
                 $cd .= 'verProc_10=VER062.052021'."\r\n";
                 $cd .= 'tpInsc_12=1'."\r\n";
-                $cd .= 'nrInsc_13='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n";
+                $cd .= 'nrInsc_13='.substr(str_replace(array(".", ",", "-", "/"), "", $empresa->escnpj),0,-6)."\r\n";
                 $cd .= 'cpfTrab_15='.str_replace(array(".", ",", "-", "/"), "",$trabalhadores->tscpf)."\r\n";
                 $cd .= 'indMV_18=1'."\r\n";
                 foreach ($basecalculo as $key => $basecalculos) {
@@ -113,11 +113,11 @@ class Evento1200Controller extends Controller
                         $cd.='INCLUIRIDEESTABLOT_154'."\r\n";
                         $cd.='tpInsc_113=1'."\r\n";
                         $cd.='nrInsc_114='.str_replace(array(".", ",", "-", "/"), "",$empresa->escnpj)."\r\n";
-                        $cd.='codLotacao_42='.$basecalculos->tomador->tsmatricula."\r\n";
+                        $cd.='codLotacao_41='.$trabalhadores->tsmatricula."\r\n";
                         $cd.='qtdDiasAv_42=01'."\r\n";
                         $cd .= 'SALVARIDEESTABLOT_154'."\r\n";
                         $cd.='INCLUIRREMUNPERAPUR_155'."\r\n";                                                         
-                        $cd.='matricula_44='.$basecalculos->tomador->tsmatricula."\r\n";                                                           
+                        $cd.='matricula_44='.$trabalhadores->tsmatricula."\r\n";                                                           
                         $cd.='indSimples_45='."\r\n";                                                              
                         $cd.='grauExp_64=1'."\r\n";                                                                 
                         $cd.='SALVARREMUNPERAPUR_155'."\r\n";

@@ -63,7 +63,7 @@ class EsocialController extends Controller
         'procEmi_5=1'."\r\n".                                                                   
         'verProc_6=1.0.0'."\r\n".                                                                
         'tpInsc_8=1'."\r\n".                                                                   
-        'nrInsc_9='.substr(str_replace(array(".", ",", "-", "/"), "", $tomador->tscnpj),0,-6)."\r\n".                                                               
+        'nrInsc_9='.substr(str_replace(array(".", ",", "-", "/"), "", $empresa->escnpj),0,-6)."\r\n".                                                               
         'codLotacao_13='.$tomador->tsmatricula."\r\n".                                                           
         'iniValid_14='.date("Y-m")."\r\n".                                                         
         'fimValid_15='."\r\n".                                           

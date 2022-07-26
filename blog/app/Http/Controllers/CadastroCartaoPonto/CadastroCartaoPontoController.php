@@ -413,7 +413,10 @@ class CadastroCartaoPontoController extends Controller
         ])
         ->first();
         $folhar = $this->folhar
-        ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+        ->where([
+            ['empresa_id', $user->empresa_id],
+            ['fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata))]
+        ])
         ->get();
         foreach ($folhar as $key => $folhas) {
             if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){

@@ -416,6 +416,12 @@
             </div>
             
             <div class="col-md-4">
+                <label for="telefone" class="form-label"><i class="fa-sm required fas fa-asterisk" data-toggle="tooltip" data-placement="top" title="Campo obrigatório"></i> Período de Validade E-social</label>
+                <input type="month" class="form-control" name="inivalid" value="" id="inivalid">
+                    <span class="text-danger"></span>
+            </div>
+            
+            <div class="col-md-4">
                 <label for="telefone" class="form-label">Telefone</label>
                 <input type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" value="{{$empresas->estelefone}}" id="telefone">
                 @error('telefone')

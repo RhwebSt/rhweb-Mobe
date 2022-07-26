@@ -28,7 +28,7 @@
                     });
                     $('#rublicas').html(nome)
                 }
-                if(data.length === 1 && dados.length > 3){
+                if(data.length >= 1 && dados.length > 3){
                   let rublica = '';
                   if (!data[0].tsvalor) {
                     rublica = ` <li class="list-group-item">O tomador da rublica ${data[0].tsdescricao} está R$ 0,00</li>`

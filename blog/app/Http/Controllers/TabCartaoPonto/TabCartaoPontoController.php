@@ -410,7 +410,10 @@ class TabCartaoPontoController extends Controller
             ])
             ->first();
             $folhar = $this->folhar
-            ->where('fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata)))
+            ->where([
+                ['fscompetencia', date('Y-m',strtotime($lancamentotabelas->lsdata))],
+                ['empresa_id', $user->empresa_id]
+            ])
             ->get();
             foreach ($folhar as $key => $folhas) {
                 if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
