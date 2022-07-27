@@ -65,7 +65,7 @@ class EsocialController extends Controller
         'tpInsc_8=1'."\r\n".                                                                   
         'nrInsc_9='.substr(str_replace(array(".", ",", "-", "/"), "", $empresa->escnpj),0,-6)."\r\n".                                                               
         'codLotacao_13='.$tomador->tsmatricula."\r\n".                                                           
-        'iniValid_14='.date("Y-m")."\r\n".                                                         
+        'iniValid_14='.$empresa->esesocial."\r\n".                                                         
         'fimValid_15='."\r\n".                                           
         'tpLotacao_17=09'."\r\n".                                                                
         'tpInsc_18=1'."\r\n".                                                                    

@@ -1290,7 +1290,8 @@ class calculoFolhaGeralController extends Controller
                     $datafinal = $datafinal[0].'-'.$datafinal[1].'-15';
                     $folha = DB::table('folhars') 
                     ->join('base_calculos', 'folhars.id', '=', 'base_calculos.folhar_id')
-                    ->select('base_calculos.bivalorliquido','base_calculos.trabalhador_id')
+                    ->selectRaw('SUM(base_calculos.bivalorliquido) as bivalorliquido,base_calculos.trabalhador_id')
+                    ->groupBy('base_calculos.trabalhador_id')
                     ->whereBetween('folhars.fsfinal',[$datainicio,$datafinal])
                     ->where('base_calculos.tomador_id',null)
                     ->where('base_calculos.trabalhador_id',$basecalculos->trabalhador_id)

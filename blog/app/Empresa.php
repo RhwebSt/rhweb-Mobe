@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class Empresa extends Model
 {
     protected $fillable = [
-        'esnome', 'escnpj', 'escpf', 'esfoto', 'estelefone', 'esdataregitro', 'esresponsavel', 'esemail', 'esseguro', 'escnae', 'escondicaosindicato', 'esretemferias', 'essindicalizado', 'escodigomunicipio'
+        'esnome', 'escnpj', 'escpf', 'esfoto', 'estelefone', 'esdataregitro', 'esresponsavel', 'esemail', 'esseguro', 'escnae', 'escondicaosindicato', 'esretemferias', 'essindicalizado', 'escodigomunicipio','esesocial'
     ];
     public function cadastro($dados)
     {
@@ -25,8 +25,7 @@ class Empresa extends Model
             'esretemferias' => $dados['retem__ferias'],
             'essindicalizado' => $dados['sincalizado'],
             'escodigomunicipio' => $dados['cod__municipio'],
-            'esseguro' => $dados['seguro']
-
+            'esseguro' => $dados['seguro'],
         ]);
     }
     public function avuso()
@@ -281,7 +280,8 @@ class Empresa extends Model
                 'esretemferias' => $dados['retem__ferias'],
                 'essindicalizado' => $dados['sincalizado'],
                 'escodigomunicipio' => $dados['cod__municipio'],
-                'esseguro' => $dados['seguro']
+                'esseguro' => $dados['seguro'],
+                'esesocial' => $dados['inivalid']
             ]);
     }
     public function deletar($id)

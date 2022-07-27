@@ -29,7 +29,7 @@ class CreateEmpresasTable extends Migration
             $table->char('essindicalizado', 30)->nullable();
             $table->char('esretemferias', 10)->nullable();
             $table->char('escondicaosindicato', 30)->nullable();
-           
+            $table->char('esesocial', 10)->nullable();
             $table->timestamps();
         });
     }

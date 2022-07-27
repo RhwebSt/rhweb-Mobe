@@ -82,6 +82,7 @@ $(document).ready(function(){
             {'data':'esid',
             render: function(data, type, row){
                 let dados = '';
+                let mensagem = '';
                 let codigoerro = ["401","402","411"];
                 if (data){
                     $.ajax({
@@ -106,20 +107,34 @@ $(document).ready(function(){
                             return  `<span class="badge bg-danger">${retorno.responseJSON.error.message}</span>`
                         }
                     });
-                    if (dados.data.status_consulta.codigo == 101) {
-                        return`<span class="badge bg-warning text-black">${dados.data.status_consulta.mensagem}</span>`
-                    }else if (dados.data.eventos[0].status.codigo == 201) {
-                        return`<span class="badge bg-success text-white">${dados.data.eventos[0].status.mensagem}</span>`
-                    }else if (dados.data.eventos[0].status.codigo == 401) {
-                        if (row.esnome == 'S1020') {
-                            return erros(dados.data.eventos[0].ocorrencias[0].descricao,row.tomador_id);
+                    if (dados.data.eventos.length >= 1) {
+                        // if (dados.data.status_consulta.codigo == 101) {
+                        //     return`<span class="badge bg-warning text-black">${dados.data.status_consulta.mensagem}</span>`
+                        // }else 
+                        if (dados.data.eventos[0].status.codigo == 201) {
+                            return`<span class="badge bg-success text-white">${dados.data.eventos[0].status.mensagem}</span>`
+                        }else if (dados.data.eventos[0].status.codigo == 401 || dados.data.eventos[0].status.codigo == 402) {
+                            if (row.esnome == 'S1020') {
+                                dados.data.eventos[0].ocorrencias.forEach(element => {
+                                    mensagem += `${element.descricao}<br><br>`
+                                });
+                                return erros(mensagem,row.tomador_id);
+                            }
+                            if (row.esnome == 'S2300') {
+                                dados.data.eventos[0].ocorrencias.forEach(element => {
+                                    mensagem += `${element.descricao}<br><br>`
+                                });
+                                return erros(mensagem,row.trabalhador_id);
+                            }
+                            if (row.esnome == 'S1200') {
+                                dados.data.eventos[0].ocorrencias.forEach(element => {
+                                    mensagem += `${element.descricao}<br><br>`
+                                });
+                                return erros(mensagem,row.folhar_id);
+                            }
                         }
-                        if (row.esnome == 'S2300') {
-                            return erros(dados.data.eventos[0].ocorrencias[0].descricao,row.trabalhador_id);
-                        }
-                        if (row.esnome == 'S1200') {
-                            return erros(dados.data.eventos[0].ocorrencias[0].descricao,row.folhar_id);
-                        }
+                    }else{
+                        return`<span class="badge bg-warning text-black">Em Processamento</span>`
                     }
                     // if (dados.data.eventos.length < 1) {
                     //     // if (dados.data.status_envio.codigo == 1) {
@@ -267,7 +282,9 @@ $(document).ready(function(){
                                     <div id="endereco" class="accordion-body row">
                                         
                                         <section  class="row residencia">
-                                           ${dados}
+                                            <p>
+                                                ${dados}
+                                            </p>
                                         </section>
                                     </div>
                                 </div>
@@ -465,5 +482,8 @@ $(document).ready(function(){
             }
          });
     }
+    // setInterval( function () {
+    //     table.ajax.reload();
+    // }, 30000 );
     
 })

@@ -24,7 +24,7 @@
                     html: '<p class="modal__aviso">{{ $message }}</p>',
                     background: '#45484A',
                     showConfirmButton: true,
-                    timer: 5000,
+                    // timer: 5000,
         
                 });
             </script>

@@ -85,7 +85,12 @@ class PerfilController extends Controller
     {
         
         $dados = $request->all();
-        // dd($dados);
+        $request->validate([
+            'inivalid' => 'required|max:10',
+        ],[
+            'inivalid.required'=>'O campo não pode estar vazio!',
+            'inivalid.max'=>'O campo não pode conter mas de 20 caracteres!',
+        ]);
             $empresas = $this->empresa->editar($dados,$id);
             $endereco = $this->endereco->editarEmpresa($dados,$id);
             $this->valoresrublica->editar($dados,$id);

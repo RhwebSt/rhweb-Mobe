@@ -417,7 +417,7 @@ class TabCartaoPontoController extends Controller
             ->get();
             foreach ($folhar as $key => $folhas) {
                 if(strtotime($folhas->fsfinal) > strtotime($lancamentotabelas->lsdata)){
-                    return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folhar lançada']);
+                    return redirect()->back()->withInput()->withErrors(['false'=>'Não foi possível deletar o registro. Pos já existe um folha lançada no mês '.date('m/Y',strtotime($folhar->fscompetencia))]);
                 }
             }
             $this->valorrublica->where('empresa_id', $user->empresa_id)
