@@ -120,7 +120,7 @@
 
             <div class="col-md-3">
                 <label for="matricula" class="form-label">Matrícula <i class="fas fa-lock" data-toggle="tooltip" data-placement="top" title="Campo automático"></i></label>
-                <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{old('cpf',$trabalhador->tsmatricula)}}" readonly>
+                <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" id="matricula" value="{{old('matricula',$trabalhador->tsmatricula)}}" readonly>
                 @error('matricula')
                 <span class="text-danger">{{ $message }}</span> 
                 @enderror

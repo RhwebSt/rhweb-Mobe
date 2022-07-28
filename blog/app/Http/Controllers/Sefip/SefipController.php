@@ -56,6 +56,7 @@ class SefipController extends Controller
          }
          $cd .='11';
          $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cnpj = substr($cnpj,0,14);
          $cd .= $cnpj;
          $cnpj = strlen($cnpj);
          for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -92,6 +93,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->endereco[0]->escep);
+         $cep = substr($cep,0,8);
          $cd .= $cep;
          $cep = strlen($cep);
          for ($i=0; $i < (8-$cep); $i++) { 
@@ -126,12 +128,14 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $competencia = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->fscompetencia);
+         $competencia = substr($competencia,0,6);
          $cd .= $competencia;
          $competencia = strlen($competencia);
          for ($i=0; $i < (6-$competencia); $i++) { 
             $cd .= ' ';
          }
          $rol = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psresol);
+         $rol = substr($rol,0,3);
          $cd .= $rol;
          $rol = strlen($rol);
          for ($i=0; $i < (3-$rol); $i++) { 
@@ -147,6 +151,7 @@ class SefipController extends Controller
          }
          $cd .= '1';
          $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cnpj = substr($cnpj,0,14);
          $cd .= $cnpj;
          $cnpj = strlen($cnpj);
          for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -164,6 +169,7 @@ class SefipController extends Controller
         //     $cd .= ' ';
         //  }
         $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+        $cnpj = substr($cnpj,0,14);
         $cd .= $cnpj;
         $cnpj = strlen($cnpj);
         for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -181,6 +187,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $rua = strtr($sefip->tomador->endereco[0]->eslogradouro,$caracteres_sem_acento);
+         $rua = str_replace(array(".", ",", "-", "/"), "",$rua);
          $rua = substr($rua,0,50);
          $cd .= strtoupper($rua);
          $rua = strlen($rua);
@@ -196,6 +203,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->endereco[0]->escep);
+         $cep = substr($cep,0,8);
          $cd .= $cep;
          $cep = strlen($cep);
          for ($i=0; $i < (8-$cep); $i++) { 
@@ -216,6 +224,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $telefone = str_replace(array(".", ",", "-", "/","(",")"," "), "",$sefip->tomador->tstelefone);
+         $telefone = substr($telefone,0,12);
          $cd .= $telefone;
          $telefone = strlen($telefone);
          for ($i=0; $i < (12-$telefone); $i++) { 
@@ -223,6 +232,7 @@ class SefipController extends Controller
          }
          $cd .= 'N';
          $cnae = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->pscnae);
+         $cnae = substr($cnae,0,7);
          $cd .= $cnae;
          $cnae = strlen($cnae);
          for ($i=0; $i < (7-$cnae); $i++) { 
@@ -230,6 +240,7 @@ class SefipController extends Controller
          }
          $cd .="P";
          $rat = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psconfpas);
+         $rat = substr($rat,0,3);
          $cd .= $rat;
          $rat = strlen($rat);
          for ($i=0; $i < (3-$rat); $i++) { 
@@ -242,12 +253,14 @@ class SefipController extends Controller
             $cd.= "0";
         }
         $fpas = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psfpas);
+        $fpas = substr($fpas,0,3);
         $cd .= $fpas;
         $fpas = strlen($fpas);
         for ($i=0; $i < (3-$fpas); $i++) { 
            $cd .= ' ';
         }
         $pasterceiros = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psfpasterceiros);
+        $pasterceiros = substr($pasterceiros,0,4);
         $cd .= $pasterceiros;
         $pasterceiros = strlen($pasterceiros);
         for ($i=0; $i < (4-$pasterceiros); $i++) { 
@@ -278,6 +291,7 @@ class SefipController extends Controller
          $cd .= "*"."\r\n";
          $cd .= '201';
          $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+         $cnpj = substr($cnpj,0,14);
          $cd .= $cnpj;
          $cnpj = strlen($cnpj);
          for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -285,6 +299,7 @@ class SefipController extends Controller
          }
          $cd .='1';
          $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tscnpj);
+         $cnpj = substr($cnpj,0,14);
          $cd .= $cnpj;
          $cnpj = strlen($cnpj);
          for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -302,6 +317,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $rua = strtr($sefip->tomador->endereco[0]->eslogradouro,$caracteres_sem_acento);
+         $rua = str_replace(array(".", ",", "-", "/"), "",$rua);
          $rua = substr($rua,0,50);
          $cd .= strtoupper($rua);
          $rua = strlen($rua);
@@ -319,6 +335,7 @@ class SefipController extends Controller
          
          
          $cep = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->endereco[0]->escep);
+         $cep = substr($cep,0,8);
          $cd .= $cep;
          $cep = strlen($cep);
          for ($i=0; $i < (8-$cep); $i++) { 
@@ -339,6 +356,7 @@ class SefipController extends Controller
             $cd .= ' ';
          }
          $gtps = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->parametrosefip[0]->psgrps);
+         $gtps = substr($gtps,0,4);
          $cd .= $gtps;
          $gtps = strlen($gtps);
         for ($i=0; $i < (4-$gtps); $i++) { 
@@ -354,6 +372,7 @@ class SefipController extends Controller
          foreach ($trabalhador as $key => $trabalhadores) {
             $cd .= '301';
             $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->folhar->empresa->escnpj);
+            $cnpj = substr($cnpj,0,14);
             $cd .= $cnpj;
             $cnpj = strlen($cnpj);
             for ($i=0; $i < (14-$cnpj); $i++) { 
@@ -361,12 +380,14 @@ class SefipController extends Controller
             }
             $cd .='1';
             $cnpj = str_replace(array(".", ",", "-", "/"), "",$sefip->tomador->tscnpj);
+            $cnpj = substr($cnpj,0,14);
             $cd .= $cnpj;
             $cnpj = strlen($cnpj);
             for ($i=0; $i < (14-$cnpj); $i++) { 
                $cd .= ' ';
             }
             $pis = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dspis);
+            $pis = substr($pis,0,11);
             $cd .= $pis;
             $pis = strlen($pis);
             for ($i=0; $i < (11-$pis); $i++) { 
@@ -394,7 +415,7 @@ class SefipController extends Controller
                $cd .= ' ';
             }
             $matriculatrabalhador = substr(str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->tsmatricula),0,11);
-            
+            $matriculatrabalhador = substr($matriculatrabalhador,0,11);
             $matriculaquant = strlen($matriculatrabalhador);
             for ($i=0; $i < (11 - $matriculaquant); $i++) { 
                $cd .= '0';
@@ -402,14 +423,14 @@ class SefipController extends Controller
            
             $cd .= $matriculatrabalhador;
             $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsctps);
-            
+            $ctps = substr($ctps,0,7);
             $ctpsquant = strlen($ctps);
             for ($i=0; $i < (7-$ctpsquant); $i++) { 
                $cd .= '0';
             }
             $cd .= $ctps;
             $serie = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsserie);
-            
+            $serie = substr($serie,0,5);
             $seriequant = strlen($serie);
             for ($i=0; $i < (5-$seriequant); $i++) { 
                $cd .= '0';
@@ -429,12 +450,14 @@ class SefipController extends Controller
             // }
             
             $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->categoria[0]->csafastamento);
+            $afastamento = substr($afastamento,0,8);
             $cd .= $afastamento;
             $afastamento = strlen($afastamento);
             for ($i=0; $i < (8-$afastamento); $i++) { 
                $cd .= ' ';
             }
             $nascimento = str_replace(array(".", ",", "-", "/"), "",date('d-m-Y', strtotime($trabalhadores->trabalhador->nascimento[0]->nsnascimento)));
+            $nascimento = substr($nascimento,0,8);
             $cd .= $nascimento;
             $nascimento = strlen($nascimento);
             for ($i=0; $i < (8-$nascimento); $i++) { 
@@ -456,7 +479,7 @@ class SefipController extends Controller
             $soma = $trabalhadores->biinss;
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
-
+            $soma = substr($soma,0,15);
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
                $cd .= '0';
@@ -470,7 +493,7 @@ class SefipController extends Controller
             }
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-           
+            $soma = substr($soma,0,15);
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
                $cd .= '0';
@@ -494,7 +517,7 @@ class SefipController extends Controller
             $soma = $inssvalor + $decimo;
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
-            
+            $soma = substr($soma,0,15);
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
                $cd .= '0';
@@ -511,7 +534,7 @@ class SefipController extends Controller
             }
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
-            
+            $soma = substr($soma,0,15);
             $somaquant = strlen($soma);
             for ($i=0; $i < (15-$somaquant); $i++) { 
                $cd .= '0';
