@@ -23,7 +23,7 @@ class BaseCalculo extends Model
     }
     public function valorcalculo()
     {
-        return $this->hasMany(ValorCalculo::class)->orderBy('vicodigo','ASC');;
+        return $this->hasMany(ValorCalculo::class)->orderBy('vicodigo','ASC');
     }
     public function relacaodia()
     {

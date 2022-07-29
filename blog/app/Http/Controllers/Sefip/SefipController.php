@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Sefip;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Tomador;
 use App\Empresa;
 use App\Folhar;
 use App\BaseCalculo;
 use App\ValorCalculo;
+use App\Trabalhador;
 class SefipController extends Controller
 {
-    private $tomador,$empresa,$folhar,$valorcalculo,$basecalculo;
+    private $tomador,$empresa,$folhar,$valorcalculo,$basecalculo,$trabalhador;
     public function __construct()
     {
         $this->tomador = new Tomador;
@@ -19,6 +21,7 @@ class SefipController extends Controller
         $this->folhar = new Folhar;
         $this->valorcalculo = new ValorCalculo;
         $this->basecalculo = new BaseCalculo;
+        $this->trabalhador = new Trabalhador;
     }
     public function geraTxt($tomador,$folhar,$empresa)
     {
@@ -42,13 +45,34 @@ class SefipController extends Controller
         ])
         ->with(['folhar.empresa.endereco','tomador.endereco','tomador.parametrosefip'])
         ->first(); 
-        $trabalhador =  $this->basecalculo->where([
+        $basecalculos =  $this->basecalculo->where([
             ['folhar_id',$folhar],
             ['tomador_id',$tomador]
          ])
-         ->with(['trabalhador.endereco','trabalhador.documento','trabalhador.categoria','trabalhador.nascimento','trabalhador.valorcalculo'])
+         //->with(['trabalhador.endereco','trabalhador.documento','trabalhador.categoria','trabalhador.nascimento','trabalhador.valorcalculo'])
          ->get();
-        //  dd($sefip,$trabalhador);
+         $idtrabalhadores = [];
+         foreach ($basecalculos as $key => $id) {
+            array_push($idtrabalhadores,$id->trabalhador_id);
+         }  
+        
+        $trabalhador = DB::table('trabalhadors')
+            ->join('documentos', 'trabalhadors.id', '=', 'documentos.trabalhador_id')
+            ->join('nascimentos', 'trabalhadors.id', '=', 'nascimentos.trabalhador_id')
+            ->join('categorias', 'trabalhadors.id', '=', 'categorias.trabalhador_id')
+            ->join('bancarios', 'trabalhadors.id', '=', 'bancarios.trabalhador_id')
+            ->select(
+                'trabalhadors.*', 
+                'documentos.*', 
+                'bancarios.*',
+                'categorias.*',
+                'nascimentos.*',
+            )
+            ->whereIn('trabalhadors.id',$idtrabalhadores)
+            ->orderBy('documentos.dspis','ASC')
+            ->get();
+            // dd($idtrabalhadores, $trabalhador);
+        //  dd($trabalhador);
          $file_name = 'SEFIP.RE';
          $cd = '00';
          for ($i=0; $i < 51 ; $i++) { 
@@ -386,7 +410,7 @@ class SefipController extends Controller
             for ($i=0; $i < (14-$cnpj); $i++) { 
                $cd .= ' ';
             }
-            $pis = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dspis);
+            $pis = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->dspis);
             $pis = substr($pis,0,11);
             $cd .= $pis;
             $pis = strlen($pis);
@@ -407,14 +431,14 @@ class SefipController extends Controller
             //    $cd .= ' ';
             // }
             $cd .= '02';
-            $nome = strtr($trabalhadores->trabalhador->tsnome,$caracteres_sem_acento);
+            $nome = strtr($trabalhadores->tsnome,$caracteres_sem_acento);
             $nome = substr($nome,0,70);
             $cd .= strtoupper($nome);
             $nome = strlen($nome);
             for ($i=0; $i < (70 - $nome); $i++) { 
                $cd .= ' ';
             }
-            $matriculatrabalhador = substr(str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->tsmatricula),0,11);
+            $matriculatrabalhador = substr(str_replace(array(".", ",", "-", "/"), "",$trabalhadores->tsmatricula),0,11);
             $matriculatrabalhador = substr($matriculatrabalhador,0,11);
             $matriculaquant = strlen($matriculatrabalhador);
             for ($i=0; $i < (11 - $matriculaquant); $i++) { 
@@ -422,14 +446,14 @@ class SefipController extends Controller
             }
            
             $cd .= $matriculatrabalhador;
-            $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsctps);
+            $ctps = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->dsctps);
             $ctps = substr($ctps,0,7);
             $ctpsquant = strlen($ctps);
             for ($i=0; $i < (7-$ctpsquant); $i++) { 
                $cd .= '0';
             }
             $cd .= $ctps;
-            $serie = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->documento[0]->dsserie);
+            $serie = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->dsserie);
             $serie = substr($serie,0,5);
             $seriequant = strlen($serie);
             for ($i=0; $i < (5-$seriequant); $i++) { 
@@ -449,34 +473,51 @@ class SefipController extends Controller
             //      }
             // }
             
-            $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->trabalhador->categoria[0]->csafastamento);
+            $afastamento = str_replace(array(".", ",", "-", "/"), "",$trabalhadores->csafastamento);
             $afastamento = substr($afastamento,0,8);
             $cd .= $afastamento;
             $afastamento = strlen($afastamento);
             for ($i=0; $i < (8-$afastamento); $i++) { 
                $cd .= ' ';
             }
-            $nascimento = str_replace(array(".", ",", "-", "/"), "",date('d-m-Y', strtotime($trabalhadores->trabalhador->nascimento[0]->nsnascimento)));
+            $nascimento = str_replace(array(".", ",", "-", "/"), "",date('d-m-Y', strtotime($trabalhadores->nsnascimento)));
             $nascimento = substr($nascimento,0,8);
             $cd .= $nascimento;
             $nascimento = strlen($nascimento);
             for ($i=0; $i < (8-$nascimento); $i++) { 
                $cd .= ' ';
             }
-            $cbo = substr($trabalhadores->trabalhador->categoria[0]->cbo,0,5);
+            $cbo = substr($trabalhadores->cbo,0,5);
             $cbo = str_replace(array(".", ",", "-", "/"), "",$cbo);
             $cboquant = strlen($cbo);
             for ($i=0; $i < (5-$cboquant); $i++) { 
                $cd .= '0';
             }
             $cd .= $cbo;
-            $soma = 0;
+           
             // foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
             //     if ($valorcalculo->vicodigo == 1009) {
             //         $soma = $valorcalculo->vivencimento + $trabalhadores->biservicodsr;
             //     }
             // }
-            $soma = $trabalhadores->biinss;
+            $soma = 0;
+            // foreach ($basecalculo as $key => $id) {
+                
+            //     if ($id->trabalhador_id == $trabalhadores->id) {
+            //         $soma = $id->biinss;
+            //     }
+            // }
+            $basecalculo =  $this->basecalculo->where([
+                ['folhar_id',$folhar],
+                ['tomador_id',$tomador],
+                ['trabalhador_id',$trabalhadores->trabalhador_id]
+             ])
+             ->with(['trabalhador.valorcalculo'])
+             ->first();
+            //  if (!isset($basecalculo->biinss)) {
+            //     dd($trabalhadores->tsnome,$basecalculo,$trabalhadores->id);
+            //  }
+            $soma = $basecalculo->biinss;
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
             $soma = substr($soma,0,15);
@@ -485,8 +526,9 @@ class SefipController extends Controller
                $cd .= '0';
             }
             $cd .= $soma;
+           
             $soma = 0;
-            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+            foreach ($basecalculo->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 1010) {
                     $soma = $valorcalculo->vivencimento;
                 }
@@ -502,18 +544,20 @@ class SefipController extends Controller
             for ($i=0; $i < 4; $i++) { 
                 $cd .= ' ';
              }
-            
-            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+             $soma = 0;
+            foreach ($basecalculo->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 2001) {
                     $inssvalor = $valorcalculo->videscinto;
                 }
             }
-            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+            foreach ($basecalculo->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 2002) {
                     $decimo = $valorcalculo->videscinto;
                 }
             }
-            // $soma = $trabalhadores->bivalordesconto;
+           
+           
+           
             $soma = $inssvalor + $decimo;
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma); 
@@ -526,12 +570,13 @@ class SefipController extends Controller
             for ($i=0; $i < 15; $i++) { 
                 $cd .= '0';
              }
-            $soma = 0;
-            foreach ($trabalhadores->trabalhador->valorcalculo as $key => $valorcalculo) {
+             $soma = 0;
+            foreach ($basecalculo->trabalhador->valorcalculo as $key => $valorcalculo) {
                 if ($valorcalculo->vicodigo == 1010) {
                     $soma = $valorcalculo->vivencimento;
                 }
             }
+           
             $soma = (string)sprintf('%.2f',$soma);
             $soma = str_replace(array(".", ",", "-", "/"), "",$soma);
             $soma = substr($soma,0,15);

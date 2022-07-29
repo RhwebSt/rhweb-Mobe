@@ -35,7 +35,7 @@ class Trabalhador extends Model
     }
     public function basecalculo()
     {
-        return $this->hasMany(BaseCalculo::class);
+        return $this->hasMany(BaseCalculo::class)->orderBy('tsnome','ASC');
     }
     public function endereco()
     {
